@@ -1,5 +1,5 @@
 <?php
-class Courseware_IndexController extends MoocipController {
+class CourseController extends MoocipController {
 
     public function before_filter(&$action, &$args)
     {

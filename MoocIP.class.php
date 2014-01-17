@@ -34,7 +34,7 @@ class MoocIP extends StudIPPlugin implements SystemPlugin
         $dispatcher = new Trails_Dispatcher(
             $this->getPluginPath(),
             rtrim(PluginEngine::getLink($this, array(), null), '/'),
-            'courseware/index'
+            'course/index'
         );
         $dispatcher->plugin = $this;
         $dispatcher->dispatch($unconsumed_path);
