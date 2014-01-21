@@ -1,5 +1,4 @@
 <?php
-require 'bootstrap.php';
 
 /**
  * MoocIP.class.php
@@ -10,7 +9,7 @@ require 'bootstrap.php';
  * @version 0.1a
  */
 
-class MoocIP extends StudIPPlugin implements SystemPlugin
+class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 {
 
     public function __construct() {
@@ -28,8 +27,32 @@ class MoocIP extends StudIPPlugin implements SystemPlugin
         PageLayout::addScript($this->getPluginURL().'/assets/application.js');
     }
 
+    public function getTabNavigation($course_id)
+    {
+        return array();
+    }
+
+    public function getNotificationObjects($course_id, $since, $user_id)
+    {
+        return array();
+    }
+
+    public function getIconNavigation($course_id, $last_visit, $user_id)
+    {
+        // ...
+    }
+
+    public function getInfoTemplate($course_id)
+    {
+        // ...
+    }
+
     public function perform($unconsumed_path)
     {
+        require_once 'vendor/trails/trails.php';
+        require_once 'app/controllers/studip_controller.php';
+        require_once 'app/controllers/authenticated_controller.php';
+
         $this->setupAutoload();
         $dispatcher = new Trails_Dispatcher(
             $this->getPluginPath(),
