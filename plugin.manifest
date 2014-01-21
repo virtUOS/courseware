@@ -3,6 +3,6 @@ pluginclassname=MoocIP
 pluginclassname=Courseware
 pluginclassname=Courseoverview
 origin=virtUOS
-version=0.1a
+version=0.1.0
 homepage=https://github.com/tgloeggl/mooc.ip
 studipMinVersion=2.5
