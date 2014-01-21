@@ -59,7 +59,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $dispatcher = new Trails_Dispatcher(
             $this->getPluginPath(),
             rtrim(PluginEngine::getLink($this, array(), null), '/'),
-            'course/index'
+            NULL
         );
         $dispatcher->plugin = $this;
         $dispatcher->dispatch($unconsumed_path);

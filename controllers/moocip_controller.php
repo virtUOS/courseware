@@ -36,4 +36,16 @@ class MoocipController extends StudipController {
 
         return PluginEngine::getURL($this->dispatcher->plugin, $params, join('/', $args));
     }
+
+
+    /**
+     * Render some data as JSON.
+     *
+     * @param Mixed $data  some WINDOWS-1252 encoded data
+     */
+    function render_json($data)
+    {
+        $this->response->add_header('Content-Type', 'application/json');
+        $this->render_text(json_encode(studip_utf8encode($data)));
+    }
 }
