@@ -14,9 +14,9 @@ class MoocipController extends StudipController {
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base_without_infobox'));
     }
 
-    /** 
+    /**
      * overwrite the default url_for to enable it to work in plugins
-     * 
+     *
      * @param type $to
      * @return type
      */
@@ -35,5 +35,5 @@ class MoocipController extends StudipController {
         $args[0] = $to;
 
         return PluginEngine::getURL($this->dispatcher->plugin, $params, join('/', $args));
-    } 
+    }
 }
