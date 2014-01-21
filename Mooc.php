@@ -43,7 +43,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         // ...
     }
 
-    // Box auf der Ãœbersichtsseite
+    // Box auf der Übersichtsseite
     public function getInfoTemplate($course_id)
     {
         // ...
@@ -83,22 +83,21 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
     private function setupNavigation()
     {
         global $perm;
-
         $cid = $this->getContext();
         if (Request::isXhr()
-            || Navigation::hasItem('/course/mooc')
+            || !Navigation::hasItem('/course')
             || !$this->isActivated($cid))
         {
             return;
         }
 
-        $url = PluginEngine::getURL($this, compact('cid'), 'TODO', true);
+        $url = PluginEngine::getURL($this, compact('cid'), 'courseware', true);
 
-        $navigation = new Navigation(_('Mooc'), $url);
+        $navigation = new Navigation('Courseware', $url);
         $navigation->setImage(Assets::image_path('icons/16/white/category.png'));
         $navigation->setActiveImage(Assets::image_path('icons/16/black/category.png'));
 
-        Navigation::addItem('/course/mooc', $navigation);
+        Navigation::addItem('/course/mooc_courseware', $navigation);
     }
 
     private function getContext()
