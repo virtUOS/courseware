@@ -91,7 +91,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 
     private function getContext()
     {
-        return Request::option("cid");
+        return Request::option('cid') ?: $GLOBALS['SessionSeminar'];
     }
 
     private function getSemClass()
