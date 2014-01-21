@@ -14,21 +14,30 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 
     public function __construct() {
         parent::__construct();
-
-        $this->setupNavigation();
     }
 
-    // bei Aufruf des Plugins Ã¼ber plugin.php/mooc/...
+    // bei Aufruf des Plugins über plugin.php/mooc/...
     public function initialize ()
     {
         PageLayout::addStylesheet($this->getPluginURL().'/assets/style.css');
         PageLayout::addScript($this->getPluginURL().'/assets/application.js');
     }
 
-    // fÃ¼r Veranstaltungskategorien-Slots
+    // für Veranstaltungskategorien-Slots
     public function getTabNavigation($course_id)
     {
-        return array();
+        if ($this->isSlotModule()) {
+            return array(
+                'mooc_overview' => $this->getOverviewNavigation(),
+                'mooc_courseware' => $this->getCoursewareNavigation()
+            );
+        }
+
+        else {
+            return array(
+                'mooc_courseware' => $this->getCoursewareNavigation()
+            );
+        }
     }
 
     // ???
@@ -80,28 +89,44 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         }
     }
 
-    private function setupNavigation()
+    private function getContext()
     {
-        global $perm;
-        $cid = $this->getContext();
-        if (Request::isXhr()
-            || !Navigation::hasItem('/course')
-            || !$this->isActivated($cid))
-        {
-            return;
-        }
+        return Request::option("cid");
+    }
 
+    private function getSemClass()
+    {
+        global $SEM_CLASS, $SEM_TYPE, $SessSemName;
+        return $SEM_CLASS[$SEM_TYPE[$SessSemName['art_num']]['class']];
+    }
+
+    private function isSlotModule()
+    {
+        return  $this->getSemClass()->isSlotModule(get_class($this));
+    }
+
+
+    private function getOverviewNavigation()
+    {
+        $url = PluginEngine::getURL($this, compact('cid'), 'course', true);
+
+        $navigation = new Navigation('Übersicht', $url);
+        $navigation->setImage(Assets::image_path('icons/16/white/seminar.png'));
+        $navigation->setActiveImage(Assets::image_path('icons/16/black/seminar.png'));
+
+        return $navigation;
+    }
+
+    private function getCoursewareNavigation()
+    {
         $url = PluginEngine::getURL($this, compact('cid'), 'courseware', true);
 
         $navigation = new Navigation('Courseware', $url);
         $navigation->setImage(Assets::image_path('icons/16/white/category.png'));
         $navigation->setActiveImage(Assets::image_path('icons/16/black/category.png'));
-
-        Navigation::addItem('/course/mooc_courseware', $navigation);
-    }
-
-    private function getContext()
-    {
-        return Request::option("cid");
+        # TODO
+        #            var_dump($this->getSemClass()->getNavigationForSlot("overview"));
+        #            var_dump(Navigation::getItem('/course')->getSubNavigation());
+        return $navigation;
     }
 }
