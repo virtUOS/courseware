@@ -1,1 +1,31 @@
-/* CSS */ 
+form.enrol {
+  text-align: center;
+}
+
+form.enrol button {
+  padding: 0.5em;
+  border: 1px solid black;
+  border-radius: 2px;
+  color: white;
+  background-color: #428BCA;
+}
+
+article h1 {
+  font-size: 1.5em;
+  border-bottom: none;
+  margin-top: 1.5em;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+
+/* Courseware */
+#mooc_courseware ol {
+  float: left;
+  padding-top: 50px;
+  padding-right: 2em;
+}
+
+#mooc_courseware section {
+  float: left;
+}
