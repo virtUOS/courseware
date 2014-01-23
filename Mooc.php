@@ -80,16 +80,10 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 
     private function setupAutoload()
     {
-        if (class_exists("StudipAutoloader")) {
-            StudipAutoloader::addAutoloadPath(__DIR__ . '/models');
-        } else {
-            spl_autoload_register(function ($class) {
-                include_once __DIR__ . $class . '.php';
-            });
-        }
+        StudipAutoloader::addAutoloadPath(__DIR__ . '/models');
     }
 
-    private function getContext()
+    public function getContext()
     {
         return Request::option('cid') ?: $GLOBALS['SessionSeminar'];
     }
