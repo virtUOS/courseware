@@ -1,14 +1,15 @@
 <?php
 
+require_once 'models/mooc/constants.php';
+
 /**
  * MoocIP.class.php
  *
  * ...
  *
- * @author  virtuos
- * @version 0.1.0
+ * @author  <tgloeggl@uos.de>
+ * @author  <mlunzena@uos.de>
  */
-
 class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 {
 
@@ -118,9 +119,48 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $navigation = new Navigation('Courseware', $url);
         $navigation->setImage(Assets::image_path('icons/16/white/category.png'));
         $navigation->setActiveImage(Assets::image_path('icons/16/black/category.png'));
-        # TODO
-        #            var_dump($this->getSemClass()->getNavigationForSlot("overview"));
-        #            var_dump(Navigation::getItem('/course')->getSubNavigation());
         return $navigation;
+    }
+
+    static function onEnable($id)
+    {
+        // enable nobody role by default
+        RolePersistence::assignPluginRoles($id, array(7));
+
+        self::insertMoocIntoOverviewSlot();
+    }
+
+    static function onDisable($id)
+    {
+        self::removeMoocFromOverviewSlot();
+    }
+
+    const OVERVIEW_SLOT = 'overview';
+
+    private static function insertMoocIntoOverviewSlot()
+    {
+        $sem_class = self::getMoocSemClass();
+        $sem_class->setSlotModule(self::OVERVIEW_SLOT, __CLASS__);
+        $sem_class->store();
+    }
+
+    private static function removeMoocFromOverviewSlot()
+    {
+        $sem_class = self::getMoocSemClass();
+        $default_module = SemClass::getDefaultSemClass()->getSlotModule(self::OVERVIEW_SLOT);
+        $sem_class->setSlotModule(self::OVERVIEW_SLOT, $default_module);
+        $sem_class->store();
+    }
+
+    private static function getMoocSemClass()
+    {
+        return new SemClass(
+            intval(self::getMoocSemClassID()));
+    }
+
+    private static function getMoocSemClassID()
+    {
+        $id = Config::get()->getValue(\Mooc\SEM_CLASS_CONFIG_ID);
+        return $id;
     }
 }
