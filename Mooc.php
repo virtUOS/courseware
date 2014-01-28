@@ -89,6 +89,8 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $navigation = new Navigation('MOOCs', $url);
         $navigation->setImage(Assets::image_path('icons/32/white/category.png'));
 
+        $navigation->addSubnavigation("till", new Navigation("Till", $url));
+
         Navigation::addItem('/mooc_list', $navigation);
     }
 

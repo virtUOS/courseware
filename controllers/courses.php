@@ -16,10 +16,18 @@ class CoursesController extends MoocipController {
         $this->courses = $sem_class->getCourses();
     }
 
-    public function show_action()
+    public function show_action($cid)
     {
-        Navigation::activateItem("/course/mooc_overview");
+        if (strlen($cid) !== 32) {
+            throw new Trails_Exception(400);
+        }
 
-        $this->courseware = \Mooc\Courseware::findByCourse($this->cid);
+        if (Navigation::hasItem("/course")) {
+            Navigation::activateItem("/course/mooc_overview");
+        } else {
+            Navigation::activateItem("/mooc_list/till");
+        }
+
+        $this->courseware = \Mooc\Courseware::findByCourse($cid);
     }
 }
