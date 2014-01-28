@@ -1,4 +1,8 @@
 /* /courses/index */
+#mooc-courses-index #layout_content #course-list article {
+  clear: both;
+  margin-bottom: 1em;
+}
 #mooc-courses-index #layout_content #course-list article .course-avatar-medium {
   float: left;
   padding-right: 20px;
