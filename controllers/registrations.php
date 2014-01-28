@@ -17,8 +17,24 @@ class RegistrationsController extends MoocipController {
         $this->course = \Course::find($this->cid);
     }
     
-    public function create_function()
+    public function create_action()
     {
-        
+        if (!Request::option('tos')) {
+            throw new Exception('You need to accept the TOS!');
+        } else {
+            $data = array(
+                'username' => Request::get('mail'),
+                'Vorname'  => Request::get('vorname'),
+                'Nachname' => Request::get('nachname'),
+            );
+            
+            $user = User::create($data);
+
+            $um = new UserManagement($user->getId());
+            $um->setPassword();
+            
+            //$course = Course::find($this->cid);
+            //$course->members->
+        }        
     }
 }

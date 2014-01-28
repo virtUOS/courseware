@@ -130,6 +130,10 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
     
     private function getRegistrationsNavigation()
     {
+        if ($GLOBALS['user']->id != 'nobody') {
+            return null;
+        }
+
         $cid = $this->getContext();
         $url = PluginEngine::getURL($this, compact('cid'), 'registrations', true);
 
