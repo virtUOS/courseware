@@ -15,6 +15,8 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 
     public function __construct() {
         parent::__construct();
+
+        $this->setupNavigation();
     }
 
     // bei Aufruf des Plugins über plugin.php/mooc/...
@@ -79,6 +81,16 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
     /* PRIVATE METHODS                                                    */
     /**********************************************************************/
 
+    private function setupNavigation()
+    {
+        $url = PluginEngine::getURL($this, array(), 'courses/index', true);
+
+        $navigation = new Navigation('MOOCs', $url);
+        $navigation->setImage(Assets::image_path('icons/32/white/category.png'));
+
+        Navigation::addItem('/mooc_list', $navigation);
+    }
+
     private function setupAutoload()
     {
         StudipAutoloader::addAutoloadPath(__DIR__ . '/models');
@@ -103,7 +115,8 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 
     private function getOverviewNavigation()
     {
-        $url = PluginEngine::getURL($this, compact('cid'), 'course', true);
+        $cid = $this->getContext();
+        $url = PluginEngine::getURL($this, compact('cid'), 'courses/show', true);
 
         $navigation = new Navigation('Übersicht', $url);
         $navigation->setImage(Assets::image_path('icons/16/white/seminar.png'));
@@ -114,6 +127,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 
     private function getCoursewareNavigation()
     {
+        $cid = $this->getContext();
         $url = PluginEngine::getURL($this, compact('cid'), 'courseware', true);
 
         $navigation = new Navigation('Courseware', $url);

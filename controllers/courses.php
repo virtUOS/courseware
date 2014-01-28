@@ -2,7 +2,7 @@
 
 require_once 'moocip_controller.php';
 
-class CourseController extends MoocipController {
+class CoursesController extends MoocipController {
 
     public function before_filter(&$action, &$args)
     {
@@ -11,6 +11,11 @@ class CourseController extends MoocipController {
     }
 
     public function index_action()
+    {
+        $this->render_text(__METHOD__);
+    }
+
+    public function show_action()
     {
         Navigation::activateItem("/course/mooc_overview");
 
