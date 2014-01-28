@@ -1,5 +1,5 @@
 <?
-$body_id = 'mooc_course';
+$body_id = 'mooc-courses-show';
 ?>
 
 <?= CourseAvatar::getAvatar($courseware->course->id)->getImageTag(CourseAvatar::ORIGINAL) ?>

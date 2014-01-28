@@ -1,5 +1,5 @@
 <?
-$body_id = 'mooc_courseware';
+$body_id = 'mooc-courseware-index';
 ?>
 
 <h1> Courseware: <?= htmlReady($courseware->title) ?></h1>

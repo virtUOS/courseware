@@ -12,7 +12,8 @@ class CoursesController extends MoocipController {
 
     public function index_action()
     {
-        $this->render_text(__METHOD__);
+        $sem_class = \Mooc\SemClass::getMoocSemClass();
+        $this->courses = $sem_class->getCourses();
     }
 
     public function show_action()
