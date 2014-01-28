@@ -12,7 +12,7 @@ class Section extends AbstractBlock
             'class_name' => 'Mooc\\Chapter',
             'foreign_key' => 'parent_id');
 
-        $this->has_many['sections'] = array(
+        $this->has_many['blocks'] = array(
             'class_name' => 'Mooc\\Block',
             'assoc_foreign_key' => 'parent_id',
             'assoc_func' => 'findByParent_id');
