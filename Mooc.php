@@ -32,6 +32,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         if ($this->isSlotModule()) {
             return array(
                 'mooc_overview' => $this->getOverviewNavigation(),
+                'mooc_registrations' => $this->getRegistrationsNavigation(),
                 'mooc_courseware' => $this->getCoursewareNavigation()
             );
         }
@@ -121,7 +122,19 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $navigation = new Navigation('Übersicht', $url);
         $navigation->setImage(Assets::image_path('icons/16/white/seminar.png'));
         $navigation->setActiveImage(Assets::image_path('icons/16/black/seminar.png'));
+        
+        return $navigation;
+    }
+    
+    private function getRegistrationsNavigation()
+    {
+        $cid = $this->getContext();
+        $url = PluginEngine::getURL($this, compact('cid'), 'registrations', true);
 
+        $navigation = new Navigation('Anmeldung', $url);
+        $navigation->setImage(Assets::image_path('icons/16/white/door-enter.png'));
+        $navigation->setActiveImage(Assets::image_path('icons/16/black/door-enter.png'));
+        
         return $navigation;
     }
 
