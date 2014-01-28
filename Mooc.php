@@ -32,7 +32,6 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         if ($this->isSlotModule()) {
             return array(
                 'mooc_overview' => $this->getOverviewNavigation(),
-                'mooc_registrations' => $this->getRegistrationsNavigation(),
                 'mooc_courseware' => $this->getCoursewareNavigation()
             );
         }
@@ -84,14 +83,24 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 
     private function setupNavigation()
     {
+        $moocid = Request::option('moocid');
+
         $url = PluginEngine::getURL($this, array(), 'courses/index', true);
 
         $navigation = new Navigation('MOOCs', $url);
         $navigation->setImage(Assets::image_path('icons/32/white/category.png'));
 
-        $navigation->addSubnavigation("till", new Navigation("Till", $url));
-
-        Navigation::addItem('/mooc_list', $navigation);
+        $overview_url = PluginEngine::getURL($this, compact('moocid'), 'courses/show/' . $moocid, true);;
+        $overview_subnav = new Navigation("Übersicht", $overview_url);
+        $overview_subnav->setImage(Assets::image_path('icons/16/white/seminar.png'));
+        $overview_subnav->setActiveImage(Assets::image_path('icons/16/black/seminar.png'));
+        $navigation->addSubnavigation("overview", $overview_subnav);
+        
+        if ($GLOBALS['user']->id == 'nobody') {
+            $navigation->addSubnavigation('registrations', $this->getRegistrationsNavigation());
+        }        
+                        
+        Navigation::addItem('/mooc', $navigation);
     }
 
     private function setupAutoload()
@@ -119,7 +128,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
     private function getOverviewNavigation()
     {
         $cid = $this->getContext();
-        $url = PluginEngine::getURL($this, compact('cid'), 'courses/show', true);
+        $url = PluginEngine::getURL($this, compact('cid'), 'courses/show/' . $cid, true);
 
         $navigation = new Navigation('Übersicht', $url);
         $navigation->setImage(Assets::image_path('icons/16/white/seminar.png'));
@@ -130,12 +139,8 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
     
     private function getRegistrationsNavigation()
     {
-        if ($GLOBALS['user']->id != 'nobody') {
-            return null;
-        }
-
-        $cid = $this->getContext();
-        $url = PluginEngine::getURL($this, compact('cid'), 'registrations', true);
+        $moocid = Request::option('moocid');
+        $url = PluginEngine::getURL($this, compact('moocid'), 'registrations', true);
 
         $navigation = new Navigation('Anmeldung', $url);
         $navigation->setImage(Assets::image_path('icons/16/white/door-enter.png'));

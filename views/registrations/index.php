@@ -7,6 +7,12 @@
         <?= _('Anmeldung') ?>
     </h2>
 
+    <? if ($registered) : ?>
+    <?= MessageBox::success('Sie wurden erfolgreich für diesen Kurs angemeldet!'
+        . ' Bitte schauen Sie in Ihrem E-Mail-Postfach nach der Bestätigungsmail!'); ?>
+    <br>
+    <br>
+    <? else : ?>
     <form class="register" method="post" action="<?= $controller->url_for('registrations/create') ?>">
         <input type="text" name="vorname" placeholder="<?= _('Vorname') ?>" required><br>
         <input type="text" name="nachname" placeholder="<?= _('Nachname') ?>" required><br>
@@ -40,7 +46,9 @@
         <br>
 
         <?= Studip\Button::createAccept(_('Jetzt anmelden')) ?>
+        <input type="hidden" name="moocid" value="<?= htmlReady($cid) ?>">
     </form>
+    <? endif ?>
 
     <? $infobox = $this->render_partial('registrations/_infobox') ?>
 </div>

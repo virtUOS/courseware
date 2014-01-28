@@ -25,7 +25,7 @@ class CoursesController extends MoocipController {
         if (Navigation::hasItem("/course")) {
             Navigation::activateItem("/course/mooc_overview");
         } else {
-            Navigation::activateItem("/mooc_list/till");
+            Navigation::activateItem("/mooc/overview");
         }
 
         $this->courseware = \Mooc\Courseware::findByCourse($cid);
