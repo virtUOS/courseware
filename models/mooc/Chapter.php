@@ -12,10 +12,11 @@ class Chapter extends AbstractBlock
             'class_name' => 'Mooc\\Courseware',
             'foreign_key' => 'parent_id');
 
-        $this->has_many['sections'] = array(
-            'class_name' => 'Mooc\\Section',
+        $this->has_many['subchapters'] = array(
+            'class_name' => 'Mooc\Subchapter',
             'assoc_foreign_key' => 'parent_id',
-            'assoc_func' => 'findByParent_id');
+            'assoc_func' => 'findByParent_id',
+        );
 
         parent::__construct($id);
     }
