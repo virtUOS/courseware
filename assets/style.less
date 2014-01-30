@@ -1,5 +1,5 @@
 /* /courses/index */
-#mooc-courses-index #layout_content {
+#mooc-courses-index #layout_container {
 
   #course-list article {
     clear: both;
@@ -18,19 +18,7 @@
 }
 
 /* /courses/show */
-#mooc-courses-show #layout_content {
-
-  form.enrol {
-    text-align: center;
-
-    button {
-      padding: 0.5em;
-      border: 1px solid black;
-      border-radius: 2px;
-      color: white;
-      background-color: #428BCA;
-    }
-  }
+#mooc-courses-show #layout_container {
 
   article h1 {
     font-size: 1.5em;
@@ -42,7 +30,7 @@
 }
 
 /* /courseware */
-#mooc-courseware-index #layout_content {
+#mooc-courseware-index #layout_container {
   ol {
     float: left;
     padding-top: 50px;
@@ -55,29 +43,44 @@
 }
 
 /* /registrations */
-#mooc-registrations-index {
+#mooc-registrations-index #layout_container {
 
   input {
     font-size: 14pt;
     margin-bottom: 5px;
   }
 
+  p {
+    max-width: 40em;
+  }
+
   #layout_sidebar {
     font-size: 12pt;
+  }
 
-    .tos {
+  article.tos {
+    h1 {
+      border:  none;
+      font-size: 1rem;
+      padding-left: 0;
+    }
+  }
 
+  label.tos {
+    display: block;
+  }
+
+  #layout_sidebar label.tos {
+
+    position: relative;
+
+    span {
       display: block;
-      position: relative;
-
-      span {
-        display: block;
-        padding-left: 30px;
-      }
-      input {
-        position: absolute;
-        top: 1.1em;
-      }
+      padding-left: 30px;
+    }
+    input {
+      position: absolute;
+      top: 1.1em;
     }
   }
 }

@@ -12,6 +12,9 @@ class CoursesController extends MoocipController {
 
     public function index_action()
     {
+        // loose the currently selected course
+        closeObject();
+
         $sem_class = \Mooc\SemClass::getMoocSemClass();
         $this->courses = $sem_class->getCourses();
     }
@@ -22,7 +25,7 @@ class CoursesController extends MoocipController {
             throw new Trails_Exception(400);
         }
 
-        if (Navigation::hasItem("/course")) {
+        if ($GLOBALS['SessionSeminar']) {
             Navigation::activateItem("/course/mooc_overview");
         } else {
             Navigation::activateItem("/mooc/overview");

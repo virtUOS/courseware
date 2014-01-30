@@ -5,6 +5,8 @@ class MoocipController extends StudipController {
     {
         parent::__construct($dispatcher);
         $this->plugin = $dispatcher->plugin;
+        $this->flash = Trails_Flash::instance();
+        $this->current_user = isset($GLOBALS['user']) ? $GLOBALS['user']->id : 'nobody';
     }
 
     public function before_filter(&$action, &$args)

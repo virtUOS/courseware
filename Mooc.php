@@ -95,11 +95,11 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $overview_subnav->setImage(Assets::image_path('icons/16/white/seminar.png'));
         $overview_subnav->setActiveImage(Assets::image_path('icons/16/black/seminar.png'));
         $navigation->addSubnavigation("overview", $overview_subnav);
-        
-        if ($GLOBALS['user']->id == 'nobody') {
+
+        #if ($GLOBALS['user']->id == 'nobody') {
             $navigation->addSubnavigation('registrations', $this->getRegistrationsNavigation());
-        }        
-                        
+        #}
+
         Navigation::addItem('/mooc', $navigation);
     }
 
@@ -133,19 +133,19 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $navigation = new Navigation('Übersicht', $url);
         $navigation->setImage(Assets::image_path('icons/16/white/seminar.png'));
         $navigation->setActiveImage(Assets::image_path('icons/16/black/seminar.png'));
-        
+
         return $navigation;
     }
-    
+
     private function getRegistrationsNavigation()
     {
         $moocid = Request::option('moocid');
-        $url = PluginEngine::getURL($this, compact('moocid'), 'registrations', true);
+        $url = PluginEngine::getURL($this, compact('moocid'), 'registrations/new', true);
 
         $navigation = new Navigation('Anmeldung', $url);
         $navigation->setImage(Assets::image_path('icons/16/white/door-enter.png'));
         $navigation->setActiveImage(Assets::image_path('icons/16/black/door-enter.png'));
-        
+
         return $navigation;
     }
 

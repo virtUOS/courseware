@@ -1,28 +1,18 @@
 /* /courses/index */
-#mooc-courses-index #layout_content #course-list article {
+#mooc-courses-index #layout_container #course-list article {
   clear: both;
   margin-bottom: 1em;
 }
-#mooc-courses-index #layout_content #course-list article .course-avatar-medium {
+#mooc-courses-index #layout_container #course-list article .course-avatar-medium {
   float: left;
   padding-right: 20px;
 }
-#mooc-courses-index #layout_content #course-list article h1 {
+#mooc-courses-index #layout_container #course-list article h1 {
   border: none;
   margin-bottom: 0;
 }
 /* /courses/show */
-#mooc-courses-show #layout_content form.enrol {
-  text-align: center;
-}
-#mooc-courses-show #layout_content form.enrol button {
-  padding: 0.5em;
-  border: 1px solid black;
-  border-radius: 2px;
-  color: white;
-  background-color: #428BCA;
-}
-#mooc-courses-show #layout_content article h1 {
+#mooc-courses-show #layout_container article h1 {
   font-size: 1.5em;
   border-bottom: none;
   margin-top: 1.5em;
@@ -30,31 +20,41 @@
   padding-bottom: 0;
 }
 /* /courseware */
-#mooc-courseware-index #layout_content ol {
+#mooc-courseware-index #layout_container ol {
   float: left;
   padding-top: 50px;
   padding-right: 2em;
 }
-#mooc-courseware-index #layout_content section {
+#mooc-courseware-index #layout_container section {
   float: left;
 }
 /* /registrations */
-#mooc-registrations-index input {
+#mooc-registrations-index #layout_container input {
   font-size: 14pt;
   margin-bottom: 5px;
 }
-#mooc-registrations-index #layout_sidebar {
+#mooc-registrations-index #layout_container p {
+  max-width: 40em;
+}
+#mooc-registrations-index #layout_container #layout_sidebar {
   font-size: 12pt;
 }
-#mooc-registrations-index #layout_sidebar .tos {
+#mooc-registrations-index #layout_container article.tos h1 {
+  border: none;
+  font-size: 1rem;
+  padding-left: 0;
+}
+#mooc-registrations-index #layout_container label.tos {
   display: block;
+}
+#mooc-registrations-index #layout_container #layout_sidebar label.tos {
   position: relative;
 }
-#mooc-registrations-index #layout_sidebar .tos span {
+#mooc-registrations-index #layout_container #layout_sidebar label.tos span {
   display: block;
   padding-left: 30px;
 }
-#mooc-registrations-index #layout_sidebar .tos input {
+#mooc-registrations-index #layout_container #layout_sidebar label.tos input {
   position: absolute;
   top: 1.1em;
 }
