@@ -39,15 +39,22 @@
   float: left;
 }
 /* /registrations */
-div.mooc-registrations {
-  font-size: 12pt;
-}
-div.mooc-registrations form.register input[type=text],
-div.mooc-registrations form.login input[type=text],
-div.mooc-registrations form.register input[type=password],
-div.mooc-registrations form.login input[type=password],
-div.mooc-registrations form.register input[type=email],
-div.mooc-registrations form.login input[type=email] {
+#mooc-registrations-index input {
   font-size: 14pt;
   margin-bottom: 5px;
+}
+#mooc-registrations-index #layout_sidebar {
+  font-size: 12pt;
+}
+#mooc-registrations-index #layout_sidebar .tos {
+  display: block;
+  position: relative;
+}
+#mooc-registrations-index #layout_sidebar .tos span {
+  display: block;
+  padding-left: 30px;
+}
+#mooc-registrations-index #layout_sidebar .tos input {
+  position: absolute;
+  top: 1.1em;
 }

@@ -1,3 +1,7 @@
+<?
+$body_id = 'mooc-registrations-index';
+?>
+
 <div class="mooc-registrations">
     <h1>
         <?= htmlReady($course->name) ?>

@@ -55,16 +55,29 @@
 }
 
 /* /registrations */
-div.mooc-registrations {
+#mooc-registrations-index {
+
+  input {
+    font-size: 14pt;
+    margin-bottom: 5px;
+  }
+
+  #layout_sidebar {
     font-size: 12pt;
 
-    form.register, form.login {
-        input[type=text],
-        input[type=password],
-        input[type=email] {
-            font-size: 14pt;
-            margin-bottom: 5px;
-        }
-    }
-}
+    .tos {
 
+      display: block;
+      position: relative;
+
+      span {
+        display: block;
+        padding-left: 30px;
+      }
+      input {
+        position: absolute;
+        top: 1.1em;
+      }
+    }
+  }
+}
