@@ -32,5 +32,6 @@ class CoursesController extends MoocipController {
         }
 
         $this->courseware = \Mooc\Courseware::findByCourse($cid);
+        $this->course = Course::find($cid);
     }
 }
