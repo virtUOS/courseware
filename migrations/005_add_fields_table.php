@@ -2,7 +2,7 @@
 /**
  * @author Till Glöggler <tgloeggl@uos.de>
  */
-class ModifyBlockTypeColumn extends Migration
+class AddFieldsTable extends Migration
 {
 
     function description()
