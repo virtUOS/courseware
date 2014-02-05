@@ -47,6 +47,7 @@ class AbstractBlock extends \SimpleORMap
         );
 
         $this->registerCallback('before_create', 'setSeminarId');
+        $this->registerCallback('before_create', 'setPositionId');
 
         parent::__construct($id);
     }
@@ -59,6 +60,20 @@ class AbstractBlock extends \SimpleORMap
     {
         if ($this->seminar_id === null && isset($_SESSION['SessionSeminar'])) {
             $this->seminar_id = $_SESSION['SessionSeminar'];
+        }
+    }
+
+    /**
+     * Calculates the position of a new block by counting the already existing
+     * blocks on the same level.
+     */
+    protected function setPositionId()
+    {
+        if ($this->parent_id !== null && $this->position === null) {
+            $this->position = static::countBySQL(
+                'parent_id = ? ORDER BY position ASC',
+                array($this->parent_id)
+            );
         }
     }
 
