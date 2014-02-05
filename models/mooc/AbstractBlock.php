@@ -46,7 +46,20 @@ class AbstractBlock extends \SimpleORMap
             }
         );
 
+        $this->registerCallback('before_create', 'setSeminarId');
+
         parent::__construct($id);
+    }
+
+    /**
+     * Sets the seminar id of the block just before storing it to the database
+     * if the current course information is stored in the session.
+     */
+    protected function setSeminarId()
+    {
+        if ($this->seminar_id === null && isset($_SESSION['SessionSeminar'])) {
+            $this->seminar_id = $_SESSION['SessionSeminar'];
+        }
     }
 
     public static function findByParent_id($id)
