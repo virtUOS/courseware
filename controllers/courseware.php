@@ -15,4 +15,21 @@ class CoursewareController extends MoocipController {
         Navigation::activateItem("/course/mooc_courseware");
         $this->courseware = \Mooc\Courseware::findByCourse($this->cid);
     }
+
+    // TODO replace me soon
+    public function test_action($block_id, $handler = null)
+    {
+        $sorm_block = \Mooc\Block::find($block_id);
+
+        $factory = new \Mooc\UI\BlockFactory();
+        $ui_block = $factory->makeBlock($sorm_block);
+
+        echo $ui_block->render('student');
+
+        if (isset($handler)) {
+            echo $ui_block->handle($handler);
+        }
+
+        $this->render_nothing();
+    }
 }

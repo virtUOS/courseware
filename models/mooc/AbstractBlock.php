@@ -4,7 +4,7 @@ namespace Mooc;
 /**
  * @author  <mlunzena@uos.de>
  */
-abstract class AbstractBlock extends \SimpleORMap
+class AbstractBlock extends \SimpleORMap
 {
 
     /**
@@ -17,15 +17,22 @@ abstract class AbstractBlock extends \SimpleORMap
     public function __construct($id = null) {
         $this->db_table = 'mooc_blocks';
 
-/*
-            `type` VARCHAR(64) NULL ,
-            `title` VARCHAR(255) NULL ,
-            `position` INT NULL DEFAULT 0 ,
-*/
-
         $this->belongs_to['course'] = array(
             'class_name'  => 'Course',
             'foreign_key' => 'seminar_id');
+
+
+        // this should not be used
+        $this->belongs_to['parent'] = array(
+            'class_name'  => 'Mooc\\AbstractBlock',
+            'foreign_key' => 'parent_id');
+
+        // this should not be used
+        $this->has_many['children'] = array(
+            'class_name' => 'Mooc\\AbstractBlock',
+            'assoc_foreign_key' => 'parent_id',
+            'assoc_func' => 'findByParent_id');
+
 
         $this->default_values['type'] = array_pop(explode('\\', get_called_class()));
         $this->default_values['json_data'] = '{}';
