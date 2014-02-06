@@ -12,8 +12,10 @@ class CoursesController extends MoocipController {
 
     public function index_action()
     {
-        // loose the currently selected course
+        // get rid of the currently selected course
         closeObject();
+
+        Navigation::activateItem('/mooc/all');
 
         $sem_class = \Mooc\SemClass::getMoocSemClass();
         $this->courses = $sem_class->getCourses();

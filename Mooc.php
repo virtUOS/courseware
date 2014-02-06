@@ -95,17 +95,19 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $url = PluginEngine::getURL($this, array(), 'courses/index', true);
 
         $navigation = new Navigation('MOOCs', $url);
-        $navigation->setImage(Assets::image_path('icons/32/white/category.png'));
+        $navigation->setImage($GLOBALS['ABSOLUTE_URI_STUDIP'] . $this->getPluginPath() . '/assets/images/mooc.png');
 
-        $overview_url = PluginEngine::getURL($this, compact('moocid'), 'courses/show/' . $moocid, true);;
-        $overview_subnav = new Navigation("Übersicht", $overview_url);
-        $overview_subnav->setImage(Assets::image_path('icons/16/white/seminar.png'));
-        $overview_subnav->setActiveImage(Assets::image_path('icons/16/black/seminar.png'));
-        $navigation->addSubnavigation("overview", $overview_subnav);
+        if (Request::get('moocid')) {
+            $overview_url = PluginEngine::getURL($this, compact('moocid'), 'courses/show/' . $moocid, true);;
+            $overview_subnav = new Navigation(_('Übersicht'), $overview_url);
+            $overview_subnav->setImage(Assets::image_path('icons/16/white/seminar.png'));
+            $overview_subnav->setActiveImage(Assets::image_path('icons/16/black/seminar.png'));
+            $navigation->addSubnavigation("overview", $overview_subnav);
 
-        #if ($GLOBALS['user']->id == 'nobody') {
             $navigation->addSubnavigation('registrations', $this->getRegistrationsNavigation());
-        #}
+        } else {
+            $navigation->addSubnavigation("all", new Navigation(_('Alle Kurse'), $url));
+        }
 
         Navigation::addItem('/mooc', $navigation);
     }
