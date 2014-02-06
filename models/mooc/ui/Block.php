@@ -92,7 +92,7 @@ abstract class Block {
      * saving this block. If that field exists, it will contain its
      * persisted value.
      *
-     * You acces the value of a field by its name:
+     * You access the value of a field by its name:
      *
      * \code
      * // define a field named 'foo'
@@ -126,6 +126,9 @@ abstract class Block {
      */
     protected function defineField($name, $scope, $default)
     {
+
+        // TODO: darf $name alle Zeichen enthalten und beliebig lang sein?
+
         if (\Mooc\SCOPE_USER === $scope) {
             // should be derived from some kind of container/runtime
             $user_id = $GLOBALS['user']->id;
@@ -144,7 +147,8 @@ abstract class Block {
     // TODO
     function __get($name)
     {
-        // `id` und `name` werden direkt aus dem SORM-Objekt genommen
+        // `id` und `name` werden direkt aus dem SORM-Objekt genommen,
+        // siehe \Mooc\AbstractBlock
         if ('id' === $name or 'name' === $name) {
             return $this->_model->$name;
         }
@@ -154,7 +158,7 @@ abstract class Block {
             throw new \InvalidArgumentException("Field was not defined.");
         }
 
-        return $this->_fields[$name]->value;
+        return $this->_fields[$name]->content;
     }
 
     // TODO
@@ -167,8 +171,8 @@ abstract class Block {
 
         // `name` wird direkt im SORM-Objekt geändert
         if ('name' === $name) {
-            $this->model->name = $value;
-            $this->model->store();
+            $this->_model->name = $value;
+            $this->_model->store();
             return;
         }
 
@@ -177,12 +181,13 @@ abstract class Block {
             throw new \InvalidArgumentException("Field was not defined.");
         }
 
-        $this->_fields[$name]->value = $value;
+        $this->_fields[$name]->content = $value;
     }
 
     /**
      * This function is called by the framework. You should not have
      * to call it yourself.
+     *
      * If you want to define a view for a derived Block, you have to
      * implement a public instance method called '{name of the
      * view}_view'.
@@ -214,6 +219,7 @@ abstract class Block {
      */
     public function render($name = 'student')
     {
+        // TODO: checken, dass es die View auch gibt!
         $result = call_user_func(array($this, "{$name}_view"));
         $this->save();
         return $result;
@@ -222,15 +228,17 @@ abstract class Block {
     // TODO
     public function handle($name)
     {
+        // TODO: Wir brauchen echte Daten.
         $data = 0;
         // $data = Request::doMagic();
 
-        var_dump("call handler: '$name'");
+        // TODO: Wir müssen sicherstellen, dass der handler da ist.
         $result = call_user_func(array($this, "{$name}_handler"), $data);
         $this->save();
 
-        // TODO
-        $result = json_encode($result);
+        // TODO: Das Resultat vom handler soll JSON sein. Also UTF-8!
+        // Reicht das so?
+        $result = json_encode(studip_utf8encode($result));
 
         return $result;
     }
