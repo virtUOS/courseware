@@ -20,18 +20,10 @@ class CoursewareController extends MoocipController {
     public function test_action($block_id, $handler = null)
     {
         $sorm_block = \Mooc\Block::find($block_id);
+        $ui_block = $this->container['block_factory']->makeBlock($sorm_block);
 
-        $factory = new \Mooc\UI\BlockFactory();
-        $ui_block = $factory->makeBlock($sorm_block);
-
-        $template_data = $ui_block->render('student');
-        $block_template_dir = $factory->getBlockDir($sorm_block->type) . '/templates';
-
-        require_once 'vendor/flexi/lib/mustache_template.php';
-
-        $factory = new Flexi_TemplateFactory($block_template_dir);
-        $factory->add_handler('mustache', 'Flexi_MustacheTemplate');
-        var_dump($factory->render('student_view', $template_data));
+        $renderer = $this->container['block_renderer'];
+        echo $renderer($ui_block, 'student');
 
         if (isset($handler)) {
             echo $ui_block->handle($handler);

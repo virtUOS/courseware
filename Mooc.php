@@ -2,6 +2,7 @@
 
 require_once 'vendor/autoload.php';
 require_once 'models/mooc/constants.php';
+require_once 'models/mooc/Container.php';
 
 /**
  * MoocIP.class.php
@@ -16,7 +17,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 
     public function __construct() {
         parent::__construct();
-
+        $this->setupContainer();
         $this->setupNavigation();
     }
 
@@ -81,6 +82,11 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
     /**********************************************************************/
     /* PRIVATE METHODS                                                    */
     /**********************************************************************/
+
+    private function setupContainer()
+    {
+        $this->container = new Mooc\Container();
+    }
 
     private function setupNavigation()
     {

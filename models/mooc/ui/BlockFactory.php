@@ -30,7 +30,7 @@ class BlockFactory {
     }
 
     // TODO
-    public function getBlockDir($type)
+    protected function getBlockDir($type)
     {
         return dirname(dirname(dirname(__DIR__))) . '/blocks/' . $type;
     }

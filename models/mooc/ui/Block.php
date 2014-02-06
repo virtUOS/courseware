@@ -250,4 +250,10 @@ abstract class Block {
             $field->store();
         }
     }
+
+    public function getBlockDir()
+    {
+        $class = new \ReflectionClass(get_called_class());
+        return dirname($class->getFileName());
+    }
 }
