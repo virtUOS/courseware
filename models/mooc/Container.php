@@ -10,7 +10,13 @@ class Container extends \Pimple
     {
         parent::__construct();
 
+        $this->setupEnv();
         $this->setupBlockStuff();
+    }
+
+    private function setupEnv()
+    {
+        $this['current_user_id'] = isset($GLOBALS['user']) ? $GLOBALS['user']->id : 'nobody';
     }
 
     private function setupBlockStuff()
