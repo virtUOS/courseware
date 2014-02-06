@@ -23,6 +23,12 @@ require_once __DIR__ . '/../constants.php';
 abstract class Block {
 
     /**
+     * Link to the dependency injection container used in Mooc.IP
+     *
+     */
+    protected $container;
+
+    /**
      * This attribute holds the reference to the model (or more
      * exactly to a SimpleORMap instance). Use this in your derived
      * class, if you need to access the model directly, instead of
@@ -60,14 +66,16 @@ abstract class Block {
      * of a derived class of class Block, you should use the
      * BlockFactory.
      *
-     * @param $model SimpleORMap  the model associated to this Block
+     * @param \Mooc\Container $container  the dependency injection container
+     * @param SimpleORMap     $model      the model associated to this Block
      *
      * @see BlockFactory::makeBlock
      */
-    public function __construct(\SimpleORMap $model)
+    public function __construct(\Mooc\Container $container, \SimpleORMap $model)
     {
-        $this->_model = $model;
-        $this->_fields = array();
+        $this->container = $container;
+        $this->_model    = $model;
+        $this->_fields   = array();
         $this->initialize();
     }
 
@@ -126,17 +134,18 @@ abstract class Block {
      */
     protected function defineField($name, $scope, $default)
     {
-
         // TODO: darf $name alle Zeichen enthalten und beliebig lang sein?
 
         if (\Mooc\SCOPE_USER === $scope) {
-            // should be derived from some kind of container/runtime
-            $user_id = $GLOBALS['user']->id;
+            $user_id = $this->container['current_user_id'];
             $field = new \Mooc\Field(array($this->id, $user_id, $name));
+        }
 
-        } elseif (\Mooc\SCOPE_BLOCK === $scope) {
+        elseif (\Mooc\SCOPE_BLOCK === $scope) {
             $field = new \Mooc\Field(array($this->id, '', $name));
-        } else {
+        }
+
+        else {
             throw new \InvalidArgumentException('No such scope');
         }
 
@@ -147,9 +156,9 @@ abstract class Block {
     // TODO
     function __get($name)
     {
-        // `id` und `name` werden direkt aus dem SORM-Objekt genommen,
+        // `id` und `title` werden direkt aus dem SORM-Objekt genommen,
         // siehe \Mooc\AbstractBlock
-        if ('id' === $name or 'name' === $name) {
+        if ('id' === $name or 'title' === $name) {
             return $this->_model->$name;
         }
 
@@ -169,9 +178,9 @@ abstract class Block {
             throw new \InvalidArgumentException("Cannot mutate attribute 'id'.");
         }
 
-        // `name` wird direkt im SORM-Objekt geändert
-        if ('name' === $name) {
-            $this->_model->name = $value;
+        // `title` wird direkt im SORM-Objekt geändert
+        if ('title' === $name) {
+            $this->_model->title = $value;
             $this->_model->store();
             return;
         }

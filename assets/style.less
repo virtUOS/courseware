@@ -31,14 +31,39 @@
 
 /* /courseware */
 #mooc-courseware-index #layout_container {
-  ol {
+
+  li.chapter.selected > span, li.subchapter.selected > span, li.section.selected > a {
+    font-weight: 700;
+  }
+
+  ol.chapters {
     float: left;
-    padding-top: 50px;
     padding-right: 2em;
   }
 
-  section {
+  ol.sections {
+    list-style: none;
+
+    li {
+      display: inline-block;
+    }
+  }
+
+  section.content {
     float: left;
+  }
+
+
+  section.block {
+    border: 1px dotted #ddd;
+    display: block;
+
+  }
+
+  section.block::before {
+    content: attr(class);
+    color: #ccc;
+    border: 1px dotted #eee;
   }
 }
 

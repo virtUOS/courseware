@@ -13,7 +13,17 @@ class CoursewareController extends MoocipController {
     public function index_action()
     {
         Navigation::activateItem("/course/mooc_courseware");
+
+        $this->selected = 4;
+
         $this->courseware = \Mooc\Courseware::findByCourse($this->cid);
+
+        // TODO: verify section is in courseware & we have access to it
+        // TODO: Section::find finds any block not only Sections. Ouch!
+        $this->section    = \Mooc\Section::find($this->selected);
+
+        $this->subchapter = $this->section->subchapter;
+        $this->chapter    = $this->subchapter->chapter;
     }
 
     // TODO replace me soon

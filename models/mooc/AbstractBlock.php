@@ -39,7 +39,7 @@ class AbstractBlock extends \SimpleORMap
 
         $this->additional_fields['fields'] = array(
             'get' => function ($block, $field) {
-                return studip_utf8decode(json_decode($block->json_data));
+                return studip_utf8decode(json_decode($block->json_data, true));
             },
             'set' => function ($block, $field, $value) {
                 return $block->json_data = json_encode(studip_utf8encode($block->json_data));

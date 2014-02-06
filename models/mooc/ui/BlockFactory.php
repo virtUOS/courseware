@@ -8,12 +8,20 @@ namespace Mooc\UI;
  */
 class BlockFactory {
 
+    private $container;
+
+    // TODO
+    public function __construct(\Mooc\Container $container)
+    {
+        $this->container = $container;
+    }
+
     // TODO
     public function makeBlock($sorm_block)
     {
         $class = $this->loadBlock($sorm_block->type);
 
-        $ui_block = new $class($sorm_block);
+        $ui_block = new $class($this->container, $sorm_block);
 
         return $ui_block;
     }

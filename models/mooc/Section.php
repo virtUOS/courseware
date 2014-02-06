@@ -8,8 +8,8 @@ class Section extends AbstractBlock
 {
     public function __construct($id = null) {
 
-        $this->belongs_to['chapter'] = array(
-            'class_name' => 'Mooc\\Chapter',
+        $this->belongs_to['subchapter'] = array(
+            'class_name' => 'Mooc\\Subchapter',
             'foreign_key' => 'parent_id');
 
         $this->has_many['blocks'] = array(

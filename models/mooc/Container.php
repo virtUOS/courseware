@@ -22,7 +22,7 @@ class Container extends \Pimple
     private function setupBlockStuff()
     {
         $this['block_factory'] = function ($c) {
-            return new \Mooc\UI\BlockFactory();
+            return new \Mooc\UI\BlockFactory($c);
         };
 
         $this['block_renderer'] = function ($c) {
