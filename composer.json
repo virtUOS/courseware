@@ -1,0 +1,6 @@
+{
+    "require": {
+        "pimple/pimple": "v1.1.1",
+        "mustache/mustache": "v2.5.1"
+    }
+}
