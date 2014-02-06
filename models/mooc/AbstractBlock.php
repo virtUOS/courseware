@@ -58,8 +58,10 @@ class AbstractBlock extends \SimpleORMap
      */
     protected function setSeminarId()
     {
-        if ($this->seminar_id === null && isset($_SESSION['SessionSeminar'])) {
-            $this->seminar_id = $_SESSION['SessionSeminar'];
+        // TODO: (mlunzena) we cannot be sure to have a
+        // SessionSeminar, so we must get that value somewhere else
+        if ($this->seminar_id === null && isset($GLOBALS['SessionSeminar'])) {
+            $this->seminar_id = $GLOBALS['SessionSeminar'];
         }
     }
 
