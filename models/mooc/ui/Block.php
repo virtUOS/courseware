@@ -64,7 +64,7 @@ abstract class Block {
      *
      * @see BlockFactory::makeBlock
      */
-    public function __construct(SimpleORMap $model)
+    public function __construct(\SimpleORMap $model)
     {
         $this->_model = $model;
         $this->_fields = array();

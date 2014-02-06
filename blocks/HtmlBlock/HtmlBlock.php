@@ -12,6 +12,18 @@ class HtmlBlock extends Block {
 
     function student_view()
     {
+        // JS, CSS und JS-ifizierte Templates werden automatisch
+        // ausgeliefert
+
+        // Was muss ich jetzt machen?
+        // - wir brauchen daten
+        // - (wir wollen die möglichkeit haben, das template zu
+        //   bestimmen, aber standardmäßig ein bestimmtes nehmen?!)
+        return array('content' => $this->content);
+
+
+
+
         // irgendwie JS und CSS ausliefern
         /*
         $fragment = new Fragment();

@@ -23,15 +23,15 @@ class BlockFactory {
     {
         $class = sprintf('Mooc\\UI\\%s', $type);
         if (!class_exists($class)) {
-            $file = $this->getBlockDir() . '/' . $type . '/' . $type . '.php';
+            $file = $this->getBlockDir($type) . '/' . $type . '.php';
             require_once $file;
         }
         return $class;
     }
 
     // TODO
-    private function getBlockDir()
+    public function getBlockDir($type)
     {
-        return dirname(dirname(dirname(__DIR__))) . '/blocks';
+        return dirname(dirname(dirname(__DIR__))) . '/blocks/' . $type;
     }
 }
