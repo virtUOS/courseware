@@ -235,12 +235,8 @@ abstract class Block {
     }
 
     // TODO
-    public function handle($name)
+    public function handle($name, $data = array())
     {
-        // TODO: Wir brauchen echte Daten.
-        $data = 0;
-        // $data = Request::doMagic();
-
         // TODO: Wir müssen sicherstellen, dass der handler da ist.
         $result = call_user_func(array($this, "{$name}_handler"), $data);
         $this->save();
