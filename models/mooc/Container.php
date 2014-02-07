@@ -18,6 +18,16 @@ class Container extends \Pimple
     {
         $this['current_user_id'] = isset($GLOBALS['user']) ? $GLOBALS['user']->id : 'nobody';
 
+        $this['current_user'] = $this->share(
+            function ($c) {
+                $user = new \Mooc\User($c, $c['current_user_id']);
+                if ($user->isNew()) {
+                    // TODO: mlunzena: create a nobody user
+                }
+                return $user;
+            });
+
+
         $this['cid'] = \Request::option('cid') ?: $GLOBALS['SessionSeminar'];
     }
 
