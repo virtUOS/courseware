@@ -21,17 +21,25 @@ class BlockFactory {
     {
         $class = $this->loadBlock($sorm_block->type);
 
-        $ui_block = new $class($this->container, $sorm_block);
+        // there is no class describing a UI for that kind of block
+        if (!$class) {
+            return null;
+        }
 
-        return $ui_block;
+        return new $class($this->container, $sorm_block);
     }
 
     // TODO
     private function loadBlock($type)
     {
         $class = sprintf('Mooc\\UI\\%s', $type);
-        if (!class_exists($class)) {
+        if (!class_exists($class, false)) {
+
             $file = $this->getBlockDir($type) . '/' . $type . '.php';
+            if (!file_exists($file)) {
+                return null;
+            }
+
             require_once $file;
         }
         return $class;
