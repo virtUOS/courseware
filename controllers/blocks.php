@@ -12,10 +12,10 @@ class BlocksController extends MoocipController {
 
     function get($id)
     {
-        $block = \Mooc\AbstractBlock::find($id);
+        $block = $this->requireBlock($id);
         $ui_block = $this->container['block_factory']->makeBlock($block);
 
-        if (!$ui_block || $this->isJSONRequest()) {
+        if ($this->isJSONRequest() || !$ui_block) {
             $this->render_json($block->toArray());
         }
 
@@ -36,6 +36,24 @@ class BlocksController extends MoocipController {
     /*****************************/
     /* PROTECTED & PRIVATE STUFF */
     /*****************************/
+
+    function requireBlock($id)
+    {
+        $block = \Mooc\AbstractBlock::find($id);
+        if (!isset($block)) {
+            throw new Trails_Exception(404);
+        }
+
+        if ($block->seminar_id === $this->container['cid']) {
+            // häh?
+        }
+
+        if (!$this->container['current_user']->canRead($block)) {
+            throw new Trails_Exception(401);
+        }
+
+        return $block;
+    }
 
 
     /**
