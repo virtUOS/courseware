@@ -36,8 +36,8 @@ class AbstractBlock extends \SimpleORMap
 
         $this->default_values['type'] = array_pop(explode('\\', get_called_class()));
 
-        $this->registerCallback('before_create', 'setSeminarId');
-        $this->registerCallback('before_create', 'setPositionId');
+        $this->registerCallback('before_create', 'ensureSeminarId');
+        $this->registerCallback('before_create', 'ensurePositionId');
 
         parent::__construct($id);
     }
@@ -46,7 +46,7 @@ class AbstractBlock extends \SimpleORMap
      * Sets the seminar id of the block just before storing it to the database
      * if the current course information is stored in the session.
      */
-    protected function setSeminarId()
+    protected function ensureSeminarId()
     {
         // TODO: (mlunzena) we cannot be sure to have a
         // SessionSeminar, so we must get that value somewhere else
@@ -59,7 +59,7 @@ class AbstractBlock extends \SimpleORMap
      * Calculates the position of a new block by counting the already existing
      * blocks on the same level.
      */
-    protected function setPositionId()
+    protected function ensurePositionId()
     {
         if ($this->parent_id !== null && $this->position === null) {
             $this->position = static::countBySQL(
