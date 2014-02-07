@@ -35,16 +35,6 @@ class AbstractBlock extends \SimpleORMap
 
 
         $this->default_values['type'] = array_pop(explode('\\', get_called_class()));
-        $this->default_values['json_data'] = '{}';
-
-        $this->additional_fields['fields'] = array(
-            'get' => function ($block, $field) {
-                return studip_utf8decode(json_decode($block->json_data, true));
-            },
-            'set' => function ($block, $field, $value) {
-                return $block->json_data = json_encode(studip_utf8encode($block->json_data));
-            }
-        );
 
         $this->registerCallback('before_create', 'setSeminarId');
         $this->registerCallback('before_create', 'setPositionId');
