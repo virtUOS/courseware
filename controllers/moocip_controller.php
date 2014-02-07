@@ -13,6 +13,8 @@ class MoocipController extends StudipController {
     {
         parent::before_filter($action, $args);
 
+        $this->data = $this->parseRequestBody();
+
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base'));
     }
 
@@ -63,5 +65,31 @@ class MoocipController extends StudipController {
         }
 
         return $is_json;
+    }
+
+    private function parseRequestBody()
+    {
+        $input = file_get_contents('php://input');
+
+        if ($this->isJSONRequest()) {
+            return self::parseJson($input);
+        }
+
+        else {
+            return self::parseFormEncoded($input);
+        }
+
+        return $input;
+    }
+
+    private static function parseJson($input)
+    {
+        return json_decode($input, true);
+    }
+
+    private static function parseFormEncoded($input)
+    {
+        parse_str($input, $result);
+        return $result;
     }
 }
