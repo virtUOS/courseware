@@ -50,4 +50,18 @@ class MoocipController extends StudipController {
         $this->response->add_header('Content-Type', 'application/json');
         $this->render_text(json_encode(studip_utf8encode($data)));
     }
+
+
+    protected function isJSONRequest()
+    {
+        $is_json = false;
+
+        if ($contentType = $_SERVER['CONTENT_TYPE']) {
+            $contentTypeParts = preg_split('/\s*[;,]\s*/', $contentType);
+            $mediaType = strtolower($contentTypeParts[0]);
+            $is_json = $mediaType === 'application/json';
+        }
+
+        return $is_json;
+    }
 }
