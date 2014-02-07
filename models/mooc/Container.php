@@ -17,6 +17,8 @@ class Container extends \Pimple
     private function setupEnv()
     {
         $this['current_user_id'] = isset($GLOBALS['user']) ? $GLOBALS['user']->id : 'nobody';
+
+        $this['cid'] = \Request::option('cid') ?: $GLOBALS['SessionSeminar'];
     }
 
     private function setupBlockStuff()
