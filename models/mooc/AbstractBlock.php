@@ -74,4 +74,30 @@ class AbstractBlock extends \SimpleORMap
         return static::findBySQL('parent_id = ? ORDER BY position ASC', array($id));
     }
 
+    /**
+     * @param string primary key
+     * @return SimpleORMap|NULL
+     */
+    public static function find($id)
+    {
+        $record = parent::find($id);
+
+        if (!$record) {
+            return null;
+        }
+
+        $class = 'Mooc\\' . $record->type;
+
+        // if it exists, it's a structural type of block like Chapter
+        // or Section
+        if (!class_exists($class, true)) {
+            $class = 'Mooc\\Block';
+        }
+
+        $data = $record->toArray();
+        $record = new $class();
+        $record->setData($data, true);
+
+        return $record;
+    }
 }
