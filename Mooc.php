@@ -26,7 +26,6 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
     public function initialize ()
     {
         PageLayout::addStylesheet($this->getPluginURL().'/assets/style.css');
-        PageLayout::addScript($this->getPluginURL().'/assets/application.js');
     }
 
     // für Veranstaltungskategorien-Slots
