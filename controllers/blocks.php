@@ -18,7 +18,22 @@ class BlocksController extends MoocipController {
         $ui_block = $this->container['block_factory']->makeBlock($block);
 
         if ($this->isJSONRequest() || !$ui_block) {
-            $this->render_json($block->toArray());
+            $json = $block->toArray();
+
+
+            $json['children'] = array();
+            foreach ($block->children as $child) {
+                // TODO: Was genau braucht man von den Kindern?
+                $json['children'][] = get_class($child);
+            }
+
+            // TODO: mlunzena: Warum sollten nicht-UI-Blöcke keine
+            // Fields haben?
+            if ($ui_block) {
+                $json['fields'] = $ui_block->getFields();
+            }
+
+            $this->render_json($json);
         }
 
         // wants HTML
