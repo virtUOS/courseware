@@ -193,6 +193,19 @@ abstract class Block {
         $this->_fields[$name]->content = $value;
     }
 
+
+    // TODO
+    public function getFields()
+    {
+        return array_reduce(
+            $this->_fields,
+            function ($memo, $field) {
+                $memo[$field->name] = $field->content;
+                return $memo;
+            },
+            array());
+    }
+
     /**
      * This function is called by the framework. You should not have
      * to call it yourself.
