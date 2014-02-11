@@ -18,7 +18,7 @@ class Courseware extends AbstractBlock
 
     public static function findByCourse($cid)
     {
-        return current(static::findBySQL('seminar_id = ? AND parent_id IS NULL LIMIT 1', array($cid)));
+        return current(self::findBySQL('seminar_id = ? AND parent_id IS NULL LIMIT 1', array($cid)));
     }
 
 }
