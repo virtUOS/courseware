@@ -47,7 +47,7 @@ class HtmlBlock extends Block {
 
     function foo_handler($data)
     {
-        $this->content = date("r", time());
-        return array('foo' => array($this->content, $data));
+        $this->content = (string) $data['content'];
+        return array("content" => $this->content);
     }
 }
