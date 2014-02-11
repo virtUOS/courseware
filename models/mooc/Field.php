@@ -30,10 +30,11 @@ class Field extends \SimpleORMap
             'foreign_key' => 'user_id');
 
 
+        // TODO: this may not be named content
         $this->additional_fields['content'] = array(
             'get' => function ($block, $field) {
                 if (isset($block->json_data)) {
-                    return studip_utf8decode(json_decode($block->json_data));
+                    return studip_utf8decode(json_decode($block->json_data, true));
                 }
                 return $block->getDefault();
             },
