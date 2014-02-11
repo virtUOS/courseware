@@ -7,7 +7,9 @@ class BlocksController extends MoocipController {
     function before_filter(&$action, &$args)
     {
         parent::before_filter($action, $args);
-        return sizeof($args) === 1 && strlen($args[0]);
+        if (sizeof($args) !== 1 || !strlen($args[0])) {
+            throw new Trails_Exception(400);
+        }
     }
 
     function get($id)
