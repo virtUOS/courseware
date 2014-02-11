@@ -254,10 +254,6 @@ abstract class Block {
         $result = call_user_func(array($this, "{$name}_handler"), $data);
         $this->save();
 
-        // TODO: Das Resultat vom handler soll JSON sein. Also UTF-8!
-        // Reicht das so?
-        $result = json_encode(studip_utf8encode($result));
-
         return $result;
     }
 
@@ -269,9 +265,12 @@ abstract class Block {
         }
     }
 
+    // TODO
     public function getBlockDir()
     {
         $class = new \ReflectionClass(get_called_class());
         return dirname($class->getFileName());
     }
+
+
 }
