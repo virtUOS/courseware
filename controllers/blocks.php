@@ -46,23 +46,23 @@ class BlocksController extends MoocipController {
 
     function post($id)
     {
-        // we need the handler
-        if (!isset($this->data['handler'])) {
+        // we need the handler and the data
+        if (!isset($this->data['handler']) || !isset($this->data['data'])) {
             throw new Trails_Exception(400);
         }
-
-        $handler = $this->data['handler'];
-        unset($this->data['handler']);
 
         // JSON requests only
         if (!$this->isJSONRequest()) {
             throw new Trails_Exception(400);
         }
 
+        $handler = $this->data['handler'];
+        $data = $this->data['data'];
+
         $block = $this->requireBlock($id);
         $ui_block = $this->container['block_factory']->makeBlock($block);
 
-        $json = $ui_block ? $ui_block->handle($handler, $this->data) : $block->toArray();
+        $json = $ui_block ? $ui_block->handle($handler, $data) : $block->toArray();
 
         $this->render_json($json);
     }
