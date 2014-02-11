@@ -22,21 +22,19 @@ class RegistrationsController extends MoocipController {
         $this->course = Course::find($this->cid);
 
         if (!Request::option('accept_tos')) {
-            return $this->error('You have to accept the TOS!', 'registrations/new');
+            return $this->error(_('Sie müssen die Nutzungsbedingungen akzeptieren!'), 'registrations/new');
         }
 
         switch (Request::get('type')) {
+            default:
+            case 'register':
+                return $this->register();
 
-        default:
-        case 'register':
-            return $this->register();
+            case 'login':
+                return $this->loginAndRegister();
 
-        case 'login':
-            return $this->loginAndRegister();
-
-        case 'create':
-            return $this->createAccountAndRegister();
-
+            case 'create':
+                return $this->createAccountAndRegister();
         }
     }
 
@@ -80,7 +78,7 @@ class RegistrationsController extends MoocipController {
         try {
             $user = $this->createAccount();
         } catch (Exception $e) {
-            return $this->error('Fehler beim Anlegen des Accounts: ' . htmlReady($e), 'registrations/new');
+            return $this->error('Fehler beim Anlegen des Accounts: ' . htmlReady($e->getMessage()), 'registrations/new');
         }
 
         $this->registerUserWithCourse($user, $this->cid);
@@ -98,6 +96,9 @@ class RegistrationsController extends MoocipController {
     {
         // TODO: check if mail adress is valid, use Stud.IP-API if possible
         $mail = Request::get('mail');
+        if (\User::findByUsername($mail)) {
+            throw new Exception(_('Es gibt bereits einen Nutzer mit dieser E-Mail-Adresse!'));
+        }
 
         // add user to database
         $password = str_replace('0', 'o', substr(\base_convert(\uniqid('pass', true), 10, 36), 1, 8));
