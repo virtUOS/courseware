@@ -75,18 +75,35 @@ class AbstractBlock extends \SimpleORMap
     }
 
     /**
-     * @param string primary key
-     * @return SimpleORMap|NULL
+     * returns array of instances of given class filtered by given sql
+     * @param string sql clause to use on the right side of WHERE
+     * @param array parameters for query
+     * @return array array of "self" objects
      */
-    public static function find($id)
+    public static function findBySQL($where, $params = array())
     {
-        $record = parent::find($id);
+        $class = get_called_class();
+        $record = new $class();
 
-        if (!$record) {
-            return null;
+        $db = \DBManager::get();
+        $sql = "SELECT * FROM `" .  $record->db_table . "` WHERE " . $where;
+        $st = $db->prepare($sql);
+        $st->execute($params);
+
+        $ret = array();
+        while($row = $st->fetch(\PDO::FETCH_ASSOC)) {
+            $class = self::typeToClass($row['type']);
+
+            $ret[] = $obj = new $class();
+            $obj->setData($row, true);
+            $obj->setNew(false);
         }
+        return $ret;
+    }
 
-        $class = 'Mooc\\' . $record->type;
+    private static function typeToClass($type)
+    {
+        $class = 'Mooc\\' . $type;
 
         // if it exists, it's a structural type of block like Chapter
         // or Section
@@ -94,10 +111,6 @@ class AbstractBlock extends \SimpleORMap
             $class = 'Mooc\\Block';
         }
 
-        $data = $record->toArray();
-        $record = new $class();
-        $record->setData($data, true);
-
-        return $record;
+        return $class;
     }
 }
