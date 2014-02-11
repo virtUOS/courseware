@@ -17,6 +17,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 
     public function __construct() {
         parent::__construct();
+        $this->setupAutoload();
         $this->setupContainer();
         $this->setupNavigation();
     }
@@ -69,7 +70,6 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         require_once 'app/controllers/studip_controller.php';
         require_once 'app/controllers/authenticated_controller.php';
 
-        $this->setupAutoload();
         $dispatcher = new Trails_Dispatcher(
             $this->getPluginPath(),
             rtrim(PluginEngine::getLink($this, array(), null), '/'),
@@ -139,9 +139,26 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $cid = $this->getContext();
         $url = PluginEngine::getURL($this, compact('cid'), 'courses/show/' . $cid, true);
 
-        $navigation = new Navigation('Übersicht', $url);
+        $navigation = new Navigation(_('Übersicht'), $url);
         $navigation->setImage(Assets::image_path('icons/16/white/seminar.png'));
         $navigation->setActiveImage(Assets::image_path('icons/16/black/seminar.png'));
+
+        $course = Course::find($cid);
+        $sem_class = self::getMoocSemClass();
+
+        $navigation->addSubNavigation('overview', new Navigation(_('Übersicht'), $url));
+
+        if ($this->container['current_user']->hasPerm($cid, 'admin')
+                && !$sem_class['studygroup_mode']
+                && ($sem_class->getSlotModule("admin"))) {
+            $navigation->addSubNavigation('admin', new Navigation(_('Administration dieser Veranstaltung'), 'adminarea_start.php?new_sem=TRUE'));
+        }
+
+        if (!$course->admission_binding && !$this->container['current_user']->hasPerm($cid, 'tutor')
+                && $this->container['current_user_id'] != 'nobody') {
+            $navigation->addSubNavigation('leave', new Navigation(_('Austragen aus der Veranstaltung'), 
+                    'meine_seminare.php?auswahl='. $cid .'&cmd=suppose_to_kill'));
+        }
 
         return $navigation;
     }

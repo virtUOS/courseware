@@ -51,8 +51,7 @@ class User extends \User
         throw new \RuntimeException('not implemented: ' . __METHOD__);
     }
 
-
-    private function hasPerm($cid, $perm_level)
+    public function hasPerm($cid, $perm_level)
     {
         if (!$cid) {
             throw new \InvalidArgumentException('$cid may not be null');

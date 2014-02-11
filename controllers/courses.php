@@ -28,7 +28,7 @@ class CoursesController extends MoocipController {
         }
 
         if ($GLOBALS['SessionSeminar']) {
-            Navigation::activateItem("/course/mooc_overview");
+            Navigation::activateItem("/course/mooc_overview/overview");
         } else {
             Navigation::activateItem("/mooc/overview");
         }
