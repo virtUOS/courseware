@@ -1,5 +1,5 @@
 <?php
-namespace Mooc;
+namespace Mooc\UI;
 
 /**
  * @author  <mlunzena@uos.de>

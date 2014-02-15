@@ -138,11 +138,11 @@ abstract class Block {
 
         if (\Mooc\SCOPE_USER === $scope) {
             $user_id = $this->container['current_user_id'];
-            $field = new \Mooc\Field(array($this->id, $user_id, $name));
+            $field = new \Mooc\DB\Field(array($this->id, $user_id, $name));
         }
 
         elseif (\Mooc\SCOPE_BLOCK === $scope) {
-            $field = new \Mooc\Field(array($this->id, '', $name));
+            $field = new \Mooc\DB\Field(array($this->id, '', $name));
         }
 
         else {

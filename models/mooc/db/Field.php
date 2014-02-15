@@ -1,5 +1,5 @@
 <?php
-namespace Mooc;
+namespace Mooc\DB;
 
 /**
  * TODO
@@ -22,7 +22,7 @@ class Field extends \SimpleORMap
         $this->db_table = 'mooc_fields';
 
         $this->belongs_to['block'] = array(
-            'class_name'  => 'Mooc\\AbstractBlock',
+            'class_name'  => 'Mooc\\DB\\Block',
             'foreign_key' => 'block_id');
 
         $this->belongs_to['user'] = array(

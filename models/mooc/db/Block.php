@@ -1,10 +1,10 @@
 <?php
-namespace Mooc;
+namespace Mooc\DB;
 
 /**
  * @author  <mlunzena@uos.de>
  */
-class AbstractBlock extends \SimpleORMap
+class Block extends \SimpleORMap
 {
 
     /**
@@ -22,19 +22,17 @@ class AbstractBlock extends \SimpleORMap
             'foreign_key' => 'seminar_id');
 
 
-        // this should not be used
         $this->belongs_to['parent'] = array(
-            'class_name'  => 'Mooc\\AbstractBlock',
+            'class_name'  => 'Mooc\\DB\\Block',
             'foreign_key' => 'parent_id');
 
-        // this should not be used
         $this->has_many['children'] = array(
-            'class_name' => 'Mooc\\AbstractBlock',
+            'class_name'        => 'Mooc\\DB\\Block',
             'assoc_foreign_key' => 'parent_id',
-            'assoc_func' => 'findByParent_id');
+            'assoc_func'        => 'findByParent_id');
 
 
-        $this->default_values['type'] = array_pop(explode('\\', get_called_class()));
+        # TODO: $this->default_values['type'] = array_pop(explode('\\', get_called_class()));
 
         $this->registerCallback('before_create', 'ensureSeminarId');
         $this->registerCallback('before_create', 'ensurePositionId');
@@ -69,9 +67,27 @@ class AbstractBlock extends \SimpleORMap
         }
     }
 
+    public function getAncestors()
+    {
+        $ancestors = array();
+        $cursor = $this;
+        while ($cursor->parent_id) {
+            $ancestors[] = $cursor->parent_id;
+            $cursor = $cursor->parent;
+        }
+
+        return array_reverse($ancestors);
+    }
+
     public static function findByParent_id($id)
     {
         return static::findBySQL('parent_id = ? ORDER BY position ASC', array($id));
+    }
+
+
+    public static function findCourseware($cid)
+    {
+        return current(self::findBySQL('seminar_id = ? AND parent_id IS NULL LIMIT 1', array($cid)));
     }
 
     /**
@@ -80,6 +96,7 @@ class AbstractBlock extends \SimpleORMap
      * @param array parameters for query
      * @return array array of "self" objects
      */
+    /*
     public static function findBySQL($where, $params = array())
     {
         $class = get_called_class();
@@ -113,4 +130,5 @@ class AbstractBlock extends \SimpleORMap
 
         return $class;
     }
+    */
 }

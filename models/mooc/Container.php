@@ -37,7 +37,7 @@ class Container extends \Pimple
         };
 
         $this['block_renderer'] = function ($c) {
-            return new \Mooc\MustacheRenderer();
+            return new \Mooc\UI\MustacheRenderer();
         };
     }
 }

@@ -32,7 +32,7 @@ class User extends \User
 
     public function canRead($model)
     {
-        if ($model instanceof \Mooc\AbstractBlock) {
+        if ($model instanceof \Mooc\DB\Block) {
             return $this->hasPerm($model->seminar_id, 'user');
         }
 

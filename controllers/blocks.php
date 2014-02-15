@@ -74,7 +74,7 @@ class BlocksController extends MoocipController {
 
     function requireBlock($id)
     {
-        $block = \Mooc\AbstractBlock::find($id);
+        $block = \Mooc\DB\Block::find($id);
         if (!isset($block)) {
             throw new Trails_Exception(404);
         }

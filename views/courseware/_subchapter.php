@@ -1,6 +1,6 @@
 <?
-$open = ($_subchapter->id == $subchapter->id);
+$selected = in_array($_subchapter->id, $active);
 ?>
-<li class="subchapter<?= $open ? ' selected' : '' ?>">
+<li class="subchapter<?= $selected ? ' selected' : '' ?>">
   <span>id:<?= $_subchapter->id ?> name:<?= htmlReady($_subchapter->title) ?></span>
 </li>

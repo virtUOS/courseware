@@ -33,7 +33,7 @@ class CoursesController extends MoocipController {
             Navigation::activateItem("/mooc/overview");
         }
 
-        $this->courseware = \Mooc\Courseware::findByCourse($cid);
+        $this->courseware = \Mooc\DB\Block::findCourseware($cid);
         $this->course = Course::find($cid);
     }
 }
