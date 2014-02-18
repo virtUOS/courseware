@@ -235,16 +235,30 @@ abstract class Block {
      * the fields of this block, and returns the return value of the
      * called method.
      *
-     * @param String $name  the name of the view to call
+     * @param String $name     the name of the view to call
+     * @param array  $context  TODO: ausformulieren
      *
      * @return String  the response to send back
      */
-    public function render($name = 'student')
+    public function render($view_name = 'student', $context = array())
     {
         // TODO: checken, dass es die View auch gibt!
-        $result = call_user_func(array($this, "{$name}_view"));
+        $data = call_user_func(array($this, "{$view_name}_view"), $context);
         $this->save();
-        return $result;
+        return $this->container['block_renderer']($this, $view_name, $data);
+    }
+
+    public function traverseChildren($callback) {
+        $results = array();
+
+        foreach ($this->_model->children as $child_model) {
+            $child = $this->container['block_factory']->makeBlock($child_model);
+            if ($child) {
+                $results[] = $callback($child, $this->container);
+            }
+        }
+
+        return $results;
     }
 
     // TODO
@@ -272,5 +286,13 @@ abstract class Block {
         return dirname($class->getFileName());
     }
 
+
+    // TODO
+    public function toJSON()
+    {
+        $json = $this->_model->toArray();
+        $json['fields'] = $this->getFields();
+        return $json;
+    }
 
 }
