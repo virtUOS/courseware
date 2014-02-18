@@ -2,6 +2,16 @@ define(['module', 'require'], function (module, require) {
 
     'use strict';
 
+    return function (type, callback) {
+        var url = ['blocks', type, "js", type].join('/');
+        require([require.toUrl(url)], function (views) {
+            callback(views);
+        });
+    };
+
+
+    /*
+
     var block_types = {},
         readyCalls = [],
         runCallbacks = function () {
@@ -32,6 +42,8 @@ define(['module', 'require'], function (module, require) {
 
     var blockLoader = function (callback) {
 
+        console.log ("in blocks", callback);
+
         if (promise.state() !== "pending") {
             callback(block_types);
         } else {
@@ -42,9 +54,6 @@ define(['module', 'require'], function (module, require) {
     };
 
 
-    /**
-     * Loader Plugin API method
-     */
     blockLoader.load = function (name, req, onLoad, config) {
 
         if (config.isBuild) {
@@ -56,7 +65,8 @@ define(['module', 'require'], function (module, require) {
         }
     };
 
-    /** END OF PUBLIC API **/
 
     return blockLoader;
+
+    */
 });

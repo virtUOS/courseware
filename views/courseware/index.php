@@ -40,13 +40,13 @@ echo $courseware_block->render("student", $context);
      }
    },
 
-   deps: ["domReady!", "assets/js/blocks!"],
+   deps: ['domReady!', 'assets/js/blocks'],
 
    callback: function(domReady, blocks) {
 
-     // var courseware = new Courseware({el: document.getElementById('courseware')});
-     // blockloader.then(function () { console.log("debug", arguments); }, function () { console.log("debug", arguments); },
-     console.log(blocks);
+     blocks('Courseware', function (views) {
+       new views.student({ el: $("#courseware") });
+     });
    }
  };
 </script>

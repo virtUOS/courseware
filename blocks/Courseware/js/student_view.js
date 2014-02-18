@@ -1,9 +1,6 @@
-define(['module', 'require', 'backbone'], function (module, require, Backbone) {
+define(['require', 'backbone', 'assets/js/blocks'], function (require, Backbone, blocks) {
 
     'use strict';
-
-    var BLOCK_TYPES = module.config().block_types;
-
 
     var Courseware = Backbone.View.extend({
 
@@ -19,11 +16,13 @@ define(['module', 'require', 'backbone'], function (module, require, Backbone) {
             _.each(this.$('section.block'), function (block) {
                 var $block = $(block),
                     id = $block.attr("data-id"),
-                    type = $block.attr("data-type");
+                    type = $block.attr("data-type"),
+                    View;
 
-                require(["blocks/" + type + "/js/" + type], function (BlockView) {
-                    if (BlockView) {
-                        self.children.push(new BlockView({el: block, block_id: id}));
+                blocks(type, function (views) {
+                    View = views && views.student;
+                    if (View) {
+                        self.children.push(new View({el: block, block_id: id}));
                     }
                 });
             });
