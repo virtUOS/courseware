@@ -1,4 +1,4 @@
-define(['require', 'backbone', 'assets/js/blocks'], function (require, Backbone, blocks) {
+define(['require', 'backbone'], function (require, Backbone) {
 
     'use strict';
 
@@ -19,8 +19,8 @@ define(['require', 'backbone', 'assets/js/blocks'], function (require, Backbone,
                     type = $block.attr("data-type"),
                     View;
 
-                blocks(type, function (views) {
-                    View = views && views.student;
+                require(['block!' + type], function (Views) {
+                    View = Views && Views.student;
                     if (View) {
                         self.children.push(new View({el: block, block_id: id}));
                     }

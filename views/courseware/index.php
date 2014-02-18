@@ -18,7 +18,7 @@ echo $courseware_block->render("student", $context);
 
    config: {
 
-     "assets/js/blocks": {
+     "block": {
        block_types: <?= json_encode(studip_utf8decode($block_types)) ?>
      },
 
@@ -31,6 +31,7 @@ echo $courseware_block->render("student", $context);
 
    paths: {
      domReady: "assets/js/domReady",
+     block:   "assets/js/block",
      backbone: "assets/js/vendor/backbone/backbone-min"
    },
 
@@ -40,13 +41,10 @@ echo $courseware_block->render("student", $context);
      }
    },
 
-   deps: ['domReady!', 'assets/js/blocks'],
+   deps: ['domReady!', 'block!Courseware'],
 
-   callback: function(domReady, blocks) {
-
-     blocks('Courseware', function (views) {
-       new views.student({ el: $("#courseware") });
-     });
+   callback: function(domReady, CoursewareViews) {
+     new CoursewareViews.student({ el: $("#courseware") });
    }
  };
 </script>
