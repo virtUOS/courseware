@@ -14,6 +14,7 @@ class CoursewareController extends MoocipController {
         Navigation::activateItem("/course/mooc_courseware");
 
         $this->courseware = \Mooc\DB\Block::findCourseware($this->container['cid']);
+        $this->courseware_block = $this->container['block_factory']->makeBlock($this->courseware);
 
         // TODO: verify section is in courseware & we have access to it
         // TODO: Section::find finds any block not only Sections. Ouch!

@@ -1,0 +1,21 @@
+<section id=courseware>
+
+  <h1> Courseware: {{courseware.title}} </h1>
+
+  <ol class=chapters>
+    {{#chapters}}
+      {{> chapter}}
+    {{/chapters}}
+  </ol>
+
+  <ol class=sections>
+    {{#sections}}
+      {{> section}}
+    {{/sections}}
+  </ol>
+
+  <section class=content>
+    {{{active_section_html}}}
+  </section>
+
+</section>

@@ -1,29 +1,10 @@
 <?
 $body_id = 'mooc-courseware-index';
 $ASSETS = $plugin->getPluginURL() . '/assets/';
+
+// TODO: $context missing
+echo $courseware_block->render("student", $context);
 ?>
-
-<section id=courseware>
-
-  <h1> Courseware: <?= htmlReady($courseware->title) ?></h1>
-
-  <ol class=chapters>
-    <?= $this->render_partial_collection('courseware/_chapter', $courseware->children) ?>
-  </ol>
-
-  <ol class=sections>
-    <?= $this->render_partial_collection('courseware/_section', $section->parent->children) ?>
-  </ol>
-
-  <section class=content>
-    <p>Diese Section hat <?= count($section->children) ?> Block/s.</p>
-
-    <?= $this->render_partial_collection('courseware/_block', $section->children) ?>
-
-  </section>
-
-</section>
-
 
 <script>
 
