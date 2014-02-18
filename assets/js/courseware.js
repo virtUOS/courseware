@@ -22,7 +22,9 @@ define(['module', 'require', 'backbone'], function (module, require, Backbone) {
                     type = $block.attr("data-type");
 
                 require(["blocks/" + type + "/js/" + type], function (BlockView) {
-                    self.children.push(new BlockView({el: block, block_id: id}));
+                    if (BlockView) {
+                        self.children.push(new BlockView({el: block, block_id: id}));
+                    }
                 });
             });
         },
