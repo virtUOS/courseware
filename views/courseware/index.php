@@ -10,12 +10,22 @@ echo $courseware_block->render("student", $context);
 
  <?
  $block_types = array_map("basename", glob($plugin->getPluginPath() . '/blocks/*'));
- $block_deps  = array_map(function ($type) { return "\"blocks/$type/js/$type\""; }, $block_types);
  $blocks_url  = current(explode("?", $controller->url_for("blocks")));
  ?>
 
 
  var require = {
+
+   config: {
+
+     "assets/js/blocks": {
+       block_types: <?= json_encode(studip_utf8decode($block_types)) ?>
+     },
+
+     "assets/js/url": {
+       blocks_url: <?= json_encode(studip_utf8decode($blocks_url)) ?>
+     }
+   },
 
    baseUrl: "<?= $plugin->getPluginURL()?>",
 
@@ -30,20 +40,13 @@ echo $courseware_block->render("student", $context);
      }
    },
 
-   deps: ["domReady!", "assets/js/courseware", <?= join(",", $block_deps) ?>],
+   deps: ["domReady!", "assets/js/blocks!"],
 
-   callback: function(domReady, Courseware) {
-     var courseware = new Courseware({el: document.getElementById('courseware')});
-   },
+   callback: function(domReady, blocks) {
 
-   config: {
-     "assets/js/courseware": {
-       block_types: <?= json_encode(studip_utf8decode($block_types)) ?>
-     },
-
-     "assets/js/url": {
-       blocks_url: <?= json_encode(studip_utf8decode($blocks_url)) ?>
-     }
+     // var courseware = new Courseware({el: document.getElementById('courseware')});
+     // blockloader.then(function () { console.log("debug", arguments); }, function () { console.log("debug", arguments); },
+     console.log(blocks);
    }
  };
 </script>

@@ -1,5 +1,6 @@
-define(['backbone', 'assets/js/url'], function (Backbone, urlhelper) {
+define([], function () {
 
     'use strict';
 
+    return {};
 });
