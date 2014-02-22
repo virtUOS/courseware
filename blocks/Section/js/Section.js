@@ -1,6 +1,6 @@
-define([], function () {
+define(['blocks/Section/js/student_view'], function (StudentView) {
 
     'use strict';
 
-    return {};
+    return { student: StudentView };
 });

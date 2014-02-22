@@ -1,0 +1,11 @@
+.active-section section.block {
+  position: relative;
+}
+.active-section section.block div.controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#courseware.view-student .active-section button.author {
+  display: none;
+}
