@@ -2,6 +2,8 @@ define(['module'], function (module) {
 
     'use strict';
 
+    var TYPES = module.config().block_types;
+
     return {
         load: function (name, req, onLoad, config) {
 
@@ -11,10 +13,12 @@ define(['module'], function (module) {
             }
 
             else {
-                var url = ['blocks', name, "js", name].join('/');
+                var modules = _.map(TYPES, function (type) {
+                    return req.toUrl(['blocks', type, "js", type].join('/'));
+                });
 
-                req([req.toUrl(url)], function (views) {
-                    onLoad(views);
+                req(modules, function () {
+                    onLoad(_.object(TYPES, arguments));
                 });
             }
         }

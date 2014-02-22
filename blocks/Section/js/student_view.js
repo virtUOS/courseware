@@ -1,5 +1,5 @@
-define(['require', 'backbone', 'assets/js/url', 'assets/js/templates', 'assets/js/block_model'],
-       function (require, Backbone, helper, templates, BlockModel) {
+define(['require', 'backbone', 'assets/js/url', 'assets/js/templates', 'assets/js/block_model', 'assets/js/block_types'],
+       function (require, Backbone, helper, templates, BlockModel, block_types) {
 
     'use strict';
 
@@ -19,16 +19,17 @@ define(['require', 'backbone', 'assets/js/url', 'assets/js/templates', 'assets/j
                     id = $block.attr("data-id"),
                     type = $block.attr("data-type"),
                     $content = $block.find('div.content'),
-                    View;
+                    Views = block_types.get(type);
 
-
-                require(['block!' + type], function (Views) {
-                    View = Views && Views.student;
-                    if (View) {
-                        self.children[id] = new View({el: $content, block_id: id});
-                    }
-                });
+                if (Views && Views.student) {
+                    self.children[id] = new Views.student({el: $content, block_id: id});
+                }
             });
+        },
+
+        remove: function() {
+            Backbone.View.prototype.remove.call(this);
+            _.invoke(this.children, "remove");
         },
 
         render: function() {
@@ -44,27 +45,12 @@ define(['require', 'backbone', 'assets/js/url', 'assets/js/templates', 'assets/j
             var model = new BlockModel({ id: block_id });
 
             //model.fetch().then(function (data) {
-                block_view.remove();
+            block_view.remove();
 
-                require(['block!' + block_type], function (Views) {
-                    var view;
-                    self.children[block_id] = view = new Views.author({model: model});
-                    console.log(view);
-                    self.$(".block-content").html(view.render().el);
-                });
+            var Views = block_types.get(block_type);
+            var view = self.children[block_id] = new Views.author({model: model});
+            self.$(".block-content").html(view.render().el);
             //});
-
-            /*
-            helper.getView(block_id, 'author').then(function (data) {
-                self.$(".content").html(data);
-
-                console.log(templates(block_type).views.author);
-
-
-                //block.remove();
-                //this.children[block_id];
-            });
-            */
         }
     });
 

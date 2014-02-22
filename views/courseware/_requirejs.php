@@ -9,7 +9,7 @@
 
    config: {
 
-     "block": {
+     "assets/js/block_loader": {
        block_types: <?= json_encode(studip_utf8decode($block_types)) ?>
      },
 
@@ -41,10 +41,12 @@
      }
    },
 
-   deps: ['domReady!', 'block!Courseware'],
+   deps: ['domReady!', 'assets/js/block_loader!', 'assets/js/block_types'],
 
-   callback: function(domReady, CoursewareViews) {
-     new CoursewareViews.student({ el: $("#courseware") });
+   callback: function(domReady, block_loader, blocks) {
+     blocks.reset(block_loader);
+     var View = blocks.get("Courseware").student;
+     new View({ el: $("#courseware") });
    }
  };
 </script>
