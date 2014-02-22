@@ -12,37 +12,13 @@ class HtmlBlock extends Block {
 
     function student_view()
     {
-        // JS, CSS und JS-ifizierte Templates werden automatisch
-        // ausgeliefert
-
-        // Was muss ich jetzt machen?
-        // - wir brauchen daten
-        // - (wir wollen die möglichkeit haben, das template zu
-        //   bestimmen, aber standardmäßig ein bestimmtes nehmen?!)
         return array('content' => $this->content);
+    }
 
 
-
-
-        // irgendwie JS und CSS ausliefern
-        /*
-        $fragment = new Fragment();
-        $fragment->body = "Number of votes: '{$this->votes}'";
-        $fragment->addJS(...);
-        return $fragment;
-        */
-
-        ob_start();
-        ?>
-
-        <h2>Student view of block <?= $this->id ?>
-
-        <div class=content>
-            <?= htmlReady($this->content) ?>
-        </div>
-
-        <?
-        return ob_get_clean();
+    function author_view()
+    {
+        return $this->toJSON();
     }
 
     function foo_handler($data)

@@ -1,6 +1,6 @@
-define(['./student_view'], function (StudentView) {
+define(['./student_view', './author_view'], function (StudentView, AuthorView) {
 
     'use strict';
 
-    return { student: StudentView };
+    return { student: StudentView, author: AuthorView };
 });
