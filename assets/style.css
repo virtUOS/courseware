@@ -20,6 +20,9 @@
   padding-bottom: 0;
 }
 /* /courseware */
+#mooc-courseware-index #layout_container {
+  position: relative;
+}
 #mooc-courseware-index #layout_container li.chapter.selected > span,
 #mooc-courseware-index #layout_container li.subchapter.selected > span,
 #mooc-courseware-index #layout_container li.section.selected > a {
@@ -35,7 +38,7 @@
 #mooc-courseware-index #layout_container ol.sections li {
   display: inline-block;
 }
-#mooc-courseware-index #layout_container section.content {
+#mooc-courseware-index #layout_container section.active-section {
   float: left;
 }
 #mooc-courseware-index #layout_container section.block {
