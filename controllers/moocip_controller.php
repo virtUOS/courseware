@@ -92,4 +92,15 @@ class MoocipController extends StudipController {
         parse_str($input, $result);
         return $result;
     }
+
+    const ALLOWED_VIEWS = 'student author';
+
+    public function getViewParam()
+    {
+        $view = Request::option('view', 'student');
+        if (!in_array($view, words(self::ALLOWED_VIEWS))) {
+            throw new Trails_Exception(400);
+        }
+        return $view;
+    }
 }

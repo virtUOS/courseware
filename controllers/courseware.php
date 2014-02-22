@@ -13,6 +13,11 @@ class CoursewareController extends MoocipController {
     {
         Navigation::activateItem("/course/mooc_courseware");
 
+        $this->view = $this->getViewParam();
+
+        // setup `context` parameter
+        $this->context = clone Request::getInstance();
+
         $this->courseware = \Mooc\DB\Block::findCourseware($this->container['cid']);
         $this->courseware_block = $this->container['block_factory']->makeBlock($this->courseware);
 
@@ -26,5 +31,52 @@ class CoursewareController extends MoocipController {
                 array($this->container['cid'])));
 
         $this->active = $this->section->getAncestors();
+
+        // add Templates
+        $this->templates = $this->getMustacheTemplates();
+
+        // add CSS
+        $this->addBlockStyles();
+
+    }
+
+
+    private function getMustacheTemplates()
+    {
+        $templates = array();
+
+        foreach (glob($this->plugin->getPluginPath() . '/blocks/*/templates/*.mustache') as $file) {
+            preg_match('|blocks/([^/]+)/templates/([^/]+).mustache$|', $file, $matches);
+
+            list(, $block, $name) = $matches;
+
+            if (!isset($templates[$block])) {
+                $templates[$block] = array(
+                    'views'    => array(),
+                    'partials' => array()
+                );
+            }
+
+            $content = file_get_contents($file);
+
+            // it's a view
+            if (substr($name, -5) === '_view') {
+                $templates[$block]['views'][substr($name, 0, -5)] = $content;
+            }
+
+            // it's a partial
+            else {
+                $templates[$block]['partials'][$name] = $content;
+            }
+        }
+
+        return $templates;
+    }
+
+    private function addBlockStyles()
+    {
+        foreach (glob($this->plugin->getPluginPath() . '/blocks/*/css/*.css') as $file) {
+            PageLayout::addStylesheet($GLOBALS['ABSOLUTE_URI_STUDIP'] . $file);
+        }
     }
 }

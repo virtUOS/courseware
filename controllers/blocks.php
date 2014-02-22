@@ -38,8 +38,11 @@ class BlocksController extends MoocipController {
 
         // wants HTML
         else {
-            // TODO: $context festlegen
-            $this->render_text($ui_block->render('student', $context = array()));
+
+            $view = $this->getViewParam();
+            $context = clone Request::getInstance();
+
+            $this->render_text($ui_block->render($view, $context));
         }
     }
 
