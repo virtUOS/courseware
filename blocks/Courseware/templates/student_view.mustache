@@ -1,6 +1,8 @@
-<section id=courseware>
+<section id=courseware class=view-student>
 
   <h1> Courseware: {{courseware.title}} </h1>
+
+  {{> controls}}
 
   <ol class=chapters>
     {{#chapters}}
@@ -14,8 +16,10 @@
     {{/sections}}
   </ol>
 
-  <section class=content>
-    {{{active_section_html}}}
-  </section>
+  {{#active_section}}
+    <section class=active-section data-id={{id}}>
+      {{{html}}}
+    </section>
+  {{/active_section}}
 
 </section>

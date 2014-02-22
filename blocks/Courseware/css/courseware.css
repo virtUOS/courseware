@@ -1,0 +1,9 @@
+section#courseware > div.controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+section#courseware.view-student > div.controls button.student,
+section#courseware.view-author > div.controls button.author {
+  display: none;
+}
