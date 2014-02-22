@@ -17,7 +17,7 @@ class BlocksController extends MoocipController {
         $block = $this->requireBlock($id);
         $ui_block = $this->container['block_factory']->makeBlock($block);
 
-        if ($this->isJSONRequest() || !$ui_block) {
+        if ($this->acceptsJSON() || !$ui_block) {
             $json = $block->toArray();
 
 
@@ -119,5 +119,15 @@ class BlocksController extends MoocipController {
         }
 
         return $verb;
+    }
+
+    function acceptsJSON() {
+        $negotiator   = new \Negotiation\FormatNegotiator();
+
+        $acceptHeader = $_SERVER['HTTP_ACCEPT'];
+        $priorities   = array('application/json');
+
+        $format = $negotiator->getBest($acceptHeader, $priorities);
+        return $format && $format->getValue() === $priorities[0];
     }
 }
