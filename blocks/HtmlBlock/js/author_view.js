@@ -5,47 +5,29 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'], function (Backbone,
     var AuthorView = Backbone.View.extend({
 
         events: {
-            "click div.content": function (event) {
-                  /*
-                  var div = $(event.target),
-                      content = div.text();
-                  div.after($("<textarea></textarea>").val(content)).hide().next().focus();
-                   */
-            },
-
-            "blur textarea": function (event) {
-                /*
-                var textarea = $(event.target),
-                    div = textarea.prev(),
-                    old_val = div.text(),
+            "click button": function (event) {
+                var textarea = this.$("textarea"),
                     new_val = textarea.val();
 
-                // remove the textarea, put the new content into the div and show it
-                textarea.remove();
-                div.text(new_val).show();
-
+                //textarea.remove();
                 helper
-                    .callHandler(this.block_id, "foo", {content: new_val})
+                    .callHandler(this.model.id, "foo", {content: new_val})
                     .then(
                         // success
-                        null,
-                        // function (data) { console.log("success", arguments); },
+                        function () {
+                            $(event.target).addClass("accept");
+                        },
 
                         // error
                         function () {
-                            div.text(old_val);
-
                             alert("Fehler, TODO!");
-                            console.log("fail", arguments, div, old_val);
+                            console.log("fail", arguments);
                         });
-
-            */
             }
 
         },
 
         initialize: function(options) {
-            this.block_id = options.block_id;
         },
 
         render: function() {
