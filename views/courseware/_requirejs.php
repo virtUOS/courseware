@@ -50,4 +50,4 @@
    }
  };
 </script>
-<script src="<?= $plugin->getPluginURL() . '/assets/' ?>js/require.js"></script>
+<script src="<?= $plugin->getPluginURL() . '/assets/' ?>js/vendor/requirejs.v2.1.11/require-min.js"></script>
