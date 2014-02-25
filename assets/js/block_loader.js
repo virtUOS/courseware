@@ -14,7 +14,7 @@ define(['module'], function (module) {
 
             else {
                 var modules = _.map(TYPES, function (type) {
-                    return req.toUrl(['blocks', type, "js", type].join('/'));
+                    return req.toUrl(['blocks/', type, "/js/", type, ".js"].join(''));
                 });
 
                 req(modules, function () {
