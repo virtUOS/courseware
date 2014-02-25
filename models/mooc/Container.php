@@ -12,6 +12,7 @@ class Container extends \Pimple
 
         $this->setupEnv();
         $this->setupBlockStuff();
+        $this->setupCoursewareStuff();
     }
 
     private function setupEnv()
@@ -38,6 +39,13 @@ class Container extends \Pimple
 
         $this['block_renderer'] = function ($c) {
             return new \Mooc\UI\MustacheRenderer();
+        };
+    }
+
+    private function setupCoursewareStuff()
+    {
+        $this['courseware_factory'] = function ($c) {
+            return new \Mooc\DB\CoursewareFactory($c);
         };
     }
 }

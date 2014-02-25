@@ -18,7 +18,8 @@ class CoursewareController extends MoocipController {
         // setup `context` parameter
         $this->context = clone Request::getInstance();
 
-        $this->courseware = \Mooc\DB\Block::findCourseware($this->container['cid']);
+        $cid = $this->container['cid'];
+        $this->courseware = $this->container['courseware_factory']->makeCourseware($cid);
         $this->courseware_block = $this->container['block_factory']->makeBlock($this->courseware);
 
         // TODO: verify section is in courseware & we have access to it
@@ -28,7 +29,7 @@ class CoursewareController extends MoocipController {
         $this->section = current(
             \Mooc\DB\Block::findBySQL(
                 'seminar_id = ? AND type = "Section" ORDER BY parent_id, position',
-                array($this->container['cid'])));
+                array($cid)));
 
         $this->active = $this->section->getAncestors();
 
