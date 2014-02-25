@@ -45,8 +45,8 @@
 
    callback: function(domReady, block_loader, blocks) {
      blocks.reset(block_loader);
-     var View = blocks.get("Courseware").student;
-     new View({ el: $("#courseware") });
+
+     var view = blocks.get("Courseware").createView("student", { el: $("#courseware") });
    }
  };
 </script>

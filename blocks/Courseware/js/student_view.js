@@ -17,9 +17,7 @@ define(['require', 'backbone', 'assets/js/url', 'assets/js/block_types'], functi
                 id = $section.attr("data-id"),
                 section_view;
 
-            var ViewClass = blocks.get("Section").student;
-
-            section_view = new ViewClass({ el: $section[0], block_id: id });
+            section_view = blocks.get("Section").createView("student", { el: $section[0], block_id: id });
 
             this.children.push(section_view);
         },

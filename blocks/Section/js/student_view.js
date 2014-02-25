@@ -18,12 +18,9 @@ define(['require', 'backbone', 'assets/js/url', 'assets/js/templates', 'assets/j
                 var $block = $(block),
                     id = $block.attr("data-id"),
                     type = $block.attr("data-type"),
-                    $content = $block.find('div.content'),
-                    Views = block_types.get(type);
+                    $content = $block.find('div.content');
 
-                if (Views && Views.student) {
-                    self.children[id] = new Views.student({el: $content, block_id: id});
-                }
+                self.children[id] = block_types.get(type).createView('student', {el: $content, block_id: id});
             });
         },
 
@@ -47,8 +44,7 @@ define(['require', 'backbone', 'assets/js/url', 'assets/js/templates', 'assets/j
             //model.fetch().then(function (data) {
             block_view.remove();
 
-            var Views = block_types.get(block_type);
-            var view = self.children[block_id] = new Views.author({model: model});
+            var view = block_types.get(block_type).createView("author", {model: model});
             self.$(".block-content").html(view.render().el);
             //});
         }

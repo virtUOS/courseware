@@ -1,6 +1,10 @@
-define(['blocks/Section/js/student_view'], function (StudentView) {
+define(['assets/js/block', './student_view'], function (Block, StudentView) {
 
     'use strict';
 
-    return { student: StudentView };
+    return new Block('Section', {
+        views:{
+            student: StudentView
+        }
+    });
 });
