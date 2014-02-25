@@ -2,8 +2,8 @@
 $body_id = 'mooc-registrations-index';
 ?>
 
-<? if (isset($this->flash['error'])) : ?>
-<?= MessageBox::error(htmlReady($this->flash['error']))?>
+<? if (isset($flash['error'])) : ?>
+<?= MessageBox::error(htmlReady($flash['error']))?>
 <? endif ?>
 
 <h1>

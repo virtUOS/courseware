@@ -38,9 +38,31 @@ class RegistrationsController extends MoocipController {
         }
     }
 
-    function show_action()
+    function show_action($user_id)
     {
-        // render implicit template
+        if (Request::get('username')) {
+            $this->loginUser();
+            $this->redirect('courses/show/' . $this->cid . '?cid=' . $this->cid);
+        } else {
+            Navigation::activateItem("/mooc/registrations");
+            PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/registrations.js');
+
+            $this->course = \Course::find($this->cid);
+            $this->user   = User::find($user_id);
+        }
+    }
+    
+    function resend_mail_action($user_id)
+    {
+        $course = \Course::find($this->cid);
+        $user   = User::find($user_id);
+        
+        if ($_SESSION['mooc']['register']['username'] == $user->username) {
+            $this->sendMail($course, $user->username, $_SESSION['mooc']['register']['password']);
+            $this->render_json(array('message' => _('Die Bestätigungsmail wurde erfolgreich erneut versendet!')));
+        } else {
+            throw new Trails_Exception(400, 'Invalid session');
+        }
     }
 
     /*******************/
@@ -83,7 +105,7 @@ class RegistrationsController extends MoocipController {
 
         $this->registerUserWithCourse($user, $this->cid);
 
-        $this->redirect('registrations/show?moocid=' . $this->cid);
+        $this->redirect('registrations/show/'. $user->getId() .'?moocid=' . $this->cid);
     }
 
     private function error($msg, $url)
@@ -104,15 +126,16 @@ class RegistrationsController extends MoocipController {
         $password = str_replace('0', 'o', substr(\base_convert(\uniqid('pass', true), 10, 36), 1, 8));
 
         $data = array(
-            'Email'    => $mail,
+            'Email'       => $mail,
 
-            'username' => $mail,
-            'Password' => UserManagement::getPwdHasher()->HashPassword($password),
+            'username'    => $mail,
+            'Password'    => UserManagement::getPwdHasher()->HashPassword($password),
 
-            'Vorname'  => Request::get('vorname'),
-            'Nachname' => Request::get('nachname'),
+            'Vorname'     => Request::get('vorname'),
+            'Nachname'    => Request::get('nachname'),
 
-            'perms'    => 'autor'
+            'perms'       => 'autor',
+            'auth_plugin' => 'standard'
         );
 
         $user = User::create($data);
@@ -120,17 +143,27 @@ class RegistrationsController extends MoocipController {
         $userinfo = new Userinfo($user->getId());
         $userinfo->store();
 
+        $this->sendMail($this->course, $mail, $password);
+
+        $_SESSION['mooc']['register'] = array(
+            'username' => $mail,
+            'password' => $password
+        );
+
+        return $user;
+    }
+    
+    private function sendMail($course, $mail, $password)
+    {
         // send mail with password to user
         $mail_msg = sprintf(
             _("Ihre Zugangsdaten für den MOOC-Kurs '%s':\n\n"
             . "Benutzername: %s \n"
             . "Passwort: %s \n\n"
             . "Hier kommen Sie direkt ins System:\n %s"),
-            $this->course->name, $mail, $password, $GLOBALS['ABSOLUTE_URI_STUDIP']
+            $course->name, $mail, $password, $GLOBALS['ABSOLUTE_URI_STUDIP']
         );
-        StudipMail::sendMessage($mail, sprintf(_('Zugang zum MOOC-Kurs "%s"'), $this->course->name), $mail_msg);
-
-        return $user;
+        StudipMail::sendMessage($mail, sprintf(_('Zugang zum MOOC-Kurs "%s"'), $course->name), $mail_msg);
     }
 
     private function loginUser()

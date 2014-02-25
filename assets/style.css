@@ -55,6 +55,10 @@
   font-size: 14pt;
   margin-bottom: 5px;
 }
+#mooc-registrations-index #layout_container form.signup input,
+#mooc-registrations-index #layout_container form.signin input {
+  width: 20em;
+}
 #mooc-registrations-index #layout_container p {
   max-width: 40em;
 }
