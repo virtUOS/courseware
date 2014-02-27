@@ -1,3 +1,11 @@
 {{#blocks}}
   {{> block_wrapper}}
 {{/blocks}}
+
+<div class=block-adder>
+  <h2>Blöcke hinzufügen</h2>
+
+  {{#content_block_types}}
+    <a class=add-block-type data-type="{{type}}">+{{type}}</a>
+  {{/content_block_types}}
+</div>

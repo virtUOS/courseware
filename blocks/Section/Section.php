@@ -9,9 +9,7 @@ class Section extends Block {
 
     function student_view($context = array())
     {
-        $data = array();
-
-        $data['blocks'] = $this->traverseChildren(
+        $blocks = $this->traverseChildren(
             function ($child, $container) use ($context) {
                 $json = $child->toJSON();
                 $json['content'] = $child->render('student', $context);
@@ -19,7 +17,35 @@ class Section extends Block {
             }
         );
 
-        return $data;
+
+        // block adder
+        $content_block_types = array(
+            array('type' => 'HtmlBlock')
+        );
+
+        return compact('blocks', 'content_block_types');
     }
 
+    function add_child_handler($data) {
+
+        if (!isset($data['type'])) {
+            throw new \RuntimeException();
+        }
+
+        // TODO: auth!
+
+        // TODO: valid type?
+
+        $block = new \Mooc\DB\Block();
+        $block->setData(array(
+            'seminar_id' => $this->_model->seminar_id,
+            'parent_id'  => $this->_model->id,
+            'type'       => $data['type'],
+            'title'      => "Ein weiterer " . $data['type']
+        ));
+
+        $block->store();
+
+        return $block->toArray();
+    }
 }

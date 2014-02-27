@@ -1,11 +1,25 @@
 .active-section section.block {
   position: relative;
+  min-width: 45em;
 }
 .active-section section.block div.controls {
   position: absolute;
   top: 0;
   right: 0;
 }
+.active-section section.block div.controls button.author {
+  background: url(../../../../../../assets/images/icons/16/grey/admin.png) center center no-repeat;
+  width: 20px;
+  height: 20px;
+  color: transparent;
+}
+.active-section section.block .loading {
+  background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat;
+  min-height: 20px;
+}
 #courseware.view-student .active-section button.author {
+  display: none;
+}
+#courseware.view-student .block-adder {
   display: none;
 }

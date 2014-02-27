@@ -1,10 +1,23 @@
 .active-section section.block {
   position: relative;
+  min-width: 45em;
 
   div.controls {
     position: absolute;
     top: 0;
     right: 0;
+
+    button.author {
+      background: url(../../../../../../assets/images/icons/16/grey/admin.png) center center no-repeat;
+      width: 20px;
+      height: 20px;
+      color: transparent;
+    }
+  }
+
+  .loading {
+    background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat;
+    min-height: 20px;
   }
 }
 
@@ -14,4 +27,7 @@
     display: none;
   }
 
+  .block-adder {
+    display: none;
+  }
 }
