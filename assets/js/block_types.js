@@ -1,17 +1,10 @@
-define([], function (loader) {
+define(["backbone", "./block_type"], function (Backbone, BlockType) {
 
     'use strict';
 
-    return {
-        types: {
-        },
+    var BlockTypesCollection = Backbone.Collection.extend({
+        model: BlockType
+    });
 
-        reset: function (types) {
-            this.types = types;
-        },
-
-        get: function (name) {
-            return this.types[name];
-        }
-    };
+    return new BlockTypesCollection([]);
 });
