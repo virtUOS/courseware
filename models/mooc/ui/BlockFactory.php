@@ -29,6 +29,13 @@ class BlockFactory {
         return new $class($this->container, $sorm_block);
     }
 
+
+    // TODO
+    public function getBlockClasses()
+    {
+        return array_map("basename", glob($this->getPluginDir() . '/blocks/*'));
+    }
+
     // TODO
     private function loadBlock($type)
     {
@@ -48,6 +55,12 @@ class BlockFactory {
     // TODO
     protected function getBlockDir($type)
     {
-        return dirname(dirname(dirname(__DIR__))) . '/blocks/' . $type;
+        return $this->getPluginDir() . '/blocks/' . $type;
+    }
+
+    // TODO
+    protected function getPluginDir()
+    {
+        return dirname(dirname(dirname(__DIR__)));
     }
 }

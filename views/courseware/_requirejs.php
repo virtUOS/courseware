@@ -1,9 +1,9 @@
 <script>
 
-'use strict';
+ 'use strict';
 
  <?
- $block_types = array_map("basename", glob($plugin->getPluginPath() . '/blocks/*'));
+ $block_types = $container['block_factory']->getBlockClasses();
  $blocks_url  = current(explode("?", $controller->url_for("blocks")));
  ?>
 
@@ -29,7 +29,6 @@
 
    paths: {
      domReady: "assets/js/domReady",
-     block:    "assets/js/block_loader",
      backbone: "assets/js/vendor/backbone/backbone-min",
      argjs:    "assets/js/vendor/arg.js/arg.js.v1.1"
    },
