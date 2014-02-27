@@ -129,7 +129,7 @@ class BlocksController extends MoocipController {
         $negotiator   = new \Negotiation\FormatNegotiator();
 
         $acceptHeader = $_SERVER['HTTP_ACCEPT'];
-        $priorities   = array('application/json');
+        $priorities   = array('application/json', 'text/html');
 
         $format = $negotiator->getBest($acceptHeader, $priorities);
         return $format && $format->getValue() === $priorities[0];
