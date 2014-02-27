@@ -18,7 +18,7 @@ define(['module'], function (module) {
                 });
 
                 req(modules, function () {
-                    onLoad(_.object(TYPES, arguments));
+                    onLoad(Array.prototype.slice.call(arguments));
                 });
             }
         }
