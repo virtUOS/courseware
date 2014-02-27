@@ -18,7 +18,7 @@ define(['assets/js/author_view', 'assets/js/url'],
                         // success
                         function () {
                             $(event.target).addClass("accept");
-                            view.trigger("switch", "student");
+                            view.switchBack();
                         },
 
                         // error
