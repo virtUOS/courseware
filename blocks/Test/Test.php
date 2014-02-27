@@ -15,16 +15,10 @@ class Test extends Block
      */
     private $test;
 
-    public function __construct(Container $container, \SimpleORMap $model)
-    {
-        parent::__construct($container, $model);
-
-        $this->test = new TestModel($this->_fields['test_id']->json_data);
-    }
-
     public function initialize()
     {
         $this->defineField('test_id', \Mooc\SCOPE_BLOCK, null);
+        $this->test = new TestModel($this->test_id);
     }
 
     public function student_view()
@@ -56,4 +50,3 @@ class Test extends Block
         );
     }
 }
- 
