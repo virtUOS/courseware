@@ -1,8 +1,12 @@
-define(['require', 'backbone', 'assets/js/url', 'assets/js/block_types'], function (require, Backbone, helper, blocks) {
+define(['assets/js/url', 'assets/js/block_model', 'assets/js/block_view', 'assets/js/block_types'],
+       function (helper, BlockModel, BlockView, blocks) {
 
     'use strict';
 
-    var Courseware = Backbone.View.extend({
+    var Courseware = BlockView.extend({
+
+        // TODO: put this into the super 'class'
+        view_name: "student",
 
         children: [],
 
@@ -15,19 +19,22 @@ define(['require', 'backbone', 'assets/js/url', 'assets/js/block_types'], functi
         initialize: function() {
             var $section = this.$('.active-section'),
                 id = $section.attr("data-id"),
-                section_view;
+                section_view,
+                section_model;
 
-            section_view = blocks.get("Section").createView("student", { el: $section[0], block_id: id });
+            section_model = new BlockModel({ id: id, type: "Section" });
+            section_view = blocks.get("Section").createView("student", { el: $section[0], model: section_model });
 
             this.children.push(section_view);
         },
 
         remove: function() {
-            Backbone.View.prototype.remove.call(this);
+            BlockView.prototype.remove.call(this);
             _.invoke(this.children, "remove");
         },
 
         render: function() {
+            return this;
         },
 
         debug: function (event) {
@@ -44,7 +51,6 @@ define(['require', 'backbone', 'assets/js/url', 'assets/js/block_types'], functi
             this.$el.attr({ "class": "view-author" });
             helper.base_view = 'author';
         }
-
     });
 
     return Courseware;
