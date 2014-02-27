@@ -1,13 +1,18 @@
-define(['backbone', 'assets/js/url', 'assets/js/templates'], function (Backbone, helper, templates) {
+define(['assets/js/block_view', 'assets/js/url'],
+       function (BlockView, helper) {
 
     'use strict';
 
-    var AuthorView = Backbone.View.extend({
+    var AuthorView = BlockView.extend({
+
+        // TODO: put this into the super 'class'
+        view_name: "author",
 
         events: {
             "click button": function (event) {
                 var textarea = this.$("textarea"),
-                    new_val = textarea.val();
+                    new_val = textarea.val(),
+                    view = this;
 
                 //textarea.remove();
                 helper
@@ -16,6 +21,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'], function (Backbone,
                         // success
                         function () {
                             $(event.target).addClass("accept");
+                            view.trigger("switch", "student");
                         },
 
                         // error
@@ -28,15 +34,10 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'], function (Backbone,
         },
 
         initialize: function(options) {
+            // console.log("initialize HtmlBlock author view", this, options);
         },
 
         render: function() {
-            var self = this;
-            helper
-                .getView(this.model.id, "author")
-                .then(
-                    function (data) { self.$el.html(data); }
-                );
             return this;
         }
     });

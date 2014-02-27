@@ -1,17 +1,22 @@
-define(['backbone', 'assets/js/url'], function (Backbone, urlhelper) {
+define(['assets/js/block_view'],
+       function (BlockView) {
 
     'use strict';
 
-    var StudentView = Backbone.View.extend({
+    var StudentView = BlockView.extend({
+
+        // TODO: put this into the super 'class'
+        view_name: "student",
 
         events: {
         },
 
         initialize: function(options) {
-            this.block_id = options.block_id;
+            // console.log("initialize HtmlBlock student view", this, options);
         },
 
         render: function() {
+            return this;
         }
     });
 

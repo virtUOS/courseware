@@ -1,14 +1,18 @@
-define(['require', 'backbone', 'assets/js/url', 'assets/js/templates', 'assets/js/block_model', 'assets/js/block_types'],
-       function (require, Backbone, helper, templates, BlockModel, block_types) {
+define(['assets/js/block_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url'],
+       function (BlockView, BlockModel, block_types, helper) {
 
     'use strict';
 
-    var SectionView = Backbone.View.extend({
+    var SectionView = BlockView.extend({
+
+        // TODO: put this into the super 'class'
+        view_name: "student",
 
         children: {},
 
         events: {
-            "click button.author": "switchBlock"
+            "click button.author": "switchToAuthorView",
+            "click .add-block-type": "addNewBlock"
         },
 
         initialize: function() {
@@ -16,37 +20,74 @@ define(['require', 'backbone', 'assets/js/url', 'assets/js/templates', 'assets/j
 
             _.each(this.$('section.block'), function (block) {
                 var $block = $(block),
-                    id = $block.attr("data-id"),
-                    type = $block.attr("data-type"),
-                    $content = $block.find('div.content');
+                    id     = $block.attr("data-id"),
+                    type   = $block.attr("data-type"),
+                    $el    = $block.find('div.block-content'),
+                    model  = new BlockModel({ id: id, type: type });
 
-                self.children[id] = block_types.get(type).createView('student', {el: $content, block_id: id});
+                self.children[id] = block_types.get(type).createView('student', {el: $el, model: model});
+                self.listenTo(self.children[id], 'switch', _.bind(self.switchView, self, id));
             });
         },
 
         remove: function() {
-            Backbone.View.prototype.remove.call(this);
+            BlockView.prototype.remove.call(this);
             _.invoke(this.children, "remove");
         },
 
         render: function() {
+            return this;
         },
 
-        switchBlock: function (event) {
-            var $block = $(event.target).closest(".block"),
-                block_id = $block.attr("data-id"),
-                block_type = $block.attr("data-type"),
-                block_view = this.children[block_id],
-                self = this;
+        switchView: function (block_id, view_name) {
 
-            var model = new BlockModel({ id: block_id });
+            var block_view = this.children[block_id],
+                model = block_view.model,
+                $block_wrapper = block_view.$el.closest('section.block');
 
-            //model.fetch().then(function (data) {
+            // TODO: switch on view_name!!
+            $block_wrapper.find(".controls button.author").toggle();
+
             block_view.remove();
 
-            var view = block_types.get(block_type).createView("author", {model: model});
-            self.$(".block-content").html(view.render().el);
-            //});
+            // create new view
+            var el = $("<div class='block-content loading'/>");
+            $block_wrapper.append(el);
+
+            var view = block_types
+                    .get(model.get('type'))
+                    .createView(view_name, {
+                        el: el,
+                        model: model
+                    });
+
+            this.children[block_id] = view;
+            this.listenTo(view, "switch", _.bind(this.switchView, this, block_id));
+
+            view.renderServerSide().then(function () {
+                el.removeClass("loading");
+            });
+        },
+
+        switchToAuthorView: function (event) {
+            var id = $(event.target).closest(".block").attr("data-id");
+            this.switchView(id, "author");
+        },
+
+        addNewBlock: function (event) {
+            var block_type = $(event.target).attr("data-type");
+            helper.callHandler(this.model.id, 'add_child', { type: block_type }).then(
+
+                function (data) {
+                    alert("TODO");
+                    window.location = "";
+                },
+
+                function (error) {
+                    alert("TODO: could not add block");
+                }
+            );
+
         }
     });
 
