@@ -1,5 +1,7 @@
 <script>
 
+'use strict';
+
  <?
  $block_types = array_map("basename", glob($plugin->getPluginPath() . '/blocks/*'));
  $blocks_url  = current(explode("?", $controller->url_for("blocks")));
@@ -41,12 +43,18 @@
      }
    },
 
-   deps: ['domReady!', 'assets/js/block_loader!', 'assets/js/block_types'],
+   deps: ['domReady!', 'assets/js/block_loader!', 'assets/js/block_types', 'assets/js/block_model'],
 
-   callback: function(domReady, block_loader, blocks) {
+   callback: function(domReady, block_loader, blocks, BlockModel) {
      blocks.reset(block_loader);
 
-     var view = blocks.get("Courseware").createView("student", { el: $("#courseware") });
+     var view = blocks.get("Courseware").createView("student", {
+       el: $("#courseware"),
+       model: new BlockModel({
+         id: <?= (int) $courseware->id ?>,
+         type: "Courseware"
+       })
+     });
    }
  };
 </script>
