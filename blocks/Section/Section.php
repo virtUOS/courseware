@@ -19,9 +19,10 @@ class Section extends Block {
 
 
         // block adder
-        $content_block_types = array(
-            array('type' => 'HtmlBlock')
-        );
+        $content_block_types = array();
+        foreach ($this->container['block_factory']->getContentBlockClasses() as $type) {
+            $content_block_types[] = compact("type");
+        }
 
         return compact('blocks', 'content_block_types');
     }

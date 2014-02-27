@@ -29,11 +29,23 @@ class BlockFactory {
         return new $class($this->container, $sorm_block);
     }
 
-
     // TODO
     public function getBlockClasses()
     {
-        return array_map("basename", glob($this->getPluginDir() . '/blocks/*'));
+        static $classes;
+        if (!isset($classes)) {
+            $classes = array_map("basename", glob($this->getPluginDir() . '/blocks/*'));
+        }
+        return $classes;
+    }
+
+
+    private static $structural_block_classes = array('Courseware', 'Chapter', 'Subchapter', 'Section');
+
+    public function getContentBlockClasses()
+    {
+        $all = $this->getBlockClasses();
+        return array_diff($all, self::$structural_block_classes);
     }
 
     // TODO
