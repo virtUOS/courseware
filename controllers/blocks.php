@@ -42,6 +42,7 @@ class BlocksController extends MoocipController {
             $view = $this->getViewParam();
             $context = clone Request::getInstance();
 
+            $this->response->add_header('Content-Type', 'text/html;charset=windows-1252');
             $this->render_text($ui_block->render($view, $context));
         }
     }
