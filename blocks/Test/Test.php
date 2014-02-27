@@ -43,8 +43,6 @@ class Test extends Block
             $exercises[] =  $entry;
         }
 
-        print_r($exercises);
-
         return array(
             'exercises' => $exercises,
         );
