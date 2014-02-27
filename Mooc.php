@@ -91,9 +91,10 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
     {
         $moocid = Request::option('moocid');
 
-        $url = PluginEngine::getURL($this, array(), 'courses/index', true);
+        $url_overview = PluginEngine::getURL($this, array(), 'courses/overview', true);
+        $url_courses = PluginEngine::getURL($this, array(), 'courses/index', true);
 
-        $navigation = new Navigation('MOOCs', $url);
+        $navigation = new Navigation('MOOCs', $url_overview);
         $navigation->setImage($GLOBALS['ABSOLUTE_URI_STUDIP'] . $this->getPluginPath() . '/assets/images/mooc.png');
 
         if (Request::get('moocid')) {
@@ -105,7 +106,8 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 
             $navigation->addSubnavigation('registrations', $this->getRegistrationsNavigation());
         } else {
-            $navigation->addSubnavigation("all", new Navigation(_('Alle Kurse'), $url));
+            $navigation->addSubnavigation("overview", new Navigation(_('MOOCs'), $url_overview));
+            $navigation->addSubnavigation("all", new Navigation(_('Alle Kurse'), $url_courses));
         }
 
         Navigation::addItem('/mooc', $navigation);

@@ -84,3 +84,7 @@
   position: absolute;
   top: 1.1em;
 }
+#mooc-courses-overview textarea {
+  width: 100%;
+  height: 20em;
+}

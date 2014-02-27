@@ -58,4 +58,9 @@ class User extends \User
         }
         return $GLOBALS['perm']->have_studip_perm($perm_level, $cid, $this->id);
     }
+    
+    public function getPerm() 
+    {
+        return $GLOBALS['user']->perms;
+    }
 }

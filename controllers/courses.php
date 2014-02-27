@@ -21,6 +21,46 @@ class CoursesController extends MoocipController {
         $this->courses = $sem_class->getCourses();
     }
 
+    public function overview_action($edit = false)
+    {
+        Navigation::activateItem('/mooc/overview');
+
+        $block = current(\Mooc\DB\Block::findBySQL('seminar_id IS NULL AND parent_id IS NULL'));
+        
+        if (!$block) {
+            $block = \Mooc\DB\Block::create(array('type' => 'HtmlBlock'));
+        }
+        
+        $this->ui_block = $this->container['block_factory']->makeBlock($block);
+        $this->context  = clone Request::getInstance();
+        $this->view     = 'student';
+        $this->root     = $this->container['current_user']->getPerm() == 'root';
+        
+        if ($edit && $this->root) {
+            $this->view = 'author';
+        }
+    }
+    
+    function store_overview_action()
+    {
+        Navigation::activateItem('/mooc/overview');
+
+        if ($this->container['current_user']->getPerm() != 'root') {
+            throw new AccessDeniedException('You need to be root to edit the overview-page');
+        }
+
+        $block = current(\Mooc\DB\Block::findBySQL('seminar_id IS NULL AND parent_id IS NULL'));
+        
+        if (!$block) {
+            $block = \Mooc\DB\Block::create(array('type' => 'HtmlBlock'));
+        }
+        
+        $ui_block = $this->container['block_factory']->makeBlock($block);
+        $ui_block->handle('foo', array('content' => Request::get('content')));
+        
+        $this->redirect('courses/overview');
+    }
+    
     public function show_action($cid)
     {
         if (strlen($cid) !== 32) {
