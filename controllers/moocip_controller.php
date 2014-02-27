@@ -13,7 +13,7 @@ class MoocipController extends StudipController {
     {
         parent::before_filter($action, $args);
 
-        $this->data = $this->parseRequestBody();
+        $this->data = studip_utf8decode($this->parseRequestBody());
 
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base'));
     }
