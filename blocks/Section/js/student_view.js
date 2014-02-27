@@ -1,5 +1,5 @@
 define(['assets/js/block_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url'],
-       function (BlockView, BlockModel, block_types, helper) {
+       function (BlockView, BlockModel, blockTypes, helper) {
 
     'use strict';
 
@@ -25,7 +25,7 @@ define(['assets/js/block_view', 'assets/js/block_model', 'assets/js/block_types'
                     $el    = $block.find('div.block-content'),
                     model  = new BlockModel({ id: id, type: type });
 
-                self.children[id] = block_types.get(type).createView('student', {el: $el, model: model});
+                self.children[id] = blockTypes.get(type).createView('student', {el: $el, model: model});
                 self.listenTo(self.children[id], 'switch', _.bind(self.switchView, self, id));
             });
         },
@@ -54,7 +54,7 @@ define(['assets/js/block_view', 'assets/js/block_model', 'assets/js/block_types'
             var el = $("<div class='block-content loading'/>");
             $block_wrapper.append(el);
 
-            var view = block_types
+            var view = blockTypes
                     .get(model.get('type'))
                     .createView(view_name, {
                         el: el,
