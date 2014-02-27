@@ -32,14 +32,14 @@ class Field extends \SimpleORMap
 
         // TODO: this may not be named content
         $this->additional_fields['content'] = array(
-            'get' => function ($block, $field) {
-                if (isset($block->json_data)) {
-                    return studip_utf8decode(json_decode($block->json_data, true));
+            'get' => function ($self, $field) {
+                if (isset($self->json_data)) {
+                    return studip_utf8decode(json_decode($self->json_data, true));
                 }
-                return $block->getDefault();
+                return $self->getDefault();
             },
-            'set' => function ($block, $field, $content) {
-                return $block->json_data = json_encode(studip_utf8encode($content));
+            'set' => function ($self, $field, $value) {
+                return $self->json_data = json_encode(studip_utf8encode($value));
             }
         );
 
