@@ -1,6 +1,6 @@
 .active-section section.block {
   position: relative;
-  min-width: 45em;
+  min-width: 55em;
 }
 .active-section section.block div.controls {
   position: absolute;
