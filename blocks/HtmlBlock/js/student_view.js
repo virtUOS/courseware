@@ -1,13 +1,9 @@
-define(['assets/js/block_view'],
-       function (BlockView) {
+define(['assets/js/student_view'],
+       function (StudentView) {
 
     'use strict';
 
-    var StudentView = BlockView.extend({
-
-        // TODO: put this into the super 'class'
-        view_name: "student",
-
+    return StudentView.extend({
         events: {
         },
 
@@ -19,6 +15,4 @@ define(['assets/js/block_view'],
             return this;
         }
     });
-
-    return StudentView;
 });

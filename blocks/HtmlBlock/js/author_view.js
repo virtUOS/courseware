@@ -1,12 +1,9 @@
-define(['assets/js/block_view', 'assets/js/url'],
-       function (BlockView, helper) {
+define(['assets/js/author_view', 'assets/js/url'],
+       function (AuthorView, helper) {
 
     'use strict';
 
-    var AuthorView = BlockView.extend({
-
-        // TODO: put this into the super 'class'
-        view_name: "author",
+    return AuthorView.extend({
 
         events: {
             "click button": function (event) {
@@ -41,6 +38,4 @@ define(['assets/js/block_view', 'assets/js/url'],
             return this;
         }
     });
-
-    return AuthorView;
 });

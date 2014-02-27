@@ -1,12 +1,9 @@
-define(['assets/js/block_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url'],
-       function (BlockView, BlockModel, blockTypes, helper) {
+define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url'],
+       function (StudentView, BlockModel, blockTypes, helper) {
 
     'use strict';
 
-    var SectionView = BlockView.extend({
-
-        // TODO: put this into the super 'class'
-        view_name: "student",
+    return StudentView.extend({
 
         children: {},
 
@@ -31,7 +28,7 @@ define(['assets/js/block_view', 'assets/js/block_model', 'assets/js/block_types'
         },
 
         remove: function() {
-            BlockView.prototype.remove.call(this);
+            StudentView.prototype.remove.call(this);
             _.invoke(this.children, "remove");
         },
 
@@ -90,6 +87,4 @@ define(['assets/js/block_view', 'assets/js/block_model', 'assets/js/block_types'
 
         }
     });
-
-    return SectionView;
 });
