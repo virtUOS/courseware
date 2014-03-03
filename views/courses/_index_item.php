@@ -2,7 +2,10 @@
 $course = $_index_item;
 ?>
 <article>
-  <?= CourseAvatar::getAvatar($course->id)->getImageTag(CourseAvatar::MEDIUM) ?>
+	<div class="course-avatar-wrapper">
+  	<?= CourseAvatar::getAvatar($course->id)->getImageTag(CourseAvatar::MEDIUM) ?>
+	</div>
+  	
 
   <h1><?= htmlReady($course->name) ?></h1>
   <p class=subtitle><?= htmlReady($course->untertitel) ?></p>

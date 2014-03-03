@@ -8,8 +8,8 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         children: [],
 
         events: {
-            "click button.student": "switchToStudentMode",
-            "click button.author":  "switchToAuthorMode",
+            "click a.student": "switchToStudentMode",
+            "click a.author":  "switchToAuthorMode",
             "click li.chapter": "debug"
         },
 
