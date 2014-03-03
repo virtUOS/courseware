@@ -16,6 +16,8 @@ $body_id = 'mooc-courses-show';
   <p><?= htmlReady($course->vorrausetzungen) ?></p>
 </article>
 
+<div class=clear></div>
+
 <? if ($container['current_user_id'] === "nobody") : ?>
   <?= \Studip\LinkButton::create("Zur Anmeldung", $controller->url_for('registrations/new', array('moocid' => $course->id))) ?>
 <? endif ?>
