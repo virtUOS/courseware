@@ -26,7 +26,10 @@ class User extends \User
 
     public function canCreate($model)
     {
-        // TODO
+        if ($model instanceof \Mooc\DB\Block) {
+            return $this->hasPerm($model->seminar_id, 'dozent');
+        }
+
         throw new \RuntimeException('not implemented: ' . __METHOD__);
     }
 
@@ -41,13 +44,19 @@ class User extends \User
 
     public function canUpdate($model)
     {
-        // TODO
+        if ($model instanceof \Mooc\DB\Block) {
+            return $this->hasPerm($model->seminar_id, 'dozent');
+        }
+
         throw new \RuntimeException('not implemented: ' . __METHOD__);
     }
 
     public function canDelete($model)
     {
-        // TODO
+        if ($model instanceof \Mooc\DB\Block) {
+            return $this->hasPerm($model->seminar_id, 'dozent');
+        }
+
         throw new \RuntimeException('not implemented: ' . __METHOD__);
     }
 
@@ -58,8 +67,8 @@ class User extends \User
         }
         return $GLOBALS['perm']->have_studip_perm($perm_level, $cid, $this->id);
     }
-    
-    public function getPerm() 
+
+    public function getPerm()
     {
         return $GLOBALS['user']->perms;
     }
