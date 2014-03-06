@@ -1,3 +1,6 @@
+.clear {
+  clear: both;
+}
 /* /courses/index */
 #mooc-courses-index #layout_container #course-list article {
   clear: both;
@@ -13,28 +16,28 @@
 }
 /* /courses/show */
 #mooc-courses-show #layout_container img {
-	width: 100%;
+  width: 100%;
 }
 #mooc-courses-show #layout_container h1 {
-	padding: 10px 0px 5px;
-	border-bottom: none;
-	margin-bottom: 0;
+  padding: 10px 0px 5px;
+  border-bottom: none;
+  margin-bottom: 0;
 }
 #mooc-courses-show #layout_container .subtitle {
-	margin: 0;
-	padding-bottom: 10px;
-	border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
 }
 #mooc-courses-show #layout_container article {
-	width: 48%;
-	float: left;
-	margin-top: 1em;
+  width: 48%;
+  float: left;
+  margin-top: 1em;
 }
 #mooc-courses-show #layout_container .description {
-	padding-right: 1%;
+  padding-right: 1%;
 }
 #mooc-courses-show #layout_container .requirements {
-	padding-left: 1%;
+  padding-left: 1%;
 }
 #mooc-courses-show #layout_container article h1 {
   font-size: 1.5em;
@@ -61,7 +64,7 @@
   list-style: none;
 }
 #mooc-courseware-index #layout_container ol.chapters li {
-	padding: 3px 0px;
+  padding: 3px 0px;
   cursor: pointer;
 }
 #mooc-courseware-index #layout_container ol.chapters .chapter ol.subchapters {
@@ -123,9 +126,4 @@
 #mooc-courses-overview textarea {
   width: 100%;
   height: 20em;
-}
-
-/* ##### */
-.clear {
-	clear: both;
 }
