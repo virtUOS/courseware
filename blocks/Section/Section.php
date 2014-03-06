@@ -54,4 +54,24 @@ class Section extends Block {
 
         return $block->toArray();
     }
+
+    function remove_content_block_handler($data) {
+
+        if (!isset($data['child_id'])) {
+            throw new \RuntimeException("Child ID required");
+        }
+
+        $child = $this->_model->children->findOneBy("id", (int) $data['child_id']);
+        if (!$child) {
+            throw new \RuntimeException("No such child");
+        }
+
+        if (!$this->container['current_user']->canDelete($child)) {
+            throw new \RuntimeException("Access denied");
+        }
+
+        $child->delete();
+
+        return array("status" => "ok");
+    }
 }

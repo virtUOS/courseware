@@ -8,7 +8,9 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         children: {},
 
         events: {
-            "click button.author": "switchToAuthorView",
+            "click .block .author":  "switchToAuthorView",
+            "click .block .trash":   "destroyView",
+
             "click .add-block-type": "addNewBlock"
         },
 
@@ -23,7 +25,6 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
                     model  = new BlockModel({ id: id, type: type });
 
                 self.children[id] = blockTypes.get(type).createView('student', {el: $el, model: model});
-                self.listenTo(self.children[id], 'switch', _.bind(self.switchView, self, id));
             });
         },
 
@@ -35,6 +36,35 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         render: function() {
             return this;
         },
+
+        switchToAuthorView: function (event) {
+            var id = $(event.target).closest(".block").attr("data-id");
+            this.switchView(id, "author");
+        },
+
+        destroyView: function (event) {
+            var block_id = $(event.target).closest(".block").attr("data-id"),
+                block_view = this.children[block_id],
+                $block_wrapper = block_view.$el.closest('section.block'),
+                self = this;
+
+            $block_wrapper.addClass("loading");
+
+            helper.callHandler(this.model.id, 'remove_content_block', { child_id: block_id }).then(
+
+                function (data) {
+                    block_view.remove();
+                    delete self.children[block_id];
+                    $block_wrapper.remove();
+                },
+
+                function (error) {
+                    $block_wrapper.removeClass("loading");
+                    alert("TODO: could not delete block");
+                }
+            );
+        },
+
 
         switchView: function (block_id, view_name) {
 
@@ -48,8 +78,8 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             block_view.remove();
 
             // create new view
-            var el = $("<div class='block-content loading'/>");
-            $block_wrapper.append(el);
+            var el = $("<div class='block-content'/>");
+            $block_wrapper.append(el).addClass("loading");
 
             var view = blockTypes
                     .get(model.get('type'))
@@ -62,18 +92,13 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             this.listenTo(view, "switch", _.bind(this.switchView, this, block_id));
 
             view.renderServerSide().then(function () {
-                el.removeClass("loading");
+                $block_wrapper.removeClass("loading");
             });
-        },
-
-        switchToAuthorView: function (event) {
-            var id = $(event.target).closest(".block").attr("data-id");
-            this.switchView(id, "author");
         },
 
         addNewBlock: function (event) {
             var block_type = $(event.target).attr("data-type");
-            helper.callHandler(this.model.id, 'add_child', { type: block_type }).then(
+            helper.callHandler(this.model.id, 'add_content_block', { type: block_type }).then(
 
                 function (data) {
                     alert("TODO");

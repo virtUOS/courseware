@@ -2,24 +2,32 @@
   position: relative;
   min-width: 55em;
 }
+.active-section section.block.loading {
+  background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat;
+}
+.active-section section.block.loading .block-content {
+  visibility: hidden;
+}
 .active-section section.block div.controls {
   position: absolute;
   top: 0;
   right: 0;
 }
-.active-section section.block div.controls button.author {
-  background: url(../../../../../../assets/images/icons/16/grey/admin.png) center center no-repeat;
+.active-section section.block div.controls button {
   width: 20px;
   height: 20px;
   color: transparent;
 }
-.active-section section.block .loading {
-  background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat;
-  min-height: 20px;
+.active-section section.block div.controls button.author {
+  background: url(../../../../../../assets/images/icons/16/grey/admin.png) center center no-repeat;
 }
-#courseware.view-student .active-section button.author {
-  display: none;
+.active-section section.block div.controls button.trash {
+  background: url(../../../../../../assets/images/icons/16/grey/trash.png) center center no-repeat;
 }
-#courseware.view-student .block-adder {
+.active-section .block-adder {
+  padding-top: 1em;
+}
+#courseware.view-student .active-section div.controls,
+#courseware.view-student .active-section .block-adder {
   display: none;
 }
