@@ -31,16 +31,16 @@
 .active-section .block-adder {
   padding-top: 1em;
 }
-#courseware.view-student .active-section div.controls,
-#courseware.view-student .active-section .block-adder {
-  display: none;
-}
-.add-block-type {
-	display: inline-block;
+.active-section .block-adder .add-block-type {
+  display: inline-block;
   background: url(../../../../../../assets/images/icons/16/blue/add.png) 10px center no-repeat #e9e9e9;
   padding: 6px 10px 6px 36px;
   border: 1px solid #bbb;
 }
-.add-block-type:hover {
-	cursor: pointer;
+.active-section .block-adder .add-block-type:hover {
+  cursor: pointer;
+}
+#courseware.view-student .active-section div.controls,
+#courseware.view-student .active-section .block-adder {
+  display: none;
 }
