@@ -27,15 +27,20 @@ class Section extends Block {
         return compact('blocks', 'content_block_types');
     }
 
-    function add_child_handler($data) {
+    function add_content_block_handler($data) {
 
         if (!isset($data['type'])) {
-            throw new \RuntimeException();
+            throw new \RuntimeException("Type required.");
         }
 
-        // TODO: auth!
+        if (!$this->container['current_user']->canCreate($this->_model)) {
+            throw new \RuntimeException("Access denied");
+        }
 
-        // TODO: valid type?
+        $types = $this->container['block_factory']->getContentBlockClasses();
+        if (!in_array($data['type'], $types)) {
+            throw new \RuntimeException("Wrong type.");
+        }
 
         $block = new \Mooc\DB\Block();
         $block->setData(array(
