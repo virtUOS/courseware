@@ -38,8 +38,12 @@ class Container extends \Pimple
         };
 
         $this['block_renderer'] = function ($c) {
-            return new \Mooc\UI\MustacheRenderer();
+            return new \Mooc\UI\MustacheRenderer($c);
         };
+
+        $this['block_renderer_helpers'] = array(
+            'i18n' => function ($text) { return _($text); }
+        );
     }
 
     private function setupCoursewareStuff()
