@@ -1,8 +1,9 @@
-<li id=section-{{id}}
-  {{#selected}} class="section selected"> {{/selected}}
-  {{^selected}} class="section"> {{/selected}}
+<li id=section-{{id}} class="section{{#selected}} selected{{/selected}}">
 
-  <a href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}" title="{{title}}">
+  <a class="js-navigate"
+     data-selected="{{id}}"
+     href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
+     title="{{title}}">
     [{{id}}]
   </a>
 </li>

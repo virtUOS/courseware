@@ -71,8 +71,8 @@ class Block extends \SimpleORMap
     {
         $ancestors = array();
         $cursor = $this;
-        while ($cursor->parent_id) {
-            $ancestors[] = $cursor->parent_id;
+        while ($cursor->parent) {
+            $ancestors[] = $cursor->parent;
             $cursor = $cursor->parent;
         }
 
@@ -89,6 +89,31 @@ class Block extends \SimpleORMap
     {
         return current(self::findBySQL('seminar_id = ? AND parent_id IS NULL LIMIT 1', array($cid)));
     }
+
+
+    // enumerate all known structural block classes
+    private static $structural_block_classes = array('Courseware', 'Chapter', 'Subchapter', 'Section');
+
+    /**
+     * Return all known structural block classes.
+     *
+     * @return array  all known structure classes
+     */
+    public static function getStructuralBlockClasses()
+    {
+        return self::$structural_block_classes;
+    }
+
+    /**
+     * Returns whether this block is a structural block.
+     *
+     * @return bool  `true` if it is a structural block, `false` otherwise
+     */
+    public function isStructuralBlock()
+    {
+        return in_array($this->type, self::$structural_block_classes);
+    }
+
 
     /**
      * returns array of instances of given class filtered by given sql

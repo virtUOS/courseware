@@ -8,6 +8,7 @@
   content: attr(class);
   color: #ccc;
   border: 1px dotted #eee;
+  line-height: 20px;
 }
 .active-section section.block.loading {
   background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat;
@@ -35,6 +36,9 @@
 .active-section section.block div.controls button.trash {
   background: url(../../../../../../assets/images/icons/16/grey/trash.png) center center no-repeat;
 }
+.active-section section.block + .no-content {
+  display: none;
+}
 .active-section .block-adder {
   padding-top: 1em;
 }
@@ -50,4 +54,10 @@
 #courseware.view-student .active-section div.controls,
 #courseware.view-student .active-section .block-adder {
   display: none;
+}
+#courseware.view-author .active-section section.block {
+  box-shadow: 2px 2px 2px 2px #DDD;
+}
+#courseware.view-author .active-section section.block:hover {
+  box-shadow: 2px 2px 2px 2px #CCC;
 }

@@ -31,8 +31,6 @@ class CoursewareController extends MoocipController {
                 'seminar_id = ? AND type = "Section" ORDER BY parent_id, position',
                 array($cid)));
 
-        $this->active = $this->section->getAncestors();
-
         // add Templates
         $this->templates = $this->getMustacheTemplates();
 

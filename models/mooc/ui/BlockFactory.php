@@ -39,13 +39,11 @@ class BlockFactory {
         return $classes;
     }
 
-
-    private static $structural_block_classes = array('Courseware', 'Chapter', 'Subchapter', 'Section');
-
+    // TODO
     public function getContentBlockClasses()
     {
         $all = $this->getBlockClasses();
-        return array_diff($all, self::$structural_block_classes);
+        return array_diff($all, \Mooc\DB\Block::getStructuralBlockClasses());
     }
 
     // TODO

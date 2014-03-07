@@ -5,15 +5,21 @@
   {{> controls}}
 
   <ol class=chapters>
+
     {{#chapters}}
       {{> chapter}}
     {{/chapters}}
+
+    <li class=no-content>{{#i18n}}Keine Kapitel{{/i18n}}</li>
   </ol>
 
   <ol class=sections>
+
     {{#sections}}
       {{> section}}
     {{/sections}}
+
+    <li class=no-content>{{#i18n}}Keine Sektionen{{/i18n}}</li>
   </ol>
 
   {{#active_section}}

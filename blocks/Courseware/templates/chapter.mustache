@@ -1,10 +1,19 @@
-<li class="chapter {{#selected}}selected{{/selected}}">
-  <a href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}">{{title}}</a>
+<li class="chapter{{#selected}} selected{{/selected}}">
+  <a class="js-navigate"
+     data-selected="{{id}}"
+     href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}">
+       {{title}}
+  </a>
+
   {{#selected}}
     <ol class=subchapters>
+
       {{#subchapters}}
         {{> subchapter}}
       {{/subchapters}}
+
+      <li class=no-content>{{#i18n}}Keine Unterkapitel{{/i18n}}</li>
+
     </ol>
   {{/selected}}
 </li>

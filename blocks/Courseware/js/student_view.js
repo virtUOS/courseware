@@ -10,7 +10,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         events: {
             "click .controls .student": "switchToStudentMode",
             "click .controls .author":  "switchToAuthorMode",
-            "click li.chapter": "debug"
+            "click a.js-navigate":      "navigateTo"
         },
 
         initialize: function() {
@@ -34,8 +34,8 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             return this;
         },
 
-        debug: function (event) {
-            alert($(event.target).text());
+        navigateTo: function (event) {
+            console.log($(event.target).text());
         },
 
         switchToStudentMode: function (event) {

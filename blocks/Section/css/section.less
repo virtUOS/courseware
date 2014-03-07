@@ -10,6 +10,7 @@
       content: attr(class);
       color: #ccc;
       border: 1px dotted #eee;
+      line-height: 20px;
     }
 
     &.loading {
@@ -45,6 +46,9 @@
       }
     }
 
+    & + .no-content {
+      display: none;
+    }
   }
 
   .block-adder {
@@ -64,8 +68,22 @@
 }
 
 
-#courseware.view-student .active-section {
-  div.controls, .block-adder {
-    display: none;
+#courseware {
+
+  &.view-student .active-section {
+    div.controls,
+    .block-adder {
+      display: none;
+    }
+  }
+
+  &.view-author .active-section {
+    section.block {
+      box-shadow: 2px 2px 2px 2px #DDD;
+
+      &:hover {
+        box-shadow: 2px 2px 2px 2px #CCC;
+      }
+    }
   }
 }
