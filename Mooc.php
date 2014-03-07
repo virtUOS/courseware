@@ -84,7 +84,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 
     private function setupContainer()
     {
-        $this->container = new Mooc\Container();
+        $this->container = new Mooc\Container($this);
     }
 
     private function setupNavigation()

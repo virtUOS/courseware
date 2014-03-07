@@ -6,9 +6,11 @@ namespace Mooc;
  */
 class Container extends \Pimple
 {
-    public function __construct()
+    public function __construct($plugin)
     {
         parent::__construct();
+
+        $this['plugin'] = $plugin;
 
         $this->setupEnv();
         $this->setupBlockStuff();
@@ -41,8 +43,13 @@ class Container extends \Pimple
             return new \Mooc\UI\MustacheRenderer($c);
         };
 
+        $container = $this;
         $this['block_renderer_helpers'] = array(
-            'i18n' => function ($text) { return _($text); }
+            'i18n'       => function ($text) { return _($text); },
+            'plugin_url' => function ($text, $helper) use ($container) {
+                return \PluginEngine::getURL($container['plugin'], array(), $helper->render($text));
+            }
+
         );
     }
 
