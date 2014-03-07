@@ -3,6 +3,14 @@
   section.block {
     position: relative;
     min-width: 55em;
+    display: block;
+    margin-bottom: 3em;
+
+    &::before {
+      content: attr(class);
+      color: #ccc;
+      border: 1px dotted #eee;
+    }
 
     &.loading {
       background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat;
