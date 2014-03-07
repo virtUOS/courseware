@@ -48,58 +48,8 @@
 }
 /* /courseware */
 #mooc-courseware-index #layout_container {
-  position: relative;
-}
-#mooc-courseware-index #layout_container li.chapter.selected > span,
-#mooc-courseware-index #layout_container li.subchapter.selected > span,
-#mooc-courseware-index #layout_container li.section.selected > a {
-  font-weight: 700;
-}
-#mooc-courseware-index #layout_container ol.chapters {
-  float: left;
-  padding-right: 2em;
-  padding-left: 1em;
-  margin: 0;
-  width: 150px;
-  list-style: none;
-}
-#mooc-courseware-index #layout_container ol.chapters li {
-  padding: 3px 0px;
-  cursor: pointer;
-}
-#mooc-courseware-index #layout_container ol.chapters .chapter ol.subchapters {
-  list-style: none;
-  padding-left: 10px;
-}
-#mooc-courseware-index #layout_container ol.sections {
-  list-style: none;
-  margin-bottom: 30px;
-}
-#mooc-courseware-index #layout_container ol.sections li {
-  display: inline-block;
-}
-#mooc-courseware-index #layout_container ol.sections li a {
-  background: #e9e9e9;
-  padding: 5px 3px;
-  border: 1px solid #bbb;
-}
-#mooc-courseware-index #layout_container ol.sections li.selected > a {
-  background: #ddd;
-  box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
-  border-color: #999;
-  font-weight: normal;
-}
-#mooc-courseware-index #layout_container section.active-section {
-  float: left;
-}
-#mooc-courseware-index #layout_container section.block {
-  display: block;
-  margin-bottom: 10px;
-}
-#mooc-courseware-index #layout_container section.block::before {
-  content: attr(class);
-  color: #ccc;
-  border: 1px dotted #eee;
+  /* See CSS of the blocks */
+
 }
 /* /registrations */
 #mooc-registrations-index #layout_container input {
