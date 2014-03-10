@@ -1,0 +1,6 @@
+section.VideoBlock {
+  border-radius: 5px;
+}
+section.VideoBlock input {
+  width: 100%;
+}
