@@ -14,7 +14,7 @@ define(['assets/js/author_view', 'assets/js/url'], function (
                 }
 
                 helper
-                .callHandler(view.model.id, 'foo', { url: url })
+                .callHandler(view.model.id, 'save', { url: url })
                 .then(function () { // success
                     $(event.target).addClass('accept');
                     view.switchBack();
