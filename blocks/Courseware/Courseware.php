@@ -34,13 +34,56 @@ class Courseware extends Block {
         }
 
         return array(
-            'user_may_edit'  => $this->container['current_user']->canUpdate($this->_model),
-            'courseware'     => $courseware->toArray(),
-            'chapters'       => $chapters,
-            'subchapters'    => $subchapters,
-            'sections'       => $sections,
-            'active_section' => $active_section);
+            'user_may_author' => $this->container['current_user']->canUpdate($this->_model),
+            'courseware'      => $courseware->toArray(),
+            'chapters'        => $chapters,
+            'subchapters'     => $subchapters,
+            'sections'        => $sections,
+            'active_section'  => $active_section);
     }
+
+    function add_structure_handler($data) {
+
+        // we need a valid parent
+        if (!isset($data['parent'])) {
+            throw new \RuntimeException("Parent required.");
+        }
+
+        $parent = \Mooc\DB\Block::find($data['parent']);
+        if (!$parent || !$parent->isStructuralBlock()) {
+            throw new \RuntimeException("Invalid parent.");
+        }
+
+        if (!$this->container['current_user']->canUpdate($parent)) {
+            throw new \RuntimeException("Access denied");
+        }
+
+        // we need a title
+        if (!isset($data['title']) || !strlen($data['title']))
+        {
+            throw new \RuntimeException("Title required.");
+        }
+
+        // is there a structural level below the parent?
+        $structure_types = \Mooc\DB\Block::getStructuralBlockClasses();
+        $index = array_search($parent->type, $structure_types);
+        if (!$child_type = $structure_types[$index + 1]) {
+            throw new \RuntimeException("Unknown child type.");
+        }
+
+        $block = new \Mooc\DB\Block();
+        $block->setData(array(
+            'seminar_id' => $this->_model->seminar_id,
+            'parent_id'  => $parent->id,
+            'type'       => $child_type,
+            'title'      => $data['title']
+        ));
+
+        $block->store();
+
+        return $block->toArray();
+    }
+
 
 
     private function childrenToJSON($collection, $selected)
@@ -123,16 +166,6 @@ class Courseware extends Block {
 
         return $this->getLastStructuralNode($first_born);
     }
-
-    /*
-    private function getDefaultSection()
-    {
-        return current(
-            \Mooc\DB\Block::findBySQL(
-                'seminar_id = ? AND type = "Section" ORDER BY parent_id, position',
-                array($this->container['cid'])));
-    }
-    */
 
     private function hasMatchingCID($block)
     {

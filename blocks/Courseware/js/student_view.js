@@ -8,9 +8,12 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         children: [],
 
         events: {
-            "click .controls .student": "switchToStudentMode",
-            "click .controls .author":  "switchToAuthorMode",
-            "click a.js-navigate":      "navigateTo"
+            "click .mode-switch .student": "switchToStudentMode",
+            "click .mode-switch .author":  "switchToAuthorMode",
+
+            "click a.js-navigate":         "navigateTo",
+
+            "click .js-add-chapter":       "addChapter"
         },
 
         initialize: function() {
@@ -34,6 +37,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             return this;
         },
 
+        // TODO: flesh this out
         navigateTo: function (event) {
             console.log($(event.target).text());
         },
@@ -45,8 +49,28 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         },
 
         switchToAuthorMode: function (event) {
-            this.$el.attr({ "class": "view-author" });
+            this.$el.removeClass("view-student").addClass("view-author");
             helper.base_view = 'author';
+        },
+
+        addChapter: function (event) {
+            var parent_id = /* TODO */ this.model.id,
+                data = {
+                    parent: this.model.id,
+                    title: "Item X"
+                };
+
+            helper.callHandler(this.model.id, 'add_structure', data).then(
+
+                function (data) {
+                    debugger;
+                },
+
+                function (error) {
+                    console.log("TODO: could not add structural block");
+                }
+            );
+
         }
     });
 });
