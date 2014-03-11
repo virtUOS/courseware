@@ -33,6 +33,14 @@ class Container extends \Pimple
         $this['cid'] = \Request::option('cid') ?: $GLOBALS['SessionSeminar'];
     }
 
+
+    private function setupCoursewareStuff()
+    {
+        $this['courseware_factory'] = function ($c) {
+            return new \Mooc\DB\CoursewareFactory($c);
+        };
+    }
+
     private function setupBlockStuff()
     {
         $this['block_factory'] = function ($c) {
@@ -43,20 +51,20 @@ class Container extends \Pimple
             return new \Mooc\UI\MustacheRenderer($c);
         };
 
-        $container = $this;
-        $this['block_renderer_helpers'] = array(
-            'i18n'       => function ($text) { return _($text); },
-            'plugin_url' => function ($text, $helper) use ($container) {
-                return \PluginEngine::getURL($container['plugin'], array(), $helper->render($text));
-            }
-
-        );
+        $this['block_renderer_helpers'] = $this->getMustacheHelpers();
     }
 
-    private function setupCoursewareStuff()
+
+    private function getMustacheHelpers()
     {
-        $this['courseware_factory'] = function ($c) {
-            return new \Mooc\DB\CoursewareFactory($c);
-        };
+        $c = $this;
+        return array(
+
+            'i18n' => function ($text) { return _($text); },
+
+            'plugin_url' => function ($text, $helper) use ($c) {
+                return \PluginEngine::getURL($c['plugin'], array(), $helper->render($text));
+            }
+        );
     }
 }
