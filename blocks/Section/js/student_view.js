@@ -1,5 +1,5 @@
-define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/templates', 'mustache'],
-       function (StudentView, BlockModel, blockTypes, helper, templates, Mustache) {
+define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/templates'],
+       function (StudentView, BlockModel, blockTypes, helper, templates) {
 
     'use strict';
 
@@ -116,9 +116,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         },
 
         appendBlockStub: function (model) {
-            var block_wrapper = Mustache.render(templates("Section").block_wrapper,
-                                                model.toJSON(),
-                                                templates("Section")),
+            var block_wrapper = templates("Section", "block_wrapper", model.toJSON()),
                 block_el = this.$(".no-content").before(block_wrapper).prev();
 
             return this.initializeBlock(block_el, model);
