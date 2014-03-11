@@ -10,8 +10,7 @@ class Courseware extends Block {
 
     function student_view($context = array())
     {
-        $section = $this->getSectionFor($context['selected']);
-        list($courseware, $chapter, $subchapter) = $this->getAncestors($section);
+        list($courseware, $chapter, $subchapter, $section) = $a = $this->getSelectedPath($context['selected']);
 
         $chapters = $this->childrenToJSON($courseware->children, $chapter->id);
 
@@ -25,6 +24,7 @@ class Courseware extends Block {
             $sections = $this->childrenToJSON($subchapter->children, $section->id);
         }
 
+        $active_section = array();
         if ($section) {
             $active_section_block = $this->container['block_factory']->makeBlock($section);
             $active_section = array(
@@ -42,7 +42,9 @@ class Courseware extends Block {
             'active_section' => $active_section);
     }
 
-    private function childrenToJSON($collection, $selected) {
+
+    private function childrenToJSON($collection, $selected)
+    {
         $result = array();
         foreach ($collection as $item) {
             $json = $item->toArray();
@@ -52,13 +54,18 @@ class Courseware extends Block {
         return $result;
     }
 
-    private function getAncestors($section)
+    private function getSelectedPath($selected)
     {
-        if (!$section) {
+        $block = $selected instanceof \Mooc\DB\Block ? $selected : \Mooc\DB\Block::find($selected);
+        if (!($block && $this->hasMatchingCID($block))) {
             return $this->getDefaultPath();
         }
 
-        return $section->getAncestors();
+        $node = $this->getLastStructuralNode($block);
+
+        $ancestors = $node->getAncestors();
+        $ancestors[] = $node;
+        return $ancestors;
     }
 
     private function getDefaultPath()
@@ -94,14 +101,8 @@ class Courseware extends Block {
     }
 
 
-    private function getSectionFor($selected)
+    private function getLastStructuralNode($block)
     {
-        $block = $selected instanceof \Mooc\DB\Block ? $selected : \Mooc\DB\Block::find($selected);
-
-        if (!($block && $this->hasMatchingCID($block))) {
-            return null;
-        }
-
         // got it!
         if ($block->type === 'Section') {
             return $block;
@@ -109,7 +110,7 @@ class Courseware extends Block {
 
         // search parent
         if (!$block->isStructuralBlock()) {
-            return $this->getSectionFor($block->parent);
+            return $this->getLastStructuralNode($block->parent);
         }
 
         // searching downwards... which is actually complicated as
@@ -117,10 +118,10 @@ class Courseware extends Block {
         $first_born = $block->children->first();
 
         if (!$first_born) {
-            return null;
+            return $block;
         }
 
-        return $this->getSectionFor($first_born);
+        return $this->getLastStructuralNode($first_born);
     }
 
     /*
