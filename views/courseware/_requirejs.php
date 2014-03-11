@@ -30,7 +30,8 @@
    paths: {
      domReady: "assets/js/domReady",
      backbone: "assets/js/vendor/backbone/backbone-min",
-     argjs:    "assets/js/vendor/arg.js/arg.js.v1.1"
+     argjs:    "assets/js/vendor/arg.js/arg.js.v1.1",
+     mustache: "assets/js/vendor/mustache.js-0.8.1/mustache"
    },
 
    shim: {
