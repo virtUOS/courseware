@@ -2,7 +2,9 @@
 
   <h1> Courseware: {{courseware.title}} </h1>
 
-  {{> controls}}
+  {{#user_may_edit}}
+    {{> controls}}
+  {{/user_may_edit}}
 
   <ol class=chapters>
 

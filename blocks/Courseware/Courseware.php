@@ -5,9 +5,9 @@ class Courseware extends Block {
 
     function initialize()
     {
+        // nothing to do
     }
 
-    // TODO: $context einführen!
     function student_view($context = array())
     {
         $section = $this->getSectionFor($context['selected']);
@@ -34,6 +34,7 @@ class Courseware extends Block {
         }
 
         return array(
+            'user_may_edit'  => $this->container['current_user']->canUpdate($this->_model),
             'courseware'     => $courseware->toArray(),
             'chapters'       => $chapters,
             'subchapters'    => $subchapters,
