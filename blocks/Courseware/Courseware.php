@@ -13,31 +13,16 @@ class Courseware extends Block {
         $section = $this->getSectionFor($context['selected']);
         list($courseware, $chapter, $subchapter) = $this->getAncestors($section);
 
-        $chapters = array();
-        foreach ($courseware->children as $chap) {
-            $json = $chap->toArray();
-            $json['selected'] = $chapter->id == $chap->id;
-            $chapters[] = $json;
-        }
-
+        $chapters = $this->childrenToJSON($courseware->children, $chapter->id);
 
         $subchapters = array();
         if ($chapter) {
-            foreach ($chapter->children as $sub) {
-                $json = $sub->toArray();
-                $json['selected'] = $subchapter->id == $sub->id;
-                $subchapters[] = $json;
-            }
+            $subchapters = $this->childrenToJSON($chapter->children, $subchapter->id);
         }
-
 
         $sections = array();
         if ($subchapter) {
-            foreach ($subchapter->children as $sec) {
-                $json = $sec->toArray();
-                $json['selected'] = $section->id == $sec->id;
-                $sections[] = $json;
-            }
+            $sections = $this->childrenToJSON($subchapter->children, $section->id);
         }
 
         if ($section) {
@@ -54,6 +39,16 @@ class Courseware extends Block {
             'subchapters'    => $subchapters,
             'sections'       => $sections,
             'active_section' => $active_section);
+    }
+
+    private function childrenToJSON($collection, $selected) {
+        $result = array();
+        foreach ($collection as $item) {
+            $json = $item->toArray();
+            $json['selected'] = $selected == $item->id;
+            $result[] = $json;
+        }
+        return $result;
     }
 
     private function getAncestors($section)
