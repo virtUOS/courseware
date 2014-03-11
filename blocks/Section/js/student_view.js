@@ -1,5 +1,5 @@
-define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url'],
-       function (StudentView, BlockModel, blockTypes, helper) {
+define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/templates', 'mustache'],
+       function (StudentView, BlockModel, blockTypes, helper, templates, Mustache) {
 
     'use strict';
 
@@ -15,17 +15,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         },
 
         initialize: function() {
-            var self = this;
-
-            _.each(this.$('section.block'), function (block) {
-                var $block = $(block),
-                    id     = $block.attr("data-id"),
-                    type   = $block.attr("data-type"),
-                    $el    = $block.find('div.block-content'),
-                    model  = new BlockModel({ id: id, type: type });
-
-                self.children[id] = blockTypes.get(type).createView('student', {el: $el, model: model});
-            });
+            _.each($('section.block'), this.initializeBlock, this);
         },
 
         remove: function() {
@@ -35,6 +25,12 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
 
         render: function() {
             return this;
+        },
+
+        addBlock: function (block) {
+            this.children[block.model.id] = block;
+            this.listenTo(block, "switch", _.bind(this.switchView, this, block.model.id));
+            return block;
         },
 
         switchToAuthorView: function (event) {
@@ -88,8 +84,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
                         model: model
                     });
 
-            this.children[block_id] = view;
-            this.listenTo(view, "switch", _.bind(this.switchView, this, block_id));
+            this.addBlock(view);
 
             view.renderServerSide().then(function () {
                 $block_wrapper.removeClass("loading");
@@ -97,19 +92,55 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         },
 
         addNewBlock: function (event) {
-            var block_type = $(event.target).attr("data-type");
+
+            var view = this,
+                block_type = $(event.target).attr("data-type");
+
             helper.callHandler(this.model.id, 'add_content_block', { type: block_type }).then(
 
                 function (data) {
-                    alert("TODO");
-                    window.location = "";
+                    var model = new BlockModel(data),
+                        block_stub = view.appendBlockStub(model),
+                        $el = block_stub.$el.closest("section.block");
+
+                    $el.addClass("loading");
+                    block_stub.renderServerSide().then(function () {
+                        $el.removeClass("loading");
+                    });
                 },
 
                 function (error) {
                     alert("TODO: could not add block");
                 }
             );
+        },
 
+        appendBlockStub: function (model) {
+            var block_wrapper = Mustache.render(templates("Section").block_wrapper,
+                                                model.toJSON(),
+                                                templates("Section")),
+                block_el = this.$(".no-content").before(block_wrapper).prev();
+
+            return this.initializeBlock(block_el, model);
+        },
+
+        initializeBlock: function (block, model) {
+            var $block = $(block),
+                $el    = $block.find('div.block-content'),
+                view;
+
+            if (!_.isObject(model)) {
+                model  = new BlockModel({
+                    id:   $block.attr("data-id"),
+                    type: $block.attr("data-type")
+                });
+            }
+
+            view = blockTypes
+                .get(model.get('type'))
+                .createView('student', {el: $el, model: model});
+
+            return this.addBlock(view);
         }
     });
 });
