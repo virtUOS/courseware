@@ -60,7 +60,18 @@ section#courseware {
 
   /* CSS for the Courseware controls */
 
-  & > div.controls {
+  // show controls only for authors
+  &:not(.user-may-author) .mode-switch,
+  &:not(.user-may-author) .controls {
+    display: none;
+  }
+
+  // do not show controls in student view
+  &.view-student .controls {
+    display: none;
+  }
+
+  .mode-switch {
     position: absolute;
     top: 7px;
     right: 12px;
@@ -96,8 +107,8 @@ section#courseware {
     }
   }
 
-  &.view-student > div.controls .student,
-  &.view-author > div.controls .author {
+  &.view-student > .mode-switch .student,
+  &.view-author  > .mode-switch .author {
         background: #ddd;
         box-shadow: inset 0px 0px 6px rgba(0,0,0,0.3);
         border-color: #999;

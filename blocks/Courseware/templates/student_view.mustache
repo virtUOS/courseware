@@ -1,10 +1,19 @@
-<section id=courseware class=view-student>
+<section id=courseware class="view-student{{#user_may_author}} user-may-author{{/user_may_author}}">
 
   <h1> Courseware: {{courseware.title}} </h1>
 
-  {{#user_may_edit}}
-    {{> controls}}
-  {{/user_may_edit}}
+  <div class=mode-switch>
+    <button class="student">
+      <img src="../../assets/images/icons/20/blue/headache.png"
+      title="Studentenmodus"
+      alt="Studentenmodus">
+    </button>
+    <button class="author">
+      <img src="../../assets/images/icons/20/blue/doctoral_cap.png"
+      title="Autorenmodus"
+      alt="Autorenmodus">
+    </button>
+  </div>
 
   <ol class=chapters>
 
@@ -13,6 +22,9 @@
     {{/chapters}}
 
     <li class=no-content>{{#i18n}}Keine Kapitel{{/i18n}}</li>
+
+    <li class=controls><button class=js-add-chapter>Kapitel einfügen</button></li>
+
   </ol>
 
   <ol class=sections>
@@ -21,7 +33,9 @@
       {{> section}}
     {{/sections}}
 
-    <li class=no-content>{{#i18n}}Keine Sektionen{{/i18n}}</li>
+    <li class=no-content>
+      {{#i18n}}Keine Sektionen{{/i18n}}
+    </li>
   </ol>
 
   {{#active_section}}
