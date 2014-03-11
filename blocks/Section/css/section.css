@@ -5,7 +5,7 @@
   margin-bottom: 3em;
 }
 .active-section section.block::before {
-  content: attr(class);
+  /* content: attr(class); */
   color: #ccc;
   border: 1px dotted #eee;
   line-height: 20px;
@@ -57,6 +57,8 @@
 }
 #courseware.view-author .active-section section.block {
   box-shadow: 2px 2px 2px 2px #DDD;
+  padding: 10px 4px;
+  border-radius: 5px;
 }
 #courseware.view-author .active-section section.block:hover {
   box-shadow: 2px 2px 2px 2px #CCC;
