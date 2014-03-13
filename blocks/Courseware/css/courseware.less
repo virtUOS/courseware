@@ -117,4 +117,11 @@ section#courseware {
         box-shadow: inset 0px 0px 6px rgba(0,0,0,0.3);
         border-color: #999;
   }
+
+  /* do not show "Sektion hinzufügen" w/o subchapter parent */
+  .active-subchapter[data-blockid=""] button.add-section {
+    display: none;
+  }
+
+
 }

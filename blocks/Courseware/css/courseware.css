@@ -4,6 +4,8 @@
 section#courseware {
   /* CSS for the Courseware controls */
 
+  /* do not show "Sektion hinzufügen" w/o subchapter parent */
+
 }
 section#courseware ol {
   list-style: none;
@@ -90,4 +92,7 @@ section#courseware.view-author > .mode-switch .author {
   background: #ddd;
   box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
   border-color: #999;
+}
+section#courseware .active-subchapter[data-blockid=""] button.add-section {
+  display: none;
 }

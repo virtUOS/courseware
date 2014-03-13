@@ -47,7 +47,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         switchToStudentMode: function (event) {
             // this.$el.attr({ class: "view-student" });
             // helper.base_view = 'student';
-            window.location = "";
+            window.location.reload(true);
         },
 
         switchToAuthorMode: function (event) {
@@ -71,7 +71,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             helper.callHandler(this.model.id, 'add_structure', data).then(
 
                 function (data) {
-                    debugger;
+                    window.location.reload(true);
                 },
 
                 function (error) {
