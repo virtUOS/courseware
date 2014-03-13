@@ -27,18 +27,18 @@ section#courseware ol.chapters {
 section#courseware ol.chapters li > a {
   display: block;
 }
-section#courseware ol.sections {
+section#courseware ol.active-subchapter {
   margin-bottom: 30px;
 }
-section#courseware ol.sections li {
+section#courseware ol.active-subchapter li {
   display: inline-block;
 }
-section#courseware ol.sections li a {
+section#courseware ol.active-subchapter li a {
   background: #e9e9e9;
   padding: 5px 3px;
   border: 1px solid #bbb;
 }
-section#courseware ol.sections li.selected > a {
+section#courseware ol.active-subchapter li.selected > a {
   background: #ddd;
   box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
   border-color: #999;

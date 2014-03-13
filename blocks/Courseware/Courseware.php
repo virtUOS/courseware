@@ -34,12 +34,14 @@ class Courseware extends Block {
         }
 
         return array(
-            'user_may_author' => $this->container['current_user']->canUpdate($this->_model),
-            'courseware'      => $courseware->toArray(),
-            'chapters'        => $chapters,
-            'subchapters'     => $subchapters,
-            'sections'        => $sections,
-            'active_section'  => $active_section);
+            'user_may_author'   => $this->container['current_user']->canUpdate($this->_model),
+            'courseware'        => $courseware->toArray(),
+            'chapters'          => $chapters,
+            'subchapters'       => $subchapters,
+            'sections'          => $sections,
+            'active_chapter'    => $chapter    ? $chapter->id    : '',
+            'active_subchapter' => $subchapter ? $subchapter->id : '',
+            'active_section'    => $active_section);
     }
 
     function add_structure_handler($data) {

@@ -13,12 +13,14 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
 
             "click a.js-navigate":         "navigateTo",
 
-            "click .js-add-chapter":       "addChapter"
+            "click .js-add-chapter":       "addChapter",
+            "click .js-add-subchapter":    "addChapter",
+            "click .js-add-section":       "addChapter"
         },
 
         initialize: function() {
             var $section = this.$('.active-section'),
-                id = $section.attr("data-id"),
+                id = $section.attr("data-blockid"),
                 section_view,
                 section_model;
 
@@ -59,6 +61,12 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
                     parent: this.model.id,
                     title: "Item X"
                 };
+
+            alert($(event.target).closest("[data-blockid]").attr("data-blockid"));
+            debugger;
+
+            return;
+
 
             helper.callHandler(this.model.id, 'add_structure', data).then(
 

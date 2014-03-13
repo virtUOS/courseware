@@ -34,12 +34,12 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         },
 
         switchToAuthorView: function (event) {
-            var id = $(event.target).closest(".block").attr("data-id");
+            var id = $(event.target).closest(".block").attr("data-blockid");
             this.switchView(id, "author");
         },
 
         destroyView: function (event) {
-            var block_id = $(event.target).closest(".block").attr("data-id"),
+            var block_id = $(event.target).closest(".block").attr("data-blockid"),
                 block_view = this.children[block_id],
                 $block_wrapper = block_view.$el.closest('section.block'),
                 self = this;
@@ -129,7 +129,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
 
             if (!_.isObject(model)) {
                 model  = new BlockModel({
-                    id:   $block.attr("data-id"),
+                    id:   $block.attr("data-blockid"),
                     type: $block.attr("data-type")
                 });
             }
