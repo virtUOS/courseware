@@ -7,16 +7,14 @@ define(['assets/js/author_view', 'assets/js/url'],
 
         events: {
             "click button": function (event) {
-                var url_input = this.$("input.urlinput");
-                var new_url = url_input.val();
-                var width_input = this.$("input.widthinput");
-                var new_width = width_input.val();
+                var url_input    = this.$("input.urlinput");
+                var new_url      = url_input.val();
                 var height_input = this.$("input.heightinput");
-                var new_height = height_input.val();
-                var view = this;
+                var new_height   = height_input.val();
+                var view         = this;
 
                 helper
-                    .callHandler(this.model.id, "foo", {url: new_url, width: new_width, height: new_height})
+                    .callHandler(this.model.id, "foo", {url: new_url, height: new_height})
                     .then(
                         // success
                         function () {

@@ -11,7 +11,7 @@ define(['assets/js/block_type', './student_view', './author_view'],
         views:{
             student: StudentView,
             author: AuthorView
-           
+
         }
     });
 });
