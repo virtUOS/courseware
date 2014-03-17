@@ -4,11 +4,21 @@ define(['assets/js/author_view', 'assets/js/url'], function (
     'use strict';
 
     function normalizeYouTubeLink(url) {
+        // YouTube API Docs - https://developers.google.com/youtube/
+        //
+        // Discussion of valid YouTube video IDs
+        // https://groups.google.com/forum/#!topic/youtube-api-gdata/maM-h-zKPZc
+        //
+        // examples for long URL, short URL, and embed URL:
         // http://www.youtube.com/watch?v=C3HFAyigqoY&feature=youtu.be
         // http://youtu.be/C3HFAyigqoY
-        // ==> //www.youtube.com/embed/C3HFAyigqoY
+        // //www.youtube.com/embed/C3HFAyigqoY
+        //
+        // examples for IDs with _ and - characters:
+        // http://www.youtube.com/watch?v=k_wJsio68D4
+        // http://www.youtube.com/watch?v=h-TPSylHrvE
         var
-        videoId = '\\w*',
+        videoId = '[\\w\\-]*',
         idQuery = 'v=(' + videoId + ')',
         queryName = '(?:[^=&;#]{2,}|[^=&;#v])',
         queryValue = '(?:=[^&;#]*)?',
