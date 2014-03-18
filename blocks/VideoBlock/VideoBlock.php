@@ -5,7 +5,7 @@ class VideoBlock extends Block
 {
     function initialize()
     {
-        $this->defineField('url', \Mooc\SCOPE_BLOCK, 'url');
+        $this->defineField('url', \Mooc\SCOPE_BLOCK, '');
     }
 
     function student_view()

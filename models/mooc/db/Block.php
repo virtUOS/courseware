@@ -36,7 +36,6 @@ class Block extends \SimpleORMap
 
         $this->registerCallback('before_create', 'ensureSeminarId');
         $this->registerCallback('before_create', 'ensurePositionId');
-        $this->registerCallback('before_create', 'ensureJSONData');
 
         parent::__construct($id);
     }
@@ -66,13 +65,6 @@ class Block extends \SimpleORMap
                 array($this->parent_id)
             );
         }
-    }
-
-    protected function ensureJSONData()
-    {
-	    if (!$this->json_data) {
-		    $this->json_data=json_encode("");
-	    }
     }
 
     public function getAncestors()

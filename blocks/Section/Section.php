@@ -12,7 +12,7 @@ class Section extends Block {
         $blocks = $this->traverseChildren(
             function ($child, $container) use ($context) {
                 $json = $child->toJSON();
-                $json['content'] = $child->render('student', $context);
+                $json['block_content'] = $child->render('student', $context);
                 return $json;
             }
         );

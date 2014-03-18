@@ -26,13 +26,17 @@ section#courseware {
     float: left;
     margin: 0;
     padding-right: 2em;
-    width: 150px;
+    width: 170px;
+
+    li > a {
+      display: block;
+    }
   }
 
   ol.subchapters {
   }
 
-  ol.sections {
+  ol.active-subchapter {
     margin-bottom: 30px;
 
     li {
@@ -60,7 +64,18 @@ section#courseware {
 
   /* CSS for the Courseware controls */
 
-  & > div.controls {
+  // show controls only for authors
+  &:not(.user-may-author) .mode-switch,
+  &:not(.user-may-author) .controls {
+    display: none;
+  }
+
+  // do not show controls in student view
+  &.view-student .controls {
+    display: none;
+  }
+
+  .mode-switch {
     position: absolute;
     top: 7px;
     right: 12px;
@@ -72,10 +87,10 @@ section#courseware {
       display: block;
       float: left;
       background: #e9e9e9;
-      padding: 2px 32px 2px 12px;
+      padding: 2px 10px;
+      margin: 0px;
       border: 1px solid #bbb;
       text-align: center;
-      width: 30px;
 
       &:hover {
         cursor: pointer;
@@ -91,15 +106,22 @@ section#courseware {
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
         border-left: none;
-        padding: 4px 32px 0px 12px;
+        padding: 4px 10px 0px 10px;
       }
     }
   }
 
-  &.view-student > div.controls .student,
-  &.view-author > div.controls .author {
+  &.view-student > .mode-switch .student,
+  &.view-author  > .mode-switch .author {
         background: #ddd;
         box-shadow: inset 0px 0px 6px rgba(0,0,0,0.3);
         border-color: #999;
   }
+
+  /* do not show "Sektion hinzufügen" w/o subchapter parent */
+  .active-subchapter[data-blockid=""] button.add-section {
+    display: none;
+  }
+
+
 }

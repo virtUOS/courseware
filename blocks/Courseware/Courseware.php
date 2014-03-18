@@ -5,41 +5,26 @@ class Courseware extends Block {
 
     function initialize()
     {
+        // nothing to do
     }
 
-    // TODO: $context einführen!
     function student_view($context = array())
     {
-        $section = $this->getSectionFor($context['selected']);
-        list($courseware, $chapter, $subchapter) = $this->getAncestors($section);
+        list($courseware, $chapter, $subchapter, $section) = $a = $this->getSelectedPath($context['selected']);
 
-        $chapters = array();
-        foreach ($courseware->children as $chap) {
-            $json = $chap->toArray();
-            $json['selected'] = $chapter->id == $chap->id;
-            $chapters[] = $json;
-        }
-
+        $chapters = $this->childrenToJSON($courseware->children, $chapter->id);
 
         $subchapters = array();
         if ($chapter) {
-            foreach ($chapter->children as $sub) {
-                $json = $sub->toArray();
-                $json['selected'] = $subchapter->id == $sub->id;
-                $subchapters[] = $json;
-            }
+            $subchapters = $this->childrenToJSON($chapter->children, $subchapter->id);
         }
-
 
         $sections = array();
         if ($subchapter) {
-            foreach ($subchapter->children as $sec) {
-                $json = $sec->toArray();
-                $json['selected'] = $section->id == $sec->id;
-                $sections[] = $json;
-            }
+            $sections = $this->childrenToJSON($subchapter->children, $section->id);
         }
 
+        $active_section = array();
         if ($section) {
             $active_section_block = $this->container['block_factory']->makeBlock($section);
             $active_section = array(
@@ -49,20 +34,83 @@ class Courseware extends Block {
         }
 
         return array(
-            'courseware'     => $courseware->toArray(),
-            'chapters'       => $chapters,
-            'subchapters'    => $subchapters,
-            'sections'       => $sections,
-            'active_section' => $active_section);
+            'user_may_author'   => $this->container['current_user']->canUpdate($this->_model),
+            'courseware'        => $courseware->toArray(),
+            'chapters'          => $chapters,
+            'subchapters'       => $subchapters,
+            'sections'          => $sections,
+            'active_chapter'    => $chapter    ? $chapter->id    : '',
+            'active_subchapter' => $subchapter ? $subchapter->id : '',
+            'active_section'    => $active_section);
     }
 
-    private function getAncestors($section)
+    function add_structure_handler($data) {
+
+        // we need a valid parent
+        if (!isset($data['parent'])) {
+            throw new \RuntimeException("Parent required.");
+        }
+
+        $parent = \Mooc\DB\Block::find($data['parent']);
+        if (!$parent || !$parent->isStructuralBlock()) {
+            throw new \RuntimeException("Invalid parent.");
+        }
+
+        if (!$this->container['current_user']->canUpdate($parent)) {
+            throw new \RuntimeException("Access denied");
+        }
+
+        // we need a title
+        if (!isset($data['title']) || !strlen($data['title']))
+        {
+            throw new \RuntimeException("Title required.");
+        }
+
+        // is there a structural level below the parent?
+        $structure_types = \Mooc\DB\Block::getStructuralBlockClasses();
+        $index = array_search($parent->type, $structure_types);
+        if (!$child_type = $structure_types[$index + 1]) {
+            throw new \RuntimeException("Unknown child type.");
+        }
+
+        $block = new \Mooc\DB\Block();
+        $block->setData(array(
+            'seminar_id' => $this->_model->seminar_id,
+            'parent_id'  => $parent->id,
+            'type'       => $child_type,
+            'title'      => $data['title']
+        ));
+
+        $block->store();
+
+        return $block->toArray();
+    }
+
+
+
+    private function childrenToJSON($collection, $selected)
     {
-        if (!$section) {
+        $result = array();
+        foreach ($collection as $item) {
+            $json = $item->toArray();
+            $json['selected'] = $selected == $item->id;
+            $result[] = $json;
+        }
+        return $result;
+    }
+
+    private function getSelectedPath($selected)
+    {
+        $block = $selected instanceof \Mooc\DB\Block ? $selected : \Mooc\DB\Block::find($selected);
+        if (!($block && $this->hasMatchingCID($block))) {
             return $this->getDefaultPath();
         }
 
-        return $section->getAncestors();
+        $node = $this->getLastStructuralNode($block);
+
+        $ancestors = $node->getAncestors();
+        $ancestors[] = $node;
+        return $ancestors;
     }
 
     private function getDefaultPath()
@@ -98,14 +146,8 @@ class Courseware extends Block {
     }
 
 
-    private function getSectionFor($selected)
+    private function getLastStructuralNode($block)
     {
-        $block = $selected instanceof \Mooc\DB\Block ? $selected : \Mooc\DB\Block::find($selected);
-
-        if (!($block && $this->hasMatchingCID($block))) {
-            return null;
-        }
-
         // got it!
         if ($block->type === 'Section') {
             return $block;
@@ -113,7 +155,7 @@ class Courseware extends Block {
 
         // search parent
         if (!$block->isStructuralBlock()) {
-            return $this->getSectionFor($block->parent);
+            return $this->getLastStructuralNode($block->parent);
         }
 
         // searching downwards... which is actually complicated as
@@ -121,21 +163,11 @@ class Courseware extends Block {
         $first_born = $block->children->first();
 
         if (!$first_born) {
-            return null;
+            return $block;
         }
 
-        return $this->getSectionFor($first_born);
+        return $this->getLastStructuralNode($first_born);
     }
-
-    /*
-    private function getDefaultSection()
-    {
-        return current(
-            \Mooc\DB\Block::findBySQL(
-                'seminar_id = ? AND type = "Section" ORDER BY parent_id, position',
-                array($this->container['cid'])));
-    }
-    */
 
     private function hasMatchingCID($block)
     {

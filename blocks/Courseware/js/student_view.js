@@ -8,14 +8,19 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         children: [],
 
         events: {
-            "click .controls .student": "switchToStudentMode",
-            "click .controls .author":  "switchToAuthorMode",
-            "click a.js-navigate":      "navigateTo"
+            "click .mode-switch .student": "switchToStudentMode",
+            "click .mode-switch .author":  "switchToAuthorMode",
+
+            "click a.navigate":            "navigateTo",
+
+            "click .add-chapter":          "addStructure",
+            "click .add-subchapter":       "addStructure",
+            "click .add-section":          "addStructure"
         },
 
         initialize: function() {
             var $section = this.$('.active-section'),
-                id = $section.attr("data-id"),
+                id = $section.attr("data-blockid"),
                 section_view,
                 section_model;
 
@@ -34,6 +39,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             return this;
         },
 
+        // TODO: flesh this out
         navigateTo: function (event) {
             console.log($(event.target).text());
         },
@@ -41,12 +47,37 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         switchToStudentMode: function (event) {
             // this.$el.attr({ class: "view-student" });
             // helper.base_view = 'student';
-            window.location = "";
+            window.location.reload(true);
         },
 
         switchToAuthorMode: function (event) {
-            this.$el.attr({ "class": "view-author" });
+            this.$el.removeClass("view-student").addClass("view-author");
             helper.base_view = 'author';
+        },
+
+        addStructure: function (event) {
+
+            var parent_id = $(event.target).closest("[data-blockid]").attr("data-blockid");
+
+            if (parent_id == null) {
+                return;
+            }
+
+            var data = {
+                parent: parent_id,
+                title: "Item X"
+            };
+
+            helper.callHandler(this.model.id, 'add_structure', data).then(
+
+                function (data) {
+                    window.location.reload(true);
+                },
+
+                function (error) {
+                    console.log("TODO: could not add structural block");
+                }
+            );
         }
     });
 });

@@ -1,8 +1,22 @@
-<section id=courseware class=view-student>
+<section
+  id=courseware
+  data-blockid={{courseware.id}}
+  class="view-student{{#user_may_author}} user-may-author{{/user_may_author}}">
 
   <h1> Courseware: {{courseware.title}} </h1>
 
-  {{> controls}}
+  <div class=mode-switch>
+    <button class="student" title="Studentenmodus">
+      <img src="../../assets/images/icons/20/blue/headache.png"
+      title="Studentenmodus"
+      alt="Studentenmodus">
+    </button>
+    <button class="author" title="Autorenmodus">
+      <img src="../../assets/images/icons/20/blue/doctoral_cap.png"
+      title="Autorenmodus"
+      alt="Autorenmodus">
+    </button>
+  </div>
 
   <ol class=chapters>
 
@@ -11,19 +25,27 @@
     {{/chapters}}
 
     <li class=no-content>{{#i18n}}Keine Kapitel{{/i18n}}</li>
+    <li class=controls>
+      <button class=add-chapter>
+        {{#i18n}}Kapitel einfügen{{/i18n}}
+      </button>
+    </li>
   </ol>
 
-  <ol class=sections>
+  <ol class=active-subchapter data-blockid={{active_subchapter}}>
 
     {{#sections}}
       {{> section}}
     {{/sections}}
 
     <li class=no-content>{{#i18n}}Keine Sektionen{{/i18n}}</li>
+    <li class=controls>
+      <button class=add-section>{{#i18n}}Sektion einfügen{{/i18n}}</button>
+    </li>
   </ol>
 
   {{#active_section}}
-    <section class=active-section data-id={{id}}>
+    <section class=active-section data-blockid={{id}}>
       {{{html}}}
     </section>
   {{/active_section}}

@@ -50,23 +50,12 @@ class CoursewareController extends MoocipController {
             list(, $block, $name) = $matches;
 
             if (!isset($templates[$block])) {
-                $templates[$block] = array(
-                    'views'    => array(),
-                    'partials' => array()
-                );
+                $templates[$block] = array();
             }
 
             $content = file_get_contents($file);
 
-            // it's a view
-            if (substr($name, -5) === '_view') {
-                $templates[$block]['views'][substr($name, 0, -5)] = $content;
-            }
-
-            // it's a partial
-            else {
-                $templates[$block]['partials'][$name] = $content;
-            }
+            $templates[$block][$name] = $content;
         }
 
         return $templates;

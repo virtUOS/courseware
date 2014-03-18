@@ -4,7 +4,10 @@
 /* /courses/index */
 #mooc-courses-index #layout_container #course-list article {
   clear: both;
-  margin-bottom: 1em;
+  padding: 10px 0px;
+  min-height: 100px;
+  position: relative;
+  border-bottom: 1px solid #d9d9d9;
 }
 #mooc-courses-index #layout_container #course-list article .course-avatar-medium {
   float: left;
@@ -12,6 +15,17 @@
 }
 #mooc-courses-index #layout_container #course-list article h1 {
   border: none;
+  margin-bottom: 0;
+}
+#mooc-courses-index #layout_container #course-list article p {
+  margin: 4px 0px 0px 0px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#mooc-courses-index #layout_container #course-list article a {
+  position: absolute;
+  bottom: 10px;
   margin-bottom: 0;
 }
 /* /courses/show */

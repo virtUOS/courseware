@@ -7,7 +7,7 @@
     margin-bottom: 3em;
 
     &::before {
-      content: attr(class);
+      /* content: attr(class); */
       color: #ccc;
       border: 1px dotted #eee;
       line-height: 20px;
@@ -80,6 +80,8 @@
   &.view-author .active-section {
     section.block {
       box-shadow: 2px 2px 2px 2px #DDD;
+      padding: 24px 4px 10px 4px;
+      border-radius: 5px;
 
       &:hover {
         box-shadow: 2px 2px 2px 2px #CCC;
