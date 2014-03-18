@@ -1,8 +1,8 @@
-var gulp   = require('gulp');
-var sass   = require('gulp-sass');
-var minify = require('gulp-minify-css');
-var concat = require('gulp-concat');
-var zip    = require('gulp-zip');
+var gulp   = require('gulp'),
+    sass   = require('gulp-sass'),
+    minify = require('gulp-minify-css'),
+    concat = require('gulp-concat'),
+    zip    = require('gulp-zip');
 
 var paths = {
     styles: ['./blocks/*/css/*.scss', './assets/*.scss']
@@ -14,19 +14,11 @@ gulp.task('default', ['sass']);
 gulp.task('sass', function() {
     // place code for your default task here
     return gulp.src(paths.styles, {base: './'})
-        .pipe(sass()).pipe(gulp.dest('.'))/*
+        .pipe(sass()).pipe(gulp.dest('.'))
         .pipe(minify())
         .pipe(concat('moocip.min.css'))
-        .pipe(gulp.dest('./assets'))*/;
+        .pipe(gulp.dest('./assets'));
 });
-
-/*
-gulp.task('js', function() {
-    return gulp.src([])
-        .pipe(uglify())
-        .pipe()
-});
-*/
 
 gulp.task('zip', ['default'], function() {
     return gulp.src(['./assets/**', './blocks/**', './controllers/**', './migrations/**', './models/**', './vendor/**', './views/**', 'Mooc.php', 'LICENSE', 'README.md'])
