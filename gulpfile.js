@@ -13,8 +13,8 @@ gulp.task('default', ['sass']);
 
 gulp.task('sass', function() {
     // place code for your default task here
-    return gulp.src(paths.styles)
-        .pipe(sass()).pipe(gulp.dest('blocks'))/*
+    return gulp.src(paths.styles, {base: './'})
+        .pipe(sass()).pipe(gulp.dest('.'))/*
         .pipe(minify())
         .pipe(concat('moocip.min.css'))
         .pipe(gulp.dest('./assets'))*/;
