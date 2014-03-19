@@ -2,13 +2,12 @@
 
 namespace Mooc\Ui;
 
-use Mooc\Container;
-use Mooc\DB\Vips\Test As TestModel;
+use Mooc\DB\Vips\Test;
 
 /**
  * @author Christian Flothmann <christian.flothmann@uos.de>
  */
-class Test extends Block
+class TestBlock extends Block
 {
     /**
      * @var \Mooc\DB\Vips\Test
@@ -19,7 +18,7 @@ class Test extends Block
     {
         $this->defineField('test_id', \Mooc\SCOPE_BLOCK, null);
         if (\PluginEngine::getPlugin('VipsPlugin')) {
-            $this->test = new TestModel($this->test_id);
+            $this->test = new Test($this->test_id);
         }
     }
 

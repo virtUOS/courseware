@@ -4,7 +4,7 @@ define(['assets/js/block_type', './student_view'],
     'use strict';
 
     return new BlockType({
-        name: 'Test',
+        name: 'TestBlock',
 
         content_block: true,
 
