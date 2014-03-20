@@ -19,6 +19,17 @@ define(['module', 'argjs'], function (module, Arg) {
             });
         },
 
+        putView: function (block_id, data) {
+
+            return $.ajax({
+                url: this.block_url(block_id),
+                type: "PUT",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json"
+            });
+        },
+
         callHandler: function (block_id, handler, data) {
 
             var payload = {

@@ -1,5 +1,5 @@
-define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'assets/js/block_types'],
-       function (helper, BlockModel, StudentView, blockTypes) {
+define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'assets/js/block_types', './edit_structure'],
+       function (helper, BlockModel, StudentView, blockTypes, EditView) {
 
     'use strict';
 
@@ -15,7 +15,9 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
 
             "click .add-chapter":          "addStructure",
             "click .add-subchapter":       "addStructure",
-            "click .add-section":          "addStructure"
+            "click .add-section":          "addStructure",
+
+            "click .edit":                 "editStructure"
         },
 
         initialize: function() {
@@ -28,6 +30,8 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             section_view = blockTypes.get("Section").createView("student", { el: $section[0], model: section_model });
 
             this.children.push(section_view);
+
+            this.$el.removeClass("loading");
         },
 
         remove: function() {
@@ -76,6 +80,37 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
 
                 function (error) {
                     console.log("TODO: could not add structural block");
+                }
+            );
+        },
+
+        editStructure: function (event) {
+            var $parent = $(event.target).closest("[data-blockid]"),
+                id = $parent.attr("data-blockid"),
+                $title = $parent.find("> .title"),
+                title = $title.find("a").text().trim();
+
+            if (id == null) {
+                return;
+            }
+
+            var type = $parent.hasClass("chapter") ? "chapter" : "subchapter";
+
+            var model = new BlockModel({ id: id, type: type, title: title }),
+                view = new EditView({ model: model });
+
+            $title.hide().before(view.el);
+
+            view.promise().then(
+
+                // resolved
+                function (model) {
+                    $title.find("a").text(model.get("title")).end().show();
+                },
+
+                // rejected, just close
+                function (error) {
+                    $title.show();
                 }
             );
         }

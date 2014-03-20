@@ -1,3 +1,5 @@
+@import '../../../assets/mixins';
+
 .active-section {
 
   section.block {
@@ -26,23 +28,12 @@
       top: 0;
       right: 0;
 
-      button {
-        width: 20px;
-        height: 20px;
-        color: transparent;
-        border: none;
-
-        &:hover {
-          cursor: pointer;
-        }
-      }
-
       button.author {
-        background: url(../../../../../../assets/images/icons/16/grey/admin.png) center center no-repeat;
+        @include btn(admin);
       }
 
       button.trash {
-        background: url(../../../../../../assets/images/icons/16/grey/trash.png) center center no-repeat;
+        @include btn(trash);
       }
     }
 
@@ -81,7 +72,8 @@
     section.block {
       box-shadow: 2px 2px 2px 2px #DDD;
       padding: 24px 4px 10px 4px;
-      border-radius: 5px;
+
+      @include border-radius(5px);
 
       &:hover {
         box-shadow: 2px 2px 2px 2px #CCC;

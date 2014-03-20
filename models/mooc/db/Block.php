@@ -7,6 +7,8 @@ namespace Mooc\DB;
 class Block extends \SimpleORMap
 {
 
+    public $errors = array();
+
     /**
      * Give primary key of record as param to fetch
      * corresponding record from db if available, if not preset primary key
@@ -36,6 +38,7 @@ class Block extends \SimpleORMap
 
         $this->registerCallback('before_create', 'ensureSeminarId');
         $this->registerCallback('before_create', 'ensurePositionId');
+        $this->registerCallback('before_store',  'validate');
 
         parent::__construct($id);
     }
@@ -112,6 +115,19 @@ class Block extends \SimpleORMap
     public function isStructuralBlock()
     {
         return in_array($this->type, self::$structural_block_classes);
+    }
+
+    /**
+     * checks, if block is valid
+     *
+     * @return boolean true or false
+     */
+    function validate() {
+        if (!strlen(trim($this->title))) {
+            $this->errors[] = "Title may not be empty.";
+            return false;
+        }
+        return true;
     }
 
 

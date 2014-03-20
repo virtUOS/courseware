@@ -72,6 +72,40 @@ class BlocksController extends MoocipController {
     }
 
 
+    function put($id)
+    {
+        // JSON requests only
+        if (!$this->isJSONRequest()) {
+            $this->json_error('Only JSON requests accepted.');
+            return;
+        }
+
+        // TODO: title only at the moment. complete this!
+        if (!isset($this->data['title'])) {
+            $this->json_error('Title required.');
+            return;
+        }
+
+        $title = trim($this->data['title']);
+        if (!strlen($title)) {
+            $this->json_error('Title must not be empty.');
+            return;
+        }
+
+
+        $block = $this->requireBlock($id);
+
+        $block->title = $title;
+
+        if ($block->store()) {
+            $this->render_json($block->toArray());
+        }
+
+        else {
+            $this->json_error('Could not modify block.');
+        }
+    }
+
     /*****************************/
     /* PROTECTED & PRIVATE STUFF */
     /*****************************/
@@ -133,5 +167,19 @@ class BlocksController extends MoocipController {
 
         $format = $negotiator->getBest($acceptHeader, $priorities);
         return $format && $format->getValue() === $priorities[0];
+    }
+
+    private function json_error($reason, $data = null)
+    {
+        $this->response->set_status(500);
+        $payload = array(
+            'status' => 'error',
+            'reason' => $reason
+        );
+        if (isset($data)) {
+            $payload['data'] = (array) $data;
+        }
+
+        $this->render_json($payload);
     }
 }
