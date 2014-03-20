@@ -33,7 +33,10 @@ define(['assets/js/author_view', 'assets/js/url'], function (
         return id ? ('//www.youtube.com/embed/' + id) : url;
     }
     function normalizeMatterhornLink(url) {
-        return url;
+        // see https://opencast.jira.com/wiki/display/MH/Engage+URL+Parameters
+        // http://someURL:8080/engage/ui/watch.html?id=someMediaPackageId
+        // http://someURL:8080/engage/ui/embed.html?id=someMediaPackageId
+        return url.replace('/engage/ui/watch.html?', '/engage/ui/embed.html?');
     }
     function normalizeLink(url) {
         return normalizeMatterhornLink(normalizeYouTubeLink(url));
