@@ -1,98 +1,73 @@
 #mooc-courseware-index #layout_container {
-  position: relative;
-}
+  position: relative; }
+
 section#courseware {
   /* CSS for the Courseware controls */
-
-  /* do not show "Sektion hinzufügen" w/o subchapter parent */
-
-}
-section#courseware ol {
-  list-style: none;
-  padding-left: 1em;
-}
-section#courseware ol li {
-  padding: 3px 0px;
-}
-section#courseware ol li.selected > a {
-  font-weight: 700;
-}
-section#courseware ol li + li.no-content {
-  display: none;
-}
-section#courseware ol.chapters {
-  float: left;
-  margin: 0;
-  padding-right: 2em;
-  width: 170px;
-}
-section#courseware ol.chapters li > a {
-  display: block;
-}
-section#courseware ol.active-subchapter {
-  margin-bottom: 30px;
-}
-section#courseware ol.active-subchapter li {
-  display: inline-block;
-}
-section#courseware ol.active-subchapter li a {
-  background: #e9e9e9;
-  padding: 5px 3px;
-  border: 1px solid #bbb;
-}
-section#courseware ol.active-subchapter li.selected > a {
-  background: #ddd;
-  box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
-  border-color: #999;
-  font-weight: normal;
-}
-section#courseware section.active-section {
-  float: left;
-}
-section#courseware:not(.user-may-author) .mode-switch,
-section#courseware:not(.user-may-author) .controls {
-  display: none;
-}
-section#courseware.view-student .controls {
-  display: none;
-}
-section#courseware .mode-switch {
-  position: absolute;
-  top: 7px;
-  right: 12px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-}
-section#courseware .mode-switch button {
-  display: block;
-  float: left;
-  background: #e9e9e9;
-  padding: 2px 10px;
-  margin: 0px;
-  border: 1px solid #bbb;
-  text-align: center;
-}
-section#courseware .mode-switch button:hover {
-  cursor: pointer;
-}
-section#courseware .mode-switch button.student {
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-  border-right: none;
-}
-section#courseware .mode-switch button.author {
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  border-left: none;
-  padding: 4px 10px 0px 10px;
-}
-section#courseware.view-student > .mode-switch .student,
-section#courseware.view-author > .mode-switch .author {
-  background: #ddd;
-  box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
-  border-color: #999;
-}
-section#courseware .active-subchapter[data-blockid=""] button.add-section {
-  display: none;
-}
+  /* do not show "Sektion hinzuf�gen" w/o subchapter parent */ }
+  section#courseware ol {
+    list-style: none;
+    padding-left: 1em; }
+    section#courseware ol li {
+      padding: 3px 0px; }
+      section#courseware ol li.selected > a {
+        font-weight: 700; }
+    section#courseware ol li + li.no-content {
+      display: none; }
+  section#courseware ol.chapters {
+    float: left;
+    margin: 0;
+    padding-right: 2em;
+    width: 170px; }
+    section#courseware ol.chapters li > a {
+      display: block; }
+  section#courseware ol.active-subchapter {
+    margin-bottom: 30px; }
+    section#courseware ol.active-subchapter li {
+      display: inline-block; }
+      section#courseware ol.active-subchapter li a {
+        background: #e9e9e9;
+        padding: 5px 3px;
+        border: 1px solid #bbb; }
+      section#courseware ol.active-subchapter li.selected > a {
+        background: #ddd;
+        box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
+        border-color: #999;
+        font-weight: normal; }
+  section#courseware section.active-section {
+    float: left; }
+  section#courseware:not(.user-may-author) .mode-switch, section#courseware:not(.user-may-author) .controls {
+    display: none; }
+  section#courseware.view-student .controls {
+    display: none; }
+  section#courseware .mode-switch {
+    position: absolute;
+    top: 7px;
+    right: 12px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px; }
+    section#courseware .mode-switch button {
+      display: block;
+      float: left;
+      background: #e9e9e9;
+      padding: 2px 10px;
+      margin: 0px;
+      border: 1px solid #bbb;
+      text-align: center; }
+      section#courseware .mode-switch button:hover {
+        cursor: pointer; }
+      section#courseware .mode-switch button.student {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        border-right: none; }
+      section#courseware .mode-switch button.author {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-left: none;
+        padding: 4px 10px 0px 10px; }
+  section#courseware.view-student > .mode-switch .student, section#courseware.view-author > .mode-switch .author {
+    background: #ddd;
+    box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
+    border-color: #999; }
+  section#courseware .active-subchapter[data-blockid=""] button.add-section {
+    display: none; }
