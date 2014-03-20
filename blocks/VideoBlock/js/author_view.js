@@ -1,67 +1,40 @@
-define(['assets/js/author_view', 'assets/js/url'], function (
-    AuthorView, helper
+define(['assets/js/author_view', 'assets/js/url', './utils'], function (
+    AuthorView, helper, Utils
 ) {
     'use strict';
-
-    function normalizeYouTubeLink(url) {
-        // YouTube API Docs - https://developers.google.com/youtube/
-        //
-        // Discussion of valid YouTube video IDs
-        // https://groups.google.com/forum/#!topic/youtube-api-gdata/maM-h-zKPZc
-        //
-        // examples for long URL, short URL, and embed URL:
-        // http://www.youtube.com/watch?v=C3HFAyigqoY&feature=youtu.be
-        // http://youtu.be/C3HFAyigqoY
-        // //www.youtube.com/embed/C3HFAyigqoY
-        //
-        // examples for IDs with _ and - characters:
-        // http://www.youtube.com/watch?v=k_wJsio68D4
-        // http://www.youtube.com/watch?v=h-TPSylHrvE
-        var
-        videoId = '[\\w\\-]*',
-        idQuery = 'v=(' + videoId + ')',
-        queryName = '(?:[^=&;#]{2,}|[^=&;#v])',
-        queryValue = '(?:=[^&;#]*)?',
-        otherQueries = '(?:' + queryName + queryValue + '[&;])*',
-        longLink = '(?:www\\.)?youtube\\.com\\/watch\\?' + otherQueries + idQuery,
-        shortLink = 'youtu\\.be\\/(' + videoId + ')',
-        youTubeLink = '^\\s*'       // ignore whitespace at beginning of line
-        + '(?:https?:)?\\/\\/'  // URL scheme is optional
-        + '(?:' + longLink + '|' + shortLink + ')',
-        matches = url.match(new RegExp(youTubeLink)),
-        id = matches ? (matches[1] || matches[2]) : null;
-        return id ? ('//www.youtube.com/embed/' + id) : url;
-    }
-    function normalizeMatterhornLink(url) {
-        // see https://opencast.jira.com/wiki/display/MH/Engage+URL+Parameters
-        // http://someURL:8080/engage/ui/watch.html?id=someMediaPackageId
-        // http://someURL:8080/engage/ui/embed.html?id=someMediaPackageId
-        return url.replace('/engage/ui/watch.html?', '/engage/ui/embed.html?');
-    }
-    function normalizeLink(url) {
-        return normalizeMatterhornLink(normalizeYouTubeLink(url));
-    }
-
     return AuthorView.extend({
         events: {
-            'click button': function (event) {
+            'keyup input': function (event) {
                 var view = this;
 
-                helper
-                .callHandler(view.model.id, 'save', {
-                    url: normalizeLink(view.$('input').val())
-                })
-                .then(function () { // success
-                    $(event.target).addClass('accept');
-                    view.switchBack();
-                }, function () {    // error
-                    alert('Fehler!');
-                    console.log('fail', arguments);
-                });
+                view.$('p').text('...am ändern.');
+                clearTimeout(this.timeoutId);
+
+                this.timeoutId = setTimeout(function () {
+                    var url = view.$('input').val();
+                    Utils.normalizeIFrame(this, url);
+
+                    // save data
+                    view.$('p').text('Speichere Änderungen...');
+                    helper
+                    .callHandler(view.model.id, 'save', { url: url })
+                    .then(function () { // success
+                        view.$('p').text('Änderungen wurden gespeichert.');
+                    }, function () {    // error
+                        view.$('p').text('Fehler beim speichern.');
+                    });
+                }, 1000);
             }
         },
         initialize: function (options) {
-            // console.log('initialize VideoBlock author view', this, options);
+            // timeoutId is needed by the 'keyup input' event
+            this.timeoutId = setTimeout(function () {
+                // TODO remove setTimeout call
+                // calling normalizeIFrame after a timeout is just a workaround
+                // since the IFrame is not initialized yet when this function
+                // is called                
+                Utils.normalizeIFrame(this);
+            }, 1000);
         },
         render: function() { return this; }
     });
