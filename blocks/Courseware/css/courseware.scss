@@ -34,7 +34,7 @@ section#courseware {
 
     li {
 
-      &.selected  a {
+      &.selected > .title > a {
         font-weight: 700;
       }
 

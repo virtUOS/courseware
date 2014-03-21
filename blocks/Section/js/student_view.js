@@ -16,6 +16,16 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
 
         initialize: function() {
             _.each($('section.block'), this.initializeBlock, this);
+
+            this.listenTo(this, "switch", this.switchAll, this);
+
+        },
+
+        switchAll: function (view) {
+            console.log(this, "switchAll", view);
+            _.each(this.children, function (child, child_id) {
+                this.switchView(child_id, view);
+            }, this);
         },
 
         remove: function() {
@@ -68,6 +78,13 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
                 model = block_view.model,
                 $block_wrapper = block_view.$el.closest('section.block');
 
+
+            // already switched
+            if (block_view.view_name === view_name) {
+                return;
+            }
+
+
             // TODO: switch on view_name!!
             $block_wrapper.find(".controls button.author").toggle();
 
@@ -94,25 +111,35 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         addNewBlock: function (event) {
 
             var view = this,
-                block_type = $(event.target).attr("data-type");
+                $button = $(event.target),
+                block_type = $button.attr("data-type");
 
-            helper.callHandler(this.model.id, 'add_content_block', { type: block_type }).then(
+            $button.prop("disabled", true).addClass("loading");
 
-                function (data) {
-                    var model = new BlockModel(data),
-                        block_stub = view.appendBlockStub(model),
-                        $el = block_stub.$el.closest("section.block");
+            helper
+                .callHandler(this.model.id, 'add_content_block', { type: block_type })
 
-                    $el.addClass("loading");
-                    block_stub.renderServerSide().then(function () {
-                        $el.removeClass("loading");
-                    });
-                },
+                .then(
 
-                function (error) {
-                    alert("TODO: could not add block");
-                }
-            );
+                    function (data) {
+                        var model = new BlockModel(data),
+                            block_stub = view.appendBlockStub(model),
+                            $el = block_stub.$el.closest("section.block");
+
+                        $el.addClass("loading");
+                        block_stub.renderServerSide().then(function () {
+                            $el.removeClass("loading");
+                        });
+                    },
+
+                    function (error) {
+                        alert("TODO: could not add block");
+                    }
+                )
+
+                .always(function () {
+                    $button.prop("disabled", false).removeClass("loading");
+                });
         },
 
         appendBlockStub: function (model) {

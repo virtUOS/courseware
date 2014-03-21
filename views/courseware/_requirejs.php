@@ -12,16 +12,15 @@
    config: {
 
      "assets/js/block_loader": {
-       block_types: <?= json_encode(studip_utf8decode($block_types)) ?>
+       block_types: <?= json_encode(studip_utf8encode($block_types)) ?>
      },
 
      "assets/js/url": {
-       blocks_url: <?= json_encode(studip_utf8decode($blocks_url)) ?>,
-       base_view: "<?= $view ?>"
+       blocks_url: <?= json_encode(studip_utf8encode($blocks_url)) ?>
      },
 
      "assets/js/templates": {
-       templates: <?= json_encode(studip_utf8decode($templates)) ?>
+       templates: <?= json_encode(studip_utf8encode($templates)) ?>
      }
    },
 
@@ -43,9 +42,16 @@
      }
    },
 
-   deps: ['domReady!', 'assets/js/block_loader!', 'assets/js/block_types', 'assets/js/block_model'],
+   deps: ['domReady!', 'backbone', 'assets/js/block_loader!', 'assets/js/block_types', 'assets/js/block_model'],
 
-   callback: function(domReady, block_loader, blocks, BlockModel) {
+   callback: function(domReady, Backbone, block_loader, blocks, BlockModel) {
+
+     Backbone.history.start({
+       push_state: true,
+       silent: true,
+       root: <?= json_encode(studip_utf8encode(current(explode('?',$controller->url_for('courseware'))))) ?>
+     });
+
      blocks.reset(block_loader);
 
      var view = blocks.get("Courseware").createView("student", {

@@ -3,6 +3,18 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
 
     'use strict';
 
+    function getHash(el) {
+        return el.ownerDocument.location.hash;
+    }
+
+    function setHash(el, fragment) {
+        el.ownerDocument.location.hash = "#" + fragment;
+    }
+
+    function clearHash(el) {
+        setHash(el, "");
+    }
+
     return StudentView.extend({
 
         children: [],
@@ -31,6 +43,10 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
 
             this.children.push(section_view);
 
+            if (getHash(this.el) === "#author") {
+                this.switchToAuthorMode();
+            }
+
             this.$el.removeClass("loading");
         },
 
@@ -45,18 +61,20 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
 
         // TODO: flesh this out
         navigateTo: function (event) {
-            console.log($(event.target).text());
+            var url = $(event.target).attr("href") + getHash(this.el);
+            window.location = url;
+            event.preventDefault();
         },
 
         switchToStudentMode: function (event) {
-            // this.$el.attr({ class: "view-student" });
-            // helper.base_view = 'student';
-            window.location.reload(true);
+            this.$el.removeClass("view-author").addClass("view-student");
+            clearHash(this.el);
+            _.invoke(this.children, "trigger", "switch", "student");
         },
 
-        switchToAuthorMode: function (event) {
+        switchToAuthorMode: function () {
             this.$el.removeClass("view-student").addClass("view-author");
-            helper.base_view = 'author';
+            setHash(this.el, "author");
         },
 
         addStructure: function (event) {

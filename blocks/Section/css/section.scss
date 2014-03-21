@@ -4,6 +4,7 @@
 
   section.block {
     position: relative;
+    min-height: 1em;
     min-width: 55em;
     display: block;
     margin-bottom: 3em;
@@ -18,7 +19,7 @@
     &.loading {
       background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat;
 
-      .block-content {
+      .block-content, .controls {
         visibility: hidden;
       }
     }
@@ -53,6 +54,10 @@
 
       &:hover {
         cursor: pointer;
+      }
+
+      &.loading {
+        background: url(../../../../../../assets/images/ajax_indicator_small.gif) 10px center no-repeat;
       }
     }
   }

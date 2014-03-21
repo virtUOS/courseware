@@ -8,6 +8,7 @@
 
 .active-section section.block {
   position: relative;
+  min-height: 1em;
   min-width: 55em;
   display: block;
   margin-bottom: 3em; }
@@ -18,7 +19,7 @@
     line-height: 20px; }
   .active-section section.block.loading {
     background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat; }
-    .active-section section.block.loading .block-content {
+    .active-section section.block.loading .block-content, .active-section section.block.loading .controls {
       visibility: hidden; }
   .active-section section.block div.controls {
     position: absolute;
@@ -39,6 +40,8 @@
     border: 1px solid #bbb; }
     .active-section .block-adder .add-block-type:hover {
       cursor: pointer; }
+    .active-section .block-adder .add-block-type.loading {
+      background: url(../../../../../../assets/images/ajax_indicator_small.gif) 10px center no-repeat; }
 
 #courseware.view-student .active-section div.controls, #courseware.view-student .active-section .block-adder {
   display: none; }
