@@ -13,10 +13,6 @@ section#courseware {
 
     li {
       padding: 3px 0px;
-
-      &.selected > a {
-        font-weight: 700;
-      }
     }
 
     li + li.no-content {
@@ -37,6 +33,10 @@ section#courseware {
   ol.chapters, ol.subchapters {
 
     li {
+
+      &.selected  a {
+        font-weight: 700;
+      }
 
       div.title {
         position: relative;

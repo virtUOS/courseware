@@ -17,8 +17,6 @@ section#courseware {
     padding-left: 1em; }
     section#courseware ol li {
       padding: 3px 0px; }
-      section#courseware ol li.selected > a {
-        font-weight: 700; }
     section#courseware ol li + li.no-content {
       display: none; }
   section#courseware ol.chapters {
@@ -26,6 +24,8 @@ section#courseware {
     margin: 0;
     padding-right: 2em;
     width: 170px; }
+  section#courseware ol.chapters li.selected a, section#courseware ol.subchapters li.selected a {
+    font-weight: 700; }
   section#courseware ol.chapters li div.title, section#courseware ol.subchapters li div.title {
     position: relative;
     line-height: 20px;
