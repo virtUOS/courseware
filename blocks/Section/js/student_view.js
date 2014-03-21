@@ -21,13 +21,6 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
 
         },
 
-        switchAll: function (view) {
-            console.log(this, "switchAll", view);
-            _.each(this.children, function (child, child_id) {
-                this.switchView(child_id, view);
-            }, this);
-        },
-
         remove: function() {
             StudentView.prototype.remove.call(this);
             _.invoke(this.children, "remove");
@@ -37,10 +30,10 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             return this;
         },
 
-        addBlock: function (block) {
-            this.children[block.model.id] = block;
-            this.listenTo(block, "switch", _.bind(this.switchView, this, block.model.id));
-            return block;
+        switchAll: function (view) {
+            _.each(this.children, function (child, child_id) {
+                this.switchView(child_id, view);
+            }, this);
         },
 
         switchToAuthorView: function (event) {
@@ -166,6 +159,17 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
                 .createView('student', {el: $el, model: model});
 
             return this.addBlock(view);
+        },
+
+        addBlock: function (block) {
+            this.children[block.model.id] = block;
+            this.listenTo(block, "switch", _.bind(this.switchView, this, block.model.id));
+
+            if (typeof block.postRender === "function") {
+                block.postRender();
+            }
+
+            return block;
         }
     });
 });
