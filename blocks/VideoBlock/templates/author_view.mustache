@@ -1,2 +1,5 @@
-<input type="text" name="url" value="{{fields.url}}"</input>
-<button class="button">Speichern</button>
+{{#fields}}
+<iframe src="{{url}}" allowfullscreen></iframe>
+<input type="text" value="{{url}}"</input>
+<p>Änderungen wurden gespeichert.</p>
+{{/fields}}

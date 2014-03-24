@@ -3,8 +3,6 @@ define(['module', 'argjs'], function (module, Arg) {
     'use strict';
 
     return {
-        base_view: module.config().base_view,
-
         block_url: function (block_id, params) {
             var path = [module.config().blocks_url, "/", block_id].join("");
             return Arg.url(path, params || {});
@@ -16,6 +14,17 @@ define(['module', 'argjs'], function (module, Arg) {
                 url: this.block_url(block_id, { view: view_name }),
                 dataType: "html",
                 type: "GET"
+            });
+        },
+
+        putView: function (block_id, data) {
+
+            return $.ajax({
+                url: this.block_url(block_id),
+                type: "PUT",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json"
             });
         },
 

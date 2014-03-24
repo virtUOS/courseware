@@ -1,9 +1,16 @@
-<li class="chapter{{#selected}} selected{{/selected}}" data-blockid={{id}}>
+<li class="chapter{{#selected}} selected{{/selected}}"
+    data-blockid={{id}}>
 
-  <a class="navigate"
-     href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}">
-       {{title}}
-  </a>
+  <div class=title>
+    <a class="navigate"
+      href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}">
+        {{title}}
+    </a>
+
+    <span class=controls>
+      <button class=edit>{{#i18n}}Ändern{{/i18n}}</button>
+    </span>
+  </div>
 
   {{#selected}}
     <ol class=subchapters>

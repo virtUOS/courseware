@@ -1,31 +1,40 @@
-define(['assets/js/author_view', 'assets/js/url'], function (
-    AuthorView, helper
+define(['assets/js/author_view', 'assets/js/url', './utils'], function (
+    AuthorView, helper, Utils
 ) {
     'use strict';
     return AuthorView.extend({
         events: {
-            'click button': function (event) {
-                var view = this,
-                    url = view.$('input').val();
-                // http://www.youtube.com/watch?v=lvB2nRGMl2c
-                var youtube = url.match(/^\s*(?:https?:)?\/\/(?:www\.)?youtube\.com\/watch\?v=(\w*)/);
-                if (youtube) {
-                    url = '//www.youtube.com/embed/' + youtube[1];
-                }
+            'keyup input': function (event) {
+                var view = this;
 
-                helper
-                .callHandler(view.model.id, 'foo', { url: url })
-                .then(function () { // success
-                    $(event.target).addClass('accept');
-                    view.switchBack();
-                }, function () {    // error
-                    alert('Fehler!');
-                    console.log('fail', arguments);
-                });
+                view.$('p').text('...am ändern.');
+                clearTimeout(this.timeoutId);
+
+                this.timeoutId = setTimeout(function () {
+                    var url = view.$('input').val();
+                    Utils.normalizeIFrame(this, url);
+
+                    // save data
+                    view.$('p').text('Speichere Änderungen...');
+                    helper
+                    .callHandler(view.model.id, 'save', { url: url })
+                    .then(function () { // success
+                        view.$('p').text('Änderungen wurden gespeichert.');
+                    }, function () {    // error
+                        view.$('p').text('Fehler beim speichern.');
+                    });
+                }, 1000);
             }
         },
         initialize: function (options) {
-            // console.log('initialize VideoBlock author view', this, options);
+            // timeoutId is needed by the 'keyup input' event
+            this.timeoutId = setTimeout(function () {
+                // TODO remove setTimeout call
+                // calling normalizeIFrame after a timeout is just a workaround
+                // since the IFrame is not initialized yet when this function
+                // is called                
+                Utils.normalizeIFrame(this);
+            }, 1000);
         },
         render: function() { return this; }
     });

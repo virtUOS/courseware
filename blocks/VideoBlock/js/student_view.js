@@ -1,9 +1,9 @@
-define(['assets/js/student_view'], function (StudentView) {
+define(['assets/js/student_view', './utils'], function (StudentView, Utils) {
     'use strict';
     return StudentView.extend({
         events: {},
         initialize: function(options) {
-            // console.log('initialize VideoBlock student view', this, options);
+            Utils.normalizeIFrame(this);
         },
         render: function() { return this; }
     });

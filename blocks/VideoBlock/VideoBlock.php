@@ -10,7 +10,7 @@ class VideoBlock extends Block
 
     function student_view()
     {
-        return array('url' => $this->url);
+        return $this->toJSON();
     }
 
     function author_view()
@@ -18,7 +18,7 @@ class VideoBlock extends Block
         return $this->toJSON();
     }
 
-    function foo_handler($data)
+    function save_handler($data)
     {
         $this->url = (string) $data['url'];
         return array('url' => $this->url);

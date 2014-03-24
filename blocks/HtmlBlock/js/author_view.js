@@ -34,6 +34,10 @@ define(['assets/js/author_view', 'assets/js/url'],
             // console.log("initialize HtmlBlock author view", this, options);
         },
 
+        postRender: function() {
+            this.$("textarea").addToolbar();
+        },
+
         render: function() {
             return this;
         }

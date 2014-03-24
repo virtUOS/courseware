@@ -1,5 +1,14 @@
+.btn-base, .active-section section.block div.controls button.author, .active-section section.block div.controls button.trash {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none; }
+  .btn-base:hover, .active-section section.block div.controls button.author:hover, .active-section section.block div.controls button.trash:hover {
+    cursor: pointer; }
+
 .active-section section.block {
   position: relative;
+  min-height: 1em;
   min-width: 55em;
   display: block;
   margin-bottom: 3em; }
@@ -10,23 +19,16 @@
     line-height: 20px; }
   .active-section section.block.loading {
     background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat; }
-    .active-section section.block.loading .block-content {
+    .active-section section.block.loading .block-content, .active-section section.block.loading .controls {
       visibility: hidden; }
   .active-section section.block div.controls {
     position: absolute;
     top: 0;
     right: 0; }
-    .active-section section.block div.controls button {
-      width: 20px;
-      height: 20px;
-      color: transparent;
-      border: none; }
-      .active-section section.block div.controls button:hover {
-        cursor: pointer; }
     .active-section section.block div.controls button.author {
-      background: url(../../../../../../assets/images/icons/16/grey/admin.png) center center no-repeat; }
+      background: url("../../../../../../assets/images/icons/16/grey/admin.png") center center no-repeat; }
     .active-section section.block div.controls button.trash {
-      background: url(../../../../../../assets/images/icons/16/grey/trash.png) center center no-repeat; }
+      background: url("../../../../../../assets/images/icons/16/grey/trash.png") center center no-repeat; }
   .active-section section.block + .no-content {
     display: none; }
 .active-section .block-adder {
@@ -38,12 +40,17 @@
     border: 1px solid #bbb; }
     .active-section .block-adder .add-block-type:hover {
       cursor: pointer; }
+    .active-section .block-adder .add-block-type.loading {
+      background: url(../../../../../../assets/images/ajax_indicator_small.gif) 10px center no-repeat; }
 
 #courseware.view-student .active-section div.controls, #courseware.view-student .active-section .block-adder {
   display: none; }
 #courseware.view-author .active-section section.block {
   box-shadow: 2px 2px 2px 2px #DDD;
   padding: 24px 4px 10px 4px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
   border-radius: 5px; }
   #courseware.view-author .active-section section.block:hover {
     box-shadow: 2px 2px 2px 2px #CCC; }

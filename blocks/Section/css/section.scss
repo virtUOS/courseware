@@ -1,7 +1,10 @@
+@import '../../../assets/mixins';
+
 .active-section {
 
   section.block {
     position: relative;
+    min-height: 1em;
     min-width: 55em;
     display: block;
     margin-bottom: 3em;
@@ -16,7 +19,7 @@
     &.loading {
       background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat;
 
-      .block-content {
+      .block-content, .controls {
         visibility: hidden;
       }
     }
@@ -26,23 +29,12 @@
       top: 0;
       right: 0;
 
-      button {
-        width: 20px;
-        height: 20px;
-        color: transparent;
-        border: none;
-
-        &:hover {
-          cursor: pointer;
-        }
-      }
-
       button.author {
-        background: url(../../../../../../assets/images/icons/16/grey/admin.png) center center no-repeat;
+        @include btn(admin);
       }
 
       button.trash {
-        background: url(../../../../../../assets/images/icons/16/grey/trash.png) center center no-repeat;
+        @include btn(trash);
       }
     }
 
@@ -63,6 +55,10 @@
       &:hover {
         cursor: pointer;
       }
+
+      &.loading {
+        background: url(../../../../../../assets/images/ajax_indicator_small.gif) 10px center no-repeat;
+      }
     }
   }
 }
@@ -81,7 +77,8 @@
     section.block {
       box-shadow: 2px 2px 2px 2px #DDD;
       padding: 24px 4px 10px 4px;
-      border-radius: 5px;
+
+      @include border-radius(5px);
 
       &:hover {
         box-shadow: 2px 2px 2px 2px #CCC;
