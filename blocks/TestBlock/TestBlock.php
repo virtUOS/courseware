@@ -36,7 +36,13 @@ class TestBlock extends Block
                     'answers' => array(),
                 );
 
-                foreach ($vipsExercise->answerArray[0] as $answer) {
+                if (is_array($vipsExercise->answerArray[0])) {
+                    $answers = $vipsExercise->answerArray[0];
+                } else {
+                    $answers = $vipsExercise->answerArray;
+                }
+
+                foreach ($answers as $answer) {
                     $entry['answers'][] = array(
                         'text' => $answer,
                     );
