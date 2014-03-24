@@ -34,6 +34,8 @@ class TestBlock extends Block
                 $entry = array(
                     'question' => $vipsExercise->question,
                     'answers' => array(),
+                    'single-choice' => $vipsExercise instanceof \sc_exercise,
+                    'multiple-choice' => $vipsExercise instanceof \mc_exercise,
                 );
 
                 if (is_array($vipsExercise->answerArray[0])) {
