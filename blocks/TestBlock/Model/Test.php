@@ -1,6 +1,6 @@
 <?php
 
-namespace Mooc\DB\Vips;
+namespace Mooc\TestBlock\Model;
 
 /**
  * @author Christian Flothmann <christian.flothmann@uos.de>
@@ -12,7 +12,7 @@ class Test extends \SimpleORMap
         $this->db_table = 'vips_test';
 
         $this->has_and_belongs_to_many['exercises'] = array(
-            'class_name' => 'Mooc\DB\Vips\Exercise',
+            'class_name' => 'Mooc\TestBlock\Model\Exercise',
             'thru_table' => 'vips_exercise_ref',
             'thru_key' => 'test_id',
             'thru_assoc_key' => 'exercise_id',

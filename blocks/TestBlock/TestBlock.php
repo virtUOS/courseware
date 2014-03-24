@@ -2,7 +2,7 @@
 
 namespace Mooc\Ui;
 
-use Mooc\DB\Vips\Test;
+use Mooc\TestBlock\Model\Test;
 
 /**
  * @author Christian Flothmann <christian.flothmann@uos.de>

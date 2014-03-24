@@ -1,6 +1,6 @@
 <?php
 
-namespace Mooc\DB\Vips;
+namespace Mooc\TestBlock\Model;
 
 /**
  * @author Christian Flothmann <christian.flothmann@uos.de>

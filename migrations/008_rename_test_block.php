@@ -33,4 +33,3 @@ class RenameTestBlock extends Migration
         );
     }
 }
- 
