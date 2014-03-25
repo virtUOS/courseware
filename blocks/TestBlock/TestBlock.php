@@ -24,6 +24,27 @@ class TestBlock extends Block
 
     public function student_view()
     {
+        return $this->buildExercises();
+    }
+
+    public function author_view()
+    {
+        return $this->toJSON();
+    }
+
+    public function modify_test_handler($testId)
+    {
+        // change the test id
+        $this->test_id = $testId;
+
+        // and reload the test data
+        $this->test = new Test($this->test_id);
+
+        return $this->buildExercises();
+    }
+
+    private function buildExercises()
+    {
         $exercises = array();
 
         if ($this->test) {
