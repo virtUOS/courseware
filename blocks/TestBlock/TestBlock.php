@@ -76,6 +76,7 @@ class TestBlock extends Block
         }
 
         return array(
+            'title' => $this->test->title,
             'exercises' => $exercises,
         );
     }
