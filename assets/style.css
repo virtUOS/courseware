@@ -56,7 +56,7 @@
 #mooc-registrations-index #layout_container input {
   font-size: 14pt;
   margin-bottom: 5px; }
-#mooc-registrations-index #layout_container form.signup input, #mooc-registrations-index #layout_container form.signin input {
+#mooc-registrations-index #layout_container form.signup input[type=text], #mooc-registrations-index #layout_container form.signup input[type=email], #mooc-registrations-index #layout_container form.signin input[type=text], #mooc-registrations-index #layout_container form.signin input[type=email] {
   width: 20em; }
 #mooc-registrations-index #layout_container p {
   max-width: 40em; }

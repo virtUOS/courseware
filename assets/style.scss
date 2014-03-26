@@ -93,7 +93,7 @@
   }
 
   form.signup, form.signin {
-    input {
+    input[type=text], input[type=email] {
       width: 20em;
     }
   }
