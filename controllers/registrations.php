@@ -211,7 +211,8 @@ class RegistrationsController extends MoocipController {
         $new = new CourseMember(array($course, $user->id));
         if ($new->isNew()) {
             $new->status = 'autor';
-            $new->admission_studiengang_id = 'all';
+            // TODO: since Stud.IP 3.0 this field does not exist anymore
+            #$new->admission_studiengang_id = 'all';
             $new->label = '';
             $new->store();
         }
