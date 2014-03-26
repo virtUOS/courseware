@@ -28,18 +28,13 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Mehr…</td>
+	<td>//a[@href=&quot;/studip/mooc/plugins.php/mooc/courses/show/2358add583efc4c04d209ff257b9d9c4?moocid=2358add583efc4c04d209ff257b9d9c4&quot;]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Zur Anmeldung</td>
 	<td></td>
-</tr>
-<tr>
-	<td>verifyText</td>
-	<td>css=div.error &gt; p</td>
-	<td>Dies ist ein erforderliches Feld</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -63,10 +58,9 @@
 </tr>
 <tr>
 	<td>verifyText</td>
-	<td>css=h2</td>
-	<td>Vielen Danke für Ihre Anmeldung!</td>
+	<td>css=div.error &gt; p</td>
+	<td>Dies ist ein erforderliches Feld</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
