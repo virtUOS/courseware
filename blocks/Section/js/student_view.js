@@ -47,21 +47,24 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
                 $block_wrapper = block_view.$el.closest('section.block'),
                 self = this;
 
-            $block_wrapper.addClass("loading");
+            if (confirm("Wollen Sie wirklich löschen?")) {
 
-            helper.callHandler(this.model.id, 'remove_content_block', { child_id: block_id }).then(
+                $block_wrapper.addClass("loading");
 
-                function (data) {
-                    block_view.remove();
-                    delete self.children[block_id];
-                    $block_wrapper.remove();
-                },
+                helper.callHandler(this.model.id, 'remove_content_block', { child_id: block_id }).then(
 
-                function (error) {
-                    $block_wrapper.removeClass("loading");
-                    alert("TODO: could not delete block");
-                }
-            );
+                    function (data) {
+                        block_view.remove();
+                        delete self.children[block_id];
+                        $block_wrapper.remove();
+                    },
+
+                    function (error) {
+                        $block_wrapper.removeClass("loading");
+                        alert("TODO: could not delete block");
+                    }
+                );
+            }
         },
 
 
