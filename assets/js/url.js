@@ -10,7 +10,7 @@ define(['module', 'argjs'], function (module, Arg) {
 
         getView: function (block_id, view_name) {
 
-            return $.ajax({
+            return jQuery.ajax({
                 url: this.block_url(block_id, { view: view_name }),
                 dataType: "html",
                 type: "GET"
@@ -19,7 +19,7 @@ define(['module', 'argjs'], function (module, Arg) {
 
         putView: function (block_id, data) {
 
-            return $.ajax({
+            return jQuery.ajax({
                 url: this.block_url(block_id),
                 type: "PUT",
                 data: JSON.stringify(data),
@@ -35,7 +35,7 @@ define(['module', 'argjs'], function (module, Arg) {
                 handler: handler
             };
 
-            return $.ajax({
+            return jQuery.ajax({
                 url: this.block_url(block_id),
                 type: "POST",
                 data: JSON.stringify(payload),

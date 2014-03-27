@@ -15,7 +15,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         },
 
         initialize: function() {
-            _.each($('section.block'), this.initializeBlock, this);
+            _.each(jQuery('section.block'), this.initializeBlock, this);
 
             this.listenTo(this, "switch", this.switchAll, this);
 
@@ -37,12 +37,12 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         },
 
         switchToAuthorView: function (event) {
-            var id = $(event.target).closest(".block").attr("data-blockid");
+            var id = jQuery(event.target).closest(".block").attr("data-blockid");
             this.switchView(id, "author");
         },
 
         destroyView: function (event) {
-            var block_id = $(event.target).closest(".block").attr("data-blockid"),
+            var block_id = jQuery(event.target).closest(".block").attr("data-blockid"),
                 block_view = this.children[block_id],
                 $block_wrapper = block_view.$el.closest('section.block'),
                 self = this;
@@ -84,7 +84,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             block_view.remove();
 
             // create new view
-            var el = $("<div class='block-content'/>");
+            var el = jQuery("<div class='block-content'/>");
             $block_wrapper.append(el).addClass("loading");
 
             var view = blockTypes
@@ -104,7 +104,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         addNewBlock: function (event) {
 
             var view = this,
-                $button = $(event.target),
+                $button = jQuery(event.target),
                 block_type = $button.attr("data-type");
 
             $button.prop("disabled", true).addClass("loading");
@@ -143,7 +143,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         },
 
         initializeBlock: function (block, model) {
-            var $block = $(block),
+            var $block = jQuery(block),
                 $el    = $block.find('div.block-content'),
                 view;
 

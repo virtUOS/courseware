@@ -55,7 +55,7 @@
      blocks.reset(block_loader);
 
      var view = blocks.get("Courseware").createView("student", {
-       el: $("#courseware"),
+       el: jQuery("#courseware"),
        model: new BlockModel({
          id: <?= (int) $courseware->id ?>,
          type: "Courseware"

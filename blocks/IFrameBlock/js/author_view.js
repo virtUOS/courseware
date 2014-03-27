@@ -30,7 +30,7 @@ define(['assets/js/author_view', 'assets/js/url'],
                 .then(
                     // success
                     function () {
-                        $(event.target).addClass("accept");
+                        jQuery(event.target).addClass("accept");
                         view.switchBack();
                     },
 
