@@ -1,3 +1,6 @@
-{{#fields}}
-<iframe src="{{url}}" allowfullscreen></iframe>
-{{/fields}}
+{{#url}}
+  <iframe src="{{url}}" allowfullscreen></iframe>
+{{/url}}
+{{^url}}
+  {{#i18n}}Kein Video eingerichtet.{{/i18n}}
+{{/url}}

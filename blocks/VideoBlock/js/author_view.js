@@ -4,27 +4,8 @@ define(['assets/js/author_view', 'assets/js/url', './utils'], function (
     'use strict';
     return AuthorView.extend({
         events: {
-            'keyup input': function (event) {
-                var view = this;
-
-                view.$('p').text('...am ändern.');
-                clearTimeout(this.timeoutId);
-
-                this.timeoutId = setTimeout(function () {
-                    var url = view.$('input').val();
-                    Utils.normalizeIFrame(this, url);
-
-                    // save data
-                    view.$('p').text('Speichere Änderungen...');
-                    helper
-                    .callHandler(view.model.id, 'save', { url: url })
-                    .then(function () { // success
-                        view.$('p').text('Änderungen wurden gespeichert.');
-                    }, function () {    // error
-                        view.$('p').text('Fehler beim speichern.');
-                    });
-                }, 1000);
-            }
+            'keyup input': "onKeyup",
+            "click button[name=cancel]": "switchBack"
         },
         initialize: function (options) {
             // timeoutId is needed by the 'keyup input' event
@@ -36,6 +17,28 @@ define(['assets/js/author_view', 'assets/js/url', './utils'], function (
                 Utils.normalizeIFrame(this);
             }, 1000);
         },
-        render: function() { return this; }
+        render: function() { return this; },
+        onKeyup: function (event) {
+            var view = this;
+
+            view.$('p').text('...am ändern.');
+            clearTimeout(this.timeoutId);
+
+            this.timeoutId = setTimeout(function () {
+                var url = view.$('input').val();
+                Utils.normalizeIFrame(this, url);
+
+                // save data
+                view.$('p').text('Speichere Änderungen...');
+                helper
+                    .callHandler(view.model.id, 'save', { url: url })
+                    .then(function () { // success
+                        view.$('p').text('Änderungen wurden gespeichert.');
+                    }, function () {    // error
+                        view.$('p').text('Fehler beim speichern.');
+                    });
+            }, 1000);
+        }
+
     });
 });
