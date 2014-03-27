@@ -39,9 +39,8 @@ define({
         return url && this.normalizeMatterhornLink(this.normalizeYouTubeLink(url));
     },
     normalizeIFrame: function (view, newUrl) {
-        var
-        iframe = view.$('iframe'),
-        url = this.normalizeLink(newUrl || iframe.attr('src'));
+        var iframe = view.$('iframe'),
+            url = this.normalizeLink(newUrl || iframe.attr('src'));
 
         if (iframe.attr('src') != url) {
             iframe.attr('src', url);

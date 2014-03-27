@@ -11,6 +11,9 @@ define(['backbone', 'assets/js/url'], function (Backbone, helper) {
                 .then(
                     function (data) {
                         self.$el.html(data);
+                        if (typeof self.postRender === "function") {
+                            self.postRender();
+                        }
                     }
                 );
         }

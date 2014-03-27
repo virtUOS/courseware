@@ -7,17 +7,11 @@ define(['assets/js/author_view', 'assets/js/url', './utils'], function (
             'keyup input': "onKeyup",
             "click button[name=cancel]": "switchBack"
         },
-        initialize: function (options) {
-            // timeoutId is needed by the 'keyup input' event
-            this.timeoutId = setTimeout(function () {
-                // TODO remove setTimeout call
-                // calling normalizeIFrame after a timeout is just a workaround
-                // since the IFrame is not initialized yet when this function
-                // is called                
-                Utils.normalizeIFrame(this);
-            }, 1000);
-        },
+        initialize: function (options) {},
         render: function() { return this; },
+        postRender: function () {
+            Utils.normalizeIFrame(this);
+        },
         onKeyup: function (event) {
             var view = this;
 

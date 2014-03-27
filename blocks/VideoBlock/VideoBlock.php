@@ -10,7 +10,7 @@ class VideoBlock extends Block
 
     function student_view()
     {
-        return $this->toJSON();
+        return array('url' => $this->url);
     }
 
     function author_view()
