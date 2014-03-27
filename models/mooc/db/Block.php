@@ -40,6 +40,8 @@ class Block extends \SimpleORMap
         $this->registerCallback('before_create', 'ensurePositionId');
         $this->registerCallback('before_store',  'validate');
 
+        $this->registerCallback('after_delete',  'destroyFields');
+
         parent::__construct($id);
     }
 
@@ -128,6 +130,14 @@ class Block extends \SimpleORMap
             return false;
         }
         return true;
+    }
+
+    /**
+     * Remove associated Fields on delete.
+     */
+    function destroyFields()
+    {
+        Field::deleteBySQL('block_id = ?', array($this->id));
     }
 
 
