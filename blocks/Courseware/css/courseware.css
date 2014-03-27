@@ -46,7 +46,7 @@ section#courseware {
       top: 0;
       right: 0; }
     section#courseware ol.chapters li div.title button.edit, section#courseware ol.subchapters li div.title button.edit {
-      background: url("../../../../../../assets/images/icons/16/grey/admin.png") center center no-repeat; }
+      background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat; }
   section#courseware ol.active-subchapter {
     margin-bottom: 30px; }
     section#courseware ol.active-subchapter li {

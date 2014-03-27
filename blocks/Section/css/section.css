@@ -26,7 +26,7 @@
     top: 0;
     right: 0; }
     .active-section section.block div.controls button.author {
-      background: url("../../../../../../assets/images/icons/16/grey/admin.png") center center no-repeat; }
+      background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat; }
     .active-section section.block div.controls button.trash {
       background: url("../../../../../../assets/images/icons/16/grey/trash.png") center center no-repeat; }
   .active-section section.block + .no-content {
