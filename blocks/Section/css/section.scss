@@ -30,7 +30,7 @@
       right: 0;
 
       button.author {
-        @include btn(admin);
+        @include btn(edit);
       }
 
       button.trash {

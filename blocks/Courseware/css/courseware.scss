@@ -64,7 +64,7 @@ section#courseware {
         }
 
         button.edit {
-          @include btn(admin);
+          @include btn(edit);
         }
       }
     }
