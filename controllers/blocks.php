@@ -52,23 +52,22 @@ class BlocksController extends MoocipController {
     {
         // we need the handler and the data
         if (!isset($this->data['handler']) || !isset($this->data['data'])) {
-            throw new Trails_Exception(400);
+            return $this->json_error('Requires handler and data.', 400);
         }
 
         // JSON requests only
         if (!$this->isJSONRequest()) {
-            throw new Trails_Exception(400);
+            return $this->json_error('Only JSON requests.', 400);
         }
-
-        $handler = $this->data['handler'];
-        $data = $this->data['data'];
 
         $block = $this->requireBlock($id);
         $ui_block = $this->container['block_factory']->makeBlock($block);
 
-        $json = $ui_block ? $ui_block->handle($handler, $data) : $block->toArray();
+        if (!$ui_block) {
+            return $this->json_error('No such handler.', 400);
+        }
 
-        $this->render_json($json);
+        $this->callBlockHandler($ui_block, $this->data['handler'], $this->data['data']);
     }
 
 
@@ -169,17 +168,42 @@ class BlocksController extends MoocipController {
         return $format && $format->getValue() === $priorities[0];
     }
 
-    private function json_error($reason, $data = null)
+    private function json_error($reason, $status = 500, $data = null)
     {
-        $this->response->set_status(500);
+        $this->response->set_status($status);
         $payload = array(
             'status' => 'error',
             'reason' => $reason
         );
+
         if (isset($data)) {
             $payload['data'] = (array) $data;
         }
 
         $this->render_json($payload);
+    }
+
+    private function callBlockHandler($ui_block, $handler, $data)
+    {
+        try {
+            $json = $ui_block->handle($handler, $data);
+            $this->render_json($json);
+        }
+        catch (\Mooc\UI\Errors\AccessDenied $ade) {
+            $this->json_error('Access Denied', 401);
+            return;
+        }
+        catch (\Mooc\UI\Errors\BadRequest $bre) {
+            $this->json_error($bre->getMessage(), 400);
+            return;
+        }
+        catch (\Mooc\UI\Errors\NotFound $nfe) {
+            $this->json_error('Not Found', 404);
+            return;
+        }
+        catch (Exception $e) {
+            $this->json_error($e->getMessage());
+            return;
+        }
     }
 }

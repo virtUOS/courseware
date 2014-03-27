@@ -30,16 +30,16 @@ class Section extends Block {
     function add_content_block_handler($data) {
 
         if (!isset($data['type'])) {
-            throw new \RuntimeException("Type required.");
+            throw new Errors\BadRequest("Type required.");
         }
 
         if (!$this->container['current_user']->canCreate($this->_model)) {
-            throw new \RuntimeException("Access denied");
+            throw new Errors\AccessDenied();
         }
 
         $types = $this->container['block_factory']->getContentBlockClasses();
         if (!in_array($data['type'], $types)) {
-            throw new \RuntimeException("Wrong type.");
+            throw new Errors\BadRequest("Wrong type.");
         }
 
         $block = new \Mooc\DB\Block();
@@ -58,16 +58,16 @@ class Section extends Block {
     function remove_content_block_handler($data) {
 
         if (!isset($data['child_id'])) {
-            throw new \RuntimeException("Child ID required");
+            throw new Errors\BadRequest("Child ID required");
         }
 
         $child = $this->_model->children->findOneBy("id", (int) $data['child_id']);
         if (!$child) {
-            throw new \RuntimeException("No such child");
+            throw new Errors\BadRequest("No such child");
         }
 
         if (!$this->container['current_user']->canDelete($child)) {
-            throw new \RuntimeException("Access denied");
+            throw new Errors\BadRequest("Access denied");
         }
 
         $child->delete();
