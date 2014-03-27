@@ -48,29 +48,29 @@ class Courseware extends Block {
 
         // we need a valid parent
         if (!isset($data['parent'])) {
-            throw new \RuntimeException("Parent required.");
+            throw new Errors\BadRequest("Parent required.");
         }
 
         $parent = \Mooc\DB\Block::find($data['parent']);
         if (!$parent || !$parent->isStructuralBlock()) {
-            throw new \RuntimeException("Invalid parent.");
+            throw new Errors\BadRequest("Invalid parent.");
         }
 
         if (!$this->container['current_user']->canUpdate($parent)) {
-            throw new \RuntimeException("Access denied");
+            throw new Errors\AccessDenied();
         }
 
         // we need a title
         if (!isset($data['title']) || !strlen($data['title']))
         {
-            throw new \RuntimeException("Title required.");
+            throw new Errors\BadRequest("Title required.");
         }
 
         // is there a structural level below the parent?
         $structure_types = \Mooc\DB\Block::getStructuralBlockClasses();
         $index = array_search($parent->type, $structure_types);
         if (!$child_type = $structure_types[$index + 1]) {
-            throw new \RuntimeException("Unknown child type.");
+            throw new Errors\BadRequest("Unknown child type.");
         }
 
         $block = new \Mooc\DB\Block();
