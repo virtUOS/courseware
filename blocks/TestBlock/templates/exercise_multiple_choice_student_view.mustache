@@ -2,6 +2,11 @@
 
 <ul>
 {{#answers}}
-    <li><input type="checkbox"> {{ text }}</li>
+    <li>
+      <input type="checkbox" name="answer[]" value="{{index}}" id="answer_{{index}}">
+      <label for="answer_{{index}}">
+        {{ text }}
+      </label>
+    </li>
 {{/answers}}
 </ul>

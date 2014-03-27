@@ -2,6 +2,11 @@
 
 <ul>
 {{#answers}}
-    <li><input type="radio"> {{ text }}</li>
+    <li>
+      <input type="radio" name="answer" value="{{index}}" id="answer_{{index}}">
+      <label for="answer_{{index}}">
+        {{ text }}
+      </label>
+    </li>
 {{/answers}}
 </ul>
