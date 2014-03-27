@@ -61,7 +61,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
 
         // TODO: flesh this out
         navigateTo: function (event) {
-            var url = $(event.target).attr("href") + getHash(this.el);
+            var url = jQuery(event.target).attr("href") + getHash(this.el);
             window.location = url;
             event.preventDefault();
         },
@@ -79,7 +79,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
 
         addStructure: function (event) {
 
-            var parent_id = $(event.target).closest("[data-blockid]").attr("data-blockid");
+            var parent_id = jQuery(event.target).closest("[data-blockid]").attr("data-blockid");
 
             if (parent_id == null) {
                 return;
@@ -103,7 +103,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         },
 
         editStructure: function (event) {
-            var $parent = $(event.target).closest("[data-blockid]"),
+            var $parent = jQuery(event.target).closest("[data-blockid]"),
                 id = $parent.attr("data-blockid"),
                 $title = $parent.find("> .title"),
                 title = $title.find("a").text().trim();
