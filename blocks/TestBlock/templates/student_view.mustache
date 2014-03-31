@@ -2,20 +2,25 @@
 
 <form method="post">
   {{#exercises}}
-    <form>
-      <input type="hidden" name="exercise_id" value="{{id}}">
-      <input type="hidden" name="assignment_id" value="{{test_id}}">
-      <input type="hidden" name="number_of_answers" value="{{number_of_answers}}">
-      <input type="hidden" name="solver_user_id" value="{{solver_user_id}}">
-      {{#single-choice}}
-        {{> exercise_single_choice_student_view}}
-      {{/single-choice}}
-      {{#multiple-choice}}
-        {{> exercise_multiple_choice_student_view}}
-      {{/multiple-choice}}
+    {{#has_solution}}
+      {{> solution_student_view.mustache}}
+    {{/has_solution}}
+    {{^has_solution}}
+      <form>
+        <input type="hidden" name="exercise_id" value="{{id}}">
+        <input type="hidden" name="assignment_id" value="{{test_id}}">
+        <input type="hidden" name="number_of_answers" value="{{number_of_answers}}">
+        <input type="hidden" name="solver_user_id" value="{{solver_user_id}}">
+        {{#single-choice}}
+          {{> exercise_single_choice_student_view}}
+        {{/single-choice}}
+        {{#multiple-choice}}
+          {{> exercise_multiple_choice_student_view}}
+        {{/multiple-choice}}
 
-      <button class="button">Abschicken</button>
-    </form>
+        <button class="button">Abschicken</button>
+      </form>
+    {{/has_solution}}
   {{/exercises}}
   {{^exercises}}
     Keine Aufgaben.

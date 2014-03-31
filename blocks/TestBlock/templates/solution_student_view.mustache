@@ -1,0 +1,23 @@
+<p class="question">{{ question }}</p>
+
+<ul>
+{{#answers}}
+    <li>
+      {{#checked}}
+        <img src="{{checked_image}}">
+      {{/checked}}
+      {{^checked}}
+        <img src="{{unchecked_image}}">
+      {{/checked}}
+
+      {{ text }}
+
+      {{#correct_answer}}
+        <img src="{{correct_image}}">
+      {{/correct_answer}}
+      {{^correct_answer}}
+        <img src="{{incorrect_image}}">
+      {{/correct_answer}}
+    </li>
+{{/answers}}
+</ul>

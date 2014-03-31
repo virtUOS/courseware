@@ -2,6 +2,8 @@
 
 namespace Mooc\Ui;
 
+use Mooc\Container;
+use Mooc\TestBlock\Model\Solution;
 use Mooc\TestBlock\Model\Test;
 
 /**
@@ -10,13 +12,23 @@ use Mooc\TestBlock\Model\Test;
 class TestBlock extends Block
 {
     /**
-     * @var \Mooc\DB\Vips\Test
+     * @var \Mooc\TestBlock\Model\Test
      */
     private $test;
+
+    private static $VIPS_PATH;
+
+    public function __construct(Container $container, \SimpleORMap $model)
+    {
+        static::$VIPS_PATH = static::getVipsPluginPath();
+
+        parent::__construct($container, $model);
+    }
 
     public function initialize()
     {
         $this->defineField('test_id', \Mooc\SCOPE_BLOCK, null);
+
         if (\PluginEngine::getPlugin('VipsPlugin')) {
             $this->test = new Test($this->test_id);
         }
@@ -45,18 +57,30 @@ class TestBlock extends Block
 
     private function buildExercises()
     {
+        /** @var \Seminar_User $user */
+        global $user;
+
         $exercises = array();
+
+        $vipsPlugin = static::getVipsPlugin();
 
         if ($this->test) {
             foreach ($this->test->exercises as $exercise) {
-                require_once __DIR__.'/../../../VipsPlugin/exercises/'.$exercise->URI.'.php';
+                require_once static::$VIPS_PATH.'/exercises/'.$exercise->URI.'.php';
                 $vipsExercise = new $exercise->URI($exercise->Aufgabe, $exercise->ID);
 
+                $solution = Solution::findOneBy($this->test, $exercise, $user);
+                $vipsSolution = $vipsExercise->getTagsFromXML($solution->solution, 'answer');
+
                 $entry = array(
+                    'id' => $vipsExercise->id,
+                    'test_id' => $this->test->id,
                     'question' => $vipsExercise->question,
                     'answers' => array(),
                     'single-choice' => $vipsExercise instanceof \sc_exercise,
                     'multiple-choice' => $vipsExercise instanceof \mc_exercise,
+                    'solver_user_id' => $user->cfg->getUserId(),
+                    'has_solution' => $solution === null ? false : true,
                 );
 
                 if (is_array($vipsExercise->answerArray[0])) {
@@ -65,11 +89,25 @@ class TestBlock extends Block
                     $answers = $vipsExercise->answerArray;
                 }
 
-                foreach ($answers as $answer) {
-                    $entry['answers'][] = array(
+                foreach ($answers as $index => $answer) {
+                    $answerEntry = array(
                         'text' => $answer,
+                        'index' => $index,
+                        'checked' => false,
+                        'checked_image' => $vipsPlugin->getPluginURL().'/images/choice_checked.png',
+                        'unchecked_image' => $vipsPlugin->getPluginURL().'/images/choice_unchecked.png',
+                        'correct_answer' => $vipsExercise->correctArray[$index] == 1,
+                        'correct_image' => \Assets::image_path('icons/16/green/accept'),
+                        'incorrect_image' => \Assets::image_path('icons/16/red/decline'),
                     );
+
+                    if ($solution !== null && $vipsSolution[$index] == 1) {
+                        $answerEntry['checked'] = true;
+                    }
+                    $entry['answers'][] = $answerEntry;
                 }
+
+                $entry['number_of_answers'] = count($answers);
 
                 $exercises[] =  $entry;
             }
@@ -79,5 +117,15 @@ class TestBlock extends Block
             'title' => $this->test->title,
             'exercises' => $exercises,
         );
+    }
+
+    private static function getVipsPluginPath()
+    {
+        return __DIR__.'/../../../VipsPlugin';
+    }
+
+    private static function getVipsPlugin()
+    {
+        return new \VipsPlugin();
     }
 }
