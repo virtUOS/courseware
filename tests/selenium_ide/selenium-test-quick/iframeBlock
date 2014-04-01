@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=IFrameBlock</td>
+	<td>//button[@data-type='IFrameBlock']</td>
 	<td></td>
 </tr>
 <tr>
@@ -64,6 +64,11 @@
 <tr>
 	<td>click</td>
 	<td>css=button.trash</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Wollen Sie wirklich löschen?</td>
 	<td></td>
 </tr>
 </tbody></table>

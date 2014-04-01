@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Test</td>
+	<td>//button[@data-type='TestBlock']</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,7 +36,11 @@
 	<td>css=button.trash</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>assertConfirmation</td>
+	<td>Wollen Sie wirklich löschen?</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

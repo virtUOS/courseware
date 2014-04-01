@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+# -*- coding: iso-8859-15 -*-
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
@@ -17,8 +18,8 @@ class IframeBlock(unittest.TestCase):
     def test_iframe_block(self):
         driver = self.driver
         driver.get("http://vm036.rz.uos.de/studip/mooc/plugins.php/mooc/courseware?cid=2358add583efc4c04d209ff257b9d9c4&selected=10")
-        driver.find_element_by_css_selector("button.author").click()
-        driver.find_element_by_link_text("IFrameBlock").click()
+        driver.find_element_by_xpath("//button[@title='Autorenmodus']").click()
+        driver.find_element_by_xpath("//button[@data-type='IFrameBlock']").click()
         for i in range(60):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, "iframe"): break
@@ -44,6 +45,8 @@ class IframeBlock(unittest.TestCase):
             time.sleep(1)
         else: self.fail("time out")
         driver.find_element_by_css_selector("button.trash").click()
+        driver.switch_to_alert().accept()
+
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -68,6 +71,7 @@ class IframeBlock(unittest.TestCase):
     
     def tearDown(self):
         #self.driver.quit()
+	time.sleep(1)
         self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
-import unittest, time, re
+import unittest, time, re, random
 
 class Einverstanden(unittest.TestCase):
     def setUp(self):
@@ -25,10 +25,11 @@ class Einverstanden(unittest.TestCase):
         driver.find_element_by_name("vorname").send_keys("Max")
         driver.find_element_by_name("nachname").clear()
         driver.find_element_by_name("nachname").send_keys("Mustermann")
-        # ERROR: Caught exception [ERROR: Unsupported command [getEval |  | ]]
+	driver.find_element_by_name("mail").clear()
+        driver.find_element_by_name("mail").send_keys("max"+ str(random.randint(0, 11111))+"@uos.de")
         driver.find_element_by_name("accept_tos").click()
         driver.find_element_by_css_selector("button[name=\"Jetzt anmelden\"]").click()
-        try: self.assertEqual(u"Vielen Danke fÃ¼r Ihre Anmeldung!", driver.find_element_by_css_selector("h2").text)
+        try: self.assertEqual(u"Vielen Danke für Ihre Anmeldung!", driver.find_element_by_css_selector("h2").text)
         except AssertionError as e: self.verificationErrors.append(str(e))
     
     def is_element_present(self, how, what):

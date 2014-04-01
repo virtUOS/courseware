@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=VideoBlock</td>
+	<td>//button[@data-type='VideoBlock']</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,8 +33,18 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>name=url</td>
+	<td>css=div.block-content &gt; input[type=&quot;text&quot;]</td>
 	<td>https://video3.virtuos.uni-osnabrueck.de/static/engage-player/b89aa8f8-251c-49db-9ceb-fea6e79c86e6/987ba5be-d194-46b8-84da-b9721628586e/MOOC_Vornberger_5.mp4</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>css=div.block-content &gt; input[type=&quot;text&quot;]</td>
+	<td>${KEY_ENTER}</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[@src='https://video3.virtuos.uni-osnabrueck.de/static/engage-player/b89aa8f8-251c-49db-9ceb-fea6e79c86e6/987ba5be-d194-46b8-84da-b9721628586e/MOOC_Vornberger_5.mp4']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>click</td>
@@ -51,7 +61,11 @@
 	<td>css=button.trash</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>assertConfirmation</td>
+	<td>Wollen Sie wirklich löschen?</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>
