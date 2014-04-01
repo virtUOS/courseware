@@ -5,6 +5,7 @@ namespace Mooc\Ui;
 use Mooc\Container;
 use Mooc\TestBlock\Model\Solution;
 use Mooc\TestBlock\Model\Test;
+use Mooc\TestBlock\Vips\Bridge as VipsBridge;
 
 /**
  * @author Christian Flothmann <christian.flothmann@uos.de>
@@ -16,12 +17,8 @@ class TestBlock extends Block
      */
     private $test;
 
-    private static $VIPS_PATH;
-
     public function __construct(Container $container, \SimpleORMap $model)
     {
-        static::$VIPS_PATH = static::getVipsPluginPath();
-
         parent::__construct($container, $model);
     }
 
@@ -62,11 +59,11 @@ class TestBlock extends Block
 
         $exercises = array();
 
-        $vipsPlugin = static::getVipsPlugin();
+        $vipsPlugin = VipsBridge::getVipsPlugin();
 
         if ($this->test) {
             foreach ($this->test->exercises as $exercise) {
-                require_once static::$VIPS_PATH.'/exercises/'.$exercise->URI.'.php';
+                require_once VipsBridge::getVipsPath().'/exercises/'.$exercise->URI.'.php';
                 $vipsExercise = new $exercise->URI($exercise->Aufgabe, $exercise->ID);
 
                 $solution = Solution::findOneBy($this->test, $exercise, $user);
@@ -117,15 +114,5 @@ class TestBlock extends Block
             'title' => $this->test->title,
             'exercises' => $exercises,
         );
-    }
-
-    private static function getVipsPluginPath()
-    {
-        return __DIR__.'/../../../VipsPlugin';
-    }
-
-    private static function getVipsPlugin()
-    {
-        return new \VipsPlugin();
     }
 }
