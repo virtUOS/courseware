@@ -52,6 +52,25 @@ class TestBlock extends Block
         return $this->buildExercises();
     }
 
+    public function exercise_submit_handler($data)
+    {
+        global $vipsPlugin, $vipsTemplateFactory;
+
+        parse_str($data, $requestParams);
+
+        foreach ($requestParams as $key => $value) {
+            $_POST[$key] = $value;
+        }
+
+        $vipsPlugin = VipsBridge::getVipsPlugin();
+        $vipsTemplateFactory = new \Flexi_TemplateFactory(VipsBridge::getVipsPath().'/templates/');
+
+        $return = \submit_exercise('sheets');
+        ob_clean();
+
+        return array('foo' => 'bar', 'data' => $_POST, 'vips' => $return);
+    }
+
     private function buildExercises()
     {
         /** @var \Seminar_User $user */
@@ -70,6 +89,7 @@ class TestBlock extends Block
                 $vipsSolution = $vipsExercise->getTagsFromXML($solution->solution, 'answer');
 
                 $entry = array(
+                    'exercise_type' => $exercise->URI,
                     'id' => $vipsExercise->id,
                     'test_id' => $this->test->id,
                     'question' => $vipsExercise->question,
@@ -87,9 +107,16 @@ class TestBlock extends Block
                 }
 
                 foreach ($answers as $index => $answer) {
+                    if ($entry['single-choice']) {
+                        $name = 'answer_0';
+                    } else {
+                        $name = 'answer_'.$index;
+                    }
+
                     $answerEntry = array(
                         'text' => $answer,
                         'index' => $index,
+                        'name' => $name,
                         'checked' => false,
                         'checked_image' => $vipsPlugin->getPluginURL().'/images/choice_checked.png',
                         'unchecked_image' => $vipsPlugin->getPluginURL().'/images/choice_unchecked.png',

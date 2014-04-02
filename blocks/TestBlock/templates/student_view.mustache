@@ -7,6 +7,10 @@
     {{/has_solution}}
     {{^has_solution}}
       <form>
+        <input type="hidden" name="action" value="sheets">
+        <input type="hidden" name="subaction" value="submit_exercise">
+        <input type="hidden" name="submit_exercise" value="1">
+        <input type="hidden" name="exercise_type" value="{{exercise_type}}">
         <input type="hidden" name="exercise_id" value="{{id}}">
         <input type="hidden" name="assignment_id" value="{{test_id}}">
         <input type="hidden" name="number_of_answers" value="{{number_of_answers}}">

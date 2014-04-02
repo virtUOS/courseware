@@ -37,4 +37,9 @@ namespace Mooc\TestBlock\Vips {
         }
     }
 }
- 
+
+namespace {
+    use Mooc\TestBlock\Vips\Bridge;
+
+    require_once Bridge::getVipsPath().'/vips_assignments.inc.php';
+}
