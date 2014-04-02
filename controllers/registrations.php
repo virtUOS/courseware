@@ -143,6 +143,11 @@ class RegistrationsController extends MoocipController {
         $userinfo = new Userinfo($user->getId());
         $userinfo->store();
 
+        // add user to special user-domain
+        $user_domain = new UserDomain(\Mooc\USER_DOMAIN_NAME);
+        $user_domain->addUser($user->getId());
+        
+        // send registration-mail
         $this->sendMail($this->course, $mail, $password);
 
         $_SESSION['mooc']['register'] = array(
