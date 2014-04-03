@@ -21,8 +21,6 @@ section#courseware {
   section#courseware ol {
     list-style: none;
   }
-    section#courseware ol li {
-      padding: 3px 0px; }
     section#courseware ol li + li.no-content {
       display: none; }
   section#courseware ol.chapters {
@@ -31,32 +29,43 @@ section#courseware {
     padding-right: 4%;
     padding-left: 1%;
     width: 18%; }
-  section#courseware ol.chapters li.selected > .title > a, section#courseware ol.subchapters li.selected > .title > a {
-    font-weight: 700; }
+	section#courseware ol.subchapters {
+		padding-left: 25px; }
+	section#courseware ol.chapters li div.title {
+		 }
+  section#courseware ol.chapters li.selected > .title > a {
+    font-weight: 700; 
+    background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat left center !important; }
+  section#courseware ol.subchapters li.selected > .title > a {
+	  font-weight: 700;
+	  background: none !important; }
   section#courseware ol.chapters li div.title, section#courseware ol.subchapters li div.title {
     position: relative;
     line-height: 20px;
-    padding-left: 0.25em; }
-    section#courseware ol.chapters li div.title a, section#courseware ol.subchapters li div.title a {
+    padding-left: 0.25em;
+    border-bottom: 1px solid #E9E9E9; }
+    section#courseware ol.chapters li.chapter div.title a { 
       display: block;
-      padding-right: 22px; }
+      padding: 5px 22px; }
+    section#courseware ol.chapters li.chapter > .title > a {
+	    background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat left center; }
+    section#courseware ol.subchapters li.subchapter div.title a {
+    	display: block;
+      padding: 3px 22px 3px 10px; }
     section#courseware ol.chapters li div.title:hover, section#courseware ol.subchapters li div.title:hover {
-      background-color: #eee;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      -ms-border-radius: 4px;
-      border-radius: 4px; }
+      background-color: #eee; }
       section#courseware ol.chapters li div.title:hover .controls, section#courseware ol.subchapters li div.title:hover .controls {
         visibility: visible; }
     section#courseware ol.chapters li div.title .controls, section#courseware ol.subchapters li div.title .controls {
       visibility: hidden;
       position: absolute;
       top: 0;
-      right: 0; }
+      right: 0;
+      padding: 2px; }
     section#courseware ol.chapters li div.title button.edit, section#courseware ol.subchapters li div.title button.edit {
       background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat; }
   section#courseware ol.active-subchapter {
-    margin: 5px 0px;
+    margin: -6px 0px 25px;
     float: left;
     padding: 0px 0px 10px 0px;
     width: 77%;
@@ -139,7 +148,12 @@ section#courseware {
   section#courseware .edit-structure {
     position: relative; }
     section#courseware .edit-structure input {
-      width: 88%; }
+      width: 88%;
+      padding: 2px 5px;
+      border-radius: 3px; 
+      border: 1px solid #BBBBBB; }
+    section#courseware .edit-structure input:focus {
+      border-color: #009EFF; }
     section#courseware .edit-structure button {
       background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
       position: absolute;
