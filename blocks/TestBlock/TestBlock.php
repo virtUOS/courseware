@@ -26,7 +26,7 @@ class TestBlock extends Block
     {
         $this->defineField('test_id', \Mooc\SCOPE_BLOCK, null);
 
-        if (\PluginEngine::getPlugin('VipsPlugin')) {
+        if (VipsBridge::vipsExists()) {
             $this->test = new Test($this->test_id);
         }
     }

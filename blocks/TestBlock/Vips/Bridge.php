@@ -30,11 +30,20 @@ namespace Mooc\TestBlock\Vips {
          */
         public static function getVipsPlugin()
         {
+            if (!static::vipsExists()) {
+                return null;
+            }
+
             if (static::$vipsPlugin === null) {
                 static::$vipsPlugin = new \VipsPlugin();
             }
 
             return static::$vipsPlugin;
+        }
+
+        public static function vipsExists()
+        {
+            return class_exists('\VipsPlugin');
         }
     }
 }
@@ -42,5 +51,7 @@ namespace Mooc\TestBlock\Vips {
 namespace {
     use Mooc\TestBlock\Vips\Bridge;
 
-    require_once Bridge::getVipsPath().'/vips_assignments.inc.php';
+    if (Bridge::vipsExists()) {
+        require_once Bridge::getVipsPath().'/vips_assignments.inc.php';
+    }
 }
