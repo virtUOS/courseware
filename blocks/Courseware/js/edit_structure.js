@@ -8,8 +8,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'],
         className: "edit-structure",
 
         events: {
-            "change input": "submit",
-            "click button": "submit"
+            "submit form": "submit"
         },
 
         initialize: function() {
@@ -17,11 +16,15 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'],
             this.render();
         },
 
-        render: function() {
+        render: function () {
             var template = templates("Courseware", "edit_structure", this.model.toJSON());
             this.$el.html(template);
 
             return this;
+        },
+
+        focus: function () {
+            this.$("input").get(0).focus();
         },
 
         promise: function () {
@@ -29,6 +32,8 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'],
         },
 
         submit: function (event) {
+
+            event.preventDefault();
 
             var old = this.model.get("title"),
                 val = this.$("input").val().trim(),

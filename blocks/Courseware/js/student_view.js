@@ -29,7 +29,9 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             "click .add-subchapter":       "addStructure",
             "click .add-section":          "addStructure",
 
-            "click .edit":                 "editStructure"
+            "click .edit":                 "editStructure",
+
+            "click .trash":                "destroyStructure"
         },
 
         initialize: function() {
@@ -86,24 +88,23 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             var courseware = this,
                 $button = jQuery(event.target),
                 $parent = $button.closest("[data-blockid]"),
-                id = $parent.attr("data-blockid");
+                id = $parent.attr("data-blockid"),
+                type;
 
             if (id == null) {
                 return;
             }
 
-            var type = $parent.hasClass("chapter") ? "subchapter" : "chapter",
-                title = type === "subchapter" ? i18n("Unterkapitel X") : i18n("Kapitel X");
+            var model = this._newBlockFromButton($button),
+                view = new EditView({ model: model }),
 
-            var model = new BlockModel({ title: title, type: type }),
-                view = new EditView({ model: model });
-
-            var insert_point = $parent.find("." + type + "s > .no-content"),
+                insert_point = $button.closest(".controls").prev(".no-content"),
                 tag = "<" + insert_point[0].tagName + "/>",
                 li_wrapper = view.$el.wrap(tag).parent();
 
             $button.hide();
             insert_point.before(li_wrapper);
+            view.focus();
 
             view.promise()
                 .then(
@@ -125,13 +126,30 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
                     });
         },
 
-        _addStructure: function (parent_id, model) {
+        _newBlockFromButton: function ($button) {
+            var type;
 
+            if ($button.hasClass("add-chapter")) {
+                type = "chapter";
+            } else if ($button.hasClass("add-subchapter")) {
+                type = "subchapter";
+            } else if ($button.hasClass("add-section")) {
+                type = "section";
+            }
+
+            var titles = {
+                chapter: i18n("Neues Kapitel"),
+                subchapter: i18n("Neues Unterkapitel"),
+                section: i18n("Neue Sektion")
+            };
+            return new BlockModel({ title: titles[type], type: type });
+        },
+
+        _addStructure: function (parent_id, model) {
             var data = {
                 parent: parent_id,
                 title:  model.get("title")
             };
-
             return helper.callHandler(this.model.id, 'add_structure', data);
         },
 
@@ -151,6 +169,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
                 view = new EditView({ model: model });
 
             $title.hide().before(view.el);
+            view.focus();
 
             view.promise()
                 .then(
@@ -167,6 +186,35 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
                         $title.show();
                     });
 
+        },
+
+        destroyStructure: function (event) {
+
+            var courseware = this,
+                $button = jQuery(event.target),
+                $parent = $button.closest("[data-blockid]"),
+                id = $parent.attr("data-blockid");
+
+            if (id == null) {
+                return;
+            }
+
+            if (confirm(i18n("Wollen Sie wirklich löschen?"))) {
+                $parent.addClass("loading");
+
+                helper
+                    .deleteView(id)
+                    .then(
+                        function () {
+                            console.log(arguments);
+                            // TODO: sollte zum previous sibling oder parent springen
+                            courseware.reload();
+                        },
+                        function (error) {
+                            console.log(arguments);
+                            alert("ERROR:" + error);
+                        });
+            }
         }
     });
 });
