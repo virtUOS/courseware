@@ -19,7 +19,8 @@ namespace Mooc\TestBlock\Vips {
          */
         public static function getVipsPath()
         {
-            return __DIR__.'/../../../../VipsPlugin';
+            $path = self::getVipsPlugin()->getPluginPath();
+            return $path;
         }
 
         /**
