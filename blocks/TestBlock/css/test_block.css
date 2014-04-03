@@ -1,4 +1,11 @@
+/* line 2, test_block.scss */
 section.TestBlock ul {
   margin: 0;
   padding: 0;
-  list-style-type: none; }
+  list-style-type: none;
+}
+/* line 8, test_block.scss */
+section.TestBlock li.correct_answer span {
+  border: 1px dashed green;
+  padding: 0px 3px;
+}

@@ -1,8 +1,8 @@
 <p class="question">{{ question }}</p>
 
 <ul>
-{{#answers}}
-    <li>
+  {{#answers}}
+    <li{{#correct_answer}} class="correct_answer"{{/correct_answer}}>
       {{#checked}}
         <img src="{{checked_image}}">
       {{/checked}}
@@ -10,14 +10,7 @@
         <img src="{{unchecked_image}}">
       {{/checked}}
 
-      {{ text }}
-
-      {{#correct_answer}}
-        <img src="{{correct_image}}">
-      {{/correct_answer}}
-      {{^correct_answer}}
-        <img src="{{incorrect_image}}">
-      {{/correct_answer}}
+      <span class="answer">{{ text }}</span>
     </li>
-{{/answers}}
+  {{/answers}}
 </ul>

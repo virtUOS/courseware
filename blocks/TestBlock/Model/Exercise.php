@@ -89,8 +89,6 @@ class Exercise extends \SimpleORMap
                 'checked_image' => $vipsUrl.'/images/choice_checked.png',
                 'unchecked_image' => $vipsUrl.'/images/choice_unchecked.png',
                 'correct_answer' => $this->isAnswerCorrect($index),
-                'correct_image' => \Assets::image_path('icons/16/green/accept'),
-                'incorrect_image' => \Assets::image_path('icons/16/red/decline'),
             );
         }
 
