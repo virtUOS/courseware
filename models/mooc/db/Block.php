@@ -31,7 +31,10 @@ class Block extends \SimpleORMap
         $this->has_many['children'] = array(
             'class_name'        => 'Mooc\\DB\\Block',
             'assoc_foreign_key' => 'parent_id',
-            'assoc_func'        => 'findByParent_id');
+            'assoc_func'        => 'findByParent_id',
+            'on_delete'         => 'delete',
+            'on_store'          => 'store'
+        );
 
 
         # TODO: $this->default_values['type'] = array_pop(explode('\\', get_called_class()));

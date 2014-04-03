@@ -105,6 +105,26 @@ class BlocksController extends MoocipController {
         }
     }
 
+
+    function delete($id)
+    {
+        // JSON requests only
+        if (!$this->isJSONRequest()) {
+            $this->json_error('Only JSON requests accepted.');
+            return;
+        }
+
+        $block = $this->requireBlock($id);
+
+        if (!$this->container['current_user']->canDelete($block)) {
+            throw new Errors\BadRequest("Access denied");
+        }
+
+        $block->delete();
+
+        $this->render_json(array('status' => 'ok'));
+    }
+
     /*****************************/
     /* PROTECTED & PRIVATE STUFF */
     /*****************************/
