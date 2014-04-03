@@ -65,10 +65,10 @@ class TestBlock extends Block
         $vipsPlugin = VipsBridge::getVipsPlugin();
         $vipsTemplateFactory = new \Flexi_TemplateFactory(VipsBridge::getVipsPath().'/templates/');
 
-        $return = \submit_exercise('sheets');
+        \submit_exercise('sheets');
         ob_clean();
 
-        return array('foo' => 'bar', 'data' => $_POST, 'vips' => $return);
+        return array();
     }
 
     private function buildExercises()
@@ -78,62 +78,23 @@ class TestBlock extends Block
 
         $exercises = array();
 
-        $vipsPlugin = VipsBridge::getVipsPlugin();
-
         if ($this->test) {
             foreach ($this->test->exercises as $exercise) {
-                require_once VipsBridge::getVipsPath().'/exercises/'.$exercise->URI.'.php';
-                $vipsExercise = new $exercise->URI($exercise->Aufgabe, $exercise->ID);
+                /** @var \Mooc\TestBlock\Model\Exercise $exercise */
 
-                $solution = Solution::findOneBy($this->test, $exercise, $user);
-                $vipsSolution = $vipsExercise->getTagsFromXML($solution->solution, 'answer');
-
-                $entry = array(
-                    'exercise_type' => $exercise->URI,
-                    'id' => $vipsExercise->id,
-                    'test_id' => $this->test->id,
-                    'question' => $vipsExercise->question,
-                    'answers' => array(),
-                    'single-choice' => $vipsExercise instanceof \sc_exercise,
-                    'multiple-choice' => $vipsExercise instanceof \mc_exercise,
+                $answers = $exercise->getAnswers($this->test, $user);
+                $exercises[] = array(
+                    'exercise_type' => $exercise->getType(),
+                    'id' => $exercise->getId(),
+                    'test_id' => $this->test->getId(),
+                    'question' => $exercise->getQuestion(),
+                    'answers' => $answers,
+                    'single-choice' => $exercise->isSingleChoice(),
+                    'multiple-choice' => $exercise->isMultipleChoice(),
                     'solver_user_id' => $user->cfg->getUserId(),
-                    'has_solution' => $solution === null ? false : true,
+                    'has_solution' => $exercise->hasSolutionFor($this->test, $user),
+                    'number_of_answers' => count($answers),
                 );
-
-                if (is_array($vipsExercise->answerArray[0])) {
-                    $answers = $vipsExercise->answerArray[0];
-                } else {
-                    $answers = $vipsExercise->answerArray;
-                }
-
-                foreach ($answers as $index => $answer) {
-                    if ($entry['single-choice']) {
-                        $name = 'answer_0';
-                    } else {
-                        $name = 'answer_'.$index;
-                    }
-
-                    $answerEntry = array(
-                        'text' => $answer,
-                        'index' => $index,
-                        'name' => $name,
-                        'checked' => false,
-                        'checked_image' => $vipsPlugin->getPluginURL().'/images/choice_checked.png',
-                        'unchecked_image' => $vipsPlugin->getPluginURL().'/images/choice_unchecked.png',
-                        'correct_answer' => $vipsExercise->correctArray[$index] == 1,
-                        'correct_image' => \Assets::image_path('icons/16/green/accept'),
-                        'incorrect_image' => \Assets::image_path('icons/16/red/decline'),
-                    );
-
-                    if ($solution !== null && $vipsSolution[$index] == 1) {
-                        $answerEntry['checked'] = true;
-                    }
-                    $entry['answers'][] = $answerEntry;
-                }
-
-                $entry['number_of_answers'] = count($answers);
-
-                $exercises[] =  $entry;
             }
         }
 
