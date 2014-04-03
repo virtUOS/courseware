@@ -263,6 +263,10 @@ class Exercise extends \SimpleORMap
 
         $vipsSolution = $this->vipsSolutions[$test->getId()][$solver->cfg->getUserId()];
 
-        return $vipsSolution[$index] == 1;
+        if ($this->isSingleChoice()) {
+            return $vipsSolution[0] == $index;
+        } else {
+            return $vipsSolution[$index] == 1;
+        }
     }
 }
