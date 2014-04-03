@@ -86,6 +86,11 @@ section#courseware {
     display: none; }
   section#courseware.view-student .controls {
     display: none; }
+  section#courseware.loading {
+    opacity: 0.5;}
+  section#courseware.loading h1 {
+    background: url(../../../../../../assets/images/ajax_indicator_small.gif) left center no-repeat;
+    padding-left: 20px;}
   section#courseware.loading .controls, section#courseware.loading .mode-switch {
     visibility: hidden; }
   section#courseware .mode-switch {

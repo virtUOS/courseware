@@ -36,9 +36,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'],
 
             if (val === old) {
                 self.deferred.resolve(self.model);
-                self.remove();
                 return;
-
             }
 
             this.model.set("title", val);
@@ -55,11 +53,6 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'],
                     // TODO: what to do? show error? or just remove it?
                     function (error) {
                         self.deferred.reject(error);
-                    }
-                )
-                .always(
-                    function () {
-                        self.remove();
                     }
                 );
         }

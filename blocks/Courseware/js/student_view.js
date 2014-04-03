@@ -1,5 +1,5 @@
-define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'assets/js/block_types', './edit_structure'],
-       function (helper, BlockModel, StudentView, blockTypes, EditView) {
+define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'assets/js/block_types', 'assets/js/i18n', './edit_structure'],
+       function (helper, BlockModel, StudentView, blockTypes, i18n, EditView) {
 
     'use strict';
 
@@ -59,9 +59,14 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             return this;
         },
 
+        reload: function () {
+            window.location.reload(true);
+        },
+
         // TODO: flesh this out
         navigateTo: function (event) {
             var url = jQuery(event.target).attr("href") + getHash(this.el);
+            this.$el.addClass("loading");
             window.location = url;
             event.preventDefault();
         },
@@ -78,28 +83,56 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         },
 
         addStructure: function (event) {
+            var courseware = this,
+                $button = jQuery(event.target),
+                $parent = $button.closest("[data-blockid]"),
+                id = $parent.attr("data-blockid");
 
-            var parent_id = jQuery(event.target).closest("[data-blockid]").attr("data-blockid");
-
-            if (parent_id == null) {
+            if (id == null) {
                 return;
             }
 
+            var type = $parent.hasClass("chapter") ? "subchapter" : "chapter",
+                title = type === "subchapter" ? i18n("Unterkapitel X") : i18n("Kapitel X");
+
+            var model = new BlockModel({ title: title, type: type }),
+                view = new EditView({ model: model });
+
+            var insert_point = $parent.find("." + type + "s > .no-content"),
+                tag = "<" + insert_point[0].tagName + "/>",
+                li_wrapper = view.$el.wrap(tag).parent();
+
+            $button.hide();
+            insert_point.before(li_wrapper);
+
+            view.promise()
+                .then(
+                    function (model) {
+                        view.$el.addClass("loading");
+                        return courseware._addStructure(id, model);
+                    })
+                .then(
+                    function (data) {
+                        courseware.reload();
+                    })
+                .then(
+                    null,
+                    function (error) {
+                        // TODO:  show error somehow
+                        alert(error);
+                        view.remove();
+                        $button.show();
+                    });
+        },
+
+        _addStructure: function (parent_id, model) {
+
             var data = {
                 parent: parent_id,
-                title: "Item X"
+                title:  model.get("title")
             };
 
-            helper.callHandler(this.model.id, 'add_structure', data).then(
-
-                function (data) {
-                    window.location.reload(true);
-                },
-
-                function (error) {
-                    console.log("TODO: could not add structural block");
-                }
-            );
+            return helper.callHandler(this.model.id, 'add_structure', data);
         },
 
         editStructure: function (event) {
@@ -119,18 +152,21 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
 
             $title.hide().before(view.el);
 
-            view.promise().then(
+            view.promise()
+                .then(
+                    function (model) {
+                        $title.find("a").text(model.get("title"));
+                    },
+                    function (error) {
+                        alert("TODO:" + error);
+                    }
+                )
+                .always(
+                    function () {
+                        view.remove();
+                        $title.show();
+                    });
 
-                // resolved
-                function (model) {
-                    $title.find("a").text(model.get("title")).end().show();
-                },
-
-                // rejected, just close
-                function (error) {
-                    $title.show();
-                }
-            );
         }
     });
 });
