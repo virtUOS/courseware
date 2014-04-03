@@ -13,9 +13,11 @@ define(['assets/js/author_view', 'assets/js/url', './utils'], function (
             Utils.normalizeIFrame(this);
         },
         onKeyup: function (event) {
-            var view = this;
+            var
+            view = this,
+            status = view.$('.status');
 
-            view.$('p').text('...am ändern.');
+            status.text('...am ändern.');
             clearTimeout(this.timeoutId);
 
             this.timeoutId = setTimeout(function () {
@@ -23,13 +25,13 @@ define(['assets/js/author_view', 'assets/js/url', './utils'], function (
                 Utils.normalizeIFrame(view, url);
 
                 // save data
-                view.$('p').text('Speichere Änderungen...');
+                status.text('Speichere Änderungen...');
                 helper
                     .callHandler(view.model.id, 'save', { url: url })
                     .then(function () { // success
-                        view.$('p').text('Änderungen wurden gespeichert.');
+                        status.text('Änderungen wurden gespeichert.');
                     }, function () {    // error
-                        view.$('p').text('Fehler beim speichern.');
+                        status.text('Fehler beim Speichern.');
                     });
             }, 1000);
         }

@@ -15,7 +15,7 @@ class VideoBlock extends Block
 
     function author_view()
     {
-        return $this->toJSON();
+        return array('url' => $this->url);
     }
 
     function save_handler($data)
