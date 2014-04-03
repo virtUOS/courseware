@@ -20,7 +20,7 @@ define(['assets/js/author_view', 'assets/js/url', './utils'], function (
 
             this.timeoutId = setTimeout(function () {
                 var url = view.$('input').val();
-                Utils.normalizeIFrame(this, url);
+                Utils.normalizeIFrame(view, url);
 
                 // save data
                 view.$('p').text('Speichere Änderungen...');
