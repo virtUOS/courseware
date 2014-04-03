@@ -237,7 +237,11 @@ class Exercise extends \SimpleORMap
      */
     private function isAnswerCorrect($index)
     {
-        return $this->vipsExercise->correctArray[$index] == 1;
+        if ($this->isSingleChoice()) {
+            return $this->vipsExercise->correctArray[0] == $index;
+        } else {
+            return $this->vipsExercise->correctArray[$index] == 1;
+        }
     }
 
     /**
