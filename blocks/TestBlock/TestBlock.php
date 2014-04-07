@@ -94,6 +94,7 @@ class TestBlock extends Block
                     'solver_user_id' => $user->cfg->getUserId(),
                     'has_solution' => $exercise->hasSolutionFor($this->test, $user),
                     'number_of_answers' => count($answers),
+                    $exercise->getAnswersStrategy()->getTemplate() => true,
                 );
             }
         }

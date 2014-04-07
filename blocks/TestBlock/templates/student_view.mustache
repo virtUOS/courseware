@@ -1,32 +1,27 @@
 <h2>{{title}}</h2>
 
-<form method="post">
-  {{#exercises}}
-    {{#has_solution}}
-      {{> solution_student_view.mustache}}
-    {{/has_solution}}
-    {{^has_solution}}
-      <form>
-        <input type="hidden" name="action" value="sheets">
-        <input type="hidden" name="subaction" value="submit_exercise">
-        <input type="hidden" name="submit_exercise" value="1">
-        <input type="hidden" name="exercise_type" value="{{exercise_type}}">
-        <input type="hidden" name="exercise_id" value="{{id}}">
-        <input type="hidden" name="assignment_id" value="{{test_id}}">
-        <input type="hidden" name="number_of_answers" value="{{number_of_answers}}">
-        <input type="hidden" name="solver_user_id" value="{{solver_user_id}}">
-        {{#single-choice}}
-          {{> exercise_single_choice_student_view}}
-        {{/single-choice}}
-        {{#multiple-choice}}
-          {{> exercise_multiple_choice_student_view}}
-        {{/multiple-choice}}
+{{#exercises}}
+  {{> _question}}
 
-        <button class="button">Abschicken</button>
-      </form>
-    {{/has_solution}}
-  {{/exercises}}
-  {{^exercises}}
-    Keine Aufgaben.
-  {{/exercises}}
-</form>
+  {{#has_solution}}
+    {{> _solution.mustache}}
+  {{/has_solution}}
+
+  {{^has_solution}}
+    {{> _exercise_form_begin}}
+
+    {{#single_choice_answers}}
+      {{> _single_choice_answers}}
+    {{/single_choice_answers}}
+
+    {{#multiple_choice_answers}}
+      {{> _multiple_choice_answers}}
+    {{/multiple_choice_answers}}
+
+    {{> _exercise_form_end}}
+  {{/has_solution}}
+{{/exercises}}
+
+{{^exercises}}
+  Keine Aufgaben.
+{{/exercises}}

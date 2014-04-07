@@ -24,6 +24,11 @@ class Exercise extends \SimpleORMap
      */
     private $vipsSolutions;
 
+    /**
+     * @var AnswersStrategyInterface The exercise's answers strategy
+     */
+    private $answersStrategy;
+
     public function __construct($id = null)
     {
         $this->db_table = 'vips_aufgabe';
@@ -42,6 +47,8 @@ class Exercise extends \SimpleORMap
             $type = $this->getType();
             require_once VipsBridge::getVipsPath().'/exercises/'.$type.'.php';
             $this->vipsExercise = new $type($this->Aufgabe, $this->ID);
+
+            $this->answersStrategy = $this->getAnswersStrategy();
         }
 
         return $returnValue;
@@ -79,16 +86,21 @@ class Exercise extends \SimpleORMap
     {
         $answers = array();
         $vipsUrl = VipsBridge::getVipsPlugin()->getPluginURL();
+        $solution = null;
 
-        foreach ($this->getRawAnswers() as $index => $answer) {
+        if ($this->hasSolutionFor($test, $solver)) {
+            $solution = $this->vipsSolutions[$test->getId()][$solver->cfg->getUserId()];
+        }
+
+        foreach ($this->answersStrategy->getAnswers() as $index => $answer) {
             $answers[] = array(
                 'text' => $answer,
                 'index' => $index,
-                'name' => $this->getNameForAnswer($index, $answer),
-                'checked' => $this->isSelectedAnswer($index, $test, $solver),
+                'name' => $this->answersStrategy->getName($index),
+                'checked' => $this->answersStrategy->isSelected($index, $solution),
                 'checked_image' => $vipsUrl.'/images/choice_checked.png',
                 'unchecked_image' => $vipsUrl.'/images/choice_unchecked.png',
-                'correct_answer' => $this->isAnswerCorrect($index),
+                'correct_answer' => $this->answersStrategy->isCorrect($index),
             );
         }
 
@@ -202,73 +214,31 @@ class Exercise extends \SimpleORMap
     }
 
     /**
-     * @return array
+     * @return AnswersStrategyInterface
      */
-    private function getRawAnswers()
+    public function getAnswersStrategy()
     {
-        if ($this->isSingleChoice()) {
-            return $this->vipsExercise->answerArray[0];
-        } else {
-            return $this->vipsExercise->answerArray;
-        }
-    }
+        if ($this->answersStrategy === null) {
+            $className = null;
 
-    /**
-     * @param int    $index
-     * @param string $answer
-     *
-     * @return string
-     */
-    private function getNameForAnswer($index, $answer)
-    {
-        if ($this->isSingleChoice()) {
-            return 'answer_0';
-        } else {
-            return 'answer_'.$index;
-        }
-    }
+            switch ($this->getType()) {
+                case 'mc_exercise':
+                    $className = 'MultipleChoiceAnswersStrategy';
+                    break;
+                case 'sc_exercise':
+                    $className = 'SingleChoiceAnswersStrategy';
+                    break;
+            }
 
-    /**
-     * @param int $index
-     *
-     * @return boolean
-     */
-    private function isAnswerCorrect($index)
-    {
-        if ($this->isSingleChoice()) {
-            return $this->vipsExercise->correctArray[0] == $index;
-        } else {
-            return $this->vipsExercise->correctArray[$index] == 1;
-        }
-    }
+            if ($className === null) {
+                return null;
+            }
 
-    /**
-     * @param int           $index
-     * @param Test          $test
-     * @param \Seminar_User $solver
-     *
-     * @return boolean
-     */
-    private function isSelectedAnswer($index, Test $test, \Seminar_User $solver = null)
-    {
-        if ($test === null) {
-            return false;
+            $fullyQualifiedClassName = '\Mooc\TestBlock\Model\\'.$className;
+
+            $this->answersStrategy = new $fullyQualifiedClassName($this->vipsExercise);
         }
 
-        if ($solver === null) {
-            return false;
-        }
-
-        if (!$this->hasSolutionFor($test, $solver)) {
-            return false;
-        }
-
-        $vipsSolution = $this->vipsSolutions[$test->getId()][$solver->cfg->getUserId()];
-
-        if ($this->isSingleChoice()) {
-            return $vipsSolution[0] == $index;
-        } else {
-            return $vipsSolution[$index] == 1;
-        }
+        return $this->answersStrategy;
     }
 }
