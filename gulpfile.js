@@ -1,20 +1,20 @@
 var gulp   = require('gulp'),
-    sass   = require('gulp-sass'),
+    less   = require('gulp-less'),
     minify = require('gulp-minify-css'),
     concat = require('gulp-concat'),
     zip    = require('gulp-zip');
 
 var paths = {
-    styles: ['./blocks/*/css/*.scss', './assets/*.scss']
+    styles: ['./blocks/*/css/*.less', './assets/*.less']
 };
 
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['less']);
 
-gulp.task('sass', function() {
+gulp.task('less', function() {
     // place code for your default task here
     return gulp.src(paths.styles, {base: './'})
-        .pipe(sass()).pipe(gulp.dest('.'))
+        .pipe(less()).pipe(gulp.dest('.'))
         .pipe(minify())
         .pipe(concat('moocip.min.css'))
         .pipe(gulp.dest('./assets'));
@@ -28,5 +28,5 @@ gulp.task('zip', ['default'], function() {
 
 // Rerun the task when a file changes
 gulp.task('watch', function() {
-  gulp.watch(paths.styles, ['sass']);
+  gulp.watch(paths.styles, ['less']);
 });

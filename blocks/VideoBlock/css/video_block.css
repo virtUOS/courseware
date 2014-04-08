@@ -1,8 +1,9 @@
 section.VideoBlock input {
-  width: 99%; }
+  width: 99%;
+}
 section.VideoBlock iframe {
   width: 560px;
   height: 315px;
   border: none;
-  background-color: #112;
-  overflow: hidden; }
+  overflow: hidden;
+}

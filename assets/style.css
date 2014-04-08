@@ -1,82 +1,103 @@
 .clear {
-  clear: both; }
-
+  clear: both;
+}
 /* /courses/index */
 #mooc-courses-index #layout_container #course-list article {
   clear: both;
   padding: 10px 0px;
   min-height: 100px;
   position: relative;
-  border-bottom: 1px solid #d9d9d9; }
-  #mooc-courses-index #layout_container #course-list article .course-avatar-medium {
-    float: left;
-    padding-right: 20px; }
-  #mooc-courses-index #layout_container #course-list article h1 {
-    border: none;
-    margin-bottom: 0; }
-  #mooc-courses-index #layout_container #course-list article p {
-    margin: 4px 0px 0px 0px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; }
-  #mooc-courses-index #layout_container #course-list article a {
-    position: absolute;
-    bottom: 10px;
-    margin-bottom: 0; }
-
+  border-bottom: 1px solid #d9d9d9;
+}
+#mooc-courses-index #layout_container #course-list article .course-avatar-medium {
+  float: left;
+  padding-right: 20px;
+}
+#mooc-courses-index #layout_container #course-list article h1 {
+  border: none;
+  margin-bottom: 0;
+}
+#mooc-courses-index #layout_container #course-list article p {
+  margin: 4px 0px 0px 0px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#mooc-courses-index #layout_container #course-list article a {
+  position: absolute;
+  bottom: 10px;
+  margin-bottom: 0;
+}
 /* /courses/show */
 #mooc-courses-show #layout_container img {
-  width: 100%; }
+  width: 100%;
+}
 #mooc-courses-show #layout_container h1 {
   padding: 10px 0px 5px;
   border-bottom: none;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+}
 #mooc-courses-show #layout_container .subtitle {
   margin: 0;
   padding-bottom: 10px;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.2); }
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
 #mooc-courses-show #layout_container article {
   width: 48%;
   float: left;
-  margin-top: 1em; }
+  margin-top: 1em;
+}
 #mooc-courses-show #layout_container .description {
-  padding-right: 1%; }
+  padding-right: 1%;
+}
 #mooc-courses-show #layout_container .requirements {
-  padding-left: 1%; }
+  padding-left: 1%;
+}
 #mooc-courses-show #layout_container article h1 {
   font-size: 1.5em;
   border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;
-  padding-left: 0; }
-
+  padding-left: 0;
+}
 /* /courseware */
-
 /* /registrations */
 #mooc-registrations-index #layout_container input {
   font-size: 14pt;
-  margin-bottom: 5px; }
-#mooc-registrations-index #layout_container form.signup input[type=text], #mooc-registrations-index #layout_container form.signup input[type=email], #mooc-registrations-index #layout_container form.signin input[type=text], #mooc-registrations-index #layout_container form.signin input[type=email] {
-  width: 20em; }
+  margin-bottom: 5px;
+}
+#mooc-registrations-index #layout_container form.signup input[type=text],
+#mooc-registrations-index #layout_container form.signup input[type=email],
+#mooc-registrations-index #layout_container form.signin input[type=text],
+#mooc-registrations-index #layout_container form.signin input[type=email] {
+  width: 20em;
+}
 #mooc-registrations-index #layout_container p {
-  max-width: 40em; }
+  max-width: 40em;
+}
 #mooc-registrations-index #layout_container #layout_sidebar {
-  font-size: 12pt; }
+  font-size: 12pt;
+}
 #mooc-registrations-index #layout_container article.tos h1 {
   border: none;
   font-size: 1rem;
-  padding-left: 0; }
+  padding-left: 0;
+}
 #mooc-registrations-index #layout_container label.tos {
-  display: block; }
+  display: block;
+}
 #mooc-registrations-index #layout_container #layout_sidebar label.tos {
-  position: relative; }
-  #mooc-registrations-index #layout_container #layout_sidebar label.tos span {
-    display: block;
-    padding-left: 30px; }
-  #mooc-registrations-index #layout_container #layout_sidebar label.tos input {
-    position: absolute;
-    top: 1.1em; }
-
+  position: relative;
+}
+#mooc-registrations-index #layout_container #layout_sidebar label.tos span {
+  display: block;
+  padding-left: 30px;
+}
+#mooc-registrations-index #layout_container #layout_sidebar label.tos input {
+  position: absolute;
+  top: 1.1em;
+}
 #mooc-courses-overview textarea {
   width: 100%;
-  height: 20em; }
+  height: 20em;
+}

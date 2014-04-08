@@ -1,0 +1,292 @@
+@import '../../../assets/mixins';
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+.btn-base, section#courseware ol.chapters li div.title button.edit,
+section#courseware ol.subchapters li div.title button.edit,
+section#courseware .edit-structure button {
+    width: 20px;
+    height: 20px;
+    color: transparent;
+    border: none;
+  
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+#mooc-courseware-index #layout_container {
+  position: relative;
+}
+
+section#courseware {
+    /* CSS for the Courseware controls */
+    /* do not show "Sektion hinzufügen" w/o subchapter parent */
+    ol {
+        list-style: none;
+        
+        li + li.no-content {
+            display: none;
+        }
+    }
+
+    ol.chapters {
+        float: left;
+        margin: 0;
+        padding-right: 4%;
+        padding-left: 1%;
+        width: 18%;
+    }
+
+    ol.subchapters {
+        padding-left: 25px;
+        
+        li div.title {
+        }
+        
+        li.selected > .title > a {
+            font-weight: 700; 
+            background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat left center !important;
+        }
+        
+        li div.title {
+            position: relative;
+            line-height: 20px;
+            padding-left: 0.25em;
+            border-bottom: 1px solid #E9E9E9;
+            
+            a {
+                display: block;
+                padding: 3px 22px 3px 10px;
+            }
+
+            button.edit {
+                background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
+            }
+            
+            .controls {
+                visibility: hidden;
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 2px;                
+            }
+            
+            
+            &:hover {
+                background-color: #eee;
+                
+                .controls {
+                    visibility: visible;
+                }                
+            }
+        }
+    }
+
+
+    
+    ol.chapters {
+        
+        li div.title {
+            position: relative;
+            line-height: 20px;
+            padding-left: 0.25em;
+            border-bottom: 1px solid #E9E9E9;
+        }
+
+        li.chapter div.title {
+            
+            a { 
+                display: block;
+                padding: 5px 22px;
+            }
+            
+            button.edit {
+                background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
+            }
+    
+            .controls {
+                visibility: hidden;
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 2px;                
+            }
+
+            &:hover {
+                background-color: #eee;
+                
+                .controls {
+                    visibility: visible;
+                }
+            }
+        }
+
+    
+        li.chapter > .title > a {
+            background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat left center; 
+        }
+    }
+
+    ol.active-subchapter {
+        margin: -6px 0px 25px;
+        float: left;
+        padding: 0px 0px 10px 0px;
+        width: 77%;
+        border-bottom: 1px solid #E9E9E9;
+        
+        li {
+            display: block;
+            float: left;
+            margin: 0px 3px;
+            
+            a {
+                background: url("../../../../../../assets/images/icons/16/blue/vote.png") center center no-repeat #ddd;
+                border: 1px solid #bbb;
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                padding: 0px;
+                display: inline-block;
+                text-indent: -9999px;
+            }
+            
+        }
+        
+        li.selected > a {
+            background-color: #ccc;
+            box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
+            border-color: #888;
+            font-weight: normal;
+        }        
+    }
+
+
+    section.active-section {
+        float: left;
+        width: 77%; 
+    }
+
+    &:not(.user-may-author) .mode-switch,
+    &:not(.user-may-author) .controls {
+        display: none;
+    }
+
+    &.view-student .controls {
+        display: none;
+    }
+
+    &.loading {
+        opacity: 0.5;
+        
+        h1 {
+            background: url(../../../../../../assets/images/ajax_indicator_small.gif) left center no-repeat;
+            padding-left: 20px;
+        }
+    }
+
+    &.loading .controls,
+    &.loading .mode-switch {
+        visibility: hidden;
+    }
+
+    .mode-switch {
+        position: absolute;
+        top: 7px;
+        right: 12px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -ms-border-radius: 4px;
+        border-radius: 4px;
+        
+        button {
+            display: block;
+            float: left;
+            background: #e9e9e9;
+            padding: 2px 10px;
+            margin: 0px;
+            border: 1px solid #bbb;
+            text-align: center;
+            
+            &:hover {
+                cursor: pointer;
+            }
+            
+            &.student {
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px;
+                border-right: none;
+            }
+            
+            &.author {
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+                border-left: none;
+                padding: 4px 10px 0px 10px;
+            }
+        }        
+    }
+
+
+    &.view-student > .mode-switch .student, 
+    &.view-author > .mode-switch .author {
+        background: #ddd;
+        box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
+        border-color: #999;
+    }
+
+    .active-subchapter[data-blockid=""] button.add-section {
+        display: none;
+    }
+
+    button.add-section, 
+    button.add-chapter,
+    button.add-subchapter {
+        background: url("../../../../../../assets/images/icons/16/blue/add.png") 6px center no-repeat #E9E9E9;
+        border: 1px solid #bbb;
+        min-height: 27px;
+        padding: 5px 6px 5px 28px;
+        margin: 0px;
+        cursor: pointer;
+        font-size: 12px;
+        border-radius: 20px;
+    }
+
+    .edit-structure {
+        position: relative; 
+        
+        input {
+            width: 88%;
+            padding: 2px 5px;
+            border-radius: 3px; 
+            border: 1px solid #BBBBBB;
+            
+            &:focus {
+                border-color: #009EFF;
+            }
+        }
+        
+        button {
+            background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
+            position: absolute;
+            top: 3px;
+            padding: 0 0 7px; 
+        }
+        
+        &.loading {
+            input {
+                background: url(../../../../../../assets/images/ajax_indicator_small.gif) center right no-repeat;
+                opacity: 0.5;
+                border-width: 0;
+            }
+            
+            button {
+               visibility: hidden;
+            }
+        }
+    }
+}
