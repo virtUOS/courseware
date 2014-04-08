@@ -228,6 +228,9 @@ class Exercise extends \SimpleORMap
                 case 'sc_exercise':
                     $className = 'SingleChoiceAnswersStrategy';
                     break;
+                case 'yn_exercise':
+                    $className = 'YesNoChoiceAnswersStrategy';
+                    break;
             }
 
             if ($className === null) {
