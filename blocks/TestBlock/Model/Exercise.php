@@ -89,7 +89,7 @@ class Exercise extends \SimpleORMap
         $solution = null;
 
         if ($this->hasSolutionFor($test, $solver)) {
-            $solution = $this->vipsSolutions[$test->getId()][$solver->cfg->getUserId()];
+            $solution = $this->getVipsSolutionFor($test, $solver);
         }
 
         foreach ($this->answersStrategy->getAnswers() as $index => $answer) {
@@ -117,22 +117,23 @@ class Exercise extends \SimpleORMap
      */
     public function getSolutionFor(Test $test, \Seminar_User $user)
     {
+        $testId = $test->getId();
         $userId = $user->cfg->getUserId();
 
         // search for a solution if there is no cached one
-        if (!isset($this->solutions[$test->getId()][$userId])) {
+        if (!isset($this->solutions[$testId][$userId])) {
             $solution = Solution::findOneBy($test, $this, $user);
-            $this->solutions[$test->getId()][$userId] = $solution;
-            $this->vipsSolutions[$test->getId()][$userId] = null;
+            $this->solutions[$testId][$userId] = $solution;
+            $this->vipsSolutions[$testId][$userId] = null;
 
             if ($solution !== null) {
-                $this->vipsSolutions[$test->getId()][$userId] = $this->vipsExercise->getTagsFromXML(
+                $this->vipsSolutions[$testId][$userId] = $this->vipsExercise->getTagsFromXML(
                     $solution->solution, 'answer'
                 );
             }
         }
 
-        return $this->solutions[$userId];
+        return $this->solutions[$testId][$userId];
     }
 
     /**
@@ -147,9 +148,26 @@ class Exercise extends \SimpleORMap
     public function hasSolutionFor(Test $test, \Seminar_User $user)
     {
         // ensure that we check for an existing solution
-        $this->getSolutionFor($test, $user);
+        $solution = $this->getSolutionFor($test, $user);
 
-        return isset($this->solutions[$test->getId()][$user->cfg->getUserId()]);
+        return $solution !== null;
+    }
+
+    /**
+     * Returns the Solution for a certain test and user in the Vips internal format.
+     *
+     * @param Test          $test
+     * @param \Seminar_User $user The user
+     *
+     * @return array The Solution or null
+     */
+    public function getVipsSolutionFor(Test $test, \Seminar_User $user)
+    {
+        if (!$this->hasSolutionFor($test, $user)) {
+            return null;
+        }
+
+        return $this->vipsSolutions[$test->getId()][$user->cfg->getUserId()];
     }
 
     /**
