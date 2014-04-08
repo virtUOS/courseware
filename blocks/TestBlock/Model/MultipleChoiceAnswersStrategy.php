@@ -7,7 +7,7 @@ namespace Mooc\TestBlock\Model;
  *
  * @author Christian Flothmann <christian.flothmann@uos.de>
  */
-class MultipleChoiceAnswersStrategy extends AbstractAnswersStrategy
+class MultipleChoiceAnswersStrategy extends AnswersStrategy
 {
     /**
      * {@inheritDoc}

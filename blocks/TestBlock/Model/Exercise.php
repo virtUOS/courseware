@@ -48,7 +48,7 @@ class Exercise extends \SimpleORMap
             require_once VipsBridge::getVipsPath().'/exercises/'.$type.'.php';
             $this->vipsExercise = new $type($this->Aufgabe, $this->ID);
 
-            $this->answersStrategy = $this->getAnswersStrategy();
+            $this->answersStrategy = AnswersStrategy::getStrategy($this->vipsExercise);
         }
 
         return $returnValue;
@@ -218,30 +218,6 @@ class Exercise extends \SimpleORMap
      */
     public function getAnswersStrategy()
     {
-        if ($this->answersStrategy === null) {
-            $className = null;
-
-            switch ($this->getType()) {
-                case 'mc_exercise':
-                    $className = 'MultipleChoiceAnswersStrategy';
-                    break;
-                case 'sc_exercise':
-                    $className = 'SingleChoiceAnswersStrategy';
-                    break;
-                case 'yn_exercise':
-                    $className = 'YesNoChoiceAnswersStrategy';
-                    break;
-            }
-
-            if ($className === null) {
-                return null;
-            }
-
-            $fullyQualifiedClassName = '\Mooc\TestBlock\Model\\'.$className;
-
-            $this->answersStrategy = new $fullyQualifiedClassName($this->vipsExercise);
-        }
-
         return $this->answersStrategy;
     }
 }
