@@ -4,6 +4,15 @@
   <a class="navigate"
      href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
      title="{{title}}">
-    &nbsp;&bull;&nbsp;
+     &nbsp;&bull;&nbsp;
+
+     <span class=details>
+       {{title}}
+
+       <span class=controls>
+         <button class=edit>{{#i18n}}Ändern{{/i18n}}</button>
+         <button class=trash>{{#i18n}}Entfernen{{/i18n}}</button>
+       </span>
+     </span>
   </a>
 </li>

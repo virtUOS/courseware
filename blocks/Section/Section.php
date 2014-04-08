@@ -9,6 +9,8 @@ class Section extends Block {
 
     function student_view($context = array())
     {
+        $title = $this->title;
+
         $blocks = $this->traverseChildren(
             function ($child, $container) use ($context) {
                 $json = $child->toJSON();
@@ -24,7 +26,7 @@ class Section extends Block {
             $content_block_types[] = compact("type");
         }
 
-        return compact('blocks', 'content_block_types');
+        return compact('blocks', 'content_block_types', 'title');
     }
 
     function add_content_block_handler($data) {

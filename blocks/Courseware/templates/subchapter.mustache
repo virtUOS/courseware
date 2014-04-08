@@ -8,9 +8,24 @@
     </a>
 
     <span class=controls>
+      <button class=edit>{{#i18n}}Ändern{{/i18n}}</button>
       <button class=trash>{{#i18n}}Entfernen{{/i18n}}</button>
-      <button class=edit>{{#i18n}}Ã„ndern{{/i18n}}</button>
     </span>
   </div>
+
+  {{#selected}}
+    <ol class=active-subchapter data-blockid={{active_subchapter}}>
+
+      {{#sections}}
+        {{> section}}
+      {{/sections}}
+
+      <li class=no-content>{{#i18n}}Keine Sektionen{{/i18n}}</li>
+        <li class=controls>
+          <button class=add-section>{{#i18n}}Sektion einfügen{{/i18n}}</button>
+        </li>
+        <div class="clear"></div>
+    </ol>
+  {{/selected}}
 
 </li>

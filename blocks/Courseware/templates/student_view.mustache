@@ -3,8 +3,9 @@
   data-blockid={{courseware.id}}
   class="view-student{{#user_may_author}} user-may-author{{/user_may_author}} loading">
 
+  <!--
   <h1> Courseware: {{courseware.title}} </h1>
-
+  -->
   <div class=mode-switch>
     <button class="student" title="Studentenmodus">
       <img src="../../assets/images/icons/20/blue/headache.png"
@@ -30,19 +31,6 @@
         {{#i18n}}Kapitel einfügen{{/i18n}}
       </button>
     </li>
-  </ol>
-
-  <ol class=active-subchapter data-blockid={{active_subchapter}}>
-
-    {{#sections}}
-      {{> section}}
-    {{/sections}}
-
-    <li class=no-content>{{#i18n}}Keine Sektionen{{/i18n}}</li>
-    <li class=controls>
-      <button class=add-section>{{#i18n}}Sektion einfügen{{/i18n}}</button>
-    </li>
-    <div class="clear"></div>
   </ol>
 
   {{#active_section}}

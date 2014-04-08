@@ -28,8 +28,9 @@ class Courseware extends Block {
         if ($section) {
             $active_section_block = $this->container['block_factory']->makeBlock($section);
             $active_section = array(
-                'id'   => $section->id,
-                'html' => $active_section_block->render('student', $context)
+                'id'    => $section->id,
+                'title' => $section->title,
+                'html'  => $active_section_block->render('student', $context)
             );
         }
 

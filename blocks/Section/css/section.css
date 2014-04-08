@@ -20,6 +20,12 @@
 .active-section section.block div.controls button.trash:hover {
   cursor: pointer;
 }
+.active-section > h1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 120px;
+}
 .active-section section.block {
   position: relative;
   min-height: 1em;
