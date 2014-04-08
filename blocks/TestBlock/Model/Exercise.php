@@ -108,6 +108,36 @@ class Exercise extends \SimpleORMap
     }
 
     /**
+     * Returns a user's answers for this exercise as a part of the given test.
+     *
+     * @param Test          $test
+     * @param \Seminar_User $solver User solving the Exercise
+     *
+     * @return array The user's answers
+     */
+    public function getUserAnswers(Test $test = null, \Seminar_User $solver)
+    {
+        $userAnswers = array();
+        $solution = $this->getVipsSolutionFor($test, $solver);
+
+        if ($solution === null) {
+            return array();
+        }
+
+        foreach ($this->answersStrategy->getUserAnswers($solution) as $index => $answer) {
+            $userAnswers[] = array(
+                'index' => $index,
+                'text' => $answer,
+                'correct' => $this->answersStrategy->isUserAnswerCorrect($answer, $index),
+                'correct_image' => \Assets::image_path('icons/16/green/accept'),
+                'incorrect_image' => \Assets::image_path('icons/16/red/decline'),
+            );
+        }
+
+        return $userAnswers;
+    }
+
+    /**
      * Returns the Solution for a certain test and user.
      *
      * @param Test          $test

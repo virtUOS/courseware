@@ -83,6 +83,7 @@ class TestBlock extends Block
                 /** @var \Mooc\TestBlock\Model\Exercise $exercise */
 
                 $answers = $exercise->getAnswers($this->test, $user);
+                $userAnswers = $exercise->getUserAnswers($this->test, $user);
                 $exercises[] = array(
                     'exercise_type' => $exercise->getType(),
                     'id' => $exercise->getId(),
@@ -95,6 +96,7 @@ class TestBlock extends Block
                     'has_solution' => $exercise->hasSolutionFor($this->test, $user),
                     'number_of_answers' => count($answers),
                     $exercise->getAnswersStrategy()->getTemplate() => true,
+                    'user_answers' => $userAnswers,
                 );
             }
         }

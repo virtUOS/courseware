@@ -50,4 +50,23 @@ interface AnswersStrategyInterface
      * @return string The template
      */
     public function getTemplate();
+
+    /**
+     * Returns a user's answer of an exercise.
+     *
+     * @param array $solution The user's solution
+     *
+     * @return array The user's answers
+     */
+    public function getUserAnswers(array $solution = null);
+
+    /**
+     * Checks if a user's answer is correct.
+     *
+     * @param string $answer The answer to check
+     * @param int    $index  The number of the answer
+     *
+     * @return boolean True, if the answer is correct, false otherwise
+     */
+    public function isUserAnswerCorrect($answer, $index);
 }

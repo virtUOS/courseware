@@ -106,4 +106,20 @@ class AnswersStrategy implements AnswersStrategyInterface
 
         return new $fullyQualifiedClassName($vipsExercise);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUserAnswers(array $solution = null)
+    {
+        return array();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isUserAnswerCorrect($answer, $index)
+    {
+        return false;
+    }
 }
