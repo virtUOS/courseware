@@ -1,0 +1,15 @@
+<ul>
+  {{#user_answers}}
+    <li>
+      {{text}}
+
+      {{#correct}}
+        <img src="{{correct_image}}">
+      {{/correct}}
+
+      {{^correct}}
+        <img src="{{incorrect_image}}">
+      {{/correct}}
+    </li>
+  {{/user_answers}}
+</ul>

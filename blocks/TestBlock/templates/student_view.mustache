@@ -4,7 +4,13 @@
   {{> _question}}
 
   {{#has_solution}}
-    {{> _solution.mustache}}
+    {{#free_text_answers}}
+      {{> _free_text_solution}}
+    {{/free_text_answers}}
+
+    {{^free_text_answers}}
+      {{> _solution.mustache}}
+    {{/free_text_answers}}
   {{/has_solution}}
 
   {{^has_solution}}
@@ -17,6 +23,10 @@
     {{#multiple_choice_answers}}
       {{> _multiple_choice_answers}}
     {{/multiple_choice_answers}}
+
+    {{#free_text_answers}}
+      {{> _free_text_answers}}
+    {{/free_text_answers}}
 
     {{> _exercise_form_end}}
   {{/has_solution}}

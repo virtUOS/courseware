@@ -94,6 +94,9 @@ class AnswersStrategy implements AnswersStrategyInterface
             case 'yn_exercise':
                 $className = 'YesNoChoiceAnswersStrategy';
                 break;
+            case 'lt_exercise':
+                $className = 'FreeTextAnswersStrategy';
+                break;
         }
 
         if ($className === null) {
