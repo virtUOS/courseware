@@ -36,11 +36,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         },
 
         initialize: function() {
-            var $section = this.$('.active-section'),
-                id = $section.attr("data-blockid"),
-                section_model = new BlockModel({ id: id, type: "Section" });
-
-            this.sectionView = blockTypes.get("Section").createView("student", { el: $section[0], model: section_model });
+            this._initializeSection();
 
             if (getHash(this.el) === "#author") {
                 this.switchToAuthorMode();
@@ -49,6 +45,19 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             this.postRender();
 
             this.$el.removeClass("loading");
+        },
+
+        _initializeSection: function() {
+            var $section = this.$('.active-section'),
+                section_model = new BlockModel({
+                    id: $section.attr("data-blockid"),
+                    type: "Section",
+                    title: $section.attr("data-title"),
+                });
+
+            this.sectionView = blockTypes
+                .get("Section")
+                .createView("student", { el: $section[0], model: section_model });
         },
 
         remove: function() {
