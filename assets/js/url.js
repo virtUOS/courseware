@@ -56,11 +56,6 @@ define(['module', 'argjs'], function (module, Arg) {
                 contentType: "application/json",
                 dataType: "json"
             });
-        },
-
-        switchToView: function (view) {
-            var url = Arg.url({ cid: Arg('cid'), view: view });
-            window.document.location = url;
         }
     };
 
