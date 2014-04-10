@@ -47,6 +47,13 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'],
             }
 
             this.model.set("title", val);
+
+            // add new object, but title is not the default title
+            if (!this.model.id) {
+                self.deferred.resolve(self.model);
+                return;
+            }
+
             this.$el.addClass("loading");
 
             helper
