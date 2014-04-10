@@ -11,6 +11,8 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'],
             "submit form": "submit"
         },
 
+        deferred: null,
+
         initialize: function() {
             this.deferred = jQuery.Deferred();
             this.render();
