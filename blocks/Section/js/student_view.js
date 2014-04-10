@@ -1,5 +1,5 @@
-define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/templates'],
-       function (StudentView, BlockModel, blockTypes, helper, templates) {
+define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/templates', './edit_view'],
+       function (StudentView, BlockModel, blockTypes, helper, templates, EditView) {
 
     'use strict';
 
@@ -8,6 +8,8 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         children: {},
 
         events: {
+            "click .title .edit":    "editTitle",
+
             "click .block .author":  "switchToAuthorView",
             "click .block .trash":   "destroyView",
 
@@ -176,6 +178,31 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             }
 
             return block;
+        },
+
+        editTitle: function (event) {
+            var $title = this.$("> .title"),
+                view = new EditView({ model: this.model }),
+                $wrapped = $title.wrapInner().children().first();
+
+            $wrapped.hide().before(view.el);
+
+            view.focus();
+
+            view.promise()
+                .then(
+                    function (model) {
+                        var new_title = templates("Section", "title", model.toJSON());
+                        $title.replaceWith(new_title);
+                    },
+                    function (error) {
+                        alert("TODO:" + error);
+                    }
+                )
+                .always(
+                    function () {
+                        view.remove();
+                    });
         }
     });
 });
