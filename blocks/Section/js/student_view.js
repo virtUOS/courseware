@@ -30,6 +30,9 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             return this;
         },
 
+        postRender: function() {
+        },
+
         switchAll: function (view) {
             _.each(this.children, function (child, child_id) {
                 this.switchView(child_id, view);

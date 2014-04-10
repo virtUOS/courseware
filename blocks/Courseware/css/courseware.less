@@ -1,4 +1,6 @@
 @import '../../../assets/mixins';
+@import './tooltip';
+
 
 button::-moz-focus-inner,
 input::-moz-focus-inner {
@@ -156,35 +158,11 @@ section#courseware {
         padding: 0px;
         display: inline-block;
         color: transparent;
-
-        .details {
-          display: none;
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 100%;
-          color: black;
-          border: 1px solid #ddd;
-          padding: 5px;
-        }
-
-        button.trash {
-          .btn(trash);
-        }
-        button.edit {
-          .btn(edit);
-        }
       }
 
       &:hover > a {
-
-        background-color: #eee;
-        background: url("../../../../../../assets/images/icons/16/red/vote.png") center center no-repeat #ddd;
-
-        .details {
-          display: block;
-          border-color: #daa;
-        }
+          background-color: #eee;
+          background: url("../../../../../../assets/images/icons/16/red/vote.png") center center no-repeat #ddd;
       }
     }
 

@@ -17,7 +17,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
 
     return StudentView.extend({
 
-        children: [],
+        sectionView: null,
 
         events: {
             "click .mode-switch .student": "switchToStudentMode",
@@ -29,36 +29,62 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             "click .add-subchapter":       "addStructure",
             "click .add-section":          "addStructure",
 
-            "click .edit":                 "editStructure",
-
-            "click .trash":                "destroyStructure"
+            "click .chapter    > .title .edit": "editStructure",
+            "click .subchapter > .title .edit": "editStructure",
+            "click .chapter    > .title .trash": "destroyStructure",
+            "click .subchapter > .title .trash": "destroyStructure"
         },
 
         initialize: function() {
             var $section = this.$('.active-section'),
                 id = $section.attr("data-blockid"),
-                section_view,
-                section_model;
+                section_model = new BlockModel({ id: id, type: "Section" });
 
-            section_model = new BlockModel({ id: id, type: "Section" });
-            section_view = blockTypes.get("Section").createView("student", { el: $section[0], model: section_model });
-
-            this.children.push(section_view);
+            this.sectionView = blockTypes.get("Section").createView("student", { el: $section[0], model: section_model });
 
             if (getHash(this.el) === "#author") {
                 this.switchToAuthorMode();
             }
+
+            this.postRender();
 
             this.$el.removeClass("loading");
         },
 
         remove: function() {
             StudentView.prototype.remove.call(this);
-            _.invoke(this.children, "remove");
+            if (this.sectionView) {
+                this.sectionView.remove();
+            }
         },
 
         render: function() {
             return this;
+        },
+
+        postRender: function() {
+            this.$(".active-subchapter").tooltip({
+                items: "li.section",
+                content: function() { return jQuery(this).find("a").attr("title"); },
+                show: false,
+                hide: false,
+                position: {
+                    my: "center bottom-10",
+                    at: "center top",
+                    using: function (position, feedback) {
+                        jQuery(this).css(position);
+                        jQuery("<div/>")
+                            .addClass("arrow")
+                            .addClass(feedback.vertical)
+                            .addClass(feedback.horizontal)
+                            .appendTo(this);
+                    }
+                }
+            });
+
+            if (this.sectionView) {
+                this.sectionView.postRender();
+            }
         },
 
         reload: function () {
@@ -76,7 +102,10 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         switchToStudentMode: function (event) {
             this.$el.removeClass("view-author").addClass("view-student");
             clearHash(this.el);
-            _.invoke(this.children, "trigger", "switch", "student");
+
+            if (this.sectionView) {
+                this.sectionView.trigger("switch", "student");
+            }
         },
 
         switchToAuthorMode: function () {
@@ -163,7 +192,11 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
                 return;
             }
 
-            var type = $parent.hasClass("chapter") ? "chapter" : "subchapter";
+            // TODO
+            var type = this._getType($parent);
+            if (!type) {
+                throw "ERROR";
+            }
 
             var model = new BlockModel({ id: id, type: type, title: title }),
                 view = new EditView({ model: model });
@@ -185,7 +218,10 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
                         view.remove();
                         $title.show();
                     });
+        },
 
+        _getType: function (element) {
+            return _.find(["chapter", "subchapter"], function (type) { return element.hasClass(type); });
         },
 
         destroyStructure: function (event) {

@@ -11,12 +11,27 @@
                                                                                    cursor: pointer;
                                                                                  }
 
-.active-section {
-  & > h1 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 120px;
+.active-section > .title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 120px;
+
+  h1 {
+    display: inline-block;
+    border-bottom: none;
+    vertical-align: top;
+  }
+
+  .controls {
+
+  }
+
+  button.edit {
+    .btn(edit);
+  }
+  button.trash {
+    .btn(trash);
   }
 }
 

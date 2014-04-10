@@ -20,11 +20,42 @@
 .active-section section.block div.controls button.trash:hover {
   cursor: pointer;
 }
-.active-section > h1 {
+.active-section > .title {
   position: absolute;
   top: 0;
   left: 0;
   right: 120px;
+}
+.active-section > .title h1 {
+  display: inline-block;
+  border-bottom: none;
+  vertical-align: top;
+}
+.active-section > .title button.edit {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+  background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
+}
+.active-section > .title button.edit:hover {
+  cursor: pointer;
+}
+.active-section > .title button.edit:hover {
+  background-image: url("../../../../../../assets/images/icons/16/black/edit.png");
+}
+.active-section > .title button.trash {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+  background: url("../../../../../../assets/images/icons/16/grey/trash.png") center center no-repeat;
+}
+.active-section > .title button.trash:hover {
+  cursor: pointer;
+}
+.active-section > .title button.trash:hover {
+  background-image: url("../../../../../../assets/images/icons/16/black/trash.png");
 }
 .active-section section.block {
   position: relative;

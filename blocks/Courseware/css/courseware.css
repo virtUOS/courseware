@@ -7,6 +7,49 @@
 .btn-base:hover {
   cursor: pointer;
 }
+.ui-tooltip,
+.arrow:after {
+  background: white;
+  border: 2px solid #bbb;
+}
+.ui-tooltip {
+  padding: 10px 20px;
+  color: black;
+  box-shadow: none;
+}
+.arrow {
+  width: 70px;
+  height: 16px;
+  overflow: hidden;
+  position: absolute;
+  left: 50%;
+  margin-left: -35px;
+  bottom: -16px;
+}
+.arrow.top {
+  top: -16px;
+  bottom: auto;
+}
+.arrow.left {
+  left: 20%;
+}
+.arrow:after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: -20px;
+  width: 25px;
+  height: 25px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  tranform: rotate(45deg);
+}
+.arrow.top:after {
+  bottom: -20px;
+  top: auto;
+}
 button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
@@ -158,49 +201,9 @@ section#courseware ol.active-subchapter li > a {
   display: inline-block;
   color: transparent;
 }
-section#courseware ol.active-subchapter li > a .details {
-  display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%;
-  color: black;
-  border: 1px solid #ddd;
-  padding: 5px;
-}
-section#courseware ol.active-subchapter li > a button.trash {
-  width: 20px;
-  height: 20px;
-  color: transparent;
-  border: none;
-  background: url("../../../../../../assets/images/icons/16/grey/trash.png") center center no-repeat;
-}
-section#courseware ol.active-subchapter li > a button.trash:hover {
-  cursor: pointer;
-}
-section#courseware ol.active-subchapter li > a button.trash:hover {
-  background-image: url("../../../../../../assets/images/icons/16/black/trash.png");
-}
-section#courseware ol.active-subchapter li > a button.edit {
-  width: 20px;
-  height: 20px;
-  color: transparent;
-  border: none;
-  background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
-}
-section#courseware ol.active-subchapter li > a button.edit:hover {
-  cursor: pointer;
-}
-section#courseware ol.active-subchapter li > a button.edit:hover {
-  background-image: url("../../../../../../assets/images/icons/16/black/edit.png");
-}
 section#courseware ol.active-subchapter li:hover > a {
   background-color: #eee;
   background: url("../../../../../../assets/images/icons/16/red/vote.png") center center no-repeat #dddddd;
-}
-section#courseware ol.active-subchapter li:hover > a .details {
-  display: block;
-  border-color: #daa;
 }
 section#courseware ol.active-subchapter li.selected > a {
   background-color: #ccc;
