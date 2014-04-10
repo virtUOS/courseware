@@ -32,17 +32,19 @@ section#courseware {
     padding-right: 4%;
     padding-left: 1%;
     width: 18%;
+
+    li.selected > .title > a {
+      font-weight: 700;
+      background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat left center !important;
+    }
   }
 
   ol.subchapters {
     padding-left: 25px;
 
-    li div.title {
-    }
-
     li.selected > .title > a {
       font-weight: 700;
-      background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat left center !important;
+      background: none !important;
     }
 
     li div.title {
@@ -76,6 +78,10 @@ section#courseware {
           visibility: visible;
         }
       }
+    }
+
+    li.no-content {
+      padding: 5px;
     }
   }
 

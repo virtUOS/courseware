@@ -34,12 +34,12 @@ section#courseware ol.chapters {
   padding-left: 1%;
   width: 18%;
 }
-section#courseware ol.subchapters {
-  padding-left: 25px;
-}
 section#courseware ol.chapters li.selected > .title > a {
   font-weight: 700;
   background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat left center !important;
+}
+section#courseware ol.subchapters {
+  padding-left: 25px;
 }
 section#courseware ol.subchapters li.selected > .title > a {
   font-weight: 700;
@@ -82,7 +82,7 @@ section#courseware ol.subchapters li div.title:hover .controls {
   visibility: visible;
 }
 section#courseware ol.subchapters li.no-content {
-	padding: 5px;
+  padding: 5px;
 }
 section#courseware ol.chapters li div.title {
   position: relative;
