@@ -19,7 +19,11 @@ define(['module', 'argjs'], function (module, Arg) {
                 hash = hash.substr(1);
             }
 
-            document.location = Arg.url(Arg.url(), params, hash);
+            var oldLocation = document.location;
+            var newLocation = Arg.url(Arg.url(), params, hash);
+            document.location = newLocation;
+
+            return oldLocation.pathname+oldLocation.search+oldLocation.hash != newLocation;
         },
 
         block_url: function (block_id, params) {

@@ -102,7 +102,9 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             event.preventDefault();
             var id = jQuery(event.target).attr("href").match(/selected=(\d+)/)[1];
 
-            helper.navigateTo(id);
+            if (!helper.navigateTo(id)) {
+                this.$el.removeClass("loading");
+            }
         },
 
         switchToStudentMode: function (event) {
