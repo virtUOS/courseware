@@ -52,7 +52,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
                 section_model = new BlockModel({
                     id: $section.attr("data-blockid"),
                     type: "Section",
-                    title: $section.attr("data-title"),
+                    title: $section.attr("data-title")
                 });
 
             this.sectionView = blockTypes
