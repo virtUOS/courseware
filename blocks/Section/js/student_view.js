@@ -1,5 +1,5 @@
-define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/templates', './edit_view'],
-       function (StudentView, BlockModel, blockTypes, helper, templates, EditView) {
+define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/i18n', 'assets/js/templates', './edit_view'],
+       function (StudentView, BlockModel, blockTypes, helper, i18n, templates, EditView) {
 
     'use strict';
 
