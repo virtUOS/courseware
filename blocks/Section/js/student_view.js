@@ -8,7 +8,9 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         children: {},
 
         events: {
-            "click .title .edit":    "editTitle",
+            "click .title .edit":    "editSection",
+
+            // child block stuff
 
             "click .block .author":  "switchToAuthorView",
             "click .block .trash":   "destroyView",
@@ -180,7 +182,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             return block;
         },
 
-        editTitle: function (event) {
+        editSection: function (event) {
             var $title = this.$("> .title"),
                 view = new EditView({ model: this.model }),
                 $wrapped = $title.wrapInner().children().first();
