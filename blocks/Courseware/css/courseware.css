@@ -135,7 +135,7 @@ section#courseware ol.chapters li div.title {
 }
 section#courseware ol.chapters li.chapter div.title a {
   display: block;
-  padding: 5px 22px;
+  padding: 5px 44px 5px 22px;
 }
 section#courseware ol.chapters li.chapter div.title button.edit {
   width: 20px;
