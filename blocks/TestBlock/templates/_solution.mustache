@@ -1,6 +1,6 @@
 <ul>
   {{#answers}}
-    <li{{#correct_answer}} class="correct_answer"{{/correct_answer}}>
+    <li{{#show_correction}}{{#correct_answer}} class="correct_answer"{{/correct_answer}}{{/show_correction}}>
       {{#checked}}
         <img src="{{checked_image}}">
       {{/checked}}

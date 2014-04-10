@@ -21,5 +21,19 @@ class Test extends \SimpleORMap
 
         parent::__construct($id);
     }
+
+    public function isSelfTest()
+    {
+        return $this->type == 'selftest';
+    }
+
+    public function isExerciseSheet()
+    {
+        return $this->type == 'practise';
+    }
+
+    public function showCorrection()
+    {
+        return $this->isSelfTest();
+    }
 }
- 
