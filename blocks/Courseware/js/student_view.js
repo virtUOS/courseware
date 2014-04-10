@@ -96,10 +96,6 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             }
         },
 
-        reload: function () {
-            window.location.reload(true);
-        },
-
         // TODO: flesh this out
         navigateTo: function (event) {
             var url = jQuery(event.target).attr("href") + getHash(this.el);
@@ -152,7 +148,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
                     })
                 .then(
                     function (data) {
-                        courseware.reload();
+                        helper.reload();
                     })
                 .then(
                     null,
@@ -251,9 +247,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
                     .deleteView(id)
                     .then(
                         function () {
-                            console.log(arguments);
-                            // TODO: sollte zum previous sibling oder parent springen
-                            courseware.reload();
+                            helper.reload();
                         },
                         function (error) {
                             console.log(arguments);

@@ -3,6 +3,10 @@ define(['module', 'argjs'], function (module, Arg) {
     'use strict';
 
     return {
+        reload: function () {
+            window.location.reload(true);
+        },
+
         block_url: function (block_id, params) {
             var path = [module.config().blocks_url, "/", block_id].join("");
             return Arg.url(path, params || {});
