@@ -7,29 +7,19 @@ define(['module', 'argjs'], function (module, Arg) {
             window.location.reload(true);
         },
 
-        navigateTo: function (id_or_url, hash) {
-            var is_numeric = parseInt(id_or_url, 10) == id_or_url,
-                params = Arg.all(),
-                url = id_or_url;
+        navigateTo: function (id, hash) {
 
-            if (is_numeric) {
-                params.selected = id_or_url;
-                url = Arg.url();
-            }
+            var params = Arg.all();
+            params.selected = id;
+
             if (typeof hash === "undefined" || hash === null) {
                 hash = window.location.hash;
             }
-
             if (hash[0] === "#") {
                 hash = hash.substr(1);
             }
 
-            var href = Arg.url(url, params, hash);
-            if (!href.match(/:\/\//)) {
-                href = window.location.protocol + "//"  +  window.location.host + href;
-            }
-
-            window.location.href = href;
+            document.location = Arg.url(Arg.url(), params, hash);
         },
 
         block_url: function (block_id, params) {

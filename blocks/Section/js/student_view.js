@@ -9,6 +9,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
 
         events: {
             "click .title .edit":    "editSection",
+            "click .title .trash":   "destroySection",
 
             // child block stuff
 
@@ -205,6 +206,27 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
                     function () {
                         view.remove();
                     });
+        },
+
+        destroySection: function (event) {
+
+            if (confirm(i18n("Wollen Sie wirklich löschen?"))) {
+                jQuery("#courseware").addClass("loading");
+
+                var parent_id = this.model.get("parent_id");
+
+                helper
+                    .deleteView(this.model.id)
+                    .then(
+                        function () {
+                            helper.navigateTo(parent_id);
+                        },
+                        function (error) {
+                            console.log(arguments);
+                            alert("ERROR:" + error);
+                        });
+
+            }
         }
     });
 });

@@ -50,9 +50,10 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         _initializeSection: function() {
             var $section = this.$('.active-section'),
                 section_model = new BlockModel({
-                    id: $section.attr("data-blockid"),
-                    type: "Section",
-                    title: $section.attr("data-title")
+                    type:      "Section",
+                    id:        $section.attr("data-blockid"),
+                    parent_id: $section.attr("data-parentid"),
+                    title:     $section.attr("data-title")
                 });
 
             this.sectionView = blockTypes
@@ -96,12 +97,12 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             }
         },
 
-        // TODO: flesh this out
         navigateTo: function (event) {
-            var url = jQuery(event.target).attr("href") + getHash(this.el);
             this.$el.addClass("loading");
-            window.location = url;
             event.preventDefault();
+            var id = jQuery(event.target).attr("href").match(/selected=(\d+)/)[1];
+
+            helper.navigateTo(id);
         },
 
         switchToStudentMode: function (event) {
@@ -148,7 +149,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
                     })
                 .then(
                     function (data) {
-                        helper.reload();
+                        helper.navigateTo(data.id);
                     })
                 .then(
                     null,
