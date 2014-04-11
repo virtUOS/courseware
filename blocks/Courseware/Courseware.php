@@ -68,22 +68,7 @@ class Courseware extends Block {
             throw new Errors\BadRequest("Title required.");
         }
 
-        // is there a structural level below the parent?
-        $structure_types = \Mooc\DB\Block::getStructuralBlockClasses();
-        $index = array_search($parent->type, $structure_types);
-        if (!$child_type = $structure_types[$index + 1]) {
-            throw new Errors\BadRequest("Unknown child type.");
-        }
-
-        $block = new \Mooc\DB\Block();
-        $block->setData(array(
-            'seminar_id' => $this->_model->seminar_id,
-            'parent_id'  => $parent->id,
-            'type'       => $child_type,
-            'title'      => $data['title']
-        ));
-
-        $block->store();
+        $block = $this->createStructure($parent, $data['title']);
 
         return $block->toArray();
     }
@@ -174,5 +159,55 @@ class Courseware extends Block {
     private function hasMatchingCID($block)
     {
         return $block->seminar_id === $this->container['cid'];
+    }
+
+
+    private function createStructure($parent, $title)
+    {
+        // determine type of new child
+        // is there a structural level below the parent?
+        $structure_types = \Mooc\DB\Block::getStructuralBlockClasses();
+        $index = array_search($parent->type, $structure_types);
+        if (!$child_type = $structure_types[$index + 1]) {
+            throw new Errors\BadRequest("Unknown child type.");
+        }
+
+        $method = "create" . $child_type;
+
+        return $this->$method($parent, $title);
+    }
+
+    private function createChapter($parent, $title)
+    {
+        $chapter = $this->createAnyBlock($parent, 'Chapter', $title);
+        $this->createSubchapter($chapter, _('Unterkapitel 1'));
+        return $chapter;
+    }
+
+    private function createSubchapter($parent, $title)
+    {
+        $subchapter = $this->createAnyBlock($parent, 'Subchapter', $title);
+        $this->createSection($subchapter, _('Abschnitt 1'));
+        return $subchapter;
+    }
+
+    private function createSection($parent, $title)
+    {
+        return $this->createAnyBlock($parent, 'Section', $title);
+    }
+
+    private function createAnyBlock($parent, $type, $title)
+    {
+        $block = new \Mooc\DB\Block();
+        $block->setData(array(
+            'seminar_id' => $this->_model->seminar_id,
+            'parent_id'  => $parent->id,
+            'type'       => $type,
+            'title'      => $title
+        ));
+
+        $block->store();
+
+        return $block;
     }
 }
