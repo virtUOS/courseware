@@ -12,18 +12,6 @@ class Courseware extends Block {
     {
         list($courseware, $chapter, $subchapter, $section) = $a = $this->getSelectedPath($context['selected']);
 
-        $chapters = $this->childrenToJSON($courseware->children, $chapter->id);
-
-        $subchapters = array();
-        if ($chapter) {
-            $subchapters = $this->childrenToJSON($chapter->children, $subchapter->id);
-        }
-
-        $sections = array();
-        if ($subchapter) {
-            $sections = $this->childrenToJSON($subchapter->children, $section->id);
-        }
-
         $active_section = array();
         if ($section) {
             $active_section_block = $this->container['block_factory']->makeBlock($section);
@@ -34,6 +22,19 @@ class Courseware extends Block {
                 'html'      => $active_section_block->render('student', $context)
             );
         }
+
+        $chapters = $this->childrenToJSON($courseware->children, $chapter->id);
+
+        $subchapters = array();
+        if ($chapter) {
+            $subchapters = $this->childrenToJSON($chapter->children, $subchapter->id);
+        }
+
+        $sections = array();
+        if ($subchapter) {
+            $sections = $this->childrenToJSON($subchapter->children, $section->id, true);
+        }
+
 
         return array(
             'user_may_author'   => $this->container['current_user']->canUpdate($this->_model),
@@ -75,11 +76,17 @@ class Courseware extends Block {
 
 
 
-    private function childrenToJSON($collection, $selected)
+    private function childrenToJSON($collection, $selected, $showFields = false)
     {
         $result = array();
         foreach ($collection as $item) {
-            $json = $item->toArray();
+            if ($showFields) {
+                $block = $this->container['block_factory']->makeBlock($item);
+                $json = $block->toJSON();
+            } else {
+                $json = $item->toArray();
+            }
+
             $json['selected'] = $selected == $item->id;
             $result[] = $json;
         }
