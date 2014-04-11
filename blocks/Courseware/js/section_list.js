@@ -60,7 +60,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 .then(
                     function (model) {
                         view.remove();
-                        new_section = insert_point.before(templates("Courseware", "section", {})).prev().addClass("loading");
+                        new_section = insert_point.before(templates("Courseware", "section", model.toJSON())).prev().addClass("loading");
                         return self._addStructure(id, model);
                     })
                 .then(
