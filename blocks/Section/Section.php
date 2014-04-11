@@ -5,11 +5,18 @@ class Section extends Block {
 
     function initialize()
     {
+        $this->defineField('visited', \Mooc\SCOPE_USER, false);
     }
 
     function student_view($context = array())
     {
+
+        if (!$this->visited) {
+            $this->visited = true;
+        }
+
         $title = $this->title;
+        $visited = $this->visited;
 
         $blocks = $this->traverseChildren(
             function ($child, $container) use ($context) {
@@ -26,7 +33,7 @@ class Section extends Block {
             $content_block_types[] = compact("type");
         }
 
-        return compact('blocks', 'content_block_types', 'title');
+        return compact('blocks', 'content_block_types', 'title', 'visited');
     }
 
     function add_content_block_handler($data) {
