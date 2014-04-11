@@ -56,21 +56,19 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                     })
                 .then(
                     function (data) {
-                        /*
                         var new_item = templates("Courseware", model.get("type"), data);
                         insert_point.before(new_item);
-                        debugger;
-                         */
-                        helper.reload();
                     })
                 .then(
                     null,
                     function (error) {
                         // TODO:  show error somehow
-                        alert(error);
-                        view.remove();
-                        $button.show();
-                    });
+                        alert("ERROR: "  + JSON.stringify(error));
+                    })
+                .always(function () {
+                    view.remove();
+                    $button.fadeIn();
+                });
         },
 
         _newBlockFromButton: function ($button) {
@@ -80,14 +78,11 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 type = "chapter";
             } else if ($button.hasClass("add-subchapter")) {
                 type = "subchapter";
-            } else if ($button.hasClass("add-section")) {
-                type = "section";
             }
 
             var titles = {
                 chapter:    i18n("Neues Kapitel"),
-                subchapter: i18n("Neues Unterkapitel"),
-                section:    i18n("Neuer Abschnitt")
+                subchapter: i18n("Neues Unterkapitel")
             };
             return new BlockModel({ title: titles[type], type: type });
         },
