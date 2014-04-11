@@ -63,8 +63,8 @@ class CoursewareFactory
     {
         $subchapter = $this->createGenericBlock($chapter, 'Subchapter', $title);
 
-        $this->createSection($subchapter, _("Sektion 1"));
-        $this->createSection($subchapter, _("Sektion 2"));
+        $this->createSection($subchapter, _("Abschnitt 1"));
+        $this->createSection($subchapter, _("Abschnitt 2"));
 
         return $subchapter;
     }

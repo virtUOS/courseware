@@ -62,7 +62,7 @@ section#courseware {
   /* CSS for the Courseware controls */
   position: relative;
   padding-top: 4em;
-  /* do not show "Sektion hinzuf�gen" w/o subchapter parent */
+  /* do not show "Abschnitt hinzuf�gen" w/o subchapter parent */
 }
 section#courseware ol {
   list-style: none;

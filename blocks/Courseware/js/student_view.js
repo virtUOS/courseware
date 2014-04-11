@@ -175,9 +175,9 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             }
 
             var titles = {
-                chapter: i18n("Neues Kapitel"),
+                chapter:    i18n("Neues Kapitel"),
                 subchapter: i18n("Neues Unterkapitel"),
-                section: i18n("Neue Sektion")
+                section:    i18n("Neuer Abschnitt")
             };
             return new BlockModel({ title: titles[type], type: type });
         },
