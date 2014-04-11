@@ -1,5 +1,5 @@
-define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'assets/js/block_types', 'assets/js/i18n', './edit_structure'],
-       function (helper, BlockModel, StudentView, blockTypes, i18n, EditView) {
+define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'assets/js/block_types', 'assets/js/i18n', './chapter_list',  './section_list', './edit_structure'],
+       function (helper, BlockModel, StudentView, blockTypes, i18n, ChapterListView, SectionListView, EditView) {
 
     'use strict';
 
@@ -17,26 +17,19 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
 
     return StudentView.extend({
 
-        sectionView: null,
+        chaptersView:      null,
+        sectionsView:      null,
+        activeSectionView: null,
 
         events: {
             "click .mode-switch .student": "switchToStudentMode",
             "click .mode-switch .author":  "switchToAuthorMode",
 
-            "click a.navigate":            "navigateTo",
-
-            "click .add-chapter":          "addStructure",
-            "click .add-subchapter":       "addStructure",
-            "click .add-section":          "addStructure",
-
-            "click .chapter    > .title .edit": "editStructure",
-            "click .subchapter > .title .edit": "editStructure",
-            "click .chapter    > .title .trash": "destroyStructure",
-            "click .subchapter > .title .trash": "destroyStructure"
+            "click a.navigate":            "navigateTo"
         },
 
         initialize: function() {
-            this._initializeSection();
+            this._initializeChildren();
 
             if (getHash(this.el) === "#author") {
                 this.switchToAuthorMode();
@@ -47,7 +40,7 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             this.$el.removeClass("loading");
         },
 
-        _initializeSection: function() {
+        _initializeChildren: function() {
             var $section = this.$('.active-section'),
                 section_model = new BlockModel({
                     type:      "Section",
@@ -56,15 +49,24 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
                     title:     $section.attr("data-title")
                 });
 
-            this.sectionView = blockTypes
+            this.activeSectionView = blockTypes
                 .get("Section")
                 .createView("student", { el: $section[0], model: section_model });
+
+            this.chaptersView = new ChapterListView({ el: '.chapters', model: this.model });
+            this.sectionsView = new SectionListView({ el: '.active-subchapter', model: this.model });
         },
 
         remove: function() {
             StudentView.prototype.remove.call(this);
-            if (this.sectionView) {
-                this.sectionView.remove();
+            if (this.chaptersView) {
+                this.chaptersView.remove();
+            }
+            if (this.sectionsView) {
+                this.sectionsView.remove();
+            }
+            if (this.activeSectionView) {
+                this.activeSectionView.remove();
             }
         },
 
@@ -73,34 +75,23 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         },
 
         postRender: function() {
-            this.$(".active-subchapter").tooltip({
-                items: "li.section",
-                content: function() { return jQuery(this).find("a").attr("title"); },
-                show: false,
-                hide: false,
-                position: {
-                    my: "center bottom-10",
-                    at: "center top",
-                    using: function (position, feedback) {
-                        jQuery(this).css(position);
-                        jQuery("<div/>")
-                            .addClass("arrow")
-                            .addClass(feedback.vertical)
-                            .addClass(feedback.horizontal)
-                            .appendTo(this);
-                    }
-                }
-            });
-
-            if (this.sectionView) {
-                this.sectionView.postRender();
+            if (this.chaptersView) {
+                this.chaptersView.postRender();
+            }
+            if (this.sectionsView) {
+                this.sectionsView.postRender();
+            }
+            if (this.activeSectionView) {
+                this.activeSectionView.postRender();
             }
         },
 
         navigateTo: function (event) {
             this.$el.addClass("loading");
             event.preventDefault();
-            var id = jQuery(event.target).attr("href").match(/selected=(\d+)/)[1];
+
+            var $parent = jQuery(event.target).closest("[data-blockid]"),
+                id = $parent.attr("data-blockid");
 
             if (!helper.navigateTo(id)) {
                 this.$el.removeClass("loading");
@@ -111,152 +102,14 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
             this.$el.removeClass("view-author").addClass("view-student");
             clearHash(this.el);
 
-            if (this.sectionView) {
-                this.sectionView.trigger("switch", "student");
+            if (this.activeSectionView) {
+                this.activeSectionView.trigger("switch", "student");
             }
         },
 
         switchToAuthorMode: function () {
             this.$el.removeClass("view-student").addClass("view-author");
             setHash(this.el, "author");
-        },
-
-        addStructure: function (event) {
-            var courseware = this,
-                $button = jQuery(event.target),
-                $parent = $button.closest("[data-blockid]"),
-                id = $parent.attr("data-blockid"),
-                type;
-
-            if (id == null) {
-                return;
-            }
-
-            var model = this._newBlockFromButton($button),
-                view = new EditView({ model: model }),
-
-                insert_point = $button.closest(".controls").prev(".no-content"),
-                tag = "<" + insert_point[0].tagName + "/>",
-                li_wrapper = view.$el.wrap(tag).parent();
-
-            $button.hide();
-            insert_point.before(li_wrapper);
-            view.focus();
-
-            view.promise()
-                .then(
-                    function (model) {
-                        view.$el.addClass("loading");
-                        return courseware._addStructure(id, model);
-                    })
-                .then(
-                    function (data) {
-                        helper.navigateTo(data.id);
-                    })
-                .then(
-                    null,
-                    function (error) {
-                        // TODO:  show error somehow
-                        alert(error);
-                        view.remove();
-                        $button.show();
-                    });
-        },
-
-        _newBlockFromButton: function ($button) {
-            var type;
-
-            if ($button.hasClass("add-chapter")) {
-                type = "chapter";
-            } else if ($button.hasClass("add-subchapter")) {
-                type = "subchapter";
-            } else if ($button.hasClass("add-section")) {
-                type = "section";
-            }
-
-            var titles = {
-                chapter:    i18n("Neues Kapitel"),
-                subchapter: i18n("Neues Unterkapitel"),
-                section:    i18n("Neuer Abschnitt")
-            };
-            return new BlockModel({ title: titles[type], type: type });
-        },
-
-        _addStructure: function (parent_id, model) {
-            var data = {
-                parent: parent_id,
-                title:  model.get("title")
-            };
-            return helper.callHandler(this.model.id, 'add_structure', data);
-        },
-
-        editStructure: function (event) {
-            var $parent = jQuery(event.target).closest("[data-blockid]"),
-                id = $parent.attr("data-blockid"),
-                $title = $parent.find("> .title"),
-                title = $title.find("a").text().trim();
-
-            if (id == null) {
-                return;
-            }
-
-            // TODO
-            var type = this._getType($parent);
-            if (!type) {
-                throw "ERROR";
-            }
-
-            var model = new BlockModel({ id: id, type: type, title: title }),
-                view = new EditView({ model: model });
-
-            $title.hide().before(view.el);
-            view.focus();
-
-            view.promise()
-                .then(
-                    function (model) {
-                        $title.find("a").text(model.get("title"));
-                    },
-                    function (error) {
-                        alert("TODO:" + error);
-                    }
-                )
-                .always(
-                    function () {
-                        view.remove();
-                        $title.show();
-                    });
-        },
-
-        _getType: function (element) {
-            return _.find(["chapter", "subchapter"], function (type) { return element.hasClass(type); });
-        },
-
-        destroyStructure: function (event) {
-
-            var courseware = this,
-                $button = jQuery(event.target),
-                $parent = $button.closest("[data-blockid]"),
-                id = $parent.attr("data-blockid");
-
-            if (id == null) {
-                return;
-            }
-
-            if (confirm(i18n("Wollen Sie wirklich löschen?"))) {
-                $parent.addClass("loading");
-
-                helper
-                    .deleteView(id)
-                    .then(
-                        function () {
-                            helper.reload();
-                        },
-                        function (error) {
-                            console.log(arguments);
-                            alert("ERROR:" + error);
-                        });
-            }
         }
     });
 });
