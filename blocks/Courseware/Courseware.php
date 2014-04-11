@@ -5,12 +5,16 @@ class Courseware extends Block {
 
     function initialize()
     {
-        // nothing to do
+        $this->defineField('lastSelected', \Mooc\SCOPE_USER, null);
     }
 
     function student_view($context = array())
     {
-        list($courseware, $chapter, $subchapter, $section) = $a = $this->getSelectedPath($context['selected']);
+        if (isset($context['selected'])) {
+            $this->lastSelected = $context['selected'];
+        }
+
+        list($courseware, $chapter, $subchapter, $section) = $this->getSelectedPath($this->lastSelected);
 
         $active_section = array();
         if ($section) {
