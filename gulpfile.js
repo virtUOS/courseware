@@ -5,7 +5,7 @@ var gulp   = require('gulp'),
     zip    = require('gulp-zip');
 
 var paths = {
-    styles: ['./blocks/*/css/*.less', './assets/*.less']
+    styles: ['./blocks/*/css/*.less', './assets/*.less', "!./blocks/*/css/_*.less"]
 };
 
 

@@ -64,6 +64,9 @@ class CoursewareController extends MoocipController {
     private function addBlockStyles()
     {
         foreach (glob($this->plugin->getPluginPath() . '/blocks/*/css/*.css') as $file) {
+            if (substr(basename($file), 0, 1) === '_') {
+                continue;
+            }
             PageLayout::addStylesheet($GLOBALS['ABSOLUTE_URI_STUDIP'] . $file);
         }
     }
