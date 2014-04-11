@@ -1,9 +1,9 @@
-<li class="section{{#selected}} selected{{/selected}}"
+<li class="section{{#selected}} selected{{/selected}}{{#fields.visited}} visited{{/fields.visited}}"
     data-blockid={{id}}>
 
   <a class="navigate"
      href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
      title="{{title}}">
-     &nbsp;&bull;&nbsp;
+     {{title}}
   </a>
 </li>
