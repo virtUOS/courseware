@@ -31,9 +31,7 @@
   </ol>
 
   {{#active_section}}
-    <section class=active-section data-blockid={{id}} data-title="{{title}}" data-parentid="{{parent_id}}">
-      {{{html}}}
-    </section>
+    {{> active_section}}
   {{/active_section}}
   <div class="clear"></div>
 </section>
