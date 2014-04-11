@@ -160,6 +160,7 @@ section#courseware {
         padding: 0px;
         display: inline-block;
 
+        &[data-icon=""]         { .bgImg(infopage,   "blue"); }
         &[data-icon="document"] { .bgImg(infopage,   "blue"); }
         &[data-icon="task"]     { .bgImg(assessment, "blue"); }
         &[data-icon="video"]    { .bgImg(video,      "blue"); }
@@ -168,6 +169,7 @@ section#courseware {
       &:hover > a {
           background-color: #ddd;
 
+          &[data-icon=""]         { .bgImg(infopage,   "red"); }
           &[data-icon="document"] { .bgImg(infopage,   "red"); }
           &[data-icon="task"]     { .bgImg(assessment, "red"); }
           &[data-icon="video"]    { .bgImg(video,      "red"); }
@@ -184,12 +186,15 @@ section#courseware {
         box-shadow: inset 2px 1px 2px #000;
         font-weight: normal;
 
+        &[data-icon=""]         { .bgImg(infopage,   "black"); }
         &[data-icon="document"] { .bgImg(infopage,   "black"); }
         &[data-icon="task"]     { .bgImg(assessment, "black"); }
         &[data-icon="video"]    { .bgImg(video,      "black"); }
-
       }
 
+      &.loading > a {
+        background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat;
+      }
     }
   }
 
