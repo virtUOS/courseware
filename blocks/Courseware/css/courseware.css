@@ -205,9 +205,13 @@ section#courseware ol.active-subchapter li:hover > a {
   background-color: #eee;
   background: url("../../../../../../assets/images/icons/16/red/vote.png") center center no-repeat #dddddd;
 }
+section#courseware ol.active-subchapter li.visited > a {
+  background-color: #f8f8f8;
+}
 section#courseware ol.active-subchapter li.selected > a {
+  background-image: url("../../../../../../assets/images/icons/16/black/vote.png");
   background-color: #ccc;
-  box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 2px 1px 2px #000;
   border-color: #888;
   font-weight: normal;
 }

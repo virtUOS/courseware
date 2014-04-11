@@ -164,13 +164,18 @@ section#courseware {
           background-color: #eee;
           background: url("../../../../../../assets/images/icons/16/red/vote.png") center center no-repeat #ddd;
       }
-    }
 
-    li.selected > a {
-      background-color: #ccc;
-      box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
-      border-color: #888;
-      font-weight: normal;
+      &.visited > a {
+        background-color: #f8f8f8;
+      }
+
+      &.selected > a {
+        background-image: url("../../../../../../assets/images/icons/16/black/vote.png");
+        background-color: #ccc;
+        box-shadow: inset 2px 1px 2px #000;
+        border-color: #888;
+        font-weight: normal;
+      }
     }
   }
 
