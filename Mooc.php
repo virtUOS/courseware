@@ -20,7 +20,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $this->setupAutoload();
         $this->setupContainer();
         $this->setupNavigation();
-     
+
         // deactivate Vips-Plugin if this course is capture by the mooc-plugin
         if ($this->isSlotModule()) {
             Navigation::removeItem('/course/vipsplugin');
