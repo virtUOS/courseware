@@ -9,12 +9,12 @@
 }
 .ui-tooltip,
 .arrow:after {
-  background: white;
-  border: 2px solid #bbb;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
 }
 .ui-tooltip {
   padding: 10px 20px;
-  color: black;
+  color: #333333;
   box-shadow: none;
 }
 .arrow {

@@ -1,11 +1,11 @@
 .ui-tooltip,
 .arrow:after {
   background: #f9f9f9;
-  border: 1px solid #ddd !important;
+  border: 1px solid #ddd;
 }
 .ui-tooltip {
   padding: 10px 20px;
-  color: #333;
+  color: #333333;
   box-shadow: none;
 }
 .arrow {
