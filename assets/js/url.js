@@ -26,6 +26,12 @@ define(['module', 'argjs'], function (module, Arg) {
             return oldLocation.pathname+oldLocation.search+oldLocation.hash != newLocation;
         },
 
+        plugin_url: function (path) {
+            path = path || "";
+            var params = _.extend({ cid: Arg("cid") }, Arg.parse(path));
+            return Arg.url(module.config().plugin_url + path, params || {});
+        },
+
         block_url: function (block_id, params) {
             var path = [module.config().blocks_url, "/", block_id].join("");
             return Arg.url(path, params || {});

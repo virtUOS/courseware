@@ -3,8 +3,9 @@
  'use strict';
 
  <?
- $block_types = $container['block_factory']->getBlockClasses();
- $blocks_url  = current(explode("?", $controller->url_for("blocks")));
+  $block_types = $container['block_factory']->getBlockClasses();
+  $plugin_url = PluginEngine::getURL($plugin, array(), '', true);
+  $blocks_url  = current(explode("?", $controller->url_for("blocks")));
  ?>
 
  var require = {
@@ -16,6 +17,7 @@
      },
 
      "assets/js/url": {
+       plugin_url: <?= json_encode(studip_utf8encode($plugin_url)) ?>,
        blocks_url: <?= json_encode(studip_utf8encode($blocks_url)) ?>
      },
 
