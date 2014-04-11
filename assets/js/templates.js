@@ -1,8 +1,17 @@
-define(['module', 'mustache'], function (module, Mustache) {
+define(['module', 'mustache', './url'], function (module, Mustache, url_helper) {
 
     'use strict';
 
     var TEMPLATES = module.config().templates || {};
+
+    var helpers = {
+        i18n: _.identity,
+        plugin_url: function () {
+            return function (text, render) {
+                return url_helper.plugin_url(render(text));
+            };
+        }
+    };
 
     return function (block_type, template_name, data) {
         var templates = TEMPLATES[block_type] || {};
@@ -11,6 +20,8 @@ define(['module', 'mustache'], function (module, Mustache) {
             throw 'No such template: "' + block_type + '/' + template_name + '"';
         }
 
-        return Mustache.render(templates[template_name], data, templates);
+        var template_data = _.extend({}, helpers, data);
+
+        return Mustache.render(templates[template_name], template_data, templates);
     };
 });
