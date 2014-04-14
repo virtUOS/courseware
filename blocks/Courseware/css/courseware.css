@@ -79,19 +79,18 @@ section#courseware ol.chapters {
 }
 section#courseware ol.chapters li.selected > .title > a {
   font-weight: 700;
-  background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat left center !important;
+  background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #f9f9f9 !important;
 }
 section#courseware ol.subchapters {
   padding-left: 25px;
 }
 section#courseware ol.subchapters li.selected > .title > a {
   font-weight: 700;
-  background: none !important;
+  background: #f9f9f9 !important;
 }
 section#courseware ol.subchapters li div.title {
   position: relative;
   line-height: 20px;
-  padding-left: 0.25em;
   border-bottom: 1px solid #E9E9E9;
 }
 section#courseware ol.subchapters li div.title a {
@@ -130,7 +129,6 @@ section#courseware ol.subchapters li.no-content {
 section#courseware ol.chapters li div.title {
   position: relative;
   line-height: 20px;
-  padding-left: 0.25em;
   border-bottom: 1px solid #E9E9E9;
 }
 section#courseware ol.chapters li.chapter div.title a {
@@ -177,7 +175,7 @@ section#courseware ol.chapters li.chapter div.title:hover .controls {
   visibility: visible;
 }
 section#courseware ol.chapters li.chapter > .title > a {
-  background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat left center;
+  background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
 }
 section#courseware ol.active-subchapter {
   position: absolute;
