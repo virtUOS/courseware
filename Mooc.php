@@ -1,8 +1,6 @@
 <?php
 
 require_once 'vendor/autoload.php';
-require_once 'models/mooc/constants.php';
-require_once 'models/mooc/Container.php';
 
 /**
  * MoocIP.class.php

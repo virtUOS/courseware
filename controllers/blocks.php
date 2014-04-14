@@ -1,7 +1,5 @@
 <?php
 
-require_once 'moocip_controller.php';
-
 class BlocksController extends MoocipController {
 
     function before_filter(&$action, &$args)

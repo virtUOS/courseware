@@ -1,6 +1,6 @@
 <?php
 
-namespace Mooc\TestBlock\Model;
+namespace Mooc\UI\TestBlock\Model;
 
 /**
  * Answers strategy for free text exercises.

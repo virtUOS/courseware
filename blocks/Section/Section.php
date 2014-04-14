@@ -1,5 +1,7 @@
 <?
-namespace Mooc\UI;
+namespace Mooc\UI\Section;
+
+use Mooc\UI\Block;
 
 class Section extends Block {
 

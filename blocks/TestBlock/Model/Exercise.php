@@ -1,8 +1,8 @@
 <?php
 
-namespace Mooc\TestBlock\Model;
+namespace Mooc\UI\TestBlock\Model;
 
-use Mooc\TestBlock\Vips\Bridge as VipsBridge;
+use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
 
 /**
  * @author Christian Flothmann <christian.flothmann@uos.de>
@@ -45,7 +45,6 @@ class Exercise extends \SimpleORMap
 
         if (isset($data['ID']) && $data['ID'] !== null) {
             $type = $this->getType();
-            require_once VipsBridge::getVipsPath().'/exercises/'.$type.'.php';
             $this->vipsExercise = new $type($this->Aufgabe, $this->ID);
 
             $this->answersStrategy = AnswersStrategy::getStrategy($this->vipsExercise);

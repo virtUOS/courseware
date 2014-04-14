@@ -1,6 +1,6 @@
 <?php
 
-namespace Mooc\TestBlock\Model;
+namespace Mooc\UI\TestBlock\Model;
 
 /**
  * Answers strategy for single choice exercises with only two answers.

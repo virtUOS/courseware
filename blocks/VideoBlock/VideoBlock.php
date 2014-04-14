@@ -1,5 +1,8 @@
 <?php
-namespace Mooc\UI;
+
+namespace Mooc\UI\VideoBlock;
+
+use Mooc\UI\Block;
 
 class VideoBlock extends Block
 {

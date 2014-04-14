@@ -1,11 +1,11 @@
 <?php
 
-namespace Mooc\Ui;
+namespace Mooc\UI\TestBlock;
 
 use Mooc\Container;
-use Mooc\TestBlock\Model\Solution;
-use Mooc\TestBlock\Model\Test;
-use Mooc\TestBlock\Vips\Bridge as VipsBridge;
+use Mooc\UI\Block;
+use Mooc\UI\TestBlock\Model\Test;
+use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
 
 /**
  * @author Christian Flothmann <christian.flothmann@uos.de>
@@ -13,7 +13,7 @@ use Mooc\TestBlock\Vips\Bridge as VipsBridge;
 class TestBlock extends Block
 {
     /**
-     * @var \Mooc\TestBlock\Model\Test
+     * @var \Mooc\UI\TestBlock\Model\Test
      */
     private $test;
 
@@ -80,7 +80,7 @@ class TestBlock extends Block
 
         if ($this->test) {
             foreach ($this->test->exercises as $exercise) {
-                /** @var \Mooc\TestBlock\Model\Exercise $exercise */
+                /** @var \Mooc\UI\TestBlock\Model\Exercise $exercise */
 
                 $answers = $exercise->getAnswers($this->test, $user);
                 $userAnswers = $exercise->getUserAnswers($this->test, $user);

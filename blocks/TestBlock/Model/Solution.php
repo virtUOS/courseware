@@ -1,6 +1,6 @@
 <?php
 
-namespace Mooc\TestBlock\Model;
+namespace Mooc\UI\TestBlock\Model;
 
 /**
  * @author Christian Flothmann <christian.flothmann@uos.de>
