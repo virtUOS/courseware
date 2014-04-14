@@ -249,8 +249,8 @@ section#courseware ol.active-subchapter li.visited > a {
 }
 section#courseware ol.active-subchapter li.selected > a {
   background-color: #ccc;
-  border-color: #888;
-  box-shadow: inset 2px 1px 2px #000;
+  border-color: #666;
+  box-shadow: inset 0px 0px 4px rgba(0,0,0,0.5);
   font-weight: normal;
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon=""] {
