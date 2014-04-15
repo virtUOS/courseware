@@ -1,7 +1,5 @@
 <?php
 
-require_once 'moocip_controller.php';
-
 class RegistrationsController extends MoocipController {
 
     public function before_filter(&$action, &$args)

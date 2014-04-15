@@ -19,10 +19,10 @@ class BlockFactory {
     // TODO
     public function makeBlock($sorm_block)
     {
-        $class = $this->loadBlock($sorm_block->type);
+        $class = 'Mooc\\UI\\'.$sorm_block->type.'\\'.$sorm_block->type;
 
         // there is no class describing a UI for that kind of block
-        if (!$class) {
+        if (!class_exists($class)) {
             return null;
         }
 
@@ -44,28 +44,6 @@ class BlockFactory {
     {
         $all = $this->getBlockClasses();
         return array_diff($all, \Mooc\DB\Block::getStructuralBlockClasses());
-    }
-
-    // TODO
-    private function loadBlock($type)
-    {
-        $class = sprintf('Mooc\\UI\\%s', $type);
-        if (!class_exists($class, false)) {
-
-            $file = $this->getBlockDir($type) . '/' . $type . '.php';
-            if (!file_exists($file)) {
-                return null;
-            }
-
-            require_once $file;
-        }
-        return $class;
-    }
-
-    // TODO
-    protected function getBlockDir($type)
-    {
-        return $this->getPluginDir() . '/blocks/' . $type;
     }
 
     // TODO

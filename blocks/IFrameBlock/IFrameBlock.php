@@ -1,5 +1,7 @@
 <?
-namespace Mooc\UI;
+namespace Mooc\IFrameBlock\UI;
+
+use Mooc\UI\Block;
 
 class IFrameBlock extends Block {
 

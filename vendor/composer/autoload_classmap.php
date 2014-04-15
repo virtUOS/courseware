@@ -6,4 +6,24 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'BlocksController' => $baseDir . '/controllers/blocks.php',
+    'BlubberController' => $baseDir . '/controllers/blubber.php',
+    'CoursesController' => $baseDir . '/controllers/courses.php',
+    'CoursewareController' => $baseDir . '/controllers/courseware.php',
+    'Exercise' => $baseDir . '/../VipsPlugin/exercises/exercise.php',
+    'MoocipController' => $baseDir . '/controllers/moocip_controller.php',
+    'RegistrationsController' => $baseDir . '/controllers/registrations.php',
+    'cloze_exercise' => $baseDir . '/../VipsPlugin/exercises/cloze_exercise.php',
+    'lt_exercise' => $baseDir . '/../VipsPlugin/exercises/lt_exercise.php',
+    'mc_exercise' => $baseDir . '/../VipsPlugin/exercises/mc_exercise.php',
+    'mco_exercise' => $baseDir . '/../VipsPlugin/exercises/mco_exercise.php',
+    'oc_exercise' => $baseDir . '/../VipsPlugin/exercises/oc_exercise.php',
+    'oct_exercise' => $baseDir . '/../VipsPlugin/exercises/oct_exercise.php',
+    'pl_exercise' => $baseDir . '/../VipsPlugin/exercises/pl_exercise.php',
+    'rh_exercise' => $baseDir . '/../VipsPlugin/exercises/rh_exercise.php',
+    'rnd_exercise' => $baseDir . '/../VipsPlugin/exercises/rnd_exercise.php',
+    'sc_exercise' => $baseDir . '/../VipsPlugin/exercises/sc_exercise.php',
+    'sco_exercise' => $baseDir . '/../VipsPlugin/exercises/sco_exercise.php',
+    'tb_exercise' => $baseDir . '/../VipsPlugin/exercises/tb_exercise.php',
+    'yn_exercise' => $baseDir . '/../VipsPlugin/exercises/yn_exercise.php',
 );

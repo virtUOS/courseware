@@ -1,6 +1,6 @@
 <?php
 
-namespace Mooc\TestBlock\Model;
+namespace Mooc\UI\TestBlock\Model;
 
 /**
  * Answers strategy for exercises.
@@ -105,7 +105,7 @@ class AnswersStrategy implements AnswersStrategyInterface
             );
         }
 
-        $fullyQualifiedClassName = '\Mooc\TestBlock\Model\\'.$className;
+        $fullyQualifiedClassName = '\Mooc\UI\TestBlock\Model\\'.$className;
 
         return new $fullyQualifiedClassName($vipsExercise);
     }

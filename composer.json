@@ -6,7 +6,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Mooc\\TestBlock\\": "blocks/TestBlock"
-        }
+            "Mooc\\UI\\": "blocks/"
+        },
+        "classmap": ["controllers/","../VipsPlugin/exercises/"]
     }
 }

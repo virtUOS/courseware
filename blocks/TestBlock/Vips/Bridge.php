@@ -1,6 +1,6 @@
 <?php
 
-namespace Mooc\TestBlock\Vips {
+namespace Mooc\UI\TestBlock\Vips {
 
     /**
      * @author Christian Flothmann <christian.flothmann@uos.de>
@@ -49,7 +49,7 @@ namespace Mooc\TestBlock\Vips {
 }
 
 namespace {
-    use Mooc\TestBlock\Vips\Bridge;
+    use Mooc\UI\TestBlock\Vips\Bridge;
 
     if (Bridge::vipsExists()) {
         require_once Bridge::getVipsPath().'/vips_assignments.inc.php';

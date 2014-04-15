@@ -1,5 +1,7 @@
 <?
-namespace Mooc\UI;
+namespace Mooc\UI\Courseware;
+
+use Mooc\UI\Block;
 
 class Courseware extends Block {
 

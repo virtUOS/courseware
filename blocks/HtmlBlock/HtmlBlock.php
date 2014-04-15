@@ -1,5 +1,7 @@
 <?
-namespace Mooc\UI;
+namespace Mooc\HtmlBlock\UI;
+
+use Mooc\UI\Block;
 
 // TODO: lots!
 class HtmlBlock extends Block {
