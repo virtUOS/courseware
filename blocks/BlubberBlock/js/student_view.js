@@ -10,7 +10,7 @@ define(['assets/js/student_view'], function (StudentView) {
         },
 
         postRender: function () {
-            var blockId = this.model.id;
+            var filterTag = '#block-'+this.model.id;
             var $container = this.$el.find('div.blubber-stream');
             var assetsBaseUrl = $container.attr("data-assets-base-url");
 
@@ -27,8 +27,22 @@ define(['assets/js/student_view'], function (StudentView) {
                         $container.html(data);
                         $container.removeClass('loading');
 
+                        // ensure that the filter tag is set properly before
+                        // creating the new Blubber posting
+                        var originalNewPosting = STUDIP.Blubber.newPosting;
+                        STUDIP.Blubber.newPosting = function () {
+                            var field = jQuery('#new_posting');
+
+                            if (field.val().indexOf(filterTag) == -1) {
+                                field.val(field.val()+' '+filterTag);
+                            }
+
+                            originalNewPosting();
+                        };
+
+                        // hide tags used to filter Blubber threads
                         jQuery('a.hashtag', $container).filter(function () {
-                            return jQuery(this).text() == '#block-'+blockId;
+                            return jQuery(this).text() == filterTag;
                         }).hide();
                     });
                 }
