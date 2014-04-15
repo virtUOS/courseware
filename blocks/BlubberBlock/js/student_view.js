@@ -10,6 +10,7 @@ define(['assets/js/student_view'], function (StudentView) {
         },
 
         postRender: function () {
+            var blockId = this.model.id;
             var $container = this.$el.find('div.blubber-stream');
             var assetsBaseUrl = $container.attr("data-assets-base-url");
 
@@ -25,6 +26,10 @@ define(['assets/js/student_view'], function (StudentView) {
                     jQuery.get($container.attr('data-stream-url'), function (data) {
                         $container.html(data);
                         $container.removeClass('loading');
+
+                        jQuery('a.hashtag', $container).filter(function () {
+                            return jQuery(this).text() == '#block-'+blockId;
+                        }).hide();
                     });
                 }
             );
