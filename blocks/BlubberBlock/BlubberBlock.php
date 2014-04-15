@@ -16,7 +16,7 @@ class BlubberBlock extends Block
         $streamUrl = \PluginEngine::getURL(
             $GLOBALS['plugin'],
             array(),
-            'blubber/index'
+            'blubber/index/'.$this->id
         );
 
         $pluginManager = \PluginManager::getInstance();

@@ -5,7 +5,7 @@
  */
 class BlubberController extends MoocipController
 {
-    public function index_action()
+    public function index_action($blockId)
     {
         if (Request::isXhr()) {
             $this->set_layout(null);
@@ -29,6 +29,7 @@ class BlubberController extends MoocipController
 
         // retrieve all blubber threads to display
         $courseStream = BlubberStream::getCourseStream(Request::get('cid'));
+        $courseStream['filter_hashtags'] = array('block-'.$blockId);
         $this->threads = $courseStream->fetchThreads(0, 11);
     }
 }
