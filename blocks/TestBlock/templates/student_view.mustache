@@ -1,7 +1,15 @@
 <h2>{{title}}</h2>
 
 {{#exercises}}
-  {{> _question}}
+  {{#cloze_answers}}
+    {{^has_solution}}
+      {{> _cloze_question}}
+    {{/has_solution}}
+  {{/cloze_answers}}
+
+  {{^cloze_answers}}
+    {{> _question}}
+  {{/cloze_answers}}
 
   {{#has_solution}}
     {{#free_text_answers}}
@@ -11,6 +19,10 @@
     {{^free_text_answers}}
       {{> _solution.mustache}}
     {{/free_text_answers}}
+
+    {{#cloze_answers}}
+      {{> _cloze_solution}}
+    {{/cloze_answers}}
   {{/has_solution}}
 
   {{^has_solution}}

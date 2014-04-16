@@ -46,4 +46,21 @@ class MultipleChoiceAnswersStrategy extends AnswersStrategy
     {
         return $this->vipsExercise->correctArray[$index] == 1;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUserAnswers(array $solution = null)
+    {
+        $userAnswers = array();
+        $answers = $this->getAnswers();
+
+        foreach ($solution as $index => $selected) {
+            if ($selected == 1) {
+                $userAnswers[] = $answers[$index];
+            }
+        }
+
+        return $userAnswers;
+    }
 }

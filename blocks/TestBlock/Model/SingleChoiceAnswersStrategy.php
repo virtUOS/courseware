@@ -46,4 +46,14 @@ class SingleChoiceAnswersStrategy extends AnswersStrategy
     {
         return $this->vipsExercise->correctArray[0] == $index;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUserAnswers(array $solution = null)
+    {
+        $answers = $this->getAnswers();
+
+        return array($answers[$solution[0]]);
+    }
 }

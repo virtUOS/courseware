@@ -97,6 +97,7 @@ class TestBlock extends Block
                     'multiple-choice' => $exercise->isMultipleChoice(),
                     'solver_user_id' => $user->cfg->getUserId(),
                     'has_solution' => $exercise->hasSolutionFor($this->test, $user),
+                    'solution' => $exercise->getAnswersStrategy()->getSolution($exercise->getVipsSolutionFor($this->test, $user)),
                     'number_of_answers' => count($answers),
                     $exercise->getAnswersStrategy()->getTemplate() => true,
                     'user_answers' => $userAnswers,

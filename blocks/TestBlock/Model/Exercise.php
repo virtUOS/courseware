@@ -70,7 +70,7 @@ class Exercise extends \SimpleORMap
      */
     public function getQuestion()
     {
-        return $this->vipsExercise->question;
+        return $this->answersStrategy->getQuestion();
     }
 
     /**

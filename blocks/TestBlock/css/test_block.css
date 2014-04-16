@@ -7,3 +7,11 @@ section.TestBlock li.correct_answer span {
   border: 1px dashed green;
   padding: 0px 3px;
 }
+
+section.TestBlock p.solution span.correct_answer {
+    color: green;
+}
+
+section.TestBlock p.solution span.incorrect_answer {
+    color: red;
+}

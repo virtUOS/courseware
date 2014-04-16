@@ -22,6 +22,14 @@ class AnswersStrategy implements AnswersStrategyInterface
     /**
      * {@inheritDoc}
      */
+    public function getQuestion()
+    {
+        return $this->vipsExercise->getQuestion();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getAnswers()
     {
         return array();
@@ -97,6 +105,9 @@ class AnswersStrategy implements AnswersStrategyInterface
             case 'lt_exercise':
                 $className = 'FreeTextAnswersStrategy';
                 break;
+            case 'cloze_exercise':
+                $className = 'ClozeAnswersStrategy';
+                break;
         }
 
         if ($className === null) {
@@ -124,5 +135,13 @@ class AnswersStrategy implements AnswersStrategyInterface
     public function isUserAnswerCorrect($answer, $index)
     {
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSolution(array $solution = null)
+    {
+        return implode(', ', $this->getUserAnswers($solution));
     }
 }

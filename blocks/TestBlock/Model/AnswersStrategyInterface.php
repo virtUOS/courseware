@@ -10,6 +10,13 @@ namespace Mooc\UI\TestBlock\Model;
 interface AnswersStrategyInterface
 {
     /**
+     * Returns the exercise's question.
+     *
+     * @return string The question
+     */
+    public function getQuestion();
+
+    /**
      * Returns the possible answers.
      *
      * @return string[] The (human readable) answers
@@ -52,7 +59,7 @@ interface AnswersStrategyInterface
     public function getTemplate();
 
     /**
-     * Returns a user's answer of an exercise.
+     * Returns a user's answers of an exercise.
      *
      * @param array $solution The user's solution
      *
@@ -69,4 +76,13 @@ interface AnswersStrategyInterface
      * @return boolean True, if the answer is correct, false otherwise
      */
     public function isUserAnswerCorrect($answer, $index);
+
+    /**
+     * Returns the user's solution as human readable string.
+     *
+     * @param array $solution The user's solution
+     *
+     * @return string The solution
+     */
+    public function getSolution(array $solution = null);
 }
