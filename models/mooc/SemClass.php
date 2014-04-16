@@ -1,8 +1,6 @@
 <?php
 namespace Mooc;
 
-require_once 'constants.php';
-
 /**
  * @author  <mlunzena@uos.de>
  */

@@ -1,8 +1,6 @@
 <?php
 namespace Mooc\UI;
 
-require_once __DIR__ . '/../constants.php';
-
 // TODO: authorization in views and handlers
 
 /**
