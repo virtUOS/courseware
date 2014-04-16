@@ -73,5 +73,17 @@ class CoursesController extends MoocipController {
 
         $this->courseware = \Mooc\DB\Block::findCourseware($cid);
         $this->course = Course::find($cid);
+        $localEntries = DataFieldEntry::getDataFieldEntries($cid);
+        foreach ($localEntries as $entry) {
+            if ($entry->structure->accessAllowed($GLOBALS['perm'])) {
+                if ($entry->getValue()) {
+                    if ($entry->getId() == md5('(M)OOC-Preview-Image')) {
+                        $this->preview_image = $entry->getValue();
+                    } else if ($entry->getId() == md5('(M)OOC-Preview-Video (mp4)')) {
+                        $this->preview_video = $entry->getValue();
+                    }
+                }
+            }
+        }
     }
 }
