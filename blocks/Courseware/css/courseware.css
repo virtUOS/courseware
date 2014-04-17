@@ -124,7 +124,7 @@ section#courseware ol.subchapters li div.title:hover .controls {
   visibility: visible;
 }
 section#courseware ol.subchapters li.no-content {
-  padding: 5px;
+  padding: 10px 5px;
 }
 section#courseware ol.chapters li div.title {
   position: relative;
@@ -222,6 +222,7 @@ section#courseware ol.active-subchapter li > a[data-icon="video"] {
 section#courseware ol.active-subchapter li:hover > a {
   background-color: #ddd;
 }
+/*
 section#courseware ol.active-subchapter li:hover > a[data-icon=""] {
   background-image: url("../../../../../../assets/images/icons/16/red/infopage.png");
   background-position: center center;
@@ -242,37 +243,37 @@ section#courseware ol.active-subchapter li:hover > a[data-icon="video"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+*/
 section#courseware ol.active-subchapter li.visited > a {
   background-color: #f8f8f8;
 }
 section#courseware ol.active-subchapter li.selected > a {
-  background-color: #ccc;
-  border-color: #666;
-  box-shadow: inset 0px 0px 4px rgba(0,0,0,0.5);
+  background-color: #24437C;
+  border-color: #222;
   font-weight: normal;
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon=""] {
-  background-image: url("../../../../../../assets/images/icons/16/black/infopage.png");
+  background-image: url("../../../../../../assets/images/icons/16/white/infopage.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon="document"] {
-  background-image: url("../../../../../../assets/images/icons/16/black/infopage.png");
+  background-image: url("../../../../../../assets/images/icons/16/white/infopage.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon="task"] {
-  background-image: url("../../../../../../assets/images/icons/16/black/assessment.png");
+  background-image: url("../../../../../../assets/images/icons/16/white/assessment.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon="video"] {
-  background-image: url("../../../../../../assets/images/icons/16/black/video.png");
+  background-image: url("../../../../../../assets/images/icons/16/white/video.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li.loading > a {
-  background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat;
+  background: url("../../../../../../assets/images/ajax_indicator_small.gif") center center no-repeat;
 }
 section#courseware section.active-section {
   float: left;
