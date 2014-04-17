@@ -1,5 +1,5 @@
 <?
-namespace Mooc\HtmlBlock\UI;
+namespace Mooc\UI\HtmlBlock;
 
 use Mooc\UI\Block;
 

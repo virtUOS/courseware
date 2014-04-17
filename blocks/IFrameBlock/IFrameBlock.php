@@ -1,5 +1,5 @@
 <?
-namespace Mooc\IFrameBlock\UI;
+namespace Mooc\UI\IFrameBlock;
 
 use Mooc\UI\Block;
 
