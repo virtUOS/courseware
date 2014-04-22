@@ -79,14 +79,14 @@ section#courseware ol.chapters {
 }
 section#courseware ol.chapters li.selected > .title > a {
   font-weight: 700;
-  background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #f9f9f9 !important;
+  background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #f8f8f8 !important;
 }
 section#courseware ol.subchapters {
   padding-left: 25px;
 }
 section#courseware ol.subchapters li.selected > .title > a {
   font-weight: 700;
-  background: #f9f9f9 !important;
+  background: #f8f8f8 !important;
 }
 section#courseware ol.subchapters li div.title {
   position: relative;
@@ -335,12 +335,25 @@ section#courseware button.add-subchapter {
   font-size: 12px;
   border-radius: 20px;
 }
+section#courseware button.add-chapter,
+section#courseware button.add-subchapter {
+  margin: 5px 0px 5px 10px;
+}
+section#courseware button.add-section:hover,
+section#courseware button.add-chapter:hover,
+section#courseware button.add-subchapter:hover,
+.active-section .block-adder .add-block-type:hover,
+section#courseware .mode-switch button:hover {
+	background-color: #F8F8F8;
+	border-color: #cccccc;
+}
 section#courseware .edit-structure {
   position: relative;
 }
 section#courseware .edit-structure input {
-  width: 88%;
-  padding: 2px 5px;
+  width: 86%;
+  padding: 4px 5px;
+  margin: 2px 0px;
   border-radius: 3px;
   border: 1px solid #BBBBBB;
 }
