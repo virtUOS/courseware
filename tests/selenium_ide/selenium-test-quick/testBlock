@@ -4,17 +4,42 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://vm036.rz.uos.de/studip/mooc/" />
-<title>logout</title>
+<title>test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">logout</td></tr>
+<tr><td rowspan="1" colspan="3">test</td></tr>
 </thead><tbody>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Logout</td>
+	<td>click</td>
+	<td>//section[@id='courseware']/div/button[2]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@data-type='TestBlock']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//section/section/div/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//section/section/div/button[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Wollen Sie wirklich löschen?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=p</td>
+	<td>Keine Inhaltsblöcke</td>
 </tr>
 </tbody></table>
 </body>

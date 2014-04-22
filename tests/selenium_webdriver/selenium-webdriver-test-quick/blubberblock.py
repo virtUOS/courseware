@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 import unittest, time, re
 import mysuite
 
-class VideoBlock(unittest.TestCase):
+class BlubberBlock(unittest.TestCase):
     def setUp(self):
         self.driver = mysuite.getOrCreateWebdriver()
         self.driver.implicitly_wait(30)
@@ -15,39 +15,34 @@ class VideoBlock(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def test_video_block(self):
+    def test_blubber_block(self):
         driver = self.driver
         driver.find_element_by_xpath("//section[@id='courseware']/div/button[2]").click()
-        driver.find_element_by_xpath("//button[@data-type='VideoBlock']").click()
+        driver.find_element_by_css_selector("button.add-block-type").click()
+        
         for i in range(60):
             try:
-                if self.is_element_present(By.CSS_SELECTOR, "section.VideoBlock"): break
+                if self.is_element_present(By.XPATH, "//textarea[@id='new_posting']"): break
             except: pass
             time.sleep(1)
         else: self.fail("time out")
-        driver.find_element_by_xpath("//section/section/div/button").click()
+        driver.find_element_by_xpath("//textarea[@id='new_posting']").clear()
+        driver.find_element_by_xpath("//textarea[@id='new_posting']").send_keys("Hello World")
+        driver.find_element_by_xpath("//textarea[@id='new_posting']").send_keys(Keys.RETURN)
+        """
         for i in range(60):
             try:
-                if self.is_element_present(By.CSS_SELECTOR, "p > input[type=\"text\"]"): break
+                if self.is_element_present(By.XPATH, "//div[3]/div[3]"): break
             except: pass
             time.sleep(1)
         else: self.fail("time out")
-        driver.find_element_by_css_selector("div.block-content > p> input[type=\"text\"]").clear()
-        driver.find_element_by_css_selector("div.block-content > p> input[type=\"text\"]").send_keys("https://video3.virtuos.uni-osnabrueck.de/static/engage-player/b89aa8f8-251c-49db-9ceb-fea6e79c86e6/987ba5be-d194-46b8-84da-b9721628586e/MOOC_Vornberger_5.mp4")
-        driver.find_element_by_css_selector("div.block-content >p> input[type=\"text\"]").send_keys(Keys.RETURN)
-        for i in range(60):
-            try:
-                if self.is_element_present(By.XPATH, "//iframe[@src='https://video3.virtuos.uni-osnabrueck.de/static/engage-player/b89aa8f8-251c-49db-9ceb-fea6e79c86e6/987ba5be-d194-46b8-84da-b9721628586e/MOOC_Vornberger_5.mp4']"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
-        driver.find_element_by_name("cancel").click()
-        try: self.assertTrue(self.is_element_present(By.XPATH, "//iframe[@src='https://video3.virtuos.uni-osnabrueck.de/static/engage-player/b89aa8f8-251c-49db-9ceb-fea6e79c86e6/987ba5be-d194-46b8-84da-b9721628586e/MOOC_Vornberger_5.mp4']"))
+        """
+        try: self.assertRegexpMatches(driver.find_element_by_xpath("//div[3]/div[3]").text, r"Hello World")
         except AssertionError as e: self.verificationErrors.append(str(e))
         driver.find_element_by_xpath("//section/section/div/button[2]").click()
-        self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
+        self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich lÃ¶schen[\s\S]$")
         
-		
+    
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
         except NoSuchElementException, e: return False
@@ -66,11 +61,10 @@ class VideoBlock(unittest.TestCase):
                 alert.accept()
             else:
                 alert.dismiss()
-            return alert_text
+            return alert_text.encode('utf-8')
         finally: self.accept_next_alert = True
     
     def tearDown(self):
-        #self.driver.quit()
         time.sleep(1)
         self.assertEqual([], self.verificationErrors)
 

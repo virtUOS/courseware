@@ -11,8 +11,9 @@
 <tr><td><a href="login">login</a></td></tr>
 <tr><td><a href="htmlBlock">htmlBlock</a></td></tr>
 <tr><td><a href="iframeBlock">iframeBlock</a></td></tr>
-<tr><td><a href="test">test</a></td></tr>
+<tr><td><a href="testBlock">testBlock</a></td></tr>
 <tr><td><a href="videoBlock">videoBlock</a></td></tr>
+<tr><td><a href="blubberBlock">blubberBlock</a></td></tr>
 <tr><td><a href="logout">logout</a></td></tr>
 </tbody></table>
 </body>

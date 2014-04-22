@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 import unittest, time, re
 import mysuite
 
-class IframeBlock(unittest.TestCase):
+class Test(unittest.TestCase):
     def setUp(self):
         self.driver = mysuite.getOrCreateWebdriver()
         self.driver.implicitly_wait(30)
@@ -15,39 +15,11 @@ class IframeBlock(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def test_iframe_block(self):
+    def test_(self):
         driver = self.driver
         driver.find_element_by_xpath("//section[@id='courseware']/div/button[2]").click()
-        driver.find_element_by_xpath("//button[@data-type='IFrameBlock']").click()
-        for i in range(60):
-            try:
-                if self.is_element_present(By.CSS_SELECTOR, "iframe"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
+        driver.find_element_by_xpath("//button[@data-type='TestBlock']").click()
         driver.find_element_by_xpath("//section/section/div/button").click()
-        for i in range(60):
-            try:
-                if self.is_element_present(By.CSS_SELECTOR, "input.urlinput"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
-        driver.find_element_by_css_selector("input.urlinput").clear()
-        driver.find_element_by_css_selector("input.urlinput").send_keys("http://myuos.de")
-        driver.find_element_by_name("save").click()
-        for i in range(60):
-            try:
-                if self.is_element_present(By.XPATH, "//iframe"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
-        self.assertTrue(self.is_element_present(By.XPATH, "//iframe[@src='http://myuos.de']"))
-        for i in range(60):
-            try:
-                if self.is_element_present(By.XPATH, "//section/section/div/button[2]"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
         driver.find_element_by_xpath("//section/section/div/button[2]").click()
         self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
         
@@ -70,12 +42,12 @@ class IframeBlock(unittest.TestCase):
                 alert.accept()
             else:
                 alert.dismiss()
-            return alert_text
+            return alert_text.encode('utf-8')
         finally: self.accept_next_alert = True
     
     def tearDown(self):
         #self.driver.quit()
-	time.sleep(1)
+        time.sleep(1)
         self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":
