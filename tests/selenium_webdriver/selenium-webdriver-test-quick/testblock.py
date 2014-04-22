@@ -15,14 +15,17 @@ class Test(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def test_(self):
+    def test_block(self):
         driver = self.driver
         driver.find_element_by_xpath("//section[@id='courseware']/div/button[2]").click()
         driver.find_element_by_xpath("//button[@data-type='TestBlock']").click()
+        try: self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "section.TestBlock"))
+        except AssertionError as e: self.verificationErrors.append(str(e))
         driver.find_element_by_xpath("//section/section/div/button").click()
+        try: self.assertTrue(self.is_element_present(By.NAME, "content"))
+        except AssertionError as e: self.verificationErrors.append(str(e))
         driver.find_element_by_xpath("//section/section/div/button[2]").click()
         self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
-        
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -42,9 +45,8 @@ class Test(unittest.TestCase):
                 alert.accept()
             else:
                 alert.dismiss()
-            return alert_text.encode('utf-8')
+            return alert_text
         finally: self.accept_next_alert = True
-    
     def tearDown(self):
         #self.driver.quit()
         time.sleep(1)
