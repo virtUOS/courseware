@@ -42,7 +42,8 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
                 insert_point = $button.closest(".controls").prev(".no-content"),
                 tag = "<" + insert_point[0].tagName + "/>",
-                li_wrapper = view.$el.wrap(tag).parent();
+                li_wrapper = view.$el.wrap(tag).parent(),
+                placeholder_item;
 
             $button.hide();
             insert_point.before(li_wrapper);
@@ -51,24 +52,24 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             view.promise()
                 .then(
                     function (model) {
-                        view.$el.addClass("loading");
+                        view.remove();
+                        placeholder_item = insert_point
+                            .before(templates("Courseware", model.get("type"), model.toJSON()))
+                            .prev()
+                            .addClass("loading");
                         return courseware._addStructure(id, model);
                     })
                 .then(
                     function (data) {
-                        var new_item = templates("Courseware", model.get("type"), data);
-                        insert_point.before(new_item);
+                        placeholder_item.replaceWith(templates("Courseware", model.get("type"), data));
+                        $button.fadeIn();
                     })
                 .then(
                     null,
                     function (error) {
                         // TODO:  show error somehow
                         alert("ERROR: "  + JSON.stringify(error));
-                    })
-                .always(function () {
-                    view.remove();
-                    $button.fadeIn();
-                });
+                    });
         },
 
         _newBlockFromButton: function ($button) {
