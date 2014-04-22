@@ -21,9 +21,21 @@ gulp.task('less', function() {
 });
 
 gulp.task('zip', ['default'], function() {
-    return gulp.src(['./assets/**', './blocks/**', './controllers/**', './migrations/**', './models/**', './vendor/**', './views/**', 'Mooc.php', 'LICENSE', 'README.md'])
-        .pipe(zip('moocip.zip'))
-        .pipe(gulp.dest('.'));
+    return gulp.src([
+        'assets/**',
+        'blocks/**',
+        'controllers/**',
+        'migrations/**',
+        'models/**',
+        'vendor/**',
+        'views/**',
+        'LICENSE',
+        'Mooc.php',
+        'plugin.manifest',
+        'README.md'
+    ], { mark: true, cwdbase: true })
+    .pipe(zip('moocip.zip'))
+    .pipe(gulp.dest('.'));
 });
 
 // Rerun the task when a file changes
