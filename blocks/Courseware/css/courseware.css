@@ -221,29 +221,13 @@ section#courseware ol.active-subchapter li > a[data-icon="video"] {
 }
 section#courseware ol.active-subchapter li:hover > a {
   background-color: #ddd;
+  /*
+          &[data-icon=""]         { .bgImg(infopage,   "red"); }
+          &[data-icon="document"] { .bgImg(infopage,   "red"); }
+          &[data-icon="task"]     { .bgImg(assessment, "red"); }
+          &[data-icon="video"]    { .bgImg(video,      "red"); }
+          */
 }
-/*
-section#courseware ol.active-subchapter li:hover > a[data-icon=""] {
-  background-image: url("../../../../../../assets/images/icons/16/red/infopage.png");
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-section#courseware ol.active-subchapter li:hover > a[data-icon="document"] {
-  background-image: url("../../../../../../assets/images/icons/16/red/infopage.png");
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-section#courseware ol.active-subchapter li:hover > a[data-icon="task"] {
-  background-image: url("../../../../../../assets/images/icons/16/red/assessment.png");
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-section#courseware ol.active-subchapter li:hover > a[data-icon="video"] {
-  background-image: url("../../../../../../assets/images/icons/16/red/video.png");
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-*/
 section#courseware ol.active-subchapter li.visited > a {
   background-color: #f8f8f8;
 }

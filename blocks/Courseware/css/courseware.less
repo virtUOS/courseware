@@ -37,7 +37,7 @@ section#courseware {
 
     li.selected > .title > a {
       font-weight: 700;
-      background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat left center !important;
+      background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #f9f9f9 !important;
     }
   }
 
@@ -46,13 +46,12 @@ section#courseware {
 
     li.selected > .title > a {
       font-weight: 700;
-      background: none !important;
+      background: #f9f9f9 !important;
     }
 
     li div.title {
       position: relative;
       line-height: 20px;
-      padding-left: 0.25em;
       border-bottom: 1px solid #E9E9E9;
 
       a {
@@ -83,7 +82,7 @@ section#courseware {
     }
 
     li.no-content {
-      padding: 5px;
+      padding: 10px 5px;
     }
   }
 
@@ -94,7 +93,6 @@ section#courseware {
     li div.title {
       position: relative;
       line-height: 20px;
-      padding-left: 0.25em;
       border-bottom: 1px solid #E9E9E9;
     }
 
@@ -131,7 +129,7 @@ section#courseware {
 
 
     li.chapter > .title > a {
-      background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat left center;
+      background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
     }
   }
 
@@ -169,10 +167,12 @@ section#courseware {
       &:hover > a {
           background-color: #ddd;
 
+          /*
           &[data-icon=""]         { .bgImg(infopage,   "red"); }
           &[data-icon="document"] { .bgImg(infopage,   "red"); }
           &[data-icon="task"]     { .bgImg(assessment, "red"); }
           &[data-icon="video"]    { .bgImg(video,      "red"); }
+          */
       }
 
       &.visited > a {
@@ -180,20 +180,19 @@ section#courseware {
       }
 
       &.selected > a {
-        background-color: #ccc;
-        border-color: #888;
+        background-color: #24437C;
+        border-color: #222;
 
-        box-shadow: inset 2px 1px 2px #000;
         font-weight: normal;
 
-        &[data-icon=""]         { .bgImg(infopage,   "black"); }
-        &[data-icon="document"] { .bgImg(infopage,   "black"); }
-        &[data-icon="task"]     { .bgImg(assessment, "black"); }
-        &[data-icon="video"]    { .bgImg(video,      "black"); }
+        &[data-icon=""]         { .bgImg(infopage,   "white"); }
+        &[data-icon="document"] { .bgImg(infopage,   "white"); }
+        &[data-icon="task"]     { .bgImg(assessment, "white"); }
+        &[data-icon="video"]    { .bgImg(video,      "white"); }
       }
 
       &.loading > a {
-        background: url(../../../../../../assets/images/ajax_indicator_small.gif) center center no-repeat;
+        background: url("../../../../../../assets/images/ajax_indicator_small.gif") center center no-repeat;
       }
     }
   }
