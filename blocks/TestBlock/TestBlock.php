@@ -82,6 +82,11 @@ class TestBlock extends Block
             foreach ($this->test->exercises as $exercise) {
                 /** @var \Mooc\UI\TestBlock\Model\Exercise $exercise */
 
+                // skip unsupported exercise types
+                if ($exercise->getAnswersStrategy() === null) {
+                    continue;
+                }
+
                 $answers = $exercise->getAnswers($this->test, $user);
                 $userAnswers = $exercise->getUserAnswers($this->test, $user);
                 $exercises[] = array(

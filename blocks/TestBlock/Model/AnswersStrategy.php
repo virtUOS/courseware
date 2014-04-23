@@ -111,9 +111,7 @@ class AnswersStrategy implements AnswersStrategyInterface
         }
 
         if ($className === null) {
-            throw new \InvalidArgumentException(
-                'There is no answers strategy for the Vips exercise type '.get_class($vipsExercise)
-            );
+            return null;
         }
 
         $fullyQualifiedClassName = '\Mooc\UI\TestBlock\Model\\'.$className;
