@@ -109,7 +109,8 @@
   background: url(../../../../../../assets/images/ajax_indicator_small.gif) 10px center no-repeat;
 }
 #courseware.view-student .active-section div.controls,
-#courseware.view-student .active-section .block-adder {
+#courseware.view-student .active-section .block-adder,
+#courseware .active-section div.controls.not-editable button.author {
   display: none;
 }
 #courseware.view-author .active-section section.block {

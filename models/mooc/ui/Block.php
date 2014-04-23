@@ -284,12 +284,24 @@ abstract class Block {
         return dirname($class->getFileName());
     }
 
+    /**
+     * Checks whether the block is editable.
+     *
+     * By default, all blocks can be modified.
+     *
+     * @return bool True, if the block is editable, false otherwise
+     */
+    public function isEditable()
+    {
+        return true;
+    }
 
     // TODO
     public function toJSON()
     {
         $json = $this->_model->toArray();
         $json['fields'] = $this->getFields();
+        $json['editable'] = $this->isEditable();
         return $json;
     }
 

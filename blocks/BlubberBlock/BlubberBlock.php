@@ -33,4 +33,12 @@ class BlubberBlock extends Block
     {
         return array();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isEditable()
+    {
+        return false;
+    }
 }

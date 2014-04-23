@@ -4,7 +4,7 @@
   data-blockid="{{id}}"
   data-type="{{type}}">
 
-  <div class=controls>
+  <div class="controls{{#editable}} editable{{/editable}}{{^editable}} not-editable{{/editable}}">
     <button class=author>{{#i18n}}Ändern{{/i18n}}</button>
     <button class=trash>{{#i18n}}Entfernen{{/i18n}}</button>
   </div>
