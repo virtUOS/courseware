@@ -52,6 +52,10 @@ class MultipleChoiceAnswersStrategy extends AnswersStrategy
      */
     public function getUserAnswers(array $solution = null)
     {
+        if ($solution === null) {
+            return array();
+        }
+
         $userAnswers = array();
         $answers = $this->getAnswers();
 

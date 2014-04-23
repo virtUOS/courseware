@@ -52,6 +52,10 @@ class SingleChoiceAnswersStrategy extends AnswersStrategy
      */
     public function getUserAnswers(array $solution = null)
     {
+        if ($solution === null) {
+            return array();
+        }
+
         $answers = $this->getAnswers();
 
         return array($answers[$solution[0]]);
