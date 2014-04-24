@@ -314,7 +314,7 @@ section#courseware .mode-switch button.student {
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
   border-right: none;
-  background-image: url("../../../../../../assets/images/icons/32/blue/headache.png"); 
+  background-image: url("../../../../../../assets/images/icons/32/blue/headache.png");
   background-position: center 0px;
 }
 section#courseware .mode-switch button.author {
@@ -330,10 +330,10 @@ section#courseware.view-author > .mode-switch .author {
   border-color: #999;
 }
 section#courseware.view-student > .mode-switch .student {
-	background-image: url("../../../../../../assets/images/icons/32/white/headache.png");
+  background-image: url("../../../../../../assets/images/icons/32/white/headache.png");
 }
 section#courseware.view-author > .mode-switch .author {
-	background-image: url("../../../../../../assets/images/icons/32/white/doctoral_cap.png");
+  background-image: url("../../../../../../assets/images/icons/32/white/doctoral_cap.png");
 }
 section#courseware .active-subchapter[data-blockid=""] button.add-section {
   display: none;
@@ -348,7 +348,7 @@ section#courseware button.add-subchapter {
   margin: 0px;
   cursor: pointer;
   font-size: 12px;
-  border-radius:3px;
+  border-radius: 3px;
 }
 section#courseware button.add-chapter,
 section#courseware button.add-subchapter {
@@ -357,10 +357,10 @@ section#courseware button.add-subchapter {
 section#courseware button.add-section:hover,
 section#courseware button.add-chapter:hover,
 section#courseware button.add-subchapter:hover,
-.active-section .block-adder .add-block-type:hover,
+section#courseware .active-section .block-adder .add-block-type:hover,
 section#courseware .mode-switch button:hover {
-	background-color: #F8F8F8;
-	border-color: #cccccc;
+  background-color: #F8F8F8;
+  border-color: #cccccc;
 }
 section#courseware .edit-structure {
   position: relative;

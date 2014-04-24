@@ -37,7 +37,7 @@ section#courseware {
 
     li.selected > .title > a {
       font-weight: 700;
-      background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #f9f9f9 !important;
+      background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #eeeeee !important;
     }
   }
 
@@ -46,7 +46,7 @@ section#courseware {
 
     li.selected > .title > a {
       font-weight: 700;
-      background: #f9f9f9 !important;
+      background: #f8f8f8 !important;
     }
 
     li div.title {
@@ -139,12 +139,14 @@ section#courseware {
     top: 4em;
     left: 23%;
     right: 12px;
-    padding: 0;
+    padding: 0px 0px 4px 0px;
+    border-bottom: 1px solid #eee;
 
 
     li {
       display: block;
       float: left;
+      height: 27px;
       margin: 0px 3px;
 
       & > a {
@@ -154,7 +156,7 @@ section#courseware {
         border: 1px solid #bbb;
         width: 25px;
         height: 25px;
-        border-radius: 50%;
+        border-radius: 3px;
         padding: 0px;
         display: inline-block;
 
@@ -200,7 +202,7 @@ section#courseware {
   section.active-section {
     float: left;
     margin-top: 70px;
-    width: 77%;
+    width: 76%;
   }
 
   &:not(.user-may-author) .mode-switch,
@@ -243,22 +245,29 @@ section#courseware {
       margin: 0px;
       border: 1px solid #bbb;
       text-align: center;
+      width: 40px;
+      height: 27px;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: 20px 20px;
 
       &:hover {
         cursor: pointer;
       }
 
       &.student {
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
         border-right: none;
+        background-image: url("../../../../../../assets/images/icons/32/blue/headache.png");
+        background-position: center 0px;
       }
 
       &.author {
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
         border-left: none;
-        padding: 4px 10px 0px 10px;
+        background-image: url("../../../../../../assets/images/icons/32/blue/doctoral_cap.png");
       }
     }
   }
@@ -266,9 +275,17 @@ section#courseware {
 
   &.view-student > .mode-switch .student,
   &.view-author > .mode-switch .author {
-    background: #ddd;
+    background-color: #24437C;
     box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
     border-color: #999;
+  }
+
+  &.view-student > .mode-switch .student {
+    background-image: url("../../../../../../assets/images/icons/32/white/headache.png");
+  }
+
+  &.view-author > .mode-switch .author {
+    background-image: url("../../../../../../assets/images/icons/32/white/doctoral_cap.png");
   }
 
   .active-subchapter[data-blockid=""] button.add-section {
@@ -285,15 +302,30 @@ section#courseware {
     margin: 0px;
     cursor: pointer;
     font-size: 12px;
-    border-radius: 20px;
+    border-radius: 3px;
+  }
+
+  button.add-chapter,
+  button.add-subchapter {
+    margin: 5px 0px 5px 10px;
+  }
+
+  button.add-section:hover,
+  button.add-chapter:hover,
+  button.add-subchapter:hover,
+  .active-section .block-adder .add-block-type:hover,
+  .mode-switch button:hover {
+    background-color: #F8F8F8;
+    border-color: #cccccc;
   }
 
   .edit-structure {
     position: relative;
 
     input {
-      width: 88%;
-      padding: 2px 5px;
+      width: 86%;
+      padding: 4px 5px;
+      margin: 2px 0px;
       border-radius: 3px;
       border: 1px solid #BBBBBB;
 
