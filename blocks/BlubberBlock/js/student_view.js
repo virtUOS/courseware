@@ -14,6 +14,13 @@ define(['assets/js/student_view'], function (StudentView) {
             var $container = this.$el.find('div.blubber-stream');
             var assetsBaseUrl = $container.attr("data-assets-base-url");
 
+            // hide tags used to filter Blubber threads
+            var filterHashTags = function () {
+                jQuery('a.hashtag', $container).filter(function () {
+                    return jQuery(this).text() == filterTag;
+                }).hide();
+            };
+
             this.loadStylesheets([assetsBaseUrl+'stylesheets/blubberforum.css']);
 
             this.loadScripts(
@@ -30,6 +37,11 @@ define(['assets/js/student_view'], function (StudentView) {
                         // ensure that the filter tag is set properly before
                         // creating the new Blubber posting
                         var originalNewPosting = STUDIP.Blubber.newPosting;
+                        var originalInsertThread = STUDIP.Blubber.insertThread;
+                        STUDIP.Blubber.insertThread = function (postingId, date, contents) {
+                            originalInsertThread(postingId, date, contents);
+                            filterHashTags();
+                        };
                         STUDIP.Blubber.newPosting = function () {
                             var field = jQuery('#new_posting');
 
@@ -40,10 +52,7 @@ define(['assets/js/student_view'], function (StudentView) {
                             originalNewPosting();
                         };
 
-                        // hide tags used to filter Blubber threads
-                        jQuery('a.hashtag', $container).filter(function () {
-                            return jQuery(this).text() == filterTag;
-                        }).hide();
+                        filterHashTags();
                     });
                 }
             );
