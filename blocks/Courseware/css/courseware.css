@@ -206,6 +206,11 @@ section#courseware ol.active-subchapter li > a[data-icon=""] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li > a[data-icon="chat"] {
+  background-image: url("../../../../../../assets/images/icons/16/blue/chat.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li > a[data-icon="document"] {
   background-image: url("../../../../../../assets/images/icons/16/blue/infopage.png");
   background-position: center center;
@@ -240,6 +245,11 @@ section#courseware ol.active-subchapter li.selected > a {
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon=""] {
   background-image: url("../../../../../../assets/images/icons/16/white/infopage.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="chat"] {
+  background-image: url("../../../../../../assets/images/icons/16/white/chat.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
