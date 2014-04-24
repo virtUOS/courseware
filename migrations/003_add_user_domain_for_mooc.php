@@ -28,7 +28,7 @@ class AddUserDomainForMooc extends Migration {
     public function down () {
         $db = DBManager::get();
         $stmt = $db->prepare("DELETE FROM userdomains"
-                . "WHERE userdomain_id = _id");
+                . " WHERE userdomain_id = :id");
         $stmt->bindValue(':id', \Mooc\USER_DOMAIN_NAME);
         $stmt->execute();
     }
