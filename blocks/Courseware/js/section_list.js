@@ -39,7 +39,6 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
         addStructure: function (event) {
             var self = this,
-                $button = jQuery(event.target),
                 id = this.$el.attr("data-blockid");
 
             if (id == null) {
@@ -52,14 +51,14 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 li_wrapper = view.$el.wrap("<li/>").parent(),
                 new_section;
 
-            $button.hide();
+            this.$(".controls").hide();
             insert_point.before(li_wrapper);
             view.focus();
 
             view.promise()
                 .then(
                     function (model) {
-                        view.remove();
+                        li_wrapper.remove();
                         new_section = insert_point.before(templates("Courseware", "section", model.toJSON())).prev().addClass("loading");
                         return self._addStructure(id, model);
                     })
@@ -71,11 +70,11 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                     null,
                     function (error) {
                         alert("ERROR: "  + JSON.stringify(error));
-                        view.remove();
+                        li_wrapper.remove();
                         new_section.remove();
                     })
                 .always(function () {
-                    $button.fadeIn();
+                    this.$(".controls").fadeIn();
                 });
         },
 
