@@ -6,7 +6,9 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
     return Backbone.View.extend({
 
         events: {
-            "click .add-section": "addStructure"
+            "click .add-section": "addStructure",
+            "click .init-sort":   "initSorting",
+            "click .stop-sort":   "stopSorting"
         },
 
         initialize: function() {
@@ -84,6 +86,44 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 title:  model.get("title")
             };
             return helper.callHandler(this.model.id, 'add_structure', data);
+        },
+
+        _original_positions: null,
+
+        initSorting: function (event) {
+            this.$el.sortable({
+                items:       ".section",
+                helper:      ".helper",
+                containment: "parent",
+                distance:    5
+            });
+
+            this._original_positions = this._get_positions();
+            this.$(".controls button").toggle();
+        },
+
+        stopSorting: function (event) {
+
+            var positions = this._get_positions(),
+                subchapter_id = this.$el.attr("data-blockid"),
+                data;
+
+            this.$el.sortable("destroy").find(".controls button").toggle();
+
+            if (JSON.stringify(positions) !== JSON.stringify(this._original_positions)) {
+                data = {
+                    parent:    subchapter_id,
+                    positions: positions
+                };
+
+                helper.callHandler(this.model.id, "update_positions", data);
+            }
+
+            this._original_positions = null;
+        },
+
+        _get_positions: function () {
+            return this.$el.sortable("toArray", { attribute: "data-blockid" });
         }
     });
 });
