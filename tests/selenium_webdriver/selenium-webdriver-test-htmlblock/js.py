@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 import unittest, time, re
 import mysuite
 
-class Test(unittest.TestCase):
+class Js(unittest.TestCase):
     def setUp(self):
         self.driver = mysuite.getOrCreateWebdriver()
         self.driver.implicitly_wait(30)
@@ -15,15 +15,19 @@ class Test(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def test_(self):
+    def test_js(self):
         driver = self.driver
-        driver.get("http://vm036.rz.uos.de/studip/mooc/plugins.php/mooc/courseware?cid=2358add583efc4c04d209ff257b9d9c4&selected=12")
-        driver.find_element_by_xpath("//button[@title='Autorenmodus']").click()
-        driver.find_element_by_xpath("//button[@data-type='TestBlock']").click()
-        driver.find_element_by_css_selector("div.controls > button.author").click()
-        driver.find_element_by_css_selector("button.trash").click()
-        driver.switch_to_alert().accept()
-
+        driver.find_element_by_css_selector("button.author").click()
+        driver.find_element_by_xpath("//button[@data-type='HtmlBlock']").click()
+        driver.find_element_by_css_selector("div.controls.editable > button.author").click()
+        driver.find_element_by_name("content").clear()
+        driver.find_element_by_name("content").send_keys("<script>alert('hello world');</script>")
+        driver.find_element_by_name("save").click()
+        self.assertNotEqual("hello world", self.close_alert_and_get_its_text())
+        try: self.assertFalse(self.is_element_present(By.XPATH, "//div[2]/div[3]/div/div/section/section/section/div[2]/div/script"))
+        except AssertionError as e: self.verificationErrors.append(str(e))
+        driver.find_element_by_css_selector("div.controls.editable > button.trash").click()
+        self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -47,7 +51,6 @@ class Test(unittest.TestCase):
         finally: self.accept_next_alert = True
     
     def tearDown(self):
-        #self.driver.quit()
         time.sleep(1)
         self.assertEqual([], self.verificationErrors)
 

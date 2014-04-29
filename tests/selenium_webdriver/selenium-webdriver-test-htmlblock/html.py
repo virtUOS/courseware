@@ -7,50 +7,28 @@ from selenium.common.exceptions import NoSuchElementException
 import unittest, time, re
 import mysuite
 
-class IframeBlock(unittest.TestCase):
+class Html(unittest.TestCase):
     def setUp(self):
         self.driver = mysuite.getOrCreateWebdriver()
         self.driver.implicitly_wait(30)
-        self.base_url = "http://vm036.rz.uos.de/studip/mooc/"
+        self.base_url = "https://vm036.rz.uos.de/"
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def test_iframe_block(self):
+    def test_html(self):
         driver = self.driver
         driver.find_element_by_css_selector("button.author").click()
-        driver.find_element_by_xpath("//button[@data-type='IFrameBlock']").click()
-        for i in range(60):
-            try:
-                if self.is_element_present(By.CSS_SELECTOR, "iframe"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
+        driver.find_element_by_xpath("//button[@data-type='HtmlBlock']").click()
         driver.find_element_by_css_selector("div.controls.editable > button.author").click()
-        for i in range(60):
-            try:
-                if self.is_element_present(By.CSS_SELECTOR, "input.urlinput"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
-        driver.find_element_by_css_selector("input.urlinput").clear()
-        driver.find_element_by_css_selector("input.urlinput").send_keys("http://myuos.de")
+        driver.find_element_by_name("content").clear()
+        driver.find_element_by_name("content").send_keys("<b>Test bold</b>\n<i>test italic</i>")
         driver.find_element_by_name("save").click()
-        for i in range(60):
-            try:
-                if self.is_element_present(By.XPATH, "//iframe"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
-        self.assertTrue(self.is_element_present(By.XPATH, "//iframe[@src='http://myuos.de']"))
-        for i in range(60):
-            try:
-                if self.is_element_present(By.XPATH, "//section/section/div/button[2]"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
+        try: self.assertEqual("Test bold", driver.find_element_by_css_selector("b").text)
+        except AssertionError as e: self.verificationErrors.append(str(e))
+        try: self.assertEqual("test italic", driver.find_element_by_css_selector("i").text)
+        except AssertionError as e: self.verificationErrors.append(str(e))
         driver.find_element_by_css_selector("div.controls.editable > button.trash").click()
         self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
-        
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -74,8 +52,7 @@ class IframeBlock(unittest.TestCase):
         finally: self.accept_next_alert = True
     
     def tearDown(self):
-        #self.driver.quit()
-	time.sleep(1)
+        time.sleep(1)
         self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":

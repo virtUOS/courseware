@@ -6,8 +6,8 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 import unittest, time, re
 import mysuite
-
-class BlubberBlock(unittest.TestCase):
+from socket import error as socket_error
+class Login(unittest.TestCase):
     def setUp(self):
         self.driver = mysuite.getOrCreateWebdriver()
         self.driver.implicitly_wait(30)
@@ -15,30 +15,19 @@ class BlubberBlock(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def test_blubber_block(self):
+    def test_login(self):
         driver = self.driver
-        driver.find_element_by_css_selector("button.author").click()
-        driver.find_element_by_xpath("//button[@data-type='BlubberBlock']").click()
-        for i in range(60):
-            try:
-                if self.is_element_present(By.XPATH, "//textarea[@id='new_posting']"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
-        driver.find_element_by_id("new_posting").clear()
-        driver.find_element_by_id("new_posting").send_keys("Hello World")
-        driver.find_element_by_id("new_posting").send_keys(Keys.RETURN)
-        for i in range(60):
-            try:
-                if self.is_element_present(By.CSS_SELECTOR, "div.content"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
-        try: self.assertEqual("Hello World", driver.find_element_by_css_selector("div.content").text)
-        except AssertionError as e: self.verificationErrors.append(str(e))
-        driver.find_element_by_css_selector("div.controls.not-editable > button.trash").click()
-        self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
-      
+        driver.get("http://vm036.rz.uos.de/studip/mooc/index.php?again=yes&cancel_login=1")
+        driver.find_element_by_id("loginname").clear()
+        driver.find_element_by_id("loginname").send_keys("test_dozent")
+        driver.find_element_by_id("password").clear()
+        driver.find_element_by_id("password").send_keys("testing")
+        driver.find_element_by_name("Login").click()
+        driver.find_element_by_css_selector("#nav_mooc > a > span").click()
+        driver.find_element_by_css_selector("span[title=\"Alle Kurse\"]").click()
+        driver.find_element_by_link_text("Zum Kurs").click()
+        driver.find_element_by_css_selector("span[title=\"Courseware\"]").click()
+        driver.find_element_by_link_text("Kapitel 2").click()
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -62,8 +51,9 @@ class BlubberBlock(unittest.TestCase):
         finally: self.accept_next_alert = True
     
     def tearDown(self):
-        time.sleep(1)
+	#self.driver.quit()
         self.assertEqual([], self.verificationErrors)
+	
 
 if __name__ == "__main__":
     unittest.main()

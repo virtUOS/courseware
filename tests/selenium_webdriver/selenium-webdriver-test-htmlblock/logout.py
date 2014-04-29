@@ -1,4 +1,3 @@
-# -*- coding: iso-8859-15 -*-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -7,7 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 import unittest, time, re
 import mysuite
 
-class BlubberBlock(unittest.TestCase):
+class Logout(unittest.TestCase):
     def setUp(self):
         self.driver = mysuite.getOrCreateWebdriver()
         self.driver.implicitly_wait(30)
@@ -15,30 +14,9 @@ class BlubberBlock(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def test_blubber_block(self):
+    def test_logout(self):
         driver = self.driver
-        driver.find_element_by_css_selector("button.author").click()
-        driver.find_element_by_xpath("//button[@data-type='BlubberBlock']").click()
-        for i in range(60):
-            try:
-                if self.is_element_present(By.XPATH, "//textarea[@id='new_posting']"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
-        driver.find_element_by_id("new_posting").clear()
-        driver.find_element_by_id("new_posting").send_keys("Hello World")
-        driver.find_element_by_id("new_posting").send_keys(Keys.RETURN)
-        for i in range(60):
-            try:
-                if self.is_element_present(By.CSS_SELECTOR, "div.content"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
-        try: self.assertEqual("Hello World", driver.find_element_by_css_selector("div.content").text)
-        except AssertionError as e: self.verificationErrors.append(str(e))
-        driver.find_element_by_css_selector("div.controls.not-editable > button.trash").click()
-        self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
-      
+        driver.find_element_by_link_text("Logout").click()
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -62,7 +40,7 @@ class BlubberBlock(unittest.TestCase):
         finally: self.accept_next_alert = True
     
     def tearDown(self):
-        time.sleep(1)
+        self.driver.quit()
         self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":

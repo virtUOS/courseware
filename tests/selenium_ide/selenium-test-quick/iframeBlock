@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//section/section/div/button</td>
+	<td>css=div.controls.editable &gt; button.author</td>
 	<td></td>
 </tr>
 <tr>
@@ -58,12 +58,12 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//section/section/div/button[2]</td>
+	<td>css=div.controls.editable &gt; button.trash</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//section/section/div/button[2]</td>
+	<td>css=div.controls.editable &gt; button.trash</td>
 	<td></td>
 </tr>
 <tr>

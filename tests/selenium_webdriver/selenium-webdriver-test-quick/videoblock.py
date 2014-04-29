@@ -17,7 +17,7 @@ class VideoBlock(unittest.TestCase):
     
     def test_video_block(self):
         driver = self.driver
-        driver.find_element_by_xpath("//section[@id='courseware']/div/button[2]").click()
+        driver.find_element_by_css_selector("button.author").click()
         driver.find_element_by_xpath("//button[@data-type='VideoBlock']").click()
         for i in range(60):
             try:
@@ -25,7 +25,7 @@ class VideoBlock(unittest.TestCase):
             except: pass
             time.sleep(1)
         else: self.fail("time out")
-        driver.find_element_by_xpath("//section/section/div/button").click()
+        driver.find_element_by_css_selector("div.controls.editable > button.author").click()
         for i in range(60):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, "p > input[type=\"text\"]"): break
@@ -44,7 +44,7 @@ class VideoBlock(unittest.TestCase):
         driver.find_element_by_name("cancel").click()
         try: self.assertTrue(self.is_element_present(By.XPATH, "//iframe[@src='https://video3.virtuos.uni-osnabrueck.de/static/engage-player/b89aa8f8-251c-49db-9ceb-fea6e79c86e6/987ba5be-d194-46b8-84da-b9721628586e/MOOC_Vornberger_5.mp4']"))
         except AssertionError as e: self.verificationErrors.append(str(e))
-        driver.find_element_by_xpath("//section/section/div/button[2]").click()
+        driver.find_element_by_css_selector("div.controls.editable > button.trash").click()
         self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
         
 		

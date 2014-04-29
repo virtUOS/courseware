@@ -13,18 +13,17 @@ def getOrCreateWebdriver():
 def suite():
     test_suite = unittest.TestSuite()
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('login'))
-    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('htmlblock'))
-    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('testblock'))
-    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('videoblock'))
-    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('iframeblock'))
-    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('blubberblock'))
+    #test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('wysiwyg'))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('html'))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('php'))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('js'))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('logout'))
     return test_suite
 
 def suite2():
     test_suite = unittest.TestSuite()
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('login'))
-    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('blubberblock'))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('html'))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromName('logout'))
     return test_suite
 

@@ -4,61 +4,56 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://vm036.rz.uos.de/studip/mooc/" />
-<title>test</title>
+<title>login</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">test</td></tr>
+<tr><td rowspan="1" colspan="3">login</td></tr>
 </thead><tbody>
 <tr>
-	<td>click</td>
-	<td>css=button.author</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//button[@data-type='TestBlock']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyElementPresent</td>
-	<td>css=section.TestBlock</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=div.controls.editable &gt; button.author</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>name=content</td>
+	<td>open</td>
+	<td>http://vm036.rz.uos.de/studip/mooc/index.php?again=yes&amp;cancel_login=1</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>name=content</td>
-	<td>3</td>
+	<td>id=loginname</td>
+	<td>test_dozent</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>name=save</td>
+	<td>type</td>
+	<td>id=password</td>
+	<td>testing</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=Login</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>css=p.question</td>
-	<td>Was ist die Antwort auf alles?</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=div.controls.editable &gt; button.trash</td>
+	<td>clickAndWait</td>
+	<td>css=#nav_mooc &gt; a &gt; span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Wollen Sie wirklich löschen?</td>
+	<td>clickAndWait</td>
+	<td>css=span[title=&quot;Alle Kurse&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Zum Kurs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=span[title=&quot;Courseware&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Kapitel 2</td>
 	<td></td>
 </tr>
 </tbody></table>

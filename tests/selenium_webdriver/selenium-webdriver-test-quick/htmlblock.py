@@ -17,7 +17,7 @@ class HtmlBlock(unittest.TestCase):
     
     def test_html_block(self):
         driver = self.driver
-        driver.find_element_by_xpath("//section[@id='courseware']/div/button[2]").click()
+        driver.find_element_by_css_selector("button.author").click()
         driver.find_element_by_xpath("//button[@data-type='HtmlBlock']").click()
         for i in range(60):
             try:
@@ -25,7 +25,7 @@ class HtmlBlock(unittest.TestCase):
             except: pass
             time.sleep(1)
         else: self.fail("time out")
-        driver.find_element_by_xpath("//section/section/div/button").click()
+        driver.find_element_by_css_selector("div.controls.editable > button.author").click()
         for i in range(60):
             try:
                 if self.is_element_present(By.NAME, "content"): break
@@ -43,7 +43,7 @@ class HtmlBlock(unittest.TestCase):
         else: self.fail("time out")
         try: self.assertEqual("Selenium Test", driver.find_element_by_css_selector("div.content").text)
         except AssertionError as e: self.verificationErrors.append(str(e))
-        driver.find_element_by_xpath("//section/section/div/button[2]").click()
+        driver.find_element_by_css_selector("div.controls.editable > button.trash").click()
         self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
         
     

@@ -17,14 +17,18 @@ class Test(unittest.TestCase):
     
     def test_block(self):
         driver = self.driver
-        driver.find_element_by_xpath("//section[@id='courseware']/div/button[2]").click()
+        driver.find_element_by_css_selector("button.author").click()
         driver.find_element_by_xpath("//button[@data-type='TestBlock']").click()
         try: self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "section.TestBlock"))
         except AssertionError as e: self.verificationErrors.append(str(e))
-        driver.find_element_by_xpath("//section/section/div/button").click()
-        try: self.assertTrue(self.is_element_present(By.NAME, "content"))
+        driver.find_element_by_css_selector("div.controls.editable > button.author").click()
+        driver.find_element_by_name("content").click()
+        driver.find_element_by_name("content").clear()
+        driver.find_element_by_name("content").send_keys("3")
+        driver.find_element_by_name("save").click()
+        try: self.assertRegexpMatches(driver.find_element_by_css_selector("p.question").text, r"^Was ist die Antwort auf alles[\s\S]$")
         except AssertionError as e: self.verificationErrors.append(str(e))
-        driver.find_element_by_xpath("//section/section/div/button[2]").click()
+        driver.find_element_by_css_selector("div.controls.editable > button.trash").click()
         self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
     
     def is_element_present(self, how, what):
