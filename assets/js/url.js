@@ -23,7 +23,7 @@ define(['module', 'argjs'], function (module, Arg) {
             var newLocation = Arg.url(Arg.url(), params, hash);
             document.location = newLocation;
 
-            return oldLocation.pathname+oldLocation.search+oldLocation.hash != newLocation;
+            return oldLocation.pathname + oldLocation.search + oldLocation.hash != newLocation;
         },
 
         plugin_url: function (path) {
