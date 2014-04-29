@@ -169,13 +169,6 @@ section#courseware {
 
       &:hover > a {
           background-color: #ddd;
-
-          /*
-          &[data-icon=""]         { .bgImg(infopage,   "red"); }
-          &[data-icon="document"] { .bgImg(infopage,   "red"); }
-          &[data-icon="task"]     { .bgImg(assessment, "red"); }
-          &[data-icon="video"]    { .bgImg(video,      "red"); }
-          */
       }
 
       &.visited > a {
@@ -195,9 +188,33 @@ section#courseware {
         &[data-icon="video"]    { .bgImg(video,      "white"); }
       }
 
+      > a .helper {
+        display: none;
+
+        line-height: 25px;
+        width: 25px;
+        padding: 5px;
+        // border-right: 1px solid #c4c4c4;
+        background: #d0d0d0 url("../../../../../../plugins_packages/core/Forum/img/anfasser_24.png") center center no-repeat;
+        cursor: move;
+      }
+
+      &.selected > a .helper {
+        background-color: transparent;
+      }
+
+
       &.loading > a {
         background: url("../../../../../../assets/images/ajax_indicator_small.gif") center center no-repeat;
       }
+    }
+  }
+
+  ol.active-subchapter.ui-sortable li > a {
+    width: 50px;
+    background-position: 25px center;
+    .helper {
+      display: inline;
     }
   }
 
@@ -290,14 +307,13 @@ section#courseware {
     background-image: url("../../../../../../assets/images/icons/32/white/doctoral_cap.png");
   }
 
-  .active-subchapter[data-blockid=""] button.add-section {
-    display: none;
+  .active-subchapter[data-blockid=""] {
+    button.add-section, button.init-sort, button.stop-sort {
+      display: none;
+    }
   }
 
-  button.add-section,
-  button.add-chapter,
-  button.add-subchapter {
-    background: url("../../../../../../assets/images/icons/16/blue/add.png") 6px center no-repeat #E9E9E9;
+  .courseware-btn() {
     border: 1px solid #bbb;
     min-height: 27px;
     padding: 5px 6px 5px 28px;
@@ -307,11 +323,31 @@ section#courseware {
     border-radius: 3px;
   }
 
+  button.add-section,
+  button.add-chapter,
+  button.add-subchapter {
+    .courseware-btn;
+    background: url("../../../../../../assets/images/icons/16/blue/add.png") 6px center no-repeat #E9E9E9;
+  }
+
+  button.init-sort {
+    .courseware-btn;
+    background: url("../../../../../../assets/images/icons/16/blue/arr_1left.png") 6px center no-repeat #E9E9E9;
+  }
+
+  button.stop-sort {
+    .courseware-btn;
+    background: url("../../../../../../assets/images/icons/16/blue/accept.png") 6px center no-repeat #E9E9E9;
+    display: none;
+  }
+
   button.add-chapter,
   button.add-subchapter {
     margin: 5px 0px 5px 10px;
   }
 
+  button.init-sort:hover,
+  button.stop-sort:hover,
   button.add-section:hover,
   button.add-chapter:hover,
   button.add-subchapter:hover,
