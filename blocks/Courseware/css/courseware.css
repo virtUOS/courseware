@@ -135,6 +135,10 @@ section#courseware ol.chapters li.chapter div.title a {
   display: block;
   padding: 5px 44px 5px 22px;
 }
+section#courseware ol.chapters li.subchapter div.title a {
+  display: block;
+  padding: 5px 44px 5px 12px;
+}
 section#courseware ol.chapters li.chapter div.title button.edit {
   width: 20px;
   height: 20px;
@@ -192,7 +196,7 @@ section#courseware ol.active-subchapter li {
   margin: 0px 3px;
 }
 section#courseware ol.active-subchapter li > a {
-  background-color: #ddd;
+  background-color: #e9e9e9;
   color: transparent;
   border: 1px solid #bbb;
   width: 25px;
@@ -227,7 +231,7 @@ section#courseware ol.active-subchapter li > a[data-icon="video"] {
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li:hover > a {
-  background-color: #ddd;
+  background-color: #F8F8F8;
   /*
           &[data-icon=""]         { .bgImg(infopage,   "red"); }
           &[data-icon="document"] { .bgImg(infopage,   "red"); }
@@ -237,6 +241,7 @@ section#courseware ol.active-subchapter li:hover > a {
 }
 section#courseware ol.active-subchapter li.visited > a {
   background-color: #f8f8f8;
+  border-color: #ccc;
 }
 section#courseware ol.active-subchapter li.selected > a {
   background-color: #24437C;
