@@ -30,26 +30,31 @@ define(['assets/js/student_view'], function (StudentView) {
                     assetsBaseUrl+'javascripts/formdata.js'
                 ],
                 function () {
+                    // ensure that the filter tag is set properly before
+                    // creating the new Blubber posting
+                    jQuery(document).ajaxSend(function (event, xhr, options) {
+                        if (options.type != 'POST') {
+                            return;
+                        }
+
+                        if (options.url.substr(-12) != '/new_posting') {
+                            return;
+                        }
+
+                        if (options.data.indexOf(filterTag.replace(/#/, '%23')) == -1) {
+                            options.data = options.data+'+'+filterTag.replace(/#/, '%23');
+                        }
+                    });
+
                     jQuery.get($container.attr('data-stream-url'), function (data) {
                         $container.html(data);
                         $container.removeClass('loading');
 
-                        // ensure that the filter tag is set properly before
-                        // creating the new Blubber posting
-                        var originalNewPosting = STUDIP.Blubber.newPosting;
+                        // hide filter hash tags of newly created postings
                         var originalInsertThread = STUDIP.Blubber.insertThread;
                         STUDIP.Blubber.insertThread = function (postingId, date, contents) {
                             originalInsertThread(postingId, date, contents);
                             filterHashTags();
-                        };
-                        STUDIP.Blubber.newPosting = function () {
-                            var field = jQuery('#new_posting');
-
-                            if (field.val().indexOf(filterTag) == -1) {
-                                field.val(field.val()+' '+filterTag);
-                            }
-
-                            originalNewPosting();
                         };
 
                         filterHashTags();
