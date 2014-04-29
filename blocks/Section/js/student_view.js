@@ -36,6 +36,11 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         },
 
         postRender: function() {
+            _.each(this.children, function (block) {
+                if (typeof block.postRender === "function") {
+                    block.postRender();
+                }
+            });
         },
 
         switchAll: function (view) {
@@ -175,10 +180,6 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         addBlock: function (block) {
             this.children[block.model.id] = block;
             this.listenTo(block, "switch", _.bind(this.switchView, this, block.model.id));
-
-            if (typeof block.postRender === "function") {
-                block.postRender();
-            }
 
             return block;
         },
