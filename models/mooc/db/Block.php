@@ -145,6 +145,24 @@ class Block extends \SimpleORMap
 
 
     /**
+     * Update child sorting
+     *
+     * @param array $positions the new sort order
+     */
+    function updateChildPositions($positions)
+    {
+        $query = sprintf(
+            'UPDATE %s SET position = FIND_IN_SET(id, ?) WHERE parent_id = ?',
+            $this->db_table);
+        $args = array(join(',', $positions), $this->id);
+
+        $db = \DBManager::get();
+        $st = $db->prepare($query);
+        $st->execute($args);
+    }
+
+
+    /**
      * returns array of instances of given class filtered by given sql
      * @param string sql clause to use on the right side of WHERE
      * @param array parameters for query
