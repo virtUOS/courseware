@@ -53,8 +53,48 @@ class Courseware extends Block {
             'active_section'    => $active_section);
     }
 
-    function add_structure_handler($data) {
+    function add_structure_handler($data)
+    {
+        $parent = $this->requireUpdatableParent($data);
 
+        // we need a title
+        if (!isset($data['title']) || !strlen($data['title']))
+        {
+            throw new Errors\BadRequest("Title required.");
+        }
+
+        $block = $this->createStructure($parent, $data['title']);
+
+        return $block->toArray();
+    }
+
+
+    function update_positions_handler($data)
+    {
+        $parent = $this->requireUpdatableParent($data);
+
+        // we need some positions
+        if (!isset($data['positions']))
+        {
+            throw new Errors\BadRequest("Positions required.");
+        }
+        $new_positions = array_map("intval", $data['positions']);
+        $old_positions = array_map("intval", $parent->children->pluck("id"));
+
+        if (sizeof($new_positions) !== sizeof($old_positions)
+            || sizeof(array_diff($new_positions, $old_positions))) {
+            throw new Errors\BadRequest("Positions required.");
+        }
+
+        $parent->updateChildPositions($new_positions);
+
+        // TODO: what to return?
+        return $new_positions;
+    }
+
+
+    private function requireUpdatableParent($data)
+    {
         // we need a valid parent
         if (!isset($data['parent'])) {
             throw new Errors\BadRequest("Parent required.");
@@ -69,18 +109,8 @@ class Courseware extends Block {
             throw new Errors\AccessDenied();
         }
 
-        // we need a title
-        if (!isset($data['title']) || !strlen($data['title']))
-        {
-            throw new Errors\BadRequest("Title required.");
-        }
-
-        $block = $this->createStructure($parent, $data['title']);
-
-        return $block->toArray();
+        return $parent;
     }
-
-
 
     private function childrenToJSON($collection, $selected, $showFields = false)
     {
