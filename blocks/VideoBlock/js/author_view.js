@@ -12,12 +12,12 @@ define(['assets/js/author_view', 'assets/js/url', './utils'], function (
         postRender: function () {
             Utils.normalizeIFrame(this);
         },
-        onKeyup: function (event) {
+        onKeyup: function () {
             var
             view = this,
             status = view.$('.status');
 
-            status.text('...am ändern.');
+            status.text('Lade Video...');
             clearTimeout(this.timeoutId);
 
             this.timeoutId = setTimeout(function () {
