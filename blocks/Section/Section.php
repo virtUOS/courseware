@@ -84,7 +84,12 @@ class Section extends Block {
 
         $this->updateIconWithBlock($block);
 
-        return $block->toArray();
+        /** @var \Mooc\UI\Block $uiBlock */
+        $uiBlock = $this->container['block_factory']->makeBlock($block);
+        $data = $block->toArray();
+        $data['editable'] = $uiBlock->isEditable();
+
+        return $data;
     }
 
     function remove_content_block_handler($data) {
