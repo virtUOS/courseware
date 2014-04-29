@@ -135,10 +135,6 @@ section#courseware ol.chapters li.chapter div.title a {
   display: block;
   padding: 5px 44px 5px 22px;
 }
-section#courseware ol.chapters li.subchapter div.title a {
-  display: block;
-  padding: 5px 44px 5px 12px;
-}
 section#courseware ol.chapters li.chapter div.title button.edit {
   width: 20px;
   height: 20px;
@@ -177,6 +173,10 @@ section#courseware ol.chapters li.chapter div.title:hover {
 }
 section#courseware ol.chapters li.chapter div.title:hover .controls {
   visibility: visible;
+}
+section#courseware ol.chapters li.subchapter div.title a {
+  display: block;
+  padding: 5px 44px 5px 12px;
 }
 section#courseware ol.chapters li.chapter > .title > a {
   background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
@@ -231,7 +231,7 @@ section#courseware ol.active-subchapter li > a[data-icon="video"] {
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li:hover > a {
-  background-color: #F8F8F8;
+  background-color: #ddd;
 }
 section#courseware ol.active-subchapter li.visited > a {
   background-color: #f8f8f8;
