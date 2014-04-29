@@ -262,8 +262,13 @@ abstract class Block {
     // TODO
     public function handle($name, $data = array())
     {
-        // TODO: Wir müssen sicherstellen, dass der handler da ist.
-        $result = call_user_func(array($this, "{$name}_handler"), $data);
+        $handler = array($this, "{$name}_handler");
+
+        if (!is_callable($handler)) {
+            throw new Errors\BadRequest("No such handler");
+        }
+
+        $result = call_user_func($handler, $data);
         $this->save();
 
         return $result;
