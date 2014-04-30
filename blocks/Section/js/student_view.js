@@ -20,7 +20,9 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         },
 
         initialize: function() {
-            _.each(jQuery('section.block'), this.initializeBlock, this);
+            _.each(jQuery('section.block'), function (element, index, list) {
+                this.initializeBlock(element, index);
+            }, this);
 
             this.listenTo(this, "switch", this.switchAll, this);
 
