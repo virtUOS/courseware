@@ -11,6 +11,8 @@ use Mooc\UI\Block;
  */
 class BlubberBlock extends Block
 {
+    const NAME = 'Diskussion';
+
     public function student_view()
     {
         $streamUrl = \PluginEngine::getURL(

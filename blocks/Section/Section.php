@@ -51,7 +51,17 @@ class Section extends Block {
         // block adder
         $content_block_types = array();
         foreach ($this->container['block_factory']->getContentBlockClasses() as $type) {
-            $content_block_types[] = compact("type");
+            $readableName = $type;
+            $nameConstant = '\\Mooc\\UI\\'.$type.'\\'.$type.'::NAME';
+
+            if (defined($nameConstant)) {
+                $readableName = constant($nameConstant);
+            }
+
+            $content_block_types[] = array(
+                'type' => $type,
+                'name' => $readableName,
+            );
         }
 
         return compact('blocks', 'content_block_types', 'icon', 'title', 'visited');

@@ -4,7 +4,9 @@ namespace Mooc\UI\HtmlBlock;
 use Mooc\UI\Block;
 
 // TODO: lots!
-class HtmlBlock extends Block {
+class HtmlBlock extends Block
+{
+    const NAME = 'Freitext';
 
     function initialize()
     {

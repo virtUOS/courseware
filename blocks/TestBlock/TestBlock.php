@@ -12,6 +12,8 @@ use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
  */
 class TestBlock extends Block
 {
+    const NAME = 'Quiz';
+
     /**
      * @var \Mooc\UI\TestBlock\Model\Test
      */

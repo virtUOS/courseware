@@ -6,6 +6,8 @@ use Mooc\UI\Block;
 
 class VideoBlock extends Block
 {
+    const NAME = 'Video';
+
     function initialize()
     {
         $this->defineField('url', \Mooc\SCOPE_BLOCK, '');

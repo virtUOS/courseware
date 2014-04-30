@@ -3,7 +3,9 @@ namespace Mooc\UI\IFrameBlock;
 
 use Mooc\UI\Block;
 
-class IFrameBlock extends Block {
+class IFrameBlock extends Block
+{
+    const NAME = 'IFrame';
 
     function initialize()
     {
