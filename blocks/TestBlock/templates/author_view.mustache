@@ -1,8 +1,6 @@
-<label for="test_{{ id }}_id">
-  Test ID:
-</label>
-
-<input type="text" id="test_{{ id }}_id" name="content" value="{{fields.test_id}}">
+<input type="hidden" name="suggestion_url" value="{{suggestion_url}}">
+<input type="hidden" name="test_id" value="{{fields.test_id}}">
+<input type="text" name="test_name" placeholder="{{#i18n}}Name des Tests bzw. Übungsblattes{{/i18n}}" value="{{test_name}}">
 
 <button name=save class=button>Speichern</button>
 <button name=cancel class=button>Abbrechen</button>

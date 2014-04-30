@@ -40,7 +40,21 @@ class TestBlock extends Block
 
     public function author_view()
     {
-        return $this->toJSON();
+        $data = $this->toJSON();
+        $data['suggestion_url'] = \PluginEngine::getURL(
+            $GLOBALS['plugin'],
+            array(),
+            'test/suggestion'
+        );
+
+        if ($data['fields']['test_id']) {
+            $test = new Test($data['fields']['test_id']);
+            $data['test_name'] = $test->title;
+        } else {
+            $data['test_name'] = '';
+        }
+
+        return $data;
     }
 
     public function modify_test_handler($testId)

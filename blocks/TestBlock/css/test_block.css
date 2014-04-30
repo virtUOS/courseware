@@ -3,7 +3,7 @@ section.TestBlock ul {
   padding: 0;
   list-style-type: none;
 }
-section.TestBlock li.correct_answer span {
+section.TestBlock ul li.correct_answer span {
   border: 1px dashed green;
   padding: 0px 3px;
 }
@@ -12,4 +12,8 @@ section.TestBlock p.solution span.correct_answer {
 }
 section.TestBlock p.solution span.incorrect_answer {
   color: red;
+}
+section.TestBlock input[type="text"] {
+  display: block;
+  width: 400px;
 }

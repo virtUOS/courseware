@@ -36,4 +36,16 @@ class Test extends \SimpleORMap
     {
         return $this->isSelfTest();
     }
+
+    /**
+     * Filter the tests by a given term.
+     *
+     * @param string $term The term used to filter
+     *
+     * @return Test[] The tests that match a search term
+     */
+    public static function findByTerm($term)
+    {
+        return static::findBySQL('title LIKE :term', array(':term' => '%'.$term.'%'));
+    }
 }
