@@ -132,16 +132,13 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
 
                     function (data) {
                         var model = new BlockModel(data),
-                            block_stub = view.appendBlockStub(model),
+                            view_name = model.get("editable") ? "author" : "student",
+                            block_stub = view.appendBlockStub(model, view_name),
                             $el = block_stub.$el.closest("section.block");
 
                         $el.addClass("loading");
                         block_stub.renderServerSide().then(function () {
                             $el.removeClass("loading");
-
-                            if (model.get("editable")) {
-                                view.switchView(model.id, 'author');
-                            }
                         });
                     },
 
@@ -155,17 +152,21 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
                 });
         },
 
-        appendBlockStub: function (model) {
+        appendBlockStub: function (model, view_name) {
             var block_wrapper = templates("Section", "block_wrapper", model.toJSON()),
                 block_el = this.$(".no-content").before(block_wrapper).prev();
 
-            return this.initializeBlock(block_el, model);
+            return this.initializeBlock(block_el, model, view_name);
         },
 
-        initializeBlock: function (block, model) {
+        initializeBlock: function (block, model, view_name) {
             var $block = jQuery(block),
                 $el    = $block.find('div.block-content'),
                 view;
+
+            if (view_name == null) {
+                view_name = "student";
+            }
 
             if (!_.isObject(model)) {
                 model  = new BlockModel({
@@ -176,7 +177,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
 
             view = blockTypes
                 .get(model.get('type'))
-                .createView('student', {el: $el, model: model});
+                .createView(view_name, {el: $el, model: model});
 
             return this.addBlock(view);
         },
