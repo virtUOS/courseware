@@ -34,14 +34,7 @@ class VideoBlock(unittest.TestCase):
         else: self.fail("time out")
         driver.find_element_by_css_selector("div.block-content > p> input[type=\"text\"]").clear()
         driver.find_element_by_css_selector("div.block-content > p> input[type=\"text\"]").send_keys("https://video3.virtuos.uni-osnabrueck.de/static/engage-player/b89aa8f8-251c-49db-9ceb-fea6e79c86e6/987ba5be-d194-46b8-84da-b9721628586e/MOOC_Vornberger_5.mp4")
-        driver.find_element_by_css_selector("div.block-content >p> input[type=\"text\"]").send_keys(Keys.RETURN)
-        for i in range(60):
-            try:
-                if self.is_element_present(By.XPATH, "//iframe[@src='https://video3.virtuos.uni-osnabrueck.de/static/engage-player/b89aa8f8-251c-49db-9ceb-fea6e79c86e6/987ba5be-d194-46b8-84da-b9721628586e/MOOC_Vornberger_5.mp4']"): break
-            except: pass
-            time.sleep(1)
-        else: self.fail("time out")
-        driver.find_element_by_name("cancel").click()
+        driver.find_element_by_name("save").click()
         try: self.assertTrue(self.is_element_present(By.XPATH, "//iframe[@src='https://video3.virtuos.uni-osnabrueck.de/static/engage-player/b89aa8f8-251c-49db-9ceb-fea6e79c86e6/987ba5be-d194-46b8-84da-b9721628586e/MOOC_Vornberger_5.mp4']"))
         except AssertionError as e: self.verificationErrors.append(str(e))
         driver.find_element_by_css_selector("div.controls.editable > button.trash").click()

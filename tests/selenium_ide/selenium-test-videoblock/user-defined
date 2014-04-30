@@ -3,13 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="http://vm036.rz.uos.de/studip/mooc/" />
-<title>videoBlock</title>
+<link rel="selenium.base" href="https://vm036.rz.uos.de/" />
+<title>user-defined</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">videoBlock</td></tr>
+<tr><td rowspan="1" colspan="3">user-defined</td></tr>
 </thead><tbody>
 <tr>
 	<td>click</td>
@@ -22,24 +22,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>css=section.VideoBlock</td>
-	<td></td>
-</tr>
-<tr>
 	<td>click</td>
 	<td>css=div.controls.editable &gt; button.author</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>css=p &gt; input[type=&quot;text&quot;]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
-	<td>css=div.block-content &gt; p&gt; input[type=&quot;text&quot;]</td>
-	<td>https://video3.virtuos.uni-osnabrueck.de/static/engage-player/b89aa8f8-251c-49db-9ceb-fea6e79c86e6/987ba5be-d194-46b8-84da-b9721628586e/MOOC_Vornberger_5.mp4</td>
+	<td>css=p &gt; input[type=&quot;text&quot;]</td>
+	<td>http://vm166.rz.uos.de/datenschutz/story_content/video_617j7qe9uTH_30_48_720x406.mp4</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -47,8 +37,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>verifyElementPresent</td>
-	<td>//iframe[@src='https://video3.virtuos.uni-osnabrueck.de/static/engage-player/b89aa8f8-251c-49db-9ceb-fea6e79c86e6/987ba5be-d194-46b8-84da-b9721628586e/MOOC_Vornberger_5.mp4']</td>
+	<td>verifyAttribute</td>
+	<td>//iframe@src</td>
+	<td>http://vm166.rz.uos.de/datenschutz/story_content/video_617j7qe9uTH_30_48_720x406.mp4</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//video</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,11 +56,7 @@
 	<td>Wollen Sie wirklich löschen?</td>
 	<td></td>
 </tr>
-<tr>
-	<td>verifyText</td>
-	<td>css=p</td>
-	<td>Keine Inhaltsblöcke</td>
-</tr>
+
 </tbody></table>
 </body>
 </html>
