@@ -21,7 +21,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
 
         initialize: function() {
             _.each(jQuery('section.block'), function (element, index, list) {
-                this.initializeBlock(element, index);
+                this.initializeBlock(element, undefined, "student");
             }, this);
 
             this.listenTo(this, "switch", this.switchAll, this);
@@ -165,10 +165,6 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             var $block = jQuery(block),
                 $el    = $block.find('div.block-content'),
                 view;
-
-            if (view_name == null) {
-                view_name = "student";
-            }
 
             if (!_.isObject(model)) {
                 model  = new BlockModel({
