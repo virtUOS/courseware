@@ -139,7 +139,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
                         block_stub.renderServerSide().then(function () {
                             $el.removeClass("loading");
 
-                            if (model.attributes.editable) {
+                            if (model.get("editable")) {
                                 view.switchView(model.id, 'author');
                             }
                         });
