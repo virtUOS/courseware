@@ -48,8 +48,8 @@ class Courseware extends Block {
             'chapters'          => $chapters,
             'subchapters'       => $subchapters,
             'sections'          => $sections,
-            'active_chapter'    => $chapter    ? $chapter->id    : '',
-            'active_subchapter' => $subchapter ? $subchapter->id : '',
+            'active_chapter'    => $chapter    ? $chapter->toArray()    : null,
+            'active_subchapter' => $subchapter ? $subchapter->toArray() : null,
             'active_section'    => $active_section);
     }
 

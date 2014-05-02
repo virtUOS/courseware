@@ -3,6 +3,17 @@
   data-blockid={{courseware.id}}
   class="view-student{{#user_may_author}} user-may-author{{/user_may_author}} loading">
 
+  <nav class=breadcrumb>
+    <ul>
+      {{#active_chapter}}
+        <li><a href="#">{{title}}</a></li>
+      {{/active_chapter}}
+      {{#active_subchapter}}
+        <li>» <a href="#">{{title}}</a></li>
+      {{/active_subchapter}}
+    </ul>
+  </nav>
+
   <div class=mode-switch>
     <button class="student" title="Studentenmodus"></button>
     <button class="author" title="Autorenmodus"></button>
