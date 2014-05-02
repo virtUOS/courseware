@@ -90,6 +90,10 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
         _original_positions: null,
 
+        _get_positions: function () {
+            return this.$el.sortable("toArray", { attribute: "data-blockid" });
+        },
+
         initSorting: function (event) {
             this.$el.sortable({
                 items:       ".section",
@@ -120,10 +124,6 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             }
 
             this._original_positions = null;
-        },
-
-        _get_positions: function () {
-            return this.$el.sortable("toArray", { attribute: "data-blockid" });
         }
     });
 });

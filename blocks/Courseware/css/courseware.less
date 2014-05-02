@@ -347,21 +347,16 @@ section#courseware {
     }
   }
 
-  .courseware-btn() {
-    border: 1px solid #bbb;
-    min-height: 27px;
-    padding: 5px 6px 5px 28px;
-    margin: 0px;
-    cursor: pointer;
-    font-size: 12px;
-    border-radius: 3px;
-  }
-
-  button.add-section,
   button.add-chapter,
-  button.add-subchapter {
+  button.add-subchapter,
+  button.add-section {
     .courseware-btn;
     background: url("../../../../../../assets/images/icons/16/blue/add.png") 6px center no-repeat #E9E9E9;
+  }
+
+  button.add-chapter,
+  button.add-subchapter {
+    margin: 5px 0px 5px 10px;
   }
 
   button.init-sort-chapter,
@@ -377,26 +372,6 @@ section#courseware {
     .courseware-btn;
     background: url("../../../../../../assets/images/icons/16/blue/accept.png") 6px center no-repeat #E9E9E9;
     display: none;
-  }
-
-  button.add-chapter,
-  button.add-subchapter {
-    margin: 5px 0px 5px 10px;
-  }
-
-  button.init-sort-chapter:hover,
-  button.init-sort-subchapter:hover,
-  button.init-sort-section:hover,
-  button.stop-sort-chapter:hover,
-  button.stop-sort-subchapter:hover,
-  button.stop-sort-section:hover,
-  button.add-section:hover,
-  button.add-chapter:hover,
-  button.add-subchapter:hover,
-  .active-section .block-adder .add-block-type:hover,
-  .mode-switch button:hover {
-    background-color: #F8F8F8;
-    border-color: #cccccc;
   }
 
   .edit-structure {

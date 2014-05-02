@@ -18,7 +18,7 @@ class Js(unittest.TestCase):
     def test_js(self):
         driver = self.driver
         driver.find_element_by_css_selector("button.author").click()
-        driver.find_element_by_xpath("//button[@data-type='HtmlBlock']").click()
+        driver.find_element_by_xpath("//button[@data-blocktype='HtmlBlock']").click()
         driver.find_element_by_css_selector("div.controls.editable > button.author").click()
         driver.find_element_by_name("content").clear()
         driver.find_element_by_name("content").send_keys("<script>alert('hello world');</script>")

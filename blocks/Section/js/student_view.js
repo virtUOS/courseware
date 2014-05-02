@@ -8,15 +8,18 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         children: {},
 
         events: {
-            "click .title .edit":    "editSection",
-            "click .title .trash":   "destroySection",
+            "click .title .edit":     "editSection",
+            "click .title .trash":    "destroySection",
 
             // child block stuff
 
-            "click .block .author":  "switchToAuthorView",
-            "click .block .trash":   "destroyView",
+            "click .block .author":   "switchToAuthorView",
+            "click .block .trash":    "destroyView",
 
-            "click .add-block-type": "addNewBlock"
+            "click .add-block-type":  "addNewBlock",
+
+            "click .init-sort-block": "initSorting",
+            "click .stop-sort-block": "stopSorting"
         },
 
         initialize: function() {
@@ -123,7 +126,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
 
             var view = this,
                 $button = jQuery(event.target),
-                block_type = $button.attr("data-type");
+                block_type = $button.attr("data-blocktype");
 
             $button.prop("disabled", true).addClass("loading");
 
@@ -169,7 +172,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             if (!_.isObject(model)) {
                 model  = new BlockModel({
                     id:   $block.attr("data-blockid"),
-                    type: $block.attr("data-type")
+                    type: $block.attr("data-blocktype")
                 });
             }
 
@@ -231,6 +234,53 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
                         });
 
             }
+        },
+
+        _original_positions: null,
+
+        _get_positions: function () {
+            return this.$el.sortable("toArray", { attribute: "data-blockid" });
+        },
+
+        _hack_metadata: null,
+
+        initSorting: function (event) {
+
+            // HACK: does not work without ;_;
+            this._hack_metadata = jQuery.metadata;
+            jQuery.metadata = null;
+
+            this.$el.sortable({
+                items:    "section.block",
+                axis:     "y",
+                distance: 5
+            });
+
+            this._original_positions = this._get_positions();
+            this.$(".block-controls button").toggle();
+        },
+
+        stopSorting: function (event) {
+
+            var positions = this._get_positions(),
+                courseware_id = jQuery("#courseware").attr("data-blockid"),
+                data;
+
+            this.$el.sortable("destroy").find(".block-controls button").toggle();
+
+            // HACK: does not work without ;_;
+            jQuery.metadata = this._hack_metadata;
+
+            if (JSON.stringify(positions) !== JSON.stringify(this._original_positions)) {
+                data = {
+                    parent:    this.model.id,
+                    positions: positions
+                };
+
+                helper.callHandler(courseware_id, "update_positions", data);
+            }
+
+            this._original_positions = null;
         }
     });
 });

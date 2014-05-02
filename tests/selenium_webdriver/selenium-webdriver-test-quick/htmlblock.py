@@ -18,7 +18,7 @@ class HtmlBlock(unittest.TestCase):
     def test_html_block(self):
         driver = self.driver
         driver.find_element_by_css_selector("button.author").click()
-        driver.find_element_by_xpath("//button[@data-type='HtmlBlock']").click()
+        driver.find_element_by_xpath("//button[@data-blocktype='HtmlBlock']").click()
         for i in range(60):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, "section.HtmlBlock"): break

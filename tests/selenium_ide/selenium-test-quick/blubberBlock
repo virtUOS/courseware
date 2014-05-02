@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//button[@data-type='BlubberBlock']</td>
+	<td>//button[@data-blocktype='BlubberBlock']</td>
 	<td></td>
 </tr>
 <tr>

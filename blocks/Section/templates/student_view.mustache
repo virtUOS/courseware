@@ -8,10 +8,15 @@
   <p>{{#i18n}}Keine Inhaltsblöcke{{/i18n}}</p>
 </div>
 
+<div class=block-controls>
+  <button class=init-sort-block>{{#i18n}}Blöcke sortieren{{/i18n}}</button>
+  <button class=stop-sort-block>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
+</div>
+
 <div class=block-adder>
   <h3>Block hinzufügen:</h3>
 
   {{#content_block_types}}
-    <button class=add-block-type data-type="{{type}}">{{#i18n}}{{name}}{{/i18n}}</button>
+    <button class=add-block-type data-blocktype="{{type}}">{{#i18n}}{{name}}{{/i18n}}</button>
   {{/content_block_types}}
 </div>

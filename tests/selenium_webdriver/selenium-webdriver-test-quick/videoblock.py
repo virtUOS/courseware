@@ -18,7 +18,7 @@ class VideoBlock(unittest.TestCase):
     def test_video_block(self):
         driver = self.driver
         driver.find_element_by_css_selector("button.author").click()
-        driver.find_element_by_xpath("//button[@data-type='VideoBlock']").click()
+        driver.find_element_by_xpath("//button[@data-blocktype='VideoBlock']").click()
         for i in range(60):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, "section.VideoBlock"): break

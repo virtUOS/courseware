@@ -18,7 +18,7 @@ class IframeBlock(unittest.TestCase):
     def test_iframe_block(self):
         driver = self.driver
         driver.find_element_by_css_selector("button.author").click()
-        driver.find_element_by_xpath("//button[@data-type='IFrameBlock']").click()
+        driver.find_element_by_xpath("//button[@data-blocktype='IFrameBlock']").click()
         for i in range(60):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, "iframe"): break

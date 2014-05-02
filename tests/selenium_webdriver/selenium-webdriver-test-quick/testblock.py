@@ -18,7 +18,7 @@ class Test(unittest.TestCase):
     def test_block(self):
         driver = self.driver
         driver.find_element_by_css_selector("button.author").click()
-        driver.find_element_by_xpath("//button[@data-type='TestBlock']").click()
+        driver.find_element_by_xpath("//button[@data-blocktype='TestBlock']").click()
         try: self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "section.TestBlock"))
         except AssertionError as e: self.verificationErrors.append(str(e))
         driver.find_element_by_css_selector("div.controls.editable > button.author").click()

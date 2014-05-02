@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//button[@data-type='IFrameBlock']</td>
+	<td>//button[@data-blocktype='IFrameBlock']</td>
 	<td></td>
 </tr>
 <tr>

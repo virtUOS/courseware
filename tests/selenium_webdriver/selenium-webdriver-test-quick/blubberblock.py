@@ -18,7 +18,7 @@ class BlubberBlock(unittest.TestCase):
     def test_blubber_block(self):
         driver = self.driver
         driver.find_element_by_css_selector("button.author").click()
-        driver.find_element_by_xpath("//button[@data-type='BlubberBlock']").click()
+        driver.find_element_by_xpath("//button[@data-blocktype='BlubberBlock']").click()
         for i in range(60):
             try:
                 if self.is_element_present(By.XPATH, "//textarea[@id='new_posting']"): break

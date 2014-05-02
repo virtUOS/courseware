@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//button[@data-type='HtmlBlock']</td>
+	<td>//button[@data-blocktype='HtmlBlock']</td>
 	<td></td>
 </tr>
 <tr>

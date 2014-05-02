@@ -388,9 +388,9 @@ section#courseware .active-subchapter[data-blockid=""] button.stop-sort-subchapt
 section#courseware .active-subchapter[data-blockid=""] button.stop-sort-section {
   display: none;
 }
-section#courseware button.add-section,
 section#courseware button.add-chapter,
-section#courseware button.add-subchapter {
+section#courseware button.add-subchapter,
+section#courseware button.add-section {
   border: 1px solid #bbb;
   min-height: 27px;
   padding: 5px 6px 5px 28px;
@@ -399,6 +399,16 @@ section#courseware button.add-subchapter {
   font-size: 12px;
   border-radius: 3px;
   background: url("../../../../../../assets/images/icons/16/blue/add.png") 6px center no-repeat #e9e9e9;
+}
+section#courseware button.add-chapter:hover,
+section#courseware button.add-subchapter:hover,
+section#courseware button.add-section:hover {
+  background-color: #F8F8F8;
+  border-color: #cccccc;
+}
+section#courseware button.add-chapter,
+section#courseware button.add-subchapter {
+  margin: 5px 0px 5px 10px;
 }
 section#courseware button.init-sort-chapter,
 section#courseware button.init-sort-subchapter,
@@ -411,6 +421,12 @@ section#courseware button.init-sort-section {
   font-size: 12px;
   border-radius: 3px;
   background: url("../../../../../../assets/images/icons/16/blue/ranking.png") 6px 2px no-repeat #e9e9e9;
+}
+section#courseware button.init-sort-chapter:hover,
+section#courseware button.init-sort-subchapter:hover,
+section#courseware button.init-sort-section:hover {
+  background-color: #F8F8F8;
+  border-color: #cccccc;
 }
 section#courseware button.stop-sort-chapter,
 section#courseware button.stop-sort-subchapter,
@@ -425,21 +441,9 @@ section#courseware button.stop-sort-section {
   background: url("../../../../../../assets/images/icons/16/blue/accept.png") 6px center no-repeat #e9e9e9;
   display: none;
 }
-section#courseware button.add-chapter,
-section#courseware button.add-subchapter {
-  margin: 5px 0px 5px 10px;
-}
-section#courseware button.init-sort-chapter:hover,
-section#courseware button.init-sort-subchapter:hover,
-section#courseware button.init-sort-section:hover,
 section#courseware button.stop-sort-chapter:hover,
 section#courseware button.stop-sort-subchapter:hover,
-section#courseware button.stop-sort-section:hover,
-section#courseware button.add-section:hover,
-section#courseware button.add-chapter:hover,
-section#courseware button.add-subchapter:hover,
-section#courseware .active-section .block-adder .add-block-type:hover,
-section#courseware .mode-switch button:hover {
+section#courseware button.stop-sort-section:hover {
   background-color: #F8F8F8;
   border-color: #cccccc;
 }
