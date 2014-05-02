@@ -62,7 +62,24 @@ section#courseware {
   /* CSS for the Courseware controls */
   position: relative;
   padding-top: 4em;
-  /* do not show "Abschnitt hinzuf�gen" w/o subchapter parent */
+}
+section#courseware nav.breadcrumb {
+  position: absolute;
+  bottom: 100%;
+}
+section#courseware nav.breadcrumb ul {
+  padding: 0;
+  margin: 0 0 0.4em 0;
+}
+section#courseware nav.breadcrumb li {
+  display: inline;
+  padding-right: 0.5em;
+}
+section#courseware nav.breadcrumb li a {
+  color: #888;
+}
+section#courseware nav.breadcrumb li a:hover {
+  color: #f33;
 }
 section#courseware ol {
   list-style: none;

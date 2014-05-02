@@ -18,8 +18,30 @@ section#courseware {
   position:relative;
   padding-top: 4em;
 
+  nav.breadcrumb {
+    position: absolute;
+    bottom: 100%;
 
-  /* do not show "Abschnitt hinzufügen" w/o subchapter parent */
+    ul {
+      padding: 0;
+      margin: 0 0 0.4em 0;
+    }
+
+    li {
+      display: inline;
+      padding-right: 0.5em;
+
+      a {
+        color: #888;
+
+        &:hover {
+          color: #f33;
+        }
+      }
+    }
+  }
+
+
   ol {
     list-style: none;
 
