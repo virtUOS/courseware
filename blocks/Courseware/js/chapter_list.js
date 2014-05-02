@@ -13,7 +13,13 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             "click .subchapter > .title .edit": "editStructure",
 
             "click .chapter    > .title .trash": "destroyStructure",
-            "click .subchapter > .title .trash": "destroyStructure"
+            "click .subchapter > .title .trash": "destroyStructure",
+
+            "click .init-sort-chapter":    "initSorting",
+            "click .init-sort-subchapter": "initSorting",
+
+            "click .stop-sort-chapter":    "stopSorting",
+            "click .stop-sort-subchapter": "stopSorting"
         },
 
         initialize: function() {
@@ -135,7 +141,8 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         },
 
         _getType: function (element) {
-            return _.find(["chapter", "subchapter"], function (type) { return element.hasClass(type); });
+            return element.is("#courseware") ? "courseware"
+                : _.find([, "chapter", "subchapter"], function (type) { return element.hasClass(type); });
         },
 
         destroyStructure: function (event) {
@@ -163,7 +170,62 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                             alert("ERROR:" + error);
                         });
             }
-        }
+        },
 
+        _sortable: null,
+        _original_positions: null,
+
+        _get_positions: function () {
+            return this._sortable.sortable("toArray", { attribute: "data-blockid" });
+        },
+
+        initSorting: function (event) {
+            var child_types = { courseware: "chapter", chapter: "subchapter" },
+                child_type = child_types[this._getType(jQuery(event.target).closest("[data-blockid]"))];
+
+            if (this._sortable) {
+                throw "Already sorting!";
+            }
+
+            if (child_type === "chapter") {
+                this._sortable = this.$el;
+            } else {
+                this._sortable = this.$(".subchapters");
+            }
+
+            this._sortable.sortable({
+                items:    "." + child_type,
+                handle:   ".handle",
+                axis:     "y",
+                distance: 5,
+                opacity:  0.7,
+                helper:   function (event, element) {
+                    return element.clone().find(".subchapters, .controls").remove().end();
+                }
+            });
+
+            this._original_positions = this._get_positions();
+            this.$el.addClass("sorting");
+        },
+
+        stopSorting: function (event) {
+
+            var positions = this._get_positions(),
+                parent_id = jQuery(event.target).closest("[data-blockid]").attr("data-blockid"),
+                data;
+
+            this._sortable.sortable("destroy");
+
+            if (JSON.stringify(positions) !== JSON.stringify(this._original_positions)) {
+                data = {
+                    parent:    parent_id,
+                    positions: positions
+                };
+                helper.callHandler(this.model.id, "update_positions", data);
+            }
+
+            this._original_positions = this._sortable = null;
+            this.$el.removeClass("sorting");
+        }
     });
 });

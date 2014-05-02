@@ -6,9 +6,9 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
     return Backbone.View.extend({
 
         events: {
-            "click .add-section": "addStructure",
-            "click .init-sort":   "initSorting",
-            "click .stop-sort":   "stopSorting"
+            "click .add-section":       "addStructure",
+            "click .init-sort-section": "initSorting",
+            "click .stop-sort-section": "stopSorting"
         },
 
         initialize: function() {
@@ -93,7 +93,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         initSorting: function (event) {
             this.$el.sortable({
                 items:       ".section",
-                helper:      ".helper",
+                handle:      ".handle",
                 containment: "parent",
                 distance:    5
             });
