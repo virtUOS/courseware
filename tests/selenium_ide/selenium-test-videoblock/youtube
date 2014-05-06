@@ -22,11 +22,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css=div.controls.editable &gt; button.author</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>css=p &gt; input[type=&quot;text&quot;]</td>
 	<td>http://youtu.be/rPdJdEFilaU</td>
@@ -38,13 +33,13 @@
 </tr>
 <tr>
 	<td>verifyAttribute</td>
-	<td>//iframe@src</td>
+	<td>//section[@data-blocktype='VideoBlock']/div[2]/iframe@src</td>
 	<td>//www.youtube.com/embed/rPdJdEFilaU</td>
 </tr>
 <tr>
 	<td>verifyAttribute</td>
 	<td>//embed@src</td>
-	<td>http://s.ytimg.com/yts/swfbin/player-vflHoZPOA/watch_as3.swf</td>
+	<td>https://s.ytimg.com/yts/swfbin/player-*/watch_as3.swf</td>
 </tr>
 <tr>
 	<td>click</td>

@@ -27,16 +27,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css=div.controls.editable &gt; button.author</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>name=content</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>name=content</td>
 	<td>Selenium Test</td>

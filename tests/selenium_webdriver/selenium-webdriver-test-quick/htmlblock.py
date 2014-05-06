@@ -19,6 +19,7 @@ class HtmlBlock(unittest.TestCase):
         driver = self.driver
         driver.find_element_by_css_selector("button.author").click()
         driver.find_element_by_xpath("//button[@data-blocktype='HtmlBlock']").click()
+        """
         for i in range(60):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, "section.HtmlBlock"): break
@@ -26,6 +27,7 @@ class HtmlBlock(unittest.TestCase):
             time.sleep(1)
         else: self.fail("time out")
         driver.find_element_by_css_selector("div.controls.editable > button.author").click()
+        """
         for i in range(60):
             try:
                 if self.is_element_present(By.NAME, "content"): break

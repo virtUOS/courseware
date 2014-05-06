@@ -25,7 +25,7 @@ class VideoBlock(unittest.TestCase):
             except: pass
             time.sleep(1)
         else: self.fail("time out")
-        driver.find_element_by_css_selector("div.controls.editable > button.author").click()
+        #driver.find_element_by_css_selector("div.controls.editable > button.author").click()
         for i in range(60):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, "p > input[type=\"text\"]"): break

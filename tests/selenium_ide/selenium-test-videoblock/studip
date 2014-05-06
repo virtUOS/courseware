@@ -22,11 +22,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css=div.controls.editable &gt; button.author</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>css=p &gt; input[type=&quot;text&quot;]</td>
 	<td>https://vm036.rz.uos.de/studip/mooc/sendfile.php?type=0&amp;file_id=9ff77e3bebe1a22e3c036359a1ab0451&amp;file_name=bsp1.webm</td>
@@ -56,7 +51,6 @@
 	<td>Wollen Sie wirklich löschen?</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

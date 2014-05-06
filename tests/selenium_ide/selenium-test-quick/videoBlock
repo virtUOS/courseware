@@ -27,11 +27,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css=div.controls.editable &gt; button.author</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForElementPresent</td>
 	<td>css=p &gt; input[type=&quot;text&quot;]</td>
 	<td></td>
