@@ -15,7 +15,7 @@ class TestController extends MoocipController
         header('Content-Type: application/json');
         $this->set_layout(null);
         $this->suggestions = array();
-        $tests = Test::findByTerm(Request::get('term'));
+        $tests = Test::findByTerm(utf8_decode(Request::get('term')));
 
         foreach ($tests as $test) {
             $this->suggestions[] = array(
