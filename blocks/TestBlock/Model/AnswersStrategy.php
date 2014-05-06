@@ -103,6 +103,7 @@ class AnswersStrategy implements AnswersStrategyInterface
                 $className = 'YesNoChoiceAnswersStrategy';
                 break;
             case 'lt_exercise':
+            case 'tb_exercise':
                 $className = 'FreeTextAnswersStrategy';
                 break;
             case 'cloze_exercise':

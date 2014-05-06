@@ -107,6 +107,7 @@ class TestBlock extends Block
                 $userAnswers = $exercise->getUserAnswers($this->test, $user);
                 $exercises[] = array(
                     'exercise_type' => $exercise->getType(),
+                    $exercise->getType() => 1,
                     'id' => $exercise->getId(),
                     'test_id' => $this->test->getId(),
                     'self_test' => $this->test->isSelfTest(),
