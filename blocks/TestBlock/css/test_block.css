@@ -3,9 +3,38 @@ section.TestBlock ul {
   padding: 0;
   list-style-type: none;
 }
+section.TestBlock ul.exercise {
+  clear: both;
+}
 section.TestBlock ul li.correct_answer span {
   border: 1px dashed green;
   padding: 0px 3px;
+}
+section.TestBlock ul.matching_exercise {
+  padding-bottom: 10px;
+  float: left;
+}
+section.TestBlock ul.matching_exercise li {
+  border-width: 1px;
+  border-style: dotted;
+  margin: 4px;
+  padding: 1ex 1ex 1ex 2ex;
+}
+section.TestBlock ul.matching_exercise.labels li {
+  border-color: transparent;
+}
+section.TestBlock ul.matching_exercise.answers li {
+  border-color: #808080;
+}
+section.TestBlock ul.matching_exercise.answers.solution_answers li.correct_answer {
+  border-color: green;
+  border-style: solid;
+}
+section.TestBlock ul.matching_exercise.answers.exercise_answers li {
+  background-image: url('http://localhost/mooc-ip/plugins_packages/virtUOS/VipsPlugin/images/drag_handle.png');
+  background-position: 1px center;
+  background-repeat: no-repeat;
+  cursor: move;
 }
 section.TestBlock p.solution span.correct_answer {
   color: green;
@@ -16,4 +45,8 @@ section.TestBlock p.solution span.incorrect_answer {
 section.TestBlock input[type="text"] {
   display: block;
   width: 400px;
+}
+section.TestBlock button.button {
+  display: block;
+  clear: both;
 }

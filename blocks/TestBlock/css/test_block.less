@@ -4,10 +4,48 @@ section.TestBlock {
     padding: 0;
     list-style-type: none;
 
+    &.exercise {
+      clear: both;
+    }
+
     li.correct_answer {
       span  {
         border: 1px dashed green;
         padding: 0px 3px;
+      }
+    }
+
+    &.matching_exercise {
+      padding-bottom: 10px;
+      float: left;
+
+      li {
+        border-width: 1px;
+        border-style: dotted;
+        margin: 4px;
+        padding: 1ex 1ex 1ex 2ex;
+      }
+
+      &.labels li {
+        border-color: transparent;
+      }
+
+      &.answers {
+        li {
+          border-color: #808080;
+        }
+
+        &.solution_answers li.correct_answer {
+          border-color: green;
+          border-style: solid;
+        }
+
+        &.exercise_answers li {
+          background-image: url('http://localhost/mooc-ip/plugins_packages/virtUOS/VipsPlugin/images/drag_handle.png');
+          background-position: 1px center;
+          background-repeat: no-repeat;
+          cursor: move;
+        }
       }
     }
   }
@@ -24,5 +62,10 @@ section.TestBlock {
   input[type="text"] {
     display: block;
     width: 400px;
+  }
+
+  button.button {
+    display: block;
+    clear: both;
   }
 }

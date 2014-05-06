@@ -109,6 +109,9 @@ class AnswersStrategy implements AnswersStrategyInterface
             case 'cloze_exercise':
                 $className = 'ClozeAnswersStrategy';
                 break;
+            case 'rh_exercise':
+                $className = 'MatchingExerciseAnswersStrategy';
+                break;
         }
 
         if ($className === null) {
