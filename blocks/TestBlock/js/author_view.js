@@ -24,6 +24,13 @@ define(['assets/js/author_view', 'assets/js/url'], function (AuthorView, helper)
                 source: function (request, response) {
                     jQuery.post(autoCompletionUrl, { term: request.term }, function (data) {
                         response(data);
+
+                        // automatically set the test id if the term that the
+                        // user entered is exactly the only result returned
+                        // by the suggestion controller
+                        if (data.length == 1 && data[0].label == nameField.val()) {
+                            idField.val(data[0].value);
+                        }
                     }, 'json');
                 },
                 select: function (event, ui) {
