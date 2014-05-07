@@ -62,12 +62,20 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 .then(
                     function (model) {
                         li_wrapper.remove();
-                        new_section = insert_point.before(templates("Courseware", "section", model.toJSON())).prev().addClass("loading");
-                        return self._addStructure(id, model);
+
+                        if (model) {
+                            new_section = insert_point.before(templates("Courseware", "section", model.toJSON())).prev().addClass("loading");
+
+                            return self._addStructure(id, model);
+                        }
+
+                        return null;
                     })
                 .then(
                     function (data) {
-                        new_section.replaceWith(templates("Courseware", "section", data));
+                        if (data) {
+                            new_section.replaceWith(templates("Courseware", "section", data));
+                        }
                     })
                 .then(
                     null,

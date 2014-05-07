@@ -8,6 +8,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'],
         className: "edit-structure",
 
         events: {
+            'click button.cancel': 'cancel',
             "submit form": "submit"
         },
 
@@ -69,6 +70,10 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'],
                         self.deferred.reject(error);
                     }
                 );
+        },
+
+        cancel: function () {
+            this.deferred.resolve(null);
         }
     });
 });

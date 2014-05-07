@@ -451,7 +451,7 @@ section#courseware .edit-structure {
   position: relative;
 }
 section#courseware .edit-structure input {
-  width: 86%;
+  width: 68%;
   padding: 4px 5px;
   margin: 2px 0px;
   border-radius: 3px;
@@ -461,7 +461,6 @@ section#courseware .edit-structure input:focus {
   border-color: #009EFF;
 }
 section#courseware .edit-structure button {
-  background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
   position: absolute;
   top: 3px;
   padding: 0 0 7px;
@@ -472,6 +471,14 @@ section#courseware .edit-structure button {
 }
 section#courseware .edit-structure button:hover {
   cursor: pointer;
+}
+section#courseware .edit-structure button.cancel {
+  background: url("../../../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
+  right: 20px;
+}
+section#courseware .edit-structure button.ok {
+  background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
+  right: 0;
 }
 section#courseware .edit-structure.loading input {
   background: url(../../../../../../assets/images/ajax_indicator_small.gif) center right no-repeat;

@@ -59,15 +59,24 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 .then(
                     function (model) {
                         view.remove();
-                        placeholder_item = insert_point
-                            .before(templates("Courseware", model.get("type"), model.toJSON()))
-                            .prev()
-                            .addClass("loading");
-                        return courseware._addStructure(id, model);
+
+                        if (model) {
+                            placeholder_item = insert_point
+                                .before(templates("Courseware", model.get("type"), model.toJSON()))
+                                .prev()
+                                .addClass("loading");
+
+                            return courseware._addStructure(id, model);
+                        }
+
+                        return null;
                     })
                 .then(
                     function (data) {
-                        placeholder_item.replaceWith(templates("Courseware", model.get("type"), data));
+                        if (data) {
+                            placeholder_item.replaceWith(templates("Courseware", model.get("type"), data));
+                        }
+
                         $button.fadeIn();
                     })
                 .then(

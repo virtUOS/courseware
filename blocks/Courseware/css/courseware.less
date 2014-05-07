@@ -378,7 +378,7 @@ section#courseware {
     position: relative;
 
     input {
-      width: 86%;
+      width: 68%;
       padding: 4px 5px;
       margin: 2px 0px;
       border-radius: 3px;
@@ -390,11 +390,20 @@ section#courseware {
     }
 
     button {
-      background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
       position: absolute;
       top: 3px;
       padding: 0 0 7px;
       .btn-base();
+
+      &.cancel {
+        background: url("../../../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
+        right: 20px;
+      }
+
+      &.ok {
+        background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
+        right: 0;
+      }
     }
 
     &.loading {
