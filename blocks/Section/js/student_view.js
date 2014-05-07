@@ -144,6 +144,9 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
                         $el.addClass("loading");
                         block_stub.renderServerSide().then(function () {
                             $el.removeClass("loading");
+
+                            // hide the edit button when the form is shown
+                            $el.find(".controls button.author").hide();
                         });
                     },
 
