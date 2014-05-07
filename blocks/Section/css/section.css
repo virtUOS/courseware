@@ -123,7 +123,6 @@ button.init-sort-block {
   font-size: 12px;
   border-radius: 3px;
   background: url("../../../../../../assets/images/icons/16/blue/ranking.png") 6px 2px no-repeat #e9e9e9;
-  display: none;
 }
 button.init-sort-block:hover {
   background-color: #F8F8F8;
@@ -163,6 +162,9 @@ button.add-block-type:hover {
 }
 #courseware.view-student .active-section div.controls,
 #courseware.view-student .active-section .block-adder,
+#courseware.view-student .active-section button.init-sort-block {
+  display: none;
+}
 #courseware .active-section div.controls.not-editable button.author {
   display: none;
 }

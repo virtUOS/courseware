@@ -109,7 +109,6 @@
 button.init-sort-block {
   .courseware-btn;
   background: url("../../../../../../assets/images/icons/16/blue/ranking.png") 6px 2px no-repeat #E9E9E9;
-  display: none;
 }
 
 button.stop-sort-block {
@@ -127,7 +126,14 @@ button.add-block-type {
   background: url(../../../../../../assets/images/ajax_indicator_small.gif) 10px center no-repeat;
 }
 
-#courseware.view-student .active-section div.controls, #courseware.view-student .active-section .block-adder,
-#courseware .active-section div.controls.not-editable button.author {
-  display: none;
+#courseware {
+  &.view-student .active-section {
+    div.controls, .block-adder, button.init-sort-block {
+      display: none;
+    }
+  }
+
+  .active-section div.controls.not-editable button.author {
+    display: none;
+  }
 }
