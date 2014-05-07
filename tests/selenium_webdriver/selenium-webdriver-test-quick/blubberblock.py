@@ -34,7 +34,7 @@ class BlubberBlock(unittest.TestCase):
             except: pass
             time.sleep(1)
         else: self.fail("time out")
-        try: self.assertEqual("Hello World", driver.find_element_by_css_selector("div.content").text)
+        try: self.assertIn("Hello World", driver.find_element_by_css_selector("div.content").text)
         except AssertionError as e: self.verificationErrors.append(str(e))
         driver.find_element_by_css_selector("div.controls.not-editable > button.trash").click()
         self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
