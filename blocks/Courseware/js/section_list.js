@@ -52,8 +52,9 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 insert_point = this.$(".no-content"),
                 li_wrapper = view.$el.wrap("<li/>").parent(),
                 new_section;
+            var $controls = this.$('.controls');
 
-            this.$(".controls").hide();
+            $controls.hide();
             insert_point.before(li_wrapper);
             view.focus();
 
@@ -76,7 +77,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                         new_section.remove();
                     })
                 .always(function () {
-                    this.$(".controls").fadeIn();
+                    $controls.fadeIn();
                 });
         },
 
