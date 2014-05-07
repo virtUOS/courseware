@@ -6,6 +6,10 @@ section.TestBlock ul {
 section.TestBlock ul.exercise {
   clear: both;
 }
+section.TestBlock ul.exercise button.button {
+  display: block;
+  clear: both;
+}
 section.TestBlock ul li.correct_answer span {
   border: 1px dashed green;
   padding: 0px 3px;
@@ -45,8 +49,4 @@ section.TestBlock p.solution span.incorrect_answer {
 section.TestBlock input[type="text"] {
   display: block;
   width: 400px;
-}
-section.TestBlock button.button {
-  display: block;
-  clear: both;
 }
