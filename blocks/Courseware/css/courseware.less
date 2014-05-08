@@ -50,23 +50,69 @@ section#courseware {
     }
   }
 
+
   ol.chapters {
+
     float: left;
     margin: 0;
     padding-right: 4%;
     padding-left: 1%;
     width: 18%;
 
-    li.selected > .title > a {
+
+    li.chapter > .title {
+      background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
+    }
+
+    li.chapter.selected > .title {
       font-weight: 700;
-      background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #eeeeee !important;
+      background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
+    }
+
+    li div.title {
+      position: relative;
+      line-height: 20px;
+      border-bottom: 1px solid #E9E9E9;
+    }
+
+    li.chapter div.title {
+
+      a {
+        display: inline-block;
+        padding: 5px 44px 5px 22px;
+      }
+
+      button.edit {
+        .btn(edit);
+      }
+      button.trash {
+        .btn(trash);
+      }
+
+      .controls {
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 2px;
+      }
+
+      &:hover {
+        background-color: #eee;
+
+        .controls {
+          visibility: visible;
+        }
+      }
     }
   }
+
+
 
   ol.subchapters {
     padding-left: 25px;
 
-    li.selected > .title > a {
+    li.selected > .title {
       font-weight: 700;
       background: #f8f8f8 !important;
     }
@@ -77,8 +123,8 @@ section#courseware {
       border-bottom: 1px solid #E9E9E9;
 
       a {
-        display: block;
-        padding: 3px 22px 3px 10px;
+        display: inline-block;
+        padding: 5px 44px 5px 12px;
       }
 
       button.edit {
@@ -109,56 +155,6 @@ section#courseware {
   }
 
 
-
-  ol.chapters {
-
-    li div.title {
-      position: relative;
-      line-height: 20px;
-      border-bottom: 1px solid #E9E9E9;
-    }
-
-    li.chapter div.title {
-
-      a {
-        display: block;
-        padding: 5px 44px 5px 22px;
-      }
-
-      button.edit {
-        .btn(edit);
-      }
-      button.trash {
-        .btn(trash);
-      }
-
-      .controls {
-        visibility: hidden;
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 2px;
-      }
-
-      &:hover {
-        background-color: #eee;
-
-        .controls {
-          visibility: visible;
-        }
-      }
-    }
-
-    li.subchapter div.title a {
-      display: block;
-      padding: 5px 44px 5px 12px;
-    }
-
-
-    li.chapter > .title > a {
-      background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
-    }
-  }
 
   ol.active-subchapter {
 
@@ -445,6 +441,8 @@ section#courseware {
     &.ui-sortable {
 
       .chapter > .title {
+
+        background-image: none;
 
         // display chapter handles
         .handle {

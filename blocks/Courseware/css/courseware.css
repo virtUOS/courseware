@@ -94,54 +94,12 @@ section#courseware ol.chapters {
   padding-left: 1%;
   width: 18%;
 }
-section#courseware ol.chapters li.selected > .title > a {
+section#courseware ol.chapters li.chapter > .title {
+  background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
+}
+section#courseware ol.chapters li.chapter.selected > .title {
   font-weight: 700;
-  background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #eeeeee !important;
-}
-section#courseware ol.subchapters {
-  padding-left: 25px;
-}
-section#courseware ol.subchapters li.selected > .title > a {
-  font-weight: 700;
-  background: #f8f8f8 !important;
-}
-section#courseware ol.subchapters li div.title {
-  position: relative;
-  line-height: 20px;
-  border-bottom: 1px solid #E9E9E9;
-}
-section#courseware ol.subchapters li div.title a {
-  display: block;
-  padding: 3px 22px 3px 10px;
-}
-section#courseware ol.subchapters li div.title button.edit {
-  width: 20px;
-  height: 20px;
-  color: transparent;
-  border: none;
-  background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
-}
-section#courseware ol.subchapters li div.title button.edit:hover {
-  cursor: pointer;
-}
-section#courseware ol.subchapters li div.title button.edit:hover {
-  background-image: url("../../../../../../assets/images/icons/16/black/edit.png");
-}
-section#courseware ol.subchapters li div.title .controls {
-  visibility: hidden;
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 2px;
-}
-section#courseware ol.subchapters li div.title:hover {
-  background-color: #eee;
-}
-section#courseware ol.subchapters li div.title:hover .controls {
-  visibility: visible;
-}
-section#courseware ol.subchapters li.no-content {
-  padding: 10px 5px;
+  background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
 }
 section#courseware ol.chapters li div.title {
   position: relative;
@@ -149,7 +107,7 @@ section#courseware ol.chapters li div.title {
   border-bottom: 1px solid #E9E9E9;
 }
 section#courseware ol.chapters li.chapter div.title a {
-  display: block;
+  display: inline-block;
   padding: 5px 44px 5px 22px;
 }
 section#courseware ol.chapters li.chapter div.title button.edit {
@@ -191,12 +149,50 @@ section#courseware ol.chapters li.chapter div.title:hover {
 section#courseware ol.chapters li.chapter div.title:hover .controls {
   visibility: visible;
 }
-section#courseware ol.chapters li.subchapter div.title a {
-  display: block;
+section#courseware ol.subchapters {
+  padding-left: 25px;
+}
+section#courseware ol.subchapters li.selected > .title {
+  font-weight: 700;
+  background: #f8f8f8 !important;
+}
+section#courseware ol.subchapters li div.title {
+  position: relative;
+  line-height: 20px;
+  border-bottom: 1px solid #E9E9E9;
+}
+section#courseware ol.subchapters li div.title a {
+  display: inline-block;
   padding: 5px 44px 5px 12px;
 }
-section#courseware ol.chapters li.chapter > .title > a {
-  background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
+section#courseware ol.subchapters li div.title button.edit {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+  background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
+}
+section#courseware ol.subchapters li div.title button.edit:hover {
+  cursor: pointer;
+}
+section#courseware ol.subchapters li div.title button.edit:hover {
+  background-image: url("../../../../../../assets/images/icons/16/black/edit.png");
+}
+section#courseware ol.subchapters li div.title .controls {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px;
+}
+section#courseware ol.subchapters li div.title:hover {
+  background-color: #eee;
+}
+section#courseware ol.subchapters li div.title:hover .controls {
+  visibility: visible;
+}
+section#courseware ol.subchapters li.no-content {
+  padding: 10px 5px;
 }
 section#courseware ol.active-subchapter {
   position: absolute;
@@ -502,6 +498,9 @@ section#courseware .chapters.sorting .subchapters > .controls button,
 section#courseware .chapters.sorting li.chapter > .title button,
 section#courseware .chapters.sorting li.subchapter > .title button {
   display: none;
+}
+section#courseware .chapters.sorting.ui-sortable .chapter > .title {
+  background-image: none;
 }
 section#courseware .chapters.sorting.ui-sortable .chapter > .title .handle {
   display: inline;
