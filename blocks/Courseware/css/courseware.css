@@ -94,67 +94,70 @@ section#courseware ol.chapters {
   padding-left: 1%;
   width: 18%;
 }
-section#courseware ol.chapters li.chapter > .title {
+section#courseware ol.chapters .chapter > .title {
   background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
 }
-section#courseware ol.chapters li.chapter.selected > .title {
+section#courseware ol.chapters .chapter.selected > .title {
   font-weight: 700;
   background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
 }
-section#courseware ol.chapters li div.title {
+section#courseware ol.chapters .chapter div.title {
   position: relative;
   line-height: 20px;
   border-bottom: 1px solid #E9E9E9;
 }
-section#courseware ol.chapters li.chapter div.title a {
+section#courseware ol.chapters .chapter div.title a {
   display: inline-block;
   padding: 5px 44px 5px 22px;
 }
-section#courseware ol.chapters li.chapter div.title button.edit {
+section#courseware ol.chapters .chapter div.title button.edit {
   width: 20px;
   height: 20px;
   color: transparent;
   border: none;
   background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
 }
-section#courseware ol.chapters li.chapter div.title button.edit:hover {
+section#courseware ol.chapters .chapter div.title button.edit:hover {
   cursor: pointer;
 }
-section#courseware ol.chapters li.chapter div.title button.edit:hover {
+section#courseware ol.chapters .chapter div.title button.edit:hover {
   background-image: url("../../../../../../assets/images/icons/16/black/edit.png");
 }
-section#courseware ol.chapters li.chapter div.title button.trash {
+section#courseware ol.chapters .chapter div.title button.trash {
   width: 20px;
   height: 20px;
   color: transparent;
   border: none;
   background: url("../../../../../../assets/images/icons/16/grey/trash.png") center center no-repeat;
 }
-section#courseware ol.chapters li.chapter div.title button.trash:hover {
+section#courseware ol.chapters .chapter div.title button.trash:hover {
   cursor: pointer;
 }
-section#courseware ol.chapters li.chapter div.title button.trash:hover {
+section#courseware ol.chapters .chapter div.title button.trash:hover {
   background-image: url("../../../../../../assets/images/icons/16/black/trash.png");
 }
-section#courseware ol.chapters li.chapter div.title .controls {
+section#courseware ol.chapters .chapter div.title .controls {
   visibility: hidden;
   position: absolute;
   top: 0;
   right: 0;
   padding: 2px;
 }
-section#courseware ol.chapters li.chapter div.title:hover {
+section#courseware ol.chapters .chapter div.title:hover {
   background-color: #eee;
 }
-section#courseware ol.chapters li.chapter div.title:hover .controls {
+section#courseware ol.chapters .chapter div.title:hover .controls {
   visibility: visible;
+}
+section#courseware ol.chapters .chapter.loading > .title {
+  background-image: url(../../../../../../assets/images/ajax_indicator_small.gif);
 }
 section#courseware ol.subchapters {
   padding-left: 25px;
 }
 section#courseware ol.subchapters li.selected > .title {
   font-weight: 700;
-  background: #f8f8f8 !important;
+  background: #f8f8f8;
 }
 section#courseware ol.subchapters li div.title {
   position: relative;
@@ -193,6 +196,9 @@ section#courseware ol.subchapters li div.title:hover .controls {
 }
 section#courseware ol.subchapters li.no-content {
   padding: 10px 5px;
+}
+section#courseware ol.subchapters .subchapter.loading > .title {
+  background: url(../../../../../../assets/images/ajax_indicator_small.gif) no-repeat 3px center;
 }
 section#courseware ol.active-subchapter {
   position: absolute;
@@ -320,9 +326,11 @@ section#courseware.loading h1 {
   background: url(../../../../../../assets/images/ajax_indicator_small.gif) left center no-repeat;
   padding-left: 20px;
 }
+section#courseware.loading .mode-switch,
 section#courseware.loading .controls,
-section#courseware.loading .mode-switch {
-  visibility: hidden;
+section#courseware .chapter.loading .controls,
+section#courseware .subchapter.loading .controls {
+  visibility: hidden !important;
 }
 section#courseware .mode-switch {
   position: absolute;
@@ -476,14 +484,6 @@ section#courseware .edit-structure button.ok {
   background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
   right: 0;
 }
-section#courseware .edit-structure.loading input {
-  background: url(../../../../../../assets/images/ajax_indicator_small.gif) center right no-repeat;
-  opacity: 0.5;
-  border-width: 0;
-}
-section#courseware .edit-structure.loading button {
-  visibility: hidden;
-}
 section#courseware .chapters .handle {
   display: none;
   color: transparent;
@@ -495,8 +495,8 @@ section#courseware .chapters .handle {
 }
 section#courseware .chapters.sorting > .controls button,
 section#courseware .chapters.sorting .subchapters > .controls button,
-section#courseware .chapters.sorting li.chapter > .title button,
-section#courseware .chapters.sorting li.subchapter > .title button {
+section#courseware .chapters.sorting .chapter > .title button,
+section#courseware .chapters.sorting .subchapter > .title button {
   display: none;
 }
 section#courseware .chapters.sorting.ui-sortable .chapter > .title {

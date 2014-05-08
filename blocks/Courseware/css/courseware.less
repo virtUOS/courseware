@@ -59,23 +59,19 @@ section#courseware {
     padding-left: 1%;
     width: 18%;
 
-
-    li.chapter > .title {
+    .chapter > .title {
       background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
     }
 
-    li.chapter.selected > .title {
+    .chapter.selected > .title {
       font-weight: 700;
       background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
     }
 
-    li div.title {
+    .chapter div.title {
       position: relative;
       line-height: 20px;
       border-bottom: 1px solid #E9E9E9;
-    }
-
-    li.chapter div.title {
 
       a {
         display: inline-block;
@@ -105,6 +101,10 @@ section#courseware {
         }
       }
     }
+
+    .chapter.loading > .title {
+      background-image: url(../../../../../../assets/images/ajax_indicator_small.gif);
+    }
   }
 
 
@@ -114,7 +114,7 @@ section#courseware {
 
     li.selected > .title {
       font-weight: 700;
-      background: #f8f8f8 !important;
+      background: #f8f8f8;
     }
 
     li div.title {
@@ -151,6 +151,11 @@ section#courseware {
 
     li.no-content {
       padding: 10px 5px;
+    }
+
+
+    .subchapter.loading > .title {
+      background: url(../../../../../../assets/images/ajax_indicator_small.gif) no-repeat 3px center;
     }
   }
 
@@ -266,9 +271,11 @@ section#courseware {
     }
   }
 
+  &.loading .mode-switch,
   &.loading .controls,
-  &.loading .mode-switch {
-    visibility: hidden;
+  .chapter.loading .controls,
+  .subchapter.loading .controls {
+    visibility: hidden !important;
   }
 
   .mode-switch {
@@ -401,18 +408,6 @@ section#courseware {
         right: 0;
       }
     }
-
-    &.loading {
-      input {
-        background: url(../../../../../../assets/images/ajax_indicator_small.gif) center right no-repeat;
-        opacity: 0.5;
-        border-width: 0;
-      }
-
-      button {
-        visibility: hidden;
-      }
-    }
   }
 
   .chapters .handle {
@@ -431,8 +426,8 @@ section#courseware {
     & > .controls button,
     .subchapters > .controls button,
 
-    li.chapter > .title button,
-    li.subchapter > .title button,
+    .chapter > .title button,
+    .subchapter > .title button,
     {
       display: none;
     }
