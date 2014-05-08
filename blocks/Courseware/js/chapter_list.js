@@ -34,8 +34,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         },
 
         addStructure: function (event) {
-            var courseware = this,
-                $button = jQuery(event.target),
+            var $button = jQuery(event.target),
                 id = $button.closest("[data-blockid]").attr("data-blockid");
 
             if (id == null) {
@@ -48,6 +47,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 insert_point = $button.closest(".controls").prev(".no-content"),
                 tag = "<" + insert_point[0].tagName + "/>",
                 li_wrapper = view.$el.wrap(tag).parent(),
+                courseware = this,
                 placeholder_item;
 
             $button.hide();
@@ -59,27 +59,25 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                     view.remove();
                     $button.fadeIn();
                 })
-                .then(
-                    function (model) {
-                        placeholder_item = insert_point
-                            .before(templates("Courseware",
-                                              model.get("type"),
-                                              model.toJSON()))
-                            .prev()
-                            .addClass("loading");
+                .then(function (model) {
+                    placeholder_item = insert_point
+                        .before(templates("Courseware",
+                                          model.get("type"),
+                                          model.toJSON()))
+                        .prev()
+                        .addClass("loading");
 
-                        return courseware._addStructure(id, model);
-                    })
+                    return courseware._addStructure(id, model);
+                })
                 .done(
                     function (data) {
-                        placeholder_item.replaceWith(templates("Courseware", model.get("type"), data));
+                        placeholder_item.replaceWith(
+                            templates("Courseware", model.get("type"), data));
                     },
-
                     function (error) {
                         placeholder_item && placeholder_item.remove();
-
                         if (error) {
-                            alert("ERROR: "  + JSON.stringify(error));
+                            alert("Fehler: "  + JSON.stringify(error));
                         }
                     });
         },
@@ -111,20 +109,20 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         editStructure: function (event) {
             var $parent = jQuery(event.target).closest("[data-blockid]"),
                 id = $parent.attr("data-blockid"),
-                $title = $parent.find("> .title"),
-                title = $title.find("a").text().trim();
+                type = this._getType($parent);
 
             if (id == null) {
                 return;
             }
 
-            var type = this._getType($parent);
             if (!type) {
                 throw "ERROR";
             }
 
-            var model = new BlockModel({ id: id, type: type, title: title }),
-                original_model = model.clone(),
+            var $title = $parent.find("> .title"),
+                title = $title.find("a").text().trim(),
+                model = new BlockModel({ id: id, type: type, title: title }),
+                orig_model = model.clone(),
                 view = new EditView({ model: model }),
                 updateListItem = function (model) {
                     $title.find("a").text(model.get('title'));
@@ -138,26 +136,24 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                     view.remove();
                     $title.show();
                 })
-                .then(
-                    function (model) {
-                        $parent.addClass("loading");
+                .then(function (model) {
+                    $parent.addClass("loading");
+                    if (model.hasChanged()) {
                         updateListItem(model);
-                        if (model.hasChanged()) {
-                            return model.save();
-                        }
-                    },
-                    function (rejected) {
-                        return "cancelled";
+                        return model.save();
                     }
-                )
-                .fin(function () {
-                    $parent.removeClass("loading");
                 })
-                .done(null, function (error) {
-                    updateListItem(original_model);
-                    alert("Fehler:" + error);
-                    console.log(error);
-                });
+                .done(
+                    function () {
+                        $parent.removeClass("loading");
+                    },
+                    function (error) {
+                        $parent.removeClass("loading");
+                        updateListItem(orig_model);
+                        if (error) {
+                            alert("Fehler: "  + JSON.stringify(error));
+                        }
+                    });
         },
 
         _getType: function (element) {
