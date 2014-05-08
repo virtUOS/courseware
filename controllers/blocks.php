@@ -94,7 +94,7 @@ class BlocksController extends MoocipController {
 
         $block->title = $title;
 
-        if ($block->store()) {
+        if (is_integer($block->store())) {
             $this->render_json($block->toArray());
         }
 
