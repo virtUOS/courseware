@@ -40,8 +40,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         },
 
         addStructure: function (event) {
-            var self = this,
-                id = this.$el.attr("data-blockid");
+            var id = this.$el.attr("data-blockid");
 
             if (id == null) {
                 return;
@@ -51,8 +50,9 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 view = new EditView({ model: model }),
                 insert_point = this.$(".no-content"),
                 li_wrapper = view.$el.wrap("<li/>").parent(),
-                placeholder_item,
-                $controls = this.$('.controls');
+                self = this,
+                $controls = this.$('.controls'),
+                placeholder_item;
 
             $controls.hide();
             insert_point.before(li_wrapper);
@@ -63,15 +63,14 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                     li_wrapper.remove();
                     $controls.fadeIn();
                 })
-                .then(
-                    function (model) {
-                        placeholder_item = insert_point
-                            .before(templates("Courseware", "section", model.toJSON()))
-                            .prev()
-                            .addClass("loading");
+                .then(function (model) {
+                    placeholder_item = insert_point
+                        .before(templates("Courseware", "section", model.toJSON()))
+                        .prev()
+                        .addClass("loading");
 
-                        return self._addStructure(id, model);
-                    })
+                    return self._addStructure(id, model);
+                })
                 .done(
                     function (data) {
                         placeholder_item.replaceWith(templates("Courseware", "section", data));
