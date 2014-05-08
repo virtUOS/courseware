@@ -30,9 +30,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                     using: function (position, feedback) {
                         jQuery(this).css(position);
                         jQuery("<div/>")
-                            .addClass("arrow")
-                            .addClass(feedback.vertical)
-                            .addClass(feedback.horizontal)
+                            .addClass(["arrow", feedback.vertical, feedback.horizontal].join(" "))
                             .appendTo(this);
                     }
                 }
