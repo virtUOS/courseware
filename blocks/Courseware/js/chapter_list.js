@@ -36,8 +36,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         addStructure: function (event) {
             var courseware = this,
                 $button = jQuery(event.target),
-                $parent = $button.closest("[data-blockid]"),
-                id = $parent.attr("data-blockid");
+                id = $button.closest("[data-blockid]").attr("data-blockid");
 
             if (id == null) {
                 return;
@@ -56,34 +55,32 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             view.focus();
 
             view.promise()
+                .fin(function () {
+                    view.remove();
+                    $button.fadeIn();
+                })
                 .then(
                     function (model) {
-                        view.remove();
+                        placeholder_item = insert_point
+                            .before(templates("Courseware",
+                                              model.get("type"),
+                                              model.toJSON()))
+                            .prev()
+                            .addClass("loading");
 
-                        if (model) {
-                            placeholder_item = insert_point
-                                .before(templates("Courseware", model.get("type"), model.toJSON()))
-                                .prev()
-                                .addClass("loading");
-
-                            return courseware._addStructure(id, model);
-                        }
-
-                        return null;
+                        return courseware._addStructure(id, model);
                     })
-                .then(
+                .done(
                     function (data) {
-                        if (data) {
-                            placeholder_item.replaceWith(templates("Courseware", model.get("type"), data));
-                        }
+                        placeholder_item.replaceWith(templates("Courseware", model.get("type"), data));
+                    },
 
-                        $button.fadeIn();
-                    })
-                .then(
-                    null,
                     function (error) {
-                        // TODO:  show error somehow
-                        alert("ERROR: "  + JSON.stringify(error));
+                        placeholder_item && placeholder_item.remove();
+
+                        if (error) {
+                            alert("ERROR: "  + JSON.stringify(error));
+                        }
                     });
         },
 
@@ -121,32 +118,46 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 return;
             }
 
-            // TODO
             var type = this._getType($parent);
             if (!type) {
                 throw "ERROR";
             }
 
             var model = new BlockModel({ id: id, type: type, title: title }),
-                view = new EditView({ model: model });
+                original_model = model.clone(),
+                view = new EditView({ model: model }),
+                updateListItem = function (model) {
+                    $title.find("a").text(model.get('title'));
+                };
 
             $title.hide().before(view.el);
             view.focus();
 
             view.promise()
+                .fin(function () {
+                    view.remove();
+                    $title.show();
+                })
                 .then(
                     function (model) {
-                        $title.find("a").text(model.get("title"));
+                        $parent.addClass("loading");
+                        updateListItem(model);
+                        if (model.hasChanged()) {
+                            return model.save();
+                        }
                     },
-                    function (error) {
-                        alert("TODO:" + error);
+                    function (rejected) {
+                        return "cancelled";
                     }
                 )
-                .always(
-                    function () {
-                        view.remove();
-                        $title.show();
-                    });
+                .fin(function () {
+                    $parent.removeClass("loading");
+                })
+                .done(null, function (error) {
+                    updateListItem(original_model);
+                    alert("Fehler:" + error);
+                    console.log(error);
+                });
         },
 
         _getType: function (element) {

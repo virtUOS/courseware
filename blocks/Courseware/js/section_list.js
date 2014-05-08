@@ -51,42 +51,38 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 view = new EditView({ model: model }),
                 insert_point = this.$(".no-content"),
                 li_wrapper = view.$el.wrap("<li/>").parent(),
-                new_section;
-            var $controls = this.$('.controls');
+                placeholder_item,
+                $controls = this.$('.controls');
 
             $controls.hide();
             insert_point.before(li_wrapper);
             view.focus();
 
             view.promise()
+                .fin(function () {
+                    li_wrapper.remove();
+                    $controls.fadeIn();
+                })
                 .then(
                     function (model) {
-                        li_wrapper.remove();
+                        placeholder_item = insert_point
+                            .before(templates("Courseware", "section", model.toJSON()))
+                            .prev()
+                            .addClass("loading");
 
-                        if (model) {
-                            new_section = insert_point.before(templates("Courseware", "section", model.toJSON())).prev().addClass("loading");
-
-                            return self._addStructure(id, model);
-                        }
-
-                        return null;
+                        return self._addStructure(id, model);
                     })
-                .then(
+                .done(
                     function (data) {
-                        if (data) {
-                            new_section.replaceWith(templates("Courseware", "section", data));
-                        }
-                    })
-                .then(
-                    null,
+                        placeholder_item.replaceWith(templates("Courseware", "section", data));
+                    },
                     function (error) {
-                        alert("ERROR: "  + JSON.stringify(error));
-                        li_wrapper.remove();
-                        new_section.remove();
-                    })
-                .always(function () {
-                    $controls.fadeIn();
-                });
+                        placeholder_item && placeholder_item.remove();
+
+                        if (error) {
+                            alert("ERROR: "  + JSON.stringify(error));
+                        }
+                    });
         },
 
         _addStructure: function (parent_id, model) {
