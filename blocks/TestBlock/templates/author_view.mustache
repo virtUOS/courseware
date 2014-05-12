@@ -1,6 +1,9 @@
-<input type="hidden" name="suggestion_url" value="{{suggestion_url}}">
-<input type="hidden" name="test_id" value="{{fields.test_id}}">
-<input type="text" name="test_name" placeholder="{{#i18n}}Name des Tests bzw. Übungsblattes{{/i18n}}" value="{{test_name}}">
+<select name="test_id">
+  <option>-- {{#i18n}}anzuzeigendes Aufgabenblatt auswählen{{/i18n}} --</option>
+  {{#tests}}
+    <option value="{{id}}"{{#current_test}} selected="selected"{{/current_test}}>{{name}}</option>
+  {{/tests}}
+</select>
 
-<button name=save class=button>Speichern</button>
-<button name=cancel class=button>Abbrechen</button>
+<button name="save" class="button">Speichern</button>
+<button name="cancel" class="button">Abbrechen</button>

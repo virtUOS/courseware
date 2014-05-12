@@ -15,40 +15,11 @@ define(['assets/js/author_view', 'assets/js/url'], function (AuthorView, helper)
             return this;
         },
 
-        postRender: function () {
-            var autoCompletionUrl = jQuery('input[name="suggestion_url"]', this.$el).val();
-            var idField = jQuery('input[name="test_id"]', this.$el);
-            var nameField = jQuery('input[name="test_name"]', this.$el);
-
-            nameField.autocomplete({
-                source: function (request, response) {
-                    jQuery.post(autoCompletionUrl, { term: request.term }, function (data) {
-                        response(data);
-
-                        // automatically set the test id if the term that the
-                        // user entered is exactly the only result returned
-                        // by the suggestion controller
-                        if (data.length == 1 && data[0].label == nameField.val()) {
-                            idField.val(data[0].value);
-                        }
-                    }, 'json');
-                },
-                select: function (event, ui) {
-                    idField.val(ui.item.value);
-                    nameField.val(ui.item.label);
-
-                    event.preventDefault();
-                }
-            });
-
-            return this;
-        },
-
         onSave: function () {
             var view = this;
 
             helper
-                .callHandler(this.model.id, 'modify_test', this.$('input[name="test_id"]').val())
+                .callHandler(this.model.id, 'modify_test', this.$('select[name="test_id"]').val())
                 .then(
                     function () {
                         view.switchBack();

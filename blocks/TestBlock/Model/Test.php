@@ -38,14 +38,12 @@ class Test extends \SimpleORMap
     }
 
     /**
-     * Filter the tests by a given term.
+     * Returns all tests.
      *
-     * @param string $term The term used to filter
-     *
-     * @return Test[] The tests that match a search term
+     * @return Test[] The tests
      */
-    public static function findByTerm($term)
+    public static function findAll()
     {
-        return static::findBySQL('title LIKE :term', array(':term' => '%'.$term.'%'));
+        return static::findBySQL('1 = 1 ORDER BY title');
     }
 }
