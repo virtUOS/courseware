@@ -51,7 +51,10 @@ class TestBlock extends Block
             );
         }
 
-        return array('tests' => $tests);
+        return array(
+            'manage_tests_url' => \PluginEngine::getURL(VipsBridge::getVipsPlugin(), array('action' => 'sheets'), 'show'),
+            'tests' => $tests,
+        );
     }
 
     public function modify_test_handler($testId)

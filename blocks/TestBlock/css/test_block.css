@@ -50,3 +50,7 @@ section.TestBlock select[name="test_id"] {
   display: block;
   width: 400px;
 }
+section.TestBlock a.edit-tests {
+  display: block;
+  float: right;
+}
