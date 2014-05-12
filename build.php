@@ -8,7 +8,21 @@ use Assetic\Asset\FileAsset;
 use Assetic\Asset\GlobAsset;
 use Assetic\Filter\LessphpFilter;
 
-less();
+$target = 'default';
+
+if (isset($_SERVER['argv'][1])) {
+    $target = $_SERVER['argv'][1];
+}
+
+switch ($target) {
+    case 'zip':
+        less();
+        zip();
+        break;
+    default:
+        less();
+        break;
+}
 
 function less()
 {
@@ -31,4 +45,45 @@ function less()
 
     $assetWriter = new AssetWriter('assets');
     $assetWriter->writeAsset($lessFiles);
+}
+
+function zip()
+{
+    $archive = new ZipArchive();
+    $archive->open('moocip.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+    addDirectories($archive, array(
+        'assets',
+        'blocks',
+        'controllers',
+        'docs',
+        'migrations',
+        'models',
+        'vendor',
+        'views',
+    ));
+    $archive->addFile('LICENSE');
+    $archive->addFile('Mooc.php');
+    $archive->addFile('plugin.manifest');
+    $archive->addFile('README.md');
+    $archive->close();
+}
+
+function addDirectory(ZipArchive $archive, $directory)
+{
+    $archive->addEmptyDir($directory);
+
+    foreach (glob($directory.'/*') as $file) {
+        if (is_dir($file)) {
+            addDirectory($archive, $file);
+        } else {
+            $archive->addFile($file);
+        }
+    }
+}
+
+function addDirectories(ZipArchive $archive, array $directories)
+{
+    foreach ($directories as $directory) {
+        addDirectory($archive, $directory);
+    }
 }
