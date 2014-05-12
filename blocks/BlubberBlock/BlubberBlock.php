@@ -7,7 +7,7 @@ use Mooc\UI\Block;
 /**
  * Display the contents of a Blubber stream in a (M)ooc.IP block.
  *
- * @author Christian Flothmann <christian.flothmann@xabbuh.de>
+ * @author Christian Flothmann <christian.flothmann@uos.de>
  */
 class BlubberBlock extends Block
 {
