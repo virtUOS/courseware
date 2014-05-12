@@ -44,8 +44,7 @@ class Exercise extends \SimpleORMap
         $returnValue = parent::setData($data, $reset);
 
         if (isset($data['ID']) && $data['ID'] !== null) {
-            $type = $this->getType();
-            $this->vipsExercise = new $type($this->Aufgabe, $this->ID);
+            $this->vipsExercise = new $this->URI($this->Aufgabe, $this->ID);
 
             $this->answersStrategy = AnswersStrategy::getStrategy($this->vipsExercise);
         }
@@ -60,7 +59,7 @@ class Exercise extends \SimpleORMap
      */
     public function getType()
     {
-        return $this->URI;
+        return $this->answersStrategy->getType();
     }
 
     /**
@@ -71,6 +70,16 @@ class Exercise extends \SimpleORMap
     public function getQuestion()
     {
         return $this->answersStrategy->getQuestion();
+    }
+
+    /**
+     * Returns the wrapped Vips exercise.
+     *
+     * @return \Exercise The exercise
+     */
+    public function getVipsExercise()
+    {
+        return $this->vipsExercise;
     }
 
     /**

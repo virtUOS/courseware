@@ -22,6 +22,14 @@ class AnswersStrategy implements AnswersStrategyInterface
     /**
      * {@inheritDoc}
      */
+    public function getType()
+    {
+        return get_class($this->vipsExercise);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getQuestion()
     {
         return $this->vipsExercise->getQuestion();
@@ -111,6 +119,9 @@ class AnswersStrategy implements AnswersStrategyInterface
                 break;
             case 'rh_exercise':
                 $className = 'MatchingExerciseAnswersStrategy';
+                break;
+            case 'rnd_exercise':
+                $className = 'RandomExerciseAnswersStrategy';
                 break;
         }
 

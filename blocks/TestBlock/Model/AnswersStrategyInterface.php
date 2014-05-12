@@ -10,6 +10,13 @@ namespace Mooc\UI\TestBlock\Model;
 interface AnswersStrategyInterface
 {
     /**
+     * Returns the exercise type.
+     *
+     * @return string The exercise type
+     */
+    public function getType();
+
+    /**
      * Returns the exercise's question.
      *
      * @return string The question
