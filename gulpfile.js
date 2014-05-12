@@ -9,18 +9,9 @@ var paths = {
 };
 
 
-gulp.task('default', ['less']);
+gulp.task('default', ['zip']);
 
-gulp.task('less', function() {
-    // place code for your default task here
-    return gulp.src(paths.styles, {base: './'})
-        .pipe(less()).pipe(gulp.dest('.'))
-        .pipe(minify())
-        .pipe(concat('moocip.min.css'))
-        .pipe(gulp.dest('./assets'));
-});
-
-gulp.task('zip', ['default'], function() {
+gulp.task('zip', function() {
     return gulp.src([
         'assets/**',
         'blocks/**',
