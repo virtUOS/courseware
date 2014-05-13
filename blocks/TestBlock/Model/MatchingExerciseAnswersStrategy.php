@@ -39,6 +39,10 @@ class MatchingExerciseAnswersStrategy extends AnswersStrategy
      */
     public function getUserAnswers(array $solution = null)
     {
+        if ($solution === null) {
+            return array();
+        }
+
         $entries = array();
         $indexToAnswer = array();
 
