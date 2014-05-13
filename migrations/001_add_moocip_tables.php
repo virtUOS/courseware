@@ -29,10 +29,13 @@ class AddMoocipTables extends DBMigration {
             `max_grade` VARCHAR(45) NULL ,
             PRIMARY KEY (`id`)
         )");
+
+        SimpleORMap::expireTableScheme();
     }
 
     public function down () {
         DBManager::get()->exec("DROP TABLE mooc_blocks");
         DBManager::get()->exec("DROP TABLE mooc_userprogress");
+        SimpleORMap::expireTableScheme();
     }
 }

@@ -20,11 +20,15 @@ class AddFieldsTable extends Migration
             `json_data` MEDIUMTEXT NULL ,
             PRIMARY KEY (`block_id`, `user_id`, `name`)
         )');
+
+        SimpleORMap::expireTableScheme();
     }
 
     function down()
     {
         $db = DBManager::get();
         $db->exec('DROP TABLE mooc_fields');
+
+        SimpleORMap::expireTableScheme();
     }
 }

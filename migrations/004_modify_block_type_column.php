@@ -24,6 +24,8 @@ class ModifyBlockTypeColumn extends Migration
     {
         $db = DBManager::get();
         $db->exec('ALTER TABLE `mooc_blocks` MODIFY `type` VARCHAR(64) NOT NULL');
+
+        SimpleORMap::expireTableScheme();
     }
 
     /**
@@ -33,5 +35,7 @@ class ModifyBlockTypeColumn extends Migration
     {
         $db = DBManager::get();
         $db->exec('ALTER TABLE `mooc_blocks` MODIFY `type` VARCHAR(64) NULL');
+
+        SimpleORMap::expireTableScheme();
     }
 }

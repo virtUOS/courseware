@@ -19,6 +19,7 @@ class AddSemClass extends Migration {
         $id = $this->addSemClass();
         $this->addSemTypes($id);
         $this->addConfigOption($id);
+        SimpleORMap::expireTableScheme();
     }
 
 
@@ -26,6 +27,7 @@ class AddSemClass extends Migration {
         $id = $this->getMoocSemClassID();
         $this->removeSemClassAndTypes($id);
         $this->removeConfigOption();
+        SimpleORMap::expireTableScheme();
     }
 
     /**********************************************************************/

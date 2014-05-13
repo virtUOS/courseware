@@ -22,6 +22,8 @@ class AddUserDomainForMooc extends Migration {
                 . "VALUES (:id, :id)");
         $stmt->bindValue(':id', \Mooc\USER_DOMAIN_NAME);
         $stmt->execute();
+
+        SimpleORMap::expireTableScheme();
     }
 
 
@@ -31,5 +33,7 @@ class AddUserDomainForMooc extends Migration {
                 . " WHERE userdomain_id = :id");
         $stmt->bindValue(':id', \Mooc\USER_DOMAIN_NAME);
         $stmt->execute();
+
+        SimpleORMap::expireTableScheme();
     }
 }
