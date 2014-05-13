@@ -155,14 +155,24 @@ function dumpAssets(AssetCollection $assets)
     foreach ($assets as $asset) {
         /** @var AssetInterface $asset */
         $assetWriter = new AssetWriter($asset->getSourceRoot());
-        $assetWriter->writeAsset($asset);
+
+        try {
+            $assetWriter->writeAsset($asset);
+        } catch (Exception $e) {
+            printError($e->getMessage());
+        }
     }
 
     // apply the CSS min filter only to the moocip.min.css file
     $assets = clone $assets;
     $assets->ensureFilter(new CssMinFilter());
     $assetWriter = new AssetWriter('assets');
-    $assetWriter->writeAsset($assets);
+
+    try {
+        $assetWriter->writeAsset($assets);
+    } catch (Exception $e) {
+        printError($e->getMessage());
+    }
 }
 
 /**
@@ -215,4 +225,14 @@ function printSuccess($message)
 function printInfo($message)
 {
     echo $message.PHP_EOL;
+}
+
+/**
+ * Prints an error message to the standard output stream of the console.
+ *
+ * @param string $message The message to print
+ */
+function printError($message)
+{
+    file_put_contents('php://stderr', "\033[31m".$message."\033[39m".PHP_EOL);
 }
