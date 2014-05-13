@@ -24,6 +24,9 @@ switch ($target) {
         break;
 }
 
+/**
+ * Compiles LESS files to CSS files.
+ */
 function less()
 {
     $lessFiles = new AssetCollection(array(
@@ -45,8 +48,13 @@ function less()
 
     $assetWriter = new AssetWriter('assets');
     $assetWriter->writeAsset($lessFiles);
+
+    printSuccess('compiled LESS files');
 }
 
+/**
+ * Creates the Stud.IP plugin zip archive.
+ */
 function zip()
 {
     $archive = new ZipArchive();
@@ -66,8 +74,16 @@ function zip()
     $archive->addFile('plugin.manifest');
     $archive->addFile('README.md');
     $archive->close();
+
+    printSuccess('created the Stud.IP plugin zip archive');
 }
 
+/**
+ * Recursively adds a directory tree to a zip archive.
+ *
+ * @param ZipArchive $archive   The zip archive
+ * @param string     $directory The directory to add
+ */
 function addDirectory(ZipArchive $archive, $directory)
 {
     $archive->addEmptyDir($directory);
@@ -81,9 +97,25 @@ function addDirectory(ZipArchive $archive, $directory)
     }
 }
 
+/**
+ * Recursively adds directory trees to a zip archive.
+ *
+ * @param ZipArchive $archive     The zip archive
+ * @param array      $directories The directories to add
+ */
 function addDirectories(ZipArchive $archive, array $directories)
 {
     foreach ($directories as $directory) {
         addDirectory($archive, $directory);
     }
+}
+
+/**
+ * Prints a success message to the standard output stream of the console.
+ *
+ * @param string $message The message to print
+ */
+function printSuccess($message)
+{
+    echo "\033[32m".$message."\033[39m".PHP_EOL;
 }
