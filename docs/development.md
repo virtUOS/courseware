@@ -14,6 +14,22 @@ minified productive CSS file (namely ``assets/moocip.min.css``):
 $ php build.php less
 ```
 
+If you frequently modify the LESS files and don't want to compile them after
+each modification manually, you can use the ``watch`` task:
+
+```bash
+$ php build.php watch
+```
+
+The ``watch`` task periodically checks for changes in the plugin's asset files
+and dumps them on demand. You can adjust the timeout between to cycles by passing
+the time to sleep in second as an argument to the task (the default timeout is
+five seconds):
+
+```bash
+$ php build.php watch 10
+```
+
 Create the Plugin Archive
 -------------------------
 
