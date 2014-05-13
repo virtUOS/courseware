@@ -412,7 +412,8 @@ section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active
 	margin: 0px;
 }
 section#courseware > .chapters > .controls > button:hover,
-section#courseware > .chapters > .chapter > .subchapters > .controls > button:hover {
+section#courseware > .chapters > .chapter > .subchapters > .controls > button:hover,
+section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active-subchapter > .controls > button:hover {
 	background-color: #F8F8F8;
   border-color: #cccccc;
 }
