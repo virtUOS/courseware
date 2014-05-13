@@ -13,7 +13,7 @@ class Section extends Block {
     // definition of precedence of icons
     // larger array index -> higher precedence
     // thus ICON_VIDEO has the highest precedence
-    private static $icon_precedences = array(self::ICON_DEFAULT, self::ICON_TASK, self::ICON_VIDEO, self::ICON_CHAT);
+    private static $icon_precedences = array(self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO);
 
     // mapping of block types to icons
     private static $map_blocks_to_icons = array(
