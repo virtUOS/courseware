@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://vm036.rz.uos.de/" />
+<title>multiplechoice</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">multiplechoice</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/studip/mooc/plugins.php/mooc/courseware?cid=2358add583efc4c04d209ff257b9d9c4&amp;selected=314#author</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//section[@id='courseware']/section/div[4]/button[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=test_id</td>
+	<td>label=Test 2 (1 Fragen)</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=p.question</td>
+	<td>exact:lorem ipsum ?</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.controls.editable &gt; button.trash</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Wollen Sie wirklich löschen?</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
