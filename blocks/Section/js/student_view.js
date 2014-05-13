@@ -205,8 +205,12 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             view.promise()
                 .then(
                     function (model) {
-                        var new_title = templates("Section", "title", model.toJSON());
-                        $title.replaceWith(new_title);
+                        if (model != null) {
+                            var new_title = templates("Section", "title", model.toJSON());
+                            $title.replaceWith(new_title);
+                        } else {
+                            $wrapped.show();
+                        }
                     },
                     function (error) {
                         alert("TODO:" + error);

@@ -112,6 +112,23 @@
 .active-section .edit-section.loading button {
   visibility: hidden;
 }
+.active-section .edit-section button {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+}
+.active-section .edit-section button:hover {
+  cursor: pointer;
+}
+.active-section .edit-section button.cancel {
+  background: url("../../../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
+  right: 20px;
+}
+.active-section .edit-section button.ok {
+  background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
+  right: 0;
+}
 button.init-sort-block {
   border: 1px solid #bbb;
   min-height: 27px;

@@ -93,15 +93,31 @@
 }
 
 .active-section {
-  .edit-section.loading {
-    input {
-      background: url(../../../../../../assets/images/ajax_indicator_small.gif) center right no-repeat;
-      opacity: 0.5;
-      border-width: 0;
+  .edit-section {
+    &.loading {
+      input {
+        background: url(../../../../../../assets/images/ajax_indicator_small.gif) center right no-repeat;
+        opacity: 0.5;
+        border-width: 0;
+      }
+
+      button {
+        visibility: hidden;
+      }
     }
 
     button {
-      visibility: hidden;
+      .btn-base();
+
+      &.cancel {
+        background: url("../../../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
+        right: 20px;
+      }
+
+      &.ok {
+        background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
+        right: 0;
+      }
     }
   }
 }
