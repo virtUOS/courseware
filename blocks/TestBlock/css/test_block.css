@@ -15,23 +15,6 @@ section.TestBlock ul {
 section.TestBlock ul.exercise {
   clear: both;
 }
-section.TestBlock ul.exercise button {
-  color: #000;
-  border: 1px solid #bbb;
-  min-height: 27px;
-  padding: 5px 6px 5px 28px;
-  margin: 0px;
-  cursor: pointer;
-  font-size: 12px;
-  border-radius: 3px;
-  background-image: none;
-  background-color: #e9e9e9;
-  padding-left: 6px;
-}
-section.TestBlock ul.exercise button:hover {
-  background-color: #F8F8F8;
-  border-color: #cccccc;
-}
 section.TestBlock ul.exercise button.button {
   display: block;
   clear: both;
