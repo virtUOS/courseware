@@ -197,8 +197,10 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             var $title = this.$("> .title"),
                 view = new EditView({ model: this.model }),
                 $wrapped = $title.wrapInner().children().first();
+            var $controls = jQuery('.controls', $title);
 
             $wrapped.hide().before(view.el);
+            $controls.hide();
 
             view.focus();
 
@@ -219,6 +221,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
                 .always(
                     function () {
                         view.remove();
+                        $controls.show();
                     });
         },
 
