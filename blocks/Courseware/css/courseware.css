@@ -394,41 +394,58 @@ section#courseware .active-subchapter[data-blockid=""] button.stop-sort-section 
 section#courseware > .chapters > .controls > button,
 section#courseware > .chapters > .chapter > .subchapters > .controls > button,
 section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active-subchapter > .controls > button {
-	border: 1px solid #bbb;
-	background-color: #e9e9e9;
-	padding: 5px 6px 5px 28px;
-	margin: 5px 0px 0px 0px;
+  color: #000;
+  border: 1px solid #bbb;
+  background-color: #e9e9e9;
+  background-repeat: no-repeat;
+  min-height: 27px;
+  padding: 5px 6px 5px 28px;
+  margin: 0px;
   cursor: pointer;
   font-size: 12px;
   border-radius: 3px;
-  min-height: 27px;
-  background-repeat: no-repeat;
+  margin: 5px 0px 0x 0px;
   width: 90%;
   text-align: left;
-}
-section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active-subchapter > .controls > button {
-	width: auto !important;
-	margin: 0px;
 }
 section#courseware > .chapters > .controls > button:hover,
 section#courseware > .chapters > .chapter > .subchapters > .controls > button:hover,
 section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active-subchapter > .controls > button:hover {
-	background-color: #F8F8F8;
+  background-color: #F8F8F8;
   border-color: #cccccc;
 }
+section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active-subchapter > .controls > button {
+  width: auto !important;
+  margin: 0px;
+}
 section#courseware .chapters .controls {
-	text-align: center;
-	margin-bottom: 5px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+section#courseware button.button {
+  color: #000;
+  border: 1px solid #bbb;
+  background-color: #e9e9e9;
+  background-repeat: no-repeat;
+  min-height: 27px;
+  padding: 5px 6px 5px 28px;
+  margin: 0px;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 3px;
+  background-image: none;
+  padding-left: 6px;
+  min-width: 80px;
+}
+section#courseware button.button:hover {
+  background-color: #F8F8F8;
+  border-color: #cccccc;
 }
 section#courseware button.add-chapter,
 section#courseware button.add-subchapter,
 section#courseware button.add-section {
   background-image: url("../../../../../../assets/images/icons/16/blue/add.png");
   background-position: 6px center;
-}
-section#courseware button.add-chapter,
-section#courseware button.add-subchapter {
-  /* margin: 5px 0px 5px 10px; */
 }
 section#courseware button.init-sort-chapter,
 section#courseware button.init-sort-subchapter,
@@ -439,14 +456,6 @@ section#courseware button.init-sort-section {
 section#courseware button.stop-sort-chapter,
 section#courseware button.stop-sort-subchapter,
 section#courseware button.stop-sort-section {
-  color: #000;
-  border: 1px solid #bbb;
-  min-height: 27px;
-  padding: 5px 6px 5px 28px;
-  margin: 0px;
-  cursor: pointer;
-  font-size: 12px;
-  border-radius: 3px;
   background: url("../../../../../../assets/images/icons/16/blue/accept.png") 6px center no-repeat #E9E9E9;
   display: none;
 }
@@ -477,11 +486,11 @@ section#courseware .edit-structure button:hover {
 }
 section#courseware .edit-structure button.cancel {
   background: url("../../../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
-  right: 10px;
+  right: 20px;
 }
 section#courseware .edit-structure button.ok {
   background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
-  right: -10px;
+  right: 0;
 }
 section#courseware .chapters .handle {
   display: none;
