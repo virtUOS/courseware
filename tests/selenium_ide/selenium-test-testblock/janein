@@ -34,7 +34,7 @@
 <tr>
 	<td>verifyText</td>
 	<td>css=p.question</td>
-	<td>exact:Zu Fuß ist weiter als über den Berg.</td>
+	<td>exact:Nachts ist es kalt.</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -46,7 +46,6 @@
 	<td>Wollen Sie wirklich löschen?</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

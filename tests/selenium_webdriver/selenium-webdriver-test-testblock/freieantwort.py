@@ -17,14 +17,14 @@ class Freieantwort(unittest.TestCase):
     
     def test_freieantwort(self):
         driver = self.driver
-        driver.get(self.base_url + "/studip/mooc/plugins.php/mooc/courseware?cid=2358add583efc4c04d209ff257b9d9c4&selected=314#author")
-        driver.find_element_by_xpath("//section[@id='courseware']/section/div[4]/button[4]").click()
+        driver.find_element_by_css_selector("button.author").click()
+        driver.find_element_by_xpath("//button[@data-blocktype='TestBlock']").click()
         Select(driver.find_element_by_name("test_id")).select_by_visible_text("Test 4 (1 Fragen)")
         driver.find_element_by_name("save").click()
-        try: self.assertRegexpMatches(driver.find_element_by_css_selector("p.question").text, r"^exact:lorem ipsum [\s\S]$")
+        try: self.assertIn("Lorem ipsum", driver.find_element_by_css_selector("p.question").text)
         except AssertionError as e: self.verificationErrors.append(str(e))
         driver.find_element_by_css_selector("div.controls.editable > button.trash").click()
-        self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich lÃ¶schen[\s\S]$")
+        self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
