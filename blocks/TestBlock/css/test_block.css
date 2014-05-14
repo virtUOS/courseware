@@ -17,6 +17,10 @@ section.TestBlock ul.exercise > li:after {
   display: block;
   clear: both;
 }
+section.TestBlock ul.exercise button.button {
+  display: block;
+  clear: both;
+}
 section.TestBlock ul li.correct_answer span {
   border: 1px dashed green;
   padding: 0px 3px;
