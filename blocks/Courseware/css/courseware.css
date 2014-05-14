@@ -394,6 +394,7 @@ section#courseware .active-subchapter[data-blockid=""] button.stop-sort-section 
 section#courseware button.add-chapter,
 section#courseware button.add-subchapter,
 section#courseware button.add-section {
+  color: #000;
   border: 1px solid #bbb;
   min-height: 27px;
   padding: 5px 6px 5px 28px;
@@ -416,6 +417,7 @@ section#courseware button.add-subchapter {
 section#courseware button.init-sort-chapter,
 section#courseware button.init-sort-subchapter,
 section#courseware button.init-sort-section {
+  color: #000;
   border: 1px solid #bbb;
   min-height: 27px;
   padding: 5px 6px 5px 28px;
@@ -434,6 +436,7 @@ section#courseware button.init-sort-section:hover {
 section#courseware button.stop-sort-chapter,
 section#courseware button.stop-sort-subchapter,
 section#courseware button.stop-sort-section {
+  color: #000;
   border: 1px solid #bbb;
   min-height: 27px;
   padding: 5px 6px 5px 28px;
