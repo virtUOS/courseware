@@ -1,3 +1,12 @@
+.btn-base {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+}
+.btn-base:hover {
+  cursor: pointer;
+}
 section.TestBlock ul {
   margin: 0;
   padding: 0;

@@ -350,31 +350,41 @@ section#courseware {
     }
   }
 
-  button.add-chapter,
-  button.add-subchapter,
-  button.add-section {
-    .courseware-btn;
-    background: url("../../../../../../assets/images/icons/16/blue/add.png") 6px center no-repeat #E9E9E9;
-  }
+  button {
+    &.button {
+      .courseware-btn;
+      background-image: none;
+      background-color: #e9e9e9;
+      padding-left: 6px;
+      min-width: 80px;
+    }
 
-  button.add-chapter,
-  button.add-subchapter {
-    margin: 5px 0px 5px 10px;
-  }
+    &.add-chapter,
+    &.add-subchapter,
+    &.add-section {
+      .courseware-btn;
+      background: url("../../../../../../assets/images/icons/16/blue/add.png") 6px center no-repeat #E9E9E9;
+    }
 
-  button.init-sort-chapter,
-  button.init-sort-subchapter,
-  button.init-sort-section {
-    .courseware-btn;
-    background: url("../../../../../../assets/images/icons/16/blue/ranking.png") 6px 2px no-repeat #E9E9E9;
-  }
+    &.add-chapter,
+    &.add-subchapter {
+      margin: 5px 0px 5px 10px;
+    }
 
-  button.stop-sort-chapter,
-  button.stop-sort-subchapter,
-  button.stop-sort-section {
-    .courseware-btn;
-    background: url("../../../../../../assets/images/icons/16/blue/accept.png") 6px center no-repeat #E9E9E9;
-    display: none;
+    &.init-sort-chapter,
+    &.init-sort-subchapter,
+    &.init-sort-section {
+      .courseware-btn;
+      background: url("../../../../../../assets/images/icons/16/blue/ranking.png") 6px 2px no-repeat #E9E9E9;
+    }
+
+    &.stop-sort-chapter,
+    &.stop-sort-subchapter,
+    &.stop-sort-section {
+      .courseware-btn;
+      background: url("../../../../../../assets/images/icons/16/blue/accept.png") 6px center no-repeat #E9E9E9;
+      display: none;
+    }
   }
 
   .edit-structure {

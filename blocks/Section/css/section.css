@@ -130,6 +130,7 @@
   right: 0;
 }
 button.init-sort-block {
+  color: #000;
   border: 1px solid #bbb;
   min-height: 27px;
   padding: 5px 6px 5px 28px;
@@ -144,6 +145,7 @@ button.init-sort-block:hover {
   border-color: #cccccc;
 }
 button.stop-sort-block {
+  color: #000;
   border: 1px solid #bbb;
   min-height: 27px;
   padding: 5px 6px 5px 28px;
@@ -159,6 +161,7 @@ button.stop-sort-block:hover {
   border-color: #cccccc;
 }
 button.add-block-type {
+  color: #000;
   border: 1px solid #bbb;
   min-height: 27px;
   padding: 5px 6px 5px 28px;
