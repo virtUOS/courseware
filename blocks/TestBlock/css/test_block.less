@@ -7,9 +7,8 @@ section.TestBlock {
     list-style-type: none;
 
     &.exercise {
-      clear: both;
-
-      button.button {
+      & > li:after {
+        content: '';
         display: block;
         clear: both;
       }

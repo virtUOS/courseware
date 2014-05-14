@@ -12,10 +12,8 @@ section.TestBlock ul {
   padding: 0;
   list-style-type: none;
 }
-section.TestBlock ul.exercise {
-  clear: both;
-}
-section.TestBlock ul.exercise button.button {
+section.TestBlock ul.exercise > li:after {
+  content: '';
   display: block;
   clear: both;
 }
