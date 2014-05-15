@@ -5,13 +5,8 @@
                 <table id="infobox_content" cellspacing="0" cellpadding="4">
                     <tbody>
                         <tr>
-                            <td>
-                                <? if ($preview_video) : ?>
-                                <video src="<?= $preview_video ?>" style="width:240px;" poster="<?= $preview_image ?>" controls>
-                                </video>
-                                <? else : ?>
-                                    <img src="<?= $preview_image ?>">
-                                <? endif ?>
+                            <td style="cursor: pointer" id="preview_video">
+                                <img src="<?= $preview_image ?: CourseAvatar::getAvatar($course->id)->getURL(Avatar::NORMAL) ?>">
                             </td>
                         </tr>
                         <tr>
@@ -28,3 +23,10 @@
     </tbody>
 </table>
 
+ 
+<? if ($preview_video) : ?>
+
+<div id="videobox" style="display: none;">
+    <iframe src="<?= $preview_video ?>" scrolling="no" allowfullscreen></iframe>
+</div>
+<? endif ?>

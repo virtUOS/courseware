@@ -1,4 +1,4 @@
-define(['assets/js/student_view', './utils'], function (StudentView, Utils) {
+define(['assets/js/student_view', 'utils'], function (StudentView, Utils) {
     'use strict';
     return StudentView.extend({
         events: {},

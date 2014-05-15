@@ -23,3 +23,5 @@ $body_id = 'mooc-courses-show';
 <? endif ?>
 
 <? $infobox = $this->render_partial('courses/_show_infobox') ?>
+
+<?= $this->render_partial('courses/_requirejs') ?>

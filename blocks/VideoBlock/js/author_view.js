@@ -1,4 +1,4 @@
-define(['assets/js/author_view', 'assets/js/url', './utils'], function (
+define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
     AuthorView, helper, Utils
 ) {
     'use strict';
