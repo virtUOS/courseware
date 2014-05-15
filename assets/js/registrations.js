@@ -18,7 +18,7 @@
         },
 
         resendRegistrationMail : function(user_id, mooc_id, button) {
-            $.ajax(STUDIP.URLHelper.getURL('plugins.php/mooc/registrations/resend_mail/' + user_id + '?mooc_id=' + mooc_id), {
+            $.ajax(STUDIP.URLHelper.getURL('plugins.php/mooc/registrations/resend_mail/' + user_id + '?moocid=' + mooc_id), {
                 success: function(response) {
                     var template = STUDIP.MOOC.Registrations.getTemplate('success_message');
                     $('#messages').append(template({
