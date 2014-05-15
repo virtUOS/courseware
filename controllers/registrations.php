@@ -158,13 +158,16 @@ class RegistrationsController extends MoocipController {
     
     private function sendMail($course, $mail, $password)
     {
+        URLHelper::setBaseUrl($GLOBALS['ABSOLUTE_URI_STUDIP']);
+        $link = $this->url_for('courses/show/' . $course->id);
+
         // send mail with password to user
         $mail_msg = sprintf(
             _("Ihre Zugangsdaten für den MOOC-Kurs '%s':\n\n"
             . "Benutzername: %s \n"
             . "Passwort: %s \n\n"
-            . "Hier kommen Sie direkt ins System:\n %s"),
-            $course->name, $mail, $password, $GLOBALS['ABSOLUTE_URI_STUDIP']
+            . "Hier kommen Sie direkt zum Kurs:\n %s"),
+            $course->name, $mail, $password, $link
         );
         StudipMail::sendMessage($mail, sprintf(_('Zugang zum MOOC-Kurs "%s"'), $course->name), $mail_msg);
     }
