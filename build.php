@@ -60,7 +60,7 @@ function zip()
         'models',
         'vendor',
         'views',
-    ));
+    ), '/^(assets|blocks).*\.less$/');
     $archive->addFile('LICENSE');
     $archive->addFile('Mooc.php');
     $archive->addFile('plugin.manifest');
@@ -178,18 +178,24 @@ function dumpAssets(AssetCollection $assets)
 /**
  * Recursively adds a directory tree to a zip archive.
  *
- * @param ZipArchive $archive   The zip archive
- * @param string     $directory The directory to add
+ * @param ZipArchive $archive           The zip archive
+ * @param string     $directory         The directory to add
+ * @param string     $ignoredFilesRegex Regular expression that matches
+ *                                      files which should be ignored
  */
-function addDirectory(ZipArchive $archive, $directory)
+function addDirectory(ZipArchive $archive, $directory, $ignoredFilesRegex = '')
 {
     $archive->addEmptyDir($directory);
 
     foreach (glob($directory.'/*') as $file) {
         if (is_dir($file)) {
-            addDirectory($archive, $file);
+            addDirectory($archive, $file, $ignoredFilesRegex);
         } else {
-            $archive->addFile($file);
+            if ($ignoredFilesRegex === '' || !preg_match($ignoredFilesRegex, $file)) {
+                $archive->addFile($file);
+            } else {
+                printError('ignore '.$file);
+            }
         }
     }
 }
@@ -197,13 +203,15 @@ function addDirectory(ZipArchive $archive, $directory)
 /**
  * Recursively adds directory trees to a zip archive.
  *
- * @param ZipArchive $archive     The zip archive
- * @param array      $directories The directories to add
+ * @param ZipArchive $archive           The zip archive
+ * @param array      $directories       The directories to add
+ * @param string     $ignoredFilesRegex Regular expression that matches
+ *                                      files which should be ignored
  */
-function addDirectories(ZipArchive $archive, array $directories)
+function addDirectories(ZipArchive $archive, array $directories, $ignoredFilesRegex = '')
 {
     foreach ($directories as $directory) {
-        addDirectory($archive, $directory);
+        addDirectory($archive, $directory, $ignoredFilesRegex);
     }
 }
 
