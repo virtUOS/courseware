@@ -27,11 +27,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>name=content</td>
-	<td>Selenium Test</td>
-</tr>
-<tr>
 	<td>click</td>
 	<td>name=save</td>
 	<td></td>
@@ -43,8 +38,8 @@
 </tr>
 <tr>
 	<td>verifyText</td>
-	<td>css=div.content</td>
-	<td>Selenium Test</td>
+	<td>css=div.content p</td>
+	<td>Hello World!</td>
 </tr>
 <tr>
 	<td>click</td>
