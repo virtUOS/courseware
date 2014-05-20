@@ -41,6 +41,11 @@ define(['q', 'backbone', 'assets/js/url', 'assets/js/templates'],
             event.preventDefault();
 
             var new_title = this.$("input").val().trim();
+
+            if (new_title == '') {
+                return;
+            }
+
             this.model.set("title", new_title);
 
             this.deferred.resolve(this.model);

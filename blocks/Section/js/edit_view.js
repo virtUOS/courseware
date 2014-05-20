@@ -42,6 +42,10 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'],
                 val = this.$("input").val().trim(),
                 self = this;
 
+            if (val == '') {
+                return;
+            }
+
             if (val === old) {
                 self.deferred.resolve(self.model);
                 return;
