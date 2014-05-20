@@ -196,32 +196,40 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
         editSection: function (event) {
             var $title = this.$("> .title"),
                 view = new EditView({ model: this.model }),
-                $wrapped = $title.wrapInner().children().first();
-            var $controls = jQuery('.controls', $title);
+                orig_model = this.model.clone(),
+                $wrapped = $title.wrapInner("<div/>").children().first(),
+                self = this,
+                updateSectionTitle = function (model) {
+                    var new_title = templates("Section", "title", model.toJSON());
+                    $title.replaceWith(new_title);
+                    return self.$("> .title");
+                };
 
             $wrapped.hide().before(view.el);
-            $controls.hide();
 
             view.focus();
 
             view.promise()
-                .then(
-                    function (model) {
-                        if (model != null) {
-                            var new_title = templates("Section", "title", model.toJSON());
-                            $title.replaceWith(new_title);
-                        } else {
-                            $wrapped.show();
-                        }
+                .fin(function () {
+                    view.remove();
+                    $wrapped.children().unwrap();
+                })
+                .then(function (model) {
+                    if (model.hasChanged()) {
+                        $title = updateSectionTitle(model).addClass("loading");
+                        return model.save();
+                    }
+                })
+                .done(
+                    function () {
+                        $title.removeClass("loading");
                     },
                     function (error) {
-                        alert("TODO:" + error);
-                    }
-                )
-                .always(
-                    function () {
-                        view.remove();
-                        $controls.show();
+                        $title.removeClass("loading");
+                        updateSectionTitle(self.model.revert());
+                        if (error) {
+                            alert("Fehler: "  + JSON.stringify(error));
+                        }
                     });
         },
 

@@ -31,6 +31,10 @@
   border-bottom: none;
   vertical-align: top;
 }
+.active-section > .title.loading h1 {
+  background: url("../../../../../../assets/images/ajax_indicator_small.gif") center left no-repeat;
+  padding-left: 20px;
+}
 .active-section > .title button.edit {
   width: 20px;
   height: 20px;
@@ -106,14 +110,6 @@
 }
 #courseware.view-author .active-section section.block:hover {
   box-shadow: 2px 2px 2px 2px #CCC;
-}
-.active-section .edit-section.loading input {
-  background: url("../../../../../../assets/images/ajax_indicator_small.gif") center right no-repeat;
-  opacity: 0.5;
-  border-width: 0;
-}
-.active-section .edit-section.loading button {
-  visibility: hidden;
 }
 .active-section .edit-section button {
   width: 20px;

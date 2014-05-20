@@ -1,5 +1,5 @@
-define(['backbone', 'assets/js/url', 'assets/js/templates'],
-       function (Backbone, helper, templates) {
+define(['q', 'backbone', 'assets/js/templates'],
+       function (Q, Backbone, templates) {
 
     'use strict';
 
@@ -8,21 +8,20 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'],
         className: "edit-section",
 
         events: {
-            'click button.cancel': 'cancel',
-            "submit form": "submit"
+            'submit form':         'submit',
+            'click button.cancel': 'cancel'
         },
 
         deferred: null,
 
         initialize: function() {
-            this.deferred = jQuery.Deferred();
+            this.deferred = Q.defer();
             this.render();
         },
 
         render: function () {
             var template = templates("Section", "edit_view", this.model.toJSON());
             this.$el.html(template);
-
             return this;
         },
 
@@ -31,46 +30,18 @@ define(['backbone', 'assets/js/url', 'assets/js/templates'],
         },
 
         promise: function () {
-            return this.deferred.promise();
+            return this.deferred.promise;
         },
 
         submit: function (event) {
-
             event.preventDefault();
-
-            var old = this.model.get("title"),
-                val = this.$("input").val().trim(),
-                self = this;
-
-            if (val == '') {
-                return;
-            }
-
-            if (val === old) {
-                self.deferred.resolve(self.model);
-                return;
-            }
-
-            this.model.set("title", val);
-            this.$el.addClass("loading");
-
-            helper
-                .putView(this.model.id, this.model.toJSON())
-                .then(
-                    // TODO: what to do with data?
-                    function (data) {
-                        self.deferred.resolve(self.model);
-                    },
-
-                    // TODO: what to do? show error? or just remove it?
-                    function (error) {
-                        self.deferred.reject(error);
-                    }
-                );
+            var new_title = this.$("input").val().trim();
+            this.model.set("title", new_title);
+            this.deferred.resolve(this.model);
         },
 
         cancel: function () {
-            this.deferred.resolve();
+            this.deferred.reject();
         }
     });
 });

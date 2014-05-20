@@ -23,9 +23,11 @@
     vertical-align: top;
   }
 
-  .controls {
-
+  &.loading h1 {
+    background: url("../../../../../../assets/images/ajax_indicator_small.gif") center left no-repeat;
+    padding-left: 20px;
   }
+
 
   button.edit {
     .btn(edit);
@@ -98,18 +100,6 @@
 
 .active-section {
   .edit-section {
-    &.loading {
-      input {
-        background: url("../../../../../../assets/images/ajax_indicator_small.gif") center right no-repeat;
-        opacity: 0.5;
-        border-width: 0;
-      }
-
-      button {
-        visibility: hidden;
-      }
-    }
-
     button {
       .btn-base();
 
