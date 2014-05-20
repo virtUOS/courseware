@@ -46,17 +46,6 @@ define(['module', 'argjs'], function (module, Arg) {
             });
         },
 
-        putView: function (block_id, data) {
-
-            return jQuery.ajax({
-                url: this.block_url(block_id),
-                type: "PUT",
-                data: JSON.stringify(data),
-                contentType: "application/json",
-                dataType: "json"
-            });
-        },
-
         deleteView: function (block_id) {
             return jQuery.ajax({
                 url: this.block_url(block_id),
