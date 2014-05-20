@@ -1,5 +1,5 @@
-define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'assets/js/block_types', 'assets/js/i18n', './chapter_list',  './section_list', './edit_structure'],
-       function (helper, BlockModel, StudentView, blockTypes, i18n, ChapterListView, SectionListView, EditView) {
+define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'assets/js/block_types', 'assets/js/i18n', './chapter_list',  './section_list', './edit_structure'],
+       function (Backbone, helper, BlockModel, StudentView, blockTypes, i18n, ChapterListView, SectionListView, EditView) {
 
     'use strict';
 
@@ -101,15 +101,13 @@ define(['assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'ass
         switchToStudentMode: function (event) {
             this.$el.removeClass("view-author").addClass("view-student");
             clearHash(this.el);
-
-            if (this.activeSectionView) {
-                this.activeSectionView.trigger("switch", "student");
-            }
+            Backbone.trigger("modeswitch", "student");
         },
 
         switchToAuthorMode: function () {
             this.$el.removeClass("view-student").addClass("view-author");
             setHash(this.el, "author");
+            Backbone.trigger("modeswitch", "author");
         }
     });
 });

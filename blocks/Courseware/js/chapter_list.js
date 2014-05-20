@@ -23,7 +23,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         },
 
         initialize: function() {
-
+            this.listenTo(Backbone, "modeswitch", this.stopSorting, this);
         },
 
         render: function() {
@@ -224,10 +224,14 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             this.$el.addClass("sorting");
         },
 
-        stopSorting: function (event) {
+        stopSorting: function () {
+
+            if (!this._sortable) {
+                return;
+            }
 
             var positions = this._get_positions(),
-                parent_id = jQuery(event.target).closest("[data-blockid]").attr("data-blockid"),
+                parent_id = this._sortable.closest("[data-blockid]").attr("data-blockid"),
                 data;
 
             this._sortable.sortable("destroy");

@@ -1,5 +1,5 @@
-define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/i18n', 'assets/js/templates', './edit_view'],
-       function (StudentView, BlockModel, blockTypes, helper, i18n, templates, EditView) {
+define(['backbone', 'assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/i18n', 'assets/js/templates', './edit_view'],
+       function (Backbone, StudentView, BlockModel, blockTypes, helper, i18n, templates, EditView) {
 
     'use strict';
 
@@ -11,15 +11,15 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             "click .title .edit":     "editSection",
             "click .title .trash":    "destroySection",
 
-            // child block stuff
-
-            "click .block .author":   "switchToAuthorView",
-            "click .block .trash":    "destroyView",
-
             "click .add-block-type":  "addNewBlock",
 
             "click .init-sort-block": "initSorting",
-            "click .stop-sort-block": "stopSorting"
+            "click .stop-sort-block": "stopSorting",
+
+            // child block stuff
+
+            "click .block .author":   "switchToAuthorView",
+            "click .block .trash":    "destroyView"
         },
 
         initialize: function() {
@@ -27,8 +27,7 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
                 this.initializeBlock(element, undefined, "student");
             }, this);
 
-            this.listenTo(this, "switch", this.switchAll, this);
-
+            this.listenTo(Backbone, "modeswitch", this.switchMode, this);
         },
 
         remove: function() {
@@ -48,10 +47,15 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             });
         },
 
-        switchAll: function (view) {
-            _.each(this.children, function (child, child_id) {
-                this.switchView(child_id, view);
-            }, this);
+        switchMode: function (view) {
+            if (view === "student") {
+
+                _.each(this.children, function (child, child_id) {
+                    this.switchView(child_id, view);
+                }, this);
+
+                this.stopSorting();
+            }
         },
 
         switchToAuthorView: function (event) {
@@ -278,11 +282,16 @@ define(['assets/js/student_view', 'assets/js/block_model', 'assets/js/block_type
             this.$(".block-controls button").toggle();
         },
 
-        stopSorting: function (event) {
+        stopSorting: function () {
 
-            var positions = this._get_positions(),
-                courseware_id = jQuery("#courseware").attr("data-blockid"),
-                data;
+            var positions, courseware_id, data;
+
+            if (this._original_positions === null) {
+                return;
+            }
+
+            positions = this._get_positions();
+            courseware_id = jQuery("#courseware").attr("data-blockid"),
 
             this.$el.sortable("destroy").find(".block-controls button").toggle();
 

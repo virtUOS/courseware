@@ -16,6 +16,7 @@ define(['q', 'backbone', 'assets/js/templates'],
 
         initialize: function() {
             this.deferred = Q.defer();
+            this.listenTo(Backbone, "modeswitch", this.cancel, this);
             this.render();
         },
 
