@@ -10,8 +10,7 @@ class HtmlBlock extends Block
 
     function initialize()
     {
-        $this->defineField('content', \Mooc\SCOPE_BLOCK, "Hello World!");
-        // $this->content = new StringField(BLOCK_SCOPE, "Hello World!");
+        $this->defineField('content', \Mooc\SCOPE_BLOCK, '');
     }
 
     function student_view()
