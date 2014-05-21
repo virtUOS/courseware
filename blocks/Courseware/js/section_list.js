@@ -21,7 +21,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         postRender: function() {
             this.$el.tooltip({
                 items: "li.section",
-                content: function() { return _.escape(jQuery(this).find("a").attr("title")); },
+                content: function() { return _.escape(jQuery(this).find("a").attr("data-title")); },
                 show: false,
                 hide: false,
                 position: {
