@@ -1,5 +1,5 @@
-define(['q', 'backbone', 'assets/js/templates'],
-       function (Q, Backbone, templates) {
+define(['q', 'backbone', 'assets/js/templates', 'assets/js/i18n'],
+       function (Q, Backbone, templates, i18n) {
 
     'use strict';
 
@@ -21,9 +21,15 @@ define(['q', 'backbone', 'assets/js/templates'],
         },
 
         render: function () {
+            this.model.set("placeholder", i18n("Sichtbar ab"));
             var template = templates("Courseware", "edit_structure", this.model.toJSON());
+            _(this.addDatePicker).defer();
             this.$el.html(template);
             return this;
+        },
+
+        addDatePicker: function() {
+            $('input[type=date]').datepicker();
         },
 
         focus: function () {
