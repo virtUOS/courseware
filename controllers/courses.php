@@ -77,10 +77,10 @@ class CoursesController extends MoocipController {
         foreach ($localEntries as $entry) {
             if ($entry->structure->accessAllowed($GLOBALS['perm'])) {
                 if ($entry->getValue()) {
-                    if ($entry->getId() == md5('(M)OOC-Preview-Image')) {
-                        $this->preview_image = $entry->getValue();
-                    } else if ($entry->getId() == md5('(M)OOC-Preview-Video (mp4)')) {
-                        $this->preview_video = $entry->getValue();
+                    foreach ($this->container['datafields'] as $field => $id) {
+                        if ($entry->getId() == $id) {
+                            $this->$field = $entry->getValue();
+                        }
                     }
                 }
             }

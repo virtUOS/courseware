@@ -11,9 +11,11 @@
                         </tr>
                         <tr>
                             <td>
-                                <p style="margin-top:3em; margin-bottom:6em;">
-                                <em>TODO: Hier kommen noch weitere Infos zum Kurs hin...</em>
-                                </p>
+                                Start: <?= strftime('%x', strtotime($start)) ?><br>
+                                <br>
+                                Dauer: <?= $duration ?><br>
+                                <br>
+                                <?= formatReady($hint) ?>
                             </td>
                         </tr>
                     </tbody>
