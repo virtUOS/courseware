@@ -12,6 +12,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         },
 
         initialize: function() {
+            this.listenTo(Backbone, 'modeswitch', this.stopSorting, this);
         },
 
         render: function() {
@@ -90,6 +91,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             return helper.callHandler(this.model.id, 'add_structure', data);
         },
 
+        _sortable: null,
         _original_positions: null,
 
         _get_positions: function () {
@@ -97,7 +99,12 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         },
 
         initSorting: function (event) {
-            this.$el.sortable({
+            if (this._sortable) {
+                throw "Already sorting!";
+            }
+
+            this._sortable = this.$el;
+            this._sortable.sortable({
                 items:       ".section",
                 handle:      ".handle",
                 containment: "parent",
@@ -110,11 +117,15 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
         stopSorting: function (event) {
 
+            if (!this._sortable) {
+                return;
+            }
+
             var positions = this._get_positions(),
-                subchapter_id = this.$el.attr("data-blockid"),
+                subchapter_id = this._sortable.attr("data-blockid"),
                 data;
 
-            this.$el.sortable("destroy").find(".controls button").toggle();
+            this._sortable.sortable("destroy").find(".controls button").toggle();
 
             if (JSON.stringify(positions) !== JSON.stringify(this._original_positions)) {
                 data = {
@@ -125,6 +136,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 helper.callHandler(this.model.id, "update_positions", data);
             }
 
+            this._sortable = null;
             this._original_positions = null;
         }
     });
