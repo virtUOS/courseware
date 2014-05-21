@@ -32,11 +32,10 @@ class HtmlBlock(unittest.TestCase):
             except: pass
             time.sleep(1)
         else: self.fail("time out")
-        try: self.assertEqual("Hello World!", driver.find_element_by_css_selector("div.content p").text)
+        try: self.assertTrue(self.is_element_present(By.XPATH, "//section[@data-blocktype='HtmlBlock']"))
         except AssertionError as e: self.verificationErrors.append(str(e))
         driver.find_element_by_css_selector("div.controls.editable > button.trash").click()
         self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Wollen Sie wirklich löschen[\s\S]$")
-        
         
     
     def is_element_present(self, how, what):

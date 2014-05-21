@@ -27,19 +27,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css=div.controls.editable &gt; button.author</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>name=content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>name=content</td>
-	<td>3</td>
+	<td>select</td>
+	<td>name=test_id</td>
+	<td>label=Test 1 (1 Fragen)</td>
 </tr>
 <tr>
 	<td>click</td>
