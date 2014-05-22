@@ -1,16 +1,5 @@
 @import '../../../assets/mixins';
 
-.btn-base, .active-section section.block div.controls button.author, .active-section section.block div.controls button.trash {
-  width: 20px;
-  height: 20px;
-  color: transparent;
-  border: none;
-}
-
-.btn-base:hover, .active-section section.block div.controls button.author:hover, .active-section section.block div.controls button.trash:hover {
-                                                                                   cursor: pointer;
-                                                                                 }
-
 .active-section > .title {
   position: absolute;
   top: 0;
@@ -28,13 +17,8 @@
     padding-left: 20px;
   }
 
-
-  button.edit {
-    .btn(edit);
-  }
-  button.trash {
-    .btn(trash);
-  }
+  button.edit  { .btn(edit); }
+  button.trash { .btn(trash); }
 }
 
 .active-section section.block {
@@ -65,12 +49,23 @@
   right: 0;
 }
 
-.active-section section.block div.controls button.author {
-  background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
+.active-section section.block div.controls {
+
+  button {
+    .btn-base();
+    background-color: transparent;
+  }
+
+  button.raise  { .bgImg(arr_2up, grey); }
+  button.lower  { .bgImg(arr_2down, grey); }
+  button.author { .bgImg(edit, grey); }
+  button.trash  { .bgImg(trash, grey); }
 }
 
-.active-section section.block div.controls button.trash {
-  background: url("../../../../../../assets/images/icons/16/grey/trash.png") center center no-repeat;
+.active-section .not-editable               button.author,
+.active-section section.block:first-of-type button.raise,
+.active-section section.block:last-of-type  button.lower {
+  visibility: hidden;
 }
 
 .active-section section.block + .no-content {
@@ -150,9 +145,5 @@ button.add-block-type {
     div.controls, .block-adder, button.init-sort-block {
       display: none;
     }
-  }
-
-  .active-section div.controls.not-editable button.author {
-    display: none;
   }
 }

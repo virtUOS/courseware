@@ -30,10 +30,12 @@
 
    paths: {
      domReady: "assets/js/domReady",
+     jquery:   "assets/js/jquery_mockup",
      backbone: "assets/js/vendor/backbone/backbone-min",
      argjs:    "assets/js/vendor/arg.js/arg.js.v1.1",
      mustache: "assets/js/vendor/mustache.js-0.8.1/mustache",
      q:        "assets/js/vendor/q.v1/q.min",
+     scrollTo: "assets/js/vendor/jquery.scrollTo/jquery.scrollTo.min",
      utils:    "assets/js/utils"
    },
 
@@ -43,12 +45,15 @@
      },
      argjs: {
        exports: 'Arg',
+     },
+     scrollTo: {
+       deps: ['jquery']
      }
    },
 
-   deps: ['domReady!', 'backbone', 'assets/js/block_loader!', 'assets/js/block_types', 'assets/js/block_model'],
+   deps: ['domReady!', 'scrollTo', 'backbone', 'assets/js/block_loader!', 'assets/js/block_types', 'assets/js/block_model'],
 
-   callback: function(domReady, Backbone, block_loader, blocks, BlockModel) {
+   callback: function(domReady, scrollTo, Backbone, block_loader, blocks, BlockModel) {
 
      Backbone.history.start({
        push_state: true,

@@ -7,19 +7,6 @@
 .btn-base:hover {
   cursor: pointer;
 }
-.btn-base,
-.active-section section.block div.controls button.author,
-.active-section section.block div.controls button.trash {
-  width: 20px;
-  height: 20px;
-  color: transparent;
-  border: none;
-}
-.btn-base:hover,
-.active-section section.block div.controls button.author:hover,
-.active-section section.block div.controls button.trash:hover {
-  cursor: pointer;
-}
 .active-section > .title {
   position: absolute;
   top: 0;
@@ -85,11 +72,40 @@
   top: 0;
   right: 0;
 }
+.active-section section.block div.controls button {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+  background-color: transparent;
+}
+.active-section section.block div.controls button:hover {
+  cursor: pointer;
+}
+.active-section section.block div.controls button.raise {
+  background-image: url("../../../../../../assets/images/icons/16/grey/arr_2up.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.active-section section.block div.controls button.lower {
+  background-image: url("../../../../../../assets/images/icons/16/grey/arr_2down.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 .active-section section.block div.controls button.author {
-  background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
+  background-image: url("../../../../../../assets/images/icons/16/grey/edit.png");
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 .active-section section.block div.controls button.trash {
-  background: url("../../../../../../assets/images/icons/16/grey/trash.png") center center no-repeat;
+  background-image: url("../../../../../../assets/images/icons/16/grey/trash.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.active-section .not-editable               button.author,
+.active-section section.block:first-of-type button.raise,
+.active-section section.block:last-of-type  button.lower {
+  visibility: hidden;
 }
 .active-section section.block + .no-content {
   display: none;
@@ -180,8 +196,5 @@ button.add-block-type {
 #courseware.view-student .active-section div.controls,
 #courseware.view-student .active-section .block-adder,
 #courseware.view-student .active-section button.init-sort-block {
-  display: none;
-}
-#courseware .active-section div.controls.not-editable button.author {
   display: none;
 }

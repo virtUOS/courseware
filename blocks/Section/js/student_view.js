@@ -1,7 +1,30 @@
-define(['backbone', 'assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/i18n', 'assets/js/templates', './edit_view'],
-       function (Backbone, StudentView, BlockModel, blockTypes, helper, i18n, templates, EditView) {
+define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/i18n', 'assets/js/templates', './edit_view'],
+       function (Backbone, Q, StudentView, BlockModel, blockTypes, helper, i18n, templates, EditView) {
 
     'use strict';
+
+    function findBlockForEvent(event) {
+        return jQuery(event.target).closest(".block");
+    }
+
+    function findBlockIDForEvent(event) {
+        return parseInt(findBlockForEvent(event).attr("data-blockid"), 10);
+    }
+
+    function getBlockPositions($el) {
+        return $el.find(".block").map(function (i, el) {
+            return parseInt(jQuery(el).attr("data-blockid"), 10);
+        }).toArray();
+    }
+
+
+    function swapPositions(ary, start_index) {
+        var result = ary.slice(0);
+        if (0 <= start_index && start_index <= result.length - 2) {
+            result.splice(start_index, 2, result[start_index + 1], result[start_index]);
+        }
+        return result;
+    }
 
     return StudentView.extend({
 
@@ -17,6 +40,9 @@ define(['backbone', 'assets/js/student_view', 'assets/js/block_model', 'assets/j
             "click .stop-sort-block": "stopSorting",
 
             // child block stuff
+
+            "click .block .lower":    "lowerBlock",
+            "click .block .raise":    "raiseBlock",
 
             "click .block .author":   "switchToAuthorView",
             "click .block .trash":    "destroyView"
@@ -59,12 +85,12 @@ define(['backbone', 'assets/js/student_view', 'assets/js/block_model', 'assets/j
         },
 
         switchToAuthorView: function (event) {
-            var id = jQuery(event.target).closest(".block").attr("data-blockid");
+            var id = findBlockIDForEvent(event);
             this.switchView(id, "author");
         },
 
         destroyView: function (event) {
-            var block_id = jQuery(event.target).closest(".block").attr("data-blockid"),
+            var block_id = findBlockIDForEvent(event),
                 block_view = this.children[block_id],
                 $block_wrapper = block_view.$el.closest('section.block'),
                 self = this;
@@ -256,6 +282,80 @@ define(['backbone', 'assets/js/student_view', 'assets/js/block_model', 'assets/j
                         });
 
             }
+        },
+
+        lowerBlock: function (event) {
+            var protagonist = findBlockForEvent(event),
+                antagonist = protagonist.next(".block"),
+                self = this;
+
+            // cannot lower last block
+            if (!antagonist.length) {
+                return;
+            }
+
+            var scrollTo = function (to, opts) {
+                var deferred = Q.defer();
+                $.scrollTo(to, _.extend(opts, { onAfter: function () { deferred.resolve("ok"); } }));
+                return deferred.promise;
+            };
+
+            Q($.when(protagonist.effect("blind", { direction: "up" })))
+
+                // blind up completed
+                .then(function () {
+                    return scrollTo(antagonist, { duration: 200, over: 1 });
+                })
+                .done(function () {
+                    antagonist.after(protagonist);
+                    protagonist.toggle("blind");
+
+
+                    var new_positions = getBlockPositions(self.$el),
+                        courseware_id = jQuery("#courseware").attr("data-blockid"),
+                        data = {
+                            parent:    self.model.id,
+                            positions: new_positions
+                        };
+                    helper.callHandler(courseware_id, "update_positions", data);
+                });
+        },
+
+        raiseBlock: function (event) {
+            var protagonist = findBlockForEvent(event),
+                antagonist = protagonist.prev(".block"),
+                self = this;
+
+            // cannot lower last block
+            if (!antagonist.length) {
+                return;
+            }
+
+            var scrollTo = function (to, opts) {
+                var deferred = Q.defer();
+                $.scrollTo(to, _.extend(opts, { onAfter: function () { deferred.resolve("ok"); } }));
+                return deferred.promise;
+            };
+
+            Q($.when(protagonist.effect("blind", { direction: "up" })))
+
+                // blind up completed
+                .then(function () {
+                    return scrollTo(antagonist, { duration: 200, offset: -50 });
+                })
+                .done(function () {
+                    antagonist.before(protagonist);
+                    protagonist.toggle("blind");
+
+
+                    var new_positions = getBlockPositions(self.$el),
+                        courseware_id = jQuery("#courseware").attr("data-blockid"),
+                        data = {
+                            parent:    self.model.id,
+                            positions: new_positions
+                        };
+                    helper.callHandler(courseware_id, "update_positions", data);
+                });
         },
 
         _original_positions: null,
