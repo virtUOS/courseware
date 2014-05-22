@@ -330,7 +330,7 @@ section#courseware.view-student .controls {
 section#courseware.loading {
   opacity: 0.5;
 }
-section#courseware.loading h1 {
+section#courseware.loading .title > h1 {
   background: url(../../../../../../assets/images/ajax_indicator_small.gif) left center no-repeat;
   padding-left: 20px;
 }
