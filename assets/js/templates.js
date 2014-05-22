@@ -5,7 +5,11 @@ define(['module', 'mustache', './url'], function (module, Mustache, url_helper) 
     var TEMPLATES = module.config().templates || {};
 
     var helpers = {
-        i18n: _.identity,
+        i18n: function () {
+            return function(text, render) {
+                return render(text);
+            };
+        },
         plugin_url: function () {
             return function (text, render) {
                 return url_helper.plugin_url(render(text));
