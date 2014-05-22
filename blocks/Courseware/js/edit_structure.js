@@ -21,18 +21,15 @@ define(['q', 'backbone', 'assets/js/templates', 'assets/js/i18n'],
         },
 
         render: function () {
-            this.model.set("placeholder", i18n("Sichtbar ab"));
             var template = templates("Courseware", "edit_structure", this.model.toJSON());
-            _(this.addDatePicker).defer();
             this.$el.html(template);
             return this;
         },
-
-        addDatePicker: function() {
-            $('input[type=date]').datepicker();
-        },
-
-        focus: function () {
+        
+        postRender: function () {
+            if (typeof Modernizr === 'undefined' || !Modernizr.inputtypes.date) {
+                $('input[type=date]').datepicker();
+            }
             this.$("input").get(0).focus();
         },
 
