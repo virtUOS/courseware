@@ -12,15 +12,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         },
 
         initialize: function() {
-            var self = this;
-            this.listenTo(Backbone, 'modeswitch', function (view) {
-                if (view == 'student') {
-                    self.stopSorting();
-                    self.$('.controls').hide();
-                } else if (view == 'author') {
-                    self.$('.controls').show();
-                }
-            }, this);
+            this.listenTo(Backbone, 'modeswitch', this.stopSorting, this);
         },
 
         render: function() {
@@ -126,7 +118,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             });
 
             this._original_positions = this._get_positions();
-            this.$(".controls button").toggle();
+            this.$el.addClass("sorting");
         },
 
         stopSorting: function (event) {
@@ -139,7 +131,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 subchapter_id = this._sortable.attr("data-blockid"),
                 data;
 
-            this._sortable.sortable("destroy").find(".controls button").toggle();
+            this._sortable.sortable("destroy");
 
             if (JSON.stringify(positions) !== JSON.stringify(this._original_positions)) {
                 data = {
@@ -152,6 +144,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
             this._sortable = null;
             this._original_positions = null;
+            this.$el.removeClass("sorting");
         }
     });
 });

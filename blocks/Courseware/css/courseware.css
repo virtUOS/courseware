@@ -525,3 +525,9 @@ section#courseware .chapters.sorting .subchapters.ui-sortable .subchapter > .tit
 section#courseware .chapters.sorting .subchapters.ui-sortable .stop-sort-subchapter {
   display: inline-block;
 }
+section#courseware .active-subchapter.sorting > .controls button:not(.stop-sort-section) {
+  display: none;
+}
+section#courseware .active-subchapter.sorting > .controls button.stop-sort-section {
+  display: inline-block;
+}

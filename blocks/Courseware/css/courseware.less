@@ -493,4 +493,21 @@ section#courseware {
       }
     }
   }
+
+  // sorting sections' icons
+  .active-subchapter.sorting {
+
+    & > .controls {
+
+      // hide all controls
+      button:not(.stop-sort-section) {
+        display: none;
+      }
+
+      // but not the stop sorting button
+      button.stop-sort-section {
+        display: inline-block;
+      }
+    }
+  }
 }
