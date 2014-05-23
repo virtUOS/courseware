@@ -7,10 +7,6 @@
 .btn-base:hover {
   cursor: pointer;
 }
-
-h1, h2, h3, h4, h5, h6 {
-	padding-bottom: 6px;
-}
 .ui-tooltip,
 .arrow:after {
   background: #f9f9f9;
@@ -53,6 +49,14 @@ h1, h2, h3, h4, h5, h6 {
 .arrow.top:after {
   bottom: -20px;
   top: auto;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding-bottom: 6px;
 }
 button::-moz-focus-inner,
 input::-moz-focus-inner {
@@ -405,11 +409,11 @@ section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active
   background-repeat: no-repeat;
   min-height: 27px;
   padding: 5px 6px 5px 28px;
-  margin: 4px 0px 0px;
+  margin: 0px;
   cursor: pointer;
   font-size: 12px;
   border-radius: 3px;
-  margin: 5px 0px 0x 0px;
+  margin: 4px 0px 0px;
   width: 90%;
   text-align: left;
 }
@@ -434,10 +438,11 @@ section#courseware button.button {
   background-repeat: no-repeat;
   min-height: 27px;
   padding: 5px 6px 5px 28px;
-  margin: 4px 0px 0px;
+  margin: 0px;
   cursor: pointer;
   font-size: 12px;
   border-radius: 3px;
+  margin: 4px 0 px 0px;
   background-image: none;
   padding-left: 6px;
   min-width: 80px;
@@ -491,11 +496,9 @@ section#courseware .edit-structure button:hover {
 }
 section#courseware .edit-structure button.cancel {
   background: url("../../../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
-  /*right: 60px;*/
 }
 section#courseware .edit-structure button.ok {
   background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
-  /*right: 40px;*/
   margin-left: 20px;
 }
 section#courseware .chapters .handle {
