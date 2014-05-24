@@ -1,8 +1,8 @@
-define(['assets/js/block_type', './student_view'], function (BlockType, StudentView) {
+define(['assets/js/block_types', './student_view'], function (block_types, StudentView) {
 
     'use strict';
 
-    return new BlockType({
+    return block_types.add({
         name: 'Courseware',
         views: {
             student: StudentView

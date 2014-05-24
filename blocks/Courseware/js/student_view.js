@@ -1,5 +1,5 @@
-define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'assets/js/block_types', 'assets/js/i18n', './chapter_list',  './section_list', './edit_structure'],
-       function (Backbone, helper, BlockModel, StudentView, blockTypes, i18n, ChapterListView, SectionListView, EditView) {
+define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'assets/js/block_types', './chapter_list',  './section_list', './edit_structure'],
+       function (Backbone, helper, BlockModel, StudentView, block_types, ChapterListView, SectionListView, EditView) {
 
     'use strict';
 
@@ -49,8 +49,8 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
                     title:     $section.attr("data-title")
                 });
 
-            this.activeSectionView = blockTypes
-                .get("Section")
+            this.activeSectionView = block_types
+                .findByName("Section")
                 .createView("student", { el: $section[0], model: section_model });
 
             this.chaptersView = new ChapterListView({ el: '.chapters', model: this.model });

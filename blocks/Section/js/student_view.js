@@ -1,5 +1,5 @@
 define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/i18n', 'assets/js/templates', './edit_view'],
-       function (Backbone, Q, StudentView, BlockModel, blockTypes, helper, i18n, templates, EditView) {
+       function (Backbone, Q, StudentView, BlockModel, block_types, helper, i18n, templates, EditView) {
 
     'use strict';
 
@@ -138,8 +138,8 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
             var el = jQuery("<div class='block-content'/>");
             $block_wrapper.append(el).addClass("loading");
 
-            var view = blockTypes
-                    .get(model.get('type'))
+            var view = block_types
+                    .findByName(model.get('type'))
                     .createView(view_name, {
                         el: el,
                         model: model
@@ -209,8 +209,8 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                 });
             }
 
-            view = blockTypes
-                .get(model.get('type'))
+            view = block_types
+                .findByName(model.get('type'))
                 .createView(view_name, {el: $el, model: model});
 
             return this.addBlock(view);

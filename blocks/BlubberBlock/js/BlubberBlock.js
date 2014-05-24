@@ -1,7 +1,8 @@
-define(['assets/js/block_type', './student_view', './author_view'], function (BlockType, StudentView, AuthorView) {
+define(['assets/js/block_types', './student_view', './author_view'], function (block_types, StudentView, AuthorView) {
+
     'use strict';
 
-    return new BlockType({
+    return block_types.add({
         name: 'BlubberBlock',
 
         content_block: true,
