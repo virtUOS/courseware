@@ -33,7 +33,7 @@
 
    paths: {
      domReady: "assets/js/domReady",
-     jquery:   "assets/js/jquery_mockup",
+     jquery:   "assets/js/jquery_compat",
      backbone: "assets/js/vendor/backbone/backbone-min",
      argjs:    "assets/js/vendor/arg.js/arg.js.v1.1",
      mustache: "assets/js/vendor/mustache.js-0.8.1/mustache",
