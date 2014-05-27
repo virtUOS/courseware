@@ -36,9 +36,6 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
             "click .add-block-type":  "addNewBlock",
 
-            "click .init-sort-block": "initSorting",
-            "click .stop-sort-block": "stopSorting",
-
             // child block stuff
 
             "click .block .lower":    "lowerBlock",
@@ -75,12 +72,9 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
         switchMode: function (view) {
             if (view === "student") {
-
                 _.each(this.children, function (child, child_id) {
                     this.switchView(child_id, view);
                 }, this);
-
-                this.stopSorting();
             }
         },
 
@@ -356,48 +350,6 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                         };
                     helper.callHandler(courseware_id, "update_positions", data);
                 });
-        },
-
-        _original_positions: null,
-
-        _get_positions: function () {
-            return this.$el.sortable("toArray", { attribute: "data-blockid" });
-        },
-
-        initSorting: function (event) {
-            this.$el.sortable({
-                items:    "section.block",
-                axis:     "y",
-                distance: 5
-            });
-
-            this._original_positions = this._get_positions();
-            this.$(".block-controls button").toggle();
-        },
-
-        stopSorting: function () {
-
-            var positions, courseware_id, data;
-
-            if (this._original_positions === null) {
-                return;
-            }
-
-            positions = this._get_positions();
-            courseware_id = jQuery("#courseware").attr("data-blockid"),
-
-            this.$el.sortable("destroy").find(".block-controls button").toggle();
-
-            if (JSON.stringify(positions) !== JSON.stringify(this._original_positions)) {
-                data = {
-                    parent:    this.model.id,
-                    positions: positions
-                };
-
-                helper.callHandler(courseware_id, "update_positions", data);
-            }
-
-            this._original_positions = null;
         }
     });
 });

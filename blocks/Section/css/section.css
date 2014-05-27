@@ -144,22 +144,6 @@
   background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
   right: 0;
 }
-.active-section > .block-controls > button {
-  color: #000;
-  border: 1px solid #bbb;
-  background-color: #e9e9e9;
-  background-repeat: no-repeat;
-  min-height: 27px;
-  padding: 5px 6px 5px 28px;
-  margin: 0px;
-  cursor: pointer;
-  font-size: 12px;
-  border-radius: 3px;
-}
-.active-section > .block-controls > button:hover {
-  background-color: #F8F8F8;
-  border-color: #cccccc;
-}
 .block-adder button {
   color: #000;
   border: 1px solid #bbb;
