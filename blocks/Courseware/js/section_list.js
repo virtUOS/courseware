@@ -55,7 +55,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
             $controls.hide();
             insert_point.before(li_wrapper);
-            view.focus();
+            view.postRender();
 
             view.promise()
                 .fin(function () {
