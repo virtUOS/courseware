@@ -34,12 +34,14 @@ define(['module', 'argjs'], function (module, Arg) {
             if (hash[0] === "#") {
                 hash = hash.substr(1);
             }
-
-            var oldLocation = document.location;
+            var oldLocation = document.location.pathname + document.location.search + document.location.hash;
             var newLocation = Arg.url(Arg.url(), params, hash);
-            document.location = newLocation;
 
-            return oldLocation.pathname + oldLocation.search + oldLocation.hash != newLocation;
+            if (oldLocation !== newLocation) {
+                document.location = newLocation;
+            } else {
+                this.reload();
+            }
         },
 
 
