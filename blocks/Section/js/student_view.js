@@ -364,14 +364,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
             return this.$el.sortable("toArray", { attribute: "data-blockid" });
         },
 
-        _hack_metadata: null,
-
         initSorting: function (event) {
-
-            // HACK: does not work without ;_;
-            this._hack_metadata = jQuery.metadata;
-            jQuery.metadata = null;
-
             this.$el.sortable({
                 items:    "section.block",
                 axis:     "y",
@@ -394,9 +387,6 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
             courseware_id = jQuery("#courseware").attr("data-blockid"),
 
             this.$el.sortable("destroy").find(".block-controls button").toggle();
-
-            // HACK: does not work without ;_;
-            jQuery.metadata = this._hack_metadata;
 
             if (JSON.stringify(positions) !== JSON.stringify(this._original_positions)) {
                 data = {
