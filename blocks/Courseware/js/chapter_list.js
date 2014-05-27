@@ -201,20 +201,21 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
         initSorting: function (event) {
             var element = jQuery(event.target).closest("[data-blockid]"),
-                model = this._modelFromElement(element);
+                model = this._modelFromElement(element),
+                child_types = { Courseware: "chapter", Chapter: "subchapter" };
 
             if (this._sortable) {
                 throw "Already sorting!";
             }
 
-            if (model.get("type") === "chapter") {
+            if (model.get("type") === "Courseware") {
                 this._sortable = this.$el;
             } else {
                 this._sortable = this.$(".subchapters");
             }
 
             this._sortable.sortable({
-                items:    "." + model.get("type").toLowerCase(),
+                items:    "." + child_types[model.get("type")],
                 handle:   ".handle",
                 axis:     "y",
                 distance: 5,
