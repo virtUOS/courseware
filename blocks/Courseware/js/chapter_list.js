@@ -167,27 +167,28 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
         destroyStructure: function (event) {
 
-            var courseware = this,
-                $button = jQuery(event.target),
-                $parent = $button.closest("[data-blockid]"),
-                id = $parent.attr("data-blockid");
+            var $parent = jQuery(event.target).closest("[data-blockid]"),
+                model = this._modelFromElement($parent);
 
-            if (id == null) {
+            if (model.isNew()) {
                 return;
             }
 
             if (confirm(i18n("Wollen Sie wirklich löschen?"))) {
+
                 $parent.addClass("loading");
 
-                helper
-                    .deleteView(id)
-                    .then(
+                model.destroy()
+                    .done(
                         function () {
-                            helper.reload();
+                            if ($parent.hasClass("selected")) {
+                                helper.reload();
+                            } else {
+                                $parent.remove();
+                            }
                         },
                         function (error) {
-                            console.log(arguments);
-                            alert("ERROR:" + error);
+                            alert("Fehler: "  + JSON.stringify(error));
                         });
             }
         },
