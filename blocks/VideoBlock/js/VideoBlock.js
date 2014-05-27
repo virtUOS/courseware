@@ -3,7 +3,7 @@ define(['assets/js/block_types', './student_view', './author_view'], function (b
     'use strict';
 
     return block_types.add({
-        name: 'VideoBlock)',
+        name: 'VideoBlock',
 
         content_block: true,
 
