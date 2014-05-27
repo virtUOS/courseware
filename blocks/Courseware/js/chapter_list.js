@@ -108,25 +108,27 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
         editStructure: function (event) {
             var $parent = jQuery(event.target).closest("[data-blockid]"),
-                id = $parent.attr("data-blockid"),
-                type = this._getType($parent);
+                model = this._modelFromElement($parent),
+                $title, title, orig_model, view, updateListItem;
 
-            if (id == null) {
+            if (model.isNew()) {
                 return;
             }
 
-            if (!type) {
+            if (!model.get("type")) {
                 throw "ERROR";
             }
 
-            var $title = $parent.find("> .title"),
-                title = $title.find("a").text().trim(),
-                model = new BlockModel({ id: id, type: type, title: title }),
-                orig_model = model.clone(),
-                view = new EditView({ model: model }),
-                updateListItem = function (model) {
-                    $title.find("a").text(model.get('title'));
-                };
+            $title = $parent.find("> .title");
+            title = $title.find("a").text().trim();
+
+            model.set("title", title);
+            orig_model = model.clone();
+
+            view = new EditView({ model: model });
+            updateListItem = function (model) {
+                $title.find("a").text(model.get('title'));
+            };
 
             $title.hide().before(view.el);
             view.postRender();
@@ -156,9 +158,11 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                     });
         },
 
-        _getType: function (element) {
-            return element.is("#courseware") ? "courseware"
-                : _.find([, "chapter", "subchapter"], function (type) { return element.hasClass(type); });
+        _modelFromElement: function (element) {
+            return new BlockModel({
+                id: element.attr("data-blockid"),
+                type: element.attr("data-type")
+            });
         },
 
         destroyStructure: function (event) {
@@ -196,21 +200,21 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         },
 
         initSorting: function (event) {
-            var child_types = { courseware: "chapter", chapter: "subchapter" },
-                child_type = child_types[this._getType(jQuery(event.target).closest("[data-blockid]"))];
+            var element = jQuery(event.target).closest("[data-blockid]"),
+                model = this._modelFromElement(element);
 
             if (this._sortable) {
                 throw "Already sorting!";
             }
 
-            if (child_type === "chapter") {
+            if (model.get("type") === "chapter") {
                 this._sortable = this.$el;
             } else {
                 this._sortable = this.$(".subchapters");
             }
 
             this._sortable.sortable({
-                items:    "." + child_type,
+                items:    "." + model.get("type").toLowerCase(),
                 handle:   ".handle",
                 axis:     "y",
                 distance: 5,

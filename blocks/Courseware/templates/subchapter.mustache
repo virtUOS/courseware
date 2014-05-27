@@ -1,5 +1,6 @@
 <li class="subchapter{{#selected}} selected{{/selected}}"
-    data-blockid={{id}}>
+  data-blockid={{id}}
+  data-type=Subchapter>
 
   <div class=title>
     <span class=handle>#</span>
@@ -15,7 +16,9 @@
   </div>
 
   {{#selected}}
-    <ol class=active-subchapter data-blockid={{active_subchapter.id}}>
+    <ol class=active-subchapter
+      data-blockid={{active_subchapter.id}}
+      data-type=Subchapter>
 
       {{#sections}}
         {{> section}}
