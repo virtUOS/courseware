@@ -93,9 +93,7 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
             var $parent = jQuery(event.target).closest("[data-blockid]"),
                 id = $parent.attr("data-blockid");
 
-            if (!helper.navigateTo(id)) {
-                this.$el.removeClass("loading");
-            }
+            helper.navigateTo(id);
         },
 
         switchToStudentMode: function (event) {
