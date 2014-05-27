@@ -107,7 +107,7 @@ class BlocksController extends MoocipController {
     function delete($id)
     {
         // JSON requests only
-        if (!$this->isJSONRequest()) {
+        if (!$this->acceptsJSON()) {
             $this->json_error('Only JSON requests accepted.');
             return;
         }
