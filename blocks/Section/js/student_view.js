@@ -264,15 +264,13 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
                 var parent_id = this.model.get("parent_id");
 
-                helper
-                    .deleteView(this.model.id)
-                    .then(
+                this.model.destroy()
+                    .done(
                         function () {
                             helper.navigateTo(parent_id);
                         },
                         function (error) {
-                            console.log(arguments);
-                            alert("ERROR:" + error);
+                            alert("Fehler: "  + JSON.stringify(error));
                         });
 
             }
