@@ -1,4 +1,4 @@
-define(['backbone', './url'], function (Backbone, url) {
+define(['q', 'backbone', './url'], function (Q, Backbone, url) {
 
     'use strict';
 
@@ -12,6 +12,14 @@ define(['backbone', './url'], function (Backbone, url) {
                 this.set(this.previousAttributes(), {silent : true});
             }
             return this;
+        },
+
+        sync: function() {
+            var result = Backbone.sync.apply(this, arguments);
+            if (Q.isPromiseAlike(result)) {
+                return Q(result);
+            }
+            return result;
         }
     });
 
