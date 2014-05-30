@@ -12,6 +12,12 @@
   top: 0;
 }
 .active-section > .title h1 {
+  font-weight: 700;
+  line-height: 1.1;
+  color: #444444;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 36px;
   border-bottom: none;
 }
 .active-section > .title h1 .controls button.edit {
