@@ -9,25 +9,15 @@ class CoursewareController extends MoocipController {
 
     public function index_action()
     {
-        Navigation::activateItem("/course/mooc_courseware");
+        Navigation::activateItem("/course/mooc_courseware/index");
 
         $this->view = $this->getViewParam();
 
         // setup `context` parameter
         $this->context = clone Request::getInstance();
 
-        $cid = $this->container['cid'];
-        $this->courseware = $this->container['courseware_factory']->makeCourseware($cid);
-        $this->courseware_block = $this->container['block_factory']->makeBlock($this->courseware);
-
-        // TODO: verify section is in courseware & we have access to it
-        // TODO: Section::find finds any block not only Sections. Ouch!
-
-        // TODO
-        $this->section = current(
-            \Mooc\DB\Block::findBySQL(
-                'seminar_id = ? AND type = "Section" ORDER BY parent_id, position',
-                array($cid)));
+        $courseware = $this->container['courseware_factory']->makeCourseware($this->container['cid']);
+        $this->courseware_block = $this->container['block_factory']->makeBlock($courseware);
 
         // add Templates
         $this->templates = $this->getMustacheTemplates();
