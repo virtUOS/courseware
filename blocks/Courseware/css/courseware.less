@@ -1,9 +1,6 @@
+@import '../../../assets/variables';
 @import '../../../assets/mixins';
 @import './_tooltip';
-
-h1, h2, h3, h4, h5, h6 {
-  padding-bottom: 6px;
-}
 
 button::-moz-focus-inner,
 input::-moz-focus-inner {
@@ -19,11 +16,11 @@ section#courseware {
   /* CSS for the Courseware controls */
 
   position:relative;
-  padding-top: 4em;
 
   nav.breadcrumb {
     position: absolute;
-    bottom: 100%;
+    top: 0px;
+    left: @sidebar-width + 5%;
 
     ul {
       padding: 0;
@@ -60,7 +57,7 @@ section#courseware {
     margin: 0;
     padding-right: 4%;
     padding-left: 1%;
-    width: 18%;
+    width: @sidebar-width;
 
     .chapter > .title {
       background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
@@ -167,8 +164,8 @@ section#courseware {
   ol.active-subchapter {
 
     position: absolute;
-    top: 4em;
-    left: 23%;
+    top: 6em;
+    left: @sidebar-width + 5%;
     right: 12px;
     padding: 0px 0px 10px 0px;
     border-bottom: 1px solid #eee;
@@ -252,7 +249,7 @@ section#courseware {
 
   section.active-section {
     float: left;
-    margin-top: 70px;
+    margin-top: 10em;
     width: 76%;
   }
 

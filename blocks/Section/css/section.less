@@ -1,24 +1,28 @@
+@import '../../../assets/variables';
 @import '../../../assets/mixins';
 
 .active-section > .title {
   position: absolute;
   top: 0;
-  left: 0;
-  right: 120px;
 
   h1 {
-    display: inline-block;
+
+    // move this to the OHN-Layout
     border-bottom: none;
-    vertical-align: top;
+
+    .controls {
+
+      button {
+        &.edit  { .btn(edit); }
+        &.trash { .btn(trash); }
+      }
+    }
   }
 
   &.loading h1 {
     background: url("../../../../../../assets/images/ajax_indicator_small.gif") center left no-repeat;
     padding-left: 20px;
   }
-
-  button.edit  { .btn(edit); }
-  button.trash { .btn(trash); }
 }
 
 .active-section section.block {

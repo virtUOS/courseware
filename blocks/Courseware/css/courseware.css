@@ -50,14 +50,6 @@
   bottom: -20px;
   top: auto;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  padding-bottom: 6px;
-}
 button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
@@ -68,11 +60,11 @@ input::-moz-focus-inner {
 }
 section#courseware {
   position: relative;
-  padding-top: 4em;
 }
 section#courseware nav.breadcrumb {
   position: absolute;
-  bottom: 100%;
+  top: 0px;
+  left: 23%;
 }
 section#courseware nav.breadcrumb ul {
   padding: 0;
@@ -209,7 +201,7 @@ section#courseware ol.subchapters .subchapter.loading > .title {
 }
 section#courseware ol.active-subchapter {
   position: absolute;
-  top: 4em;
+  top: 6em;
   left: 23%;
   right: 12px;
   padding: 0px 0px 10px 0px;
@@ -317,7 +309,7 @@ section#courseware ol.active-subchapter.ui-sortable li > a .handle {
 }
 section#courseware section.active-section {
   float: left;
-  margin-top: 70px;
+  margin-top: 10em;
   width: 76%;
 }
 section#courseware:not(.user-may-author) .mode-switch,
