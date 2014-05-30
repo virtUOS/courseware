@@ -190,8 +190,15 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $url = PluginEngine::getURL($this, compact('cid'), 'courseware', true);
 
         $navigation = new Navigation('Courseware', $url);
-        $navigation->setImage(Assets::image_path('icons/16/white/category.png'));
-        $navigation->setActiveImage(Assets::image_path('icons/16/black/category.png'));
+        $navigation->addSubnavigation('index', clone $navigation);
+
+        // TODO: should only be shown to students
+        if (TRUE) {
+            $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
+            $progress_subnav = new Navigation(_('Fortschrittsübersicht'), $progress_url);
+            $navigation->addSubnavigation("progress", $progress_subnav);
+        }
+
         return $navigation;
     }
 

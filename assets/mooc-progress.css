@@ -1,0 +1,106 @@
+#mooc-progress-index #layout_container h1 {
+  border: none;
+  padding-left: 0;
+}
+#mooc-progress-index #layout_container table.chapters {
+  width: 100%;
+  border-collapse: collapse;
+}
+#mooc-progress-index #layout_container table.chapters tr > * {
+  padding: 0.5em;
+}
+#mooc-progress-index #layout_container table.chapters tr:nth-child(even) {
+  background: #eee;
+}
+#mooc-progress-index #layout_container table.chapters tr + tr {
+  border-top: 1px solid #ddd;
+}
+#mooc-progress-index #layout_container .chapter th,
+#mooc-progress-index #layout_container .subchapter th {
+  text-align: left;
+  font-weight: 700;
+  line-height: 1.1;
+  padding-top: 1.1em;
+  padding-bottom: 0.55em;
+  color: #444;
+}
+#mooc-progress-index #layout_container .chapter th {
+  font-size: 1.7em;
+}
+#mooc-progress-index #layout_container .subchapter th {
+  font-size: 1.4em;
+  white-space: nowrap;
+  width: 10%;
+}
+#mooc-progress-index #layout_container ol.sections {
+  list-style: none;
+  padding: 5px;
+  margin: 0;
+}
+#mooc-progress-index #layout_container ol.sections li progress {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  width: 100%;
+  height: 20px;
+  color: blue;
+  font-size: .6em;
+  line-height: 1.5em;
+}
+#mooc-progress-index #layout_container ol.sections li a {
+  box-sizing: border-box;
+  padding: 0.5em 1em;
+  display: inline-block;
+  position: relative;
+}
+#mooc-progress-index #layout_container ol.sections li a:after {
+  content: attr(data-progress) '%';
+  font-size: 14px;
+  color: white;
+  position: absolute;
+  top: 0.5em;
+  left: 1.5em;
+  line-height: 1.5em;
+}
+#mooc-progress-index #layout_container ol.sections li {
+  float: left;
+}
+#mooc-progress-index #layout_container ol.sections li a {
+  width: 8em;
+}
+html.flexbox #mooc-progress-index #layout_container ol.sections {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-content: stretch;
+  -ms-flex-line-pack: stretch;
+  align-content: stretch;
+  -webkit-align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+html.flexbox #mooc-progress-index #layout_container ol.sections li {
+  -webkit-order: 0;
+  -ms-flex-order: 0;
+  order: 0;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  -webkit-align-self: auto;
+  -ms-flex-item-align: auto;
+  align-self: auto;
+  float: none;
+}
+html.flexbox #mooc-progress-index #layout_container ol.sections li a {
+  width: 100%;
+}
