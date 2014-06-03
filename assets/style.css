@@ -171,6 +171,23 @@ html.flexbox #mooc-progress-index #layout_container ol.sections li a {
   height: 100%;
   border: 0;
 }
+#mooc-courses-show #preview_image_container {
+  position: relative;
+}
+#mooc-courses-show #play_image {
+  background-image: url("../../../../assets/images/icons/32/white/play.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  left: 50%;
+  top: 50%;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: absolute;
+}
 #mooc-registrations-index #layout_container input {
   font-size: 14pt;
   margin-bottom: 5px;

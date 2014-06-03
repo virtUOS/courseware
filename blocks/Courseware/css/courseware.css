@@ -201,7 +201,7 @@ section#courseware ol.subchapters .subchapter.loading > .title {
 }
 section#courseware ol.active-subchapter {
   position: absolute;
-  top: 6em;
+  top: 2em;
   left: 23%;
   right: 12px;
   padding: 0px 0px 10px 0px;
@@ -306,11 +306,6 @@ section#courseware ol.active-subchapter.ui-sortable li > a {
 }
 section#courseware ol.active-subchapter.ui-sortable li > a .handle {
   display: inline;
-}
-section#courseware section.active-section {
-  float: left;
-  margin-top: 10em;
-  width: 76%;
 }
 section#courseware:not(.user-may-author) .mode-switch,
 section#courseware:not(.user-may-author) .controls {

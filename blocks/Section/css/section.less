@@ -1,91 +1,121 @@
 @import '../../../assets/variables';
 @import '../../../assets/mixins';
 
-.active-section > .title {
-  position: absolute;
-  top: 0;
+.active-section {
+  float: left;
+  margin-top: 5em;
+  width: 76%;
 
-  h1 {
 
-    // move this to the OHN-Layout
-    font-weight: 700;
-    line-height: 1.1;
-    color: #444444;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 36px;
-    border-bottom: none;
-    // end move
+  // ***** Title *****
+  & > .title {
+    h1 {
 
-    .controls {
+      // move this to the OHN-Layout
+      font-weight: 700;
+      line-height: 1.1;
+      color: #444444;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 36px;
+      border-bottom: none;
+      padding: 0px;
+      // end move
 
-      button {
-        &.edit  { .btn(edit); }
-        &.trash { .btn(trash); }
+      .controls {
+
+        button {
+          &.edit  { .btn(edit); }
+          &.trash { .btn(trash); }
+        }
       }
+    }
+
+    &.loading h1 {
+      background: url("../../../../../../assets/images/ajax_indicator_small.gif") center left no-repeat;
+      padding-left: 20px;
     }
   }
 
-  &.loading h1 {
-    background: url("../../../../../../assets/images/ajax_indicator_small.gif") center left no-repeat;
-    padding-left: 20px;
+
+  // ***** Blocks *****
+  section.block {
+    position: relative;
+    min-height: 1em;
+    line-height: 20px;
+    /*min-width: 55em;*/
+    display: block;
+    margin-bottom: 3em;
+
+    &::before {
+      color: #ccc;
+      border: 1px dotted #eee;
+      line-height: 20px;
+    }
+
+
+    &.loading {
+      background: url("../../../../../../assets/images/ajax_indicator_small.gif") center center no-repeat;
+
+      .block-content, .controls {
+        visibility: hidden;
+      }
+    }
+
+
+    div.controls {
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      button {
+        .btn-base();
+        background-color: transparent;
+      }
+
+      button.raise  { .bgImg(arr_2up, grey); }
+      button.lower  { .bgImg(arr_2down, grey); }
+      button.author { .bgImg(edit, grey); }
+      button.trash  { .bgImg(trash, grey); }
+    }
+
+    & + .no-content {
+      display: none;
+    }
+  }
+
+  // hide several buttonss
+  .not-editable               button.author,
+  section.block:first-of-type button.raise,
+  section.block:last-of-type  button.lower {
+    visibility: hidden;
+  }
+
+  .block-adder {
+    padding-top: 1em;
+
+    button {
+      .courseware-btn;
+    }
+  }
+
+  .edit-section {
+    button {
+      .btn-base();
+
+      &.cancel {
+        background: url("../../../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
+        right: 20px;
+      }
+
+      &.ok {
+        background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
+        right: 0;
+      }
+    }
   }
 }
 
-.active-section section.block {
-  position: relative;
-  min-height: 1em;
-  line-height: 20px;
-  /*min-width: 55em;*/
-  display: block;
-  margin-bottom: 3em;
-}
-
-.active-section section.block::before {
-  /* content: attr(class); */
-  color: #ccc;
-  border: 1px dotted #eee;
-  line-height: 20px;
-}
-
-.active-section section.block.loading {
-  background: url("../../../../../../assets/images/ajax_indicator_small.gif") center center no-repeat; }
-.active-section section.block.loading .block-content, .active-section section.block.loading .controls {
-  visibility: hidden;
-}
-
-.active-section section.block div.controls {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.active-section section.block div.controls {
-
-  button {
-    .btn-base();
-    background-color: transparent;
-  }
-
-  button.raise  { .bgImg(arr_2up, grey); }
-  button.lower  { .bgImg(arr_2down, grey); }
-  button.author { .bgImg(edit, grey); }
-  button.trash  { .bgImg(trash, grey); }
-}
-
-.active-section .not-editable               button.author,
-.active-section section.block:first-of-type button.raise,
-.active-section section.block:last-of-type  button.lower {
-  visibility: hidden;
-}
-
-.active-section section.block + .no-content {
-  display: none;
-}
-
-.active-section .block-adder {
-  padding-top: 1em;
-}
 
 #courseware.view-author .active-section section.block {
   box-shadow: 2px 2px 2px 2px #DDD;
@@ -104,27 +134,6 @@
   }
 }
 
-.active-section {
-  .edit-section {
-    button {
-      .btn-base();
-
-      &.cancel {
-        background: url("../../../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
-        right: 20px;
-      }
-
-      &.ok {
-        background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
-        right: 0;
-      }
-    }
-  }
-}
-
-.block-adder button {
-  .courseware-btn;
-}
 
 button.init-sort-block {
   background-image: url("../../../../../../assets/images/icons/16/blue/ranking.png");
