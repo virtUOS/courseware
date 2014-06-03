@@ -60,13 +60,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             view.promise()
                 .fin(function () {
                     li_wrapper.remove();
-
-                    // if the view has been suspended because the user switched
-                    // to the student view, the control buttons must not be
-                    // displayed again
-                    if ($(self.$el).closest('.view-author').length > 0) {
-                        $controls.fadeIn();
-                    }
+                    $controls.show();
                 })
                 .then(function (model) {
                     placeholder_item = insert_point

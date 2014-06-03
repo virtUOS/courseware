@@ -317,7 +317,7 @@ section#courseware:not(.user-may-author) .controls {
   display: none;
 }
 section#courseware.view-student .controls {
-  display: none;
+  display: none !important;
 }
 section#courseware.loading {
   opacity: 0.5;
