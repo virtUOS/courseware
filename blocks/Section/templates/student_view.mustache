@@ -16,22 +16,36 @@
   {{/content_block_types}}
 </div>
 
-<div class=neighbors>
+<div class=section_navigation>
   {{#prev_section}}
-    <a class="navigate prev"
+    <a class="prev button navigate"
        data-blockid={{id}}
        href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
        title="{{title}}">
       {{#i18n}}zurück{{/i18n}}
     </a>
   {{/prev_section}}
+  {{^prev_section}}
+    <a class="prev button disabled"
+       href="#"
+       title="{{title}}">
+      {{#i18n}}zurück{{/i18n}}
+    </a>
+  {{/prev_section}}
 
   {{#next_section}}
-    <a class="navigate next"
+    <a class="next button navigate"
        data-blockid={{id}}
        href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
        title="{{title}}">
-      {{#i18n}}vor{{/i18n}}
+      {{#i18n}}weiter{{/i18n}}
+    </a>
+  {{/next_section}}
+  {{^next_section}}
+    <a class="next button disabled"
+       href="#"
+       title="{{title}}">
+      {{#i18n}}weiter{{/i18n}}
     </a>
   {{/next_section}}
 </div>
