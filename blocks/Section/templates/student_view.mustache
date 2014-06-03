@@ -15,3 +15,23 @@
     <button class=add-block-type data-blocktype="{{type}}">{{#i18n}}{{name}}{{/i18n}}</button>
   {{/content_block_types}}
 </div>
+
+<div class=neighbors>
+  {{#prev_section}}
+    <a class="navigate prev"
+       data-blockid={{id}}
+       href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
+       title="{{title}}">
+      {{#i18n}}zurück{{/i18n}}
+    </a>
+  {{/prev_section}}
+
+  {{#next_section}}
+    <a class="navigate next"
+       data-blockid={{id}}
+       href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
+       title="{{title}}">
+      {{#i18n}}vor{{/i18n}}
+    </a>
+  {{/next_section}}
+</div>
