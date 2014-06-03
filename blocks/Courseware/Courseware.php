@@ -12,9 +12,7 @@ class Courseware extends Block {
 
     function student_view($context = array())
     {
-        if (isset($context['selected'])) {
-            $this->lastSelected = $context['selected'];
-        }
+        $this->lastSelected = $this->getSelected($context);
 
         list($courseware, $chapter, $subchapter, $section) = $this->getSelectedPath($this->lastSelected);
 
@@ -92,6 +90,11 @@ class Courseware extends Block {
         return $new_positions;
     }
 
+
+    private function getSelected($context)
+    {
+        return isset($context['selected']) ? $context['selected'] : $this->lastSelected;
+    }
 
     private function requireUpdatableParent($data)
     {
