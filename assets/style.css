@@ -6,9 +6,6 @@
   width: 100%;
   border-collapse: collapse;
 }
-#mooc-progress-index #layout_container table.chapters tr > * {
-  padding: 0.5em;
-}
 #mooc-progress-index #layout_container table.chapters tr:nth-child(even) {
   background: #eee;
 }
@@ -25,10 +22,11 @@
   color: #444;
 }
 #mooc-progress-index #layout_container .chapter th {
-  font-size: 1.7em;
+  font-size: 1.4em;
 }
 #mooc-progress-index #layout_container .subchapter th {
-  font-size: 1.4em;
+  font-size: 1.1em;
+  padding-left: 1.2em;
   white-space: nowrap;
   width: 10%;
 }
