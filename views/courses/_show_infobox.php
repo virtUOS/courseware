@@ -6,7 +6,10 @@
                     <tbody>
                         <tr>
                             <td style="cursor: pointer" id="preview_video">
-                                <img src="<?= $preview_image ?: CourseAvatar::getAvatar($course->id)->getURL(Avatar::NORMAL) ?>">
+																<div id="preview_image_container">                         		
+                                	<img src="<?= $preview_image ?: CourseAvatar::getAvatar($course->id)->getURL(Avatar::NORMAL) ?>">
+																	<div id="play_image"></div>
+																</div>
                             </td>
                         </tr>
                         <tr>

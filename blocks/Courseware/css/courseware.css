@@ -62,9 +62,8 @@ section#courseware {
   position: relative;
 }
 section#courseware nav.breadcrumb {
-  position: absolute;
-  top: 0px;
-  left: 23%;
+  margin-left: 1%;
+  margin-bottom: 20px;
 }
 section#courseware nav.breadcrumb ul {
   padding: 0;
@@ -199,9 +198,31 @@ section#courseware ol.subchapters li.no-content {
 section#courseware ol.subchapters .subchapter.loading > .title {
   background: url(../../../../../../assets/images/ajax_indicator_small.gif) no-repeat 3px center;
 }
+
+section#courseware ol.fixed_navigation {
+	display: none;
+	position: fixed;
+	top: 24px;
+	left: 24%;
+	right: 38px;
+	background: #f00;
+	z-index: 9999;
+	padding: 0px;
+}
+section#courseware ol.fixed_navigation li {
+	float: left;
+}
+section#courseware ol.fixed_navigation li.fixed_navigation_button {
+	width: 10%;
+	text-align: center;
+}
+section#courseware ol.fixed_navigation li.fixed_navigation_title {
+	width: 80%;
+	text-align: center;
+}
 section#courseware ol.active-subchapter {
   position: absolute;
-  top: 6em;
+  top: 5em;
   left: 23%;
   right: 12px;
   padding: 0px 0px 10px 0px;
@@ -309,7 +330,7 @@ section#courseware ol.active-subchapter.ui-sortable li > a .handle {
 }
 section#courseware section.active-section {
   float: left;
-  margin-top: 10em;
+  margin-top: 6em;
   width: 76%;
 }
 section#courseware:not(.user-may-author) .mode-switch,
@@ -430,7 +451,7 @@ section#courseware button.button {
   background-repeat: no-repeat;
   min-height: 27px;
   padding: 5px 6px 5px 28px;
-  margin: 0px;
+  margin: 4px 0px;
   cursor: pointer;
   font-size: 12px;
   border-radius: 3px;
@@ -463,6 +484,7 @@ section#courseware button.stop-sort-section {
 }
 section#courseware .edit-structure {
   position: relative;
+  z-index: 9999;
 }
 section#courseware .edit-structure input {
   width: 68%;

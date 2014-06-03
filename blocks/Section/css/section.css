@@ -12,13 +12,14 @@
   top: 0;
 }
 .active-section > .title h1 {
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.1;
   color: #444444;
-  margin-top: 20px;
+  margin-top: 15px;
   margin-bottom: 10px;
-  font-size: 36px;
+  font-size: 34px;
   border-bottom: none;
+  padding-left: 0px;
 }
 .active-section > .title h1 .controls button.edit {
   width: 20px;
@@ -64,6 +65,9 @@
 }
 .active-section section.block.loading {
   background: url("../../../../../../assets/images/ajax_indicator_small.gif") center center no-repeat;
+}
+.active-section section.block .block-content h2 {
+	padding-bottom: 8px;
 }
 .active-section section.block.loading .block-content,
 .active-section section.block.loading .controls {
