@@ -479,10 +479,10 @@ section#courseware .edit-structure button:hover {
 }
 section#courseware .edit-structure button.cancel {
   background: url("../../../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
+  margin-left: 20px;
 }
 section#courseware .edit-structure button.ok {
   background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
-  margin-left: 20px;
 }
 section#courseware .chapters .handle {
   display: none;
