@@ -200,27 +200,24 @@ section#courseware ol.subchapters .subchapter.loading > .title {
   background: url(../../../../../../assets/images/ajax_indicator_small.gif) no-repeat 3px center;
 }
 section#courseware ol.active-subchapter {
+	background-color: transparent;
   position: absolute;
   top: 2em;
   left: 23%;
   right: 12px;
-  padding: 0px 0px 10px 0px;
-  border-bottom: 1px solid #eee;
+  padding: 0px;
 }
 section#courseware ol.active-subchapter li {
   display: block;
   float: left;
-  height: 27px;
-  margin: 0px 3px;
+  margin: 0px 1px 0px 0px;
 }
 section#courseware ol.active-subchapter li > a {
-  background-color: #e9e9e9;
+  background-color: #eee;
   background-size: 20px;
   color: transparent;
-  border: 1px solid #bbb;
-  width: 30px;
-  height: 30px;
-  border-radius: 3px;
+  width: 35px;
+  height: 35px;
   padding: 0px;
   display: inline-block;
 }
@@ -240,7 +237,7 @@ section#courseware ol.active-subchapter li > a[data-icon="document"] {
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li > a[data-icon="task"] {
-  background-image: url("../../../../../../assets/images/icons/32/blue/assessment.png");
+  background-image: url("../../../../../../assets/images/icons/32/blue/question.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -254,7 +251,6 @@ section#courseware ol.active-subchapter li:hover > a {
 }
 section#courseware ol.active-subchapter li.visited > a {
   background-color: #f8f8f8;
-  border-color: #ccc;
 }
 section#courseware ol.active-subchapter li.selected > a {
   background-color: #24437C;
@@ -277,7 +273,7 @@ section#courseware ol.active-subchapter li.selected > a[data-icon="document"] {
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon="task"] {
-  background-image: url("../../../../../../assets/images/icons/32/white/assessment.png");
+  background-image: url("../../../../../../assets/images/icons/32/white/question.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -329,7 +325,7 @@ section#courseware .subchapter.loading .controls {
 }
 section#courseware .mode-switch {
   position: absolute;
-  top: 7px;
+  top: -10px;
   right: 12px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -391,15 +387,15 @@ section#courseware > .chapters > .controls > button,
 section#courseware > .chapters > .chapter > .subchapters > .controls > button,
 section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active-subchapter > .controls > button {
   color: #000;
-  border: 1px solid #bbb;
+  border: 1px solid #d0d0d0;
   background-color: #e9e9e9;
   background-repeat: no-repeat;
   min-height: 27px;
-  padding: 5px 6px 5px 28px;
+  padding: 9px 6px 9px 28px;
   margin: 0px;
   cursor: pointer;
   font-size: 12px;
-  border-radius: 3px;
+  border-radius: 2px;
   margin: 4px 0px 0px;
   width: 90%;
   text-align: left;
@@ -412,7 +408,7 @@ section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active
 }
 section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active-subchapter > .controls > button {
   width: auto !important;
-  margin: 0px;
+  margin: 0px 0px 0px 4px;
 }
 section#courseware .chapters .controls {
   text-align: center;
@@ -420,7 +416,7 @@ section#courseware .chapters .controls {
 }
 section#courseware button.button {
   color: #000;
-  border: 1px solid #bbb;
+  border: 1px solid #d0d0d0;
   background-color: #e9e9e9;
   background-repeat: no-repeat;
   min-height: 27px;
@@ -428,7 +424,7 @@ section#courseware button.button {
   margin: 0px;
   cursor: pointer;
   font-size: 12px;
-  border-radius: 3px;
+  border-radius: 2px;
   margin: 4px 0 px 0px;
   background-image: none;
   padding-left: 6px;
@@ -448,7 +444,7 @@ section#courseware button.init-sort-chapter,
 section#courseware button.init-sort-subchapter,
 section#courseware button.init-sort-section {
   background-image: url("../../../../../../assets/images/icons/16/blue/ranking.png");
-  background-position: 6px 2px;
+  background-position: 6px 6px;
 }
 section#courseware button.stop-sort-chapter,
 section#courseware button.stop-sort-subchapter,
