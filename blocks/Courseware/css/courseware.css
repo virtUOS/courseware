@@ -200,7 +200,7 @@ section#courseware ol.subchapters .subchapter.loading > .title {
   background: url(../../../../../../assets/images/ajax_indicator_small.gif) no-repeat 3px center;
 }
 section#courseware ol.active-subchapter {
-	background-color: transparent;
+  background-color: transparent;
   position: absolute;
   top: 2em;
   left: 23%;
@@ -420,7 +420,7 @@ section#courseware button.button {
   background-color: #e9e9e9;
   background-repeat: no-repeat;
   min-height: 27px;
-  padding: 5px 6px 5px 28px;
+  padding: 9px 6px 9px 28px;
   margin: 0px;
   cursor: pointer;
   font-size: 12px;
