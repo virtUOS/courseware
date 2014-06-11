@@ -183,6 +183,7 @@ section#courseware {
         height: 35px;
         padding: 0px;
         display: inline-block;
+        border-radius: 2px;
 
         &[data-icon=""]         { .bgImg(infopage,   "blue", 32); }
         &[data-icon="chat"]     { .bgImg(chat,       "blue", 32); }
@@ -202,6 +203,7 @@ section#courseware {
       &.selected > a {
         background-color: #24437C;
         border-color: #222;
+        border-radius: 2px;
 
         font-weight: normal;
 
@@ -295,16 +297,16 @@ section#courseware {
       }
 
       &.student {
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
         border-right: none;
         background-image: url("../../../../../../assets/images/icons/32/blue/headache.png");
         background-position: center 0px;
       }
 
       &.author {
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
         border-left: none;
         background-image: url("../../../../../../assets/images/icons/32/blue/doctoral_cap.png");
       }
@@ -346,6 +348,7 @@ section#courseware {
       .courseware-btn;
       margin: 4px 0px 0px;
       width: 90%;
+      height: 35px;
       text-align: left;
     }
 
