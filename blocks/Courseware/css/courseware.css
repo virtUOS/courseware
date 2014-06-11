@@ -437,6 +437,10 @@ section#courseware button.button:hover {
   background-color: #F8F8F8;
   border-color: #cccccc;
 }
+section#courseware button.button[name="save"],
+section#courseware button.button[name="cancel"] {
+  margin-top: 10px;
+}
 section#courseware button.add-chapter,
 section#courseware button.add-subchapter,
 section#courseware button.add-section {
