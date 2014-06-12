@@ -33,6 +33,39 @@
           <button class=stop-sort-section>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
         </li>
     </ol>
+
+    {{#section_nav}}
+    <div class=section_navigation>
+      {{#prev}}
+        <a class="prev navigate"
+           data-blockid={{id}}
+           href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
+           title="{{title}}">
+          {{#i18n}}zurück{{/i18n}}
+        </a>
+      {{/prev}}
+      {{^prev}}
+      <span class="prev" title="{{title}}">
+        {{#i18n}}zurück{{/i18n}}
+      </span>
+      {{/prev}}
+
+      {{#next}}
+        <a class="next navigate"
+           data-blockid={{id}}
+           href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
+           title="{{title}}">
+          {{#i18n}}weiter{{/i18n}}
+        </a>
+      {{/next}}
+      {{^next}}
+      <span class="next" title="{{title}}">
+        {{#i18n}}weiter{{/i18n}}
+      </span>
+      {{/next}}
+    </div>
+    {{/section_nav}}
+
   {{/selected}}
 
 </li>

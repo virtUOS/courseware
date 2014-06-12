@@ -37,6 +37,7 @@ class Courseware extends Block {
         $sections = array();
         if ($subchapter) {
             $sections = $this->childrenToJSON($subchapter->children, $section->id, true);
+            $section_nav = $this->getNeighborSections($subchapter->children, $section);
         }
 
 
@@ -46,6 +47,7 @@ class Courseware extends Block {
             'chapters'          => $chapters,
             'subchapters'       => $subchapters,
             'sections'          => $sections,
+            'section_nav'       => $section_nav,
             'active_chapter'    => $chapter    ? $chapter->toArray()    : null,
             'active_subchapter' => $subchapter ? $subchapter->toArray() : null,
             'active_section'    => $active_section);
@@ -255,5 +257,15 @@ class Courseware extends Block {
         $block->store();
 
         return $block;
+    }
+
+    private function getNeighborSections($siblings, $active_section)
+    {
+        $ids = $siblings->pluck('id');
+        $index = array_search($active_section->id, $ids);
+        return array(
+            'prev' => array_key_exists($index - 1, $ids) ? $siblings->find($ids[$index - 1])->toArray() : null,
+            'next' => array_key_exists($index + 1, $ids) ? $siblings->find($ids[$index + 1])->toArray() : null
+        );
     }
 }
