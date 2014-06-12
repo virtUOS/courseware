@@ -20,23 +20,9 @@
     <ol class=active-subchapter
       data-blockid={{active_subchapter.id}}
       data-type=Subchapter>
-
-
-      {{#sections}}
-        {{> section}}
-      {{/sections}}
-
-        <li class=no-content>{{#i18n}}Keine Abschnitte{{/i18n}}</li>
-
-        <li class=controls>
-          <button class=add-section>{{#i18n}}Abschnitt einfügen{{/i18n}}</button>
-          <button class=init-sort-section>{{#i18n}}Abschnitte sortieren{{/i18n}}</button>
-          <button class=stop-sort-section>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
-        </li>
-    </ol>
-
-    {{#section_nav}}
-    <div class=section_navigation>
+      
+      <li class="prev_next_navigation prev_navigation">
+      {{#section_nav}}
       {{#prev}}
         <a class="prev navigate"
            data-blockid={{id}}
@@ -50,13 +36,22 @@
         {{#i18n}}zurück{{/i18n}}
       </span>
       {{/prev}}
+			{{/section_nav}}
+      </li>
 
+
+      {{#sections}}
+        {{> section}}
+      {{/sections}}
+      
+      <li class="prev_next_navigation next_navigation">
+      {{#section_nav}}
       {{#next}}
         <a class="next navigate"
            data-blockid={{id}}
            href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
            title="{{title}}">
-          {{#i18n}}weiter{{/i18n}}
+          {{#i18n}}weiterr{{/i18n}}
         </a>
       {{/next}}
       {{^next}}
@@ -64,8 +59,19 @@
         {{#i18n}}weiter{{/i18n}}
       </span>
       {{/next}}
-    </div>
-    {{/section_nav}}
+			{{/section_nav}}
+      </li>
+
+        <li class=no-content>{{#i18n}}Keine Abschnitte{{/i18n}}</li>
+
+        <li class=controls>
+          <button class=add-section>{{#i18n}}Abschnitt einfügen{{/i18n}}</button>
+          <button class=init-sort-section>{{#i18n}}Abschnitte sortieren{{/i18n}}</button>
+          <button class=stop-sort-section>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
+        </li>
+    </ol>
+
+    
 
   {{/selected}}
 

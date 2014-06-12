@@ -207,6 +207,53 @@ section#courseware ol.active-subchapter {
   right: 12px;
   padding: 0px;
 }
+section#courseware ol.active-subchapter li.prev_next_navigation {
+	background-color: #bbb;
+  background-position: center center;
+  background-size: 20px;
+  background-repeat: no-repeat;
+	border-radius: 2px;
+}
+section#courseware ol.active-subchapter li.prev_navigation {
+	background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+}
+section#courseware ol.active-subchapter li.prev_navigation a:hover {
+	background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+	background-position: center center;
+  background-size: 20px;
+  background-repeat: no-repeat;
+	background-color: #DDDDDD !important;
+}
+section#courseware ol.active-subchapter li.next_navigation {
+	background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+}
+section#courseware ol.active-subchapter li.next_navigation a:hover {
+	background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+	background-position: center center;
+  background-size: 20px;
+  background-repeat: no-repeat;
+	background-color: #DDDDDD;
+}
+section#courseware ol.active-subchapter li.prev_next_navigation a {
+	background: transparent;
+}
+section#courseware ol.active-subchapter li.prev_next_navigation span {
+	display: block;
+	width: 35px;
+	height: 35px;
+	text-indent: -999px;
+	background-color: #eee;
+	background-position: center center;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  border-radius: 2px;
+}
+section#courseware ol.active-subchapter li.prev_navigation span {
+	background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+}
+section#courseware ol.active-subchapter li.next_navigation span {
+	background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+}
 section#courseware ol.active-subchapter li {
   display: block;
   float: left;
@@ -250,10 +297,19 @@ section#courseware ol.active-subchapter li > a[data-icon="video"] {
 section#courseware ol.active-subchapter li:hover > a {
   background-color: #ddd;
 }
+section#courseware ol.active-subchapter li.visited:hover > a {
+  background-color: #ddd;
+}
 section#courseware ol.active-subchapter li.visited > a {
   background-color: #f8f8f8;
 }
 section#courseware ol.active-subchapter li.selected > a {
+  background-color: #24437C;
+  border-color: #222;
+  border-radius: 2px;
+  font-weight: normal;
+}
+section#courseware ol.active-subchapter li.selected:hover > a {
   background-color: #24437C;
   border-color: #222;
   border-radius: 2px;
