@@ -47,9 +47,6 @@ class Section extends Block {
             }
         );
 
-        // next and prev section (if applicable)
-        list($prev_section, $next_section) = $this->getNeighborSections();
-
         // block adder
         $content_block_types = array();
         foreach ($this->container['block_factory']->getContentBlockClasses() as $type) {
@@ -66,7 +63,7 @@ class Section extends Block {
             );
         }
 
-        return compact('blocks', 'content_block_types', 'icon', 'title', 'visited', 'prev_section', 'next_section');
+        return compact('blocks', 'content_block_types', 'icon', 'title', 'visited');
     }
 
     function add_content_block_handler($data) {
@@ -158,19 +155,5 @@ class Section extends Block {
             }
         }
         $this->icon = $highest_icon;
-    }
-
-
-    private function getNeighborSections()
-    {
-        $siblings = $this->_model->parent->children;
-        $ids = $siblings->pluck('id');
-
-        $index = array_search($this->id, $ids);
-
-        return array(
-            array_key_exists($index - 1, $ids) ? $siblings->find($ids[$index - 1])->toArray() : null,
-            array_key_exists($index + 1, $ids) ? $siblings->find($ids[$index + 1])->toArray() : null
-        );
     }
 }
