@@ -87,6 +87,10 @@ define(function() {
     };
     
     Date.fromUnixtime = function(timestamp) {
+        if (typeof timestamp === 'undefined' || timestamp == '') {
+            return '';
+        }
+
         if (typeof timestamp === 'string') {
             timestamp = parseInt(timestamp);
         }
