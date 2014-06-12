@@ -93,6 +93,7 @@ class BlocksController extends MoocipController {
         $block = $this->requireBlock($id);
 
         $block->title = $title;
+        $block->publication_date = strtotime($this->data['publication_date']) ?: null;
 
         if (is_integer($block->store())) {
             $this->render_json($block->toArray());

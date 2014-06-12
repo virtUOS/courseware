@@ -101,7 +101,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         _addStructure: function (parent_id, model) {
             var data = {
                 parent: parent_id,
-                title:  model.get("title")
+                title:  model.get("title"),
             };
             return helper.callHandler(this.model.id, 'add_structure', data);
         },
@@ -109,7 +109,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         editStructure: function (event) {
             var $parent = jQuery(event.target).closest("[data-blockid]"),
                 model = this._modelFromElement($parent),
-                $title, title, orig_model, view, updateListItem;
+                $title, title, orig_model, view, updateListItem, publication_date;
 
             if (model.isNew()) {
                 return;
@@ -121,13 +121,16 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
             $title = $parent.find("> .title");
             title = $title.find("a").text().trim();
+            publication_date = Date.fromUnixtime($title.find("a").attr('data-publication'));
 
             model.set("title", title);
+            model.set("publication_date", publication_date);
             orig_model = model.clone();
 
             view = new EditView({ model: model });
             updateListItem = function (model) {
                 $title.find("a").text(model.get('title'));
+                $title.find("a").attr('data-publication', Date.toUnixtime(model.get("publication_date")));
             };
 
             $title.hide().before(view.el);

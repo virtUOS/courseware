@@ -39,7 +39,8 @@
      mustache: "assets/js/vendor/mustache.js-0.8.1/mustache",
      q:        "assets/js/vendor/q.v1/q.min",
      scrollTo: "assets/js/vendor/jquery.scrollTo/jquery.scrollTo.min",
-     utils:    "assets/js/utils"
+     utils:    "assets/js/utils",
+     dateFormat: "assets/js/date.format"
    },
 
    shim: {
