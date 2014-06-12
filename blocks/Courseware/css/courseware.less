@@ -175,6 +175,62 @@ section#courseware {
       float: left;
       margin: 0px 1px 0px 0px;
 
+      &.prev_next_navigation {
+        background-color: #bbb;
+        background-position: center center;
+        background-size: 20px;
+        background-repeat: no-repeat;
+        border-radius: 2px;
+
+        a {
+          background: transparent;
+        }
+
+        span {
+          display: block;
+          width: 35px;
+          height: 35px;
+          text-indent: -999px;
+          background-color: #eee;
+          background-position: center center;
+          background-size: 20px;
+          background-repeat: no-repeat;
+          border-radius: 2px;
+        }
+      }
+
+      &.prev_navigation {
+        background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+
+        a:hover {
+          background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+          background-position: center center;
+          background-size: 20px;
+          background-repeat: no-repeat;
+          background-color: #DDDDDD !important;
+        }
+
+        span {
+          background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+        }
+      }
+
+      &.next_navigation {
+        background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+
+        a:hover {
+          background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+          background-position: center center;
+          background-size: 20px;
+          background-repeat: no-repeat;
+          background-color: #DDDDDD;
+        }
+
+        span {
+          background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+        }
+      }
+
       & > a {
         background-color: #eee;
         background-size: 20px;
@@ -196,22 +252,38 @@ section#courseware {
           background-color: #ddd;
       }
 
-      &.visited > a {
-        background-color: #f8f8f8;
+      &.visited {
+        &:hover > a {
+          background-color: #ddd;
+        }
+
+        & > a {
+          background-color: #f8f8f8;
+        }
       }
 
-      &.selected > a {
-        background-color: #24437C;
-        border-color: #222;
-        border-radius: 2px;
+      &.selected {
+        & > a {
+          background-color: #24437C;
+          border-color: #222;
+          border-radius: 2px;
+          font-weight: normal;
+        }
 
-        font-weight: normal;
+        &:hover > a {
+          background-color: #24437C;
+          border-color: #222;
+          border-radius: 2px;
+          font-weight: normal;
+        }
 
-        &[data-icon=""]         { .bgImg(infopage,   "white", 32); }
-        &[data-icon="chat"]     { .bgImg(chat,       "white", 32); }
-        &[data-icon="document"] { .bgImg(infopage,   "white", 32); }
-        &[data-icon="task"]     { .bgImg(question,   "white", 32); }
-        &[data-icon="video"]    { .bgImg(video,      "white", 32); }
+        & > a {
+          &[data-icon=""]         { .bgImg(infopage,   "white", 32); }
+          &[data-icon="chat"]     { .bgImg(chat,       "white", 32); }
+          &[data-icon="document"] { .bgImg(infopage,   "white", 32); }
+          &[data-icon="task"]     { .bgImg(question,   "white", 32); }
+          &[data-icon="video"]    { .bgImg(video,      "white", 32); }
+        }
       }
 
       > a.handle {
