@@ -40,7 +40,7 @@
      q:        "assets/js/vendor/q.v1/q.min",
      scrollTo: "assets/js/vendor/jquery.scrollTo/jquery.scrollTo.min",
      utils:    "assets/js/utils",
-     dateFormat: "assets/js/date.format"
+     dateFormat: "assets/js/vendor/date.format/date.format"
    },
 
    shim: {
