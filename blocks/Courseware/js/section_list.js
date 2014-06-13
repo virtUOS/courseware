@@ -41,7 +41,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         addStructure: function (event) {
             var id = this.$el.attr("data-blockid");
 
-            if (id == null) {
+            if (id === null) {
                 return;
             }
 
@@ -75,7 +75,9 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                         placeholder_item.replaceWith(templates("Courseware", "section", data));
                     },
                     function (error) {
-                        placeholder_item && placeholder_item.remove();
+                        if (placeholder_item) {
+                            placeholder_item.remove();
+                        }
 
                         if (error) {
                             alert("ERROR: "  + JSON.stringify(error));
