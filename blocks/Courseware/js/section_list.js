@@ -36,6 +36,23 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                     }
                 }
             });
+
+            this.makeSticky();
+        },
+
+        makeSticky: function () {
+
+            var nav = this.$el,
+                nav_offset = nav.offset();
+
+            jQuery(window).scroll(function () {
+                if (jQuery(this).scrollTop() > nav_offset.top - 27) {
+                    nav.addClass("stuck");
+                } else {
+                    nav.removeClass("stuck");
+                }
+            });
+
         },
 
         addStructure: function (event) {
@@ -47,7 +64,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
             var model = new BlockModel({ title: i18n("Neuer Abschnitt"), type: 'Section' }),
                 view = new EditView({ model: model }),
-                insert_point = this.$(".no-content"),
+                insert_point = this.$(".controls"),
                 li_wrapper = view.$el.wrap("<li/>").parent(),
                 self = this,
                 $controls = this.$('.controls'),

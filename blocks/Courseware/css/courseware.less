@@ -370,23 +370,37 @@ section#courseware {
         background: url("../../../../../../assets/images/ajax_indicator_small.gif") center center no-repeat;
       }
     }
-  }
 
-  ol.active-subchapter.ui-sortable li > a {
-    width: 50px;
-    background-position: 25px center;
-    .handle {
-      display: inline;
+    // section navigation
+    .prev, .next {
+      color: transparent;
+
+      display: block;
+      width: 35px;
+      height: 35px;
+
+      background-color: #bbb;
+      background-size: 20px;
+      border-radius: 2px;
+
+      a {
+        background: inherit;
+      }
+
+      &.disabled {
+        background-color: #e8e8e8;
+      }
     }
-  }
 
-  &:not(.user-may-author) .mode-switch,
-  &:not(.user-may-author) .controls {
-    display: none;
-  }
+    .prev {
+      .bgImg('arr_1left', 'white', 32);
+    }
 
-  &.view-student .controls {
-    display: none !important;
+    .next {
+      .bgImg('arr_1right', 'white', 32);
+    }
+
+
     // ***** SORTING SECTIONS *****
     &.sorting > .controls {
 
@@ -409,6 +423,32 @@ section#courseware {
       }
     }
 
+
+    // ***** STICKY SECTION LIST *****
+    &.stuck {
+      position: fixed;
+      top: 30px;
+      z-index: 5;
+      background-color: #fff;
+
+      // add layout-container's padding
+      padding-left: 12px;
+    }
+
+
+    // ***** MISSING SECTION *****
+
+    &[data-blockid=""] {
+      button.add-section,
+      button.init-sort-chapter,
+      button.init-sort-subchapter,
+      button.init-sort-section,
+      button.stop-sort-chapter,
+      button.stop-sort-subchapter,
+      button.stop-sort-section {
+        display: none;
+      }
+    }
   }
 
 

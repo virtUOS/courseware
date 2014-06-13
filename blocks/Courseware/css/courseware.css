@@ -100,6 +100,10 @@ section#courseware ol.chapters .chapter.selected > .title {
   font-weight: 700;
   background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
 }
+section#courseware ol.chapters .controls {
+  text-align: center;
+  margin-bottom: 5px;
+}
 section#courseware ol.chapters .chapter div.title {
   position: relative;
   line-height: 20px;
@@ -150,6 +154,39 @@ section#courseware ol.chapters .chapter div.title:hover .controls {
 }
 section#courseware ol.chapters .chapter.loading > .title {
   background-image: url(../../../../../../assets/images/ajax_indicator_small.gif);
+}
+section#courseware ol.chapters .handle {
+  display: none;
+  color: transparent;
+  line-height: 25px;
+  width: 25px;
+  padding: 5px;
+  background: transparent url("../../../../../../plugins_packages/core/Forum/img/anfasser_24.png") center center no-repeat;
+  cursor: move;
+}
+section#courseware ol.chapters.sorting > .controls button,
+section#courseware ol.chapters.sorting .subchapters > .controls button,
+section#courseware ol.chapters.sorting .chapter > .title button,
+section#courseware ol.chapters.sorting .subchapter > .title button {
+  display: none;
+}
+section#courseware ol.chapters.sorting.ui-sortable .chapter > .title {
+  background-image: none;
+}
+section#courseware ol.chapters.sorting.ui-sortable .chapter > .title .handle {
+  display: inline;
+}
+section#courseware ol.chapters.sorting.ui-sortable .stop-sort-chapter {
+  display: inline-block !important;
+}
+section#courseware ol.chapters.sorting.ui-sortable .subchapter > .title {
+  display: none;
+}
+section#courseware ol.chapters.sorting .subchapters.ui-sortable .subchapter > .title .handle {
+  display: inline;
+}
+section#courseware ol.chapters.sorting .subchapters.ui-sortable .stop-sort-subchapter {
+  display: inline-block;
 }
 section#courseware ol.subchapters {
   padding-left: 25px;
@@ -354,6 +391,40 @@ section#courseware ol.active-subchapter li.selected > a.handle {
 section#courseware ol.active-subchapter li.loading > a {
   background: url("../../../../../../assets/images/ajax_indicator_small.gif") center center no-repeat;
 }
+section#courseware ol.active-subchapter .prev,
+section#courseware ol.active-subchapter .next {
+  color: transparent;
+  display: block;
+  width: 35px;
+  height: 35px;
+  background-color: #bbb;
+  background-size: 20px;
+  border-radius: 2px;
+}
+section#courseware ol.active-subchapter .prev a,
+section#courseware ol.active-subchapter .next a {
+  background: inherit;
+}
+section#courseware ol.active-subchapter .prev.disabled,
+section#courseware ol.active-subchapter .next.disabled {
+  background-color: #e8e8e8;
+}
+section#courseware ol.active-subchapter .prev {
+  background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter .next {
+  background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter.sorting > .controls button:not(.stop-sort-section) {
+  display: none;
+}
+section#courseware ol.active-subchapter.sorting > .controls button.stop-sort-section {
+  display: inline-block;
+}
 section#courseware ol.active-subchapter.ui-sortable li > a {
   width: 50px;
   background-position: 25px center;
@@ -361,12 +432,21 @@ section#courseware ol.active-subchapter.ui-sortable li > a {
 section#courseware ol.active-subchapter.ui-sortable li > a .handle {
   display: inline;
 }
-section#courseware:not(.user-may-author) .mode-switch,
-section#courseware:not(.user-may-author) .controls {
-  display: none;
+section#courseware ol.active-subchapter.stuck {
+  position: fixed;
+  top: 30px;
+  z-index: 5;
+  background-color: #fff;
+  padding-left: 12px;
 }
-section#courseware.view-student .controls {
-  display: none !important;
+section#courseware ol.active-subchapter[data-blockid=""] button.add-section,
+section#courseware ol.active-subchapter[data-blockid=""] button.init-sort-chapter,
+section#courseware ol.active-subchapter[data-blockid=""] button.init-sort-subchapter,
+section#courseware ol.active-subchapter[data-blockid=""] button.init-sort-section,
+section#courseware ol.active-subchapter[data-blockid=""] button.stop-sort-chapter,
+section#courseware ol.active-subchapter[data-blockid=""] button.stop-sort-subchapter,
+section#courseware ol.active-subchapter[data-blockid=""] button.stop-sort-section {
+  display: none;
 }
 section#courseware.loading {
   opacity: 0.5;
@@ -432,18 +512,16 @@ section#courseware.view-student > .mode-switch .student {
 section#courseware.view-author > .mode-switch .author {
   background-image: url("../../../../../../assets/images/icons/32/white/doctoral_cap.png");
 }
-section#courseware .active-subchapter[data-blockid=""] button.add-section,
-section#courseware .active-subchapter[data-blockid=""] button.init-sort-chapter,
-section#courseware .active-subchapter[data-blockid=""] button.init-sort-subchapter,
-section#courseware .active-subchapter[data-blockid=""] button.init-sort-section,
-section#courseware .active-subchapter[data-blockid=""] button.stop-sort-chapter,
-section#courseware .active-subchapter[data-blockid=""] button.stop-sort-subchapter,
-section#courseware .active-subchapter[data-blockid=""] button.stop-sort-section {
+section#courseware:not(.user-may-author) .mode-switch,
+section#courseware:not(.user-may-author) .controls {
   display: none;
+}
+section#courseware.view-student .controls {
+  display: none !important;
 }
 section#courseware > .chapters > .controls > button,
 section#courseware > .chapters > .chapter > .subchapters > .controls > button,
-section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active-subchapter > .controls > button {
+section#courseware > .chapters > .chapter > .subchapters > .subchapter .active-subchapter > .controls > button {
   color: #000;
   border: 1px solid #d0d0d0;
   background-color: #e9e9e9;
@@ -461,17 +539,13 @@ section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active
 }
 section#courseware > .chapters > .controls > button:hover,
 section#courseware > .chapters > .chapter > .subchapters > .controls > button:hover,
-section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active-subchapter > .controls > button:hover {
+section#courseware > .chapters > .chapter > .subchapters > .subchapter .active-subchapter > .controls > button:hover {
   background-color: #F8F8F8;
   border-color: #cccccc;
 }
-section#courseware > .chapters > .chapter > .subchapters > .subchapter > .active-subchapter > .controls > button {
+section#courseware > .chapters > .chapter > .subchapters > .subchapter .active-subchapter > .controls > button {
   width: auto !important;
   margin: 0px 0px 0px 4px;
-}
-section#courseware .chapters .controls {
-  text-align: center;
-  margin-bottom: 5px;
 }
 section#courseware button.button {
   color: #000;
@@ -515,20 +589,23 @@ section#courseware button.stop-sort-section {
   background: url("../../../../../../assets/images/icons/16/blue/accept.png") 6px center no-repeat #E9E9E9;
   display: none;
 }
-section#courseware .edit-structure {
+section#courseware .chapters > li > .edit-structure,
+section#courseware .subchapters > li > .edit-structure {
   position: relative;
 }
-section#courseware .edit-structure input {
+section#courseware .chapters > li > .edit-structure input,
+section#courseware .subchapters > li > .edit-structure input {
   width: 68%;
-  padding: 4px 5px;
+  padding: 4px;
   margin: 2px 0px;
-  border-radius: 3px;
   border: 1px solid #BBBBBB;
 }
-section#courseware .edit-structure input:focus {
+section#courseware .chapters > li > .edit-structure input:focus,
+section#courseware .subchapters > li > .edit-structure input:focus {
   border-color: #009EFF;
 }
-section#courseware .edit-structure button {
+section#courseware .chapters > li > .edit-structure button,
+section#courseware .subchapters > li > .edit-structure button {
   position: absolute;
   top: 3px;
   padding: 0 0 7px;
@@ -537,52 +614,58 @@ section#courseware .edit-structure button {
   color: transparent;
   border: none;
 }
-section#courseware .edit-structure button:hover {
+section#courseware .chapters > li > .edit-structure button:hover,
+section#courseware .subchapters > li > .edit-structure button:hover {
   cursor: pointer;
 }
-section#courseware .edit-structure button.cancel {
-  background: url("../../../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
+section#courseware .chapters > li > .edit-structure button.cancel,
+section#courseware .subchapters > li > .edit-structure button.cancel {
+  background-image: url("../../../../../../assets/images/icons/16/grey/decline.png");
+  background-position: center center;
+  background-repeat: no-repeat;
   margin-left: 20px;
 }
-section#courseware .edit-structure button.ok {
-  background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
+section#courseware .chapters > li > .edit-structure button.ok,
+section#courseware .subchapters > li > .edit-structure button.ok {
+  background-image: url("../../../../../../assets/images/icons/16/grey/accept.png");
+  background-position: center center;
+  background-repeat: no-repeat;
 }
-section#courseware .chapters .handle {
-  display: none;
+section#courseware .active-subchapter > li > .edit-structure {
+  white-space: nowrap;
+  margin-left: 4px;
+  padding-left: 4px;
+  background: #ddd;
+}
+section#courseware .active-subchapter > li > .edit-structure input,
+section#courseware .active-subchapter > li > .edit-structure button {
+  vertical-align: center;
+}
+section#courseware .active-subchapter > li > .edit-structure input {
+  padding: 4px;
+  border: 1px solid #BBBBBB;
+}
+section#courseware .active-subchapter > li > .edit-structure input:focus {
+  border-color: #009EFF;
+}
+section#courseware .active-subchapter > li > .edit-structure button {
+  width: 20px;
+  height: 20px;
   color: transparent;
-  line-height: 25px;
-  width: 25px;
-  padding: 5px;
-  background: transparent url("../../../../../../plugins_packages/core/Forum/img/anfasser_24.png") center center no-repeat;
-  cursor: move;
+  border: none;
+  height: 36px;
+  width: 36px;
 }
-section#courseware .chapters.sorting > .controls button,
-section#courseware .chapters.sorting .subchapters > .controls button,
-section#courseware .chapters.sorting .chapter > .title button,
-section#courseware .chapters.sorting .subchapter > .title button {
-  display: none;
+section#courseware .active-subchapter > li > .edit-structure button:hover {
+  cursor: pointer;
 }
-section#courseware .chapters.sorting.ui-sortable .chapter > .title {
-  background-image: none;
+section#courseware .active-subchapter > li > .edit-structure button.cancel {
+  background-image: url("../../../../../../assets/images/icons/16/grey/decline.png");
+  background-position: center center;
+  background-repeat: no-repeat;
 }
-section#courseware .chapters.sorting.ui-sortable .chapter > .title .handle {
-  display: inline;
-}
-section#courseware .chapters.sorting.ui-sortable .stop-sort-chapter {
-  display: inline-block !important;
-}
-section#courseware .chapters.sorting.ui-sortable .subchapter > .title {
-  display: none;
-}
-section#courseware .chapters.sorting .subchapters.ui-sortable .subchapter > .title .handle {
-  display: inline;
-}
-section#courseware .chapters.sorting .subchapters.ui-sortable .stop-sort-subchapter {
-  display: inline-block;
-}
-section#courseware .active-subchapter.sorting > .controls button:not(.stop-sort-section) {
-  display: none;
-}
-section#courseware .active-subchapter.sorting > .controls button.stop-sort-section {
-  display: inline-block;
+section#courseware .active-subchapter > li > .edit-structure button.ok {
+  background-image: url("../../../../../../assets/images/icons/16/grey/accept.png");
+  background-position: center center;
+  background-repeat: no-repeat;
 }
