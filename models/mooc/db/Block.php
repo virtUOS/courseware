@@ -44,6 +44,7 @@ class Block extends \SimpleORMap
         $this->registerCallback('before_store',  'validate');
 
         $this->registerCallback('after_delete',  'destroyFields');
+        $this->registerCallback('after_delete',  'destroyUserProgress');
 
         parent::__construct($id);
     }
@@ -142,6 +143,15 @@ class Block extends \SimpleORMap
     {
         Field::deleteBySQL('block_id = ?', array($this->id));
     }
+
+    /**
+     * Remove associated UserProgress on delete.
+     */
+    function destroyUserProgress()
+    {
+        UserProgress::deleteBySQL('block_id = ?', array($this->id));
+    }
+
 
 
     /**
