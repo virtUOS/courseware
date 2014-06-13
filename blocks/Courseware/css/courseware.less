@@ -68,6 +68,11 @@ section#courseware {
       background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
     }
 
+    .controls {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
     .chapter div.title {
       position: relative;
       line-height: 20px;
@@ -104,6 +109,65 @@ section#courseware {
 
     .chapter.loading > .title {
       background-image: url(../../../../../../assets/images/ajax_indicator_small.gif);
+    }
+
+
+    // ***** SORTING SUB/CHAPTERS *****
+
+    .handle {
+      display: none;
+
+      color: transparent;
+      line-height: 25px;
+      width: 25px;
+      padding: 5px;
+      background: transparent url("../../../../../../plugins_packages/core/Forum/img/anfasser_24.png") center center no-repeat;
+      cursor: move;
+    }
+
+    &.sorting {
+
+      & > .controls button,
+      .subchapters > .controls button,
+      .chapter > .title button,
+      .subchapter > .title button {
+        display: none;
+      }
+
+      &.ui-sortable {
+
+        .chapter > .title {
+
+          background-image: none;
+
+          // display chapter handles
+          .handle {
+            display: inline;
+          }
+        }
+
+        .stop-sort-chapter {
+          display: inline-block !important;
+        }
+
+        // hide the subchapters
+        .subchapter > .title {
+          display: none
+        }
+      }
+
+      // sorting subchapters
+      .subchapters.ui-sortable {
+
+        // display subchapter handles
+        .subchapter > .title .handle {
+          display: inline;
+        }
+
+        .stop-sort-subchapter {
+          display: inline-block;
+        }
+      }
     }
   }
 
@@ -244,7 +308,7 @@ section#courseware {
         &[data-icon=""]         { .bgImg(infopage,   "blue", 32); }
         &[data-icon="chat"]     { .bgImg(chat,       "blue", 32); }
         &[data-icon="document"] { .bgImg(infopage,   "blue", 32); }
-        &[data-icon="task"]     { .bgImg(question, "blue", 32); }
+        &[data-icon="task"]     { .bgImg(question,   "blue", 32); }
         &[data-icon="video"]    { .bgImg(video,      "blue", 32); }
       }
 
@@ -323,8 +387,32 @@ section#courseware {
 
   &.view-student .controls {
     display: none !important;
+    // ***** SORTING SECTIONS *****
+    &.sorting > .controls {
+
+      // hide all controls
+      button:not(.stop-sort-section) {
+        display: none;
+      }
+
+      // but not the stop sorting button
+      button.stop-sort-section {
+        display: inline-block;
+      }
+    }
+
+    &.ui-sortable li > a {
+      width: 50px;
+      background-position: 25px center;
+      .handle {
+        display: inline;
+      }
+    }
+
   }
 
+
+  // ***** LOADING *****
   &.loading {
     opacity: 0.5;
 
@@ -334,6 +422,7 @@ section#courseware {
     }
   }
 
+
   &.loading .mode-switch,
   &.loading .controls,
   .chapter.loading .controls,
@@ -341,6 +430,8 @@ section#courseware {
     visibility: hidden !important;
   }
 
+
+  // ***** MODE SWITCH *****
   .mode-switch {
     position: absolute;
     top: -10px;
@@ -385,7 +476,6 @@ section#courseware {
     }
   }
 
-
   &.view-student > .mode-switch .student,
   &.view-author > .mode-switch .author {
     background-color: #24437C;
@@ -401,22 +491,24 @@ section#courseware {
     background-image: url("../../../../../../assets/images/icons/32/white/doctoral_cap.png");
   }
 
-  .active-subchapter[data-blockid=""] {
-    button.add-section,
-    button.init-sort-chapter,
-    button.init-sort-subchapter,
-    button.init-sort-section,
-    button.stop-sort-chapter,
-    button.stop-sort-subchapter,
-    button.stop-sort-section {
-      display: none;
-    }
+
+  // ***** STUDENT/AUTHOR VIEW *****
+  &:not(.user-may-author) .mode-switch,
+  &:not(.user-may-author) .controls {
+    display: none;
   }
+
+  &.view-student .controls {
+    display: none !important;
+  }
+
+
+  // ***** BUTTON STYLE *****
 
   & > .chapters {
     & > .controls > button,
     & > .chapter > .subchapters > .controls > button,
-    & > .chapter > .subchapters > .subchapter > .active-subchapter > .controls > button {
+    & > .chapter > .subchapters > .subchapter .active-subchapter > .controls > button {
       .courseware-btn;
       margin: 4px 0px 0px;
       width: 90%;
@@ -424,15 +516,10 @@ section#courseware {
       text-align: left;
     }
 
-    & > .chapter > .subchapters > .subchapter > .active-subchapter > .controls > button {
+    & > .chapter > .subchapters > .subchapter .active-subchapter > .controls > button {
       width: auto !important;
       margin: 0px 0px 0px 4px;
     }
-  }
-
-  .chapters .controls {
-    text-align: center;
-    margin-bottom: 5px;
   }
 
   button {
@@ -472,14 +559,17 @@ section#courseware {
     }
   }
 
-  .edit-structure {
+
+  // ***** EDITING SUB/CHAPTERS *****
+
+  .chapters > li > .edit-structure,
+  .subchapters > li > .edit-structure {
     position: relative;
 
     input {
       width: 68%;
-      padding: 4px 5px;
+      padding: 4px;
       margin: 2px 0px;
-      border-radius: 3px;
       border: 1px solid #BBBBBB;
 
       &:focus {
@@ -494,88 +584,49 @@ section#courseware {
       .btn-base();
 
       &.cancel {
-        background: url("../../../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
+        .bgImg(decline, grey, 16);
         margin-left: 20px;
       }
 
       &.ok {
-        background: url("../../../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
+        .bgImg(accept, grey, 16);
       }
     }
   }
 
-  .chapters .handle {
-    display: none;
 
-    color: transparent;
-    line-height: 25px;
-    width: 25px;
-    padding: 5px;
-    background: transparent url("../../../../../../plugins_packages/core/Forum/img/anfasser_24.png") center center no-repeat;
-    cursor: move;
-  }
+  // ***** EDITING SECTIONS *****
 
-  // sorting sub/chapters
-  .chapters.sorting {
-    & > .controls button,
-    .subchapters > .controls button,
+  .active-subchapter > li > .edit-structure {
+    white-space: nowrap;
+    margin-left: 4px;
+    padding-left: 4px;
+    background: #ddd;
 
-    .chapter > .title button,
-    .subchapter > .title button,
-    {
-      display: none;
+    input, button {
+      vertical-align: center;
     }
 
-    // sorting chapters
-    &.ui-sortable {
+    input {
+      padding: 4px;
+      border: 1px solid #BBBBBB;
 
-      .chapter > .title {
-
-        background-image: none;
-
-        // display chapter handles
-        .handle {
-          display: inline;
-        }
-      }
-
-      .stop-sort-chapter {
-        display: inline-block !important;
-      }
-
-      // hide the subchapters
-      .subchapter > .title {
-        display: none
+      &:focus {
+        border-color: #009EFF;
       }
     }
 
-    // sorting subchapters
-    .subchapters.ui-sortable {
+    button {
+      .btn-base();
+      height: 36px;
+      width: 36px;
 
-      // display subchapter handles
-      .subchapter > .title .handle {
-        display: inline;
+      &.cancel {
+        .bgImg(decline, grey, 16);
       }
 
-      .stop-sort-subchapter {
-        display: inline-block;
-      }
-    }
-  }
-
-  // sorting sections' icons
-  .active-subchapter.sorting {
-
-    & > .controls {
-
-      // hide all controls
-      button:not(.stop-sort-section) {
-        display: none;
-      }
-
-      // but not the stop sorting button
-      button.stop-sort-section {
-        display: inline-block;
+      &.ok {
+        .bgImg(accept, grey, 16);
       }
     }
   }
