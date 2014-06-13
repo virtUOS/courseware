@@ -1,12 +1,12 @@
 <li class="subchapter{{#selected}} selected{{/selected}}"
   data-blockid={{id}}
+  data-publication="{{publication_date}}"
   data-type=Subchapter>
 
   <div class=title>
     <span class=handle>#</span>
     <a class="navigate"
-      href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
-      data-publication="{{publication_date}}">
+      href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}">
         {{title}}
     </a>
 

@@ -22,12 +22,16 @@ define(['q', 'backbone', 'assets/js/templates', 'assets/js/i18n', 'dateFormat'],
 
         render: function () {
             var data = {
-                title: this.model.get("title"),
-            }
+                title: this.model.get("title")
+            };
 
             // hide publication_date for sections
             if (this.model.get("type") !== 'Section') {
-                data.publication_date = this.model.get("publication_date")
+                if (this.model.get("publication_date")) {
+                    data.publication_date =
+                        Date.fromUnixtime(this.model.get("publication_date"))
+                            .format("Y-m-d");
+                }
                 data.chapter = true;
             }
 

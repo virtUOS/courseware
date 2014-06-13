@@ -1,12 +1,12 @@
 <li class="chapter{{#selected}} selected{{/selected}}"
   data-blockid={{id}}
+  data-publication="{{publication_date}}"
   data-type=Chapter>
 
   <div class=title>
     <span class=handle>#</span>
     <a class="navigate"
-      href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
-      data-publication="{{publication_date}}">
+      href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}">
         {{title}}
     </a>
 
@@ -22,7 +22,7 @@
       {{#subchapters}}
         {{> subchapter}}
       {{/subchapters}}
-			
+
       <li class=no-content>{{#i18n}}Keine Unterkapitel{{/i18n}}</li>
       <li class=controls>
         <button class=add-subchapter>{{#i18n}}Unterkapitel einfügen{{/i18n}}</button>

@@ -85,7 +85,7 @@ define(function() {
 
         return new Date(el[2], el[1] - 1, el[0]).getTime() / 1000;
     };
-    
+
     Date.fromUnixtime = function(timestamp) {
         if (typeof timestamp === 'undefined' || timestamp == '') {
             return '';
@@ -95,6 +95,6 @@ define(function() {
             timestamp = parseInt(timestamp);
         }
 
-        return new Date(timestamp * 1000).format('d.m.Y')
+        return new Date(timestamp * 1000);
     };
 });
