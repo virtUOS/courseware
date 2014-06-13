@@ -7,7 +7,7 @@ class ChangeMaxGradeDefault extends DBMigration {
 
     public function up () {
         $db = DBManager::get();
-        $db->exec('ALTER TABLE `mooc_userprogress` CHANGE `max_grade` `max_grade` DOUBLE NULL DEFAULT  \'1.0\'');
+        $db->exec('ALTER TABLE `mooc_userprogress` CHANGE `max_grade` `max_grade` DOUBLE NOT NULL DEFAULT  \'1.0\'');
         SimpleORMap::expireTableScheme();
     }
 
