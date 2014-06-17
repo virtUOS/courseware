@@ -67,7 +67,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
             var model = new BlockModel({ title: i18n("Neuer Abschnitt"), type: 'Section' }),
                 view = new EditView({ model: model }),
-                insert_point = this.$(".controls"),
+                insert_point = this.$(".no-content"),
                 li_wrapper = view.$el.wrap("<li/>").parent(),
                 self = this,
                 $controls = this.$('.controls'),
