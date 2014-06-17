@@ -15,6 +15,7 @@ class HtmlBlock extends Block
 
     function student_view()
     {
+        $this->setGrade(1.0);
         return array('content' => $this->content);
     }
 

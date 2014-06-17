@@ -1,34 +1,42 @@
 <?php
 $body_id = 'mooc-progress-index';
 
-$courseware = current($grouped['']);
-$children = function ($parent) use ($grouped) {
-  return $grouped[$parent->id];
+$progress = function ($block, $format = "") {
+    return ceil($block['progress'] * 100) . $format;
 };
 ?>
 
 
 
-<h1><?= $courseware->title ?></h1>
+<h1><?= $courseware['title'] ?></h1>
 
 <table class=chapters>
-  <? foreach ($children($courseware) as $chapter) : ?>
+  <? foreach ($courseware['children'] as $chapter) : ?>
     <tr class=chapter>
-      <th colspan=2><?= $chapter->title ?></th>
+      <th colspan=2>
+        <?= htmlReady($chapter['title']) ?>
+        <? if (sizeof($chapter['children'])) : ?>
+          <span class=progress><?= $progress($chapter, "%") ?></span>
+        <? endif ?>
+      </th>
     </tr>
 
-    <? foreach ($children($chapter) as $subchapter) : ?>
+    <? foreach ($chapter['children'] as $subchapter) : ?>
       <tr class=subchapter>
-        <th><?= $subchapter->title ?></th>
+        <th>
+          <?= htmlReady($subchapter['title']) ?>
+          <? if (sizeof($subchapter['children'])) : ?>
+            <span class=progress><?= $progress($subchapter, "%") ?></span>
+          <? endif ?>
+        </th>
         <td>
           <ol class=sections>
-            <? foreach ($children($subchapter) as $section) : ?>
+            <? foreach ($subchapter['children'] as $section) : ?>
               <li>
-                <a href="#"
-                   title="<?= htmlReady($section->title) ?>"
-                   data-progress="<?= 75 ?>">
-                  <progress value=75
-                            max=100><span>75</span>%</progress>
+                <a href="<?= $controller->url_for('courseware', array('selected' => $section['id'])) ?>"
+                   title="<?= htmlReady($section['title']) ?>"
+                   data-progress="<?= $progress($section) ?>">
+                  <progress value=<?= $progress($section) ?> max=100><span><?= $progress($section) ?></span>%</progress>
                 </a>
               </li>
             <? endforeach ?>

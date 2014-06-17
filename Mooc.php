@@ -192,8 +192,8 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $navigation = new Navigation('Courseware', $url);
         $navigation->addSubnavigation('index', clone $navigation);
 
-        // TODO: should only be shown to students
-        if (TRUE) {
+        // should only be shown to students
+        if (!$this->container['current_user']->hasPerm($cid, 'dozent')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
             $progress_subnav = new Navigation(_('Fortschrittsübersicht'), $progress_url);
             $navigation->addSubnavigation("progress", $progress_subnav);

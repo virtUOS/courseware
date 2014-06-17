@@ -280,6 +280,11 @@ abstract class Block {
         foreach ($this->_fields as $field) {
             $field->store();
         }
+
+        // save the progress if there is one
+        if (isset($this->_progress)) {
+            $this->_progress->store();
+        }
     }
 
     // TODO
@@ -310,4 +315,32 @@ abstract class Block {
         return $json;
     }
 
+    // memorize the user's progress
+    private $_progress;
+
+    /**
+     * Return the current user's progress.
+     *
+     * @return object  the user's progress as a UserProgress object
+     */
+    public function getProgress()
+    {
+        if (!isset($this->_progress)) {
+            // get it from the DB
+            $this->_progress = new \Mooc\DB\UserProgress(
+                array(
+                    $this->_model->id,
+                    $this->container['current_user_id']));
+        }
+
+        return $this->_progress;
+    }
+
+    public function setGrade($grade)
+    {
+        // only students of this course get grades
+        if (!$this->container['current_user']->canUpdate($this->_model)) {
+            $this->getProgress()->grade = $grade;
+        }
+    }
 }

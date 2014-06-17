@@ -63,13 +63,13 @@ class User extends \User
     public function hasPerm($cid, $perm_level)
     {
         if (!$cid) {
-            throw new \InvalidArgumentException('$cid may not be null');
+            return false;
         }
         return $GLOBALS['perm']->have_studip_perm($perm_level, $cid, $this->id);
     }
 
     public function getPerm()
     {
-        return $GLOBALS['user']->perms;
+        return $this->perms;
     }
 }
