@@ -11,8 +11,11 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             "click .stop-sort-section": "stopSorting"
         },
 
-        initialize: function() {
+        initialize: function(options) {
             this.listenTo(Backbone, 'modeswitch', this.stopSorting, this);
+
+            this.active_section = options.active_section;
+            this.listenTo(this.active_section, 'change', this.updateSectionList, this);
         },
 
         render: function() {
@@ -158,6 +161,16 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             this._sortable = null;
             this._original_positions = null;
             this.$el.removeClass("sorting");
+        },
+
+        updateSectionList: function () {
+            if (this.active_section.hasChanged('title')) {
+                this.$("> .selected > a")
+                    .attr({
+                        title:        this.active_section.get('title'),
+                        'data-title': this.active_section.get('title')
+                    });
+            }
         }
     });
 });

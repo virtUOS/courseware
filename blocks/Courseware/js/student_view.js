@@ -54,7 +54,13 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
                 .createView("student", { el: $section[0], model: section_model });
 
             this.chaptersView = new ChapterListView({ el: '.chapters', model: this.model });
-            this.sectionsView = new SectionListView({ el: '.active-subchapter', model: this.model });
+            this.sectionsView = new SectionListView({
+                el: '.active-subchapter',
+                model: this.model,
+                active_section: section_model
+            });
+
+
         },
 
         remove: function() {
