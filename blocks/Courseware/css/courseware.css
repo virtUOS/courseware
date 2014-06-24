@@ -239,10 +239,10 @@ section#courseware ol.subchapters .subchapter.loading > .title {
 section#courseware ol.active-subchapter {
   background-color: transparent;
   position: absolute;
-  top: 2em;
+  top: 1.5em;
   left: 23%;
   right: 12px;
-  padding: 0px;
+  padding: 10px 0px;
 }
 section#courseware ol.active-subchapter li {
   display: block;
@@ -434,10 +434,9 @@ section#courseware ol.active-subchapter.ui-sortable li > a .handle {
 }
 section#courseware ol.active-subchapter.stuck {
   position: fixed;
-  top: 30px;
   z-index: 5;
   background-color: #fff;
-  padding-left: 12px;
+  padding: 12px 0px 6px 1%;
 }
 section#courseware ol.active-subchapter[data-blockid=""] button.add-section,
 section#courseware ol.active-subchapter[data-blockid=""] button.init-sort-chapter,

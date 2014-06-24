@@ -14,13 +14,13 @@
 }
 .active-section > .title h1 {
   font-weight: 700;
-  line-height: 1.1;
   color: #444444;
+  line-height: 1.1;
   margin-top: 15px;
   margin-bottom: 30px;
   font-size: 32px;
-  border-bottom: none;
   padding: 0px;
+  border-bottom: none;
 }
 .active-section > .title h1 .controls button.edit {
   width: 20px;
@@ -135,6 +135,15 @@
 .active-section .block-adder button:hover {
   background-color: #F8F8F8;
   border-color: #cccccc;
+}
+.active-section .edit-section input {
+  font-weight: 700;
+  color: #444444;
+  line-height: 1.1;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  font-size: 32px;
+  padding: 0px;
 }
 .active-section .edit-section button {
   width: 20px;

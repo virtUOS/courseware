@@ -6,21 +6,24 @@
   margin-top: 5em;
   width: 76%;
 
+  .section-title() {
+    // move this to the OHN-Layout
+    font-weight: 700;
+    color: #444444;
+    line-height: 1.1;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    font-size: 32px;
+    padding: 0px;
+    // end move
+  }
+
 
   // ***** Title *****
   & > .title {
     h1 {
-
-      // move this to the OHN-Layout
-      font-weight: 700;
-      line-height: 1.1;
-      color: #444444;
-      margin-top: 15px;
-      margin-bottom: 30px;
-      font-size: 32px;
+      .section-title();
       border-bottom: none;
-      padding: 0px;
-      // end move
 
       .controls {
 
@@ -103,6 +106,11 @@
   }
 
   .edit-section {
+
+    input {
+      .section-title();
+    }
+
     button {
       .btn-base();
 
