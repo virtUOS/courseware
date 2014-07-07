@@ -178,4 +178,16 @@ class XmlVisitor extends AbstractVisitor
         $element->appendChild($height);
         $this->currentNode->appendChild($element);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function startVisitingVideoBlock(VideoBlock $block)
+    {
+        $element = $this->document->createElement('video-block');
+        $url = $this->document->createAttribute('url');
+        $url->value = $block->url;
+        $element->appendChild($url);
+        $this->currentNode->appendChild($element);
+    }
 }
