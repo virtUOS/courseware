@@ -175,7 +175,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                     },
 
                     function (error) {
-                        alert("TODO: could not add block");
+                        alert("Could not add block: "+jQuery.parseJSON(error.responseText).reason);
                     }
                 )
 

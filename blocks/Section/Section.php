@@ -2,6 +2,7 @@
 namespace Mooc\UI\Section;
 
 use Mooc\UI\Block;
+use Mooc\UI\Errors\BadRequest;
 
 class Section extends Block {
 
@@ -84,6 +85,12 @@ class Section extends Block {
         $types = $this->container['block_factory']->getContentBlockClasses();
         if (!in_array($data['type'], $types)) {
             throw new Errors\BadRequest("Wrong type.");
+        }
+
+        $className = '\Mooc\UI\\'.$data['type'].'\\'.$data['type'];
+
+        if (!call_user_func(array($className, 'additionalInstanceAllowed'), $this)) {
+            throw new BadRequest('No additional '.$data['type'].' allowed');
         }
 
         $block = new \Mooc\DB\Block();
