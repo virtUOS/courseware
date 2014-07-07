@@ -50,8 +50,9 @@ class Section extends Block {
         // block adder
         $content_block_types = array();
         foreach ($this->container['block_factory']->getContentBlockClasses() as $type) {
+            $className = '\Mooc\UI\\'.$type.'\\'.$type;
             $readableName = $type;
-            $nameConstant = '\\Mooc\\UI\\'.$type.'\\'.$type.'::NAME';
+            $nameConstant = $className.'::NAME';
 
             if (defined($nameConstant)) {
                 $readableName = constant($nameConstant);
@@ -60,6 +61,10 @@ class Section extends Block {
             $content_block_types[] = array(
                 'type' => $type,
                 'name' => $readableName,
+                'additional_instance_allowed' => call_user_func(array(
+                    $className,
+                    'additionalInstanceAllowed'
+                ), $this),
             );
         }
 

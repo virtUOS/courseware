@@ -12,6 +12,8 @@
   <h3>Block hinzufügen:</h3>
 
   {{#content_block_types}}
-    <button class=add-block-type data-blocktype="{{type}}">{{#i18n}}{{name}}{{/i18n}}</button>
+    {{#additional_instance_allowed}}
+      <button class=add-block-type data-blocktype="{{type}}">{{#i18n}}{{name}}{{/i18n}}</button>
+    {{/additional_instance_allowed}}
   {{/content_block_types}}
 </div>

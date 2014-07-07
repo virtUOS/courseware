@@ -3,6 +3,7 @@
 namespace Mooc\UI\BlubberBlock;
 
 use Mooc\UI\Block;
+use Mooc\UI\Section\Section;
 
 /**
  * Display the contents of a Blubber stream in a (M)ooc.IP block.
@@ -42,5 +43,20 @@ class BlubberBlock extends Block
     public function isEditable()
     {
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function additionalInstanceAllowed(Section $section)
+    {
+        $blubberBlockAllowed = true;
+        $section->traverseChildren(function ($child) use (&$blubberBlockAllowed) {
+            if ($child instanceof BlubberBlock) {
+                $blubberBlockAllowed = false;
+            }
+        });
+
+        return $blubberBlockAllowed;
     }
 }

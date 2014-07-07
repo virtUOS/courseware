@@ -4,6 +4,7 @@ namespace Mooc\UI\TestBlock;
 
 use Mooc\Container;
 use Mooc\UI\Block;
+use Mooc\UI\Section\Section;
 use Mooc\UI\TestBlock\Model\Test;
 use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
 
@@ -132,5 +133,13 @@ class TestBlock extends Block
             'title' => $this->test->title,
             'exercises' => $exercises,
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function additionalInstanceAllowed(Section $section)
+    {
+        return VipsBridge::vipsExists();
     }
 }

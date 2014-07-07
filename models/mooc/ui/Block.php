@@ -2,6 +2,7 @@
 namespace Mooc\UI;
 
 // TODO: authorization in views and handlers
+use Mooc\UI\Section\Section;
 
 /**
  * Objects of this class represent a UI component bundling model, view
@@ -342,5 +343,18 @@ abstract class Block {
         if (!$this->container['current_user']->canUpdate($this->_model)) {
             $this->getProgress()->grade = $grade;
         }
+    }
+
+    /**
+     * Checks whether a new instance of a block type can be created for a given
+     * section.
+     *
+     * @param Section $section The section the block should be created in
+     *
+     * @return bool True if a new block instance is allowed, false otherwise
+     */
+    public static function additionalInstanceAllowed(Section $section)
+    {
+        return true;
     }
 }
