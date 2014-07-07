@@ -70,6 +70,7 @@ return array(
     'CssWhitesmithsFormatter' => $vendorDir . '/natxet/CssMin/src/CssMin.php',
     'Exercise' => $baseDir . '/../VipsPlugin/exercises/exercise.php',
     'MoocipController' => $baseDir . '/controllers/moocip_controller.php',
+    'ProgressController' => $baseDir . '/controllers/progress.php',
     'RegistrationsController' => $baseDir . '/controllers/registrations.php',
     'aCssAtBlockEndToken' => $vendorDir . '/natxet/CssMin/src/CssMin.php',
     'aCssAtBlockStartToken' => $vendorDir . '/natxet/CssMin/src/CssMin.php',

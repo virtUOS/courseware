@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Mooc\\UI\\' => array($baseDir . '/blocks'),
+    'Mooc\\Export\\' => array($baseDir . '/export'),
 );

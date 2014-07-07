@@ -152,6 +152,16 @@ abstract class Block {
         $this->_fields[$name] = $field;
     }
 
+    /**
+     * Returns the underlying model object.
+     *
+     * @return \SimpleORMap The model
+     */
+    public function getModel()
+    {
+        return $this->_model;
+    }
+
     // TODO
     function __get($name)
     {
