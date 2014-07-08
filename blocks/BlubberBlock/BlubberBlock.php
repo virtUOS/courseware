@@ -16,6 +16,9 @@ class BlubberBlock extends Block
 
     public function student_view()
     {
+        // on view: grade with 100%
+        $this->setGrade(1.0);
+
         $streamUrl = \PluginEngine::getURL(
             $GLOBALS['plugin'],
             array(),
