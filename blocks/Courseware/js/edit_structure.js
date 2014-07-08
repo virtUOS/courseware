@@ -42,7 +42,9 @@ define(['q', 'backbone', 'assets/js/templates', 'assets/js/i18n', 'dateFormat'],
 
         postRender: function () {
             if (typeof Modernizr === 'undefined' || !Modernizr.inputtypes.date) {
-                $('input[type=date]').datepicker();
+                $('input[type=date]').datepicker({
+                    dateFormat: $.datepicker.W3C
+                });
             }
             this.$("input").get(0).focus();
         },
