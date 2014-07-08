@@ -129,6 +129,9 @@ class XmlVisitor extends AbstractVisitor
         $title = $this->document->createAttribute('title');
         $title->value = $section->title;
         $element->appendChild($title);
+        $icon = $this->document->createAttribute('icon');
+        $icon->value = $section->icon;
+        $element->appendChild($icon);
         $blocks = $this->document->createElement('blocks');
         $element->appendChild($blocks);
         $this->currentNode->appendChild($element);
