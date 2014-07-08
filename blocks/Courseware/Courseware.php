@@ -17,7 +17,7 @@ class Courseware extends Block {
         list($courseware, $chapter, $subchapter, $section) = $this->getSelectedPath($this->lastSelected);
 
         $active_section = array();
-        if ($section) {
+        if ($section && $this->container['current_user']->canRead($section)) {
             $active_section_block = $this->container['block_factory']->makeBlock($section);
             $active_section = array(
                 'id'        => $section->id,
@@ -121,6 +121,10 @@ class Courseware extends Block {
     {
         $result = array();
         foreach ($collection as $item) {
+            if (!$this->container['current_user']->canRead($item)) {
+                continue;
+            }
+
             if ($showFields) {
                 $block = $this->container['block_factory']->makeBlock($item);
                 $json = $block->toJSON();
@@ -128,6 +132,9 @@ class Courseware extends Block {
                 $json = $item->toArray();
             }
 
+            if (!$item->isPublished()) {
+                $json['unpublished'] = true;
+            }
             $json['selected'] = $selected == $item->id;
             $result[] = $json;
         }

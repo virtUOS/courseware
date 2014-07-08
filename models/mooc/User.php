@@ -35,8 +35,12 @@ class User extends \User
 
     public function canRead($model)
     {
+        if ($this->canUpdate($model)) {
+            return true;
+        }
+
         if ($model instanceof \Mooc\DB\Block) {
-            return $this->hasPerm($model->seminar_id, 'user');
+            return $model->isPublished() && $this->hasPerm($model->seminar_id, 'user');
         }
 
         throw new \RuntimeException('not implemented: ' . __METHOD__);

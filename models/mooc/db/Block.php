@@ -171,6 +171,26 @@ class Block extends \SimpleORMap
         $st->execute($args);
     }
 
+    /**
+     *
+     * @param type $timestamp
+     * @return boolean
+     */
+    function isPublished($timestamp = null)
+    {
+        if (is_null($timestamp)) {
+            $timestamp = time();
+        }
+
+        // check if parent blocks are published
+        if ($this->parent && !$this->parent->isPublished($timestamp)) {
+            return false;
+        }
+
+        // check if block is published
+        return $this->publication_date <= $timestamp;
+    }
+
 
     /**
      * returns array of instances of given class filtered by given sql
