@@ -30,7 +30,12 @@ class XmlVisitor extends AbstractVisitor
     private $document;
 
     /**
-     * @var \DOMElement
+     * @var \DOMNode[]
+     */
+    private $nodeStack = array();
+
+    /**
+     * @var \DOMNode
      */
     private $currentNode;
 
@@ -38,7 +43,7 @@ class XmlVisitor extends AbstractVisitor
     {
         $this->blockFactory = $blockFactory;
         $this->document = $document;
-        $this->currentNode = $document;
+        $this->enterNode($document);
     }
 
     /**
@@ -46,12 +51,7 @@ class XmlVisitor extends AbstractVisitor
      */
     public function startVisitingCourseware(Courseware $courseware)
     {
-        $element = $this->document->createElement('courseware');
-        $title = $this->document->createAttribute('title');
-        $title->value = $courseware->title;
-        $element->appendChild($title);
-        $this->currentNode->appendChild($element);
-        $this->currentNode = $element;
+        $this->enterNode($this->appendBlockNode('courseware', $courseware->title));
 
         foreach ($courseware->getModel()->children as $chapter) {
             $this->startVisitingChapter($chapter);
@@ -64,7 +64,7 @@ class XmlVisitor extends AbstractVisitor
      */
     public function endVisitingCourseware(Courseware $courseware)
     {
-        $this->currentNode = $this->currentNode->parentNode;
+        $this->leaveNode();
     }
 
     /**
@@ -72,12 +72,7 @@ class XmlVisitor extends AbstractVisitor
      */
     public function startVisitingChapter(Block $chapter)
     {
-        $element = $this->document->createElement('chapter');
-        $title = $this->document->createAttribute('title');
-        $title->value = $chapter->title;
-        $element->appendChild($title);
-        $this->currentNode->appendChild($element);
-        $this->currentNode = $element;
+        $this->enterNode($this->appendBlockNode('chapter', $chapter->title));
 
         foreach ($chapter->children as $chapter) {
             $this->startVisitingSubChapter($chapter);
@@ -90,7 +85,7 @@ class XmlVisitor extends AbstractVisitor
      */
     public function endVisitingChapter(Block $chapter)
     {
-        $this->currentNode = $this->currentNode->parentNode;
+        $this->leaveNode();
     }
 
     /**
@@ -98,12 +93,7 @@ class XmlVisitor extends AbstractVisitor
      */
     public function startVisitingSubChapter(Block $subChapter)
     {
-        $element = $this->document->createElement('subchapter');
-        $title = $this->document->createAttribute('title');
-        $title->value = $subChapter->title;
-        $element->appendChild($title);
-        $this->currentNode->appendChild($element);
-        $this->currentNode = $element;
+        $this->enterNode($this->appendBlockNode('subchapter', $subChapter->title));
 
         foreach ($subChapter->children as $block) {
             $section = $this->blockFactory->makeBlock($block);
@@ -117,7 +107,7 @@ class XmlVisitor extends AbstractVisitor
      */
     public function endVisitingSubChapter(Block $subChapter)
     {
-        $this->currentNode = $this->currentNode->parentNode;
+        $this->leaveNode();
     }
 
     /**
@@ -125,17 +115,9 @@ class XmlVisitor extends AbstractVisitor
      */
     public function startVisitingSection(Section $section)
     {
-        $element = $this->document->createElement('section');
-        $title = $this->document->createAttribute('title');
-        $title->value = $section->title;
-        $element->appendChild($title);
-        $icon = $this->document->createAttribute('icon');
-        $icon->value = $section->icon;
-        $element->appendChild($icon);
-        $blocks = $this->document->createElement('blocks');
-        $element->appendChild($blocks);
-        $this->currentNode->appendChild($element);
-        $this->currentNode = $blocks;
+        $this->enterNode($this->appendBlockNode('section', $section->title, array(
+            $this->createAttributeNode('icon', $section->icon),
+        )));
 
         foreach ($section->getModel()->children as $block) {
             $uiBlock = $this->blockFactory->makeBlock($block);
@@ -164,7 +146,7 @@ class XmlVisitor extends AbstractVisitor
      */
     public function endVisitingSection(Section $section)
     {
-        $this->currentNode = $this->currentNode->parentNode->parentNode;
+        $this->leaveNode();
     }
 
     /**
@@ -172,8 +154,7 @@ class XmlVisitor extends AbstractVisitor
      */
     public function startVisitingBlubberBlock(BlubberBlock $block)
     {
-        $element = $this->document->createElement('discussion-block');
-        $this->currentNode->appendChild($element);
+        $this->appendBlockNode('discussion-block', $block->title);
     }
 
     /**
@@ -181,14 +162,10 @@ class XmlVisitor extends AbstractVisitor
      */
     public function startVisitingIFrameBlock(IFrameBlock $block)
     {
-        $element = $this->document->createElement('iframe-block');
-        $url = $this->document->createAttribute('url');
-        $url->value = $block->url;
-        $element->appendChild($url);
-        $height = $this->document->createAttribute('height');
-        $height->value = $block->height;
-        $element->appendChild($height);
-        $this->currentNode->appendChild($element);
+        $this->appendBlockNode('iframe-block', $block->title, array(
+            $this->createAttributeNode('url', $block->url),
+            $this->createAttributeNode('height', $block->height)
+        ));
     }
 
     /**
@@ -196,10 +173,79 @@ class XmlVisitor extends AbstractVisitor
      */
     public function startVisitingVideoBlock(VideoBlock $block)
     {
-        $element = $this->document->createElement('video-block');
-        $url = $this->document->createAttribute('url');
-        $url->value = $block->url;
-        $element->appendChild($url);
+        $this->appendBlockNode('video-block', $block->title, array(
+            $this->createAttributeNode('url', $block->url)
+        ));
+    }
+
+    /**
+     * Enters a new DOM node (i. e. making it the current node).
+     *
+     * @param \DOMNode $node The node to enter
+     */
+    private function enterNode(\DOMNode $node)
+    {
+        // put current node on the backtracking stack
+        if ($this->currentNode !== null) {
+            $this->nodeStack[] = $this->currentNode;
+        }
+
+        $this->currentNode = $node;
+    }
+
+    /**
+     * Leaves the current node.
+     *
+     * @throws \RuntimeException if the current node is the XML document
+     */
+    private function leaveNode()
+    {
+        if (count($this->nodeStack) == 0) {
+            throw new \RuntimeException('Cannot leave the root node');
+        }
+
+        $this->currentNode = array_pop($this->nodeStack);
+    }
+
+    /**
+     * Appends a new block node to the current node.
+     *
+     * @param string $elementName The element name
+     * @param string $title       The block title
+     * @param array  $attributes  Element attributes
+     *
+     * @return \DOMElement The new element
+     */
+    private function appendBlockNode($elementName, $title = null, array $attributes = array())
+    {
+        $element = $this->document->createElement($elementName);
+
+        if ($title !== null) {
+            $element->appendChild($this->createAttributeNode('title', $title));
+        }
+
+        foreach ($attributes as $attribute) {
+            $element->appendChild($attribute);
+        }
+
         $this->currentNode->appendChild($element);
+
+        return $element;
+    }
+
+    /**
+     * Creates a new DOM XML attribute.
+     *
+     * @param string $name  Attribute name
+     * @param string $value Attribute value
+     *
+     * @return \DOMAttr Attribute node
+     */
+    private function createAttributeNode($name, $value)
+    {
+        $attribute = $this->document->createAttribute($name);
+        $attribute->value = $value;
+
+        return $attribute;
     }
 }
