@@ -170,6 +170,15 @@ class XmlVisitor extends AbstractVisitor
     /**
      * {@inheritdoc}
      */
+    public function startVisitingBlubberBlock(BlubberBlock $block)
+    {
+        $element = $this->document->createElement('discussion-block');
+        $this->currentNode->appendChild($element);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function startVisitingIFrameBlock(IFrameBlock $block)
     {
         $element = $this->document->createElement('iframe-block');
