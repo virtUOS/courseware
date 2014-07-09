@@ -105,7 +105,10 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                         $block_wrapper.removeClass("loading");
                         alert("TODO: could not delete block");
                     }
-                );
+                )
+                    .always(function () {
+                        self.refreshBlockTypes(self.model.id, self.$('div.block-types'));
+                    });
             }
         },
 
@@ -181,6 +184,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
                 .always(function () {
                     $button.prop("disabled", false).removeClass("loading");
+                    view.refreshBlockTypes(view.model.id, view.$('div.block-types'));
                 });
         },
 
@@ -348,6 +352,14 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                         };
                     helper.callHandler(courseware_id, "update_positions", data);
                 });
+        },
+
+        refreshBlockTypes: function (sectionId, container) {
+            var model = { id: sectionId };
+            var options = { el: container, model: model };
+            var section = block_types.findByName('Section');
+            var blockTypesStub = section.createView('block_types', options);
+            blockTypesStub.renderServerSide();
         }
     });
 });

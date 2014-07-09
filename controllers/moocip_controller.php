@@ -93,7 +93,7 @@ class MoocipController extends StudipController {
         return $result;
     }
 
-    const ALLOWED_VIEWS = 'student author';
+    const ALLOWED_VIEWS = 'student author block_types';
 
     public function getViewParam()
     {

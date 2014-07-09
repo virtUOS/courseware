@@ -49,27 +49,19 @@ class Section extends Block {
         );
 
         // block adder
-        $content_block_types = array();
-        foreach ($this->container['block_factory']->getContentBlockClasses() as $type) {
-            $className = '\Mooc\UI\\'.$type.'\\'.$type;
-            $readableName = $type;
-            $nameConstant = $className.'::NAME';
-
-            if (defined($nameConstant)) {
-                $readableName = constant($nameConstant);
-            }
-
-            $content_block_types[] = array(
-                'type' => $type,
-                'name' => $readableName,
-                'additional_instance_allowed' => call_user_func(array(
-                    $className,
-                    'additionalInstanceAllowed'
-                ), $this),
-            );
-        }
+        $content_block_types = $this->getBlockTypes();
 
         return compact('blocks', 'content_block_types', 'icon', 'title', 'visited');
+    }
+
+    /**
+     * View rendering buttons to add new blocks.
+     *
+     * @return array The available block types
+     */
+    function block_types_view()
+    {
+        return array('content_block_types' => $this->getBlockTypes());
     }
 
     function add_content_block_handler($data) {
@@ -133,6 +125,37 @@ class Section extends Block {
         $this->refreshIcon();
 
         return array("status" => "ok");
+    }
+
+    /**
+     * Returns the available block types.
+     *
+     * @return array The available block types
+     */
+    private function getBlockTypes()
+    {
+        $blockTypes = array();
+
+        foreach ($this->container['block_factory']->getContentBlockClasses() as $type) {
+            $className = '\Mooc\UI\\'.$type.'\\'.$type;
+            $readableName = $type;
+            $nameConstant = $className.'::NAME';
+
+            if (defined($nameConstant)) {
+                $readableName = constant($nameConstant);
+            }
+
+            $blockTypes[] = array(
+                'type' => $type,
+                'name' => $readableName,
+                'additional_instance_allowed' => call_user_func(array(
+                    $className,
+                    'additionalInstanceAllowed'
+                ), $this),
+            );
+        }
+
+        return $blockTypes;
     }
 
     private function updateIconWithBlock($new_block)
