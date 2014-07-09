@@ -121,23 +121,8 @@ class XmlVisitor extends AbstractVisitor
 
         foreach ($section->getModel()->children as $block) {
             $uiBlock = $this->blockFactory->makeBlock($block);
-
-            if ($uiBlock instanceof BlubberBlock) {
-                $this->startVisitingBlubberBlock($uiBlock);
-                $this->endVisitingBlubberBlock($uiBlock);
-            } elseif ($uiBlock instanceof HtmlBlock) {
-                $this->startVisitingHtmlBlock($uiBlock);
-                $this->endVisitingHtmlBlock($uiBlock);
-            } elseif ($uiBlock instanceof IFrameBlock) {
-                $this->startVisitingIFrameBlock($uiBlock);
-                $this->endVisitingIFrameBlock($uiBlock);
-            } elseif ($uiBlock instanceof TestBlock) {
-                $this->startVisitingTestBlock($uiBlock);
-                $this->endVisitingTestBlock($uiBlock);
-            } elseif ($uiBlock instanceof VideoBlock) {
-                $this->startVisitingVideoBlock($uiBlock);
-                $this->endVisitingVideoBlock($uiBlock);
-            }
+            $this->startVisitingBlock($uiBlock);
+            $this->endVisitingBlock($uiBlock);
         }
     }
 
@@ -152,30 +137,16 @@ class XmlVisitor extends AbstractVisitor
     /**
      * {@inheritdoc}
      */
-    public function startVisitingBlubberBlock(BlubberBlock $block)
+    public function startVisitingBlock(\Mooc\UI\Block $block)
     {
-        $this->appendBlockNode('discussion-block', $block->title);
-    }
+        $properties = $block->export();
+        $attributes = array();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function startVisitingIFrameBlock(IFrameBlock $block)
-    {
-        $this->appendBlockNode('iframe-block', $block->title, array(
-            $this->createAttributeNode('url', $block->url),
-            $this->createAttributeNode('height', $block->height)
-        ));
-    }
+        foreach ($properties as $name => $value) {
+            $attributes[] = $this->createAttributeNode($name, $value);
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function startVisitingVideoBlock(VideoBlock $block)
-    {
-        $this->appendBlockNode('video-block', $block->title, array(
-            $this->createAttributeNode('url', $block->url)
-        ));
+        $this->appendBlockNode('block', $block->title, $attributes);
     }
 
     /**

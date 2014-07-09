@@ -77,70 +77,14 @@ abstract class AbstractVisitor implements VisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function startVisitingBlubberBlock(BlubberBlock $block)
+    public function startVisitingBlock(\Mooc\UI\Block $block)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function endVisitingBlubberBlock(BlubberBlock $block)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function startVisitingHtmlBlock(HtmlBlock $block)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function endVisitingHtmlBlock(HtmlBlock $block)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function startVisitingIFrameBlock(IFrameBlock $block)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function endVisitingIFrameBlock(IFrameBlock $block)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function startVisitingTestBlock(TestBlock $block)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function endVisitingTestBlock(TestBlock $block)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function startVisitingVideoBlock(VideoBlock $block)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function endVisitingVideoBlock(VideoBlock $block)
+    public function endVisitingBlock(\Mooc\UI\Block $block)
     {
     }
 }

@@ -33,23 +33,7 @@ interface VisitorInterface
 
     public function endVisitingSection(Section $section);
 
-    public function startVisitingBlubberBlock(BlubberBlock $block);
+    public function startVisitingBlock(\Mooc\UI\Block $block);
 
-    public function endVisitingBlubberBlock(BlubberBlock $block);
-
-    public function startVisitingHtmlBlock(HtmlBlock $block);
-
-    public function endVisitingHtmlBlock(HtmlBlock $block);
-
-    public function startVisitingIFrameBlock(IFrameBlock $block);
-
-    public function endVisitingIFrameBlock(IFrameBlock $block);
-
-    public function startVisitingTestBlock(TestBlock $block);
-
-    public function endVisitingTestBlock(TestBlock $block);
-
-    public function startVisitingVideoBlock(VideoBlock $block);
-
-    public function endVisitingVideoBlock(VideoBlock $block);
+    public function endVisitingBlock(\Mooc\UI\Block $block);
 }

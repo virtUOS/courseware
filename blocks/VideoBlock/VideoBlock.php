@@ -30,4 +30,12 @@ class VideoBlock extends Block
         $this->url = (string) $data['url'];
         return array('url' => $this->url);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function export()
+    {
+        return array('url' => $this->url);
+    }
 }

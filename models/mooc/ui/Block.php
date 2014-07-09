@@ -326,6 +326,16 @@ abstract class Block {
         return $json;
     }
 
+    /**
+     * Exposes properties to be exported.
+     *
+     * @return array The properties to export
+     */
+    public function export()
+    {
+        return array();
+    }
+
     // memorize the user's progress
     private $_progress;
 

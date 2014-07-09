@@ -38,4 +38,9 @@ class IFrameBlock extends Block
         $this->height = (int) $data['height'];
         return $this->array_rep();
     }
+
+    public function export()
+    {
+        return array('url' => $this->url, 'height' => $this->height);
+    }
 }
