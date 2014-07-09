@@ -244,7 +244,7 @@ class XmlVisitor extends AbstractVisitor
     private function createAttributeNode($name, $value)
     {
         $attribute = $this->document->createAttribute($name);
-        $attribute->value = $value;
+        $attribute->value = utf8_encode($value);
 
         return $attribute;
     }

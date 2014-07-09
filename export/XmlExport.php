@@ -28,7 +28,7 @@ class XmlExport implements ExportInterface
      */
     public function export(Courseware $courseware)
     {
-        $document = new \DOMDocument('1.0', 'ISO-8859-15');
+        $document = new \DOMDocument('1.0', 'UTF-8');
         $visitor = new XmlVisitor($this->blockFactory, $document);
         $visitor->startVisitingCourseware($courseware);
 
