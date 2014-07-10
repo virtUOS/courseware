@@ -37,6 +37,10 @@ define(['module', 'argjs'], function (module, Arg) {
             var oldLocation = document.location.pathname + document.location.search + document.location.hash;
             var newLocation = Arg.url(Arg.url(), params, hash);
 
+            if (newLocation.substr(-1) === "#") {
+                newLocation = newLocation.substr(0, newLocation.length - 1);
+            }
+
             if (oldLocation !== newLocation) {
                 document.location = newLocation;
             } else {
