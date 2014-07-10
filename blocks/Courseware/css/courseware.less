@@ -60,12 +60,12 @@ section#courseware {
     width: @sidebar-width;
 
     .chapter > .title {
-      background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
+      background: url("@{blocks-icon-dir}/16/blue/arr_1right.png") no-repeat 3px center;
     }
 
     .chapter.selected > .title {
       font-weight: 700;
-      background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
+      background: url("@{blocks-icon-dir}/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
     }
 
     .controls {
@@ -108,7 +108,7 @@ section#courseware {
     }
 
     .chapter.loading > .title {
-      background-image: url(../../../../../../assets/images/ajax_indicator_small.gif);
+      background-image: url("@{blocks-images-dir}/ajax_indicator_small.gif");
     }
 
 
@@ -118,10 +118,10 @@ section#courseware {
       display: none;
 
       color: transparent;
-      line-height: 25px;
+      line-height: 35px;
       width: 25px;
       padding: 5px;
-      background: transparent url("../../../../../../plugins_packages/core/Forum/img/anfasser_24.png") center center no-repeat;
+      background: transparent @anfasser-bg-url center center no-repeat;
       cursor: move;
     }
 
@@ -219,7 +219,7 @@ section#courseware {
 
 
     .subchapter.loading > .title {
-      background: url(../../../../../../assets/images/ajax_indicator_small.gif) no-repeat 3px center;
+      background: url(@{blocks-images-dir}/ajax_indicator_small.gif) no-repeat 3px center;
     }
   }
 
@@ -264,10 +264,10 @@ section#courseware {
       }
 
       &.prev_navigation {
-        background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+        background-image: url("@{blocks-icons-dir}/32/white/arr_1left.png");
 
         a:hover {
-          background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+          background-image: url("@{blocks-icons-dir}/32/white/arr_1left.png");
           background-position: center center;
           background-size: 20px;
           background-repeat: no-repeat;
@@ -275,15 +275,15 @@ section#courseware {
         }
 
         span {
-          background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+          background-image: url("@{blocks-icons-dir}/32/white/arr_1left.png");
         }
       }
 
       &.next_navigation {
-        background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+        background-image: url("@{blocks-icons-dir}/32/white/arr_1right.png");
 
         a:hover {
-          background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+          background-image: url("@{blocks-icons-dir}/32/white/arr_1right.png");
           background-position: center center;
           background-size: 20px;
           background-repeat: no-repeat;
@@ -291,7 +291,7 @@ section#courseware {
         }
 
         span {
-          background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+          background-image: url("@{blocks-icons-dir}/32/white/arr_1right.png");
         }
       }
 
@@ -356,8 +356,7 @@ section#courseware {
         line-height: 25px;
         width: 25px;
         padding: 5px;
-        // border-right: 1px solid #c4c4c4;
-        background: #d0d0d0 url("../../../../../../plugins_packages/core/Forum/img/anfasser_24.png") center center no-repeat;
+        background: #d0d0d0 @anfasser-bg-url center center no-repeat;
         cursor: move;
       }
 
@@ -367,7 +366,7 @@ section#courseware {
 
 
       &.loading > a {
-        background: url("../../../../../../assets/images/ajax_indicator_small.gif") center center no-repeat;
+        background: url("@{blocks-images-dir}/ajax_indicator_small.gif") center center no-repeat;
       }
     }
 
@@ -454,7 +453,7 @@ section#courseware {
     opacity: 0.5;
 
     .title > h1 {
-      background: url(../../../../../../assets/images/ajax_indicator_small.gif) left center no-repeat;
+      background: url("@{blocks-images-dir}/ajax_indicator_small.gif") left center no-repeat;
       padding-left: 20px;
     }
   }
@@ -499,7 +498,7 @@ section#courseware {
         border-top-left-radius: 2px;
         border-bottom-left-radius: 2px;
         border-right: none;
-        background-image: url("../../../../../../assets/images/icons/32/blue/headache.png");
+        background-image: url("@{blocks-icons-dir}/32/blue/headache.png");
         background-position: center 0px;
       }
 
@@ -507,7 +506,7 @@ section#courseware {
         border-top-right-radius: 2px;
         border-bottom-right-radius: 2px;
         border-left: none;
-        background-image: url("../../../../../../assets/images/icons/32/blue/doctoral_cap.png");
+        background-image: url("@{blocks-icons-dir}/32/blue/doctoral_cap.png");
       }
     }
   }
@@ -520,11 +519,11 @@ section#courseware {
   }
 
   &.view-student > .mode-switch .student {
-    background-image: url("../../../../../../assets/images/icons/32/white/headache.png");
+    background-image: url("@{blocks-icons-dir}/32/white/headache.png");
   }
 
   &.view-author > .mode-switch .author {
-    background-image: url("../../../../../../assets/images/icons/32/white/doctoral_cap.png");
+    background-image: url("@{blocks-icons-dir}/32/white/doctoral_cap.png");
   }
 
 
@@ -576,21 +575,21 @@ section#courseware {
     &.add-chapter,
     &.add-subchapter,
     &.add-section {
-      background-image: url("../../../../../../assets/images/icons/16/blue/add.png");
+      background-image: url("@{blocks-icons-dir}/16/blue/add.png");
       background-position: 6px center;
     }
 
     &.init-sort-chapter,
     &.init-sort-subchapter,
     &.init-sort-section {
-      background-image: url("../../../../../../assets/images/icons/16/blue/ranking.png");
+      background-image: url("@{blocks-icons-dir}/16/blue/ranking.png");
       background-position: 6px 6px;
     }
 
     &.stop-sort-chapter,
     &.stop-sort-subchapter,
     &.stop-sort-section {
-      background: url("../../../../../../assets/images/icons/16/blue/accept.png") 6px center no-repeat #E9E9E9;
+      background: url("@{blocks-icons-dir}/16/blue/accept.png") 6px center no-repeat #E9E9E9;
       display: none;
     }
   }

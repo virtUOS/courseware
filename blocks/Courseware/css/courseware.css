@@ -94,11 +94,11 @@ section#courseware ol.chapters {
   width: 18%;
 }
 section#courseware ol.chapters .chapter > .title {
-  background: url("../../../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
+  background: url("/16/blue/arr_1right.png") no-repeat 3px center;
 }
 section#courseware ol.chapters .chapter.selected > .title {
   font-weight: 700;
-  background: url("../../../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
+  background: url("/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
 }
 section#courseware ol.chapters .controls {
   text-align: center;
@@ -118,26 +118,26 @@ section#courseware ol.chapters .chapter div.title button.edit {
   height: 20px;
   color: transparent;
   border: none;
-  background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
+  background: url("../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
 }
 section#courseware ol.chapters .chapter div.title button.edit:hover {
   cursor: pointer;
 }
 section#courseware ol.chapters .chapter div.title button.edit:hover {
-  background-image: url("../../../../../../assets/images/icons/16/black/edit.png");
+  background-image: url("../../../../assets/images/icons/16/black/edit.png");
 }
 section#courseware ol.chapters .chapter div.title button.trash {
   width: 20px;
   height: 20px;
   color: transparent;
   border: none;
-  background: url("../../../../../../assets/images/icons/16/grey/trash.png") center center no-repeat;
+  background: url("../../../../assets/images/icons/16/grey/trash.png") center center no-repeat;
 }
 section#courseware ol.chapters .chapter div.title button.trash:hover {
   cursor: pointer;
 }
 section#courseware ol.chapters .chapter div.title button.trash:hover {
-  background-image: url("../../../../../../assets/images/icons/16/black/trash.png");
+  background-image: url("../../../../assets/images/icons/16/black/trash.png");
 }
 section#courseware ol.chapters .chapter div.title .controls {
   visibility: hidden;
@@ -153,15 +153,15 @@ section#courseware ol.chapters .chapter div.title:hover .controls {
   visibility: visible;
 }
 section#courseware ol.chapters .chapter.loading > .title {
-  background-image: url(../../../../../../assets/images/ajax_indicator_small.gif);
+  background-image: url("../../../../assets/images/ajax_indicator_small.gif");
 }
 section#courseware ol.chapters .handle {
   display: none;
   color: transparent;
-  line-height: 25px;
+  line-height: 35px;
   width: 25px;
   padding: 5px;
-  background: transparent url("../../../../../../plugins_packages/core/Forum/img/anfasser_24.png") center center no-repeat;
+  background: transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAYCAYAAAA20uedAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gcIChIQ+6DGYQAAAK1JREFUKM+F0kkKAjEURdFbDxQUwXYubsBut7UodaTuwabsQBAtcOD7ICnQTA43P4MQkuV5PgAOQEUBDT6rmSpg6pjYcShg5ohD81DA0DGy0UMBfUfPRvf/DruOsBMKaKeb38OWo+L3I1QUUHek1gRkjlQJKB0vG10KeDieNvoh4O6oKODmuNrom4CL45wqoHCcUgUcHUWq/F8Adol7AWvH1m5CASvHwi7DXxcq3tZTMV+q42t6AAAAAElFTkSuQmCC") center center no-repeat;
   cursor: move;
 }
 section#courseware ol.chapters.sorting > .controls button,
@@ -209,13 +209,13 @@ section#courseware ol.subchapters li div.title button.edit {
   height: 20px;
   color: transparent;
   border: none;
-  background: url("../../../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
+  background: url("../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
 }
 section#courseware ol.subchapters li div.title button.edit:hover {
   cursor: pointer;
 }
 section#courseware ol.subchapters li div.title button.edit:hover {
-  background-image: url("../../../../../../assets/images/icons/16/black/edit.png");
+  background-image: url("../../../../assets/images/icons/16/black/edit.png");
 }
 section#courseware ol.subchapters li div.title .controls {
   visibility: hidden;
@@ -234,7 +234,7 @@ section#courseware ol.subchapters li.no-content {
   padding: 10px 5px;
 }
 section#courseware ol.subchapters .subchapter.loading > .title {
-  background: url(../../../../../../assets/images/ajax_indicator_small.gif) no-repeat 3px center;
+  background: url(../../../../assets/images/ajax_indicator_small.gif) no-repeat 3px center;
 }
 section#courseware ol.active-subchapter {
   background-color: transparent;
@@ -271,30 +271,30 @@ section#courseware ol.active-subchapter li.prev_next_navigation span {
   border-radius: 2px;
 }
 section#courseware ol.active-subchapter li.prev_navigation {
-  background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+  background-image: url("../../../../assets/images/icons/32/white/arr_1left.png");
 }
 section#courseware ol.active-subchapter li.prev_navigation a:hover {
-  background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+  background-image: url("../../../../assets/images/icons/32/white/arr_1left.png");
   background-position: center center;
   background-size: 20px;
   background-repeat: no-repeat;
   background-color: #DDDDDD !important;
 }
 section#courseware ol.active-subchapter li.prev_navigation span {
-  background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+  background-image: url("../../../../assets/images/icons/32/white/arr_1left.png");
 }
 section#courseware ol.active-subchapter li.next_navigation {
-  background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+  background-image: url("../../../../assets/images/icons/32/white/arr_1right.png");
 }
 section#courseware ol.active-subchapter li.next_navigation a:hover {
-  background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+  background-image: url("../../../../assets/images/icons/32/white/arr_1right.png");
   background-position: center center;
   background-size: 20px;
   background-repeat: no-repeat;
   background-color: #DDDDDD;
 }
 section#courseware ol.active-subchapter li.next_navigation span {
-  background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+  background-image: url("../../../../assets/images/icons/32/white/arr_1right.png");
 }
 section#courseware ol.active-subchapter li > a {
   background-color: #eee;
@@ -307,27 +307,27 @@ section#courseware ol.active-subchapter li > a {
   border-radius: 2px;
 }
 section#courseware ol.active-subchapter li > a[data-icon=""] {
-  background-image: url("../../../../../../assets/images/icons/32/blue/infopage.png");
+  background-image: url("../../../../assets/images/icons/32/blue/infopage.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li > a[data-icon="chat"] {
-  background-image: url("../../../../../../assets/images/icons/32/blue/chat.png");
+  background-image: url("../../../../assets/images/icons/32/blue/chat.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li > a[data-icon="document"] {
-  background-image: url("../../../../../../assets/images/icons/32/blue/infopage.png");
+  background-image: url("../../../../assets/images/icons/32/blue/infopage.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li > a[data-icon="task"] {
-  background-image: url("../../../../../../assets/images/icons/32/blue/question.png");
+  background-image: url("../../../../assets/images/icons/32/blue/question.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li > a[data-icon="video"] {
-  background-image: url("../../../../../../assets/images/icons/32/blue/video.png");
+  background-image: url("../../../../assets/images/icons/32/blue/video.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -353,27 +353,27 @@ section#courseware ol.active-subchapter li.selected:hover > a {
   font-weight: normal;
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon=""] {
-  background-image: url("../../../../../../assets/images/icons/32/white/infopage.png");
+  background-image: url("../../../../assets/images/icons/32/white/infopage.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon="chat"] {
-  background-image: url("../../../../../../assets/images/icons/32/white/chat.png");
+  background-image: url("../../../../assets/images/icons/32/white/chat.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon="document"] {
-  background-image: url("../../../../../../assets/images/icons/32/white/infopage.png");
+  background-image: url("../../../../assets/images/icons/32/white/infopage.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon="task"] {
-  background-image: url("../../../../../../assets/images/icons/32/white/question.png");
+  background-image: url("../../../../assets/images/icons/32/white/question.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon="video"] {
-  background-image: url("../../../../../../assets/images/icons/32/white/video.png");
+  background-image: url("../../../../assets/images/icons/32/white/video.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -382,14 +382,14 @@ section#courseware ol.active-subchapter li > a.handle {
   line-height: 25px;
   width: 25px;
   padding: 5px;
-  background: #d0d0d0 url("../../../../../../plugins_packages/core/Forum/img/anfasser_24.png") center center no-repeat;
+  background: #d0d0d0 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAYCAYAAAA20uedAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gcIChIQ+6DGYQAAAK1JREFUKM+F0kkKAjEURdFbDxQUwXYubsBut7UodaTuwabsQBAtcOD7ICnQTA43P4MQkuV5PgAOQEUBDT6rmSpg6pjYcShg5ohD81DA0DGy0UMBfUfPRvf/DruOsBMKaKeb38OWo+L3I1QUUHek1gRkjlQJKB0vG10KeDieNvoh4O6oKODmuNrom4CL45wqoHCcUgUcHUWq/F8Adol7AWvH1m5CASvHwi7DXxcq3tZTMV+q42t6AAAAAElFTkSuQmCC") center center no-repeat;
   cursor: move;
 }
 section#courseware ol.active-subchapter li.selected > a.handle {
   background-color: transparent;
 }
 section#courseware ol.active-subchapter li.loading > a {
-  background: url("../../../../../../assets/images/ajax_indicator_small.gif") center center no-repeat;
+  background: url("../../../../assets/images/ajax_indicator_small.gif") center center no-repeat;
 }
 section#courseware ol.active-subchapter .prev,
 section#courseware ol.active-subchapter .next {
@@ -410,12 +410,12 @@ section#courseware ol.active-subchapter .next.disabled {
   background-color: #e8e8e8;
 }
 section#courseware ol.active-subchapter .prev {
-  background-image: url("../../../../../../assets/images/icons/32/white/arr_1left.png");
+  background-image: url("../../../../assets/images/icons/32/white/arr_1left.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware ol.active-subchapter .next {
-  background-image: url("../../../../../../assets/images/icons/32/white/arr_1right.png");
+  background-image: url("../../../../assets/images/icons/32/white/arr_1right.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -451,7 +451,7 @@ section#courseware.loading {
   opacity: 0.5;
 }
 section#courseware.loading .title > h1 {
-  background: url(../../../../../../assets/images/ajax_indicator_small.gif) left center no-repeat;
+  background: url("../../../../assets/images/ajax_indicator_small.gif") left center no-repeat;
   padding-left: 20px;
 }
 section#courseware.loading .mode-switch,
@@ -489,14 +489,14 @@ section#courseware .mode-switch button.student {
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
   border-right: none;
-  background-image: url("../../../../../../assets/images/icons/32/blue/headache.png");
+  background-image: url("../../../../assets/images/icons/32/blue/headache.png");
   background-position: center 0px;
 }
 section#courseware .mode-switch button.author {
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
   border-left: none;
-  background-image: url("../../../../../../assets/images/icons/32/blue/doctoral_cap.png");
+  background-image: url("../../../../assets/images/icons/32/blue/doctoral_cap.png");
 }
 section#courseware.view-student > .mode-switch .student,
 section#courseware.view-author > .mode-switch .author {
@@ -505,10 +505,10 @@ section#courseware.view-author > .mode-switch .author {
   border-color: #999;
 }
 section#courseware.view-student > .mode-switch .student {
-  background-image: url("../../../../../../assets/images/icons/32/white/headache.png");
+  background-image: url("../../../../assets/images/icons/32/white/headache.png");
 }
 section#courseware.view-author > .mode-switch .author {
-  background-image: url("../../../../../../assets/images/icons/32/white/doctoral_cap.png");
+  background-image: url("../../../../assets/images/icons/32/white/doctoral_cap.png");
 }
 section#courseware:not(.user-may-author) .mode-switch,
 section#courseware:not(.user-may-author) .controls {
@@ -572,19 +572,19 @@ section#courseware button.button[name="cancel"] {
 section#courseware button.add-chapter,
 section#courseware button.add-subchapter,
 section#courseware button.add-section {
-  background-image: url("../../../../../../assets/images/icons/16/blue/add.png");
+  background-image: url("../../../../assets/images/icons/16/blue/add.png");
   background-position: 6px center;
 }
 section#courseware button.init-sort-chapter,
 section#courseware button.init-sort-subchapter,
 section#courseware button.init-sort-section {
-  background-image: url("../../../../../../assets/images/icons/16/blue/ranking.png");
+  background-image: url("../../../../assets/images/icons/16/blue/ranking.png");
   background-position: 6px 6px;
 }
 section#courseware button.stop-sort-chapter,
 section#courseware button.stop-sort-subchapter,
 section#courseware button.stop-sort-section {
-  background: url("../../../../../../assets/images/icons/16/blue/accept.png") 6px center no-repeat #E9E9E9;
+  background: url("../../../../assets/images/icons/16/blue/accept.png") 6px center no-repeat #E9E9E9;
   display: none;
 }
 section#courseware .chapters > li > .edit-structure,
@@ -618,14 +618,14 @@ section#courseware .subchapters > li > .edit-structure button:hover {
 }
 section#courseware .chapters > li > .edit-structure button.cancel,
 section#courseware .subchapters > li > .edit-structure button.cancel {
-  background-image: url("../../../../../../assets/images/icons/16/grey/decline.png");
+  background-image: url("../../../../assets/images/icons/16/grey/decline.png");
   background-position: center center;
   background-repeat: no-repeat;
   margin-left: 20px;
 }
 section#courseware .chapters > li > .edit-structure button.ok,
 section#courseware .subchapters > li > .edit-structure button.ok {
-  background-image: url("../../../../../../assets/images/icons/16/grey/accept.png");
+  background-image: url("../../../../assets/images/icons/16/grey/accept.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -658,25 +658,25 @@ section#courseware .active-subchapter > li > .edit-structure button:hover {
   cursor: pointer;
 }
 section#courseware .active-subchapter > li > .edit-structure button.cancel {
-  background-image: url("../../../../../../assets/images/icons/16/grey/decline.png");
+  background-image: url("../../../../assets/images/icons/16/grey/decline.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware .active-subchapter > li > .edit-structure button.ok {
-  background-image: url("../../../../../../assets/images/icons/16/grey/accept.png");
+  background-image: url("../../../../assets/images/icons/16/grey/accept.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
 section#courseware li[data-type="Chapter"]:not([data-publication='']) > div.title > a.navigate,
 section#courseware li[data-type="Subchapter"]:not([data-publication='']) > div.title > a.navigate {
-  background-image: url("../../../../../../assets/images/icons/16/grey/date.png");
+  background-image: url("../../../../assets/images/icons/16/grey/date.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-position: center right;
 }
 section#courseware li[data-type="Chapter"]:not([data-publication='']).unpublished > div.title > a.navigate,
 section#courseware li[data-type="Subchapter"]:not([data-publication='']).unpublished > div.title > a.navigate {
-  background-image: url("../../../../../../assets/images/icons/16/black/date.png");
+  background-image: url("../../../../assets/images/icons/16/black/date.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-position: center right;
