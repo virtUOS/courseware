@@ -138,7 +138,7 @@ class Courseware extends Block {
                 $json['unpublished'] = true;
             }
 
-            $json['dom_title'] = date('d.m.Y', $item->publication_date);
+            $json['dom_title'] = $item->publication_date ? date('d.m.Y', $item->publication_date) : ' ';
             $json['selected'] = $selected == $item->id;
             $result[] = $json;
         }
