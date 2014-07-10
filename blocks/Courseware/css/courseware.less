@@ -666,4 +666,19 @@ section#courseware {
       }
     }
   }
+
+  li.subchapter:not([data-publication='']),
+  li.chapter:not([data-publication='']) {
+    a.navigate {
+        .bgImg(date, grey, 16);
+        background-position: center right;
+    }
+
+    &.unpublished {
+      a.navigate {
+        .bgImg(date, black, 16);
+        background-position: center right;
+      }
+    }
+  }
 }
