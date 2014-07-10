@@ -57,7 +57,7 @@ define(['q', 'backbone', 'assets/js/templates', 'assets/js/i18n', 'dateFormat'],
             var new_title = this.$("input").val().trim();
             var new_publication_date = Math.floor(Date.parse(this.$("input[type=date]").val()) / 1000);
 
-            if (new_title == '') {
+            if (new_title === '') {
                 return;
             }
 
