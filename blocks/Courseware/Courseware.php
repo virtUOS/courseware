@@ -65,7 +65,7 @@ class Courseware extends Block {
             throw new BadRequest("Title required.");
         }
 
-        $block = $this->createStructure($parent, $data['title']);
+        $block = $this->createStructure($parent, $data);
 
         return $block->toArray();
     }
@@ -137,6 +137,8 @@ class Courseware extends Block {
             if (!$item->isPublished()) {
                 $json['unpublished'] = true;
             }
+
+            $json['dom_title'] = date('d.m.Y', $item->publication_date);
             $json['selected'] = $selected == $item->id;
             $result[] = $json;
         }
@@ -219,7 +221,7 @@ class Courseware extends Block {
     }
 
 
-    private function createStructure($parent, $title)
+    private function createStructure($parent, $data)
     {
         // determine type of new child
         // is there a structural level below the parent?
@@ -231,36 +233,37 @@ class Courseware extends Block {
 
         $method = "create" . $child_type;
 
-        return $this->$method($parent, $title);
+        return $this->$method($parent, $data);
     }
 
-    private function createChapter($parent, $title)
+    private function createChapter($parent, $data)
     {
-        $chapter = $this->createAnyBlock($parent, 'Chapter', $title);
-        $this->createSubchapter($chapter, _('Unterkapitel 1'));
+        $chapter = $this->createAnyBlock($parent, 'Chapter', $data);
+        $this->createSubchapter($chapter, array('title' => _('Unterkapitel 1')));
         return $chapter;
     }
 
-    private function createSubchapter($parent, $title)
+    private function createSubchapter($parent, $data)
     {
-        $subchapter = $this->createAnyBlock($parent, 'Subchapter', $title);
-        $this->createSection($subchapter, _('Abschnitt 1'));
+        $subchapter = $this->createAnyBlock($parent, 'Subchapter', $data);
+        $this->createSection($subchapter, array('title' => _('Abschnitt 1')));
         return $subchapter;
     }
 
-    private function createSection($parent, $title)
+    private function createSection($parent, $data)
     {
-        return $this->createAnyBlock($parent, 'Section', $title);
+        return $this->createAnyBlock($parent, 'Section', $data);
     }
 
-    private function createAnyBlock($parent, $type, $title)
+    private function createAnyBlock($parent, $type, $data)
     {
         $block = new \Mooc\DB\Block();
         $block->setData(array(
-            'seminar_id' => $this->_model->seminar_id,
-            'parent_id'  => $parent->id,
-            'type'       => $type,
-            'title'      => $title
+            'seminar_id'       => $this->_model->seminar_id,
+            'parent_id'        => $parent->id,
+            'type'             => $type,
+            'title'            => $data['title'],
+            'publication_date' => $data['publication_date']
         ));
 
         $block->store();

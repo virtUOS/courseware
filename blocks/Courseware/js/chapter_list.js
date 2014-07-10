@@ -102,6 +102,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             var data = {
                 parent: parent_id,
                 title:  model.get("title"),
+                publication_date: model.get('publication_date')
             };
             return helper.callHandler(this.model.id, 'add_structure', data);
         },
@@ -144,6 +145,8 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 } else {
                     $parent.attr('data-publication', '');
                 }
+
+                $parent.attr('title', new Date($parent.attr('data-publication') * 1000).format('d.m.Y'));
             };
 
             $title.hide().before(view.el);

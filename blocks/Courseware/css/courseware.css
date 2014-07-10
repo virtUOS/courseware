@@ -669,14 +669,14 @@ section#courseware .active-subchapter > li > .edit-structure button.ok {
 }
 section#courseware li[data-type="Chapter"]:not([data-publication='']) > div.title > a.navigate,
 section#courseware li[data-type="Subchapter"]:not([data-publication='']) > div.title > a.navigate {
-  background-image: url("../../../../assets/images/icons/16/grey/date.png");
+  background-image: url("../../../../assets/images/icons/16/grey/calendar.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-position: center right;
 }
 section#courseware li[data-type="Chapter"]:not([data-publication='']).unpublished > div.title > a.navigate,
 section#courseware li[data-type="Subchapter"]:not([data-publication='']).unpublished > div.title > a.navigate {
-  background-image: url("../../../../assets/images/icons/16/black/date.png");
+  background-image: url("../../../../assets/images/icons/16/grey/calendar.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-position: center right;
