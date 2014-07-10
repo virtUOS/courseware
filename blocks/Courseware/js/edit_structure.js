@@ -61,8 +61,10 @@ define(['q', 'backbone', 'assets/js/templates', 'assets/js/i18n', 'dateFormat'],
                 return;
             }
 
-            this.model.set("title", new_title);
-            this.model.set("publication_date", new_publication_date);
+            this.model.set({
+                title: new_title,
+                publication_date: new_publication_date
+            });
             this.deferred.resolve(this.model);
         },
 
