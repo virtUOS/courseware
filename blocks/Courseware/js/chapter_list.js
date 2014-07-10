@@ -128,15 +128,22 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             view = new EditView({ model: model });
             updateListItem = function (model) {
                 $title.find("a").text(model.get('title'));
-                var date = new Date(model.get("publication_date") * 1000);
-                
-                // add class "unpbulsihed" if publication_date is in the future
-                if (new Date().getTime() < date.getTime()) {
-                    $parent.addClass('unpublished');
+
+                if (!isNaN(model.get("publication_date"))) {
+
+                    var date = new Date(model.get("publication_date") * 1000);
+
+                    // add class "unpbulsihed" if publication_date is in the future
+                    if (new Date().getTime() < date.getTime()) {
+                        $parent.addClass('unpublished');
+                    } else {
+                        $parent.removeClass('unpublished');
+                    }
+
+                    $parent.attr('data-publication', model.get("publication_date"));
                 } else {
-                    $parent.removeClass('unpublished');
+                    $parent.attr('data-publication', '');
                 }
-                $parent.attr('data-publication', model.get("publication_date"));
             };
 
             $title.hide().before(view.el);
