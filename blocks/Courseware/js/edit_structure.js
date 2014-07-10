@@ -28,9 +28,8 @@ define(['q', 'backbone', 'assets/js/templates', 'assets/js/i18n', 'dateFormat'],
             // hide publication_date for sections
             if (this.model.get("type") !== 'Section') {
                 if (this.model.get("publication_date")) {
-                    data.publication_date =
-                        Date.fromUnixtime(this.model.get("publication_date"))
-                            .format("Y-m-d");
+                    var date = new Date(this.model.get("publication_date") * 1000);
+                    data.publication_date = date.format("Y-m-d");
                 }
                 data.chapter = true;
             }
@@ -56,7 +55,7 @@ define(['q', 'backbone', 'assets/js/templates', 'assets/js/i18n', 'dateFormat'],
         submit: function (event) {
             event.preventDefault();
             var new_title = this.$("input").val().trim();
-            var new_publication_date = this.$("input[type=date]").val();
+            var new_publication_date = Math.floor(Date.parse(this.$("input[type=date]").val()) / 1000);
 
             if (new_title == '') {
                 return;

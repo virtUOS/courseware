@@ -128,8 +128,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             view = new EditView({ model: model });
             updateListItem = function (model) {
                 $title.find("a").text(model.get('title'));
-                $parent.attr('data-publication',
-                             Math.floor(Date.parse(model.get("publication_date")) / 1000));
+                $parent.attr('data-publication', model.get("publication_date"));
             };
 
             $title.hide().before(view.el);
@@ -164,7 +163,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             var values = {
                 id: element.attr("data-blockid"),
                 type: element.attr("data-type"),
-                publication_date: element.attr("data-publication")
+                publication_date: parseInt(element.attr("data-publication"), 10)
             };
 
             return new BlockModel(values);
