@@ -74,27 +74,4 @@ define(function() {
             return (esc === '' && replaceChars[chr]) ? replaceChars[chr].call(date) : chr;
         });
     };
-
-    // convert a german-looking date (01.7.14) into a unix timestamp
-    Date.toUnixtime = function(date_string) {
-        var el = date_string.split('.');
-
-        if (el.length !== 3) {
-            return null;
-        }
-
-        return new Date(el[2], el[1] - 1, el[0]).getTime() / 1000;
-    };
-
-    Date.fromUnixtime = function(timestamp) {
-        if (typeof timestamp === 'undefined' || timestamp == '') {
-            return '';
-        }
-
-        if (typeof timestamp === 'string') {
-            timestamp = parseInt(timestamp);
-        }
-
-        return new Date(timestamp * 1000);
-    };
 });
