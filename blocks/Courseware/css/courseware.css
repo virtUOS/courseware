@@ -667,15 +667,15 @@ section#courseware .active-subchapter > li > .edit-structure button.ok {
   background-position: center center;
   background-repeat: no-repeat;
 }
-section#courseware li.subchapter:not([data-publication='']) a.navigate,
-section#courseware li.chapter:not([data-publication='']) a.navigate {
+section#courseware li[data-type="Chapter"]:not([data-publication='']) > div.title > a.navigate,
+section#courseware li[data-type="Subchapter"]:not([data-publication='']) > div.title > a.navigate {
   background-image: url("../../../../../../assets/images/icons/16/grey/date.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-position: center right;
 }
-section#courseware li.subchapter:not([data-publication='']).unpublished a.navigate,
-section#courseware li.chapter:not([data-publication='']).unpublished a.navigate {
+section#courseware li[data-type="Chapter"]:not([data-publication='']).unpublished > div.title > a.navigate,
+section#courseware li[data-type="Subchapter"]:not([data-publication='']).unpublished > div.title > a.navigate {
   background-image: url("../../../../../../assets/images/icons/16/black/date.png");
   background-position: center center;
   background-repeat: no-repeat;
