@@ -2,6 +2,8 @@
 namespace Mooc\UI\Courseware;
 
 use Mooc\UI\Block;
+use Mooc\UI\Errors\AccessDenied;
+use Mooc\UI\Errors\BadRequest;
 
 class Courseware extends Block {
 
@@ -60,7 +62,7 @@ class Courseware extends Block {
         // we need a title
         if (!isset($data['title']) || !strlen($data['title']))
         {
-            throw new Errors\BadRequest("Title required.");
+            throw new BadRequest("Title required.");
         }
 
         $block = $this->createStructure($parent, $data['title']);
@@ -76,14 +78,14 @@ class Courseware extends Block {
         // we need some positions
         if (!isset($data['positions']))
         {
-            throw new Errors\BadRequest("Positions required.");
+            throw new BadRequest("Positions required.");
         }
         $new_positions = array_map("intval", $data['positions']);
         $old_positions = array_map("intval", $parent->children->pluck("id"));
 
         if (sizeof($new_positions) !== sizeof($old_positions)
             || sizeof(array_diff($new_positions, $old_positions))) {
-            throw new Errors\BadRequest("Positions required.");
+            throw new BadRequest("Positions required.");
         }
 
         $parent->updateChildPositions($new_positions);
@@ -102,16 +104,16 @@ class Courseware extends Block {
     {
         // we need a valid parent
         if (!isset($data['parent'])) {
-            throw new Errors\BadRequest("Parent required.");
+            throw new BadRequest("Parent required.");
         }
 
         $parent = \Mooc\DB\Block::find($data['parent']);
         if (!$parent || !$parent->isStructuralBlock()) {
-            throw new Errors\BadRequest("Invalid parent.");
+            throw new BadRequest("Invalid parent.");
         }
 
         if (!$this->container['current_user']->canUpdate($parent)) {
-            throw new Errors\AccessDenied();
+            throw new AccessDenied();
         }
 
         return $parent;
@@ -224,7 +226,7 @@ class Courseware extends Block {
         $structure_types = \Mooc\DB\Block::getStructuralBlockClasses();
         $index = array_search($parent->type, $structure_types);
         if (!$child_type = $structure_types[$index + 1]) {
-            throw new Errors\BadRequest("Unknown child type.");
+            throw new BadRequest("Unknown child type.");
         }
 
         $method = "create" . $child_type;

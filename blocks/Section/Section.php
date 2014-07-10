@@ -2,6 +2,7 @@
 namespace Mooc\UI\Section;
 
 use Mooc\UI\Block;
+use Mooc\UI\Errors\AccessDenied;
 use Mooc\UI\Errors\BadRequest;
 
 class Section extends Block {
@@ -67,16 +68,16 @@ class Section extends Block {
     function add_content_block_handler($data) {
 
         if (!isset($data['type'])) {
-            throw new Errors\BadRequest("Type required.");
+            throw new BadRequest("Type required.");
         }
 
         if (!$this->container['current_user']->canCreate($this->_model)) {
-            throw new Errors\AccessDenied();
+            throw new AccessDenied();
         }
 
         $types = $this->container['block_factory']->getContentBlockClasses();
         if (!in_array($data['type'], $types)) {
-            throw new Errors\BadRequest("Wrong type.");
+            throw new BadRequest("Wrong type.");
         }
 
         $className = '\Mooc\UI\\'.$data['type'].'\\'.$data['type'];
@@ -108,16 +109,16 @@ class Section extends Block {
     function remove_content_block_handler($data) {
 
         if (!isset($data['child_id'])) {
-            throw new Errors\BadRequest("Child ID required");
+            throw new BadRequest("Child ID required");
         }
 
         $child = $this->_model->children->findOneBy("id", (int) $data['child_id']);
         if (!$child) {
-            throw new Errors\BadRequest("No such child");
+            throw new BadRequest("No such child");
         }
 
         if (!$this->container['current_user']->canDelete($child)) {
-            throw new Errors\BadRequest("Access denied");
+            throw new BadRequest("Access denied");
         }
 
         $child->delete();
