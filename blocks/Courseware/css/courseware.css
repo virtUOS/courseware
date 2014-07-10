@@ -94,11 +94,11 @@ section#courseware ol.chapters {
   width: 18%;
 }
 section#courseware ol.chapters .chapter > .title {
-  background: url("/16/blue/arr_1right.png") no-repeat 3px center;
+  background: url("../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
 }
 section#courseware ol.chapters .chapter.selected > .title {
   font-weight: 700;
-  background: url("/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
+  background: url("../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
 }
 section#courseware ol.chapters .controls {
   text-align: center;

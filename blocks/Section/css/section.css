@@ -155,11 +155,11 @@
   cursor: pointer;
 }
 .active-section .edit-section button.cancel {
-  background: url("/16/grey/decline.png") center center no-repeat;
+  background: url("../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
   right: 20px;
 }
 .active-section .edit-section button.ok {
-  background: url("/16/grey/accept.png") center center no-repeat;
+  background: url("../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
   right: 0;
 }
 #courseware.view-author .active-section section.block {
@@ -176,16 +176,16 @@
   box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.3);
 }
 button.init-sort-block {
-  background-image: url("/16/blue/ranking.png");
+  background-image: url("../../../../assets/images/icons/16/blue/ranking.png");
   background-position: 6px 2px;
 }
 button.stop-sort-block {
-  background-image: url("/16/blue/accept.png");
+  background-image: url("../../../../assets/images/icons/16/blue/accept.png");
   background-position: 6px center;
   display: none;
 }
 button.add-block-type {
-  background-image: url("/16/blue/add.png");
+  background-image: url("../../../../assets/images/icons/16/blue/add.png");
   background-position: 6px center;
 }
 .active-section .block-adder .add-block-type.loading {
