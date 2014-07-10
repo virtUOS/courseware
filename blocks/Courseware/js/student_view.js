@@ -93,8 +93,14 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         },
 
         navigateTo: function (event) {
-            this.$el.addClass("loading");
+
             event.preventDefault();
+
+            if (this.$el.hasClass("loading")) {
+                return;
+            }
+
+            this.$el.addClass("loading");
 
             var $parent = jQuery(event.target).closest("[data-blockid]"),
                 id = $parent.attr("data-blockid");
