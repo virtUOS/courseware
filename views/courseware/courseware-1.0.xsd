@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/courseware/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/courseware/"
+    elementFormDefault="qualified"
+>
+    <xsd:element name="courseware">
+        <xsd:complexType>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element name="chapter" type="chapter" />
+            </xsd:choice>
+            <xsd:attribute name="title" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="chapter">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="subchapter" type="subchapter" />
+        </xsd:choice>
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="subchapter">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="section" type="section" />
+        </xsd:choice>
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="section">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="block" type="block" />
+        </xsd:choice>
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="block">
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+        <xsd:anyAttribute />
+    </xsd:complexType>
+</xsd:schema>

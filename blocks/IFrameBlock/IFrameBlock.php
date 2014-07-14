@@ -39,8 +39,27 @@ class IFrameBlock extends Block
         return $this->array_rep();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function export()
     {
         return array('url' => $this->url, 'height' => $this->height);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlNamespace()
+    {
+        return 'http://moocip.de/schema/block/iframe/';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlSchemaLocation()
+    {
+        return 'http://moocip.de/schema/block/iframe/iframe-1.0.xsd';
     }
 }

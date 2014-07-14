@@ -4,13 +4,8 @@ namespace Mooc\Export\Visitor;
 
 use Mooc\DB\Block;
 use Mooc\UI\BlockFactory;
-use Mooc\UI\BlubberBlock\BlubberBlock;
 use Mooc\UI\Courseware\Courseware;
-use Mooc\UI\HtmlBlock\HtmlBlock;
-use Mooc\UI\IFrameBlock\IFrameBlock;
 use Mooc\UI\Section\Section;
-use Mooc\UI\TestBlock\TestBlock;
-use Mooc\UI\VideoBlock\VideoBlock;
 
 /**
  * XML courseware visitor.
@@ -52,6 +47,16 @@ class XmlVisitor extends AbstractVisitor
     public function startVisitingCourseware(Courseware $courseware)
     {
         $this->enterNode($this->appendBlockNode('courseware', $courseware->title));
+
+        $this->addNamespace(
+            'http://moocip.de/schema/courseware/',
+            'http://moocip.de/schema/courseware/courseware-1.0.xsd'
+        );
+        $this->addNamespace(
+            'http://www.w3.org/2001/XMLSchema-instance',
+            null,
+            'xsi'
+        );
 
         foreach ($courseware->getModel()->children as $chapter) {
             $this->startVisitingChapter($chapter);
@@ -139,10 +144,32 @@ class XmlVisitor extends AbstractVisitor
      */
     public function startVisitingBlock(\Mooc\UI\Block $block)
     {
+        $alias = null;
+        $namespace = $block->getXmlNamespace();
+        $schemaLocation = $block->getXmlSchemaLocation();
+
+        if ($namespace !== null && $schemaLocation !== null) {
+            $alias = strtolower(get_class($block));
+
+            if (preg_match('/\\\\(\w+)$/', $alias, $matches)) {
+                $alias = $matches[1];
+            }
+
+            if (substr($alias, -5) === 'block') {
+                $alias = substr($alias, 0, strlen($alias) - 5);
+            }
+
+            $this->addNamespace($namespace, $schemaLocation, $alias);
+        }
+
         $properties = $block->export();
         $attributes = array();
 
         foreach ($properties as $name => $value) {
+            if ($alias !== null) {
+                $name = $alias.':'.$name;
+            }
+
             $attributes[] = $this->createAttributeNode($name, $value);
         }
 
@@ -176,6 +203,42 @@ class XmlVisitor extends AbstractVisitor
         }
 
         $this->currentNode = array_pop($this->nodeStack);
+    }
+
+    /**
+     * Introduce a new XML namespace with an optional namespace alias.
+     *
+     * @param string $namespace      The full XML namespace
+     * @param string $schemaLocation The url under which the XML schema definition
+     *                               file is located
+     * @param string $alias          An optional namespace alias (must be given
+     *                               to be able to use multiple namespaces in
+     *                               a single file)
+     */
+    private function addNamespace($namespace, $schemaLocation, $alias = null)
+    {
+        if ($alias === null) {
+            $namespaceNode = $this->createAttributeNode('xmlns', $namespace);
+        } else {
+            $namespaceNode = $this->createAttributeNode('xmlns:'.$alias, $namespace);
+        }
+
+        $rootNode =  $this->document->documentElement;
+        $rootNode->appendChild($namespaceNode);
+
+        if ($schemaLocation === null) {
+            return;
+        }
+
+        if ($rootNode->hasAttribute('xsi:schemaLocation')) {
+            $attributeNode = $rootNode->getAttributeNode('xsi:schemaLocation');
+        } else {
+            $attributeNode = $this->createAttributeNode('xsi:schemaLocation', '');
+        }
+
+        $attributeNode->value = trim($attributeNode->value).' '.$namespace.' '.$schemaLocation;
+
+        $this->document->documentElement->appendChild($attributeNode);
     }
 
     /**

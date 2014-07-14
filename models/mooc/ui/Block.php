@@ -336,6 +336,28 @@ abstract class Block {
         return array();
     }
 
+    /**
+     * An optional additional XML namespace which is used in XML file exports
+     * for the attributes exposed by the export() method.
+     *
+     * @return string The XML namespace
+     */
+    public function getXmlNamespace()
+    {
+        return null;
+    }
+
+    /**
+     * Returns the url of an optional additional XML schema definition file
+     * for a particular block type.
+     *
+     * @return string|null The url to the XSD file
+     */
+    public function getXmlSchemaLocation()
+    {
+        return null;
+    }
+
     // memorize the user's progress
     private $_progress;
 
