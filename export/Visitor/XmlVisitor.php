@@ -47,11 +47,7 @@ class XmlVisitor extends AbstractVisitor
     public function startVisitingCourseware(Courseware $courseware)
     {
         $this->enterNode($this->appendBlockNode('courseware', $courseware->title));
-
-        $this->addNamespace(
-            'http://moocip.de/schema/courseware/',
-            'http://moocip.de/schema/courseware/courseware-1.0.xsd'
-        );
+        $this->addNamespace($courseware->getXmlNamespace(), $courseware->getXmlSchemaLocation());
         $this->addNamespace(
             'http://www.w3.org/2001/XMLSchema-instance',
             null,
