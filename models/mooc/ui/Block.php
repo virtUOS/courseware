@@ -331,9 +331,19 @@ abstract class Block {
      *
      * @return array The properties to export
      */
-    public function export()
+    public function exportProperties()
     {
         return array();
+    }
+
+    /**
+     * Exposes the block contents that should be exported.
+     *
+     * @return string The block contents
+     */
+    public function exportContents()
+    {
+        return null;
     }
 
     /**

@@ -158,7 +158,7 @@ class XmlVisitor extends AbstractVisitor
             $this->addNamespace($namespace, $schemaLocation, $alias);
         }
 
-        $properties = $block->export();
+        $properties = $block->exportProperties();
         $attributes = array();
 
         foreach ($properties as $name => $value) {
@@ -169,7 +169,12 @@ class XmlVisitor extends AbstractVisitor
             $attributes[] = $this->createAttributeNode($name, $value);
         }
 
-        $this->appendBlockNode('block', $block->title, $attributes);
+        $blockNode = $this->appendBlockNode('block', $block->title, $attributes);
+        $contents = $block->exportContents();
+
+        if ($contents !== null) {
+            $blockNode->appendChild($this->document->createCDATASection($contents));
+        }
     }
 
     /**

@@ -30,4 +30,12 @@ class HtmlBlock extends Block
         $this->content = (string) $data['content'];
         return array("content" => $this->content);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function exportContents()
+    {
+        return $this->content;
+    }
 }

@@ -36,7 +36,11 @@
     </xsd:complexType>
 
     <xsd:complexType name="block">
-        <xsd:attribute name="title" type="xsd:string" use="required" />
-        <xsd:anyAttribute />
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="title" type="xsd:string" use="required" />
+                <xsd:anyAttribute />
+            </xsd:extension>
+        </xsd:simpleContent>
     </xsd:complexType>
 </xsd:schema>

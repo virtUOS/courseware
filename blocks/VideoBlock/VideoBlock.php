@@ -34,7 +34,7 @@ class VideoBlock extends Block
     /**
      * {@inheritdoc}
      */
-    public function export()
+    public function exportProperties()
     {
         return array('url' => $this->url);
     }
