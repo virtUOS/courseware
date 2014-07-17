@@ -25,7 +25,7 @@ class SemClass extends \SemClass
                 return $t['id'];
             }
         }, $GLOBALS['SEM_TYPE']));
-        return \Course::findBySQL('status = ?', array($types));
+        return \Course::findBySQL('status = ? AND visible = 1', array($types));
     }
 
     private static function getMoocSemClassID()
