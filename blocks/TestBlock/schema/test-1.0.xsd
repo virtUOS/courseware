@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/test/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/test/"
+    elementFormDefault="qualified">
+
+    <xsd:attribute name="test-id" type="xsd:integer" />
+    <xsd:attribute name="type" type="xsd:string" />
+    <xsd:attribute name="title" type="xsd:string" />
+    <xsd:attribute name="halted" type="xsd:boolean" />
+    <xsd:attribute name="evaluation-mode" type="xsd:integer" />
+    <xsd:attribute name="shuffle-answers" type="xsd:boolean" />
+    <xsd:attribute name="printable" type="xsd:boolean" />
+    <xsd:attribute name="released" type="xsd:boolean" />
+
+    <xsd:element name="description">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:string" />
+        </xsd:simpleType>
+    </xsd:element>
+
+    <xsd:element name="exercises">
+        <xsd:complexType>
+            <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+                <xsd:element name="exercise" type="exercise" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="exercise">
+        <xsd:sequence>
+            <xsd:element name="TestItem" type="test-item" />
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:integer" />
+        <xsd:attribute name="type" type="xsd:string" />
+        <xsd:attribute name="name" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="test-item">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="Name" type="xsd:string" />
+            <xsd:element name="Hint" type="xsd:string" />
+            <xsd:element name="CommentField" type="comment" />
+            <xsd:element name="AnswerDistance" type="xsd:string" />
+            <xsd:element name="Question" type="question" />
+            <xsd:element name="EvalMode" type="xsd:string" />
+            <xsd:element name="Default" type="default" />
+            <xsd:element name="Answer" type="answer" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="ChooseItem" type="xsd:integer" />
+            <xsd:element name="AnswerDefault" type="xsd:string" />
+        </xsd:choice>
+        <xsd:attribute name="ID" type="xsd:string" />
+        <xsd:attribute name="Type" type="xsd:string" />
+        <xsd:attribute name="Language" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="comment">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="Visible" type="xsd:string" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="question" mixed="true">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="Paragraph" type="xsd:string" />
+            <xsd:element name="Cloze" type="cloze" />
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="default">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="ID" type="xsd:integer" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="answer">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="group" type="xsd:integer" />
+                <xsd:attribute name="Correct" type="xsd:float" />
+                <xsd:attribute name="Default" type="xsd:integer" />
+                <xsd:attribute name="ID" type="xsd:integer" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="cloze">
+        <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="Answer" type="cloze-answer" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="cloze-answer">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="Points" type="xsd:float" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+</xsd:schema>

@@ -2,8 +2,8 @@
 <xsd:schema xmlns="http://moocip.de/schema/courseware/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     targetNamespace="http://moocip.de/schema/courseware/"
-    elementFormDefault="qualified"
->
+    elementFormDefault="qualified">
+
     <xsd:element name="courseware">
         <xsd:complexType>
             <xsd:choice minOccurs="0" maxOccurs="unbounded">
@@ -35,12 +35,12 @@
         <xsd:attribute name="icon" type="xsd:string" use="required" />
     </xsd:complexType>
 
-    <xsd:complexType name="block">
-        <xsd:simpleContent>
-            <xsd:extension base="xsd:string">
-                <xsd:attribute name="title" type="xsd:string" use="required" />
-                <xsd:anyAttribute />
-            </xsd:extension>
-        </xsd:simpleContent>
+    <xsd:complexType name="block" mixed="true">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:any />
+        </xsd:choice>
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+        <xsd:anyAttribute />
     </xsd:complexType>
+
 </xsd:schema>

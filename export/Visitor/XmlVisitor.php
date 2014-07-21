@@ -170,10 +170,19 @@ class XmlVisitor extends AbstractVisitor
         }
 
         $blockNode = $this->appendBlockNode('block', $block->title, $attributes);
-        $contents = $block->exportContents();
 
-        if ($contents !== null) {
-            $blockNode->appendChild($this->document->createCDATASection($contents));
+        if (method_exists($block, 'exportContentsForXml')) {
+            $contents = $block->exportContentsForXml($this->document, $alias);
+
+            foreach ($contents as $node) {
+                $blockNode->appendChild($node);
+            }
+        } else {
+            $contents = $block->exportContents();
+
+            if ($contents !== null) {
+                $blockNode->appendChild($this->document->createCDATASection($contents));
+            }
         }
     }
 

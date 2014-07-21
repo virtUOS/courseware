@@ -89,6 +89,130 @@ class TestBlock extends Block
         return array();
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function exportProperties()
+    {
+        $options = json_decode($this->test->options);
+        $properties = array(
+            'test-id' => (int) $this->test->id,
+            'type' => $this->test->type,
+            'title' => $this->test->title,
+            'halted' => $this->test->halted == 1 ? 'true' : 'false',
+            'evaluation-mode' => (int) $options->evaluation_mode,
+        );
+
+        if ($options->shuffle_answers) {
+            $properties['shuffle-answers'] = 'true';
+        } else {
+            $properties['shuffle-answers'] = 'false';
+        }
+
+        if ($options->printable) {
+            $properties['printable'] = 'true';
+        } else {
+            $properties['printable'] = 'false';
+        }
+
+        if ($options->released) {
+            $properties['released'] = 'true';
+        } else {
+            $properties['released'] = 'false';
+        }
+
+        return $properties;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlNamespace()
+    {
+        return 'http://moocip.de/schema/block/test/';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlSchemaLocation()
+    {
+        return 'http://moocip.de/schema/block/test/test-1.0.xsd';
+    }
+
+    /**
+     * Exports the block as a list of XML DOM node objects.
+     *
+     * @param \DOMDocument $document The document the nodes are created for
+     * @param string       $alias    The namespace alias to be used to prefix
+     *                               generated node names
+     *
+     * @return \DOMNode[] The generated nodes
+     */
+    public function exportContentsForXml(\DOMDocument $document, $alias)
+    {
+        if ($this->test->id == 0) {
+            return array();
+        }
+
+        $descriptionNode = $document->createElement($alias.':description', $this->test->description);
+        $exercisesNode = $document->createElement($alias.':exercises');
+
+        foreach ($this->test->exercises as $exercise) {
+            /** @var \Mooc\UI\TestBlock\Model\Exercise $exercise */
+
+            $exerciseNode = $document->createElement($alias.':exercise');
+            $idNode = $document->createAttribute('id');
+            $idNode->value = $exercise->ID;
+            $exerciseNode->appendChild($idNode);
+            $nameNode = $document->createAttribute('name');
+            $nameNode->value = utf8_encode($exercise->name);
+            $exerciseNode->appendChild($nameNode);
+            $typeNode = $document->createAttribute('type');
+            $typeNode->value = $exercise->URI;
+            $exerciseNode->appendChild($typeNode);
+
+            $exerciseContent = new \DOMDocument();
+            $exerciseContent->loadXML(utf8_encode($exercise->Aufgabe));
+            $this->importNode($exerciseContent->documentElement, $exerciseNode, $alias);
+
+            $exercisesNode->appendChild($exerciseNode);
+        }
+
+        return array($descriptionNode, $exercisesNode);
+    }
+
+    /**
+     * Recursively import a node tree applying a namespace prefix to each
+     * node name.
+     *
+     * @param \DOMNode $node   The node tree to import
+     * @param \DOMNode $parent The parent node where the tree will be imported
+     * @param string   $alias  The namespace prefix
+     */
+    private function importNode(\DOMNode $node, \DOMNode $parent, $alias)
+    {
+        if ($node instanceof \DOMText) {
+            $textNode = new \DOMText($node->nodeValue);
+            $parent->appendChild($textNode);
+
+            return;
+        }
+
+        $newNode = $parent->ownerDocument->createElement($alias.':'.$node->nodeName);
+        $parent->appendChild($newNode);
+
+        foreach ($node->attributes as $attribute) {
+            $newAttribute = $parent->ownerDocument->createAttribute($attribute->nodeName);
+            $newAttribute->value = $attribute->value;
+            $newNode->appendChild($newAttribute);
+        }
+
+        foreach ($node->childNodes as $child) {
+            $this->importNode($child, $newNode, $alias);
+        }
+    }
+
     private function buildExercises()
     {
         /** @var \Seminar_User $user */
