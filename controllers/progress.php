@@ -44,7 +44,7 @@ class ProgressController extends MoocipController {
             foreach($root['children'] as &$child) {
                 $this->buildTree($grouped, $progress, $child);
             }
-            $this->computeProgress($root);
+            $root['progress'] = $this->computeProgress($root);
         }
 
         else {
