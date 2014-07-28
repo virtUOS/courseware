@@ -31,8 +31,10 @@ class XmlValidator implements ValidatorInterface
         $document->loadXML($data);
         $schemaFile = tempnam(sys_get_temp_dir(), 'schema-');
         $this->buildXmlSchema($document)->save($schemaFile);
+        $validationResult = $document->schemaValidate($schemaFile);
+        unlink($schemaFile);
 
-        return $document->schemaValidate($schemaFile);
+        return $validationResult;
     }
 
     private function buildXmlSchema(\DOMDocument $document)
