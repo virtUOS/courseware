@@ -54,4 +54,16 @@ class VideoBlock extends Block
     {
         return 'http://moocip.de/schema/block/video/video-1.0.xsd';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function importProperties(array $properties)
+    {
+        if (isset($properties['url'])) {
+            $this->url = $properties['url'];
+        }
+
+        $this->save();
+    }
 }

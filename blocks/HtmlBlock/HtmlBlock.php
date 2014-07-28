@@ -38,4 +38,13 @@ class HtmlBlock extends Block
     {
         return $this->content;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function importContents($contents)
+    {
+        $this->content = $contents;
+        $this->save();
+    }
 }

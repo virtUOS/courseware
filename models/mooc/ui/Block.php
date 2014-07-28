@@ -368,6 +368,24 @@ abstract class Block {
         return null;
     }
 
+    /**
+     * Handle properties being imported.
+     *
+     * @param array $properties The properties to import
+     */
+    public function importProperties(array $properties)
+    {
+    }
+
+    /**
+     * Handle the block contents that should be imported.
+     *
+     * @param string $contents The block contents to import
+     */
+    public function importContents($contents)
+    {
+    }
+
     // memorize the user's progress
     private $_progress;
 

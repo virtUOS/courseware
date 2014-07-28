@@ -201,6 +201,10 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
             $exportUrl = PluginEngine::getURL($this, array(), 'export');
             $exportNavigation = new Navigation(_('Export'), $exportUrl);
             $navigation->addSubNavigation('export', $exportNavigation);
+
+            $importUrl = PluginEngine::getURL($this, array(), 'import');
+            $importNavigation = new Navigation(_('Import'), $importUrl);
+            $navigation->addSubNavigation('import', $importNavigation);
         }
 
         return $navigation;

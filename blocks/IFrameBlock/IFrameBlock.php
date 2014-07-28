@@ -62,4 +62,20 @@ class IFrameBlock extends Block
     {
         return 'http://moocip.de/schema/block/iframe/iframe-1.0.xsd';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function importProperties(array $properties)
+    {
+        if (isset($properties['url'])) {
+            $this->url = $properties['url'];
+        }
+
+        if (isset($properties['height'])) {
+            $this->height = $properties['height'];
+        }
+
+        $this->save();
+    }
 }
