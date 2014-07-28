@@ -145,7 +145,7 @@ abstract class Block {
         }
 
         else {
-            throw new \InvalidArgumentException('No such scope');
+            throw new \InvalidArgumentException(sprintf('No such scope "%s"', $scope));
         }
 
         $field->setDefault($default);
@@ -163,7 +163,7 @@ abstract class Block {
 
         // field must be previously defined
         if (!isset($this->_fields[$name])) {
-            throw new \InvalidArgumentException("Field was not defined.");
+            throw new \InvalidArgumentException(sprintf("Field '%s' was not defined.", $name));
         }
 
         return $this->_fields[$name]->content;
@@ -186,7 +186,7 @@ abstract class Block {
 
         // field must be previously defined
         if (!isset($this->_fields[$name])) {
-            throw new \InvalidArgumentException("Field was not defined.");
+            throw new \InvalidArgumentException(sprintf("Field '%s' was not defined.", $name));
         }
 
         $this->_fields[$name]->content = $value;
