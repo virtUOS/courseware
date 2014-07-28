@@ -20,6 +20,11 @@ class TestBlock extends Block
      */
     private $test;
 
+    /**
+     * @var array Cache of imported tests, used to avoid creating tests twice during imports
+     */
+    private static $importedTests = array();
+
     public function __construct(Container $container, \SimpleORMap $model)
     {
         parent::__construct($container, $model);
@@ -138,6 +143,75 @@ class TestBlock extends Block
     public function getXmlSchemaLocation()
     {
         return 'http://moocip.de/schema/block/test/test-1.0.xsd';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function importProperties(array $properties)
+    {
+        $importedTestId = $properties['test-id'];
+
+        // no test included in the import format
+        if ($importedTestId <= 0) {
+            $this->test_id = null;
+            $this->save();
+
+            return;
+        }
+
+        $courseId = $this->getModel()->course->id;
+
+        // the test being imported has already been imported, reuse it
+        if (isset(static::$importedTests[$courseId][$importedTestId])) {
+            $this->test = new Test(static::$importedTests[$courseId][$importedTestId]);
+            $this->test_id = $this->test->id;
+            $this->save();
+
+            return;
+        }
+
+        // create a new test and set all of its properties that are present
+        // at this step
+        $options = new \stdClass();
+        $options->evaluation_mode = $properties['evaluation-mode'];
+
+        if ($properties['shuffle-answers'] == 'true') {
+            $options->shuffle_answers = true;
+        } else {
+            $options->shuffle_answers = false;
+        }
+
+        if ($properties['printable'] == 'true') {
+            $options->printable = true;
+        } else {
+            $options->printable = false;
+        }
+
+        if ($properties['released'] == 'true') {
+            $options->released = true;
+        } else {
+            $options->released = false;
+        }
+
+        $test = new Test();
+        $test->type = $properties['type'];
+        $test->course_id = $courseId;
+        $test->position = VipsBridge::findNextVipsPosition($courseId);
+        $test->title = $properties['title'];
+        $test->description = '';
+        $test->options = json_encode($options);
+
+        if ($properties['halted'] == 'true') {
+            $test->halted = 1;
+        } else {
+            $test->halted = 0;
+        }
+
+        $test->store();
+        $this->test_id = $test->id;
+        static::$importedTests[$courseId][$importedTestId] = $test->id;
+        $this->save();
     }
 
     /**
