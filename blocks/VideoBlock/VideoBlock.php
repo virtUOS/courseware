@@ -30,4 +30,40 @@ class VideoBlock extends Block
         $this->url = (string) $data['url'];
         return array('url' => $this->url);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function exportProperties()
+    {
+        return array('url' => $this->url);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlNamespace()
+    {
+        return 'http://moocip.de/schema/block/video/';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlSchemaLocation()
+    {
+        return 'http://moocip.de/schema/block/video/video-1.0.xsd';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function importProperties(array $properties)
+    {
+        if (isset($properties['url'])) {
+            $this->url = $properties['url'];
+        }
+
+        $this->save();
+    }
 }

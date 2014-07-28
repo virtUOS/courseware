@@ -94,6 +94,21 @@ class Courseware extends Block {
         return $new_positions;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlNamespace()
+    {
+        return 'http://moocip.de/schema/courseware/';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlSchemaLocation()
+    {
+        return 'http://moocip.de/schema/courseware/courseware-1.0.xsd';
+    }
 
     private function getSelected($context)
     {

@@ -45,6 +45,30 @@ namespace Mooc\UI\TestBlock\Vips {
         {
             return class_exists('\VipsPlugin');
         }
+
+        /**
+         * Returns the next position of a test in a course.
+         *
+         * @param string $courseId The course id
+         *
+         * @return int The calculated position (1 or higher)
+         */
+        public static function findNextVipsPosition($courseId)
+        {
+            $db = \DBManager::get();
+            $stmt = $db->prepare(
+                'SELECT
+                  COUNT(*)
+                FROM
+                  vips_test
+                WHERE
+                  course_id = :course_id'
+            );
+            $stmt->bindValue(':course_id', $courseId);
+            $stmt->execute();
+
+            return ((int) $stmt->fetchColumn(0)) + 1;
+        }
     }
 }
 

@@ -20,6 +20,11 @@ class TestBlock extends Block
      */
     private $test;
 
+    /**
+     * @var array Cache of imported tests, used to avoid creating tests twice during imports
+     */
+    private static $importedTests = array();
+
     public function __construct(Container $container, \SimpleORMap $model)
     {
         parent::__construct($container, $model);
@@ -87,6 +92,199 @@ class TestBlock extends Block
         ob_clean();
 
         return array();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function exportProperties()
+    {
+        $options = json_decode($this->test->options);
+        $properties = array(
+            'test-id' => (int) $this->test->id,
+            'type' => $this->test->type,
+            'title' => $this->test->title,
+            'halted' => $this->test->halted == 1 ? 'true' : 'false',
+            'evaluation-mode' => (int) $options->evaluation_mode,
+        );
+
+        if ($options->shuffle_answers) {
+            $properties['shuffle-answers'] = 'true';
+        } else {
+            $properties['shuffle-answers'] = 'false';
+        }
+
+        if ($options->printable) {
+            $properties['printable'] = 'true';
+        } else {
+            $properties['printable'] = 'false';
+        }
+
+        if ($options->released) {
+            $properties['released'] = 'true';
+        } else {
+            $properties['released'] = 'false';
+        }
+
+        return $properties;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlNamespace()
+    {
+        return 'http://moocip.de/schema/block/test/';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlSchemaLocation()
+    {
+        return 'http://moocip.de/schema/block/test/test-1.0.xsd';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function importProperties(array $properties)
+    {
+        $importedTestId = $properties['test-id'];
+
+        // no test included in the import format
+        if ($importedTestId <= 0) {
+            $this->test_id = null;
+            $this->save();
+
+            return;
+        }
+
+        $courseId = $this->getModel()->course->id;
+
+        // the test being imported has already been imported, reuse it
+        if (isset(static::$importedTests[$courseId][$importedTestId])) {
+            $this->test = new Test(static::$importedTests[$courseId][$importedTestId]);
+            $this->test_id = $this->test->id;
+            $this->save();
+
+            return;
+        }
+
+        // create a new test and set all of its properties that are present
+        // at this step
+        $options = new \stdClass();
+        $options->evaluation_mode = $properties['evaluation-mode'];
+
+        if ($properties['shuffle-answers'] == 'true') {
+            $options->shuffle_answers = true;
+        } else {
+            $options->shuffle_answers = false;
+        }
+
+        if ($properties['printable'] == 'true') {
+            $options->printable = true;
+        } else {
+            $options->printable = false;
+        }
+
+        if ($properties['released'] == 'true') {
+            $options->released = true;
+        } else {
+            $options->released = false;
+        }
+
+        $test = new Test();
+        $test->type = $properties['type'];
+        $test->course_id = $courseId;
+        $test->position = VipsBridge::findNextVipsPosition($courseId);
+        $test->title = $properties['title'];
+        $test->description = '';
+        $test->options = json_encode($options);
+
+        if ($properties['halted'] == 'true') {
+            $test->halted = 1;
+        } else {
+            $test->halted = 0;
+        }
+
+        $test->store();
+        $this->test_id = $test->id;
+        static::$importedTests[$courseId][$importedTestId] = $test->id;
+        $this->save();
+    }
+
+    /**
+     * Exports the block as a list of XML DOM node objects.
+     *
+     * @param \DOMDocument $document The document the nodes are created for
+     * @param string       $alias    The namespace alias to be used to prefix
+     *                               generated node names
+     *
+     * @return \DOMNode[] The generated nodes
+     */
+    public function exportContentsForXml(\DOMDocument $document, $alias)
+    {
+        if ($this->test->id == 0) {
+            return array();
+        }
+
+        $descriptionNode = $document->createElement($alias.':description', $this->test->description);
+        $exercisesNode = $document->createElement($alias.':exercises');
+
+        foreach ($this->test->exercises as $exercise) {
+            /** @var \Mooc\UI\TestBlock\Model\Exercise $exercise */
+
+            $exerciseNode = $document->createElement($alias.':exercise');
+            $idNode = $document->createAttribute('id');
+            $idNode->value = $exercise->ID;
+            $exerciseNode->appendChild($idNode);
+            $nameNode = $document->createAttribute('name');
+            $nameNode->value = utf8_encode($exercise->name);
+            $exerciseNode->appendChild($nameNode);
+            $typeNode = $document->createAttribute('type');
+            $typeNode->value = $exercise->URI;
+            $exerciseNode->appendChild($typeNode);
+
+            $exerciseContent = new \DOMDocument();
+            $exerciseContent->loadXML(utf8_encode($exercise->Aufgabe));
+            $this->importNode($exerciseContent->documentElement, $exerciseNode, $alias);
+
+            $exercisesNode->appendChild($exerciseNode);
+        }
+
+        return array($descriptionNode, $exercisesNode);
+    }
+
+    /**
+     * Recursively import a node tree applying a namespace prefix to each
+     * node name.
+     *
+     * @param \DOMNode $node   The node tree to import
+     * @param \DOMNode $parent The parent node where the tree will be imported
+     * @param string   $alias  The namespace prefix
+     */
+    private function importNode(\DOMNode $node, \DOMNode $parent, $alias)
+    {
+        if ($node instanceof \DOMText) {
+            $textNode = new \DOMText($node->nodeValue);
+            $parent->appendChild($textNode);
+
+            return;
+        }
+
+        $newNode = $parent->ownerDocument->createElement($alias.':'.$node->nodeName);
+        $parent->appendChild($newNode);
+
+        foreach ($node->attributes as $attribute) {
+            $newAttribute = $parent->ownerDocument->createAttribute($attribute->nodeName);
+            $newAttribute->value = $attribute->value;
+            $newNode->appendChild($newAttribute);
+        }
+
+        foreach ($node->childNodes as $child) {
+            $this->importNode($child, $newNode, $alias);
+        }
     }
 
     private function buildExercises()

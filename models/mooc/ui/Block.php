@@ -152,6 +152,16 @@ abstract class Block {
         $this->_fields[$name] = $field;
     }
 
+    /**
+     * Returns the underlying model object.
+     *
+     * @return \SimpleORMap The model
+     */
+    public function getModel()
+    {
+        return $this->_model;
+    }
+
     // TODO
     function __get($name)
     {
@@ -314,6 +324,66 @@ abstract class Block {
         $json['fields'] = $this->getFields();
         $json['editable'] = $this->isEditable();
         return $json;
+    }
+
+    /**
+     * Exposes properties to be exported.
+     *
+     * @return array The properties to export
+     */
+    public function exportProperties()
+    {
+        return array();
+    }
+
+    /**
+     * Exposes the block contents that should be exported.
+     *
+     * @return string The block contents
+     */
+    public function exportContents()
+    {
+        return null;
+    }
+
+    /**
+     * An optional additional XML namespace which is used in XML file exports
+     * for the attributes exposed by the export() method.
+     *
+     * @return string The XML namespace
+     */
+    public function getXmlNamespace()
+    {
+        return null;
+    }
+
+    /**
+     * Returns the url of an optional additional XML schema definition file
+     * for a particular block type.
+     *
+     * @return string|null The url to the XSD file
+     */
+    public function getXmlSchemaLocation()
+    {
+        return null;
+    }
+
+    /**
+     * Handle properties being imported.
+     *
+     * @param array $properties The properties to import
+     */
+    public function importProperties(array $properties)
+    {
+    }
+
+    /**
+     * Handle the block contents that should be imported.
+     *
+     * @param string $contents The block contents to import
+     */
+    public function importContents($contents)
+    {
     }
 
     // memorize the user's progress
