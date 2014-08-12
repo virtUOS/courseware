@@ -5,6 +5,7 @@ namespace Mooc\UI\TestBlock;
 use Mooc\Container;
 use Mooc\UI\Block;
 use Mooc\UI\Section\Section;
+use Mooc\UI\TestBlock\Model\Exercise;
 use Mooc\UI\TestBlock\Model\Test;
 use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
 
@@ -24,6 +25,11 @@ class TestBlock extends Block
      * @var array Cache of imported tests, used to avoid creating tests twice during imports
      */
     private static $importedTests = array();
+
+    /**
+     * @var array Cache of imported exercises, used to avoid creating exercises twice during imports
+     */
+    private static $importedExercises = array();
 
     public function __construct(Container $container, \SimpleORMap $model)
     {
@@ -209,6 +215,7 @@ class TestBlock extends Block
         }
 
         $test->store();
+        $this->test = $test;
         $this->test_id = $test->id;
         static::$importedTests[$courseId][$importedTestId] = $test->id;
         $this->save();
@@ -257,33 +264,126 @@ class TestBlock extends Block
     }
 
     /**
-     * Recursively import a node tree applying a namespace prefix to each
-     * node name.
+     * Handles the import of the block's contents through XML.
      *
-     * @param \DOMNode $node   The node tree to import
-     * @param \DOMNode $parent The parent node where the tree will be imported
-     * @param string   $alias  The namespace prefix
+     * @param \DOMNode $node  The block's DOM node
+     * @param string   $alias The namespace alias to be used to prefix
+     *                        generated node names
      */
-    private function importNode(\DOMNode $node, \DOMNode $parent, $alias)
+    public function importContentsFromXml(\DOMNode $node, $alias)
+    {
+        if ($this->test->id === null) {
+            return;
+        }
+
+        $courseId = $this->getModel()->course->id;
+        $xpath = new \DOMXPath($node->ownerDocument);
+
+        $description = $xpath->query('./'.$alias.':description', $node);
+        if ($description->length === 1) {
+            $this->test->description = utf8_decode($description->item(0)->textContent);
+            $this->test->store();
+        }
+
+        $exercises = $xpath->query('./'.$alias.':exercises/'.$alias.':exercise', $node);
+        if ($exercises->length > 0) {
+            foreach ($exercises as $exerciseData) {
+                if ($exerciseData instanceof \DOMNode) {
+                    $getAttribute = function ($name) use ($exerciseData) {
+                        return $exerciseData->attributes->getNamedItem($name)->nodeValue;
+                    };
+
+                    if (!isset(static::$importedExercises[$courseId][$this->test->id][$getAttribute('id')])) {
+                        $document = new \DOMDocument('1.0', 'utf-8');
+                        $this->importNode($xpath->query('./*', $exerciseData)->item(0), $document, $alias, true, true);
+
+                        $exercise = new Exercise();
+                        $exercise->Name = utf8_decode($getAttribute('name'));
+                        $exercise->Aufgabe = utf8_decode($document->saveXML());
+                        $exercise->URI = $getAttribute('type');
+                        $exercise->store();
+
+                        static::$importedExercises[$courseId][$this->test->id][$getAttribute('id')] = $exercise;
+                    }
+                }
+            }
+        }
+
+        // SimpleORMap can't handle many-to-many relationships with extra fields
+        $db = \DBManager::get();
+        $deleteStmt = $db->prepare('DELETE FROM vips_exercise_ref WHERE test_id = :test_id');
+        $deleteStmt->bindParam(':test_id', $this->test->id);
+        $deleteStmt->execute();
+        $insertStmt = $db->prepare(
+            'INSERT INTO
+              vips_exercise_ref
+            SET
+              exercise_id = :exercise_id,
+              test_id = :test_id,
+              position = :position'
+        );
+        $position = 1;
+        foreach (static::$importedExercises[$courseId][$this->test->id] as $exercise) {
+            $insertStmt->bindParam(':exercise_id', $exercise->ID);
+            $insertStmt->bindParam(':test_id', $this->test->id);
+            $insertStmt->bindParam(':position', $position);
+            $insertStmt->execute();
+            $position++;
+        }
+    }
+
+    /**
+     * Recursively import a node tree either applying a namespace prefix to
+     * each node name or stripping it off.
+     *
+     * @param \DOMNode $node                      The node tree to import
+     * @param \DOMNode $parent                    The parent node where the
+     *                                            tree will be imported
+     * @param string   $alias                     The namespace prefix
+     * @param bool     $stripPrefix               Whether or not to strip off
+     *                                            the namespace prefix
+     * @param bool     $ignoreWhiteSpaceTextNodes Whether or not to ignore text
+     *                                            nodes that only consist of
+     *                                            whitespaces
+     */
+    private function importNode(\DOMNode $node, \DOMNode $parent, $alias, $stripPrefix = false, $ignoreWhiteSpaceTextNodes = false)
     {
         if ($node instanceof \DOMText) {
+            if ($ignoreWhiteSpaceTextNodes && trim($node->nodeValue) === '') {
+                return;
+            }
+
             $textNode = new \DOMText($node->nodeValue);
             $parent->appendChild($textNode);
 
             return;
         }
 
-        $newNode = $parent->ownerDocument->createElement($alias.':'.$node->nodeName);
+        if ($parent instanceof \DOMDocument) {
+            $document = $parent;
+        } else {
+            $document = $parent->ownerDocument;
+        }
+
+        if ($stripPrefix && strpos($node->nodeName, $alias.':') === 0) {
+            $nodeName = substr($node->nodeName, strlen($alias) + 1);
+        } elseif ($stripPrefix) {
+            $nodeName = $node->nodeName;
+        } else {
+            $nodeName = $alias.':'.$node->nodeName;
+        }
+
+        $newNode = $document->createElement($nodeName);
         $parent->appendChild($newNode);
 
         foreach ($node->attributes as $attribute) {
-            $newAttribute = $parent->ownerDocument->createAttribute($attribute->nodeName);
+            $newAttribute = $document->createAttribute($attribute->nodeName);
             $newAttribute->value = $attribute->value;
             $newNode->appendChild($newAttribute);
         }
 
         foreach ($node->childNodes as $child) {
-            $this->importNode($child, $newNode, $alias);
+            $this->importNode($child, $newNode, $alias, $stripPrefix, $ignoreWhiteSpaceTextNodes);
         }
     }
 

@@ -17,6 +17,7 @@ class Test extends \SimpleORMap
             'thru_key' => 'test_id',
             'thru_assoc_key' => 'exercise_id',
             'assoc_foreign_key' => 'ID',
+            'on_store' => true,
         );
 
         parent::__construct($id);

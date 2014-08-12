@@ -135,6 +135,14 @@ class XmlImport implements ImportInterface
             $uiBlock->importProperties($properties);
         }
 
-        $uiBlock->importContents(trim($node->textContent));
+        if (method_exists($uiBlock, 'importContentsFromXml')) {
+            $alias = strtolower($block->type);
+            if (substr($alias, -5) === 'block') {
+                $alias = substr($alias, 0, -5);
+            }
+            $uiBlock->importContentsFromXml($node, $alias);
+        } else {
+            $uiBlock->importContents(trim($node->textContent));
+        }
     }
 }

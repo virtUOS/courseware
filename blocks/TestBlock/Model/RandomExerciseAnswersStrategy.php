@@ -21,7 +21,10 @@ class RandomExerciseAnswersStrategy implements AnswersStrategyInterface
 
         $randomExerciseId = $exercise->chooseSubexercise($user->cfg->getUserId());
         $exercise = new Exercise($randomExerciseId);
-        $this->randomExerciseStrategy = AnswersStrategy::getStrategy($exercise->getVipsExercise());
+
+        if ($exercise->getVipsExercise() !== null) {
+            $this->randomExerciseStrategy = AnswersStrategy::getStrategy($exercise->getVipsExercise());
+        }
     }
 
     /**
