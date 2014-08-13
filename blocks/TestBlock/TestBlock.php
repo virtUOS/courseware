@@ -81,6 +81,82 @@ class TestBlock extends Block
         return $this->buildExercises();
     }
 
+    public function exercise_reset_handler($data)
+    {
+        /** @var \Seminar_User $user */
+        global $user;
+
+        parse_str($data, $requestData);
+
+        $testId = $requestData['test_id'];
+        $exerciseId = $requestData['exercise_id'];
+
+        \check_test_access($testId);
+
+        $db = \DBManager::get();
+
+        // do not allow to delete solutions if the test is no selftest
+        $stmt = $db->prepare(
+            'SELECT
+              type
+            FROM
+              vips_test
+            WHERE
+              id = :test_id'
+        );
+        $stmt->bindValue(':test_id', $testId);
+        $stmt->execute();
+
+        if ($stmt->fetchColumn() != 'selftest') {
+            return false;
+        }
+
+        // delete the solution
+        $stmt = $db->prepare(
+            'DELETE FROM
+              vips_solution
+            WHERE
+              test_id = :test_id AND
+              exercise_id = :exercise_id AND
+              user_id = :user_id'
+        );
+        $stmt->bindValue(':test_id', $testId);
+        $stmt->bindValue(':exercise_id', $exerciseId);
+        $stmt->bindValue(':user_id', $user->cfg->getUserId());
+        $stmt->execute();
+
+        // determine the number of solutions of the current user that do still
+        // exist
+        $stmt = $db->prepare(
+            'SELECT
+              COUNT(*)
+            FROM
+              vips_solution
+            WHERE
+              test_id = :test_id AND
+              user_id = :user_id'
+        );
+        $stmt->bindValue(':test_id', $testId);
+        $stmt->bindValue(':user_id', $user->cfg->getUserId());
+        $stmt->execute();
+
+        // there are no solutions left, clean the solve start time
+        if ($stmt->fetchColumn() == 0) {
+            $stmt = $db->prepare(
+                'DELETE FROM
+                  vips_aufgaben_zeit
+                WHERE
+                  test_id = :test_id AND
+                  user_id = :user_id'
+            );
+            $stmt->bindValue(':test_id', $testId);
+            $stmt->bindValue(':user_id', $user->cfg->getUserId());
+            $stmt->execute();
+        }
+
+        return array();
+    }
+
     public function exercise_submit_handler($data)
     {
         global $vipsPlugin, $vipsTemplateFactory;

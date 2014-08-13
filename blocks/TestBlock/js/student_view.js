@@ -3,7 +3,26 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
 
     return StudentView.extend({
         events: {
-            'click button': function (event) {
+            'click button[name=reset-exercise]': function (event) {
+                var $form = this.$(event.target).closest('form');
+                var view = this;
+
+                if (confirm('Soll die Antwort zurückgesetzt werden?')) {
+                    helper
+                        .callHandler(this.model.id, 'exercise_reset', $form.serialize())
+                        .then(
+                            function () {
+                                view.renderServerSide();
+                            },
+                            function () {
+                                console.log('failed to reset the exercise');
+                            }
+                        );
+                }
+
+                return false;
+            },
+            'click button[name=submit-exercise]': function (event) {
                 var $form = this.$(event.target).closest('form');
                 var view = this;
 
