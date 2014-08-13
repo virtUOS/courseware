@@ -21,6 +21,10 @@ class UserProgress extends \SimpleORMap
             'foreign_key' => 'user_id');
 
         parent::__construct($id);
+
+        if ($this->isNew()) {
+            $this->grade = 0;
+        }
     }
 
     /**
