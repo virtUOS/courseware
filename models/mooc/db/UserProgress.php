@@ -28,6 +28,18 @@ class UserProgress extends \SimpleORMap
     }
 
     /**
+     * {@inheritdata}
+     */
+    public function setData($data, $reset = false)
+    {
+        // we need to ensure that the max_grade field is set before the
+        // grade field since it is evaluated in setGrade()
+        krsort($data);
+
+        return parent::setData($data, $reset);
+    }
+
+    /**
      * Grade must be a float in [0..1]
      *
      * As as is usual with SimpleORMap this method gets called on
@@ -36,14 +48,21 @@ class UserProgress extends \SimpleORMap
      * $progress->grade = 0.5;
      * \endcode
      *
-     * @param float $grade  a floating point number between 0.0 and 1.0
+     * @param float $grade a floating point number between 0.0 and and the
+     *                     value of the max_grade field
+     *
+     * @throws \InvalidArgumentException if the grade is not in the allowed
+     *                                   range
      */
     protected function setGrade($grade)
     {
-        if (!is_numeric($grade) || $grade < 0 || $grade > 1) {
-            throw new \InvalidArgumentException('Grade must be within [0..1].');
+        if ($this->max_grade === null) {
+            $this->max_grade = 1;
+        }
+
+        if (!is_numeric($grade) || $grade < 0 || $grade > $this->max_grade) {
+            throw new \InvalidArgumentException('Grade must be within [0..'.$this->max_grade.'].');
         }
         $this->content['grade'] = $grade;
     }
-
 }
