@@ -19,7 +19,11 @@ class ProgressController extends MoocipController {
         $progress = array_reduce(
             \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id = ?', array($bids, $uid)),
             function ($memo, $item) {
-                $memo[$item->block_id] = $item->grade / $item->max_grade;
+                $memo[$item->block_id] = array(
+                    'grade' => $item->grade,
+                    'max_grade' => $item->max_grade,
+                );
+
                 return $memo;
             },
             array());
@@ -51,9 +55,23 @@ class ProgressController extends MoocipController {
             $root['children'] = $this->addChildren($grouped, $root);
             if ($root['children']) {
                 $grades = array_map(
-                    function ($block) use ($progress) { return (double) $progress[$block['id']]; },
-                    $root['children']);
-                $root['progress'] = array_sum($grades) / sizeof($grades);
+                    function ($block) use ($progress) {
+                        return (double) $progress[$block['id']]['grade'];
+                    },
+                    $root['children']
+                );
+                $maxGrades = array_map(
+                    function ($block) use ($progress) {
+                        return (double) $progress[$block['id']]['max_grade'];
+                    },
+                    $root['children']
+                );
+
+                if (array_sum($maxGrades) > 0) {
+                    $root['progress'] = array_sum($grades) / array_sum($maxGrades);
+                } else {
+                    $root['progress'] = 0;
+                }
             }
             else {
                 $root['progress'] = 0;
