@@ -89,7 +89,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                 $block_wrapper = block_view.$el.closest('section.block'),
                 self = this;
 
-            if (confirm("Wollen Sie wirklich löschen?")) {
+            if (confirm("Wollen Sie den Block wirklich löschen?")) {
 
                 $block_wrapper.addClass("loading");
 
@@ -263,7 +263,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
         destroySection: function (event) {
 
-            if (confirm(i18n("Wollen Sie wirklich löschen?"))) {
+            if (confirm(i18n("Wollen Sie den gesamten Abschnitt wirklich löschen?"))) {
                 jQuery("#courseware").addClass("loading");
 
                 var parent_id = this.model.get("parent_id");
