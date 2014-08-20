@@ -1,3 +1,10 @@
 section.HtmlBlock textarea {
   width: 100%;
 }
+section.HtmlBlock div.content:after {
+  content: ".";
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+}
