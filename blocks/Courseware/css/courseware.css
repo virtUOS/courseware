@@ -305,6 +305,7 @@ section#courseware ol.active-subchapter li > a {
   padding: 0px;
   display: inline-block;
   border-radius: 2px;
+  overflow: hidden;
 }
 section#courseware ol.active-subchapter li > a[data-icon=""] {
   background-image: url("../../../../assets/images/icons/32/blue/infopage.png");
