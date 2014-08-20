@@ -63,6 +63,16 @@ class Exercise extends \SimpleORMap
     }
 
     /**
+     * Returns the Exercise title.
+     *
+     * @return string The title
+     */
+    public function getTitle()
+    {
+        return $this->Name;
+    }
+
+    /**
      * Returns the Exercise question.
      *
      * @return string The question

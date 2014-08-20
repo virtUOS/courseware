@@ -519,6 +519,7 @@ class TestBlock extends Block
                     'self_test' => $this->test->isSelfTest(),
                     'exercise_sheet' => $this->test->isExerciseSheet(),
                     'show_correction' => $this->test->showCorrection(),
+                    'title' => $exercise->getTitle(),
                     'question' => $exercise->getQuestion(),
                     'answers' => $answers,
                     'single-choice' => $exercise->isSingleChoice(),
