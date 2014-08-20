@@ -45,6 +45,7 @@ class Block extends \SimpleORMap
 
         $this->registerCallback('after_delete',  'destroyFields');
         $this->registerCallback('after_delete',  'destroyUserProgress');
+        $this->registerCallback('after_delete',  'updatePositionsAfterDelete');
 
         parent::__construct($id);
     }
@@ -152,7 +153,30 @@ class Block extends \SimpleORMap
         UserProgress::deleteBySQL('block_id = ?', array($this->id));
     }
 
+    /**
+     * Reflects changes in position if a block on one level is deleted.
+     */
+    public function updatePositionsAfterDelete()
+    {
+        if (!$this->parent) {
+            return;
+        }
 
+        $db = \DBManager::get();
+        $stmt = $db->prepare(sprintf(
+            'UPDATE
+              %s
+            SET
+              position = position - 1
+            WHERE
+              parent_id = :parent_id AND
+              position > :position',
+            $this->db_table
+        ));
+        $stmt->bindValue(':parent_id', $this->parent->id);
+        $stmt->bindValue(':position', $this->position);
+        $stmt->execute();
+    }
 
     /**
      * Update child sorting
