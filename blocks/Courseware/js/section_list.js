@@ -93,6 +93,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 .done(
                     function (data) {
                         placeholder_item.replaceWith(templates("Courseware", "section", data));
+                        helper.navigateTo(data.id);
                     },
                     function (error) {
                         if (placeholder_item) {
