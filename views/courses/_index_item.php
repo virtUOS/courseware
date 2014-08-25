@@ -3,7 +3,7 @@ $course = $_index_item;
 ?>
 <article>
 	<div class="course-avatar-wrapper">
-  	<?= CourseAvatar::getAvatar($course->id)->getImageTag(CourseAvatar::MEDIUM) ?>
+  	    <img class="course-avatar-medium course-<?=$course->seminar_id?>" alt="<?=htmlReady($course->name)?>" title="<?=htmlReady($course->name)?>" src="<?= $preview_images[$course->id] ?: CourseAvatar::getAvatar($course->id)->getURL(CourseAvatar::MEDIUM) ?>" />
 	</div>
   	
 

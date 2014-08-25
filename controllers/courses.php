@@ -17,6 +17,26 @@ class CoursesController extends MoocipController {
 
         $sem_class = \Mooc\SemClass::getMoocSemClass();
         $this->courses = $sem_class->getCourses();
+        $this->preview_images = array();
+
+        foreach ($this->courses as $course) {
+            $localEntries = DataFieldEntry::getDataFieldEntries($course->seminar_id);
+            foreach ($localEntries as $entry) {
+                if ($entry->structure->accessAllowed($GLOBALS['perm'])) {
+                    if ($entry->getValue()) {
+                        foreach ($this->container['datafields'] as $field => $id) {
+                            if ($field != 'preview_image') {
+                                continue;
+                            }
+
+                            if ($entry->getId() == $id) {
+                                $this->preview_images[$course->id] = $entry->getValue();
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public function overview_action($edit = false)
