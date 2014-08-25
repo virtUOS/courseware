@@ -56,7 +56,7 @@ class UserProgress extends \SimpleORMap
      */
     protected function setGrade($grade)
     {
-        if ($this->max_grade === null) {
+        if ($this->max_grade === null || $this->max_grade == 0) {
             $this->max_grade = 1;
         }
 
