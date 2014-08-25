@@ -1,8 +1,21 @@
 Development Documentation
 =========================
 
-The MOOC.IP plugin ships with a build script that automates several steps
-that are performed during the development cycle:
+The MOOC.IP plugin ships with a build script that automates several steps which
+are performed during the development cycle. When you cloned the plugin source
+code using Git, you'll have to install all dependencies. After that, you have
+to compile LESS files into CSS.
+
+Installing Dependencies
+-----------------------
+
+The MOOC.IP plugin uses [Composer](https://getcomposer.org/) as the dependency
+manager. Make sure that you have [installed it globally](https://getcomposer.org/doc/00-intro.md).
+Then, run the ``composer`` command to install all required dependencies:
+
+```bash
+$ composer install
+```
 
 Compile LESS Files
 ------------------
@@ -33,7 +46,9 @@ $ php build.php watch 10
 Create the Plugin Archive
 -------------------------
 
-You can create an installable Stud.IP plugin archive using the ``zip`` command:
+You can create an installable Stud.IP plugin archive using the ``zip`` command
+(make your that you have [installed all dependencies](#installing-dependencies)
+and that you have [compiled the LESS files](#compile-less-files)):
 
 ```bash
 $ php build.php zip
