@@ -72,7 +72,7 @@ class TestBlock extends Block
 
     public function author_view()
     {
-        $storedTests = Test::findAll();
+        $storedTests = Test::findAllByType('selftest');
         $tests = array();
 
         foreach ($storedTests as $test) {

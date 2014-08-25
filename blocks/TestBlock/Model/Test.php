@@ -47,4 +47,27 @@ class Test extends \SimpleORMap
     {
         return static::findBySQL('1 = 1 ORDER BY title');
     }
+
+    /**
+     * Returns all tests which are of a given type (one of "exam", "practice",
+     * "selftest").
+     *
+     * @param string $type The test type
+     *
+     * @return Test[] The tests
+     *
+     * @throws \InvalidArgumentException if $type is not one of "exam",
+     *                                   "practice", "selftest"
+     */
+    public static function findAllByType($type)
+    {
+        if (!in_array($type, array('exam', 'practice', 'selftest'))) {
+            throw new \InvalidArgumentException(sprintf(
+                'The test type must be one of "exam", "practice", "selftest" ("%s" given).',
+                $type
+            ));
+        }
+
+        return static::findBySQL('type = :type ORDER BY title', array(':type' => $type));
+    }
 }
