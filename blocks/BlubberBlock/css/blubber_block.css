@@ -1,0 +1,7 @@
+section.BlubberBlock div.blubber-stream.loading {
+  background-image: url('/ajax_indicator_small.gif');
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  opacity: 0.5;
+}
