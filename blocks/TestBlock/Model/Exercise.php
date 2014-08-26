@@ -202,6 +202,42 @@ class Exercise extends \SimpleORMap
     }
 
     /**
+     * Checks whether or not the solution should be shown to the user.
+     *
+     * @param Test          $test The test
+     * @param \Seminar_User $user The user
+     *
+     * @return bool True if the solution should be shown, false otherwise
+     */
+    public function showSolutionFor(Test $test, \Seminar_User $user)
+    {
+        if (!$this->hasSolutionFor($test, $user)) {
+            return false;
+        }
+
+        $solution = $this->getSolutionFor($test, $user);
+
+        return $solution == 1;
+    }
+
+    /**
+     * Checks whether or not a user is allowed to solve an exercise.
+     *
+     * @param Test          $test The test in which the exercise is embedded
+     * @param \Seminar_User $user The user
+     *
+     * @return bool True if the user is allowed to pass solve an exercise,
+     *              false otherwise
+     */
+    public function solvingAllowed(Test $test, \Seminar_User $user) {
+        $now = time();
+        $start = strtotime($test->start);
+        $end = strtotime($test->end);
+
+        return $now >= $start && $now <= $end;
+    }
+
+    /**
      * Returns the Solution for a certain test and user in the Vips internal format.
      *
      * @param Test          $test

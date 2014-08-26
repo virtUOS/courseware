@@ -523,7 +523,7 @@ class TestBlock extends Block
 
                 $answers = $exercise->getAnswers($this->test, $user);
                 $userAnswers = $exercise->getUserAnswers($this->test, $user);
-                $exercises[] = array(
+                $entry = array(
                     'exercise_type' => $exercise->getType(),
                     $exercise->getType() => 1,
                     'id' => $exercise->getId(),
@@ -531,6 +531,7 @@ class TestBlock extends Block
                     'self_test' => $this->test->isSelfTest(),
                     'exercise_sheet' => $this->test->isExerciseSheet(),
                     'show_correction' => $this->test->showCorrection(),
+                    'show_solution' => $exercise->showSolutionFor($this->test, $user),
                     'title' => $exercise->getTitle(),
                     'question' => $exercise->getQuestion(),
                     'answers' => $answers,
@@ -539,10 +540,13 @@ class TestBlock extends Block
                     'solver_user_id' => $user->cfg->getUserId(),
                     'has_solution' => $exercise->hasSolutionFor($this->test, $user),
                     'solution' => $exercise->getAnswersStrategy()->getSolution($exercise->getVipsSolutionFor($this->test, $user)),
+                    'solving_allowed' => $exercise->solvingAllowed($this->test, $user),
                     'number_of_answers' => count($answers),
                     $exercise->getAnswersStrategy()->getTemplate() => true,
                     'user_answers' => $userAnswers,
                 );
+                $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
+                $exercises[] = $entry;
             }
         }
 
