@@ -153,12 +153,13 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
             var view = this,
                 $button = jQuery(event.target),
-                block_type = $button.attr("data-blocktype");
+                block_type = $button.attr("data-blocktype"),
+                block_sub_type = $button.attr("data-blocksubtype");
 
             $button.prop("disabled", true).addClass("loading");
 
             helper
-                .callHandler(this.model.id, 'add_content_block', { type: block_type })
+                .callHandler(this.model.id, 'add_content_block', { type: block_type, sub_type: block_sub_type })
 
                 .then(
 

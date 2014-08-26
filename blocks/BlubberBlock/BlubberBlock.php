@@ -51,7 +51,7 @@ class BlubberBlock extends Block
     /**
      * {@inheritdoc}
      */
-    public static function additionalInstanceAllowed(Section $section)
+    public static function additionalInstanceAllowed(Section $section, $subType = null)
     {
         $blubberBlockAllowed = true;
         $section->traverseChildren(function ($child) use (&$blubberBlockAllowed) {

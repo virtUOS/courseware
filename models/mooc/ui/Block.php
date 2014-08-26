@@ -216,6 +216,20 @@ abstract class Block {
     }
 
     /**
+     * Returns the block's sub types.
+     *
+     * A block can (optionally) define sub types. For each sub type, the user
+     * can create a separate block. Array keys are treated as identifiers,
+     * values will be treated as human-readable strings presented to the end-user.
+     *
+     * @return array The allowed sub types
+     */
+    public static function getSubTypes()
+    {
+        return array();
+    }
+
+    /**
      * This function is called by the framework. You should not have
      * to call it yourself.
      *
@@ -420,10 +434,11 @@ abstract class Block {
      * section.
      *
      * @param Section $section The section the block should be created in
+     * @param string  $subType The block sub type
      *
      * @return bool True if a new block instance is allowed, false otherwise
      */
-    public static function additionalInstanceAllowed(Section $section)
+    public static function additionalInstanceAllowed(Section $section, $subType = null)
     {
         return true;
     }

@@ -65,6 +65,18 @@ class TestBlock extends Block
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubTypes()
+    {
+        return array(
+            'exam' => _('Klausur'),
+            'selftest' => _('Selbsttest'),
+            'practice' => _('Übungsblatt'),
+        );
+    }
+
     public function student_view()
     {
         return $this->buildExercises();
@@ -72,7 +84,7 @@ class TestBlock extends Block
 
     public function author_view()
     {
-        $storedTests = Test::findAllByType('selftest');
+        $storedTests = Test::findAllByType($this->_model->sub_type);
         $tests = array();
 
         foreach ($storedTests as $test) {
@@ -543,7 +555,7 @@ class TestBlock extends Block
     /**
      * {@inheritdoc}
      */
-    public static function additionalInstanceAllowed(Section $section)
+    public static function additionalInstanceAllowed(Section $section, $subType = null)
     {
         return VipsBridge::vipsExists();
     }

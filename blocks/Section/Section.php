@@ -82,7 +82,7 @@ class Section extends Block {
 
         $className = '\Mooc\UI\\'.$data['type'].'\\'.$data['type'];
 
-        if (!call_user_func(array($className, 'additionalInstanceAllowed'), $this)) {
+        if (!call_user_func(array($className, 'additionalInstanceAllowed'), $this, $data['sub_type'])) {
             throw new BadRequest('No additional '.$data['type'].' allowed');
         }
 
@@ -91,6 +91,7 @@ class Section extends Block {
             'seminar_id' => $this->_model->seminar_id,
             'parent_id'  => $this->_model->id,
             'type'       => $data['type'],
+            'sub_type'   => $data['sub_type'],
             'title'      => "Ein weiterer " . $data['type']
         ));
 
@@ -146,14 +147,31 @@ class Section extends Block {
                 $readableName = constant($nameConstant);
             }
 
-            $blockTypes[] = array(
-                'type' => $type,
-                'name' => $readableName,
-                'additional_instance_allowed' => call_user_func(array(
-                    $className,
-                    'additionalInstanceAllowed'
-                ), $this),
-            );
+            $subTypes = call_user_func(array($className, 'getSubTypes'));
+
+            if (count($subTypes) > 0) {
+                foreach ($subTypes as $subType => $name)  {
+                    $blockTypes[] = array(
+                        'type' => $type,
+                        'sub_type' => $subType,
+                        'name' => $readableName.' ('.$name.')',
+                        'additional_instance_allowed' => call_user_func(array(
+                            $className,
+                            'additionalInstanceAllowed'
+                        ), $this, $subType),
+                    );
+                }
+            } else {
+                $blockTypes[] = array(
+                    'type' => $type,
+                    'sub_type' => null,
+                    'name' => $readableName,
+                    'additional_instance_allowed' => call_user_func(array(
+                        $className,
+                        'additionalInstanceAllowed'
+                    ), $this),
+                );
+            }
         }
 
         return $blockTypes;
