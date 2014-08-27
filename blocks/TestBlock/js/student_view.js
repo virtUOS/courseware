@@ -50,10 +50,9 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
 
         postRender: function () {
             var view = this;
-            var $sortableAnswers = jQuery('ul.exercise_answers', this.$el);
-
-            if ($sortableAnswers.length == 1) {
-                this.updateSizes(null);
+            jQuery('ul.exercise_answers', this.$el).each(function () {
+                var $sortableAnswers = $(this);
+                view.updateSizes($sortableAnswers);
                 $sortableAnswers.sortable({
                     axis: 'y',
                     containment: $sortableAnswers,
@@ -69,18 +68,13 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         });
                     }
                 });
-            }
+            });
         },
 
-        updateSizes: function (event) {
-            var $columns = jQuery('ul.matching_exercise', this.$el);
+        updateSizes: function ($container) {
+            var $columns = jQuery('ul.matching_exercise', $container);
             var $items = jQuery('li', $columns);
             var height = 0;
-
-            if (event != null) {
-                $items.css('height', 'auto');
-                $columns.css('width', 'auto');
-            }
 
             $items.each(function (i, element) {
                 height = Math.max(height, jQuery(element).height());
