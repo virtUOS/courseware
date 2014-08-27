@@ -78,6 +78,10 @@
   background-color: #eee;
   text-align: right;
 }
+.active-section section.block div.controls span.type {
+  margin-left: 5px;
+  float: left;
+}
 .active-section section.block div.controls button {
   width: 20px;
   height: 20px;

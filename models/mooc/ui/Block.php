@@ -320,6 +320,27 @@ abstract class Block {
     }
 
     /**
+     * Returns the readable name of a concrete block.
+     *
+     * @return string
+     */
+    public function getReadableName()
+    {
+        $readableName = get_class($this);
+
+        if (defined($readableName.'::NAME')) {
+            $readableName = constant($readableName.'::NAME');
+        }
+
+        if ($this->_model->sub_type !== null) {
+            $subTypes = $this->getSubTypes();
+            $readableName .= ' ('.$subTypes[$this->_model->sub_type].')';
+        }
+
+        return $readableName;
+    }
+
+    /**
      * Checks whether the block is editable.
      *
      * By default, all blocks can be modified.
@@ -336,6 +357,7 @@ abstract class Block {
     {
         $json = $this->_model->toArray();
         $json['fields'] = $this->getFields();
+        $json['readable_name'] = $this->getReadableName();
         $json['editable'] = $this->isEditable();
         return $json;
     }
