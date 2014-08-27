@@ -2,7 +2,6 @@
 $body_id = 'mooc-courses-show';
 ?>
 
-<?= CourseAvatar::getAvatar($course->id)->getImageTag(CourseAvatar::ORIGINAL) ?>
 <h1><?= htmlReady($course->name) ?></h1>
 <p class=subtitle><?= htmlReady($course->untertitel) ?></p>
 
