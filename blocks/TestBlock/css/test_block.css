@@ -30,7 +30,7 @@ section.TestBlock ul li.correct_answer span {
 }
 section.TestBlock ul.matching_exercise {
   padding-bottom: 10px;
-  float: left;
+  display: table-cell;
 }
 section.TestBlock ul.matching_exercise li {
   border-width: 1px;
@@ -40,6 +40,8 @@ section.TestBlock ul.matching_exercise li {
 }
 section.TestBlock ul.matching_exercise.labels li {
   border-color: transparent;
+  margin-left: 0;
+  padding-left: 0;
 }
 section.TestBlock ul.matching_exercise.answers li {
   border-color: #808080;

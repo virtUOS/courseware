@@ -32,7 +32,7 @@ section.TestBlock {
 
     &.matching_exercise {
       padding-bottom: 10px;
-      float: left;
+      display: table-cell;
 
       li {
         border-width: 1px;
@@ -43,6 +43,8 @@ section.TestBlock {
 
       &.labels li {
         border-color: transparent;
+        margin-left: 0;
+        padding-left: 0;
       }
 
       &.answers {
