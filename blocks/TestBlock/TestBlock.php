@@ -276,6 +276,9 @@ class TestBlock extends Block
      */
     public function importProperties(array $properties)
     {
+        /** @var \Seminar_User $user */
+        global $user;
+
         $importedTestId = $properties['test-id'];
 
         // no test included in the import format
@@ -326,6 +329,7 @@ class TestBlock extends Block
         $test->position = VipsBridge::findNextVipsPosition($courseId);
         $test->title = $properties['title'];
         $test->description = '';
+        $test->user_id = $user->cfg->getUserId();
         $test->options = json_encode($options);
 
         if ($properties['halted'] == 'true') {
