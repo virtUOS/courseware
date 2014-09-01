@@ -51,7 +51,7 @@ class XmlImport implements ImportInterface
         $chapter = new Block();
         $chapter->type = 'Chapter';
         $chapter->parent = $courseware->getModel();
-        $chapter->title = $node->getAttribute('title');
+        $chapter->title = utf8_decode($node->getAttribute('title'));
         $chapter->store();
 
         foreach ($node->childNodes as $subChapterNode) {
@@ -72,7 +72,7 @@ class XmlImport implements ImportInterface
         $subChapter = new Block();
         $subChapter->type = 'Subchapter';
         $subChapter->parent = $chapter;
-        $subChapter->title = $node->getAttribute('title');
+        $subChapter->title = utf8_decode($node->getAttribute('title'));
         $subChapter->store();
 
         foreach ($node->childNodes as $sectionNode) {
@@ -93,7 +93,7 @@ class XmlImport implements ImportInterface
         $section = new Block();
         $section->type = 'Section';
         $section->parent = $subChapter;
-        $section->title = $node->getAttribute('title');
+        $section->title = utf8_decode($node->getAttribute('title'));
         $section->store();
 
         foreach ($node->childNodes as $blockNode) {
@@ -112,12 +112,12 @@ class XmlImport implements ImportInterface
     private function processBlockNode(\DOMElement $node, Block $section)
     {
         $block = new Block();
-        $block->type = $node->getAttribute('type');
+        $block->type = utf8_decode($node->getAttribute('type'));
         if ($node->hasAttribute('sub-type')) {
-            $block->sub_type = $node->getAttribute('sub-type');
+            $block->sub_type = utf8_decode($node->getAttribute('sub-type'));
         }
         $block->parent = $section;
-        $block->title = $node->getAttribute('title');
+        $block->title = utf8_decode($node->getAttribute('title'));
         $block->store();
 
         /** @var \Mooc\UI\Block $uiBlock */
@@ -130,7 +130,7 @@ class XmlImport implements ImportInterface
             }
 
             if ($attribute->namespaceURI !== null) {
-                $properties[$attribute->name] = $attribute->value;
+                $properties[$attribute->name] = utf8_decode($attribute->value);
             }
         }
 
