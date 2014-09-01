@@ -43,24 +43,26 @@ class TestBlock extends Block
         if (VipsBridge::vipsExists()) {
             $this->test = new Test($this->test_id);
 
-            $progress = $this->getProgress();
+            if (!$this->_model->isNew()) {
+                $progress = $this->getProgress();
 
-            // initialize the user progress (if necessary)
-            if ($progress->isNew()) {
-                $progress->grade = 0;
-                $progress->max_grade = count($this->test->exercises);
-                $progress->store();
-            }
-
-            // fix the max grade value if the number of exercises had changed
-            if ($progress->max_grade != count($this->test->exercises)) {
-                $progress->max_grade = count($this->test->exercises);
-
-                if ($progress->grade > $progress->max_grade) {
-                    $progress->grade = $progress->max_grade;
+                // initialize the user progress (if necessary)
+                if ($progress->isNew()) {
+                    $progress->grade = 0;
+                    $progress->max_grade = count($this->test->exercises);
+                    $progress->store();
                 }
 
-                $progress->store();
+                // fix the max grade value if the number of exercises had changed
+                if ($progress->max_grade != count($this->test->exercises)) {
+                    $progress->max_grade = count($this->test->exercises);
+
+                    if ($progress->grade > $progress->max_grade) {
+                        $progress->grade = $progress->max_grade;
+                    }
+
+                    $progress->store();
+                }
             }
         }
     }
