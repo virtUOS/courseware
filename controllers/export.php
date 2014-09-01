@@ -18,6 +18,7 @@ class ExportController extends MoocipController
     {
         $this->set_layout(null);
         header('Content-Type: application/zip');
+        header('Content-Disposition: attachment; filename=courseware.zip');
 
         // create a temporary directory
         $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
