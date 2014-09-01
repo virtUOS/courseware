@@ -161,6 +161,7 @@ class XmlVisitor extends AbstractVisitor
         $properties = $block->exportProperties();
         $attributes = array();
         $attributes[] = $this->createAttributeNode('type', $block->getModel()->type);
+        $attributes[] = $this->createAttributeNode('sub-type', $block->getModel()->sub_type);
 
         foreach ($properties as $name => $value) {
             if ($alias !== null) {

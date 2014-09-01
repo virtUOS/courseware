@@ -113,6 +113,9 @@ class XmlImport implements ImportInterface
     {
         $block = new Block();
         $block->type = $node->getAttribute('type');
+        if ($node->hasAttribute('sub-type')) {
+            $block->sub_type = $node->getAttribute('sub-type');
+        }
         $block->parent = $section;
         $block->title = $node->getAttribute('title');
         $block->store();
