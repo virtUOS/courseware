@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "mustache/mustache",
-            "version": "v2.6.1",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/mustache.php.git",
-                "reference": "1430ca884912eaba2b3830856b45685733b16789"
+                "reference": "fdf41dd673dc99b41d60992470dbae94ae0b6ba1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/mustache.php/zipball/1430ca884912eaba2b3830856b45685733b16789",
-                "reference": "1430ca884912eaba2b3830856b45685733b16789",
+                "url": "https://api.github.com/repos/bobthecow/mustache.php/zipball/fdf41dd673dc99b41d60992470dbae94ae0b6ba1",
+                "reference": "fdf41dd673dc99b41d60992470dbae94ae0b6ba1",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "mustache",
                 "templating"
             ],
-            "time": "2014-06-20 19:34:49"
+            "time": "2014-08-26 19:50:10"
         },
         {
             "name": "pimple/pimple",
