@@ -93,6 +93,7 @@ class TestBlock extends Block
             $tests[] = array(
                 'id' => $test->id,
                 'name' => $test->title,
+                'created' => isset($test->created) ? date('d.m.Y', strtotime($test->created)) : '',
                 'exercises_count' => count($test->exercises),
                 'current_test' => $this->test_id === $test->id,
             );
