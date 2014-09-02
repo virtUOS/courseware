@@ -252,6 +252,14 @@ class TestBlock extends Block
             $properties['released'] = 'false';
         }
 
+        if ($this->test->start != '0000-00-00 00:00:00') {
+            $properties['start'] = date('Y-m-d\TH:i:s', strtotime($this->test->start));
+        }
+
+        if ($this->test->end != '0000-00-00 00:00:00') {
+            $properties['end'] = date('Y-m-d\TH:i:s', strtotime($this->test->end));
+        }
+
         return $properties;
     }
 
@@ -336,6 +344,18 @@ class TestBlock extends Block
             $test->halted = 1;
         } else {
             $test->halted = 0;
+        }
+
+        if (isset($properties['start'])) {
+            $test->start = date('Y-m-d H:i:s', strtotime($properties['start']));
+        } else {
+            $test->start = date('Y-m-d H:i:s');
+        }
+
+        if (isset($properties['end'])) {
+            $test->end = date('Y-m-d H:i:s', strtotime($properties['end']));
+        } else {
+            $test->end = date('Y-m-d H:i:s');
         }
 
         $test->store();

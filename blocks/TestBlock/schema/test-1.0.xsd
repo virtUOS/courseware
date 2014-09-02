@@ -12,6 +12,8 @@
     <xsd:attribute name="shuffle-answers" type="xsd:boolean" />
     <xsd:attribute name="printable" type="xsd:boolean" />
     <xsd:attribute name="released" type="xsd:boolean" />
+    <xsd:attribute name="start" type="xsd:dateTime" />
+    <xsd:attribute name="end" type="xsd:dateTime" />
 
     <xsd:element name="description">
         <xsd:simpleType>
