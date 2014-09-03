@@ -25,12 +25,6 @@ class HtmlBlock extends Block
         return $this->toJSON();
     }
 
-    function foo_handler($data)
-    {
-        $this->content = (string) $data['content'];
-        return array("content" => $this->content);
-    }
-
     /**
      * {@inheritdoc}
      */

@@ -32,13 +32,6 @@ class IFrameBlock extends Block
         return $this->toJSON();
     }
 
-    function foo_handler($data)
-    {
-        $this->url    = (string) $data['url'];
-        $this->height = (int) $data['height'];
-        return $this->array_rep();
-    }
-
     /**
      * {@inheritdoc}
      */
