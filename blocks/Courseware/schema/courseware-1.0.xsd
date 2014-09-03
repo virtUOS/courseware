@@ -8,6 +8,7 @@
         <xsd:complexType>
             <xsd:choice minOccurs="0" maxOccurs="unbounded">
                 <xsd:element name="chapter" type="chapter" />
+                <xsd:element name="files" type="files" />
             </xsd:choice>
             <xsd:attribute name="title" type="xsd:string" use="required" />
         </xsd:complexType>
@@ -45,4 +46,14 @@
         <xsd:anyAttribute />
     </xsd:complexType>
 
+    <xsd:complexType name="files">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="file" type="file" />
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="file">
+        <xsd:attribute name="id" type="xsd:string" use="required" />
+        <xsd:attribute name="filename" type="xsd:string" use="required" />
+    </xsd:complexType>
 </xsd:schema>

@@ -27,8 +27,13 @@ class ExportController extends MoocipController
         // dump the XML to the filesystem
         $blockFactory = $this->container['block_factory'];
         $export = new XmlExport($blockFactory);
-        $courseware = $this->container['courseware_factory']->makeCourseware($this->container['cid']);
-        file_put_contents($tempDir.'/data.xml', $export->export($blockFactory->makeBlock($courseware)));
+        $courseware = $blockFactory->makeBlock($this->container['courseware_factory']->makeCourseware($this->container['cid']));
+        foreach ($courseware->getFiles() as $file) {
+            $destination = $tempDir . '/' . $file['id'];
+            mkdir($destination);
+            copy($file['path'], $destination.'/'.$file['filename']);
+        }
+        file_put_contents($tempDir.'/data.xml', $export->export($courseware));
 
         $zipFile = $GLOBALS['TMP_PATH'].'/'.uniqid().'.zip';
         create_zip_from_directory($tempDir, $zipFile);

@@ -130,6 +130,22 @@ class Section extends Block {
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getFiles()
+    {
+        $files = array();
+
+        foreach ($this->_model->children as $child) {
+            /** @var \Mooc\UI\Block $block */
+            $block = $this->container['block_factory']->makeBlock($child);
+            $files = array_merge($files, $block->getFiles());
+        }
+
+        return $files;
+    }
+
+    /**
      * Returns the available block types.
      *
      * @return array The available block types

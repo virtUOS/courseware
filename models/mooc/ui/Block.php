@@ -383,6 +383,16 @@ abstract class Block {
     }
 
     /**
+     * Returns the files referenced by a block or its child blocks.
+     *
+     * @return array The referenced files
+     */
+    public function getFiles()
+    {
+        return array();
+    }
+
+    /**
      * An optional additional XML namespace which is used in XML file exports
      * for the attributes exposed by the export() method.
      *

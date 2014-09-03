@@ -97,6 +97,20 @@ class Courseware extends Block {
     /**
      * {@inheritdoc}
      */
+    public function getFiles()
+    {
+        $files = array();
+
+        foreach ($this->_model->children as $chapter) {
+            $files = array_merge($files, $this->getFilesForChapter($chapter));
+        }
+
+        return $files;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getXmlNamespace()
     {
         return 'http://moocip.de/schema/courseware/';
@@ -294,5 +308,30 @@ class Courseware extends Block {
             'prev' => array_key_exists($index - 1, $ids) ? $siblings->find($ids[$index - 1])->toArray() : null,
             'next' => array_key_exists($index + 1, $ids) ? $siblings->find($ids[$index + 1])->toArray() : null
         );
+    }
+
+    private function getFilesForChapter(\Mooc\DB\Block $chapter)
+    {
+        $files = array();
+
+        foreach ($chapter->children as $subChapter) {
+            $files = array_merge($files, $this->getFilesForSubChapter($subChapter));
+        }
+
+        return $files;
+
+    }
+
+    private function getFilesForSubChapter(\Mooc\DB\Block $subChapter)
+    {
+        $files = array();
+
+        foreach ($subChapter->children as $section) {
+            /** @var \Mooc\UI\Section\Section $block */
+            $block = $this->container['block_factory']->makeBlock($section);
+            $files = array_merge($files, $block->getFiles());
+        }
+
+        return $files;
     }
 }

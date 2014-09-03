@@ -58,6 +58,16 @@ class XmlVisitor extends AbstractVisitor
             $this->startVisitingChapter($chapter);
             $this->endVisitingChapter($chapter);
         }
+
+        $this->enterNode($this->appendBlockNode('files'));
+        foreach ($courseware->getFiles() as $file) {
+            $attributes = array(
+                $this->createAttributeNode('id', $file['id']),
+                $this->createAttributeNode('filename', $file['filename']),
+            );
+            $this->appendBlockNode('file', null, $attributes);
+        }
+        $this->leaveNode();
     }
 
     /**
