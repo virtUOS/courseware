@@ -332,7 +332,7 @@ abstract class Block {
             $readableName = constant($readableName.'::NAME');
         }
 
-        if ($this->_model->sub_type !== null) {
+        if ($this->_model->sub_type !== null && $this->_model->sub_type !== '') {
             $subTypes = $this->getSubTypes();
             $readableName .= ' ('.$subTypes[$this->_model->sub_type].')';
         }
