@@ -1,7 +1,9 @@
 define(['domReady!', 'scrollTo', 'backbone', 'assets/js/url', 'assets/js/block_types', 'assets/js/block_model'], function (domReady, scrollTo, Backbone, helper, block_types, BlockModel) {
 
     function logError(error) {
-        alert(error);
+        if (console) {
+            console.log(error);
+        }
     }
 
     window.onerror  = function (message, file, line) {
