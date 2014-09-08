@@ -16,17 +16,15 @@ define(['domReady!', 'scrollTo', 'backbone', 'assets/js/url', 'assets/js/block_t
         root: helper.courseware_url
     });
 
-    var $el = jQuery("#courseware"),
-
-        model = new BlockModel({
+    jQuery(document).ready(function () {
+        var $el = jQuery("#courseware");
+        var model = new BlockModel({
             id: $el.attr("data-blockid"),
             type: "Courseware"
-        }),
-
-        view = block_types
-            .findByName("Courseware")
-            .createView("student", {
-                el: $el,
-                model: model
-            });
+        });
+        block_types.findByName("Courseware").createView("student", {
+            el: $el,
+            model: model
+        });
+    });
 });
