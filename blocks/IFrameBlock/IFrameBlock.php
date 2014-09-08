@@ -33,6 +33,21 @@ class IFrameBlock extends Block
     }
 
     /**
+     * Updates the block's data.
+     *
+     * @param array $data The request data
+     *
+     * @return array The block's data
+     */
+    public function save_handler(array $data)
+    {
+        $this->url = (string) $data['url'];
+        $this->height = (int) $data['height'];
+
+        return $this->array_rep();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function exportProperties()

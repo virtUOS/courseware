@@ -27,6 +27,20 @@ class HtmlBlock extends Block
     }
 
     /**
+     * Updates the block's contents.
+     *
+     * @param array $data The request data
+     *
+     * @return array The block's data
+     */
+    public function save_handler(array $data)
+    {
+        $this->content = (string) $data['content'];
+
+        return array('content' => $this->content);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function exportContents()

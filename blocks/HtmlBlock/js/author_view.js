@@ -29,7 +29,7 @@ define(['assets/js/author_view', 'assets/js/url'],
 
             //textarea.remove();
             helper
-                .callHandler(this.model.id, "foo", {content: new_val})
+                .callHandler(this.model.id, "save", {content: new_val})
                 .then(
                     // success
                     function () {

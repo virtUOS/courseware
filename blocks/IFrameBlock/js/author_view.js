@@ -26,7 +26,7 @@ define(['assets/js/author_view', 'assets/js/url'],
             var view         = this;
 
             helper
-                .callHandler(this.model.id, "foo", {url: new_url, height: new_height})
+                .callHandler(this.model.id, "save", {url: new_url, height: new_height})
                 .then(
                     // success
                     function () {
