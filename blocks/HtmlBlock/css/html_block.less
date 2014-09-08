@@ -3,11 +3,17 @@ section.HtmlBlock {
     width: 100%;
   }
 
-  div.content:after {
-    content: ".";
-    clear: both;
-    display: block;
-    visibility: hidden;
-    height: 0;
+  div.content {
+    img {
+      max-width: 100%;
+    }
+
+    &:after {
+      content: ".";
+      clear: both;
+      display: block;
+      visibility: hidden;
+      height: 0;
+    }
   }
 }
