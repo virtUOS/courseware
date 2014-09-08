@@ -18,7 +18,7 @@ class ClozeAnswersStrategy extends AnswersStrategy
         $index = 0;
 
         foreach ($this->vipsExercise->question as $questionPart) {
-            if (is_array($questionPart) && count($questionPart) > 1) {
+            if (is_array($questionPart) && count($questionPart) > 1 && $this->vipsExercise->chooseItem) {
                 $question .= '<select name="answer_'.$index.'">';
 
                 foreach ($questionPart as $answer) {
@@ -35,7 +35,7 @@ class ClozeAnswersStrategy extends AnswersStrategy
             }
         }
 
-        return $question;
+        return nl2br($question);
     }
 
     /**
