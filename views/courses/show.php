@@ -7,12 +7,12 @@ $body_id = 'mooc-courses-show';
 
 <article class=description>
   <h1>Kursbeschreibung</h1>
-  <p><?= htmlReady($course->beschreibung) ?></p>
+  <p><?= nl2br(htmlReady($course->beschreibung)) ?></p>
 </article>
 
 <article class=requirements>
   <h1>Voraussetzungen</h1>
-  <p><?= htmlReady($course->vorrausetzungen) ?></p>
+  <p><?= nl2br(htmlReady($course->vorrausetzungen)) ?></p>
 </article>
 
 <div class=clear></div>
