@@ -193,7 +193,7 @@ class XmlVisitor extends AbstractVisitor
             $contents = $block->exportContents();
 
             if ($contents !== null) {
-                $blockNode->appendChild($this->document->createCDATASection($contents));
+                $blockNode->appendChild($this->document->createCDATASection(utf8_encode($contents)));
             }
         }
     }
