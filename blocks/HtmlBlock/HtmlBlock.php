@@ -45,7 +45,36 @@ class HtmlBlock extends Block
      */
     public function exportContents()
     {
-        return $this->content;
+        $document = new \DOMDocument();
+        $document->loadHTML($this->content);
+
+        $anchorElements = $document->getElementsByTagName('a');
+        foreach ($anchorElements as $element) {
+            if (!$element instanceof \DOMElement || !$element->hasAttribute('href')) {
+                continue;
+            }
+
+            $block = $this;
+
+            $this->applyCallbackOnInternalUrl($element->getAttribute('href'), function ($components) use ($block, $element) {
+                $element->setAttribute('href', $block->buildInternalUrl($components));
+            });
+        }
+
+        $imageElements = $document->getElementsByTagName('img');
+        foreach ($imageElements as $element) {
+            if (!$element instanceof \DOMElement || !$element->hasAttribute('src')) {
+                continue;
+            }
+
+            $block = $this;
+
+            $this->applyCallbackOnInternalUrl($element->getAttribute('src'), function ($components) use ($block, $element) {
+                $element->setAttribute('src', $block->buildInternalUrl($components));
+            });
+        }
+
+        return $document->saveHTML();
     }
 
     /**
@@ -58,23 +87,11 @@ class HtmlBlock extends Block
 
         $files = array();
         $crawler = new Crawler($this->content);
+        $block = $this;
 
         // extract a file id from a URL
-        $extractFile = function ($url) use ($user) {
-            if (!\Studip\MarkupPrivate\MediaProxy\isInternalLink($url)) {
-                return null;
-            }
-
-            $components = parse_url($url);
-
-            if (
-                isset($components['path'])
-                && substr($components['path'], -13) == '/sendfile.php'
-                && isset($components['query'])
-                && $components['query'] != ''
-            ) {
-                parse_str($components['query'], $queryParams);
-
+        $extractFile = function ($url) use ($user, $block) {
+            return $block->applyCallbackOnInternalUrl($url, function ($components, $queryParams) use ($user) {
                 if (isset($queryParams['file_id'])) {
                     $document = new \StudipDocument($queryParams['file_id']);
 
@@ -84,13 +101,16 @@ class HtmlBlock extends Block
 
                     return array(
                         'id' => $queryParams['file_id'],
+                        'name' => $document->name,
+                        'description' => $document->description,
                         'filename' => $document->filename,
+                        'url' => $document->url,
                         'path' => get_upload_file_path($queryParams['file_id']),
                     );
                 }
-            }
 
-            return null;
+                return null;
+            });
         };
 
         // filter files referenced in anchor elements
@@ -121,5 +141,48 @@ class HtmlBlock extends Block
     {
         $this->content = $contents;
         $this->save();
+    }
+
+    /**
+     * Calls a callback if a given URL is an internal URL.
+     *
+     * @param string   $url      The url to check
+     * @param callable $callback A callable to execute
+     *
+     * @return mixed The return value of the callback or null if the callback
+     *               is not executed
+     */
+    private function applyCallbackOnInternalUrl($url, $callback)
+    {
+        if (!\Studip\MarkupPrivate\MediaProxy\isInternalLink($url)) {
+            return null;
+        }
+
+        $components = parse_url($url);
+
+        if (
+            isset($components['path'])
+            && substr($components['path'], -13) == '/sendfile.php'
+            && isset($components['query'])
+            && $components['query'] != ''
+        ) {
+            parse_str($components['query'], $queryParams);
+
+            return $callback($components, $queryParams);
+        }
+
+        return null;
+    }
+
+    /**
+     * Builds a dummy internal URL for file references.
+     *
+     * @param string[] $components The parts of the origin URL
+     *
+     * @return string The internal URL
+     */
+    private function buildInternalUrl($components)
+    {
+        return 'http://internal.moocip.de'.$components['path'].'?'.$components['query'];
     }
 }

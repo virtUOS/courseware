@@ -29,6 +29,10 @@ class ExportController extends MoocipController
         $export = new XmlExport($blockFactory);
         $courseware = $blockFactory->makeBlock($this->container['courseware_factory']->makeCourseware($this->container['cid']));
         foreach ($courseware->getFiles() as $file) {
+            if (trim($file['url']) !== '') {
+                continue;
+            }
+
             $destination = $tempDir . '/' . $file['id'];
             mkdir($destination);
             copy($file['path'], $destination.'/'.$file['filename']);
