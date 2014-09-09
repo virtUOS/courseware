@@ -38,7 +38,9 @@
             {{> _cloze_solution}}
           {{/cloze_answers}}
 
-          {{> _reset_exercise}}
+          {{#self_test}}
+            {{> _reset_exercise}}
+          {{/self_test}}
         {{/show_solution}}
 
         {{^show_solution}}
