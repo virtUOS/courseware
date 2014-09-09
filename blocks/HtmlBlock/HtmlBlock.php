@@ -61,12 +61,14 @@ class HtmlBlock extends Block
 
         // extract a file id from a URL
         $extractFile = function ($url) use ($user) {
+            if (!\Studip\MarkupPrivate\MediaProxy\isInternalLink($url)) {
+                return null;
+            }
+
             $components = parse_url($url);
 
             if (
-                isset($components['host'])
-                && $components['host'] === $_SERVER['SERVER_NAME']
-                && isset($components['path'])
+                isset($components['path'])
                 && substr($components['path'], -13) == '/sendfile.php'
                 && isset($components['query'])
                 && $components['query'] != ''
