@@ -50,15 +50,33 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
 
         postRender: function () {
             var view = this;
+            var fixAnswersHeight = function (labels, answers) {
+                for (var i = 0; i < labels.length && i < answers.length; i++) {
+                    var answer = answers.eq(i);
+                    answer.css({height: 'auto'});
+                    var label = labels.eq(i);
+                    label.css({height: 'auto'});
+                    var labelHeight = label.height();
+                    var answerHeight = answer.height();
+
+                    if (labelHeight > answerHeight) {
+                        answer.css({height: labelHeight});
+                    } else if (labelHeight < answerHeight) {
+                        label.css({height: answerHeight});
+                    }
+                }
+            };
             jQuery('ul.exercise_answers', this.$el).each(function () {
                 var $sortableAnswers = $(this);
-                view.updateSizes($sortableAnswers);
+                var $sortableLabels = $('ul.matching_exercise.labels', $(this).parent());
+                fixAnswersHeight($('li', $sortableAnswers), $('li', $sortableLabels));
                 $sortableAnswers.sortable({
                     axis: 'y',
                     containment: $sortableAnswers,
                     tolerance: 'pointer',
                     update: function () {
                         view.moveChoice($sortableAnswers);
+                        fixAnswersHeight($('li', $sortableAnswers), $('li', $sortableLabels));
                     },
                     sort: function (event, ui) {
                         // this workaround is needed, otherwise, sortable items
@@ -68,21 +86,6 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         });
                     }
                 });
-            });
-        },
-
-        updateSizes: function ($container) {
-            var $columns = jQuery('ul.matching_exercise', $container);
-            var $items = jQuery('li', $columns);
-            var height = 0;
-
-            $items.each(function (i, element) {
-                height = Math.max(height, jQuery(element).height());
-            });
-
-            $items.height(height);
-            $columns.width(function (index, width) {
-                return width;
             });
         },
 
