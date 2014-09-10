@@ -50,9 +50,12 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
             jQuery(window).scroll(function () {
                 if (jQuery(this).scrollTop() > nav_offset.top - 27) {
+                    var $chapters = jQuery("ol.chapters");
                     nav.addClass("stuck");
+                    nav.css({left: $chapters.offset().left});
                 } else {
                     nav.removeClass("stuck");
+                    nav.css({left: 0});
                 }
             });
 

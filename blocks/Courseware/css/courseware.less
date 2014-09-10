@@ -229,15 +229,19 @@ section#courseware {
     background-color: transparent;
     position: absolute;
     top: 1.5em;
-    left: @sidebar-width + 5%;
-    right: 12px;
+    left: 0;
     padding: 10px 0px;
-
+    width: 100%;
+    max-width: 1200px;
 
     li {
       display: block;
       float: left;
       margin: 0px 1px 0px 0px;
+
+      &:first-child {
+        margin-left: @sidebar-width+5;
+      }
 
       &.prev_next_navigation {
         background-color: #bbb;
@@ -428,8 +432,6 @@ section#courseware {
     &.stuck {
       position: fixed;
       z-index: 5;
-      background-color: #fff;
-      padding: 12px 0px 6px 1%;
     }
 
 
