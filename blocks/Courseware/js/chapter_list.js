@@ -130,8 +130,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             updateListItem = function (model) {
                 $title.find("a").text(model.get('title'));
 
-                if (!isNaN(model.get("publication_date"))) {
-
+                if (model.get("publication_date") != null && !isNaN(model.get("publication_date"))) {
                     var date = new Date(model.get("publication_date") * 1000);
 
                     // add class "unpbulsihed" if publication_date is in the future
@@ -146,7 +145,11 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                     $parent.attr('data-publication', '');
                 }
 
-                $parent.attr('title', new Date($parent.attr('data-publication') * 1000).format('d.m.Y'));
+                if ($parent.attr('data-publication') != "") {
+                    $parent.attr('title', new Date($parent.attr('data-publication') * 1000).format('d.m.Y'));
+                } else {
+                    $parent.attr('title', '');
+                }
             };
 
             $title.hide().before(view.el);
