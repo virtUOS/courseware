@@ -69,6 +69,22 @@ namespace Mooc\UI\TestBlock\Vips {
 
             return ((int) $stmt->fetchColumn(0)) + 1;
         }
+
+        /**
+         * Creates a Vips exercise instance.
+         *
+         * @param string $type The exercise type
+         * @param string $xml  The exercise as an XML formatted string
+         * @param string $id   The exercise id
+         *
+         * @return \Exercise The exercise instance
+         */
+        public static function getExerciseInstance($type, $xml, $id)
+        {
+            require_once static::getVipsPath().'/exercises/'.$type.'.php';
+
+            return new $type($xml, $id);
+        }
     }
 }
 
