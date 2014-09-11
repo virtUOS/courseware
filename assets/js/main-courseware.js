@@ -1,4 +1,4 @@
-define(['domReady!', 'scrollTo', 'backbone', 'assets/js/url', 'assets/js/block_types', 'assets/js/block_model'], function (domReady, scrollTo, Backbone, helper, block_types, BlockModel) {
+define(['domReady!', 'scrollTo', 'backbone', 'assets/js/url', 'assets/js/block_types', 'assets/js/block_model', 'blocks/Courseware/js/Courseware'], function (domReady, scrollTo, Backbone, helper, block_types, BlockModel, Courseware) {
 
     function logError(error) {
         if (console) {
@@ -21,7 +21,7 @@ define(['domReady!', 'scrollTo', 'backbone', 'assets/js/url', 'assets/js/block_t
         id: $el.attr("data-blockid"),
         type: "Courseware"
     });
-    block_types.findByName("Courseware").createView("student", {
+    Courseware.createView("student", {
         el: $el,
         model: model
     });
