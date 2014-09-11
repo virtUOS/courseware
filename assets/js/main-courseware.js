@@ -16,7 +16,7 @@ define(['domReady!', 'scrollTo', 'backbone', 'assets/js/url', 'assets/js/block_t
         root: helper.courseware_url
     });
 
-    jQuery(document).ready(function () {
+    domReady(function () {
         var $el = jQuery("#courseware");
         var model = new BlockModel({
             id: $el.attr("data-blockid"),
