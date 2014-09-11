@@ -109,9 +109,32 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         },
 
         switchToStudentMode: function (event) {
-            this.$el.removeClass("view-author").addClass("view-student");
-            clearHash(this.el);
-            Backbone.trigger("modeswitch", "student");
+            var switchView = true;
+
+            // Listen on the "preventviewswitch" event, other parts of the
+            // application can listen to the "beforemodeswitch" event. If
+            // they want to prevent the switch of the view, they'll trigger
+            // such a "preventviewswitch" event passing true to the
+            // listeners.
+            Backbone.on('preventviewswitch', function (preventViewSwitch) {
+                if (preventViewSwitch) {
+                    switchView = false;
+                }
+            });
+
+            // notify listeners that the view should be switched
+            var beforeModeSwitchEvent = {
+                fromView: 'author',
+                toView: 'student',
+                isUserInputHandled: false
+            };
+            Backbone.trigger("beforemodeswitch", "student", beforeModeSwitchEvent);
+
+            if (switchView) {
+                this.$el.removeClass("view-author").addClass("view-student");
+                clearHash(this.el);
+                Backbone.trigger("modeswitch", "student");
+            }
         },
 
         switchToAuthorMode: function () {

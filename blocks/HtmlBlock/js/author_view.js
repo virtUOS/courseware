@@ -11,6 +11,7 @@ define(['assets/js/author_view', 'assets/js/url'],
         },
 
         initialize: function(options) {
+            Backbone.on('beforemodeswitch', this.onModeSwitch, this);
         },
 
         postRender: function() {
@@ -42,6 +43,20 @@ define(['assets/js/author_view', 'assets/js/url'],
                         alert("Fehler, TODO!");
                         console.log("fail", arguments);
                     });
+        },
+
+        onModeSwitch: function (toView, event) {
+            if (toView != 'student') {
+                return;
+            }
+
+            // another listener already handled the user's feedback
+            if (event.isUserInputHandled) {
+                return;
+            }
+
+            event.isUserInputHandled = true;
+            Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
         }
     });
 });
