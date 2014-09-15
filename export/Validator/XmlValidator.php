@@ -31,10 +31,16 @@ class XmlValidator implements ValidatorInterface
         $document->loadXML($data);
         $schemaFile = tempnam(sys_get_temp_dir(), 'schema-');
         $this->buildXmlSchema($document)->save($schemaFile);
-        $validationResult = @$document->schemaValidate($schemaFile);
+        libxml_use_internal_errors(true);
+        @$document->schemaValidate($schemaFile);
         unlink($schemaFile);
+        $errors = array();
 
-        return $validationResult;
+        foreach (libxml_get_errors() as $error) {
+            $errors[] = $error->message;
+        }
+
+        return $errors;
     }
 
     private function buildXmlSchema(\DOMDocument $document)

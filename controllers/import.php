@@ -63,9 +63,14 @@ class ImportController extends MoocipController
         }
 
         $validator = new XmlValidator($this->container['block_factory']);
+        $validationErrors = $validator->validate(file_get_contents($dataFile));
 
-        if (!$validator->validate(file_get_contents($dataFile))) {
+        if (count($validationErrors) > 0) {
             $errors[] = _('Die Datendatei data.xml enthält kein valides XML.');
+
+            foreach ($validationErrors as $validationError) {
+                $errors[] = $validationError;
+            }
 
             return false;
         }

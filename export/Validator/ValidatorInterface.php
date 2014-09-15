@@ -14,7 +14,7 @@ interface ValidatorInterface
      *
      * @param string $data The data to validate
      *
-     * @return bool True if the data is of the proper format
+     * @return string[] An array of validation error messages
      */
     public function validate($data);
 }

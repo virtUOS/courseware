@@ -53,12 +53,12 @@
     </xsd:complexType>
 
     <xsd:complexType name="file">
-        <xsd:complexContent>
+        <xsd:simpleContent>
             <xsd:extension base="xsd:string">
                 <xsd:attribute name="id" type="xsd:string" use="required" />
                 <xsd:attribute name="filename" type="xsd:string" use="required" />
                 <xsd:attribute name="url" type="xsd:string" />
             </xsd:extension>
-        </xsd:complexContent>
+        </xsd:simpleContent>
     </xsd:complexType>
 </xsd:schema>
