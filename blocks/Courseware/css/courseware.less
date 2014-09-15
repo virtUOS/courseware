@@ -16,12 +16,12 @@ section#courseware {
   /* CSS for the Courseware controls */
 
   position:relative;
-  max-width: 1200px;
+  max-width: @courseware-max-width;
 
   nav.breadcrumb {
     position: absolute;
     top: 0px;
-    left: @sidebar-width + 5%;
+    left: @sidebar-overall-width;
 
     ul {
       padding: 0;
@@ -56,8 +56,8 @@ section#courseware {
 
     float: left;
     margin: 0;
-    padding-right: 4%;
-    padding-left: 1%;
+    padding-left: @sidebar-padding-left;
+    padding-right: @sidebar-padding-right;
     width: @sidebar-width;
 
     .chapter > .title {
@@ -229,19 +229,13 @@ section#courseware {
     background-color: transparent;
     position: absolute;
     top: 1.5em;
-    left: 0;
+    left: @sidebar-overall-width;
     padding: 10px 0px;
-    width: 100%;
-    max-width: 1200px;
 
     li {
       display: block;
       float: left;
       margin: 0px 1px 0px 0px;
-
-      &:first-child {
-        margin-left: @sidebar-width+5;
-      }
 
       &.prev_next_navigation {
         background-color: #bbb;
@@ -431,7 +425,7 @@ section#courseware {
     // ***** STICKY SECTION LIST *****
     &.stuck {
       position: fixed;
-      z-index: 5;
+      z-index: 500;
     }
 
 
