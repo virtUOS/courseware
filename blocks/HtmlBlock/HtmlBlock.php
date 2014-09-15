@@ -104,6 +104,7 @@ class HtmlBlock extends Block
                         'name' => $document->name,
                         'description' => $document->description,
                         'filename' => $document->filename,
+                        'filesize' => $document->filesize,
                         'url' => $document->url,
                         'path' => get_upload_file_path($queryParams['file_id']),
                     );

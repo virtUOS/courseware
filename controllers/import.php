@@ -32,7 +32,7 @@ class ImportController extends MoocipController
                     $coursewareBlock = Block::findCourseware(Request::get('cid'));
                     $courseware = $this->container['block_factory']->makeBlock($coursewareBlock);
                     $importer = new XmlImport($this->container['block_factory']);
-                    $importer->import(file_get_contents($tempDir.'/data.xml'), $courseware);
+                    $importer->import($tempDir, $courseware);
 
                     $this->redirect(PluginEngine::getURL($this->plugin, array(), 'courseware'));
                 }

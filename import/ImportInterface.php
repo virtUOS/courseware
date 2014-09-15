@@ -14,9 +14,10 @@ interface ImportInterface
     /**
      * Import formatted courseware data into a course.
      *
-     * @param string     $data    The formatted data to import
+     * @param string     $path    Path to where the files to be imported have
+     *                            been extracted
      * @param Courseware $context The courseware context in which to import
      *                            the given data
      */
-    public function import($data, Courseware $context);
+    public function import($path, Courseware $context);
 }

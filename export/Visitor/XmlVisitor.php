@@ -59,11 +59,12 @@ class XmlVisitor extends AbstractVisitor
             $this->endVisitingChapter($chapter);
         }
 
-        $this->enterNode($this->appendBlockNode('files'));
         foreach ($courseware->getFiles() as $file) {
             $attributes = array(
                 $this->createAttributeNode('id', $file['id']),
+                $this->createAttributeNode('name', $file['name']),
                 $this->createAttributeNode('filename', $file['filename']),
+                $this->createAttributeNode('filesize', $file['filesize']),
             );
             if ($file['url']) {
                 $attributes[] = $this->createAttributeNode('url', $file['url']);
@@ -74,7 +75,6 @@ class XmlVisitor extends AbstractVisitor
                 $fileNode->appendChild($this->document->createCDATASection(utf8_encode($file['description'])));
             }
         }
-        $this->leaveNode();
     }
 
     /**

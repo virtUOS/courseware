@@ -26,17 +26,64 @@ class XmlImport implements ImportInterface
     /**
      * {@inheritdoc}
      */
-    public function import($data, Courseware $context)
+    public function import($path, Courseware $context)
     {
+        $dataFile = $path.'/data.xml';
         $document = new \DOMDocument();
-        $document->loadXML($data);
+        $document->loadXML(file_get_contents($dataFile));
 
         $coursewareNode = $document->documentElement;
 
-        foreach ($coursewareNode->childNodes as $chapterNode) {
-            if ($chapterNode instanceof \DOMElement) {
-                $this->processChapterNode($chapterNode, $context);
+        foreach ($coursewareNode->childNodes as $child) {
+            if ($child instanceof \DOMElement) {
+                if ($child->tagName === 'chapter') {
+                    $this->processChapterNode($child, $context);
+                } elseif ($child->tagName === 'file') {
+                    $this->processFile($child, $context, $path);
+                }
             }
+        }
+    }
+
+    /**
+     * Processes a file.
+     *
+     * @param \DOMElement $node       The file node
+     * @param Courseware  $courseware The parent courseware
+     * @param string      $path       The path under which the ZIP archive
+     *                                which contents are to be imported has
+     *                                been extracted
+     */
+    private function processFile(\DOMElement $node, Courseware $courseware, $path)
+    {
+        /** @var \Seminar_User $user */
+        global $user;
+
+        $folder = \TreeAbstract::getInstance('StudipDocumentTree', array('range_id' => $courseware->getModel()->seminar_id));
+        $folders = $folder->getKids($courseware->getModel()->seminar_id);
+        $originId = $node->getAttribute('id');
+        $filename = utf8_decode($node->getAttribute('filename'));
+        $sourceFile = $path.'/'.$originId.'/'.$filename;
+        $data = array(
+            'range_id' => $folders[0],
+            'user_id' => $user->cfg->getUserId(),
+            'seminar_id' => $courseware->getModel()->seminar_id,
+            'name' => utf8_decode($node->getAttribute('name')),
+            'description' => utf8_decode($node->textContent),
+            'filename' => $filename,
+            'filesize' => utf8_decode($node->getAttribute('filesize')),
+            'url' => utf8_decode($node->getAttribute('url')),
+            'author_name' => $user->getFullName(),
+        );
+
+        if (file_exists($sourceFile)) {
+            // the file is part of the uploaded ZIP archive
+            \StudipDocument::createWithFile($sourceFile, $data);
+        } else {
+            // the file is referenced by URL
+            $document = new \StudipDocument();
+            $document->setData($data);
+            $document->store();
         }
     }
 
