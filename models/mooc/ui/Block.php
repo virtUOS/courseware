@@ -427,8 +427,10 @@ abstract class Block {
      * Handle the block contents that should be imported.
      *
      * @param string $contents The block contents to import
+     * @param array  $files    Mapping of original file ids to imported
+     *                         document instances
      */
-    public function importContents($contents)
+    public function importContents($contents, array $files)
     {
     }
 

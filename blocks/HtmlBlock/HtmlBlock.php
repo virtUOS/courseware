@@ -57,7 +57,7 @@ class HtmlBlock extends Block
             $block = $this;
 
             $this->applyCallbackOnInternalUrl($element->getAttribute('href'), function ($components) use ($block, $element) {
-                $element->setAttribute('href', $block->buildInternalUrl($components));
+                $element->setAttribute('href', $block->buildUrl('http://internal.moocip.de', '/sendfile.php', $components));
             });
         }
 
@@ -70,7 +70,7 @@ class HtmlBlock extends Block
             $block = $this;
 
             $this->applyCallbackOnInternalUrl($element->getAttribute('src'), function ($components) use ($block, $element) {
-                $element->setAttribute('src', $block->buildInternalUrl($components));
+                $element->setAttribute('src', $block->buildUrl('http://internal.moocip.de', '/sendfile.php', $components));
             });
         }
 
@@ -138,9 +138,44 @@ class HtmlBlock extends Block
     /**
      * {@inheritdoc}
      */
-    public function importContents($contents)
+    public function importContents($contents, array $files)
     {
-        $this->content = $contents;
+        $document = new \DOMDocument();
+        $document->loadHTML($contents);
+
+        $anchorElements = $document->getElementsByTagName('a');
+        foreach ($anchorElements as $element) {
+            if (!$element instanceof \DOMElement || !$element->hasAttribute('href')) {
+                continue;
+            }
+
+            $block = $this;
+
+            $this->applyCallbackOnInternalUrl($element->getAttribute('href'), function ($components) use ($block, $element, $files) {
+                parse_str($components['query'], $queryParams);
+                $queryParams['file_id'] = $files[$queryParams['file_id']]->id;
+                $components['query'] = http_build_query($queryParams);
+                $element->setAttribute('href', $block->buildUrl($GLOBALS['ABSOLUTE_URI_STUDIP'], '/sendfile.php', $components));
+            });
+        }
+
+        $imageElements = $document->getElementsByTagName('img');
+        foreach ($imageElements as $element) {
+            if (!$element instanceof \DOMElement || !$element->hasAttribute('src')) {
+                continue;
+            }
+
+            $block = $this;
+
+            $this->applyCallbackOnInternalUrl($element->getAttribute('src'), function ($components) use ($block, $element, $files) {
+                parse_str($components['query'], $queryParams);
+                $queryParams['file_id'] = $files[$queryParams['file_id']]->id;
+                $components['query'] = http_build_query($queryParams);
+                $element->setAttribute('src', $block->buildUrl($GLOBALS['ABSOLUTE_URI_STUDIP'], '/sendfile.php', $components));
+            });
+        }
+
+        $this->content = $document->saveHTML();
         $this->save();
     }
 
@@ -155,7 +190,7 @@ class HtmlBlock extends Block
      */
     private function applyCallbackOnInternalUrl($url, $callback)
     {
-        if (!\Studip\MarkupPrivate\MediaProxy\isInternalLink($url)) {
+        if (!\Studip\MarkupPrivate\MediaProxy\isInternalLink($url) && substr($url, 0, 25) !== 'http://internal.moocip.de') {
             return null;
         }
 
@@ -178,12 +213,14 @@ class HtmlBlock extends Block
     /**
      * Builds a dummy internal URL for file references.
      *
+     * @param string   $baseUrl    The base URL
+     * @param string   $path       The URL path
      * @param string[] $components The parts of the origin URL
      *
      * @return string The internal URL
      */
-    private function buildInternalUrl($components)
+    private function buildUrl($baseUrl, $path, $components)
     {
-        return 'http://internal.moocip.de'.$components['path'].'?'.$components['query'];
+        return rtrim($baseUrl, '/').'/'.ltrim($path, '/').'?'.$components['query'];
     }
 }

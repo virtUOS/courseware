@@ -31,15 +31,21 @@ class XmlImport implements ImportInterface
         $dataFile = $path.'/data.xml';
         $document = new \DOMDocument();
         $document->loadXML(file_get_contents($dataFile));
-
         $coursewareNode = $document->documentElement;
+        $files = array();
+
+        foreach ($coursewareNode->childNodes as $child) {
+            if ($child instanceof \DOMElement) {
+                if  ($child->tagName === 'file') {
+                    $this->processFile($child, $context, $path, $files);
+                }
+            }
+        }
 
         foreach ($coursewareNode->childNodes as $child) {
             if ($child instanceof \DOMElement) {
                 if ($child->tagName === 'chapter') {
-                    $this->processChapterNode($child, $context);
-                } elseif ($child->tagName === 'file') {
-                    $this->processFile($child, $context, $path);
+                    $this->processChapterNode($child, $context, $files);
                 }
             }
         }
@@ -53,8 +59,10 @@ class XmlImport implements ImportInterface
      * @param string      $path       The path under which the ZIP archive
      *                                which contents are to be imported has
      *                                been extracted
+     * @param array       $files      Mapping of original file ids to new
+     *                                document instances
      */
-    private function processFile(\DOMElement $node, Courseware $courseware, $path)
+    private function processFile(\DOMElement $node, Courseware $courseware, $path, &$files)
     {
         /** @var \Seminar_User $user */
         global $user;
@@ -78,13 +86,15 @@ class XmlImport implements ImportInterface
 
         if (file_exists($sourceFile)) {
             // the file is part of the uploaded ZIP archive
-            \StudipDocument::createWithFile($sourceFile, $data);
+            $document = \StudipDocument::createWithFile($sourceFile, $data);
         } else {
             // the file is referenced by URL
             $document = new \StudipDocument();
             $document->setData($data);
             $document->store();
         }
+
+        $files[$originId] = $document;
     }
 
     /**
@@ -92,8 +102,10 @@ class XmlImport implements ImportInterface
      *
      * @param \DOMElement $node       The chapter node
      * @param Courseware  $courseware The parent courseware
+     * @param array       $files      Mapping of original file ids to new
+     *                                document instances
      */
-    private function processChapterNode(\DOMElement $node, Courseware $courseware)
+    private function processChapterNode(\DOMElement $node, Courseware $courseware, array $files)
     {
         $chapter = new Block();
         $chapter->type = 'Chapter';
@@ -103,7 +115,7 @@ class XmlImport implements ImportInterface
 
         foreach ($node->childNodes as $subChapterNode) {
             if ($subChapterNode instanceof \DOMElement) {
-                $this->processSubChapterNode($subChapterNode, $chapter);
+                $this->processSubChapterNode($subChapterNode, $chapter, $files);
             }
         }
     }
@@ -113,8 +125,10 @@ class XmlImport implements ImportInterface
      *
      * @param \DOMElement $node    The sub chapter node
      * @param Block       $chapter The parent chapter
+     * @param array       $files   Mapping of original file ids to new
+     *                             document instances
      */
-    private function processSubChapterNode(\DOMElement $node, Block $chapter)
+    private function processSubChapterNode(\DOMElement $node, Block $chapter, $files)
     {
         $subChapter = new Block();
         $subChapter->type = 'Subchapter';
@@ -124,7 +138,7 @@ class XmlImport implements ImportInterface
 
         foreach ($node->childNodes as $sectionNode) {
             if ($sectionNode instanceof \DOMElement) {
-                $this->processSectionNode($sectionNode, $subChapter);
+                $this->processSectionNode($sectionNode, $subChapter, $files);
             }
         }
     }
@@ -134,8 +148,10 @@ class XmlImport implements ImportInterface
      *
      * @param \DOMElement $node       The section node
      * @param Block       $subChapter The parent sub chapter
+     * @param array       $files      Mapping of original file ids to new
+     *                                document instances
      */
-    private function processSectionNode(\DOMElement $node, Block $subChapter)
+    private function processSectionNode(\DOMElement $node, Block $subChapter, $files)
     {
         $section = new Block();
         $section->type = 'Section';
@@ -145,7 +161,7 @@ class XmlImport implements ImportInterface
 
         foreach ($node->childNodes as $blockNode) {
             if ($blockNode instanceof \DOMElement) {
-                $this->processBlockNode($blockNode, $section);
+                $this->processBlockNode($blockNode, $section, $files);
             }
         }
     }
@@ -155,8 +171,10 @@ class XmlImport implements ImportInterface
      *
      * @param \DOMElement $node    The block node
      * @param Block       $section The parent section
+     * @param array       $files   Mapping of original file ids to new
+     *                             document instances
      */
-    private function processBlockNode(\DOMElement $node, Block $section)
+    private function processBlockNode(\DOMElement $node, Block $section, $files)
     {
         $block = new Block();
         $block->type = utf8_decode($node->getAttribute('type'));
@@ -190,9 +208,9 @@ class XmlImport implements ImportInterface
             if (substr($alias, -5) === 'block') {
                 $alias = substr($alias, 0, -5);
             }
-            $uiBlock->importContentsFromXml($node, $alias);
+            $uiBlock->importContentsFromXml($node, $alias, $files);
         } else {
-            $uiBlock->importContents(trim($node->textContent));
+            $uiBlock->importContents(trim($node->textContent), $files);
         }
     }
 }
