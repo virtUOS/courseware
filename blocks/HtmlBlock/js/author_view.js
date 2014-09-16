@@ -50,6 +50,11 @@ define(['assets/js/author_view', 'assets/js/url'],
                 return;
             }
 
+            // the user already switched back (i.e. the is not visible)
+            if (!this.$el.is(':visible')) {
+                return;
+            }
+
             // another listener already handled the user's feedback
             if (event.isUserInputHandled) {
                 return;
