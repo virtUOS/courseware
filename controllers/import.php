@@ -16,30 +16,32 @@ class ImportController extends MoocipController
         parent::before_filter($action, $args);
     }
 
+
     public function index_action()
     {
         $this->errors = array();
 
-        if (Request::method() == 'POST') {
+        // upload filed
+        if (Request::method() == 'POST' && Request::option('subcmd')=='upload') {
             if (count($this->errors) === 0) {
-                // create a temporary directory
-                $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
-                mkdir($tempDir);
-
-                unzip_file($_FILES['import_file']['tmp_name'], $tempDir);
-
-                if ($this->validateUploadFile($tempDir, $this->errors)) {
-                    $coursewareBlock = Block::findCourseware(Request::get('cid'));
-                    $courseware = $this->container['block_factory']->makeBlock($coursewareBlock);
-                    $importer = new XmlImport($this->container['block_factory']);
-                    $importer->import($tempDir, $courseware);
-
-                    $this->redirect(PluginEngine::getURL($this->plugin, array(), 'courseware'));
-                }
-
-                $this->deleteRecursively($tempDir);
+                $this->installModule($_FILES['import_file']['tmp_name']);
             }
+
+        // search for content modules from marketplace
+        } else if (Request::method() == 'POST' && Request::option('subcmd')=='search') {
+            require_once('lib/plugins/engine/PluginRepository.class.php');
+            $repo = new PluginRepository('http://content.moocip.de/?dispatch=xml');
+            $this->modules = $repo->getPlugins(Request::option('q'));
+
+        // search for content modules from marketplace
+        } else if (Request::method() == 'POST' && Request::option('subcmd')=='install') {
+            $temp_name = tempnam(get_config('TMP_PATH'), 'module');
+            if (!@copy($plugin_url, $temp_name)) {
+                $this->msg = _('Das Herunterladen des Moduls ist fehlgeschlagen.');
+            }
+            $this->installModule($temp_name);
         }
+
 
         Navigation::activateItem("/course/mooc_courseware/import");
     }
@@ -76,6 +78,25 @@ class ImportController extends MoocipController
         }
 
         return true;
+    }
+
+    private function installModule($filename) {
+        // create a temporary directory
+        $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
+        mkdir($tempDir);
+        unzip_file($filename, $tempDir);
+
+        if ($this->validateUploadFile($tempDir, $this->errors)) {
+            $coursewareBlock = Block::findCourseware(Request::get('cid'));
+            $courseware = $this->container['block_factory']->makeBlock($coursewareBlock);
+            $importer = new XmlImport($this->container['block_factory']);
+            $importer->import($tempDir, $courseware);
+
+            $this->redirect(PluginEngine::getURL($this->plugin, array(), 'courseware'));
+        }
+
+        $this->deleteRecursively($tempDir);
+
     }
 
     private function deleteRecursively($path)

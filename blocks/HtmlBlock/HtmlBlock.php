@@ -188,7 +188,7 @@ class HtmlBlock extends Block
      * @return mixed The return value of the callback or null if the callback
      *               is not executed
      */
-    private function applyCallbackOnInternalUrl($url, $callback)
+    public function applyCallbackOnInternalUrl($url, $callback)
     {
         if (!\Studip\MarkupPrivate\MediaProxy\isInternalLink($url) && substr($url, 0, 25) !== 'http://internal.moocip.de') {
             return null;

@@ -1,6 +1,6 @@
 pluginname=Mooc.IP
 pluginclassname=Mooc
 origin=virtUOS
-version=0.3
+version=0.9
 homepage=https://github.com/virtuos/mooc.ip
-studipMinVersion=2.5
+studipMinVersion=3.0
