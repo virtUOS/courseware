@@ -1,5 +1,5 @@
-define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'assets/js/block_types', './chapter_list',  './section_list', './edit_structure'],
-       function (Backbone, helper, BlockModel, StudentView, block_types, ChapterListView, SectionListView, EditView) {
+define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student_view', 'assets/js/block_types', './chapter_list',  './section_list', 'assets/js/tooltip'],
+       function (Backbone, helper, BlockModel, StudentView, block_types, ChapterListView, SectionListView, tooltip) {
 
     'use strict';
 
@@ -90,6 +90,8 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
             if (this.activeSectionView) {
                 this.activeSectionView.postRender();
             }
+
+            tooltip(this.$el, 'button');
         },
 
         navigateTo: function (event) {

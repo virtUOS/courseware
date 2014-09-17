@@ -1,5 +1,5 @@
-define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', 'assets/js/block_model', './edit_structure'],
-       function (Backbone, helper, templates, i18n, BlockModel, EditView) {
+define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', 'assets/js/block_model', './edit_structure', 'assets/js/tooltip'],
+       function (Backbone, helper, templates, i18n, BlockModel, EditView, tooltip) {
 
     'use strict';
 
@@ -23,23 +23,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         },
 
         postRender: function() {
-            this.$el.tooltip({
-                items: "li.section",
-                content: function() { return _.escape(jQuery(this).find("a").attr("data-title")); },
-                show: false,
-                hide: false,
-                position: {
-                    my: "center bottom-10",
-                    at: "center top",
-                    using: function (position, feedback) {
-                        jQuery(this).css(position);
-                        jQuery("<div/>")
-                            .addClass(["arrow", feedback.vertical, feedback.horizontal].join(" "))
-                            .appendTo(this);
-                    }
-                }
-            });
-
+            tooltip(this.$el, 'li.prev,li.section,li.next', function () { return jQuery(this).find("a").attr("data-title") });
             this.makeSticky();
         },
 

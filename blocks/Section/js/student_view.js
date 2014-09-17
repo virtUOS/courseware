@@ -1,5 +1,5 @@
-define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/i18n', 'assets/js/templates', './edit_view'],
-       function (Backbone, Q, StudentView, BlockModel, block_types, helper, i18n, templates, EditView) {
+define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'assets/js/block_types', 'assets/js/url', 'assets/js/i18n', 'assets/js/templates', './edit_view', 'assets/js/tooltip'],
+       function (Backbone, Q, StudentView, BlockModel, block_types, helper, i18n, templates, EditView, tooltip) {
 
     'use strict';
 
@@ -68,6 +68,8 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                     block.postRender();
                 }
             });
+
+            tooltip(this.$el, 'button.edit,button.trash');
         },
 
         switchMode: function (view) {
