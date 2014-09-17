@@ -89,8 +89,13 @@ class BlocksController extends MoocipController {
             return;
         }
 
-
         $block = $this->requireBlock($id);
+
+        if (!$this->container['current_user']->canUpdate($block->parent)) {
+            $this->json_error('Access Denied', 401);
+
+            return;
+        }
 
         $block->title = $title;
         $block->publication_date = (int)$this->data['publication_date'] ?: null;
@@ -116,7 +121,9 @@ class BlocksController extends MoocipController {
         $block = $this->requireBlock($id);
 
         if (!$this->container['current_user']->canDelete($block)) {
-            throw new Errors\BadRequest("Access denied");
+            $this->json_error('Access Denied', 401);
+
+            return;
         }
 
         $block->delete();

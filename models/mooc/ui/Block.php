@@ -1,7 +1,8 @@
 <?php
 namespace Mooc\UI;
 
-// TODO: authorization in views and handlers
+use Mooc\UI\Errors\AccessDenied;
+use Mooc\UI\Errors\BadRequest;
 use Mooc\UI\Section\Section;
 
 /**
@@ -475,5 +476,24 @@ abstract class Block {
     public static function additionalInstanceAllowed(Section $section, $subType = null)
     {
         return true;
+    }
+
+    protected function requireUpdatableParent($data)
+    {
+        // we need a valid parent
+        if (!isset($data['parent'])) {
+            throw new BadRequest("Parent required.");
+        }
+
+        $parent = \Mooc\DB\Block::find($data['parent']);
+        if (!$parent || !$parent->isStructuralBlock()) {
+            throw new BadRequest("Invalid parent.");
+        }
+
+        if (!$this->container['current_user']->canUpdate($parent)) {
+            throw new AccessDenied();
+        }
+
+        return $parent;
     }
 }

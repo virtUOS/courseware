@@ -27,6 +27,8 @@ class VideoBlock extends Block
 
     function save_handler($data)
     {
+        $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
+
         $this->url = (string) $data['url'];
         return array('url' => $this->url);
     }

@@ -41,6 +41,8 @@ class IFrameBlock extends Block
      */
     public function save_handler(array $data)
     {
+        $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
+
         $this->url = (string) $data['url'];
         $this->height = (int) $data['height'];
 

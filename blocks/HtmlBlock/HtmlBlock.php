@@ -35,6 +35,8 @@ class HtmlBlock extends Block
      */
     public function save_handler(array $data)
     {
+        $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
+
         $this->content = (string) $data['content'];
 
         return array('content' => $this->content);

@@ -107,6 +107,8 @@ class TestBlock extends Block
 
     public function modify_test_handler($testId)
     {
+        $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
+
         // change the test id
         $this->test_id = $testId;
 

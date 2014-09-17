@@ -2,7 +2,6 @@
 namespace Mooc\UI\Courseware;
 
 use Mooc\UI\Block;
-use Mooc\UI\Errors\AccessDenied;
 use Mooc\UI\Errors\BadRequest;
 
 class Courseware extends Block {
@@ -127,25 +126,6 @@ class Courseware extends Block {
     private function getSelected($context)
     {
         return isset($context['selected']) ? $context['selected'] : $this->lastSelected;
-    }
-
-    private function requireUpdatableParent($data)
-    {
-        // we need a valid parent
-        if (!isset($data['parent'])) {
-            throw new BadRequest("Parent required.");
-        }
-
-        $parent = \Mooc\DB\Block::find($data['parent']);
-        if (!$parent || !$parent->isStructuralBlock()) {
-            throw new BadRequest("Invalid parent.");
-        }
-
-        if (!$this->container['current_user']->canUpdate($parent)) {
-            throw new AccessDenied();
-        }
-
-        return $parent;
     }
 
     private function childrenToJSON($collection, $selected, $showFields = false)

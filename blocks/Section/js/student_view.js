@@ -306,24 +306,22 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                 return deferred.promise;
             };
 
-            Q($.when(protagonist.effect("blind", { direction: "up" })))
-
-                // blind up completed
+            var new_positions = getBlockPositions(self.$el);
+            var courseware_id = jQuery("#courseware").attr("data-blockid");
+            var data = { parent:    self.model.id, positions: new_positions };
+            helper
+                .callHandler(courseware_id, "update_positions", data)
                 .then(function () {
-                    return scrollTo(antagonist, { duration: 200, over: 1 });
-                })
-                .done(function () {
-                    antagonist.after(protagonist);
-                    protagonist.toggle("blind");
+                    Q($.when(protagonist.effect("blind", { direction: "up" })))
 
-
-                    var new_positions = getBlockPositions(self.$el),
-                        courseware_id = jQuery("#courseware").attr("data-blockid"),
-                        data = {
-                            parent:    self.model.id,
-                            positions: new_positions
-                        };
-                    helper.callHandler(courseware_id, "update_positions", data);
+                        // blind up completed
+                        .then(function () {
+                            return scrollTo(antagonist, { duration: 200, over: 1 });
+                        })
+                        .done(function () {
+                            antagonist.after(protagonist);
+                            protagonist.toggle("blind");
+                        });
                 });
         },
 
@@ -343,24 +341,22 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                 return deferred.promise;
             };
 
-            Q($.when(protagonist.effect("blind", { direction: "up" })))
+            var new_positions = getBlockPositions(self.$el);
+            var courseware_id = jQuery("#courseware").attr("data-blockid");
+            var data = { parent:    self.model.id, positions: new_positions };
+            helper
+                .callHandler(courseware_id, "update_positions", data)
+                .then( function () {
+                    Q($.when(protagonist.effect("blind", { direction: "up" })))
 
-                // blind up completed
-                .then(function () {
-                    return scrollTo(antagonist, { duration: 200, offset: -50 });
-                })
-                .done(function () {
-                    antagonist.before(protagonist);
-                    protagonist.toggle("blind");
-
-
-                    var new_positions = getBlockPositions(self.$el),
-                        courseware_id = jQuery("#courseware").attr("data-blockid"),
-                        data = {
-                            parent:    self.model.id,
-                            positions: new_positions
-                        };
-                    helper.callHandler(courseware_id, "update_positions", data);
+                        // blind up completed
+                        .then(function () {
+                            return scrollTo(antagonist, { duration: 200, offset: -50 });
+                        })
+                        .done(function () {
+                            antagonist.before(protagonist);
+                            protagonist.toggle("blind");
+                        });
                 });
         },
 
