@@ -2,7 +2,7 @@ define(['q', 'backbone', './url'], function (Q, Backbone, url) {
 
     'use strict';
 
-    var BlockModel = Backbone.Model.extend({
+    return Backbone.Model.extend({
         urlRoot: function () {
             return url.block_url("");
         },
@@ -22,7 +22,4 @@ define(['q', 'backbone', './url'], function (Q, Backbone, url) {
             return result;
         }
     });
-
-
-    return BlockModel;
 });

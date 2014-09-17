@@ -110,7 +110,7 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
             helper.navigateTo(id);
         },
 
-        switchToStudentMode: function (event) {
+        switchToStudentMode: function () {
             var switchView = true;
 
             // Listen on the "preventviewswitch" event, other parts of the

@@ -17,15 +17,6 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
         }).toArray();
     }
 
-
-    function swapPositions(ary, start_index) {
-        var result = ary.slice(0);
-        if (0 <= start_index && start_index <= result.length - 2) {
-            result.splice(start_index, 2, result[start_index + 1], result[start_index]);
-        }
-        return result;
-    }
-
     return StudentView.extend({
 
         children: {},
@@ -46,7 +37,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
         },
 
         initialize: function() {
-            _.each(jQuery('section.block'), function (element, index, list) {
+            _.each(jQuery('section.block'), function (element) {
                 this.initializeBlock(element, undefined, "student");
             }, this);
 
@@ -97,7 +88,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
                 helper.callHandler(this.model.id, 'remove_content_block', { child_id: block_id }).then(
 
-                    function (data) {
+                    function () {
                         block_view.remove();
                         delete self.children[block_id];
                         $block_wrapper.remove();
@@ -228,10 +219,9 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
             return block;
         },
 
-        editSection: function (event) {
+        editSection: function () {
             var $title = this.$("> .title"),
                 view = new EditView({ model: this.model }),
-                orig_model = this.model.clone(),
                 $wrapped = $title.wrapInner("<div/>").children().first(),
                 self = this,
                 updateSectionTitle = function (model) {
@@ -254,6 +244,8 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                         $title = updateSectionTitle(model).addClass("loading");
                         return model.save();
                     }
+
+                    return false;
                 })
                 .done(
                     function () {
@@ -270,7 +262,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                     });
         },
 
-        destroySection: function (event) {
+        destroySection: function () {
 
             if (confirm(i18n("Wollen Sie den gesamten Abschnitt wirklich löschen?"))) {
                 jQuery("#courseware").addClass("loading");

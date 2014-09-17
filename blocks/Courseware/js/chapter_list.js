@@ -168,6 +168,8 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                         updateListItem(model);
                         return model.save();
                     }
+
+                    return false;
                 })
                 .done(
                     function () {

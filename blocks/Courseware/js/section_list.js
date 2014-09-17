@@ -45,7 +45,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
         },
 
-        addStructure: function (event) {
+        addStructure: function () {
             var id = this.$el.attr("data-blockid");
 
             if (id === null) {
@@ -110,7 +110,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             return this.$el.sortable("toArray", { attribute: "data-blockid" });
         },
 
-        initSorting: function (event) {
+        initSorting: function () {
             if (this._sortable) {
                 throw "Already sorting!";
             }
@@ -127,7 +127,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             this.$el.addClass("sorting");
         },
 
-        stopSorting: function (event) {
+        stopSorting: function () {
 
             if (!this._sortable) {
                 return;

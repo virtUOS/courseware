@@ -1,5 +1,5 @@
-define(['q', 'backbone', 'assets/js/templates', 'assets/js/i18n', 'dateFormat'],
-       function (Q, Backbone, templates, i18n) {
+define(['q', 'backbone', 'assets/js/templates'],
+       function (Q, Backbone, templates) {
 
     'use strict';
 

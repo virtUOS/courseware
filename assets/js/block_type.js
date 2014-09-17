@@ -1,14 +1,10 @@
 define(['backbone'], function (Backbone) {
 
-    var BlockType = Backbone.Model.extend({
+    return Backbone.Model.extend({
 
         idAttribute: 'name',
 
         initialize: function (options) {
-        },
-
-        isContentBlock: function () {
-            return !!this.get('content_block');
         },
 
         createView: function (view_name, options) {
@@ -24,6 +20,4 @@ define(['backbone'], function (Backbone) {
             });
         }
     });
-
-    return BlockType;
 });
