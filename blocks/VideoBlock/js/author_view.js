@@ -38,8 +38,8 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
                 .then(function () {
                     status.text('Änderungen wurden gespeichert.');
                     view.switchBack();
-                }, function () {
-                    status.text('Fehler beim Speichern.');
+                }, function (error) {
+                    status.text('Fehler beim Speichern: '+jQuery.parseJSON(error.responseText).reason);
                 });
         }
     });

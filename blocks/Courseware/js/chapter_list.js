@@ -77,7 +77,9 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                     function (error) {
                         placeholder_item && placeholder_item.remove();
                         if (error) {
-                            alert("Fehler: "  + JSON.stringify(error));
+                            var errorMessage = 'Could not add the chapter: '+jQuery.parseJSON(error.responseText).reason;
+                            alert(errorMessage);
+                            console.log(errorMessage, arguments);
                         }
                     });
         },
@@ -175,7 +177,9 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                         $parent.removeClass("loading");
                         updateListItem(orig_model);
                         if (error) {
-                            alert("Fehler: "  + JSON.stringify(error));
+                            var errorMessage = 'Could not update the chapter: '+jQuery.parseJSON(error.responseText).reason;
+                            alert(errorMessage);
+                            console.log(errorMessage, arguments);
                         }
                     });
         },
@@ -213,7 +217,10 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                             }
                         },
                         function (error) {
-                            alert("Fehler: "  + JSON.stringify(error));
+                            var errorMessage = 'Could not delete the chapter: '+jQuery.parseJSON(error.responseText).reason;
+                            alert(errorMessage);
+                            console.log(errorMessage, arguments);
+                            $parent.removeClass("loading");
                         });
             }
         },

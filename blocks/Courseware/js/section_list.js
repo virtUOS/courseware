@@ -104,7 +104,9 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                         }
 
                         if (error) {
-                            alert("ERROR: "  + JSON.stringify(error));
+                            var errorMessage = 'Could not add the section: '+jQuery.parseJSON(error.responseText).reason;
+                            alert(errorMessage);
+                            console.log(errorMessage, arguments);
                         }
                     });
         },

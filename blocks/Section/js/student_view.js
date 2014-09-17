@@ -103,7 +103,9 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
                     function (error) {
                         $block_wrapper.removeClass("loading");
-                        alert("TODO: could not delete block");
+                        var errorMessage = 'Could not update the block: '+jQuery.parseJSON(error.responseText).reason;
+                        alert(errorMessage);
+                        console.log(errorMessage, arguments);
                     }
                 )
                     .always(function () {
@@ -179,7 +181,9 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                     },
 
                     function (error) {
-                        alert("Could not add block: "+jQuery.parseJSON(error.responseText).reason);
+                        var errorMessage = 'Could not add the block: '+jQuery.parseJSON(error.responseText).reason;
+                        alert(errorMessage);
+                        console.log(errorMessage, arguments);
                     }
                 )
 
@@ -257,7 +261,9 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                         $title.removeClass("loading");
                         updateSectionTitle(self.model.revert());
                         if (error) {
-                            alert("Fehler: "  + JSON.stringify(error));
+                            var errorMessage = 'Could not update the section: '+jQuery.parseJSON(error.responseText).reason;
+                            alert(errorMessage);
+                            console.log(errorMessage, arguments);
                         }
                     });
         },
@@ -275,7 +281,10 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                             helper.navigateTo(parent_id);
                         },
                         function (error) {
-                            alert("Fehler: "  + JSON.stringify(error));
+                            var errorMessage = 'Could not remove the section: '+jQuery.parseJSON(error.responseText).reason;
+                            alert(errorMessage);
+                            console.log(errorMessage, arguments);
+                            jQuery('#courseware').removeClass('loading');
                         });
 
             }
