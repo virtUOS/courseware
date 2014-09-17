@@ -10,7 +10,12 @@ define(['assets/js/author_view', 'assets/js/url'],
             "click button[name=cancel]": "switchBack"
         },
 
-        initialize: function(options) {
+        initialize: function() {
+            var $section = this.$el.closest('section.HtmlBlock');
+            var $sortingButtons = jQuery('button.lower', $section);
+            $sortingButtons = $sortingButtons.add(jQuery('button.raise', $section));
+            $sortingButtons.addClass('no-sorting');
+
             Backbone.on('beforemodeswitch', this.onModeSwitch, this);
         },
 

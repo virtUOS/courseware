@@ -7,8 +7,11 @@ define(['assets/js/student_view'],
         events: {
         },
 
-        initialize: function(options) {
-            // console.log("initialize HtmlBlock student view", this, options);
+        initialize: function() {
+            var $section = this.$el.closest('section.HtmlBlock');
+            var $sortingButtons = jQuery('button.lower', $section);
+            $sortingButtons = $sortingButtons.add(jQuery('button.raise', $section));
+            $sortingButtons.removeClass('no-sorting');
         },
 
         render: function() {
