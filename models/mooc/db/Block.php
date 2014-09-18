@@ -3,6 +3,20 @@ namespace Mooc\DB;
 
 /**
  * @author  <mlunzena@uos.de>
+ *
+ * @property int     $id
+ * @property string  $type
+ * @property string  $sub_type
+ * @property int     $parent_id
+ * @property Block   $parent
+ * @property Block[] $children
+ * @property string  $seminar_id
+ * @property \Course $course
+ * @property string  $title
+ * @property int     $position
+ * @property int     $publication_date
+ * @property int     $chdate
+ * @property int     $mkdate
  */
 class Block extends \SimpleORMap
 {
@@ -197,7 +211,7 @@ class Block extends \SimpleORMap
 
     /**
      *
-     * @param type $timestamp
+     * @param int $timestamp
      * @return boolean
      */
     function isPublished($timestamp = null)
@@ -214,47 +228,4 @@ class Block extends \SimpleORMap
         // check if block is published
         return $this->publication_date <= $timestamp;
     }
-
-
-    /**
-     * returns array of instances of given class filtered by given sql
-     * @param string sql clause to use on the right side of WHERE
-     * @param array parameters for query
-     * @return array array of "self" objects
-     */
-    /*
-    public static function findBySQL($where, $params = array())
-    {
-        $class = get_called_class();
-        $record = new $class();
-
-        $db = \DBManager::get();
-        $sql = "SELECT * FROM `" .  $record->db_table . "` WHERE " . $where;
-        $st = $db->prepare($sql);
-        $st->execute($params);
-
-        $ret = array();
-        while($row = $st->fetch(\PDO::FETCH_ASSOC)) {
-            $class = self::typeToClass($row['type']);
-
-            $ret[] = $obj = new $class();
-            $obj->setData($row, true);
-            $obj->setNew(false);
-        }
-        return $ret;
-    }
-
-    private static function typeToClass($type)
-    {
-        $class = 'Mooc\\' . $type;
-
-        // if it exists, it's a structural type of block like Chapter
-        // or Section
-        if (!class_exists($class, true)) {
-            $class = 'Mooc\\Block';
-        }
-
-        return $class;
-    }
-    */
 }

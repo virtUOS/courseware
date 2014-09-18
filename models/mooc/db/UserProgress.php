@@ -5,6 +5,13 @@ namespace Mooc\DB;
  * TODO
  *
  * @author  <mlunzena@uos.de>
+ *
+ * @property int    $block_id
+ * @property Block  $block
+ * @property string $user_id
+ * @property \User  $user
+ * @property float  $grade
+ * @property float  $max_grade
  */
 class UserProgress extends \SimpleORMap
 {

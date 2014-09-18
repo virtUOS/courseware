@@ -1,6 +1,10 @@
 <?php
 namespace Mooc;
 
+use Mooc\DB\CoursewareFactory;
+use Mooc\UI\BlockFactory;
+use Mooc\UI\MustacheRenderer;
+
 /**
  * @author  <mlunzena@uos.de>
  */
@@ -22,7 +26,7 @@ class Container extends \Pimple
         $this['current_user_id'] = isset($GLOBALS['user']) ? $GLOBALS['user']->id : 'nobody';
 
         $this['current_user'] = function ($c) {
-            $user = new \Mooc\User($c, $c['current_user_id']);
+            $user = new User($c, $c['current_user_id']);
             if ($user->isNew()) {
                 // TODO: mlunzena: create a nobody user
             }
@@ -45,18 +49,18 @@ class Container extends \Pimple
     private function setupCoursewareStuff()
     {
         $this['courseware_factory'] = function ($c) {
-            return new \Mooc\DB\CoursewareFactory($c);
+            return new CoursewareFactory($c);
         };
     }
 
     private function setupBlockStuff()
     {
         $this['block_factory'] = function ($c) {
-            return new \Mooc\UI\BlockFactory($c);
+            return new BlockFactory($c);
         };
 
         $this['block_renderer'] = function ($c) {
-            return new \Mooc\UI\MustacheRenderer($c);
+            return new MustacheRenderer($c);
         };
 
         $this['block_renderer_helpers'] = $this->getMustacheHelpers();

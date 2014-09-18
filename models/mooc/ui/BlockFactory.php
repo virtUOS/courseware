@@ -1,6 +1,7 @@
 <?php
 namespace Mooc\UI;
 
+use Mooc\Container;
 use Mooc\DB\Block;
 
 /**
@@ -15,7 +16,7 @@ class BlockFactory {
     private $blockClasses = null;
 
     // TODO
-    public function __construct(\Mooc\Container $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }

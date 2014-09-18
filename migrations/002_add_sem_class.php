@@ -6,7 +6,7 @@ class AddSemClass extends Migration {
     {
         require_once __DIR__ . '/../models/mooc/constants.php';
 
-        parent::__construct($verbose);
+        parent::Migration($verbose);
     }
 
 

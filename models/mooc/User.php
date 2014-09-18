@@ -1,8 +1,12 @@
 <?php
 namespace Mooc;
 
+use Mooc\DB\Block;
+
 /**
  * @author  <mlunzena@uos.de>
+ *
+ * @property string $perms
  */
 class User extends \User
 {
@@ -26,7 +30,7 @@ class User extends \User
 
     public function canCreate($model)
     {
-        if ($model instanceof \Mooc\DB\Block) {
+        if ($model instanceof Block) {
             return $this->hasPerm($model->seminar_id, 'dozent');
         }
 
@@ -39,7 +43,7 @@ class User extends \User
             return true;
         }
 
-        if ($model instanceof \Mooc\DB\Block) {
+        if ($model instanceof Block) {
             return $model->isPublished() && $this->hasPerm($model->seminar_id, 'user');
         }
 
@@ -48,7 +52,7 @@ class User extends \User
 
     public function canUpdate($model)
     {
-        if ($model instanceof \Mooc\DB\Block) {
+        if ($model instanceof Block) {
             return $this->hasPerm($model->seminar_id, 'dozent');
         }
 
@@ -57,7 +61,7 @@ class User extends \User
 
     public function canDelete($model)
     {
-        if ($model instanceof \Mooc\DB\Block) {
+        if ($model instanceof Block) {
             return $this->hasPerm($model->seminar_id, 'dozent');
         }
 
@@ -69,7 +73,11 @@ class User extends \User
         if (!$cid) {
             return false;
         }
-        return $GLOBALS['perm']->have_studip_perm($perm_level, $cid, $this->id);
+
+        /** @var \Seminar_Perm $perm */
+        $perm = $GLOBALS['perm'];
+
+        return $perm->have_studip_perm($perm_level, $cid, $this->id);
     }
 
     public function getPerm()

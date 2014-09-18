@@ -3,13 +3,8 @@
 namespace Mooc\Export\Visitor;
 
 use Mooc\DB\Block;
-use Mooc\UI\BlubberBlock\BlubberBlock;
 use Mooc\UI\Courseware\Courseware;
-use Mooc\UI\HtmlBlock\HtmlBlock;
-use Mooc\UI\IFrameBlock\IFrameBlock;
 use Mooc\UI\Section\Section;
-use Mooc\UI\TestBlock\TestBlock;
-use Mooc\UI\VideoBlock\VideoBlock;
 
 /**
  * Abstract visitor, provides empty implementations for all methods.

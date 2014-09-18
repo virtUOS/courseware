@@ -1,9 +1,11 @@
 <?php
 namespace Mooc\UI;
 
+use Mooc\Container;
+use Mooc\DB\Field;
+use Mooc\DB\UserProgress;
 use Mooc\UI\Errors\AccessDenied;
 use Mooc\UI\Errors\BadRequest;
-use Mooc\UI\Section\Section;
 
 /**
  * Objects of this class represent a UI component bundling model, view
@@ -19,12 +21,17 @@ use Mooc\UI\Section\Section;
  *  - saving
  *
  * @author  <mlunzena@uos.de>
+ *
+ * @property int     $id
+ * @property string  $title
+ * @property Field[] $_fields
  */
 abstract class Block {
 
     /**
      * Link to the dependency injection container used in Mooc.IP
      *
+     * @var Container
      */
     protected $container;
 
@@ -33,6 +40,8 @@ abstract class Block {
      * exactly to a SimpleORMap instance). Use this in your derived
      * class, if you need to access the model directly, instead of
      * using the fields.
+     *
+     * @var \Mooc\DB\Block
      */
     protected $_model;
 
@@ -57,21 +66,27 @@ abstract class Block {
      *
      * Fields are not automatically created, you have to define them
      * using Block::defineField
+     *
+     * @var Field[]
      */
     protected $_fields;
 
+    /**
+     * @var UserProgress
+     */
+    private $_progress;
 
     /**
      * This constructor should not be called. If you need an instance
      * of a derived class of class Block, you should use the
      * BlockFactory.
      *
-     * @param \Mooc\Container $container  the dependency injection container
-     * @param SimpleORMap     $model      the model associated to this Block
+     * @param Container    $container  the dependency injection container
+     * @param \SimpleORMap $model      the model associated to this Block
      *
      * @see BlockFactory::makeBlock
      */
-    public function __construct(\Mooc\Container $container, \SimpleORMap $model)
+    public function __construct(Container $container, \SimpleORMap $model)
     {
         $this->container = $container;
         $this->_model    = $model;
@@ -88,75 +103,10 @@ abstract class Block {
     {
     }
 
-
-    /**
-     * You have to use this method in Block::initialize to define a
-     * field for this block specified by its name, scope and a default
-     * value. Fields are containers for values, you may store
-     * some value in it and you may retrieve that value again.
-     *
-     *
-     * If that field does not exist yet, it will be created when
-     * saving this block. If that field exists, it will contain its
-     * persisted value.
-     *
-     * You access the value of a field by its name:
-     *
-     * \code
-     * // define a field named 'foo'
-     * $this->defineField('foo', ...);
-     *
-     * // access that field
-     * echo $this->foo;
-     * \endcode
-     *
-     * The scope of a field defines the type of relation to its
-     * block. You may choose from either Mooc\SCOPE_BLOCK or
-     * Mooc\SCOPE_USER.
-     *
-     * Choosing Mooc\SCOPE_BLOCK associates that field just to this
-     * block. Everytime that you access that field in the context of
-     * the same block (same ID), you get the same field.
-     *
-     * Choosing Mooc\SCOPE_USER associates that field to this block
-     * and to a user, the currently logged in user. (So there are
-     * actually several such fields, one for each user.) Everytime
-     * that field is access in the context of the same block (same ID)
-     * and the same user, you get the same field.
-     *
-     * You setup a default value for that field by providing that
-     * value as the 3rd parameter to this method. If you do not store
-     * something in that field, its value is that default value.
-     *
-     * @param String $name     the name of that field
-     * @param mixed  $scope    the scope of that field, see above
-     * @param mixed  $default  the default value of that field.
-     */
-    protected function defineField($name, $scope, $default)
-    {
-        // TODO: darf $name alle Zeichen enthalten und beliebig lang sein?
-
-        if (\Mooc\SCOPE_USER === $scope) {
-            $user_id = $this->container['current_user_id'];
-            $field = new \Mooc\DB\Field(array($this->id, $user_id, $name));
-        }
-
-        elseif (\Mooc\SCOPE_BLOCK === $scope) {
-            $field = new \Mooc\DB\Field(array($this->id, '', $name));
-        }
-
-        else {
-            throw new \InvalidArgumentException(sprintf('No such scope "%s"', $scope));
-        }
-
-        $field->setDefault($default);
-        $this->_fields[$name] = $field;
-    }
-
     /**
      * Returns the underlying model object.
      *
-     * @return \SimpleORMap The model
+     * @return \Mooc\DB\Block The model
      */
     public function getModel()
     {
@@ -259,8 +209,8 @@ abstract class Block {
      * the fields of this block, and returns the return value of the
      * called method.
      *
-     * @param String $name     the name of the view to call
-     * @param array  $context  TODO: ausformulieren
+     * @param string $view_name the name of the view to call
+     * @param array  $context   The execution context
      *
      * @return String  the response to send back
      */
@@ -276,7 +226,7 @@ abstract class Block {
         $results = array();
 
         foreach ($this->_model->children as $child_model) {
-            $child = $this->container['block_factory']->makeBlock($child_model);
+            $child = $this->getBlockFactory()->makeBlock($child_model);
             if ($child) {
                 $results[] = $callback($child, $this->container);
             }
@@ -298,19 +248,6 @@ abstract class Block {
         $this->save();
 
         return $result;
-    }
-
-    // TODO
-    protected function save()
-    {
-        foreach ($this->_fields as $field) {
-            $field->store();
-        }
-
-        // save the progress if there is one
-        if (isset($this->_progress)) {
-            $this->_progress->store();
-        }
     }
 
     // TODO
@@ -435,9 +372,6 @@ abstract class Block {
     {
     }
 
-    // memorize the user's progress
-    private $_progress;
-
     /**
      * Return the current user's progress.
      *
@@ -447,7 +381,7 @@ abstract class Block {
     {
         if (!isset($this->_progress)) {
             // get it from the DB
-            $this->_progress = new \Mooc\DB\UserProgress(
+            $this->_progress = new UserProgress(
                 array(
                     $this->_model->id,
                     $this->container['current_user_id']));
@@ -459,7 +393,7 @@ abstract class Block {
     public function setGrade($grade)
     {
         // only students of this course get grades
-        if (!$this->container['current_user']->canUpdate($this->_model)) {
+        if (!$this->getCurrentUser()->canUpdate($this->_model)) {
             $this->getProgress()->grade = $grade;
         }
     }
@@ -468,14 +402,91 @@ abstract class Block {
      * Checks whether a new instance of a block type can be created for a given
      * section.
      *
-     * @param Section $section The section the block should be created in
-     * @param string  $subType The block sub type
-     *
      * @return bool True if a new block instance is allowed, false otherwise
      */
-    public static function additionalInstanceAllowed(Section $section, $subType = null)
+    public static function additionalInstanceAllowed()
     {
         return true;
+    }
+
+    /**
+     * You have to use this method in Block::initialize to define a
+     * field for this block specified by its name, scope and a default
+     * value. Fields are containers for values, you may store
+     * some value in it and you may retrieve that value again.
+     *
+     *
+     * If that field does not exist yet, it will be created when
+     * saving this block. If that field exists, it will contain its
+     * persisted value.
+     *
+     * You access the value of a field by its name:
+     *
+     * \code
+     * // define a field named 'foo'
+     * $this->defineField('foo', ...);
+     *
+     * // access that field
+     * echo $this->foo;
+     * \endcode
+     *
+     * The scope of a field defines the type of relation to its
+     * block. You may choose from either Mooc\SCOPE_BLOCK or
+     * Mooc\SCOPE_USER.
+     *
+     * Choosing Mooc\SCOPE_BLOCK associates that field just to this
+     * block. Everytime that you access that field in the context of
+     * the same block (same ID), you get the same field.
+     *
+     * Choosing Mooc\SCOPE_USER associates that field to this block
+     * and to a user, the currently logged in user. (So there are
+     * actually several such fields, one for each user.) Everytime
+     * that field is access in the context of the same block (same ID)
+     * and the same user, you get the same field.
+     *
+     * You setup a default value for that field by providing that
+     * value as the 3rd parameter to this method. If you do not store
+     * something in that field, its value is that default value.
+     *
+     * @param string $name     the name of that field
+     * @param mixed  $scope    the scope of that field, see above
+     * @param mixed  $default  the default value of that field.
+     *
+     * @throws \InvalidArgumentException if the scope is neither \Mooc\SCOPE_USER
+     *                                   nor \Mooc\SCOPE_BLOCK
+     */
+    protected function defineField($name, $scope, $default)
+    {
+        // TODO: darf $name alle Zeichen enthalten und beliebig lang sein?
+
+        if (\Mooc\SCOPE_USER === $scope) {
+            $user_id = $this->container['current_user_id'];
+            $field = new Field(array($this->id, $user_id, $name));
+        }
+
+        elseif (\Mooc\SCOPE_BLOCK === $scope) {
+            $field = new Field(array($this->id, '', $name));
+        }
+
+        else {
+            throw new \InvalidArgumentException(sprintf('No such scope "%s"', $scope));
+        }
+
+        $field->setDefault($default);
+        $this->_fields[$name] = $field;
+    }
+
+    // TODO
+    protected function save()
+    {
+        foreach ($this->_fields as $field) {
+            $field->store();
+        }
+
+        // save the progress if there is one
+        if (isset($this->_progress)) {
+            $this->_progress->store();
+        }
     }
 
     protected function requireUpdatableParent($data)
@@ -485,15 +496,36 @@ abstract class Block {
             throw new BadRequest("Parent required.");
         }
 
+        /** @var \Mooc\DB\Block $parent */
         $parent = \Mooc\DB\Block::find($data['parent']);
         if (!$parent || !$parent->isStructuralBlock()) {
             throw new BadRequest("Invalid parent.");
         }
 
-        if (!$this->container['current_user']->canUpdate($parent)) {
+        if (!$this->getCurrentUser()->canUpdate($parent)) {
             throw new AccessDenied();
         }
 
         return $parent;
+    }
+
+    /**
+     * Returns the block factory.
+     *
+     * @return BlockFactory
+     */
+    protected function getBlockFactory()
+    {
+        return $this->container['block_factory'];
+    }
+
+    /**
+     * Retrieves the current user from the container.
+     *
+     * @return \Mooc\User The user
+     */
+    protected function getCurrentUser()
+    {
+        return $this->container['current_user'];
     }
 }

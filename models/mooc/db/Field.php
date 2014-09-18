@@ -5,6 +5,13 @@ namespace Mooc\DB;
  * TODO
  *
  * @author  <mlunzena@uos.de>
+ *
+ * @property int    $block_id
+ * @property Block  $block
+ * @property string $user_id
+ * @property \User  $user
+ * @property string $name
+ * @property string $json_data
  */
 class Field extends \SimpleORMap
 {
@@ -32,7 +39,7 @@ class Field extends \SimpleORMap
 
         // TODO: this may not be named content
         $this->additional_fields['content'] = array(
-            'get' => function ($self, $field) {
+            'get' => function (Field $self) {
                 if (isset($self->json_data)) {
                     return studip_utf8decode(json_decode($self->json_data, true));
                 }
