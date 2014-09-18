@@ -1,4 +1,5 @@
-define(['q', 'backbone', 'assets/js/templates'],
+// dateFormat is require to be able to use a format() method on Date objects
+define(['q', 'backbone', 'assets/js/templates', 'dateFormat'],
        function (Q, Backbone, templates) {
 
     'use strict';
