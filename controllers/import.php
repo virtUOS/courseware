@@ -36,7 +36,10 @@ class ImportController extends MoocipController
         // search for content modules from marketplace
         } else if (Request::method() == 'POST' && Request::option('subcmd')=='install') {
             $temp_name = tempnam(get_config('TMP_PATH'), 'module');
-            if (!@copy($plugin_url, $temp_name)) {
+            require_once('lib/plugins/engine/PluginRepository.class.php');
+            $repo = new PluginRepository('http://content.moocip.de/?dispatch=xml');
+            $module=$repo->getPlugin(Request::quoted('n'));
+            if (!@copy($module['url'], $temp_name)) {
                 $this->msg = _('Das Herunterladen des Moduls ist fehlgeschlagen.');
             }
             $this->installModule($temp_name);
