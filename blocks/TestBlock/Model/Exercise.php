@@ -224,12 +224,12 @@ class Exercise extends \SimpleORMap
      * Checks whether or not a user is allowed to solve an exercise.
      *
      * @param Test          $test The test in which the exercise is embedded
-     * @param \Seminar_User $user The user
      *
      * @return bool True if the user is allowed to pass solve an exercise,
      *              false otherwise
      */
-    public function solvingAllowed(Test $test, \Seminar_User $user) {
+    public function solvingAllowed(Test $test)
+    {
         $now = time();
         $start = strtotime($test->start);
         $end = strtotime($test->end);
@@ -305,6 +305,7 @@ class Exercise extends \SimpleORMap
         $exercises = array();
 
         foreach ($stmt->fetchAll(\PDO::FETCH_ASSOC) as $row) {
+            /** @var Exercise $exercise */
             $exercise = new $class();
             $exercise->setData($row, true);
             $exercise->setNew(false);

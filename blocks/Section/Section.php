@@ -5,6 +5,10 @@ use Mooc\UI\Block;
 use Mooc\UI\Errors\AccessDenied;
 use Mooc\UI\Errors\BadRequest;
 
+/**
+ * @property bool   $visited
+ * @property string $icon
+ */
 class Section extends Block {
 
     const ICON_CHAT    = 'chat';
@@ -42,7 +46,7 @@ class Section extends Block {
         $visited = $this->visited;
 
         $blocks = $this->traverseChildren(
-            function ($child, $container) use ($context) {
+            function (Block $child) use ($context) {
                 $json = $child->toJSON();
                 $json['block_content'] = $child->render('student', $context);
                 return $json;
@@ -71,11 +75,11 @@ class Section extends Block {
             throw new BadRequest("Type required.");
         }
 
-        if (!$this->container['current_user']->canCreate($this->_model)) {
+        if (!$this->getCurrentUser()->canCreate($this->_model)) {
             throw new AccessDenied();
         }
 
-        $types = $this->container['block_factory']->getContentBlockClasses();
+        $types = $this->getBlockFactory()->getContentBlockClasses();
         if (!in_array($data['type'], $types)) {
             throw new BadRequest("Wrong type.");
         }
@@ -100,7 +104,7 @@ class Section extends Block {
         $this->updateIconWithBlock($block);
 
         /** @var \Mooc\UI\Block $uiBlock */
-        $uiBlock = $this->container['block_factory']->makeBlock($block);
+        $uiBlock = $this->getBlockFactory()->makeBlock($block);
         $data = $block->toArray();
         $data['editable'] = $uiBlock->isEditable();
 
@@ -118,7 +122,7 @@ class Section extends Block {
             throw new BadRequest("No such child");
         }
 
-        if (!$this->container['current_user']->canDelete($child)) {
+        if (!$this->getCurrentUser()->canDelete($child)) {
             throw new BadRequest("Access denied");
         }
 
@@ -138,7 +142,7 @@ class Section extends Block {
 
         foreach ($this->_model->children as $child) {
             /** @var \Mooc\UI\Block $block */
-            $block = $this->container['block_factory']->makeBlock($child);
+            $block = $this->getBlockFactory()->makeBlock($child);
             $files = array_merge($files, $block->getFiles());
         }
 
@@ -154,7 +158,7 @@ class Section extends Block {
     {
         $blockTypes = array();
 
-        foreach ($this->container['block_factory']->getContentBlockClasses() as $type) {
+        foreach ($this->getBlockFactory()->getContentBlockClasses() as $type) {
             $className = '\Mooc\UI\\'.$type.'\\'.$type;
             $readableName = $type;
             $nameConstant = $className.'::NAME';

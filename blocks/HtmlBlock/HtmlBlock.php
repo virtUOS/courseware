@@ -4,7 +4,9 @@ namespace Mooc\UI\HtmlBlock;
 use Mooc\UI\Block;
 use Symfony\Component\DomCrawler\Crawler;
 
-// TODO: lots!
+/**
+ * @property string $content
+ */
 class HtmlBlock extends Block
 {
     const NAME = 'Freitext';

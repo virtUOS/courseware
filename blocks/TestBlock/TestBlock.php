@@ -416,10 +416,8 @@ class TestBlock extends Block
      * @param \DOMNode $node  The block's DOM node
      * @param string   $alias The namespace alias to be used to prefix
      *                        generated node names
-     * @param array    $files Mapping of original file ids to imported
-     *                        document instances
      */
-    public function importContentsFromXml(\DOMNode $node, $alias, array $files)
+    public function importContentsFromXml(\DOMNode $node, $alias)
     {
         if ($this->test->id === null) {
             return;

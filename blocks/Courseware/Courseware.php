@@ -4,6 +4,9 @@ namespace Mooc\UI\Courseware;
 use Mooc\UI\Block;
 use Mooc\UI\Errors\BadRequest;
 
+/**
+ * @property \Mooc\DB\Block $lastSelected
+ */
 class Courseware extends Block {
 
     function initialize()
@@ -15,11 +18,14 @@ class Courseware extends Block {
     {
         $this->lastSelected = $this->getSelected($context);
 
+        /** @var \Mooc\DB\Block $courseware */
+        /** @var \Mooc\DB\Block $chapter */
+        /** @var \Mooc\DB\Block $subchapter */
         list($courseware, $chapter, $subchapter, $section) = $this->getSelectedPath($this->lastSelected);
 
         $active_section = array();
-        if ($section && $this->container['current_user']->canRead($section)) {
-            $active_section_block = $this->container['block_factory']->makeBlock($section);
+        if ($section && $this->getCurrentUser()->canRead($section)) {
+            $active_section_block = $this->getBlockFactory()->makeBlock($section);
             $active_section = array(
                 'id'        => $section->id,
                 'title'     => $section->title,
@@ -36,6 +42,7 @@ class Courseware extends Block {
         }
 
         $sections = array();
+        $section_nav = null;
         if ($subchapter) {
             $sections = $this->childrenToJSON($subchapter->children, $section->id, true);
             $section_nav = $this->getNeighborSections($subchapter->children, $section);
@@ -43,7 +50,7 @@ class Courseware extends Block {
 
 
         return array(
-            'user_may_author'   => $this->container['current_user']->canUpdate($this->_model),
+            'user_may_author'   => $this->getCurrentUser()->canUpdate($this->_model),
             'courseware'        => $courseware->toArray(),
             'chapters'          => $chapters,
             'subchapters'       => $subchapters,
@@ -132,12 +139,13 @@ class Courseware extends Block {
     {
         $result = array();
         foreach ($collection as $item) {
-            if (!$this->container['current_user']->canRead($item)) {
+            /** @var \Mooc\DB\Block $item */
+            if (!$this->getCurrentUser()->canRead($item)) {
                 continue;
             }
 
             if ($showFields) {
-                $block = $this->container['block_factory']->makeBlock($item);
+                $block = $this->getBlockFactory()->makeBlock($item);
                 $json = $block->toJSON();
             } else {
                 $json = $item->toArray();
@@ -200,7 +208,11 @@ class Courseware extends Block {
         return $ancestors;
     }
 
-
+    /**
+     * @param \Mooc\DB\Block $block
+     *
+     * @return mixed
+     */
     private function getLastStructuralNode($block)
     {
         // got it!
@@ -229,7 +241,14 @@ class Courseware extends Block {
         return $block->seminar_id === $this->container['cid'];
     }
 
-
+    /**
+     * @param $parent
+     * @param $data
+     *
+     * @return \Mooc\DB\Block
+     *
+     * @throws \Mooc\UI\Errors\BadRequest
+     */
     private function createStructure($parent, $data)
     {
         // determine type of new child
@@ -280,6 +299,12 @@ class Courseware extends Block {
         return $block;
     }
 
+    /**
+     * @param \Mooc\DB\Block $siblings
+     * @param \Mooc\DB\Block $active_section
+     *
+     * @return array
+     */
     private function getNeighborSections($siblings, $active_section)
     {
         $ids = $siblings->pluck('id');
@@ -308,7 +333,7 @@ class Courseware extends Block {
 
         foreach ($subChapter->children as $section) {
             /** @var \Mooc\UI\Section\Section $block */
-            $block = $this->container['block_factory']->makeBlock($section);
+            $block = $this->getBlockFactory()->makeBlock($section);
             $files = array_merge($files, $block->getFiles());
         }
 
