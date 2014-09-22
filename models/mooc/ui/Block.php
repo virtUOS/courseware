@@ -477,7 +477,7 @@ abstract class Block {
     }
 
     // TODO
-    protected function save()
+    public function save()
     {
         foreach ($this->_fields as $field) {
             $field->store();

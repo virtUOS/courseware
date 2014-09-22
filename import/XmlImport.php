@@ -5,6 +5,7 @@ namespace Mooc\Import;
 use Mooc\DB\Block;
 use Mooc\UI\BlockFactory;
 use Mooc\UI\Courseware\Courseware;
+use Mooc\UI\Section\Section;
 
 /**
  * Courseware XML import.
@@ -159,31 +160,38 @@ class XmlImport implements ImportInterface
         $section->title = utf8_decode($node->getAttribute('title'));
         $section->store();
 
+        /** @var \Mooc\UI\Section\Section $uiSection */
+        $uiSection = $this->blockFactory->makeBlock($section);
+
         foreach ($node->childNodes as $blockNode) {
             if ($blockNode instanceof \DOMElement) {
-                $this->processBlockNode($blockNode, $section, $files);
+                $this->processBlockNode($blockNode, $uiSection, $files);
             }
         }
+
+        $uiSection->save();
     }
 
     /**
      * Processes a block and its fields.
      *
      * @param \DOMElement $node    The block node
-     * @param Block       $section The parent section
+     * @param Section     $section The parent section
      * @param array       $files   Mapping of original file ids to new
      *                             document instances
      */
-    private function processBlockNode(\DOMElement $node, Block $section, $files)
+    private function processBlockNode(\DOMElement $node, Section $section, $files)
     {
         $block = new Block();
         $block->type = utf8_decode($node->getAttribute('type'));
         if ($node->hasAttribute('sub-type')) {
             $block->sub_type = utf8_decode($node->getAttribute('sub-type'));
         }
-        $block->parent = $section;
+        $block->parent = $section->getModel();
         $block->title = utf8_decode($node->getAttribute('title'));
         $block->store();
+
+        $section->updateIconWithBlock($block);
 
         /** @var \Mooc\UI\Block $uiBlock */
         $uiBlock = $this->blockFactory->makeBlock($block);

@@ -149,6 +149,21 @@ class Section extends Block {
         return $files;
     }
 
+    public function updateIconWithBlock($new_block)
+    {
+        if (!isset(self::$map_blocks_to_icons[$new_block->type])) {
+            return;
+        }
+
+        $icon_for_block = self::$map_blocks_to_icons[$new_block->type];
+        $precedence = array_search($icon_for_block, self::$icon_precedences);
+        $current_precedence = array_search($this->icon, self::$icon_precedences);
+
+        if ($precedence > $current_precedence) {
+            $this->icon = $icon_for_block;
+        }
+    }
+
     /**
      * Returns the available block types.
      *
@@ -195,21 +210,6 @@ class Section extends Block {
         }
 
         return $blockTypes;
-    }
-
-    private function updateIconWithBlock($new_block)
-    {
-        if (!isset(self::$map_blocks_to_icons[$new_block->type])) {
-            return;
-        }
-
-        $icon_for_block = self::$map_blocks_to_icons[$new_block->type];
-        $precedence = array_search($icon_for_block, self::$icon_precedences);
-        $current_precedence = array_search($this->icon, self::$icon_precedences);
-
-        if ($precedence > $current_precedence) {
-            $this->icon = $icon_for_block;
-        }
     }
 
     private function refreshIcon()
