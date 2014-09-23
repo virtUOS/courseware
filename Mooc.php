@@ -190,6 +190,8 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $url = PluginEngine::getURL($this, compact('cid'), 'courseware', true);
 
         $navigation = new Navigation('Courseware', $url);
+        $navigation->setImage('icons/16/white/group3.png');
+        $navigation->setActiveImage('icons/16/black/group3.png');
         $navigation->addSubnavigation('index', clone $navigation);
 
         // should only be shown to students
