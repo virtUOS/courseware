@@ -204,8 +204,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             if (model.isNew()) {
                 return;
             }
-
-            if (confirm(i18n("Wollen Sie wirklich löschen?"))) {
+            if (confirm(i18n("Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke werden unwiderruflich entfernt!"))) {
 
                 $parent.addClass("loading");
 
