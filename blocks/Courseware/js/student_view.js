@@ -95,19 +95,29 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         },
 
         navigateTo: function (event) {
-
+	    var navigate = true;
             event.preventDefault();
-
+            Backbone.on('preventnavigateto', function(preventNavigateTo){
+                if(preventNavigateTo){
+			navigate = false;
+		}
+            });
+            var beforeNavigateEvent = {isUserInputHandled : false };
+	
+            Backbone.trigger("beforenavigate", beforeNavigateEvent);
             if (this.$el.hasClass("loading")) {
                 return;
             }
+	    if (navigate){
+                this.$el.addClass("loading");
 
-            this.$el.addClass("loading");
+                var $parent = jQuery(event.target).closest("[data-blockid]"),
+                    id = $parent.attr("data-blockid");
 
-            var $parent = jQuery(event.target).closest("[data-blockid]"),
-                id = $parent.attr("data-blockid");
-
-            helper.navigateTo(id);
+                helper.navigateTo(id);
+            }
+            else return false;
+	    
         },
 
         switchToStudentMode: function () {

@@ -8,6 +8,7 @@ define(['assets/js/author_view', 'assets/js/url'],
         events: {
             "click button[name=save]":   "onSave",
             "click button[name=cancel]": "switchBack"
+
         },
 
         initialize: function() {
@@ -17,7 +18,15 @@ define(['assets/js/author_view', 'assets/js/url'],
             $sortingButtons.addClass('no-sorting');
 
             Backbone.on('beforemodeswitch', this.onModeSwitch, this);
+	    Backbone.on('beforenavigate', this.onNavigate, this);
         },
+
+        onNavigate: function(event){
+            if(event.isUserInputHandled){return;}
+            event.isUserInputHandled = true;		
+            Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie die Seite trotzdem verlassen?'));
+
+	},
 
         postRender: function() {
             this.$("textarea").addToolbar();
@@ -68,6 +77,7 @@ define(['assets/js/author_view', 'assets/js/url'],
 
             event.isUserInputHandled = true;
             Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
-        }
+        }, 
+	
     });
 });
