@@ -22,7 +22,8 @@ define(['assets/js/author_view', 'assets/js/url'],
         },
 
         onNavigate: function(event){
-            if(event.isUserInputHandled){return;}
+	    if(!$("section .block-content button[name=save]").length) return;
+	    if(event.isUserInputHandled) return;
             event.isUserInputHandled = true;		
             Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie die Seite trotzdem verlassen?'));
 
