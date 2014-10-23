@@ -162,7 +162,8 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                         var model = new BlockModel(data),
                             view_name = model.get("editable") ? "author" : "student",
                             block_stub = view.appendBlockStub(model, view_name),
-                            $el = block_stub.$el.closest("section.block");
+                            $el = block_stub.$el.closest("section.block"),
+			    block_name = $button.html();
 
                         $el.addClass("loading");
                         block_stub.renderServerSide().then(function () {
@@ -170,6 +171,8 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
                             // hide the edit button when the form is shown
                             $el.find(".controls button.author").hide();
+			    //insert block name 
+			    $el.find(".controls span.type").html(block_name);
                         });
                     },
 
