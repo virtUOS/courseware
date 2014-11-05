@@ -16,6 +16,8 @@ define(['q', 'backbone', 'assets/js/templates'],
 
         initialize: function() {
             this.deferred = Q.defer();
+	    console.log('remove tooltip');
+	    $('.ui-tooltip').remove();
             this.listenTo(Backbone, "modeswitch", this.cancel, this);
             this.render();
         },
