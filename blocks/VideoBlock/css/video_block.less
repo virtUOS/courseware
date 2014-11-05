@@ -1,10 +1,15 @@
 section.VideoBlock {
     input {
-        width: 99%;
+        width: 25em;
+	margin: 1em;
+	&[type="number"]{
+		margin-left: 0.5em;
+		width: 4em;
+	}
     }
     iframe {
-        width: 560px;
-        height: 315px;
+        width: 860px;
+        height: 484px;
         border: none;
         overflow: hidden;
     }

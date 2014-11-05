@@ -26,7 +26,6 @@ define({
         + '(?:' + longLink + '|' + shortLink + ')',
         matches = url.match(new RegExp(youTubeLink)),
         id = matches ? (matches[1] || matches[2]) : null;
-
         return id ? ('//www.youtube.com/embed/' + id) : url;
     },
     normalizeMatterhornLink: function (url) {
@@ -41,9 +40,50 @@ define({
     normalizeIFrame: function (view, newUrl) {
         var iframe = view.$('iframe'),
             url = this.normalizeLink(newUrl || iframe.attr('src'));
-
+	  
         if (iframe.attr('src') != url) {
             iframe.attr('src', url);
         }
+    },
+    getUrl: function(view, videotype){
+	var url = '';
+	switch(videotype){
+		case 'youtube': url = this.buildYouTubeLink(view.$('#youtubeid').val(), view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoendmin').val(),view.$('#videoendsec').val()); break;
+		case 'matterhorn': url = this.normalizeMatterhornLink(view.$('#urlinput').val()); break;
+		case 'url': url = view.$('#urlinput').val(); break;
+	}
+	return url;
+    },
+    getVideoType: function(view, url){
+	var videotype = '';
+	if(url.indexOf("youtube") != -1) videotype = "youtube";
+	else if (url.indexOf("engage") != -1) videotype = "matterhorn";
+	else videotype = "url";
+	return videotype;
+    },
+    buildYouTubeLink: function(id, startmin, startsec, endmin, endsec){
+
+	var url =  'http://www.youtube.com/embed/'+id, start = 0, end = 0;
+	if(startmin != '') start += parseInt(startmin)*60;
+	if(startsec != '') start += parseInt(startsec);
+	if(endmin != '') end += parseInt(endmin)*60;
+	if(endsec != '') end  += parseInt(endsec);
+	if (start != 0){
+		url += '?start='+start;
+		if ((end != 0)&&(start < end)) url += '&end='+end;
+	}else{
+		if (end != 0) url += '?end='+end;
+	}
+	
+	return url;
+    },
+    loadYouTubeInfo: function(url){
+	var id, startmin, startsec, endmin, endsec;
+		
+    },
+    showPreview: function(view, url){
+	var iframe = view.$('iframe');
+	iframe.attr('src', url);
     }
+	
 });
