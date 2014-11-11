@@ -154,7 +154,9 @@ abstract class Block {
     }
 
 
-    // TODO
+    /**
+     * @return Field[]
+     */
     public function getFields()
     {
         return array_reduce(

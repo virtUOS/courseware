@@ -21,7 +21,11 @@ class BlockFactory {
         $this->container = $container;
     }
 
-    // TODO
+    /**
+     * @param Block $sorm_block
+     *
+     * @return \Mooc\UI\Block
+     */
     public function makeBlock($sorm_block)
     {
         $class = 'Mooc\\UI\\'.$sorm_block->type.'\\'.$sorm_block->type;
@@ -48,7 +52,7 @@ class BlockFactory {
     public function getContentBlockClasses()
     {
         $all = $this->getBlockClasses();
-        return array_diff($all, \Mooc\DB\Block::getStructuralBlockClasses());
+        return array_diff($all, Block::getStructuralBlockClasses());
     }
 
     /**
