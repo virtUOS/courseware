@@ -223,7 +223,7 @@ class HtmlBlock extends Block
      *
      * @return string The internal URL
      */
-    private function buildUrl($baseUrl, $path, $components)
+    public function buildUrl($baseUrl, $path, $components)
     {
         return rtrim($baseUrl, '/').'/'.ltrim($path, '/').'?'.$components['query'];
     }
