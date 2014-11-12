@@ -304,6 +304,11 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
             };
 
             var new_positions = getBlockPositions(self.$el);
+            var thisid = parseInt(protagonist.attr('data-blockid'));
+            var index = new_positions.indexOf(thisid);
+            new_positions[index] = new_positions[index + 1];
+            new_positions[index + 1] = thisid;
+            
             var courseware_id = jQuery("#courseware").attr("data-blockid");
             var data = { parent:    self.model.id, positions: new_positions };
             helper
@@ -327,7 +332,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                 antagonist = protagonist.prev(".block"),
                 self = this;
 
-            // cannot lower last block
+            // cannot raise first block
             if (!antagonist.length) {
                 return;
             }
@@ -339,6 +344,11 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
             };
 
             var new_positions = getBlockPositions(self.$el);
+            var thisid = parseInt(protagonist.attr('data-blockid'));
+            var index = new_positions.indexOf(thisid);
+            new_positions[index] = new_positions[index - 1];
+            new_positions[index - 1] = thisid;
+
             var courseware_id = jQuery("#courseware").attr("data-blockid");
             var data = { parent:    self.model.id, positions: new_positions };
             helper
