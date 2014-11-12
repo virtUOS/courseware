@@ -29,6 +29,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
     // bei Aufruf des Plugins über plugin.php/mooc/...
     public function initialize ()
     {
+		PageLayout::setTitle($_SESSION['SessSemName']['header_line'] . ' - ' . $this->getPluginname());
         PageLayout::addStylesheet($this->getPluginURL().'/assets/style.css');
     }
 
