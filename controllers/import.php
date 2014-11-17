@@ -45,8 +45,9 @@ class ImportController extends MoocipController
             $this->installModule($temp_name);
         }
 
-
-        Navigation::activateItem("/course/mooc_courseware/import");
+        if (Navigation::hasItem('/course/mooc_courseware/import')) {
+            Navigation::activateItem("/course/mooc_courseware/import");
+        }
     }
 
     /**

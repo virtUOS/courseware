@@ -13,7 +13,9 @@ class CoursesController extends MoocipController {
         // get rid of the currently selected course
         closeObject();
 
-        Navigation::activateItem('/mooc/all');
+        if (Navigation::hasItem('/mooc/all')) {
+            Navigation::activateItem('/mooc/all');
+        }
 
         $sem_class = \Mooc\SemClass::getMoocSemClass();
         $this->courses = $sem_class->getCourses();
@@ -41,53 +43,57 @@ class CoursesController extends MoocipController {
 
     public function overview_action($edit = false)
     {
-        Navigation::activateItem('/mooc/overview');
+        if (Navigation::hasItem('/mooc/overview')) {
+            Navigation::activateItem('/mooc/overview');
+        }
 
         $block = current(\Mooc\DB\Block::findBySQL('seminar_id IS NULL AND parent_id IS NULL'));
-        
+
         if (!$block) {
             $block = \Mooc\DB\Block::create(array('type' => 'HtmlBlock', 'title' => 'LandingPage'));
         }
-        
+
         $this->ui_block = $this->container['block_factory']->makeBlock($block);
         $this->context  = clone Request::getInstance();
         $this->view     = 'student';
         $this->root     = $this->container['current_user']->getPerm() == 'root';
-        
+
         if ($edit && $this->root) {
             $this->view = 'author';
         }
     }
-    
+
     function store_overview_action()
     {
-        Navigation::activateItem('/mooc/overview');
+        if (Navigation::hasItem('/mooc/overview')) {
+            Navigation::activateItem('/mooc/overview');
+        }
 
         if ($this->container['current_user']->getPerm() != 'root') {
             throw new AccessDeniedException('You need to be root to edit the overview-page');
         }
 
         $block = current(\Mooc\DB\Block::findBySQL('seminar_id IS NULL AND parent_id IS NULL'));
-        
+
         if (!$block) {
             $block = \Mooc\DB\Block::create(array('type' => 'HtmlBlock'));
         }
-        
+
         $ui_block = $this->container['block_factory']->makeBlock($block);
         $ui_block->handle('save', array('content' => Request::get('content')));
-        
+
         $this->redirect('courses/overview');
     }
-    
+
     public function show_action($cid)
     {
         if (strlen($cid) !== 32) {
             throw new Trails_Exception(400);
         }
 
-        if ($GLOBALS['SessionSeminar']) {
+        if ($GLOBALS['SessionSeminar'] && Navigation::hasItem('/course/mooc_overview/overview')) {
             Navigation::activateItem("/course/mooc_overview/overview");
-        } else {
+        } elseif (Navigation::hasItem('/mooc/overview')) {
             Navigation::activateItem("/mooc/overview");
         }
 

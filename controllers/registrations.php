@@ -10,7 +10,9 @@ class RegistrationsController extends MoocipController {
 
     public function new_action()
     {
-        Navigation::activateItem("/mooc/registrations");
+        if (Navigation::hasItem('/mooc/registrations')) {
+            Navigation::activateItem("/mooc/registrations");
+        }
 
         $this->course = \Course::find($this->cid);
     }
@@ -42,19 +44,22 @@ class RegistrationsController extends MoocipController {
             $this->loginUser();
             $this->redirect('courses/show/' . $this->cid . '?cid=' . $this->cid);
         } else {
-            Navigation::activateItem("/mooc/registrations");
+            if (Navigation::hasItem('/mooc/registrations')) {
+                Navigation::activateItem("/mooc/registrations");
+            }
+
             PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/registrations.js');
 
             $this->course = \Course::find($this->cid);
             $this->user   = User::find($user_id);
         }
     }
-    
+
     function resend_mail_action($user_id)
     {
         $course = \Course::find($this->cid);
         $user   = User::find($user_id);
-        
+
         if ($_SESSION['mooc']['register']['username'] == $user->username) {
             $this->sendMail($course, $user->username, $_SESSION['mooc']['register']['password']);
             $this->render_json(array('message' => _('Die Bestätigungsmail wurde erfolgreich erneut versendet!')));
@@ -144,7 +149,7 @@ class RegistrationsController extends MoocipController {
         // add user to special user-domain
         $user_domain = new UserDomain(\Mooc\USER_DOMAIN_NAME);
         $user_domain->addUser($user->getId());
-        
+
         // send registration-mail
         $this->sendMail($this->course, $mail, $password);
 
@@ -155,7 +160,7 @@ class RegistrationsController extends MoocipController {
 
         return $user;
     }
-    
+
     private function sendMail($course, $mail, $password)
     {
         URLHelper::setBaseUrl($GLOBALS['ABSOLUTE_URI_STUDIP']);

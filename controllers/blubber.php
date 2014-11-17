@@ -10,7 +10,9 @@ class BlubberController extends MoocipController
         if (Request::isXhr()) {
             $this->set_layout(null);
         } else {
-            Navigation::activateItem('/course/discussion');
+            if (Navigation::hasItem('/course/discussion')) {
+                Navigation::activateItem('/course/discussion');
+            }
 
             $pluginManager = PluginManager::getInstance();
             $blubberPlugin = $pluginManager->getPlugin('Blubber');

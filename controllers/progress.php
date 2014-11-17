@@ -9,7 +9,9 @@ class ProgressController extends MoocipController {
 
     public function index_action()
     {
-        Navigation::activateItem("/course/mooc_courseware/progress");
+        if (Navigation::hasItem('/course/mooc_courseware/progress')) {
+            Navigation::activateItem("/course/mooc_courseware/progress");
+        }
 
         $cid    = $this->container['cid'];
         $uid    = $this->container['current_user_id'];
