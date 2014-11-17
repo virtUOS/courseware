@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+1.0.2
+-----
+
 * no errors are raised any more when HTML blocks with empty content are
   exported
 * ensure that the course navigation is enabled when a course is entered
