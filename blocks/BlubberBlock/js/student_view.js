@@ -59,7 +59,7 @@ define(['assets/js/student_view'], function (StudentView) {
 
                         filterHashTags();
 
-                        jQuery('#new_posting').after('<input type="submit" value="Absenden">');
+                        //jQuery('#new_posting').after('<input type="submit" value="Absenden">');
                     });
                 }
             );
