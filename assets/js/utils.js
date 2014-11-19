@@ -26,7 +26,8 @@ define({
         + '(?:' + longLink + '|' + shortLink + ')',
         matches = url.match(new RegExp(youTubeLink)),
         id = matches ? (matches[1] || matches[2]) : null;
-        return id ? ('//www.youtube.com/embed/' + id) : url;
+	return id;
+        //return id ? ('//www.youtube.com/embed/' + id) : url;
     },
     normalizeMatterhornLink: function (url) {
         // see https://opencast.jira.com/wiki/display/MH/Engage+URL+Parameters
@@ -45,10 +46,29 @@ define({
             iframe.attr('src', url);
         }
     },
+    getYouTubeId: function(url){
+    console.log(url);
+    if (url.length == 11) return url;
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    //console.log(match);
+    if (match&&match[7].length==11){
+        return match[7];
+    }else{
+        return 'fehler';
+    }
+    },
+
     getUrl: function(view, videotype){
 	var url = '';
 	switch(videotype){
-		case 'youtube': url = this.buildYouTubeLink(view.$('#youtubeid').val(), view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoendmin').val(),view.$('#videoendsec').val()); break;
+		case 'youtube': 
+		var id = view.$('#youtubeid'),
+                value = id.val(),
+		youtubeid = this.getYouTubeId(value);
+                url = this.buildYouTubeLink(youtubeid, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoendmin').val(),view.$('#videoendsec').val());
+		id.val(youtubeid);
+                break;
 		case 'matterhorn': url = this.normalizeMatterhornLink(view.$('#urlinput').val()); break;
 		case 'url': url = view.$('#urlinput').val(); break;
 	}

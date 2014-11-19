@@ -5,7 +5,7 @@ define(['assets/js/student_view', 'utils'], function (StudentView, Utils) {
         initialize: function(options) { },
         render: function() { return this; },
         postRender: function () {
-            Utils.normalizeIFrame(this);
+            //Utils.normalizeIFrame(this);
         }
     });
 });

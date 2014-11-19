@@ -14,28 +14,15 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
 	},
         render: function() { return this; },
         postRender: function () {
-            //Utils.normalizeIFrame(this);
 	    Utils.showPreview(this, this.$('#videourl').text());
 	    var 
             view = this,
             url = view.$('#videourl').text(),
 	    videotype = Utils.getVideoType(view, url);
+		if(url=='') view.$('iframe').hide();
             view.$("#videotype option[value="+videotype+"]").attr('selected', true);
 	    view.selection();
 
-        },
-        onKeyup: function () {
-            var
-            view = this,
-            status = view.$('.status');
-
-            status.text('Lade Video...');
-            clearTimeout(this.timeoutId);
-
-            this.timeoutId = setTimeout(function () {
-                var url = view.$('input').val();
-                Utils.normalizeIFrame(view, url);
-            }, 1000);
         },
 	selection: function(){
 		var videotype = this.$('#videotype').val();
@@ -77,6 +64,7 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
 		videourl = view.$('#videourl'),
 		videotype = view.$('#videotype').val(),
 		url = Utils.getUrl(view, videotype);
+		view.$('iframe').show();
 		videourl.html(url);
 		Utils.showPreview(view, url);
 	},
