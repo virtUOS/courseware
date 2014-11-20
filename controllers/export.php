@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__ . '../export/XmlExport.php';
+
 use Mooc\Export\XmlExport;
 
 /**
