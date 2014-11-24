@@ -16,6 +16,6 @@
             "Mooc\\Import\\": "import/",
             "Mooc\\UI\\": "blocks/"
         },
-        "classmap": ["controllers/","../VipsPlugin/exercises/"]
+        "classmap": ["controllers/"]
     }
 }

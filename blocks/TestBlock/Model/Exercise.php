@@ -46,7 +46,9 @@ class Exercise extends \SimpleORMap
         if (isset($data['ID']) && $data['ID'] !== null) {
             $this->vipsExercise = VipsBridge::getExerciseInstance($this->URI, $this->Aufgabe, $this->ID);
 
-            $this->answersStrategy = AnswersStrategy::getStrategy($this->vipsExercise);
+            if ($this->vipsExercise !== null) {
+                $this->answersStrategy = AnswersStrategy::getStrategy($this->vipsExercise);
+            }
         }
 
         return $returnValue;

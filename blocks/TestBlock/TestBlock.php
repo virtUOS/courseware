@@ -99,8 +99,12 @@ class TestBlock extends Block
             );
         }
 
+        if ($plugin = VipsBridge::getVipsPlugin() === null) {
+            return array();
+        }
+
         return array(
-            'manage_tests_url' => \PluginEngine::getURL(VipsBridge::getVipsPlugin(), array('action' => 'sheets'), 'show'),
+            'manage_tests_url' => \PluginEngine::getURL($plugin, array('action' => 'sheets'), 'show'),
             'tests' => $tests,
         );
     }

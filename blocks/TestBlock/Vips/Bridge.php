@@ -19,8 +19,13 @@ namespace Mooc\UI\TestBlock\Vips {
          */
         public static function getVipsPath()
         {
-            $path = self::getVipsPlugin()->getPluginPath();
-            return $path;
+            $plugin = self::getVipsPlugin();
+
+            if ($plugin === null) {
+                return null;
+            }
+
+            return $plugin->getPluginPath();
         }
 
         /**
@@ -81,9 +86,15 @@ namespace Mooc\UI\TestBlock\Vips {
          */
         public static function getExerciseInstance($type, $xml, $id)
         {
-            require_once static::getVipsPath().'/exercises/'.$type.'.php';
+            $path = static::getVipsPath().'/exercises/'.$type.'.php';
 
-            return new $type($xml, $id);
+            if (file_exists($path)) {
+                require_once $path;
+
+                return new $type($xml, $id);
+            }
+
+            return null;
         }
     }
 }
