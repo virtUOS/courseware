@@ -56,6 +56,8 @@ function zip()
         'blocks',
         'controllers',
         'docs',
+        'export',
+        'import',
         'migrations',
         'models',
         'vendor',
