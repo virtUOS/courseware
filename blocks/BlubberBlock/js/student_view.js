@@ -59,7 +59,14 @@ define(['assets/js/student_view'], function (StudentView) {
 
                         filterHashTags();
 
-                        //jQuery('#new_posting').after('<input type="submit" value="Absenden">');
+                        var $newPostingInput = jQuery('#new_posting');
+                        $newPostingInput.after('<input type="submit" value="Absenden">');
+                        $newPostingInput.next().click(function () {
+                            var event = jQuery.Event('keydown');
+                            event.keyCode = 13;
+                            event.which = 13;
+                            jQuery('#new_posting').trigger(event);
+                        });
                     });
                 }
             );
