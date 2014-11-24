@@ -14,16 +14,20 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
 	},
         render: function() { return this; },
         postRender: function () {
-	    Utils.showPreview(this, this.$('#videourl').text());
-	    var 
-            view = this,
-            url = view.$('#videourl').text(),
-	    videotype = Utils.getVideoType(view, url);
-		if(url=='') view.$('iframe').hide();
-            view.$("#videotype option[value="+videotype+"]").attr('selected', true);
-	    view.selection();
+            Utils.showPreview(this, this.$('#videourl').text());
+            var
+                view = this,
+                url = view.$('#videourl').text(),
+                videotype = Utils.getVideoType(view, url);
 
+            if(url=='') {
+                view.$('iframe').hide();
+            }
+
+            view.$("#videotype option[value="+videotype+"]").attr('selected', true);
+            view.selection();
         },
+
 	selection: function(){
 		var videotype = this.$('#videotype').val();
 		if (videotype == 'youtube'){

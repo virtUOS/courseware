@@ -24,10 +24,9 @@ define({
         youTubeLink = '^\\s*'       // ignore whitespace at beginning of line
         + '(?:https?:)?\\/\\/'  // URL scheme is optional
         + '(?:' + longLink + '|' + shortLink + ')',
-        matches = url.match(new RegExp(youTubeLink)),
-        id = matches ? (matches[1] || matches[2]) : null;
-	return id;
-        //return id ? ('//www.youtube.com/embed/' + id) : url;
+        matches = url.match(new RegExp(youTubeLink));
+
+        return matches ? (matches[1] || matches[2]) : null;
     },
     normalizeMatterhornLink: function (url) {
         // see https://opencast.jira.com/wiki/display/MH/Engage+URL+Parameters
@@ -38,42 +37,42 @@ define({
     normalizeLink: function (url) {
         return url && this.normalizeMatterhornLink(this.normalizeYouTubeLink(url));
     },
-    normalizeIFrame: function (view, newUrl) {
-        var iframe = view.$('iframe'),
-            url = this.normalizeLink(newUrl || iframe.attr('src'));
-	  
-        if (iframe.attr('src') != url) {
-            iframe.attr('src', url);
+
+    getYouTubeId: function(url) {
+        if (url.length == 11) {
+            return url;
         }
-    },
-    getYouTubeId: function(url){
-    console.log(url);
-    if (url.length == 11) return url;
-    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-    var match = url.match(regExp);
-    //console.log(match);
-    if (match&&match[7].length==11){
-        return match[7];
-    }else{
-        return 'fehler';
-    }
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        var match = url.match(regExp);
+
+        if (match && match[7].length == 11) {
+            return match[7];
+        } else {
+            return 'fehler';
+        }
     },
 
     getUrl: function(view, videotype){
-	var url = '';
-	switch(videotype){
-		case 'youtube': 
-		var id = view.$('#youtubeid'),
+        var url = '';
+        switch(videotype){
+            case 'youtube':
+                var id = view.$('#youtubeid'),
                 value = id.val(),
-		youtubeid = this.getYouTubeId(value);
+                youtubeid = this.getYouTubeId(value);
                 url = this.buildYouTubeLink(youtubeid, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoendmin').val(),view.$('#videoendsec').val());
-		id.val(youtubeid);
+                id.val(youtubeid);
                 break;
-		case 'matterhorn': url = this.normalizeMatterhornLink(view.$('#urlinput').val()); break;
-		case 'url': url = view.$('#urlinput').val(); break;
-	}
-	return url;
+            case 'matterhorn':
+                url = this.normalizeMatterhornLink(view.$('#urlinput').val());
+                break;
+            case 'url':
+                url = view.$('#urlinput').val();
+                break;
+	    }
+
+        return url;
     },
+
     getVideoType: function(view, url){
 	var videotype = '';
 	if(url.indexOf("youtube") != -1) videotype = "youtube";
@@ -96,10 +95,6 @@ define({
 	}
 	
 	return url;
-    },
-    loadYouTubeInfo: function(url){
-	var id, startmin, startsec, endmin, endsec;
-		
     },
     showPreview: function(view, url){
 	var iframe = view.$('iframe');

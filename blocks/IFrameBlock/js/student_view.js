@@ -8,7 +8,6 @@ define(['assets/js/student_view'],
         },
 
         initialize: function(options) {
-            // console.log("initialize HtmlBlock student view", this, options);
         },
 
         render: function() {

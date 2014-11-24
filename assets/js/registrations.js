@@ -36,9 +36,9 @@
                 }
             })
         }
-    }
+    };
 
     $(document).ready(function() {
         STUDIP.MOOC.Registrations.init();
-    })
+    });
 })(jQuery);
