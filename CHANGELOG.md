@@ -1,6 +1,8 @@
 CHANGELOG
 =========
 
+* no errors are raised any more when HTML blocks with empty content are
+  exported
 * ensure that the course navigation is enabled when a course is entered
 * the VipsPlugin is no longer required to build the plugin archive
 * button to submit discussion entries works again

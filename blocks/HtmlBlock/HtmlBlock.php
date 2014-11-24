@@ -49,6 +49,10 @@ class HtmlBlock extends Block
      */
     public function exportContents()
     {
+        if (strlen($this->content) === 0) {
+            return '';
+        }
+
         $document = new \DOMDocument();
         $document->loadHTML($this->content);
 
