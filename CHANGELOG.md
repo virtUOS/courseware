@@ -1,6 +1,7 @@
 CHANGELOG
 =========
 
+* ensure that the course navigation is enabled when a course is entered
 * the VipsPlugin is no longer required to build the plugin archive
 * button to submit discussion entries works again
 * only activate existing navigation items

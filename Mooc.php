@@ -128,6 +128,26 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         return Request::option('cid') ?: $GLOBALS['SessionSeminar'];
     }
 
+    public function fixCourseNavigation()
+    {
+        // don't do anything if we are not in a course context
+        if (!$this->getContext()) {
+            return;
+        }
+
+        // don't do anything if there already is an overview item
+        if (Navigation::hasItem('/course/overview') || Navigation::hasItem('/course/mooc_overview')) {
+            return;
+        }
+
+        /** @var Navigation $courseNavigation */
+        $courseNavigation = Navigation::getItem('/course');
+        $it = $courseNavigation->getIterator();
+
+        Navigation::insertItem('/course/mooc_courseware', $this->getCoursewareNavigation(), $it->count() === 0 ? null : $it->key());
+        Navigation::activateItem('/course/mooc_courseware/index');
+    }
+
     private function getSemClass()
     {
         global $SEM_CLASS, $SEM_TYPE, $SessSemName;

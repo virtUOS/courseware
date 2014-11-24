@@ -93,8 +93,8 @@ class CoursesController extends MoocipController {
 
         if ($GLOBALS['SessionSeminar'] && Navigation::hasItem('/course/mooc_overview/overview')) {
             Navigation::activateItem("/course/mooc_overview/overview");
-        } elseif (Navigation::hasItem('/mooc/overview')) {
-            Navigation::activateItem("/mooc/overview");
+        } else {
+            $this->plugin->fixCourseNavigation();
         }
 
         $this->courseware = \Mooc\DB\Block::findCourseware($cid);
