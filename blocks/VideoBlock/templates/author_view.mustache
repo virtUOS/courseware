@@ -1,13 +1,23 @@
 <iframe src="{{url}}" scrolling="no" allowfullscreen></iframe>
 <p id="videourl">{{url}}</p>
+<div id="videodata">
 Video-Typ: <select id="videotype">
-	<option></option>
-	<option value="youtube">youtube</option>
-	<option value="matterhorn">matterhorn</option>
-	<option value="url">url</option>
+    <option></option>
+    <option value="youtube">youtube</option>
+    <option value="matterhorn">matterhorn</option>
+    <option value="url">url</option>
 </select>
-<div id="videodata"></div>
+<span id="videosrcname">URL</span><input type="text" id="videosrc">
+</div>
+<div id="videosettings">
+    <span>Video automatisch starten<input type="checkbox" id="videoautostart" ></span> <br/> 
+    <span>Kontrollelemente verstecken<input type="checkbox" id="videocontrols" ></span> <br/><br/>
+    <span>Start<input id="videostartmin" type="number" min="0" placeholder="min" ><input id="videostartsec" type="number" step="1" max="59" min="0" placeholder="sek"></span> 
+    <span>Ende<input id="videoendmin" type="number" min="0" placeholder="min"><input id="videoendsec" type="number" step="1" max="59" min="0" placeholder="sek"></span> <br/>
+</div>
 <p class="status">&nbsp;</p>
+<div id="videobuttons">
 <button name="preview" class="button">Vorschau</button>
 <button name="save" class="button">Speichern</button>
 <button name="cancel" class="button">Abbrechen</button>
+</div>

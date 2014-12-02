@@ -18,7 +18,7 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
             var
                 view = this,
                 url = view.$('#videourl').text(),
-                videotype = Utils.getVideoType(view, url);
+                videotype = Utils.getVideoType(url);
 
             if(url=='') {
                 view.$('iframe').hide();
@@ -31,36 +31,13 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
 	selection: function(){
 		var videotype = this.$('#videotype').val();
 		if (videotype == 'youtube'){
-			var html = 'youtube ID<input type="text" id="youtubeid"></input>Start<input type="number" id="videostartmin" min="0"></input>';
-			html += '<input id="videostartsec" type="number" min="0" max="59" step="1"></input>Ende<input type="number" id="videoendmin" min="0"></input>';
-			html += '<input id="videoendsec" type="number" min="0" max="59"  step="1"></input>'
-			this.$('#videodata').html(html);
+			this.$('#videosrcname').html('YouTube ID');
 		}else {
-			var html = 'url <input type="text" id="urlinput"></input>';
-			this.$('#videodata').html(html);
+			this.$('#videosrcname').html('URL');
 		}
+		Utils.resetVideoData(this);
 		var url = this.$('#videourl').text();
-		var currentvideotype = Utils.getVideoType(this, url);
-		switch(currentvideotype){
-		    case 'youtube': {
-			var youtubeid = url.slice(29).split("?",1);
-			this.$('#youtubeid').val(youtubeid);
-			var start = url.slice(url.indexOf("start=")+6, url.length);
-			start = start.split("&", 1);
-			this.$('#videostartmin').val(parseInt(start/60));
-			this.$('#videostartsec').val(start%60);
-			var end = url.slice(url.indexOf("end=")+4, url.length);
-			console.log(end);
-			this.$('#videoendmin').val(parseInt(end/60));
-			this.$('#videoendsec').val(end%60);	
-			break;
-		    } 
-		    case 'matterhorn':
-		    case 'url': {
-			this.$('#urlinput').val(url);
-			break;
-		    }
-		}
+		Utils.setVideoData(this, url, videotype);
 	},
 	preview: function(){
 		var

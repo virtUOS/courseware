@@ -1,16 +1,22 @@
 section.VideoBlock {
     input {
-        width: 25em;
+        width: 30em;
 	margin: 1em;
 	&[type="number"]{
 		margin-left: 0.5em;
 		width: 4em;
 	}
+	&[type="checkbox"]{
+		width: 0;
+	}
     }
     iframe {
-        width: 860px;
+        width: 100%;
         height: 484px;
         border: none;
         overflow: hidden;
+    }
+    #videourl {
+	display: none;
     }
 }

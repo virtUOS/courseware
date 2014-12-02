@@ -56,31 +56,80 @@ define({
         var url = '';
         switch(videotype){
             case 'youtube':
-                var id = view.$('#youtubeid'),
+                var id = view.$('#videosrc'),
                 value = id.val(),
                 youtubeid = this.getYouTubeId(value);
-                url = this.buildYouTubeLink(youtubeid, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoendmin').val(),view.$('#videoendsec').val());
+                url = this.buildYouTubeLink(youtubeid, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoendmin').val(),view.$('#videoendsec').val(),view.$('#videoautostart').is(':checked'));
                 id.val(youtubeid);
                 break;
             case 'matterhorn':
-                url = this.normalizeMatterhornLink(view.$('#urlinput').val());
+                url = this.normalizeMatterhornLink(view.$('#videosrc').val());
+		url = this.buildMatterhornLink(url, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoautostart').is(':checked'), view.$('#videocontrols').is(':checked'));
                 break;
             case 'url':
-                url = view.$('#urlinput').val();
+                url = view.$('#videosrc').val();
                 break;
 	    }
 
         return url;
     },
 
-    getVideoType: function(view, url){
+    getVideoType: function(url){
 	var videotype = '';
 	if(url.indexOf("youtube") != -1) videotype = "youtube";
 	else if (url.indexOf("engage") != -1) videotype = "matterhorn";
 	else videotype = "url";
 	return videotype;
     },
-    buildYouTubeLink: function(id, startmin, startsec, endmin, endsec){
+    resetVideoData: function(view){
+	view.$('#videosrc').val('');
+	view.$('#videosettings input').val('').removeAttr('checked').removeAttr('selected').prop('disabled', false);
+    },
+    setVideoData: function(view, url, videotype){
+	if ((videotype == 'youtube')&&(this.getVideoType(url) == 'youtube')) {
+			view.$('#videocontrols').prop('disabled', true);
+                        var youtubeid = url.slice(29).split("?",1);
+                        view.$('#videosrc').val(youtubeid);
+                        var start = url.slice(url.indexOf("start=")+6, url.length);
+                        start = start.split("&", 1);
+                        view.$('#videostartmin').val(parseInt(start/60));
+                        view.$('#videostartsec').val(start%60);
+                        var end = url.slice(url.indexOf("end=")+4, url.length);
+                        view.$('#videoendmin').val(parseInt(end/60));
+                        view.$('#videoendsec').val(end%60);
+                        var autoplay = url.slice(url.indexOf("autoplay=")+9, url.length); 
+			if(parseInt(autoplay) == 1) view.$('#videoautostart').attr("checked", '');
+	}	
+        if((videotype=='matterhorn')&&(this.getVideoType(url)== 'matterhorn')){
+			var urlandid = url.split("&", 1);
+			var autoplay = '', start = '', hidecontrols = '';
+			view.$('#videosrc').val(urlandid);
+			var urlArray = url.split("&");
+			$.each(urlArray, function( index, value){
+				if(value.indexOf('play') != -1)  autoplay = value.split('=')[1];
+				if (value.indexOf('t=') != -1) start = value.split('=')[1];
+				if(value.indexOf('hideControls') != -1) hidecontrols = value.split('=')[1];
+			});
+			console.log(autoplay);
+			console.log(start);
+			console.log(hidecontrols);
+			if (autoplay == 'true') view.$('#videoautostart').attr("checked", '');
+			if (hidecontrols == 'true') view.$('#videocontrols').attr("checked", '');
+			if (start != ''){ 
+				var start = start.split("m");
+				view.$('#videostartmin').val(start[0]);
+				view.$('#videostartsec').val(start[1].split("s",1)); 
+			}
+			view.$('#videoendmin').prop('disabled', true);
+			view.$('#videoendsec').prop('disabled', true);
+	}
+        if((videotype == 'url')&&(this.getVideoType(url) == 'url')){
+                        view.$('#videosrc').val(url);
+			view.$('#videosettings input').prop('disabled', true);
+        }
+
+    },
+    buildYouTubeLink: function(id, startmin, startsec, endmin, endsec, autoplay){
 
 	var url =  'http://www.youtube.com/embed/'+id, start = 0, end = 0;
 	if(startmin != '') start += parseInt(startmin)*60;
@@ -93,8 +142,22 @@ define({
 	}else{
 		if (end != 0) url += '?end='+end;
 	}
-	
+	if(autoplay) {
+		if((start != 0)||(end != 0))
+		url += '&autoplay=1';
+		else url += '?autoplay=1';
+	}
 	return url;
+    },
+    buildMatterhornLink: function(url, startmin, startsec, autoplay, controls){
+	var start = '';
+	if(startmin != '') start += startmin + 'm';
+        if(startsec != '') start += startsec + 's';
+        if (start != '') url += '&t='+start;
+	if (autoplay)  url += '&play=true'; 
+	if (controls) url += '&hideControls=true'; else url +='&hideControls=false';
+        return url;
+
     },
     showPreview: function(view, url){
 	var iframe = view.$('iframe');
