@@ -1,42 +1,4 @@
 define({
-    normalizeYouTubeLink: function (url) {
-        // YouTube API Docs - https://developers.google.com/youtube/
-        //
-        // Discussion of valid YouTube video IDs
-        // https://groups.google.com/forum/#!topic/youtube-api-gdata/maM-h-zKPZc
-        //
-        // examples for long URL, short URL, and embed URL:
-        // http://www.youtube.com/watch?v=C3HFAyigqoY&feature=youtu.be
-        // http://youtu.be/C3HFAyigqoY
-        // //www.youtube.com/embed/C3HFAyigqoY
-        //
-        // examples for IDs with _ and - characters:
-        // http://www.youtube.com/watch?v=k_wJsio68D4
-        // http://www.youtube.com/watch?v=h-TPSylHrvE
-        var
-        videoId = '[\\w\\-]*',
-        idQuery = 'v=(' + videoId + ')',
-        queryName = '(?:[^=&;#]{2,}|[^=&;#v])',
-        queryValue = '(?:=[^&;#]*)?',
-        otherQueries = '(?:' + queryName + queryValue + '[&;])*',
-        longLink = '(?:www\\.)?youtube\\.com\\/watch\\?' + otherQueries + idQuery,
-        shortLink = 'youtu\\.be\\/(' + videoId + ')',
-        youTubeLink = '^\\s*'       // ignore whitespace at beginning of line
-        + '(?:https?:)?\\/\\/'  // URL scheme is optional
-        + '(?:' + longLink + '|' + shortLink + ')',
-        matches = url.match(new RegExp(youTubeLink));
-
-        return matches ? (matches[1] || matches[2]) : null;
-    },
-    normalizeMatterhornLink: function (url) {
-        // see https://opencast.jira.com/wiki/display/MH/Engage+URL+Parameters
-        // http://someURL:8080/engage/ui/watch.html?id=someMediaPackageId
-        // http://someURL:8080/engage/ui/embed.html?id=someMediaPackageId
-        return url.replace('/engage/ui/watch.html?', '/engage/ui/embed.html?');
-    },
-    normalizeLink: function (url) {
-        return url && this.normalizeMatterhornLink(this.normalizeYouTubeLink(url));
-    },
 
     getYouTubeId: function(url) {
         if (url.length == 11) {
@@ -48,29 +10,47 @@ define({
         if (match && match[7].length == 11) {
             return match[7];
         } else {
-            return 'fehler';
+            return false;
         }
     },
 
     getUrl: function(view, videotype){
-        var url = '';
+        var url = '', message = '';
         switch(videotype){
             case 'youtube':
                 var id = view.$('#videosrc'),
-                value = id.val(),
-                youtubeid = this.getYouTubeId(value);
+                value = id.val();
+                if(this.getYouTubeId(value)) var youtubeid = this.getYouTubeId(value); 
+		else { 
+			message = 'Fehlerhafte youtube ID. Wert wurde zurückgesetzt.';
+			break;
+		}
                 url = this.buildYouTubeLink(youtubeid, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoendmin').val(),view.$('#videoendsec').val(),view.$('#videoautostart').is(':checked'));
                 id.val(youtubeid);
                 break;
             case 'matterhorn':
-                url = this.normalizeMatterhornLink(view.$('#videosrc').val());
-		url = this.buildMatterhornLink(url, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoautostart').is(':checked'), view.$('#videocontrols').is(':checked'));
-                break;
+                var matterhornurl = view.$('#videosrc').val();
+		if (matterhornurl.indexOf('?id=') == -1 ){
+			message = 'Keine Matterhorn ID übergeben. Wert wurde zurückgesetzt.';
+                        break;
+                }
+		if (matterhornurl.indexOf('/engage/ui/watch.html?') != -1){
+			// see https://opencast.jira.com/wiki/display/MH/Engage+URL+Parameters
+		        // http://someURL:8080/engage/ui/watch.html?id=someMediaPackageId
+		        // http://someURL:8080/engage/ui/embed.html?id=someMediaPackageId
+			matterhornurl = matterhornurl.replace('/engage/ui/watch.html?', '/engage/ui/embed.html?');
+			message = 'Matterhorn URL wurde berichtigt.';
+		}
+		matterhornurl = matterhornurl.split('&')[0];
+		url = this.buildMatterhornLink(matterhornurl, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoautostart').is(':checked'), view.$('#videocontrols').is(':checked'));
+                view.$('#videosrc').val(matterhornurl);
+		break;
             case 'url':
                 url = view.$('#videosrc').val();
                 break;
 	    }
-
+	if(message != '') view.$('.status').html(message).css('color', '#ff0000').fadeIn().delay(3000).fadeOut();
+	else view.$('.status').html(url).css('color', '#24437c').fadeIn().delay(3000).fadeOut();
         return url;
     },
 
@@ -110,9 +90,6 @@ define({
 				if (value.indexOf('t=') != -1) start = value.split('=')[1];
 				if(value.indexOf('hideControls') != -1) hidecontrols = value.split('=')[1];
 			});
-			console.log(autoplay);
-			console.log(start);
-			console.log(hidecontrols);
 			if (autoplay == 'true') view.$('#videoautostart').attr("checked", '');
 			if (hidecontrols == 'true') view.$('#videocontrols').attr("checked", '');
 			if (start != ''){ 

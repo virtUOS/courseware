@@ -4,11 +4,10 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
     'use strict';
     return AuthorView.extend({
         events: {
-            //'keyup input': "preview",
-            'click button[name=save]': 'saveVideo',
+            "click button[name=save]": "saveVideo",
             "click button[name=cancel]": "switchBack",
 	    "click #videotype option": "selection",
-	    "click button[name=preview]": 'preview'
+	    "click button[name=preview]": "preview"
         },
         initialize: function (options) {
 	},
@@ -36,8 +35,7 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
 			this.$('#videosrcname').html('URL');
 		}
 		Utils.resetVideoData(this);
-		var url = this.$('#videourl').text();
-		Utils.setVideoData(this, url, videotype);
+		Utils.setVideoData(this, this.$('#videourl').text(), videotype);
 	},
 	preview: function(){
 		var
@@ -45,9 +43,11 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
 		videourl = view.$('#videourl'),
 		videotype = view.$('#videotype').val(),
 		url = Utils.getUrl(view, videotype);
-		view.$('iframe').show();
-		videourl.html(url);
-		Utils.showPreview(view, url);
+		if (url != ''){
+     			view.$('iframe').show();
+			videourl.html(url);
+			Utils.showPreview(view, url);
+		}else this.selection();
 	},
 
         saveVideo: function () {

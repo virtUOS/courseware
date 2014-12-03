@@ -10,14 +10,15 @@ Video-Typ: <select id="videotype">
 <span id="videosrcname">URL</span><input type="text" id="videosrc">
 </div>
 <div id="videosettings">
-    <span>Video automatisch starten<input type="checkbox" id="videoautostart" ></span> <br/> 
-    <span>Kontrollelemente verstecken<input type="checkbox" id="videocontrols" ></span> <br/><br/>
+    <span>Video automatisch starten<input type="checkbox" id="videoautostart" ></span>
+    <span>Kontrollelemente verstecken<input type="checkbox" id="videocontrols" ></span> <br/>
     <span>Start<input id="videostartmin" type="number" min="0" placeholder="min" ><input id="videostartsec" type="number" step="1" max="59" min="0" placeholder="sek"></span> 
     <span>Ende<input id="videoendmin" type="number" min="0" placeholder="min"><input id="videoendsec" type="number" step="1" max="59" min="0" placeholder="sek"></span> <br/>
 </div>
-<p class="status">&nbsp;</p>
+<div id="videostatus"><span class="status">&nbsp;</span></div>
 <div id="videobuttons">
 <button name="preview" class="button">Vorschau</button>
 <button name="save" class="button">Speichern</button>
 <button name="cancel" class="button">Abbrechen</button>
 </div>
+
