@@ -66,9 +66,10 @@ define({
 	view.$('#videosettings input').val('').removeAttr('checked').removeAttr('selected').prop('disabled', false);
     },
     setVideoData: function(view, url, videotype){
-	if ((videotype == 'youtube')&&(this.getVideoType(url) == 'youtube')) {
-			view.$('#videocontrols').prop('disabled', true);
-                        var youtubeid = url.slice(29).split("?",1);
+	if (videotype == 'youtube'){
+		view.$('#videocontrols').prop('disabled', true);
+		if (this.getVideoType(url) == 'youtube') {
+	                var youtubeid = url.slice(29).split("?",1);
                         view.$('#videosrc').val(youtubeid);
                         var start = url.slice(url.indexOf("start=")+6, url.length);
                         start = start.split("&", 1);
@@ -79,8 +80,12 @@ define({
                         view.$('#videoendsec').val(end%60);
                         var autoplay = url.slice(url.indexOf("autoplay=")+9, url.length); 
 			if(parseInt(autoplay) == 1) view.$('#videoautostart').attr("checked", '');
+		}
 	}	
-        if((videotype=='matterhorn')&&(this.getVideoType(url)== 'matterhorn')){
+        if(videotype=='matterhorn'){
+		view.$('#videoendmin').prop('disabled', true);
+                view.$('#videoendsec').prop('disabled', true);
+		if (this.getVideoType(url)== 'matterhorn'){
 			var urlandid = url.split("&", 1);
 			var autoplay = '', start = '', hidecontrols = '';
 			view.$('#videosrc').val(urlandid);
@@ -97,12 +102,13 @@ define({
 				view.$('#videostartmin').val(start[0]);
 				view.$('#videostartsec').val(start[1].split("s",1)); 
 			}
-			view.$('#videoendmin').prop('disabled', true);
-			view.$('#videoendsec').prop('disabled', true);
+		}
 	}
-        if((videotype == 'url')&&(this.getVideoType(url) == 'url')){
+        if(videotype == 'url') {
+		view.$('#videosettings input').prop('disabled', true);
+		if (this.getVideoType(url) == 'url'){
                         view.$('#videosrc').val(url);
-			view.$('#videosettings input').prop('disabled', true);
+		}
         }
 
     },
