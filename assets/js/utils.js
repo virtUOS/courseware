@@ -1,9 +1,9 @@
 define({
     getYouTubeId: function(url) {
         if(url.length == 11) return url;
-        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/,
+	var regExp = /^.*(youtu.be\/|v\/|embed\/|watch\?|youtube.com\/|user\|watch\?|feature=player_embedded\&|\/[^#]*#([^\/]*?\/)*)\??v?=?([^#\&\?]*).*/,
         match = url.match(regExp);
-        if(match && match[7].length == 11) return match[7];
+        if(match && match[3].length == 11) return match[3];
         else return false;
     },
     getUrl: function(view, videotype) {
