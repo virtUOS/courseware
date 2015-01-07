@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+1.0.3
+-----
+
 * updated dependencies:
   * `kriswallsmith/assetic` is now `1.2.1` (was `1.2.0` before)
   * `leafo/lessphp` is now `0.5.0` (was `0.4.0` before)
