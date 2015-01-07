@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* greatly improved the JavaScript handling in the video block
+* fix typo in iframe block
+
 1.0.2
 -----
 
