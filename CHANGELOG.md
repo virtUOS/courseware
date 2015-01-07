@@ -1,6 +1,7 @@
 CHANGELOG
 =========
 
+* fix handling of deprecated YouTube URLs
 * greatly improved the JavaScript handling in the video block
 * fix typo in iframe block
 

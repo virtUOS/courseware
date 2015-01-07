@@ -39,13 +39,18 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
 	},
         saveVideo: function() {
             this.preview();
-	    var url = this.$('#videourl').text(), status = this.$('.status');
-	    status.text('Speichere Änderungen...');
-            helper.callHandler(this.model.id, 'save', { url: url }).then(function() {
-            	status.text('Änderungen wurden gespeichert.');
-            	this.switchBack();
-            	}, function (error) {status.text('Fehler beim Speichern: '+jQuery.parseJSON(error.responseText).reason);
-	    });
+            var url = this.$('#videourl').text(), status = this.$('.status');
+            status.text('Speichere Änderungen...');
+            var view = this;
+            helper.callHandler(this.model.id, 'save', { url: url }).then(
+                function() {
+                    status.text('Änderungen wurden gespeichert.');
+                    view.switchBack();
+            	},
+                function (error) {
+                    status.text('Fehler beim Speichern: '+jQuery.parseJSON(error.responseText).reason);
+	            }
+            );
         }
     });
 });
