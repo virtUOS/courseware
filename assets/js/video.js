@@ -6,7 +6,8 @@ define(['utils'], function (
     return {
         init: function() {
             var $iFrame = $('iframe', $('#videobox'));
-            $iFrame.attr('src', Utils.normalizeLink($iFrame.attr('src')));
+
+            $iFrame.attr('src', Utils.getVideoUrl($iFrame.attr('src')));
 
             jQuery('#preview_video').click(function() {
                 jQuery('#videobox').dialog({ 

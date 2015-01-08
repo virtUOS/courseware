@@ -13,6 +13,7 @@ define({
             return false;
         }
     },
+
     getUrl: function (view, videotype) {
         var url = '', message = '';
         switch (videotype) {
@@ -50,15 +51,16 @@ define({
                 url = view.$('#videosrc').val();
                 break;
         }
-        
+
         if (message != '') {
             view.$('.status').html(message).css('color', '#ff0000').fadeIn().delay(3000).fadeOut();
         } else {
             view.$('.status').html(url).css('color', '#24437c').fadeIn().delay(3000).fadeOut();
         }
-        
+
         return url;
     },
+
     getVideoType: function (url) {
         var videotype = '';
         if (url.indexOf("youtube") != -1) {
@@ -71,10 +73,12 @@ define({
 
         return videotype;
     },
+
     resetVideoData: function (view) {
         view.$('#videosrc').val('');
         view.$('#videosettings input').val('').removeAttr('checked').removeAttr('selected').prop('disabled', false);
     },
+
     setVideoData: function (view, url, videotype) {
         if (videotype == 'youtube') {
             view.$('#videocontrols').prop('disabled', true);
@@ -144,8 +148,9 @@ define({
             }
         }
     },
+
     buildYouTubeLink: function (id, startmin, startsec, endmin, endsec, autoplay) {
-        var url = 'http://www.youtube.com/embed/'+id, start = 0, end = 0;
+        var url = '//www.youtube.com/embed/'+id, start = 0, end = 0;    // ommit protocol to prevent http/https-problems
 
         if (startmin != '') {
             start += parseInt(startmin)*60;
@@ -182,6 +187,7 @@ define({
 
         return url;
     },
+
     buildMatterhornLink: function (url, startmin, startsec, autoplay, controls) {
         var start = '';
 
@@ -209,7 +215,22 @@ define({
 
         return url;
     },
+
     showPreview: function (view, url) {
         view.$('iframe').attr('src', url);
+    },
+
+    getVideoUrl: function(url) {
+        switch (this.getVideoType(url)) {
+            case 'youtube':
+                return this.buildYouTubeLink(this.getYouTubeId(url));
+            break;
+
+            case 'matterhorn':
+                return this.buildMatterhornLink(url);
+            break;
+        }
+
+        return url;
     }
 });
