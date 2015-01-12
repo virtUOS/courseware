@@ -50,7 +50,7 @@ class CoursesController extends MoocipController {
         $block = current(\Mooc\DB\Block::findBySQL('seminar_id IS NULL AND parent_id IS NULL'));
 
         if (!$block) {
-            $block = \Mooc\DB\Block::create(array('type' => 'HtmlBlock', 'title' => 'LandingPage'));
+            $block = \Mooc\DB\Block::create(array('type' => 'HtmlBlock', 'seminar_id' => '', 'title' => 'LandingPage'));
         }
 
         $this->ui_block = $this->container['block_factory']->makeBlock($block);

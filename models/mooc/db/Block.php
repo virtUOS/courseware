@@ -74,6 +74,9 @@ class Block extends \SimpleORMap
         // SessionSeminar, so we must get that value somewhere else
         if ($this->seminar_id === null && isset($GLOBALS['SessionSeminar'])) {
             $this->seminar_id = $GLOBALS['SessionSeminar'];
+        } elseif ($this->seminar_id === '') {
+            // workaround to allow blocks that are not associated with a course
+            $this->seminar_id = null;
         }
     }
 
