@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* fix call to undefined method in JavaScript
+* use schema-relative YouTube URLs
+
 1.0.3
 -----
 
