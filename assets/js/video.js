@@ -1,11 +1,14 @@
-define(['utils'], function (
-    Utils
-) {
+define(['utils'], function (Utils) {
     'use strict';
     
     return {
         init: function() {
             var $iFrame = $('iframe', $('#videobox'));
+
+            // skip processing if there are not video iframes
+            if ($iFrame.length == 0) {
+                return;
+            }
 
             $iFrame.attr('src', Utils.getVideoUrl($iFrame.attr('src')));
 

@@ -19,7 +19,7 @@ var require = {
 
     deps: ['domReady!'],
 
-    callback: function(domReady) {
+    callback: function() {
         require(['video'], function (Video) {
             Video.init();
         });

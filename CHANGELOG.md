@@ -1,6 +1,7 @@
 CHANGELOG
 =========
 
+* don't show video container if no video was embedded
 * fix how the URL of the test modification page is built
 * fix call to undefined method in JavaScript
 * use schema-relative YouTube URLs
