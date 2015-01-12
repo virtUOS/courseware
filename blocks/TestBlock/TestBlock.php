@@ -99,7 +99,7 @@ class TestBlock extends Block
             );
         }
 
-        if ($plugin = VipsBridge::getVipsPlugin() === null) {
+        if (($plugin = VipsBridge::getVipsPlugin()) === null) {
             return array();
         }
 

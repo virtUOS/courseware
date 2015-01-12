@@ -1,6 +1,7 @@
 CHANGELOG
 =========
 
+* fix how the URL of the test modification page is built
 * fix call to undefined method in JavaScript
 * use schema-relative YouTube URLs
 
