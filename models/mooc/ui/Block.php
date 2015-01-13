@@ -4,8 +4,6 @@ namespace Mooc\UI;
 use Mooc\Container;
 use Mooc\DB\Field;
 use Mooc\DB\UserProgress;
-use Mooc\UI\Errors\AccessDenied;
-use Mooc\UI\Errors\BadRequest;
 
 /**
  * Objects of this class represent a UI component bundling model, view
@@ -218,8 +216,14 @@ abstract class Block {
      */
     public function render($view_name = 'student', $context = array())
     {
-        // TODO: checken, dass es die View auch gibt!
-        $data = call_user_func(array($this, "{$view_name}_view"), $context);
+        $view_method = $view_name . '_view';
+
+        // checken, dass es die View auch gibt!
+        if (!is_callable(array($this, $view_method))) {
+            throw new Errors\BadRequest('No such view.');
+        }
+
+        $data = $this->$view_method($context);
         $this->save();
         return $this->container['block_renderer']($this, $view_name, $data);
     }
@@ -495,17 +499,17 @@ abstract class Block {
     {
         // we need a valid parent
         if (!isset($data['parent'])) {
-            throw new BadRequest("Parent required.");
+            throw new Errors\BadRequest("Parent required.");
         }
 
         /** @var \Mooc\DB\Block $parent */
         $parent = \Mooc\DB\Block::find($data['parent']);
         if (!$parent || !$parent->isStructuralBlock()) {
-            throw new BadRequest("Invalid parent.");
+            throw new Errors\BadRequest("Invalid parent.");
         }
 
         if (!$this->getCurrentUser()->canUpdate($parent)) {
-            throw new AccessDenied();
+            throw new Errors\AccessDenied();
         }
 
         return $parent;
