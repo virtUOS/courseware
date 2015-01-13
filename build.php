@@ -113,7 +113,7 @@ function getAssets()
     $assets = new AssetCollection(
         array(
             new GlobAsset('assets/*.less'),
-            new GlobAsset('blocks/*/css/[a-zA-Z0-9]*.less'),
+            new GlobAsset('blocks/*/css/[_a-zA-Z0-9]*.less'),
         ),
         array(new LessphpFilter())
     );
