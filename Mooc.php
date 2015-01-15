@@ -29,25 +29,30 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
     // bei Aufruf des Plugins über plugin.php/mooc/...
     public function initialize ()
     {
-		PageLayout::setTitle($_SESSION['SessSemName']['header_line'] . ' - ' . $this->getPluginname());
+        PageLayout::setTitle($_SESSION['SessSemName']['header_line'] . ' - ' . $this->getPluginname());
         PageLayout::addStylesheet($this->getPluginURL().'/assets/style.css');
     }
 
     // für Veranstaltungskategorien-Slots
     public function getTabNavigation($course_id)
     {
+        $tabs = array();
+
         if ($this->isSlotModule()) {
-            return array(
-                'mooc_overview' => $this->getOverviewNavigation(),
-                'mooc_courseware' => $this->getCoursewareNavigation()
-            );
+            $tabs['mooc_overview']   = $this->getOverviewNavigation();
+            $tabs['mooc_courseware'] = $this->getCoursewareNavigation();
         }
 
         else {
-            return array(
-                'mooc_courseware' => $this->getCoursewareNavigation()
-            );
+            $tabs['mooc_courseware'] = $this->getCoursewareNavigation();
         }
+
+        if (!$this->container['current_user']->hasPerm($cid, 'dozent')) {
+            $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
+            $tabs['mooc_progress'] = new Navigation(_('Fortschrittsübersicht'), $progress_url);
+        }
+
+        return $tabs;
     }
 
     // ???
@@ -186,7 +191,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 
         if (!$course->admission_binding && !$this->container['current_user']->hasPerm($cid, 'tutor')
                 && $this->container['current_user_id'] != 'nobody') {
-            $navigation->addSubNavigation('leave', new Navigation(_('Austragen aus der Veranstaltung'), 
+            $navigation->addSubNavigation('leave', new Navigation(_('Austragen aus der Veranstaltung'),
                     'meine_seminare.php?auswahl='. $cid .'&cmd=suppose_to_kill'));
         }
 
@@ -213,23 +218,6 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $navigation = new Navigation('Courseware', $url);
         $navigation->setImage('icons/16/white/group3.png');
         $navigation->setActiveImage('icons/16/black/group3.png');
-
-        $navigation->addSubnavigation('index', new Navigation('Courseware', $url));
-
-        // should only be shown to students
-        if (!$this->container['current_user']->hasPerm($cid, 'dozent')) {
-            $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
-            $progress_subnav = new Navigation(_('Fortschrittsübersicht'), $progress_url);
-            $navigation->addSubnavigation("progress", $progress_subnav);
-        } else {
-            $exportUrl = PluginEngine::getURL($this, array(), 'export');
-            $exportNavigation = new Navigation(_('Export'), $exportUrl);
-            $navigation->addSubNavigation('export', $exportNavigation);
-
-            $importUrl = PluginEngine::getURL($this, array(), 'import');
-            $importNavigation = new Navigation(_('Import'), $importUrl);
-            $navigation->addSubNavigation('import', $importNavigation);
-        }
 
         return $navigation;
     }

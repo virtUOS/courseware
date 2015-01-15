@@ -9,8 +9,8 @@ class CoursewareController extends MoocipController {
 
     public function index_action()
     {
-        if (Navigation::hasItem('/course/mooc_courseware/index')) {
-            Navigation::activateItem("/course/mooc_courseware/index");
+        if (Navigation::hasItem('/course/mooc_courseware')) {
+            Navigation::activateItem("/course/mooc_courseware");
         }
 
         $this->view = $this->getViewParam();
