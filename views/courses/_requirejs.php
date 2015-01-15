@@ -1,9 +1,12 @@
+<?php
+/** @var \Mooc $plugin */
+?>
 <script>
 
 'use strict';
 
 <?
-$block_types = $container['block_factory']->getBlockClasses();
+$block_types = $plugin->getBlockFactory()->getBlockClasses();
 $plugin_url = PluginEngine::getURL($plugin, array(), '', true);
 $blocks_url  = current(explode("?", $controller->url_for("blocks")));
 ?>

@@ -1,3 +1,6 @@
+<?php
+/** @var \Mooc $plugin */
+?>
 <?
 $body_id = 'mooc-courses-show';
 ?>
@@ -17,7 +20,7 @@ $body_id = 'mooc-courses-show';
 
 <div class=clear></div>
 
-<? if ($container['current_user_id'] === "nobody") : ?>
+<? if ($plugin->getCurrentUserId() === "nobody") : ?>
   <?= \Studip\LinkButton::create("Zur Anmeldung", $controller->url_for('registrations/new', array('moocid' => $course->id))) ?>
 <? endif ?>
 

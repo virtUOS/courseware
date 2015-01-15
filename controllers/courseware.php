@@ -18,8 +18,8 @@ class CoursewareController extends MoocipController {
         // setup `context` parameter
         $this->context = clone Request::getInstance();
 
-        $courseware = $this->container['courseware_factory']->makeCourseware($this->container['cid']);
-        $this->courseware_block = $this->container['block_factory']->makeBlock($courseware);
+        $courseware = $this->plugin->getCoursewareFactory()->makeCourseware($this->plugin->getCourseId());
+        $this->courseware_block = $this->plugin->getBlockFactory()->makeBlock($courseware);
 
         // add Templates
         $this->templates = $this->getMustacheTemplates();

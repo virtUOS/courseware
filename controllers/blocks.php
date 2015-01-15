@@ -13,7 +13,7 @@ class BlocksController extends MoocipController {
     function get($id)
     {
         $block = $this->requireBlock($id);
-        $ui_block = $this->container['block_factory']->makeBlock($block);
+        $ui_block = $this->plugin->getBlockFactory()->makeBlock($block);
 
         if ($this->acceptsJSON() || !$ui_block) {
             $json = $block->toArray();
@@ -59,7 +59,7 @@ class BlocksController extends MoocipController {
         }
 
         $block = $this->requireBlock($id);
-        $ui_block = $this->container['block_factory']->makeBlock($block);
+        $ui_block = $this->plugin->getBlockFactory()->makeBlock($block);
 
         if (!$ui_block) {
             return $this->json_error('No such handler.', 400);
@@ -91,7 +91,7 @@ class BlocksController extends MoocipController {
 
         $block = $this->requireBlock($id);
 
-        if (!$this->container['current_user']->canUpdate($block->parent)) {
+        if (!$this->plugin->getCurrentUser()->canUpdate($block->parent)) {
             $this->json_error('Access Denied', 401);
 
             return;
@@ -120,7 +120,7 @@ class BlocksController extends MoocipController {
 
         $block = $this->requireBlock($id);
 
-        if (!$this->container['current_user']->canDelete($block)) {
+        if (!$this->plugin->getCurrentUser()->canDelete($block)) {
             $this->json_error('Access Denied', 401);
 
             return;
@@ -142,11 +142,11 @@ class BlocksController extends MoocipController {
             throw new Trails_Exception(404);
         }
 
-        if ($block->seminar_id === $this->container['cid']) {
+        if ($block->seminar_id === $this->plugin->getCourseId()) {
             // häh?
         }
 
-        if (!$this->container['current_user']->canRead($block)) {
+        if (!$this->plugin->getCurrentUser()->canRead($block)) {
             throw new Trails_Exception(401);
         }
 

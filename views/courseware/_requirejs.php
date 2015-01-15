@@ -1,5 +1,8 @@
- <?
-  $block_types = $container['block_factory']->getBlockClasses();
+<?php
+/** @var \Mooc $plugin */
+?>
+<?
+  $block_types = $plugin->getBlockFactory()->getBlockClasses();
 
   $blocks_url     = current(explode("?", $controller->url_for("blocks")));
   $courseware_url = current(explode("?", $controller->url_for("courseware")));

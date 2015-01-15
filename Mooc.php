@@ -3,6 +3,11 @@
 require_once __DIR__.'/vendor/autoload.php';
 require_once __DIR__.'/models/mooc/constants.php';
 
+use Mooc\Container;
+use Mooc\DB\CoursewareFactory;
+use Mooc\UI\BlockFactory;
+use Mooc\User;
+
 /**
  * MoocIP.class.php
  *
@@ -13,6 +18,10 @@ require_once __DIR__.'/models/mooc/constants.php';
  */
 class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
 {
+    /**
+     * @var Container
+     */
+    private $container;
 
     public function __construct() {
         parent::__construct();
@@ -88,6 +97,62 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         $dispatcher->dispatch($unconsumed_path);
     }
 
+    /**
+     * @return string
+     */
+    public function getContext()
+    {
+        return Request::option('cid') ?: $GLOBALS['SessionSeminar'];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getDataFields()
+    {
+        return $this->container['datafields'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getCourseId()
+    {
+        return $this->container['cid'];
+    }
+
+    /**
+     * @return CoursewareFactory
+     */
+    public function getCoursewareFactory()
+    {
+        return $this->container['courseware_factory'];
+    }
+
+    /**
+     * @return BlockFactory
+     */
+    public function getBlockFactory()
+    {
+        return $this->container['block_factory'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentUserId()
+    {
+        return $this->container['current_user_id'];
+    }
+
+    /**
+     * @return User
+     */
+    public function getCurrentUser()
+    {
+        return $this->container['current_user'];
+    }
+
     /**********************************************************************/
     /* PRIVATE METHODS                                                    */
     /**********************************************************************/
@@ -126,11 +191,6 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
     private function setupAutoload()
     {
         StudipAutoloader::addAutoloadPath(__DIR__ . '/models');
-    }
-
-    public function getContext()
-    {
-        return Request::option('cid') ?: $GLOBALS['SessionSeminar'];
     }
 
     public function fixCourseNavigation()

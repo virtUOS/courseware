@@ -1,11 +1,14 @@
 <?php
+
+/**
+ * @property \Mooc $plugin
+ */
 class MoocipController extends StudipController {
 
     public function __construct($dispatcher)
     {
         parent::__construct($dispatcher);
         $this->plugin = $dispatcher->plugin;
-        $this->container = $this->plugin->container;
         $this->flash = Trails_Flash::instance();
     }
 

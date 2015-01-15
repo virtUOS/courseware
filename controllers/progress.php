@@ -13,13 +13,10 @@ class ProgressController extends MoocipController {
             Navigation::activateItem("/course/mooc_progress");
         }
 
-        $cid    = $this->container['cid'];
-        $uid    = $this->container['current_user_id'];
-
-        $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position', array($cid));
+        $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position', array($this->plugin->getCourseId()));
         $bids   = array_map(function ($block) { return (int) $block->id; }, $blocks);
         $progress = array_reduce(
-            \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id = ?', array($bids, $uid)),
+            \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id = ?', array($bids, $this->plugin->getCurrentUserId())),
             function ($memo, $item) {
                 $memo[$item->block_id] = array(
                     'grade' => $item->grade,
@@ -31,7 +28,7 @@ class ProgressController extends MoocipController {
             array());
 
         $grouped = array_reduce(
-            \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position', array($cid)),
+            \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position', array($this->plugin->getCourseId())),
             function($memo, $item) {
                 $memo[$item->parent_id][] = $item->toArray();
                 return $memo;

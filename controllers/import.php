@@ -68,7 +68,7 @@ class ImportController extends MoocipController
             return false;
         }
 
-        $validator = new XmlValidator($this->container['block_factory']);
+        $validator = new XmlValidator($this->plugin->getBlockFactory());
         $validationErrors = $validator->validate(file_get_contents($dataFile));
 
         if (count($validationErrors) > 0) {
@@ -92,8 +92,8 @@ class ImportController extends MoocipController
 
         if ($this->validateUploadFile($tempDir, $this->errors)) {
             $coursewareBlock = Block::findCourseware(Request::get('cid'));
-            $courseware = $this->container['block_factory']->makeBlock($coursewareBlock);
-            $importer = new XmlImport($this->container['block_factory']);
+            $courseware = $this->plugin->getBlockFactory()->makeBlock($coursewareBlock);
+            $importer = new XmlImport($this->plugin->getBlockFactory());
             $importer->import($tempDir, $courseware);
 
             $this->redirect(PluginEngine::getURL($this->plugin, array(), 'courseware'));

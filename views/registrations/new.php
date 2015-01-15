@@ -1,3 +1,6 @@
+<?php
+/** @var \Mooc $plugin */
+?>
 <?
 $body_id = 'mooc-registrations-index';
 ?>
@@ -10,7 +13,7 @@ $body_id = 'mooc-registrations-index';
   <? printf(_('Anmeldung für "%s"'), htmlReady($course->name)) ?>
 </h1>
 
-<? if ($container['current_user_id'] === 'nobody') : ?>
+<? if ($plugin->getCurrentUserId() === 'nobody') : ?>
   <?= $this->render_partial('registrations/_create_and_register') ?>
   <? $infobox = $this->render_partial('registrations/_infobox') ?>
 <? else : ?>

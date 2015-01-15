@@ -1,7 +1,22 @@
 <?php
 
+use Mooc\UI\Block;
+use Mooc\UI\Courseware\Courseware;
 use Mooc\UI\VideoBlock\VideoBlock;
 
+/**
+ * @property \Request   $context
+ * @property Courseware $courseware
+ * @property \Course[]  $courses
+ * @property \Course    $course
+ * @property Block      $ui_block
+ * @property string     $view
+ * @property bool       $root
+ * @property string     $cid
+ * @property string[]   $preview_images
+ * @property string     $preview_image
+ * @property string     $preview_video
+ */
 class CoursesController extends MoocipController {
 
     public function before_filter(&$action, &$args)
@@ -24,11 +39,14 @@ class CoursesController extends MoocipController {
         $this->preview_images = array();
 
         foreach ($this->courses as $course) {
+            /** @var \DataFieldEntry[] $localEntries */
             $localEntries = DataFieldEntry::getDataFieldEntries($course->seminar_id);
             foreach ($localEntries as $entry) {
-                if ($entry->structure->accessAllowed($GLOBALS['perm'])) {
+                /** @var \DataFieldStructure $structure */
+                $structure = $entry->structure;
+                if ($structure->accessAllowed($GLOBALS['perm'])) {
                     if ($entry->getValue()) {
-                        foreach ($this->container['datafields'] as $field => $id) {
+                        foreach ($this->plugin->getDataFields() as $field => $id) {
                             if ($field != 'preview_image') {
                                 continue;
                             }
@@ -55,10 +73,10 @@ class CoursesController extends MoocipController {
             $block = \Mooc\DB\Block::create(array('type' => 'HtmlBlock', 'seminar_id' => '', 'title' => 'LandingPage'));
         }
 
-        $this->ui_block = $this->container['block_factory']->makeBlock($block);
+        $this->ui_block = $this->plugin->getBlockFactory()->makeBlock($block);
         $this->context  = clone Request::getInstance();
         $this->view     = 'student';
-        $this->root     = $this->container['current_user']->getPerm() == 'root';
+        $this->root     = $this->plugin->getCurrentUser()->getPerm() == 'root';
 
         if ($edit && $this->root) {
             $this->view = 'author';
@@ -71,7 +89,7 @@ class CoursesController extends MoocipController {
             Navigation::activateItem('/mooc/overview');
         }
 
-        if ($this->container['current_user']->getPerm() != 'root') {
+        if ($this->plugin->getCurrentUser()->getPerm() != 'root') {
             throw new AccessDeniedException('You need to be root to edit the overview-page');
         }
 
@@ -81,7 +99,7 @@ class CoursesController extends MoocipController {
             $block = \Mooc\DB\Block::create(array('type' => 'HtmlBlock'));
         }
 
-        $ui_block = $this->container['block_factory']->makeBlock($block);
+        $ui_block = $this->plugin->getBlockFactory()->makeBlock($block);
         $ui_block->handle('save', array('content' => Request::get('content')), false);
 
         $this->redirect('courses/overview');
@@ -101,11 +119,14 @@ class CoursesController extends MoocipController {
 
         $this->courseware = \Mooc\DB\Block::findCourseware($cid);
         $this->course = Course::find($cid);
+        /** @var \DataFieldEntry[] $localEntries */
         $localEntries = DataFieldEntry::getDataFieldEntries($cid);
         foreach ($localEntries as $entry) {
-            if ($entry->structure->accessAllowed($GLOBALS['perm'])) {
+            /** @var \DataFieldStructure $structure */
+            $structure = $entry->structure;
+            if ($structure->accessAllowed($GLOBALS['perm'])) {
                 if ($entry->getValue()) {
-                    foreach ($this->container['datafields'] as $field => $id) {
+                    foreach ($this->plugin->getDataFields() as $field => $id) {
                         if ($entry->getId() == $id) {
                             $this->$field = $entry->getValue();
                         }
