@@ -31,13 +31,20 @@ class HtmlBlock extends Block
     /**
      * Updates the block's contents.
      *
-     * @param array $data The request data
+     * @param array $data                  The request data
+     * @param bool  $isParentBlockRequired By default, a content block can only
+     *                                     be modified it a parent block does
+     *                                     exist. Pass false to bypass this check
+     *                                     (this is, for example, needed when
+     *                                     the course overview page is edited.
      *
      * @return array The block's data
      */
-    public function save_handler(array $data)
+    public function save_handler(array $data, $isParentBlockRequired = true)
     {
-        $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
+        if ($isParentBlockRequired) {
+            $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
+        }
 
         $this->content = (string) $data['content'];
 

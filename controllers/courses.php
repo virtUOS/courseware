@@ -80,7 +80,7 @@ class CoursesController extends MoocipController {
         }
 
         $ui_block = $this->container['block_factory']->makeBlock($block);
-        $ui_block->handle('save', array('content' => Request::get('content')));
+        $ui_block->handle('save', array('content' => Request::get('content')), false);
 
         $this->redirect('courses/overview');
     }

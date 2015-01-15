@@ -250,7 +250,7 @@ abstract class Block {
             throw new Errors\BadRequest("No such handler");
         }
 
-        $result = call_user_func($handler, $data);
+        $result = call_user_func_array($handler, array_slice(func_get_args(), 1));
         $this->save();
 
         return $result;
