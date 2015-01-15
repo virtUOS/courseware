@@ -35,7 +35,7 @@ class VideoBlock extends Block
     {
         $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
 
-        $this->url = $this->cleanUpYouTubeUrl((string) $data['url']);
+        $this->url = static::cleanUpYouTubeUrl((string) $data['url']);
         return array('url' => $this->url);
     }
 
@@ -86,7 +86,7 @@ class VideoBlock extends Block
      *
      * @return string The cleaned up URL
      */
-    private function cleanUpYouTubeUrl($url)
+    public static function cleanUpYouTubeUrl($url)
     {
         if (!preg_match(self::YOUTUBE_PATTERN, $url)) {
             return $url;

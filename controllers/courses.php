@@ -1,5 +1,7 @@
 <?php
 
+use Mooc\UI\VideoBlock\VideoBlock;
+
 class CoursesController extends MoocipController {
 
     public function before_filter(&$action, &$args)
@@ -110,6 +112,11 @@ class CoursesController extends MoocipController {
                     }
                 }
             }
+        }
+
+        if ($this->preview_image === null && preg_match(VideoBlock::YOUTUBE_PATTERN, $this->preview_video)) {
+            $this->preview_video = VideoBlock::cleanUpYouTubeUrl($this->preview_video);
+            $this->preview_image = '//img.youtube.com/vi/'.basename($this->preview_video).'/0.jpg';
         }
     }
 }

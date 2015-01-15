@@ -1,6 +1,8 @@
 CHANGELOG
 =========
 
+* automatically show a preview image from YouTube for their videos if the
+  user didn't choose one
 * fix a permission check that prevented the user from modifying the course
   overview page
 * blocks for the overview page are not associated with a particular course
