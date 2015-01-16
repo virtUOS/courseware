@@ -1,20 +1,18 @@
 // ***** BUTTON STYLE *****
 
-& > .chapters {
-  & > .controls > button,
-  & > .chapter > .subchapters > .controls > button,
-  & > .chapter > .subchapters > .subchapter .active-subchapter > .controls > button {
-    .courseware-btn;
-    margin: 4px 0px 0px;
-    width: 90%;
-    height: 35px;
-    text-align: left;
-  }
+> .chapters > .controls > button,
+> .chapters > .chapter > .subchapters > .controls > button,
+.active-subchapter > .controls > button {
+  .courseware-btn;
+  margin: 4px 0px 0px;
+  width: 90%;
+  height: 35px;
+  text-align: left;
+}
 
-  & > .chapter > .subchapters > .subchapter .active-subchapter > .controls > button {
-    width: auto !important;
-    margin: 0px 0px 0px 4px;
-  }
+.active-subchapter > .controls > button {
+  width: auto !important;
+  margin: 0px 0px 0px 4px;
 }
 
 button {

@@ -1,0 +1,57 @@
+<ol class=active-subchapter
+  data-blockid={{active_subchapter.id}}
+  data-type=Subchapter>
+
+  {{#section_nav}}
+    {{#prev}}
+      <li class="prev">
+        <a class="navigate"
+           data-blockid={{id}}
+           href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
+           data-title="{{title}}">
+          {{#i18n}}zurück{{/i18n}}
+        </a>
+      </li>
+    {{/prev}}
+
+    {{^prev}}
+      <li class="prev disabled">
+        {{#i18n}}zurück{{/i18n}}
+      </li>
+    {{/prev}}
+  {{/section_nav}}
+
+  {{#sections}}
+    {{> section}}
+  {{/sections}}
+
+
+  <li class=no-content>{{#i18n}}Keine Abschnitte{{/i18n}}</li>
+
+  {{#section_nav}}
+    {{#next}}
+      <li class="next">
+        <a class="navigate"
+           data-blockid={{id}}
+           href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
+           data-title="{{title}}">
+          {{#i18n}}weiter{{/i18n}}
+        </a>
+      </li>
+    {{/next}}
+
+    {{^next}}
+      <li class="next disabled">
+        {{#i18n}}weiter{{/i18n}}
+      </li>
+    {{/next}}
+  {{/section_nav}}
+
+
+  <li class=controls>
+    <button class=add-section>{{#i18n}}Abschnitt einfügen{{/i18n}}</button>
+    <button class=init-sort-section>{{#i18n}}Abschnitte sortieren{{/i18n}}</button>
+    <button class=stop-sort-section>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
+  </li>
+
+</ol>
