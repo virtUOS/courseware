@@ -1,0 +1,217 @@
+ol.chapters {
+
+  float: left;
+  margin: 0;
+  padding-left: @sidebar-padding-left;
+  padding-right: @sidebar-padding-right;
+  width: @sidebar-width;
+
+  .chapter > .title {
+    background: url("@{blocks-icons-dir}/16/blue/arr_1right.png") no-repeat 3px center;
+  }
+
+  .chapter.selected > .title {
+    font-weight: 700;
+    background: url("@{blocks-icons-dir}/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
+  }
+
+  .controls {
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .chapter div.title {
+    position: relative;
+    line-height: 20px;
+    border-bottom: 1px solid #E9E9E9;
+
+    a {
+      display: table-cell;
+      padding: 5px 44px 5px 22px;
+    }
+
+    button.edit {
+      .btn(edit);
+    }
+    button.trash {
+      .btn(trash);
+    }
+
+    .controls {
+      visibility: hidden;
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 2px;
+    }
+
+    &:hover {
+      background-color: #eee;
+
+      .controls {
+        visibility: visible;
+      }
+    }
+  }
+
+  .chapter.loading > .title {
+    background-image: url("@{blocks-images-dir}/ajax_indicator_small.gif");
+  }
+
+
+  // ***** SORTING SUB/CHAPTERS *****
+
+  .handle {
+    display: none;
+
+    color: transparent;
+    width: 25px;
+    padding: 5px;
+    background: transparent @anfasser-bg-url center center no-repeat;
+    cursor: move;
+  }
+
+  &.sorting {
+
+    & > .controls button,
+    .subchapters > .controls button,
+    .chapter > .title button,
+    .subchapter > .title button {
+      display: none;
+    }
+
+    &.ui-sortable {
+
+      .chapter > .title {
+
+        background-image: none;
+
+        // display chapter handles
+        .handle {
+          display: table-cell;
+        }
+      }
+
+      .stop-sort-chapter {
+        display: inline-block !important;
+      }
+
+      // hide the subchapters
+      .subchapter > .title {
+        display: none
+      }
+    }
+
+    // sorting subchapters
+    .subchapters.ui-sortable {
+
+      // display subchapter handles
+      .subchapter > .title .handle {
+        display: table-cell;
+      }
+
+      .stop-sort-subchapter {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+
+ol.subchapters {
+  padding-left: 25px;
+
+  li.selected > .title {
+    font-weight: 700;
+    background: #f8f8f8;
+  }
+
+  li div.title {
+    position: relative;
+    line-height: 20px;
+    border-bottom: 1px solid #E9E9E9;
+
+    a {
+      display: table-cell;
+      padding: 5px 44px 5px 12px;
+    }
+
+    button.edit {
+      .btn(edit);
+    }
+
+    .controls {
+      visibility: hidden;
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 2px;
+    }
+
+
+    &:hover {
+      background-color: #eee;
+
+      .controls {
+        visibility: visible;
+      }
+    }
+  }
+
+  li.no-content {
+    padding: 10px 5px;
+  }
+
+
+  .subchapter.loading > .title {
+    background: url(@{blocks-images-dir}/ajax_indicator_small.gif) no-repeat 3px center;
+  }
+}
+
+
+
+
+// ***** EDITING SUB/CHAPTERS *****
+
+.chapters > li > .edit-structure,
+.subchapters > li > .edit-structure {
+  position: relative;
+
+  input {
+    width: 68%;
+    padding: 4px;
+    margin: 2px 0px;
+    border: 1px solid #BBBBBB;
+
+    &:focus {
+      border-color: #009EFF;
+    }
+  }
+
+  button {
+    position: absolute;
+    top: 3px;
+    padding: 0 0 7px;
+    .btn-base();
+
+    &.cancel {
+      .bgImg(decline, grey, 16);
+      margin-left: 20px;
+    }
+
+    &.ok {
+      .bgImg(accept, grey, 16);
+    }
+  }
+}
+
+&.user-may-author {
+  li[data-type="Chapter"]:not([data-publication='']),
+  li[data-type="Subchapter"]:not([data-publication='']) {
+    & > div.title > a.navigate {
+      .bgImg(calendar, grey, 16);
+      background-position: center right;
+      opacity: 0.5;
+    }
+  }
+}
