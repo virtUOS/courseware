@@ -1,5 +1,22 @@
-<?
+<?php
+/** @var \Mooc $plugin */
+/** @var \Course $_index_item */
+/** @var string[] $preview_images */
+
+/** @var \Seminar_Perm $perm */
+$perm = $GLOBALS['perm'];
+
 $course = $_index_item;
+
+if ($perm->have_studip_perm('autor', $course->id)) {
+    $label = 'Zum Kurs';
+    $params = array('cid' => $course->id);
+} else {
+    $label = 'Mehr…';
+    $params = array('moocid' => $course->id);
+}
+
+$courseUrl = PluginEngine::getLink($plugin, array(), 'courses/show/'.$course->id);
 ?>
 <article>
 	<div class="course-avatar-wrapper">
@@ -10,9 +27,5 @@ $course = $_index_item;
   <h1><?= htmlReady($course->name) ?></h1>
   <p class=subtitle><?= htmlReady($course->untertitel) ?></p>
 
-  <? if ($GLOBALS['perm']->have_studip_perm("autor", $course->id)) : ?>
-    <?= \Studip\LinkButton::create("Zum Kurs", $controller->url_for('courses/show/' . $course->id, array('cid' => $course->id))) ?>
-  <? else : ?>
-    <?= \Studip\LinkButton::create("Mehr…", $controller->url_for('courses/show/' . $course->id, array('moocid' => $course->id))) ?>
-  <? endif ?>
+  <?= \Studip\LinkButton::create($label, $courseUrl) ?>
 </article>

@@ -16,7 +16,7 @@ use Mooc\User;
  * @author  <tgloeggl@uos.de>
  * @author  <mlunzena@uos.de>
  */
-class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
+class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemPlugin
 {
     /**
      * @var Container
@@ -93,6 +93,60 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
     public function getInfoTemplate($course_id)
     {
         return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPortalTemplate()
+    {
+        $sem_class = \Mooc\SemClass::getMoocSemClass();
+        $moocCourses = $sem_class->getCourses();
+        $courses = array();
+        $preview_images = array();
+
+        foreach ($moocCourses as $course) {
+            $userIsEnrolled = false;
+
+            foreach ($course->members as $member) {
+                if ($member->user_id === $this->getCurrentUserId()) {
+                    $courses[] = $course;
+                    $userIsEnrolled = true;
+                    break;
+                }
+            }
+
+            if (!$userIsEnrolled) {
+                /** @var \DataFieldEntry[] $localEntries */
+                $localEntries = DataFieldEntry::getDataFieldEntries($course->seminar_id);
+                foreach ($localEntries as $entry) {
+                    /** @var \DataFieldStructure $structure */
+                    $structure = $entry->structure;
+                    if ($structure->accessAllowed($GLOBALS['perm'])) {
+                        if ($entry->getValue()) {
+                            foreach ($this->getDataFields() as $field => $id) {
+                                if ($field != 'preview_image') {
+                                    continue;
+                                }
+
+                                if ($entry->getId() == $id) {
+                                    $preview_images[$course->id] = $entry->getValue();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        PageLayout::addStylesheet($this->getPluginURL().'/assets/start.css');
+
+        $template_factory = new Flexi_TemplateFactory(__DIR__.'/views');
+        $template = $template_factory->open('start/index');
+        $template->plugin = $this;
+        $template->courses = $courses;
+
+        return $template;
     }
 
     public function perform($unconsumed_path)
