@@ -1,8 +1,13 @@
 <?php
 /** @var \Mooc $plugin */
-?>
-<?
+
 $body_id = 'mooc-courses-show';
+
+$sidebar = Sidebar::Get();
+$actions = new ActionsWidget();
+$actions->setTitle('Vorschau');
+$actions->insertElement(new WidgetElement($this->render_partial('courses/_show_infobox')), 'navigation');
+$sidebar->addWidget($actions);
 ?>
 
 <h1><?= htmlReady($course->name) ?></h1>
@@ -23,7 +28,5 @@ $body_id = 'mooc-courses-show';
 <? if ($plugin->getCurrentUserId() === "nobody") : ?>
   <?= \Studip\LinkButton::create("Zur Anmeldung", $controller->url_for('registrations/new', array('moocid' => $course->id))) ?>
 <? endif ?>
-
-<? $infobox = $this->render_partial('courses/_show_infobox') ?>
 
 <?= $this->render_partial('courses/_requirejs') ?>
