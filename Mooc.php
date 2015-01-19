@@ -100,6 +100,11 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
      */
     public function getPortalTemplate()
     {
+        // hide the widget if the Stud.IP version doesn't support them
+        if (!class_exists('WdigetHelper')) {
+            return null;
+        }
+
         $sem_class = \Mooc\SemClass::getMoocSemClass();
         $moocCourses = $sem_class->getCourses();
         $courses = array();
