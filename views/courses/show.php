@@ -15,12 +15,12 @@ $sidebar->addWidget($actions);
 
 <article class=description>
   <h1>Kursbeschreibung</h1>
-  <p><?= nl2br(htmlReady($course->beschreibung)) ?></p>
+  <p><?= formatReady($course->beschreibung) ?></p>
 </article>
 
 <article class=requirements>
   <h1>Voraussetzungen</h1>
-  <p><?= nl2br(htmlReady($course->vorrausetzungen)) ?></p>
+  <p><?= formatReady($course->vorrausetzungen) ?></p>
 </article>
 
 <div class=clear></div>
