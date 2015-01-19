@@ -47,7 +47,9 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         PageLayout::addStylesheet($this->getPluginURL().'/assets/style.css');
     }
 
-    // für Veranstaltungskategorien-Slots
+    /**
+     * {@inheritdoc}
+     */
     public function getTabNavigation($course_id)
     {
         $tabs = array();
@@ -69,22 +71,28 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
         return $tabs;
     }
 
-    // ???
+    /**
+     * {@inheritdoc}
+     */
     public function getNotificationObjects($course_id, $since, $user_id)
     {
         return array();
     }
 
-    // Icon auf meine_seminare.php
+    /**
+     * {@inheritdoc}
+     */
     public function getIconNavigation($course_id, $last_visit, $user_id)
     {
-        // ...
+        return null;
     }
 
-    // Box auf der Übersichtsseite
+    /**
+     * {@inheritdoc}
+     */
     public function getInfoTemplate($course_id)
     {
-        // ...
+        return null;
     }
 
     public function perform($unconsumed_path)
