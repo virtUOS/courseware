@@ -34,7 +34,7 @@ class Mooc extends StudIPPlugin implements StandardPlugin, SystemPlugin
             Navigation::removeItem('/course/vipsplugin');
         }
 
-        if (strpos($_SERVER[REQUEST_URI], 'dispatch.php/course/basicdata') !== false) {
+        if (strpos($_SERVER['REQUEST_URI'], 'dispatch.php/course/basicdata') !== false) {
             PageLayout::addHeadElement('script', array(),
                     "$(function() { $('textarea[name=course_description], textarea[name=course_requirements]').addClass('add_toolbar'); });");
         }
