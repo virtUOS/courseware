@@ -3,11 +3,15 @@
 
 $body_id = 'mooc-courses-show';
 
-$sidebar = Sidebar::Get();
-$actions = new ActionsWidget();
-$actions->setTitle('Vorschau');
-$actions->insertElement(new WidgetElement($this->render_partial('courses/_show_infobox')), 'navigation');
-$sidebar->addWidget($actions);
+if (class_exists('Sidebar')):
+    $sidebar = Sidebar::Get();
+    $actions = new ActionsWidget();
+    $actions->setTitle('Vorschau');
+    $actions->insertElement(new WidgetElement($this->render_partial('courses/_show_sidebar')), 'navigation');
+    $sidebar->addWidget($actions);
+else:
+    $infobox = $this->render_partial('courses/_show_infobox');
+endif;
 ?>
 
 <h1><?= htmlReady($course->name) ?></h1>
