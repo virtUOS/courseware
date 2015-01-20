@@ -1,5 +1,12 @@
 <h2>Diskussion</h2>
 
 <div>
-  Diskussionen werden geladen...
+    {{#topics}}
+    <div>
+        <a href="{{link_to_post}}">{{name}}</a> <span style="font-size: 0.8em">{{human_date}}</span><br>
+    </div>
+    {{/topics}}
+
+    <br>
+    <a href="{{link_to_area}}">Alles anzeigen / Eigenen Beitrag schreiben</a>
 </div>
