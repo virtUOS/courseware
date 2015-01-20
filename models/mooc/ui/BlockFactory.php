@@ -2,7 +2,6 @@
 namespace Mooc\UI;
 
 use Mooc\Container;
-use Mooc\DB\Block;
 
 /**
  * TODO
@@ -52,7 +51,7 @@ class BlockFactory {
     public function getContentBlockClasses()
     {
         $all = $this->getBlockClasses();
-        return array_diff($all, Block::getStructuralBlockClasses());
+        return array_diff($all, \Mooc\DB\Block::getStructuralBlockClasses());
     }
 
     /**
@@ -79,7 +78,7 @@ class BlockFactory {
             $className = $matches[1];
         }
 
-        $block = new Block();
+        $block = new \Mooc\DB\Block();
         $block->type = $className;
 
         return new $fqcn($this->container, $block);
