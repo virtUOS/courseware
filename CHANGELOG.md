@@ -1,6 +1,8 @@
 CHANGELOG
 =========
 
+* don't break when the Mooc.IP overview navigation item is not available due
+  to some misconfiguration
 * automatically show a preview image from YouTube for their videos if the
   user didn't choose one
 * fix a permission check that prevented the user from modifying the course

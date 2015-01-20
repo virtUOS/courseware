@@ -11,6 +11,8 @@ class CoursewareController extends MoocipController {
     {
         if (Navigation::hasItem('/course/mooc_courseware')) {
             Navigation::activateItem("/course/mooc_courseware");
+        } else {
+            $this->plugin->fixCourseNavigation();
         }
 
         $this->view = $this->getViewParam();

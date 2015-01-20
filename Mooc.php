@@ -282,7 +282,14 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
         $it = $courseNavigation->getIterator();
 
         Navigation::insertItem('/course/mooc_courseware', $this->getCoursewareNavigation(), $it->count() === 0 ? null : $it->key());
-        Navigation::activateItem('/course/mooc_courseware/index');
+
+        if (Navigation::hasItem('/course/mooc_courseware/index')) {
+            Navigation::activateItem('/course/mooc_courseware/index');
+        } elseif (Navigation::hasItem('/course/main')) {
+            Navigation::activateItem('/course/main');
+        } else {
+            Navigation::activateItem('/course/mooc_courseware');
+        }
     }
 
     private function getSemClass()
