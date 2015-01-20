@@ -3,10 +3,21 @@ CHANGELOG
 
 * don't break when the Mooc.IP overview navigation item is not available due
   to some misconfiguration
+* add a widget to display the list of enrolled Mooc.IP courses on the user's
+  homepage when using Stud.IP 3.1
+* the WYSIWYG editor can be used for the Mooc.IP description fields
+* move info box into the sidebar when used with Stud.IP 3.1
+* show mode switch even when the list of sections is really large
 * automatically show a preview image from YouTube for their videos if the
   user didn't choose one
+* move certain items out of the navigation to maintain compatibility with
+  Stud.IP 3.1 (the third level navigation isn't rendered as tabs anymore,
+  but in the sidebar which is not shown in Mooc.IP)
+* icons will no longer be shown in the third level of the navigation to
+  maintain compatibility with Stud.IP 3.1
 * fix a permission check that prevented the user from modifying the course
   overview page
+* do not limit the allowed block view types
 * blocks for the overview page are not associated with a particular course
 * don't show video container if no video was embedded
 * fix how the URL of the test modification page is built
