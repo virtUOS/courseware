@@ -3,7 +3,7 @@ define(['assets/js/block_types', './student_view', './author_view'], function (b
     'use strict';
 
     return block_types.add({
-        name: 'BlubberBlock',
+        name: 'ForumBlock',
 
         content_block: true,
 
