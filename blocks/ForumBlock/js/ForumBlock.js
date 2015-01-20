@@ -1,4 +1,4 @@
-define(['assets/js/block_types', './student_view', './author_view'], function (block_types, StudentView, AuthorView) {
+define(['assets/js/block_types', './student_view'], function (block_types, StudentView, AuthorView) {
 
     'use strict';
 
@@ -8,8 +8,7 @@ define(['assets/js/block_types', './student_view', './author_view'], function (b
         content_block: true,
 
         views: {
-            student: StudentView,
-            author: AuthorView
+            student: StudentView
         }
     });
 });
