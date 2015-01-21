@@ -16,7 +16,7 @@ if ($perm->have_studip_perm('autor', $course->id)) {
     $params = array('moocid' => $course->id);
 }
 
-$courseUrl = PluginEngine::getLink($plugin, array(), 'courses/show/'.$course->id);
+$courseUrl = PluginEngine::getLink($plugin, $params, 'courses/show/'.$course->id);
 ?>
 <article>
 	<div class="course-avatar-wrapper">

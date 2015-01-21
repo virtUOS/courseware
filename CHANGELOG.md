@@ -1,6 +1,7 @@
 CHANGELOG
 =========
 
+* pass the right context when accessing a course from the course list
 * don't break when the Mooc.IP overview navigation item is not available due
   to some misconfiguration
 * add a widget to display the list of enrolled Mooc.IP courses on the user's
