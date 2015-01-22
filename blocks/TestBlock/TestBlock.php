@@ -43,6 +43,11 @@ class TestBlock extends Block
         if (VipsBridge::vipsExists()) {
             $this->test = new Test($this->test_id);
 
+            // do not allow tests that belong to other courses
+            if ($this->test->course_id !== $this->_model->course->id) {
+                $this->test = null;
+            }
+
             if (!$this->_model->isNew()) {
                 $progress = $this->getProgress();
 
@@ -86,7 +91,7 @@ class TestBlock extends Block
 
     public function author_view()
     {
-        $storedTests = Test::findAllByType($this->_model->sub_type);
+        $storedTests = Test::findAllByType($this->_model->course->id, $this->_model->sub_type);
         $tests = array();
 
         foreach ($storedTests as $test) {

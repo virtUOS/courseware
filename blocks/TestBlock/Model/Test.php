@@ -4,6 +4,13 @@ namespace Mooc\UI\TestBlock\Model;
 
 /**
  * @author Christian Flothmann <christian.flothmann@uos.de>
+ *
+ * @property string $type        The test type (one of "exam", "practice", "selftest")
+ * @property string $course_id   The id of the course the test belongs to
+ * @property int    $position    The position of the test in the list view
+ * @property string $title       The test title
+ * @property string $description The test description
+ * @property string $user_id     The id of the user who created the test
  */
 class Test extends \SimpleORMap
 {
@@ -49,17 +56,18 @@ class Test extends \SimpleORMap
     }
 
     /**
-     * Returns all tests which are of a given type (one of "exam", "practice",
-     * "selftest").
+     * Returns all tests of a course which are of a given type (one of "exam",
+     * "practice", "selftest").
      *
-     * @param string $type The test type
+     * @param string $courseId The course id
+     * @param string $type     The test type
      *
      * @return Test[] The tests
      *
      * @throws \InvalidArgumentException if $type is not one of "exam",
      *                                   "practice", "selftest"
      */
-    public static function findAllByType($type)
+    public static function findAllByType($courseId, $type)
     {
         if (!in_array($type, array('exam', 'practice', 'selftest'))) {
             throw new \InvalidArgumentException(sprintf(
@@ -68,6 +76,9 @@ class Test extends \SimpleORMap
             ));
         }
 
-        return static::findBySQL('type = :type ORDER BY title', array(':type' => $type));
+        return static::findBySQL('type = :type AND course_id = :course_id ORDER BY title', array(
+            ':type' => $type,
+            ':course_id' => $courseId,
+        ));
     }
 }
