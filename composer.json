@@ -16,6 +16,7 @@
             "Mooc\\Import\\": "import/",
             "Mooc\\UI\\": "blocks/"
         },
-        "classmap": ["controllers/"]
+        "classmap": ["controllers/"],
+        "files": ["models/mooc/constants.php"]
     }
 }

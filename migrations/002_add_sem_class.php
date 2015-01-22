@@ -1,15 +1,9 @@
 <?php
 
-class AddSemClass extends Migration {
+require __DIR__.'/../vendor/autoload.php';
 
-    public function __construct($verbose = FALSE)
-    {
-        require_once __DIR__ . '/../models/mooc/constants.php';
-
-        parent::Migration($verbose);
-    }
-
-
+class AddSemClass extends Migration
+{
     public function description () {
         return 'add SemClass and SemTypes whose courses have this plugin in their overview slot';
     }

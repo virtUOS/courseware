@@ -1,15 +1,9 @@
 <?php
 
-class AddUserDomainForMooc extends Migration {
+require __DIR__.'/../vendor/autoload.php';
 
-    public function __construct($verbose = FALSE)
-    {
-        require_once __DIR__ . '/../models/mooc/constants.php';
-
-        parent::Migration($verbose);
-    }
-
-
+class AddUserDomainForMooc extends Migration
+{
     public function description () {
         return 'add userdomain for (foreign) users participating in a mooc-course';
     }
