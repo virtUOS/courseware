@@ -8,12 +8,18 @@ class RegistrationsController extends MoocipController {
         $this->cid = Request::option('moocid');
     }
 
+    public function terms_action()
+    {
+        $this->terms = Config::get()->getValue(\Mooc\TERMS_OF_SERVICE_CONFIG_ID);
+    }
+
     public function new_action()
     {
         if (Navigation::hasItem('/mooc/registrations')) {
             Navigation::activateItem("/mooc/registrations");
         }
 
+        $this->fields = explode("\n", Config::get()->getValue(\Mooc\REGISTRATION_FORM_CONFIG_ID));
         $this->course = \Course::find($this->cid);
     }
 
@@ -22,19 +28,22 @@ class RegistrationsController extends MoocipController {
         $this->course = Course::find($this->cid);
 
         if (!Request::option('accept_tos')) {
-            return $this->error(_('Sie müssen die Nutzungsbedingungen akzeptieren!'), 'registrations/new');
+            $this->error(_('Sie müssen die Nutzungsbedingungen akzeptieren!'), 'registrations/new');
+
+            return;
         }
 
         switch (Request::get('type')) {
             default:
             case 'register':
-                return $this->register();
-
+                $this->register();
+                break;
             case 'login':
-                return $this->loginAndRegister();
-
+                $this->loginAndRegister();
+                break;
             case 'create':
-                return $this->createAccountAndRegister();
+                $this->createAccountAndRegister();
+                break;
         }
     }
 
