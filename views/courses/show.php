@@ -1,6 +1,9 @@
 <?php
 /** @var \Mooc $plugin */
 
+/** @var \Seminar_Perm $perm */
+$perm = $GLOBALS['perm'];
+
 $body_id = 'mooc-courses-show';
 
 if (class_exists('Sidebar')):
@@ -29,7 +32,7 @@ endif;
 
 <div class=clear></div>
 
-<? if ($plugin->getCurrentUserId() === "nobody") : ?>
+<? if (!$perm->have_studip_perm('autor', $course->id)): ?>
   <?= \Studip\LinkButton::create("Zur Anmeldung", $controller->url_for('registrations/new', array('moocid' => $course->id))) ?>
 <? endif ?>
 
