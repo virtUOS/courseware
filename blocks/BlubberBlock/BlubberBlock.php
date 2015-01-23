@@ -16,7 +16,7 @@ class BlubberBlock extends Block
 
     public function student_view()
     {
-        if (!$active = $this->blubberActivated()) {
+        if (!$active = self::blubberActivated($this)) {
             return compact('active');
         }
 
@@ -42,7 +42,7 @@ class BlubberBlock extends Block
 
     public function author_view()
     {
-        if (!$active = $this->blubberActivated()) {
+        if (!$active = self::blubberActivated($this)) {
             return compact('active');
         }
 
@@ -62,6 +62,10 @@ class BlubberBlock extends Block
      */
     public static function additionalInstanceAllowed(Section $section, $subType = null)
     {
+        if (!self::blubberActivated($section)) {
+            return false;
+        }
+
         $blubberBlockAllowed = true;
         $section->traverseChildren(function ($child) use (&$blubberBlockAllowed) {
             if ($child instanceof BlubberBlock) {
@@ -72,10 +76,11 @@ class BlubberBlock extends Block
         return $blubberBlockAllowed;
     }
 
-    private function blubberActivated()
+    // is the Blubber plugin activated in the currently selected course
+    private static function blubberActivated($block)
     {
         $plugin_manager = \PluginManager::getInstance();
         $plugin_info = $plugin_manager->getPluginInfo('Blubber');
-        return $plugin_manager->isPluginActivated($plugin_info['id'], $this->getModel()->seminar_id);
+        return $plugin_manager->isPluginActivated($plugin_info['id'], $block->getModel()->seminar_id);
     }
 }
