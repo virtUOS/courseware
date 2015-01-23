@@ -1,13 +1,19 @@
-<a href="{{manage_tests_url}}" class="edit-tests">{{#i18n}}Aufgabenblätter verwalten{{/i18n}}</a>
+{{#active}}
+  <a href="{{manage_tests_url}}" class="edit-tests">{{#i18n}}Aufgabenblätter verwalten{{/i18n}}</a>
 
-<select name="test_id">
-  <option>-- {{#i18n}}anzuzeigendes Aufgabenblatt auswählen{{/i18n}} --</option>
-  {{#tests}}
-    <option value="{{id}}"{{#current_test}} selected="selected"{{/current_test}}>
-      {{name}} ({{#created}}{{#i18n}}erstellt am{{/i18n}} {{created}}, {{/created}}{{exercises_count}} {{#i18n}}Fragen{{/i18n}})
-    </option>
-  {{/tests}}
-</select>
+    <select name="test_id">
+      <option>-- {{#i18n}}anzuzeigendes Aufgabenblatt auswählen{{/i18n}} --</option>
+        {{#tests}}
+          <option value="{{id}}"{{#current_test}} selected="selected"{{/current_test}}>
+            {{name}} ({{#created}}{{#i18n}}erstellt am{{/i18n}} {{created}}, {{/created}}{{exercises_count}} {{#i18n}}Fragen{{/i18n}})
+          </option>
+        {{/tests}}
+    </select>
 
-<button name="save" class="button">Speichern</button>
-<button name="cancel" class="button">Abbrechen</button>
+    <button name="save" class="button">Speichern</button>
+    <button name="cancel" class="button">Abbrechen</button>
+{{/active}}
+
+{{^active}}
+  {{> _vips_deactivated}}
+{{/active}}

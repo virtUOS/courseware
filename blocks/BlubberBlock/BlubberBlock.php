@@ -16,6 +16,10 @@ class BlubberBlock extends Block
 
     public function student_view()
     {
+        if (!$active = $this->blubberActivated()) {
+            return compact('active');
+        }
+
         // on view: grade with 100%
         $this->setGrade(1.0);
 
@@ -30,14 +34,19 @@ class BlubberBlock extends Block
         $assetsBaseUrl = $blubberPlugin->getPluginUrl(). '/assets/';
 
         return array(
-            'stream_url' => $streamUrl,
+            'active'          => true,
+            'stream_url'      => $streamUrl,
             'assets_base_url' => $assetsBaseUrl,
         );
     }
 
     public function author_view()
     {
-        return array();
+        if (!$active = $this->blubberActivated()) {
+            return compact('active');
+        }
+
+        return compact('active');
     }
 
     /**
@@ -61,5 +70,12 @@ class BlubberBlock extends Block
         });
 
         return $blubberBlockAllowed;
+    }
+
+    private function blubberActivated()
+    {
+        $plugin_manager = \PluginManager::getInstance();
+        $plugin_info = $plugin_manager->getPluginInfo('Blubber');
+        return $plugin_manager->isPluginActivated($plugin_info['id'], $this->getModel()->seminar_id);
     }
 }

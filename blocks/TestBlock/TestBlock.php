@@ -39,37 +39,7 @@ class TestBlock extends Block
     public function initialize()
     {
         $this->defineField('test_id', \Mooc\SCOPE_BLOCK, null);
-
-        if (VipsBridge::vipsExists()) {
-            $this->test = new Test($this->test_id);
-
-            // do not allow tests that belong to other courses
-            if ($this->test->course_id !== $this->_model->course->id) {
-                $this->test = null;
-            }
-
-            if (!$this->_model->isNew()) {
-                $progress = $this->getProgress();
-
-                // initialize the user progress (if necessary)
-                if ($progress->isNew()) {
-                    $progress->grade = 0;
-                    $progress->max_grade = count($this->test->exercises);
-                    $progress->store();
-                }
-
-                // fix the max grade value if the number of exercises had changed
-                if ($progress->max_grade != count($this->test->exercises)) {
-                    $progress->max_grade = count($this->test->exercises);
-
-                    if ($progress->grade > $progress->max_grade) {
-                        $progress->grade = $progress->max_grade;
-                    }
-
-                    $progress->store();
-                }
-            }
-        }
+        $this->loadRelatedTest();
     }
 
     /**
@@ -86,33 +56,50 @@ class TestBlock extends Block
 
     public function student_view()
     {
-        return $this->buildExercises();
+        $active = VipsBridge::vipsActivated($this);
+        return $active ? array_merge(compact('active'), $this->buildExercises()) : compact('active');
     }
 
     public function author_view()
     {
+        if (!$active = VipsBridge::vipsActivated($this)) {
+            return compact('active');
+        }
+
         $storedTests = Test::findAllByType($this->_model->course->id, $this->_model->sub_type);
-        $tests = array();
+        $tests       = array();
 
         foreach ($storedTests as $test) {
             $tests[] = array(
-                'id' => $test->id,
-                'name' => $test->title,
-                'created' => isset($test->created) ? date('d.m.Y', strtotime($test->created)) : '',
+                'id'              => $test->id,
+                'name'            => $test->title,
+                'created'         => isset($test->created) ? date('d.m.Y', strtotime($test->created)) : '',
                 'exercises_count' => count($test->exercises),
-                'current_test' => $this->test_id === $test->id,
+                'current_test'    => $this->test_id === $test->id,
             );
         }
 
-        if (($plugin = VipsBridge::getVipsPlugin()) === null) {
-            return array();
-        }
-
         return array(
+            'active'           => $active,
             'manage_tests_url' => \PluginEngine::getURL($plugin, array('action' => 'sheets'), 'show'),
-            'tests' => $tests,
+            'tests'            => $tests,
         );
     }
+
+
+    // ***** HANDLERS *****
+
+    // preclude any calls to handlers
+    public function handle($name, $data = array())
+    {
+        if (!VipsBridge::vipsActivated($this)) {
+            throw \RuntimeException('Vips is not activated.');
+        }
+
+        return parent::handle($name, $data);
+    }
+
+
 
     public function modify_test_handler($testId)
     {
@@ -589,9 +576,9 @@ class TestBlock extends Block
         }
 
         return array(
-            'title' => $this->test->title,
+            'title'       => $this->test->title,
             'description' => nl2br(htmlReady($this->test->description)),
-            'exercises' => $exercises,
+            'exercises'   => $exercises
         );
     }
 
@@ -600,6 +587,40 @@ class TestBlock extends Block
      */
     public static function additionalInstanceAllowed(Section $section, $subType = null)
     {
-        return VipsBridge::vipsExists();
+        return VipsBridge::vipsActivated($section);
+    }
+
+    private function loadRelatedTest()
+    {
+        if (VipsBridge::vipsExists()) {
+            $this->test = new Test($this->test_id);
+
+            // do not allow tests that belong to other courses
+            if ($this->test->course_id !== $this->_model->seminar_id) {
+                $this->test = null;
+            }
+
+            if (!$this->_model->isNew()) {
+                $progress = $this->getProgress();
+
+                // initialize the user progress (if necessary)
+                if ($progress->isNew()) {
+                    $progress->grade = 0;
+                    $progress->max_grade = count($this->test->exercises);
+                    $progress->store();
+                }
+
+                // fix the max grade value if the number of exercises had changed
+                if ($progress->max_grade != count($this->test->exercises)) {
+                    $progress->max_grade = count($this->test->exercises);
+
+                    if ($progress->grade > $progress->max_grade) {
+                        $progress->grade = $progress->max_grade;
+                    }
+
+                    $progress->store();
+                }
+            }
+        }
     }
 }

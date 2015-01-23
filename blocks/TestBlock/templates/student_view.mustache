@@ -1,74 +1,80 @@
-<h2>{{title}}</h2>
+{{#active}}
+  <h2>{{title}}</h2>
 
-{{#description}}
-  <div class="description">{{{description}}}</div>
-{{/description}}
+  {{#description}}
+    <div class="description">{{{description}}}</div>
+  {{/description}}
 
-{{#exercises}}
-  {{^skip_entry}}
-    <ul class="exercise">
-      <li>
-        <h3 class="title">{{ title }}</h3>
+  {{#exercises}}
+    {{^skip_entry}}
+      <ul class="exercise">
+        <li>
+          <h3 class="title">{{ title }}</h3>
 
-        {{#cloze_answers}}
-          {{^show_solution}}
-            {{> _cloze_question}}
+          {{#cloze_answers}}
+            {{^show_solution}}
+              {{> _cloze_question}}
+              {{/show_solution}}
+          {{/cloze_answers}}
+
+          {{^cloze_answers}}
+            {{> _question}}
+          {{/cloze_answers}}
+
+          {{#show_solution}}
+            {{#free_text_answers}}
+              {{> _free_text_solution}}
+            {{/free_text_answers}}
+
+            {{^free_text_answers}}
+              {{#matching_exercise_answers}}
+                {{> _matching_exercise_answers}}
+              {{/matching_exercise_answers}}
+              {{^matching_exercise_answers}}
+                {{> _solution.mustache}}
+              {{/matching_exercise_answers}}
+            {{/free_text_answers}}
+
+            {{#cloze_answers}}
+              {{> _cloze_solution}}
+            {{/cloze_answers}}
+
+            {{#self_test}}
+              {{> _reset_exercise}}
+            {{/self_test}}
           {{/show_solution}}
-        {{/cloze_answers}}
 
-        {{^cloze_answers}}
-          {{> _question}}
-        {{/cloze_answers}}
+          {{^show_solution}}
+            {{> _exercise_form_begin}}
 
-        {{#show_solution}}
-          {{#free_text_answers}}
-            {{> _free_text_solution}}
-          {{/free_text_answers}}
+            {{#single_choice_answers}}
+              {{> _single_choice_answers}}
+            {{/single_choice_answers}}
 
-          {{^free_text_answers}}
+            {{#multiple_choice_answers}}
+              {{> _multiple_choice_answers}}
+            {{/multiple_choice_answers}}
+
+            {{#free_text_answers}}
+              {{> _free_text_answers}}
+            {{/free_text_answers}}
+
             {{#matching_exercise_answers}}
               {{> _matching_exercise_answers}}
             {{/matching_exercise_answers}}
-            {{^matching_exercise_answers}}
-              {{> _solution.mustache}}
-            {{/matching_exercise_answers}}
-          {{/free_text_answers}}
 
-          {{#cloze_answers}}
-            {{> _cloze_solution}}
-          {{/cloze_answers}}
+            {{> _exercise_form_end}}
+          {{/show_solution}}
+        </li>
+      </ul>
+      {{/skip_entry}}
+  {{/exercises}}
 
-          {{#self_test}}
-            {{> _reset_exercise}}
-          {{/self_test}}
-        {{/show_solution}}
+  {{^exercises}}
+    {{#i18n}}Keine Aufgaben.{{/i18n}}
+  {{/exercises}}
+{{/active}}
 
-        {{^show_solution}}
-          {{> _exercise_form_begin}}
-
-          {{#single_choice_answers}}
-            {{> _single_choice_answers}}
-          {{/single_choice_answers}}
-
-          {{#multiple_choice_answers}}
-            {{> _multiple_choice_answers}}
-          {{/multiple_choice_answers}}
-
-          {{#free_text_answers}}
-            {{> _free_text_answers}}
-          {{/free_text_answers}}
-
-          {{#matching_exercise_answers}}
-            {{> _matching_exercise_answers}}
-          {{/matching_exercise_answers}}
-
-          {{> _exercise_form_end}}
-        {{/show_solution}}
-      </li>
-    </ul>
-  {{/skip_entry}}
-{{/exercises}}
-
-{{^exercises}}
-  Keine Aufgaben.
-{{/exercises}}
+{{^active}}
+  {{> _vips_deactivated}}
+{{/active}}

@@ -52,6 +52,22 @@ namespace Mooc\UI\TestBlock\Vips {
         }
 
         /**
+         * @param \Mooc\UI\Block $block  a block of the courseware
+         * @return bool   TRUE if Vips is activated in the course
+         *                to which the given block belongs.
+         */
+        public static function vipsActivated(\Mooc\UI\Block $block)
+        {
+            if (!static::vipsExists()) {
+                return false;
+            }
+
+            $plugin_manager = \PluginManager::getInstance();
+            $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
+            return $plugin_manager->isPluginActivated($plugin_info['id'], $block->getModel()->seminar_id);
+        }
+
+        /**
          * Returns the next position of a test in a course.
          *
          * @param string $courseId The course id
