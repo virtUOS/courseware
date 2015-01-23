@@ -173,6 +173,8 @@ class Section extends Block {
     {
         $blockTypes = array();
 
+
+
         foreach ($this->getBlockFactory()->getContentBlockClasses() as $type) {
             $className = '\Mooc\UI\\'.$type.'\\'.$type;
             $readableName = $type;
@@ -186,26 +188,25 @@ class Section extends Block {
 
             if (count($subTypes) > 0) {
                 foreach ($subTypes as $subType => $name)  {
+
+                    if (!$className::additionalInstanceAllowed($this, $subType)) {
+                        continue;
+                    }
+
                     $blockTypes[] = array(
-                        'type' => $type,
+                        'type'     => $type,
                         'sub_type' => $subType,
-                        'name' => $readableName.' ('.$name.')',
-                        'additional_instance_allowed' => call_user_func(array(
-                            $className,
-                            'additionalInstanceAllowed'
-                        ), $this, $subType),
+                        'name'     => $readableName.' ('.$name.')'
                     );
                 }
             } else {
-                $blockTypes[] = array(
-                    'type' => $type,
-                    'sub_type' => null,
-                    'name' => $readableName,
-                    'additional_instance_allowed' => call_user_func(array(
-                        $className,
-                        'additionalInstanceAllowed'
-                    ), $this),
-                );
+                if ($className::additionalInstanceAllowed($this)) {
+                    $blockTypes[] = array(
+                        'type'     => $type,
+                        'sub_type' => null,
+                        'name'     => $readableName
+                    );
+                }
             }
         }
 
