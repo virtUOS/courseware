@@ -31,27 +31,6 @@ class Block extends \SimpleORMap
      * @param mixed $id primary key of table
      */
     public function __construct($id = null) {
-        $this->db_table = 'mooc_blocks';
-
-        $this->belongs_to['course'] = array(
-            'class_name'  => 'Course',
-            'foreign_key' => 'seminar_id');
-
-
-        $this->belongs_to['parent'] = array(
-            'class_name'  => 'Mooc\\DB\\Block',
-            'foreign_key' => 'parent_id');
-
-        $this->has_many['children'] = array(
-            'class_name'        => 'Mooc\\DB\\Block',
-            'assoc_foreign_key' => 'parent_id',
-            'assoc_func'        => 'findByParent_id',
-            'on_delete'         => 'delete',
-            'on_store'          => 'store'
-        );
-
-
-        # TODO: $this->default_values['type'] = array_pop(explode('\\', get_called_class()));
 
         $this->registerCallback('before_create', 'ensureSeminarId');
         $this->registerCallback('before_create', 'ensurePositionId');
@@ -62,6 +41,29 @@ class Block extends \SimpleORMap
         $this->registerCallback('after_delete',  'updatePositionsAfterDelete');
 
         parent::__construct($id);
+    }
+
+    protected static function configure($config = array())
+    {
+        $config['db_table'] = 'mooc_blocks';
+
+        $config['belongs_to']['course'] = array(
+            'class_name'  => '\\Course',
+            'foreign_key' => 'seminar_id');
+
+        $config['belongs_to']['parent'] = array(
+            'class_name'  => 'Mooc\\DB\\Block',
+            'foreign_key' => 'parent_id');
+
+        $config['has_many']['children'] = array(
+            'class_name'        => 'Mooc\\DB\\Block',
+            'assoc_foreign_key' => 'parent_id',
+            'assoc_func'        => 'findByParent_id',
+            'on_delete'         => 'delete',
+            'on_store'          => 'store'
+        );
+
+        parent::configure($config);
     }
 
     /**
