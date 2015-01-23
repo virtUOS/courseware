@@ -1,7 +1,8 @@
 <li class="section{{#selected}} selected{{/selected}}{{#fields.visited}} visited{{/fields.visited}}"
-  data-blockid={{id}}
+  data-blockid="{{id}}"
   data-type=Section>
 
+  {{#id}}
   <a class="navigate"
      data-icon="{{fields.icon}}"
      href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}"
@@ -9,4 +10,14 @@
      <span class=handle>#</span>
      {{title}}
   </a>
+  {{/id}}
+
+  {{^id}}
+  <a data-icon="{{fields.icon}}"
+     data-title="{{title}}">
+     <span class=handle>#</span>
+     {{title}}
+  </a>
+
+  {{/id}}
 </li>
