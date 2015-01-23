@@ -50,7 +50,7 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
                 function (error) {
                     status.text('Fehler beim Speichern: '+jQuery.parseJSON(error.responseText).reason);
 	            }
-            );
+            ).done();
         }
     });
 });

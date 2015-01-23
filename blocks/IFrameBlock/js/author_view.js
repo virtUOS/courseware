@@ -38,7 +38,8 @@ define(['assets/js/author_view', 'assets/js/url'],
                         var errorMessage = 'Could not update the block: '+jQuery.parseJSON(error.responseText).reason;
                         alert(errorMessage);
                         console.log(errorMessage, arguments);
-                    });
+                    })
+                .done();
         }
     });
 });

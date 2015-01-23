@@ -29,7 +29,7 @@ define(['assets/js/author_view', 'assets/js/url'], function (AuthorView, helper)
                         alert(errorMessage);
                         console.log(errorMessage, arguments);
                     }
-                );
+                ).done();
         }
     });
 });

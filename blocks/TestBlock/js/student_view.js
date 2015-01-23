@@ -17,7 +17,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                             function () {
                                 console.log('failed to reset the exercise');
                             }
-                        );
+                        ).done();
                 }
 
                 return false;
@@ -35,7 +35,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         function () {
                             console.log('failed to store the solution');
                         }
-                    );
+                    ).done();
 
                 return false;
             }

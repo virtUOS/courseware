@@ -86,24 +86,25 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
                 $block_wrapper.addClass("loading");
 
-                helper.callHandler(this.model.id, 'remove_content_block', { child_id: block_id }).then(
+                helper.callHandler(this.model.id, 'remove_content_block', { child_id: block_id })
+                    .then(
+                        function () {
+                            block_view.remove();
+                            delete self.children[block_id];
+                            $block_wrapper.remove();
+                        },
 
-                    function () {
-                        block_view.remove();
-                        delete self.children[block_id];
-                        $block_wrapper.remove();
-                    },
-
-                    function (error) {
-                        $block_wrapper.removeClass("loading");
-                        var errorMessage = 'Could not update the block: '+jQuery.parseJSON(error.responseText).reason;
-                        alert(errorMessage);
-                        console.log(errorMessage, arguments);
-                    }
-                )
+                        function (error) {
+                            $block_wrapper.removeClass("loading");
+                            var errorMessage = 'Could not update the block: '+jQuery.parseJSON(error.responseText).reason;
+                            alert(errorMessage);
+                            console.log(errorMessage, arguments);
+                        }
+                    )
                     .always(function () {
                         self.refreshBlockTypes(self.model.id, self.$('div.block-types'));
-                    });
+                    })
+                    .done();
             }
         },
 
@@ -141,7 +142,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
             view.renderServerSide().then(function () {
                 $block_wrapper.removeClass("loading");
-            });
+            }).done();
         },
 
         addNewBlock: function (event) {
@@ -163,7 +164,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                             view_name = model.get("editable") ? "author" : "student",
                             block_stub = view.appendBlockStub(model, view_name),
                             $el = block_stub.$el.closest("section.block"),
-			    block_name = $button.html();
+                            block_name = $button.html();
 
                         $el.addClass("loading");
                         block_stub.renderServerSide().then(function () {
@@ -171,9 +172,9 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
                             // hide the edit button when the form is shown
                             $el.find(".controls button.author").hide();
-			    //insert block name 
-			    $el.find(".controls span.type").html(block_name);
-                        });
+                            //insert block name
+                            $el.find(".controls span.type").html(block_name);
+                        }).done();
                     },
 
                     function (error) {
@@ -186,7 +187,8 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                 .always(function () {
                     $button.prop("disabled", false).removeClass("loading");
                     view.refreshBlockTypes(view.model.id, view.$('div.block-types'));
-                });
+                })
+                .done();
         },
 
         appendBlockStub: function (model, view_name) {
@@ -308,7 +310,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
             var index = new_positions.indexOf(thisid);
             new_positions[index] = new_positions[index + 1];
             new_positions[index + 1] = thisid;
-            
+
             var courseware_id = jQuery("#courseware").attr("data-blockid");
             var data = { parent:    self.model.id, positions: new_positions };
             helper
@@ -324,7 +326,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                             antagonist.after(protagonist);
                             protagonist.toggle("blind");
                         });
-                });
+                }).done();
         },
 
         raiseBlock: function (event) {
@@ -364,7 +366,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                             antagonist.before(protagonist);
                             protagonist.toggle("blind");
                         });
-                });
+                }).done();
         },
 
         refreshBlockTypes: function (sectionId, container) {
