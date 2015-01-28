@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @property \Course $course
+ * @property string  $cid
+ * @property array   $fields
+ * @property array   $userInput
+ */
 class RegistrationsController extends MoocipController {
 
     public function before_filter(&$action, &$args)
@@ -19,16 +25,31 @@ class RegistrationsController extends MoocipController {
             Navigation::activateItem("/mooc/registrations");
         }
 
-        $this->fields = explode("\n", Config::get()->getValue(\Mooc\REGISTRATION_FORM_CONFIG_ID));
         $this->course = \Course::find($this->cid);
+        $this->fields = $this->parseRegistrationFormFields();
+        $this->userInput = array();
     }
 
     public function create_action()
     {
         $this->course = Course::find($this->cid);
+        $this->fields = $this->parseRegistrationFormFields();
+        $this->userInput = array();
+
+        foreach ($this->fields as $field) {
+            $fieldName = $field['fieldName'];
+            $fieldValue = Request::get($fieldName);
+            $this->userInput[$fieldName] = $fieldValue;
+
+            if ($field['required'] && trim($fieldValue) === '') {
+                $this->flash['error'] = _('Sie müssen alle Pflichtfelder ausfüllen!');
+
+                return;
+            }
+        }
 
         if (!Request::option('accept_tos')) {
-            $this->error(_('Sie müssen die Nutzungsbedingungen akzeptieren!'), 'registrations/new');
+            $this->flash['error'] = _('Sie müssen die Nutzungsbedingungen akzeptieren!');
 
             return;
         }
@@ -42,7 +63,7 @@ class RegistrationsController extends MoocipController {
                 $this->loginAndRegister();
                 break;
             case 'create':
-                $this->createAccountAndRegister();
+                $this->createAccountAndRegister($this->userInput);
                 break;
         }
     }
@@ -107,10 +128,10 @@ class RegistrationsController extends MoocipController {
         $this->redirect('courses/show/' . $this->cid . '?cid=' . $this->cid);
     }
 
-    private function createAccountAndRegister()
+    private function createAccountAndRegister($userInput)
     {
         try {
-            $user = $this->createAccount();
+            $user = $this->createAccount($userInput);
         } catch (Exception $e) {
             return $this->error('Fehler beim Anlegen des Accounts: ' . htmlReady($e->getMessage()), 'registrations/new');
         }
@@ -126,7 +147,7 @@ class RegistrationsController extends MoocipController {
         $this->redirect($url . '?moocid=' . $this->cid);
     }
 
-    private function createAccount()
+    private function createAccount($additionalData)
     {
         // TODO: check if mail adress is valid, use Stud.IP-API if possible
         $mail = Request::get('mail');
@@ -166,6 +187,20 @@ class RegistrationsController extends MoocipController {
             'username' => $mail,
             'password' => $password
         );
+
+        foreach ($additionalData as $fieldName => $value) {
+            if (!$this->isDataFieldFormField($fieldName)) {
+                continue;
+            }
+
+            $dataField = new DataFieldStructure(array('datafield_id' => $fieldName));
+            $dataField->load();
+
+            if ($dataField->data !== false) {
+                $entry = new DataFieldTextlineEntry($dataField, $user->getId(), $value);
+                $entry->store();
+            }
+        }
 
         return $user;
     }
@@ -236,5 +271,66 @@ class RegistrationsController extends MoocipController {
             $new->label = '';
             $new->store();
         }
+    }
+
+    /**
+     * @return array
+     */
+    private function parseRegistrationFormFields()
+    {
+        $fields = explode("\n", Config::get()->getValue(\Mooc\REGISTRATION_FORM_CONFIG_ID));
+        $parsedFields = array();
+        $fieldNameMap = array(
+            'firstname' => 'vorname',
+            'lastname' => 'nachname',
+            'email' => 'mail',
+            'terms_of_service' => 'accept_tos',
+        );
+
+        foreach ($fields as $field) {
+            if (substr($field, 0, 6) === 'field:') {
+                $field = trim($field);
+                $separatorPos = strpos($field, '|');
+                $required = false;
+                $label = null;
+
+                // field name and label are separated by a pipe character
+                if ($separatorPos !== false) {
+                    $label = substr($field, $separatorPos + 1);
+                    $fieldName = substr($field, 6, $separatorPos - 6);
+                } else {
+                    $fieldName = substr($field, 6);
+                }
+
+                // the field is required if its name ends with an asterisk character
+                if (substr($fieldName, -1) === '*') {
+                    $fieldName = substr($fieldName, 0, -1);
+                    $required = true;
+                }
+
+                // map configured field names to user properties
+                if (isset($fieldNameMap[$fieldName])) {
+                    $fieldName = $fieldNameMap[$fieldName];
+                } elseif ($fieldName !== 'terms_of_service' && !$this->isDataFieldFormField($fieldName)) {
+                    // skip the field if it is not recognised
+                    continue;
+                }
+
+                $parsedFields[] = array(
+                    'fieldName' => $fieldName,
+                    'label' => $label,
+                    'required' => $required,
+                );
+            } else {
+                $parsedFields[] = $field;
+            }
+        }
+
+        return $parsedFields;
+    }
+
+    private function isDataFieldFormField($fieldName)
+    {
+        return preg_match('/^[a-z0-9]{32}$/i', $fieldName);
     }
 }
