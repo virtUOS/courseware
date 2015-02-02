@@ -26,6 +26,10 @@ class FreeTextAnswersStrategy extends AnswersStrategy
      */
     public function isUserAnswerCorrect($userAnswer, $index)
     {
+        if ($this->vipsExercise->getType()) {
+            return $userAnswer === $this->vipsExercise->answerArray[0];
+        }
+
         foreach ($this->vipsExercise->answerArray as $index => $answer) {
             if ($answer != $userAnswer) {
                 continue;
