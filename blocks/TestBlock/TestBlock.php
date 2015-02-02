@@ -81,7 +81,7 @@ class TestBlock extends Block
 
         return array(
             'active'           => $active,
-            'manage_tests_url' => \PluginEngine::getURL($plugin, array('action' => 'sheets'), 'show'),
+            'manage_tests_url' => \PluginEngine::getURL(VipsBridge::getVipsPlugin(), array('action' => 'sheets'), 'show'),
             'tests'            => $tests,
         );
     }
