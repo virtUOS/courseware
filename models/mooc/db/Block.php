@@ -56,6 +56,12 @@ class Block extends \SimpleORMap
             'on_store'          => 'store'
         );
 
+        $this->notification_map['after_create']  = 'MoocBlockDidCreate';
+        $this->notification_map['after_store']   = 'MoocBlockDidUpdate';
+        $this->notification_map['after_delete']  = 'MoocBlockDidDelete';
+        $this->notification_map['before_create'] = 'MoocBlockWillCreate';
+        $this->notification_map['before_store']  = 'MoocBlockWillUpdate';
+        $this->notification_map['before_delete'] = 'MoocBlockWillDelete';
 
         parent::__construct($id);
     }
