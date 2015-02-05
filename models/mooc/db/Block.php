@@ -63,6 +63,14 @@ class Block extends \SimpleORMap
         $this->notification_map['before_store']  = 'MoocBlockWillUpdate';
         $this->notification_map['before_delete'] = 'MoocBlockWillDelete';
 
+        $this->registerCallback('before_create', 'ensureSeminarId');
+        $this->registerCallback('before_create', 'ensurePositionId');
+        $this->registerCallback('before_store',  'validate');
+
+        $this->registerCallback('after_delete',  'destroyFields');
+        $this->registerCallback('after_delete',  'destroyUserProgress');
+        $this->registerCallback('after_delete',  'updatePositionsAfterDelete');
+
         parent::__construct($id);
     }
 
