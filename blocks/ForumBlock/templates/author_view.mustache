@@ -1,0 +1,21 @@
+<h2>Diskussion</h2>
+
+<div>
+    {{#connected}}
+    Momentan verknüpft mit: <a href="{{area_url}}">{{area_name}}</a><br>
+    <br>
+    {{/connected}}
+
+    Wählen Sie hier einen vorhandenen Forenbereich aus oder lassen Sie automatisch einen neuen erstellen:
+    <select name="area">
+        <option value="-1">Automatisch neuen Forenbereich erstellen</option>
+    {{#areas}}
+    <option value="{{topic_id}}">
+        {{name_raw}}
+    </option>
+    {{/areas}}
+    </select><br>
+
+    <button name="save" class="button">Speichern</button>
+    <button name="cancel" class="button">Abbrechen</button>
+</div>

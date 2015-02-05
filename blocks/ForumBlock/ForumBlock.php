@@ -12,12 +12,16 @@ use Mooc\UI\Section\Section;
  */
 class ForumBlock extends Block
 {
-    const NAME = 'Diskussion';
+    const NAME = 'Forum';
 
     public function initialize()
     {
         $this->defineField('area_id', \Mooc\SCOPE_BLOCK, -1);
-        $this->connectForum();
+
+        // check, if we lost our connected area
+        if ($this->area_id != -1 && !\ForumEntry::getConstraints($this->area_id)) {
+            $this->area_id = -1;
+        }
     }
 
     public function student_view()
@@ -29,46 +33,61 @@ class ForumBlock extends Block
         $topics = \ForumEntry::getList('list', $this->area_id);
         $topics = array_values(array_slice($topics['list'], 0, 5));
 
+        $area = \ForumEntry::getConstraints($this->area_id);
+
         foreach ($topics as $key => $topic) {
             $topics[$key]['human_date']   = date('d.m.Y', $topic['chdate']);
             $topics[$key]['link_to_post'] = \URLHelper::getLink('plugins.php/coreforum/index/index/' . $topic['topic_id']);
         }
 
-       return array(
+        return array(
             'topics'       => $topics,
-            'link_to_area' => \URLHelper::getLink('plugins.php/coreforum/index/index/' . $this->area_id)
+            'connected'    => !($this->area_id == -1),
+            'area_name'    => $area['name'],
+            'area_url' => \URLHelper::getLink('plugins.php/coreforum/index/index/' . $this->area_id)
         );
     }
 
     public function author_view()
     {
-        return array();
-    }
+        $areas = \ForumEntry::getList('area', $this->container['cid']);
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isEditable()
-    {
-        return false;
-    }
-
-    // connect this block with an area of the forum
-    private function connectForum()
-    {
-        $seminar_id = $this->container['cid'];
-        $user_id    = $this->container['current_user']->id;
-
-        $category_id = $this->findOrCreateCategory();
-
-        if ($this->area_id != -1 && \ForumEntry::getConstraints($this->area_id)) {
-            return;
+        if ($this->area_id != -1) {
+            $area =  \ForumEntry::getConstraints($this->area_id);
         }
 
-        $this->area_id = md5(uniqid());
+        return array(
+            'area_id'   => $this->area_id,
+            'connected' => !($this->area_id == -1),
+            'area_url'  => \URLHelper::getLink('plugins.php/coreforum/index/index/' . $this->area_id),
+            'area_name' => $area['name'],
+            'areas'     => array_values($areas['list'])
+        );
+    }
 
-        \ForumEntry::insert(
-            array(
+    private function connectToArea($area_id)
+    {
+        if ($area_id == -1 || !\ForumEntry::getConstraints($area_id)) {
+            // create new area and create default category if not present
+            $seminar_id = $this->container['cid'];
+            $user_id    = $this->container['current_user']->id;
+
+            // predefined category must have the id md5('mooc' . seminar_id)
+            $category_id = md5('mooc' . $seminar_id);
+
+            // check, that correct categories and areas present
+            if (!\ForumCat::get($category_id)) {
+                $stmt = \DBManager::get()->prepare("INSERT INTO forum_categories
+                    (category_id, seminar_id, entry_name)
+                    VALUES (?, ?, ?)");
+
+                $stmt->execute(array($category_id, $seminar_id, 'Diskussionen zu den Aufgaben'));
+            }
+
+            // create new area
+            $this->area_id = md5(uniqid());
+
+            \ForumEntry::insert(array(
                 'topic_id'    => $this->area_id,
                 'seminar_id'  => $seminar_id,
                 'user_id'     => $user_id,
@@ -77,34 +96,17 @@ class ForumBlock extends Block
                 'author_host' => getenv('REMOTE_ADDR')
             ), $seminar_id);
 
-        \ForumCat::addArea($category_id, $this->area_id);
-    }
-
-    private function findOrCreateCategory()
-    {
-        $seminar_id = $this->container['cid'];
-
-        // predefined category must have the id md5('mooc' . seminar_id)
-        $category_id = md5('mooc' . $seminar_id);
-
-        // check, that correct categories and areas present
-        if (!\ForumCat::get($category_id)) {
-            $stmt = \DBManager::get()->prepare("INSERT INTO forum_categories
-                (category_id, seminar_id, entry_name)
-                VALUES (?, ?, ?)");
-
-            $stmt->execute(array($category_id, $seminar_id, 'Diskussionen zu den Aufgaben'));
+            \ForumCat::addArea($category_id, $this->area_id);
+        } else {
+            $this->area_id = $area_id;
         }
-
-        return $category_id;
     }
 
-    // get parents' titles
+     // get parents' titles
     private function getParentTitles()
     {
         $path = array();
         $parent = $this->getModel();
-
         while ($parent = $parent->parent) {
             if ($parent->type == 'Courseware') {
                 break;
@@ -112,5 +114,17 @@ class ForumBlock extends Block
             $path[] = $parent->title;
         }
         return implode(' > ', array_reverse($path));
+    }
+
+    public function save_handler(array $data)
+    {
+        if (!$this->getCurrentUser()->canUpdate($this->getModel())) {
+            throw new Errors\AccessDenied();
+        }
+
+        // store submitted connection
+        $this->connectToArea($data['area_id']);
+
+        return array();
     }
 }
