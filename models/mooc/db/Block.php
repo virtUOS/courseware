@@ -32,50 +32,23 @@ class Block extends \SimpleORMap
      */
     public function __construct($id = null) {
 
-        $this->registerCallback('before_create', 'ensureSeminarId');
-        $this->registerCallback('before_create', 'ensurePositionId');
-        $this->registerCallback('before_store',  'validate');
+        $this->db_table = 'mooc_blocks';
 
-        $this->registerCallback('after_delete',  'destroyFields');
-        $this->registerCallback('after_delete',  'destroyUserProgress');
-        $this->registerCallback('after_delete',  'updatePositionsAfterDelete');
-
-        if (!method_exists('\SimpleORMap', 'configure')) {
-            $this->db_table = 'mooc_blocks';
-
-            $this->belongs_to['course'] = array(
-                'class_name'  => '\\Course',
-                'foreign_key' => 'seminar_id',
-            );
-            $this->belongs_to['parent'] = array(
-                'class_name'  => 'Mooc\\DB\\Block',
-                'foreign_key' => 'parent_id',
-            );
-            $this->has_many['children'] = array(
-                'class_name'        => 'Mooc\\DB\\Block',
-                'assoc_foreign_key' => 'parent_id',
-                'assoc_func'        => 'findByParent_id',
-                'on_delete'         => 'delete',
-                'on_store'          => 'store',
-            );
-        }
-
-        parent::__construct($id);
-    }
-
-    protected static function configure($config = array())
-    {
-        $config['db_table'] = 'mooc_blocks';
-
-        $config['belongs_to']['course'] = array(
-            'class_name'  => '\\Course',
-            'foreign_key' => 'seminar_id');
-
-        $config['belongs_to']['parent'] = array(
+        $this->belongs_to['parent'] = array(
             'class_name'  => 'Mooc\\DB\\Block',
             'foreign_key' => 'parent_id');
 
-        $config['has_many']['children'] = array(
+        $this->belongs_to['course'] = array(
+            'class_name'  => '\\Course',
+            'foreign_key' => 'seminar_id');
+
+
+        // workaround for Stud.IP ticket:5312
+        $options = $this->getRelationOptions('course');
+        $options = $this->getRelationOptions('parent');
+
+
+        $this->has_many['children'] = array(
             'class_name'        => 'Mooc\\DB\\Block',
             'assoc_foreign_key' => 'parent_id',
             'assoc_func'        => 'findByParent_id',
@@ -83,7 +56,8 @@ class Block extends \SimpleORMap
             'on_store'          => 'store'
         );
 
-        parent::configure($config);
+
+        parent::__construct($id);
     }
 
     /**
