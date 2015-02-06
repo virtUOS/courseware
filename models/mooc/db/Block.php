@@ -18,7 +18,7 @@ namespace Mooc\DB;
  * @property int     $chdate
  * @property int     $mkdate
  */
-class Block extends \SimpleORMap
+class Block extends \SimpleORMap implements \Serializable
 {
 
     public $errors = array();
@@ -261,5 +261,23 @@ class Block extends \SimpleORMap
 
         // check if block is published
         return $this->publication_date <= $timestamp;
+    }
+
+    public function serialize()
+    {
+        if ($this->isDirty()) {
+            throw new \RuntimeException('Cannot serialize dirty Block instances.');
+        }
+
+        return serialize(array($this->content, $this->is_new));
+    }
+
+    public function unserialize($serialized)
+    {
+        static::__construct();
+
+        list($data, $is_new) = unserialize($serialized);
+        $this->setData($data, true);
+        $this->setNew($is_new);
     }
 }
