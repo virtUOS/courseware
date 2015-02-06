@@ -36,7 +36,7 @@ class Courseware extends Block {
 
         $section_nav = null;
         if ($subchapter) {
-            $section_nav = $this->getNeighborSections($subchapter->children, $section);
+            $section_nav = $this->getNeighborSections($section);
         }
 
         return array_merge($tree, array(
@@ -335,14 +335,25 @@ class Courseware extends Block {
      *
      * @return array
      */
-    private function getNeighborSections($siblings, $active_section)
+    private function getNeighborSections($active_section)
     {
-        $ids = $siblings->pluck('id');
-        $index = array_search($active_section->id, $ids);
-        return array(
-            'prev' => array_key_exists($index - 1, $ids) ? $siblings->find($ids[$index - 1])->toArray() : null,
-            'next' => array_key_exists($index + 1, $ids) ? $siblings->find($ids[$index + 1])->toArray() : null
-        );
+        // next
+        for ($node = $active_section; !$next&& $node; $node = $node->parent) {
+            $next = $node->nextSibling();
+        }
+        if (isset($next)) {
+            $next = $next->toArray();
+        }
+
+        // prev
+        for ($node = $active_section; !$prev&& $node; $node = $node->parent) {
+            $prev = $node->previousSibling();
+        }
+        if (isset($prev)) {
+            $prev = $prev->toArray();
+        }
+
+        return compact('prev', 'next');
     }
 
     private function getFilesForChapter(\Mooc\DB\Block $chapter)

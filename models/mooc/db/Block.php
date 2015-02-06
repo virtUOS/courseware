@@ -116,6 +116,16 @@ class Block extends \SimpleORMap implements \Serializable
         return array_reverse($ancestors);
     }
 
+    public function nextSibling()
+    {
+        return static::findOneBySQL('parent_id = ? AND position > ? ORDER BY position ASC', array($this->parent_id, $this->position));
+    }
+
+    public function previousSibling()
+    {
+        return static::findOneBySQL('parent_id = ? AND position < ? ORDER BY position DESC', array($this->parent_id, $this->position));
+    }
+
     public static function findByParent_id($id)
     {
         return static::findBySQL('parent_id = ? ORDER BY position ASC', array($id));
