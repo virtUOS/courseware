@@ -21,7 +21,7 @@ class Courseware extends Block {
         /** @var \Mooc\DB\Block $courseware */
         /** @var \Mooc\DB\Block $chapter */
         /** @var \Mooc\DB\Block $subchapter */
-        list($courseware, $chapter, $subchapter, $section) = $this->getSelectedPath($this->lastSelected);
+        $tree = $this->getPrunedChapterNodes(list($courseware, $chapter, $subchapter, $section) = $this->getSelectedPath($this->lastSelected));
 
         $active_section = array();
         if ($section && $this->getCurrentUser()->canRead($section)) {
@@ -34,31 +34,17 @@ class Courseware extends Block {
             );
         }
 
-        $chapters = $this->childrenToJSON($courseware->children, $chapter->id);
-
-        $subchapters = array();
-        if ($chapter) {
-            $subchapters = $this->childrenToJSON($chapter->children, $subchapter->id);
-        }
-
-        $sections = array();
         $section_nav = null;
         if ($subchapter) {
-            $sections = $this->childrenToJSON($subchapter->children, $section->id, true);
             $section_nav = $this->getNeighborSections($subchapter->children, $section);
         }
 
-
-        return array(
+        return array_merge($tree, array(
             'user_may_author'   => $this->getCurrentUser()->canUpdate($this->_model),
-            'courseware'        => $courseware->toArray(),
-            'chapters'          => $chapters,
-            'subchapters'       => $subchapters,
-            'sections'          => $sections,
             'section_nav'       => $section_nav,
             'active_chapter'    => $chapter    ? $chapter->toArray()    : null,
             'active_subchapter' => $subchapter ? $subchapter->toArray() : null,
-            'active_section'    => $active_section);
+            'active_section'    => $active_section));
     }
 
     function add_structure_handler($data)
@@ -130,36 +116,79 @@ class Courseware extends Block {
         return 'http://moocip.de/schema/courseware/courseware-1.0.xsd';
     }
 
+
+    // ******** PRIVATE FUNCTIONS ********
+
     private function getSelected($context)
     {
         return isset($context['selected']) ? $context['selected'] : $this->lastSelected;
+    }
+
+    // get all chapters and the subchapters of the selected chapter
+    private function getPrunedChapterNodes($selection)
+    {
+        list($courseware, $chapter, $subchapter, $section) = $selection;
+
+        $chapter_nodes = $this->getChapterNodes();
+        $chapters = $this->childrenToJSON($chapter_nodes[$courseware->id], $chapter->id);
+
+        $subchapters = array();
+        if ($chapter) {
+            $subchapters = $this->childrenToJSON($chapter_nodes[$chapter->id], $subchapter->id);
+        }
+
+        $sections = array();
+        if ($subchapter) {
+            $sections = $this->childrenToJSON($subchapter->children, $section->id, true);
+        }
+        return compact('chapters', 'subchapters', 'sections');
+    }
+    // get all chapters and the subchapters
+    private function getChapterNodes()
+    {
+            $nodes = array_reduce(
+                \Mooc\DB\Block::findInCourseByType($this->container['cid'], words('Chapter Subchapter')),
+                function ($memo, $item) {
+                    if (!isset($memo[$item->parent_id])) {
+                        $memo[$item->parent_id] = array();
+                    }
+                    $memo[$item->parent_id][$item->id] = $item;
+                    return $memo;
+                },
+                array());
+        return $nodes;
     }
 
     private function childrenToJSON($collection, $selected, $showFields = false)
     {
         $result = array();
         foreach ($collection as $item) {
-            /** @var \Mooc\DB\Block $item */
-            if (!$this->getCurrentUser()->canRead($item)) {
-                continue;
-            }
-
-            if ($showFields) {
-                $block = $this->getBlockFactory()->makeBlock($item);
-                $json = $block->toJSON();
-            } else {
-                $json = $item->toArray();
-            }
-
-            if (!$item->isPublished()) {
-                $json['unpublished'] = true;
-            }
-
-            $json['dom_title'] = $item->publication_date ? date('d.m.Y', $item->publication_date) : ' ';
-            $json['selected'] = $selected == $item->id;
-            $result[] = $json;
+            $result[] = $this->childToJSON($item, $selected, $showFields);
         }
         return $result;
+    }
+
+    private function childToJSON($child, $selected, $showFields)
+    {
+        /** @var \Mooc\DB\Block $child */
+        if (!$this->getCurrentUser()->canRead($child)) {
+            continue;
+        }
+
+        if ($showFields) {
+            $block = $this->getBlockFactory()->makeBlock($child);
+            $json = $block->toJSON();
+        } else {
+            $json = $child->toArray();
+        }
+
+        if (!$child->isPublished()) {
+            $json['unpublished'] = true;
+        }
+
+        $json['dom_title'] = $child->publication_date ? date('d.m.Y', $child->publication_date) : ' ';
+        $json['selected'] = $selected == $child->id;
+        return $json;
     }
 
     private function getSelectedPath($selected)

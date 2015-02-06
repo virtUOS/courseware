@@ -127,6 +127,27 @@ class Block extends \SimpleORMap
         return current(self::findBySQL('seminar_id = ? AND parent_id IS NULL LIMIT 1', array($cid)));
     }
 
+    /**
+     * Find all Block of given types in a single course.
+     *
+     * @param string $cid    the ID of the course
+     * @param mixed  $types  either a string containing a single block type
+     *                       or an array of strings containing block types
+     *
+     * @return array  an array of Block instances of those types in
+     *                that course
+     */
+
+    public static function findInCourseByType($cid, $types = array())
+    {
+        if (!is_array($types)) {
+            $types = (array) $types;
+        }
+
+        return static::findBySQL('seminar_id = ? AND type IN (?) ORDER BY position ASC',
+                                 array($cid, $types));
+    }
+
 
     // enumerate all known structural block classes
     private static $structural_block_classes = array('Courseware', 'Chapter', 'Subchapter', 'Section');
