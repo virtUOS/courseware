@@ -42,6 +42,7 @@ class Courseware extends Block {
         return array_merge($tree, array(
             'user_may_author'   => $this->getCurrentUser()->canUpdate($this->_model),
             'section_nav'       => $section_nav,
+            'courseware'        => $courseware,
             'active_chapter'    => $chapter    ? $chapter->toArray()    : null,
             'active_subchapter' => $subchapter ? $subchapter->toArray() : null,
             'active_section'    => $active_section));
