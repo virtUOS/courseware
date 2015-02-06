@@ -62,7 +62,7 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
             $tabs['mooc_courseware'] = $this->getCoursewareNavigation();
         }
 
-        if (!$this->container['current_user']->hasPerm($cid, 'dozent')) {
+        if (!$this->container['current_user']->hasPerm($course_id, 'dozent')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
             $tabs['mooc_progress'] = new Navigation(_('Fortschrittsübersicht'), $progress_url);
         }
