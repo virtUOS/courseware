@@ -7,6 +7,7 @@ const SEM_TYPE_NAMES      = 'Veranstaltung';
 const USER_DOMAIN_NAME    = 'mooc-user';
 const REGISTRATION_FORM_CONFIG_ID = 'MOOC_REGISTRATION_FORM';
 const TERMS_OF_SERVICE_CONFIG_ID = 'MOOC_TERMS_OF_SERVICE';
+const PRIVACY_POLICY_ID = 'MOOC_PRIVACY_POLICY';
 
 // Field scopes
 const SCOPE_BLOCK = 'block_id-null';

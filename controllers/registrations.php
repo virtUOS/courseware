@@ -19,6 +19,11 @@ class RegistrationsController extends MoocipController {
         $this->terms = Config::get()->getValue(\Mooc\TERMS_OF_SERVICE_CONFIG_ID);
     }
 
+    public function privacy_policy_action()
+    {
+        $this->privacyPolicy = Config::get()->getValue(\Mooc\PRIVACY_POLICY_ID);
+    }
+
     public function new_action()
     {
         if (Navigation::hasItem('/mooc/registrations')) {
@@ -42,14 +47,14 @@ class RegistrationsController extends MoocipController {
             $this->userInput[$fieldName] = $fieldValue;
 
             if ($field['required'] && trim($fieldValue) === '') {
-                $this->flash['error'] = _('Sie müssen alle Pflichtfelder ausfüllen!');
+                $this->flash['error'] = _('Sie mï¿½ssen alle Pflichtfelder ausfï¿½llen!');
 
                 return;
             }
         }
 
         if (!Request::option('accept_tos')) {
-            $this->flash['error'] = _('Sie müssen die Nutzungsbedingungen akzeptieren!');
+            $this->flash['error'] = _('Sie mï¿½ssen die Nutzungsbedingungen akzeptieren!');
 
             return;
         }
@@ -92,7 +97,7 @@ class RegistrationsController extends MoocipController {
 
         if ($_SESSION['mooc']['register']['username'] == $user->username) {
             $this->sendMail($course, $user->username, $_SESSION['mooc']['register']['password']);
-            $this->render_json(array('message' => _('Die Bestätigungsmail wurde erfolgreich erneut versendet!')));
+            $this->render_json(array('message' => _('Die Bestï¿½tigungsmail wurde erfolgreich erneut versendet!')));
         } else {
             throw new Trails_Exception(400, 'Invalid session');
         }
@@ -212,7 +217,7 @@ class RegistrationsController extends MoocipController {
 
         // send mail with password to user
         $mail_msg = sprintf(
-            _("Ihre Zugangsdaten für den MOOC-Kurs '%s':\n\n"
+            _("Ihre Zugangsdaten fï¿½r den MOOC-Kurs '%s':\n\n"
             . "Benutzername: %s \n"
             . "Passwort: %s \n\n"
             . "Hier kommen Sie direkt zum Kurs:\n %s"),
@@ -284,6 +289,8 @@ class RegistrationsController extends MoocipController {
             'firstname' => 'vorname',
             'lastname' => 'nachname',
             'email' => 'mail',
+            'birthday' => 'geburtsdatum',
+            'sex' => 'geschlecht',
             'terms_of_service' => 'accept_tos',
         );
 
@@ -293,6 +300,7 @@ class RegistrationsController extends MoocipController {
                 $separatorPos = strpos($field, '|');
                 $required = false;
                 $label = null;
+                $choices = null;
 
                 // field name and label are separated by a pipe character
                 if ($separatorPos !== false) {
@@ -311,15 +319,30 @@ class RegistrationsController extends MoocipController {
                 // map configured field names to user properties
                 if (isset($fieldNameMap[$fieldName])) {
                     $fieldName = $fieldNameMap[$fieldName];
-                } elseif ($fieldName !== 'terms_of_service' && !$this->isDataFieldFormField($fieldName)) {
+                } elseif ($this->isDataFieldFormField($fieldName)) {
+                    $dataField = new \Datafield($fieldName);
+
+                    if ($dataField->type === 'selectbox') {
+                        $choices = explode("\n", $dataField->typeparam);
+                    }
+                } elseif ($fieldName !== 'terms_of_service') {
                     // skip the field if it is not recognised
                     continue;
+                }
+
+                if ($fieldName === 'geschlecht') {
+                    $choices = array(
+                        _('unbekannt'),
+                        _('männlich'),
+                        _('weiblich'),
+                    );
                 }
 
                 $parsedFields[] = array(
                     'fieldName' => $fieldName,
                     'label' => $label,
                     'required' => $required,
+                    'choices' => $choices,
                 );
             } else {
                 $parsedFields[] = $field;
