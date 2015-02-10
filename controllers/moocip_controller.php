@@ -56,6 +56,16 @@ class MoocipController extends StudipController {
         $this->render_text(json_encode(studip_utf8encode($data)));
     }
 
+    function map_action($action)
+    {
+        \Metrics::increment(
+            sprintf('moocip.performed.%s.%s',
+                    strtr(substr(strtolower(get_called_class()), 0, -10), '_', '.'),
+                    $action));
+
+        return parent::map_action($action);
+    }
+
 
     protected function isJSONRequest()
     {

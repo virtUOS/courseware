@@ -223,9 +223,16 @@ abstract class Block {
             throw new Errors\BadRequest('No such view.');
         }
 
+        $timer = \Metrics::startTimer();
+
         $data = $this->$view_method($context);
         $this->save();
-        return $this->container['block_renderer']($this, $view_name, $data);
+        $result = $this->container['block_renderer']($this, $view_name, $data);
+
+        $key = sprintf('moocip.block.%s.render.%s', strtolower($this->getModel()->type), strtolower($view_name));
+        $timer($key, 0.1);
+
+        return $result;
     }
 
     public function traverseChildren($callback) {
@@ -250,8 +257,13 @@ abstract class Block {
             throw new Errors\BadRequest("No such handler");
         }
 
+        $timer = \Metrics::startTimer();
+
         $result = call_user_func_array($handler, array_slice(func_get_args(), 1));
         $this->save();
+
+        $key = sprintf('moocip.block.%s.handle.%s', strtolower($this->getModel()->type), strtolower($name));
+        $timer($key);
 
         return $result;
     }

@@ -24,6 +24,10 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
 
     public function __construct() {
         parent::__construct();
+
+        // adjust host system
+        $this->setupCompatibility();
+
         $this->setupAutoload();
         $this->setupContainer();
         $this->setupNavigation();
@@ -400,5 +404,12 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
     {
         $id = Config::get()->getValue(\Mooc\SEM_CLASS_CONFIG_ID);
         return $id;
+    }
+
+    private function setupCompatibility()
+    {
+        if (!class_exists('\\Metrics')) {
+            require_once __DIR__ . '/models/Metrics.v3_0.php';
+        }
     }
 }
