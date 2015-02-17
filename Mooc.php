@@ -108,42 +108,16 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
             return null;
         }
 
-        $sem_class = \Mooc\SemClass::getMoocSemClass();
-        $moocCourses = $sem_class->getCourses();
+        $my_cids = $this->getCurrentUser()->course_memberships->pluck('seminar_id');
+
+        $preview_image_df_id = $this->container['datafields']['preview_image'];
+
         $courses = array();
         $preview_images = array();
-
-        foreach ($moocCourses as $course) {
-            $userIsEnrolled = false;
-
-            foreach ($course->members as $member) {
-                if ($member->user_id === $this->getCurrentUserId()) {
-                    $courses[] = $course;
-                    $userIsEnrolled = true;
-                    break;
-                }
-            }
-
-            if (!$userIsEnrolled) {
-                /** @var \DataFieldEntry[] $localEntries */
-                $localEntries = DataFieldEntry::getDataFieldEntries($course->seminar_id);
-                foreach ($localEntries as $entry) {
-                    /** @var \DataFieldStructure $structure */
-                    $structure = $entry->structure;
-                    if ($structure->accessAllowed($GLOBALS['perm'])) {
-                        if ($entry->getValue()) {
-                            foreach ($this->getDataFields() as $field => $id) {
-                                if ($field != 'preview_image') {
-                                    continue;
-                                }
-
-                                if ($entry->getId() == $id) {
-                                    $preview_images[$course->id] = $entry->getValue();
-                                }
-                            }
-                        }
-                    }
-                }
+        foreach (\Mooc\SemClass::getMoocSemClass()->getCourses() as $course) {
+            if (in_array($course->id, $my_cids)) {
+                $courses[$course->id] = $course;
+                $preview_images[$course->id] = $course->datafields->findOneBy('datafield_id', $preview_image_df_id)->content;
             }
         }
 
@@ -153,6 +127,7 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
         $template = $template_factory->open('start/index');
         $template->plugin = $this;
         $template->courses = $courses;
+        $template->preview_images = $preview_images;
 
         return $template;
     }
