@@ -104,7 +104,7 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
     public function getPortalTemplate()
     {
         // hide the widget if the Stud.IP version doesn't support them
-        if (!class_exists('WdigetHelper')) {
+        if (!class_exists('WidgetHelper')) {
             return null;
         }
 
