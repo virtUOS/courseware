@@ -10,7 +10,7 @@ class AddSemClass extends Migration
 
 
     public function up () {
-        $id = $this->addSemClass();
+        $id = $this->insertSemClass();
         $this->addSemTypes($id);
         $this->addConfigOption($id);
         SimpleORMap::expireTableScheme();
@@ -33,7 +33,7 @@ class AddSemClass extends Migration
         return Config::get()->getValue(\Mooc\SEM_CLASS_CONFIG_ID);
     }
 
-    private function addSemClass()
+    private function insertSemClass()
     {
         $db = DBManager::get();
         $name = \Mooc\SEM_CLASS_NAME;
