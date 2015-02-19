@@ -9,7 +9,7 @@ $body_id = 'mooc-courses-show';
 if (class_exists('Sidebar')):
     $sidebar = Sidebar::Get();
     $actions = new ActionsWidget();
-    $actions->setTitle('Vorschau');
+    $actions->setTitle(null);
     $actions->insertElement(new WidgetElement($this->render_partial('courses/_show_sidebar')), 'navigation');
     $sidebar->addWidget($actions);
 else:
