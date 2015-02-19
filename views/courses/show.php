@@ -7,11 +7,20 @@ $perm = $GLOBALS['perm'];
 $body_id = 'mooc-courses-show';
 
 if (class_exists('Sidebar')):
-    $sidebar = Sidebar::Get();
-    $actions = new ActionsWidget();
-    $actions->setTitle(null);
-    $actions->insertElement(new WidgetElement($this->render_partial('courses/_show_sidebar')), 'navigation');
-    $sidebar->addWidget($actions);
+    NotificationCenter::addObserver('MoocSidebarOverview', 'addPreview', 'SidebarWillRender');
+
+    // #TODO: find a better solution for this ugly piece of code
+    $GLOBALS['mooc_widget'] = new WidgetElement($this->render_partial('courses/_show_sidebar'));
+
+    class MoocSidebarOverview {
+        function addPreview($event, $sidebar) {
+            $actions = new ActionsWidget();
+            $actions->setTitle(null);
+            $actions->insertElement($GLOBALS['mooc_widget'], 'navigation');
+            $sidebar->insertWidget($actions, ':first');
+        }
+    }
+
 else:
     $infobox = $this->render_partial('courses/_show_infobox');
 endif;
