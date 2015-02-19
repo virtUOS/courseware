@@ -39,23 +39,9 @@ class RegistrationsController extends MoocipController {
     {
         $this->course = Course::find($this->cid);
         $this->fields = $this->parseRegistrationFormFields();
-        $this->userInput = array();
-
-        foreach ($this->fields as $field) {
-            $fieldName = $field['fieldName'];
-            $fieldValue = Request::get($fieldName);
-            $this->userInput[$fieldName] = $fieldValue;
-
-            if ($field['required'] && trim($fieldValue) === '') {
-                $this->flash['error'] = _('Sie mï¿½ssen alle Pflichtfelder ausfï¿½llen!');
-
-                return;
-            }
-        }
 
         if (!Request::option('accept_tos')) {
-            $this->flash['error'] = _('Sie mï¿½ssen die Nutzungsbedingungen akzeptieren!');
-
+            $this->flash['error'] = _('Sie müssen die Nutzungsbedingungen akzeptieren!');
             return;
         }
 
@@ -68,7 +54,7 @@ class RegistrationsController extends MoocipController {
                 $this->loginAndRegister();
                 break;
             case 'create':
-                $this->createAccountAndRegister($this->userInput);
+                $this->createAccountAndRegister();
                 break;
         }
     }
@@ -97,7 +83,7 @@ class RegistrationsController extends MoocipController {
 
         if ($_SESSION['mooc']['register']['username'] == $user->username) {
             $this->sendMail($course, $user->username, $_SESSION['mooc']['register']['password']);
-            $this->render_json(array('message' => _('Die Bestï¿½tigungsmail wurde erfolgreich erneut versendet!')));
+            $this->render_json(array('message' => _('Die Bestätigungsmail wurde erfolgreich erneut versendet!')));
         } else {
             throw new Trails_Exception(400, 'Invalid session');
         }
@@ -133,10 +119,23 @@ class RegistrationsController extends MoocipController {
         $this->redirect('courses/show/' . $this->cid . '?cid=' . $this->cid);
     }
 
-    private function createAccountAndRegister($userInput)
+    private function createAccountAndRegister()
     {
+        $this->userInput = array();
+
+        foreach ($this->fields as $field) {
+            $fieldName = $field['fieldName'];
+            $fieldValue = Request::get($fieldName);
+            $this->userInput[$fieldName] = $fieldValue;
+
+            if ($field['required'] && trim($fieldValue) === '') {
+                $this->flash['error'] = _('Sie müssen alle Pflichtfelder ausfüllen!');
+                return;
+            }
+        }
+
         try {
-            $user = $this->createAccount($userInput);
+            $user = $this->createAccount($this->userInput);
         } catch (Exception $e) {
             return $this->error('Fehler beim Anlegen des Accounts: ' . htmlReady($e->getMessage()), 'registrations/new');
         }
@@ -217,7 +216,7 @@ class RegistrationsController extends MoocipController {
 
         // send mail with password to user
         $mail_msg = sprintf(
-            _("Ihre Zugangsdaten fï¿½r den MOOC-Kurs '%s':\n\n"
+            _("Ihre Zugangsdaten für den MOOC-Kurs '%s':\n\n"
             . "Benutzername: %s \n"
             . "Passwort: %s \n\n"
             . "Hier kommen Sie direkt zum Kurs:\n %s"),
