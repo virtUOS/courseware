@@ -231,8 +231,8 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
 
             $navigation->addSubnavigation('registrations', $this->getRegistrationsNavigation());
         } else {
-            $navigation->addSubnavigation("overview", new Navigation(_('MOOCs'), $url_overview));
-            $navigation->addSubnavigation("all", new Navigation(_('Alle Kurse'), $url_courses));
+            #$navigation->addSubnavigation("overview", new Navigation(_('MOOCs'), $url_overview));
+            #$navigation->addSubnavigation("all", new Navigation(_('Alle Kurse'), $url_courses));
         }
 
         Navigation::addItem('/mooc', $navigation);
