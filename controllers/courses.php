@@ -74,6 +74,7 @@ class CoursesController extends MoocipController {
         }
 
         $this->ui_block = $this->plugin->getBlockFactory()->makeBlock($block);
+        $this->data     = $this->ui_block->getFields();
         $this->context  = clone Request::getInstance();
         $this->view     = 'student';
         $this->root     = $this->plugin->getCurrentUser()->getPerm() == 'root';
