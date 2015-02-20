@@ -109,15 +109,18 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
         }
 
         $my_cids = $this->getCurrentUser()->course_memberships->pluck('seminar_id');
-
-        $preview_image_df_id = $this->container['datafields']['preview_image'];
+        $dfids = $this->container['datafields'];
 
         $courses = array();
-        $preview_images = array();
         foreach (\Mooc\SemClass::getMoocSemClass()->getCourses() as $course) {
             if (in_array($course->id, $my_cids)) {
-                $courses[$course->id] = $course;
-                $preview_images[$course->id] = $course->datafields->findOneBy('datafield_id', $preview_image_df_id)->content;
+                $datafields = array_reduce($course->datafields->toArray(), function ($memo, $elem) use ($dfids) {
+                    if ($key = array_search($elem['datafield_id'], $dfids)) {
+                        $memo[$key] = trim($elem['content']);
+                    }
+                    return $memo;
+                }, array());
+                $courses[$course->id] = compact('course', 'datafields');
             }
         }
 

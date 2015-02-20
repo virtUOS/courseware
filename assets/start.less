@@ -1,12 +1,9 @@
 #mooc-course-list article {
-  clear: both;
   padding: 10px 10px;
   min-height: 100px;
-  position: relative;
   border-bottom: 1px solid #d9d9d9;
 
   .course-avatar-medium {
-    float: left;
     padding-right: 20px;
   }
 
@@ -22,15 +19,47 @@
     text-overflow: ellipsis;
   }
 
-  a {
-    position: absolute;
-    bottom: 10px;
-    margin-bottom: 0;
+  .duration {
+    font-size: 0.9em;
   }
 
   a.kill {
-    right: 1em;
+    text-align: right;
     font-style: italic;
     font-size: 0.9em;
+    line-height: 2em;
+    vertical-align: middle;
+  }
+}
+
+
+html.flexbox #mooc-course-list article {
+  display: flex;
+  flex-wrap: wrap;
+
+  .description {
+    flex: 1 1 auto;
+    align-self: stretch;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  h1 {
+    flex: 1 1;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+}
+
+html:not(.flexbox) #mooc-course-list article {
+  img {
+    float: left;
   }
 }

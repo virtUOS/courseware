@@ -1,32 +1,40 @@
 <? if (sizeof($courses)) : ?>
   <section id="mooc-course-list">
-  <? foreach ($courses as $course) : ?>
+  <? foreach ($courses as $data) : ?>
       <article>
-          <div class="course-avatar-wrapper">
-              <img class="course-avatar-medium course-<?= $course->id ?>"
-                   alt="<?= $name = htmlReady($course->name) ?>"
-                   title="<?= $name ?>"
-                   src="<?= $preview_images[$course->id] ?: CourseAvatar::getAvatar($course->id)->getURL(CourseAvatar::MEDIUM) ?>" />
+          <img class="course-avatar-medium course-<?= $data['course']->id ?>"
+               alt="<?= $name = htmlReady($data['course']->name) ?>"
+               title="<?= $name ?>"
+               src="<?= $data['datafields']['preview_image'] ?: CourseAvatar::getAvatar($data['course']->id)->getURL(CourseAvatar::MEDIUM) ?>" />
+
+          <div class="description">
+              <h1><?= $name ?></h1>
+
+              <? if ($untertitel = trim($data['course']->untertitel)) : ?>
+                  <p class=subtitle><?= htmlReady($untertitel) ?></p>
+              <? endif ?>
+
+              <? if ($data['datafields']['duration']) : ?>
+                  <div class=duration>Dauer: <?= $data['datafields']['duration'] ?></div>
+              <? endif ?>
+
+
+              <div class="controls">
+                  <?= \Studip\LinkButton::create(_('Kurs anzeigen'),
+                                                 PluginEngine::getLink($plugin,
+                                                                       array('cid' => $data['course']->id),
+                                                                       'courses/show/'.$data['course']->id,
+                                                                       true)) ?>
+
+                  <a class="kill"
+                     href="<?= \URLHelper::getLink("dispatch.php/my_courses/decline/{$data['course']->id}",
+                                                   array(), true)  ?>">
+                      <?= _("Mitgliedschaft beenden") ?>
+                  </a>
+              </div>
           </div>
 
-
-          <h1><?= $name ?></h1>
-          <p class=subtitle><?= htmlReady($course->untertitel) ?></p>
-
-          <?= \Studip\LinkButton::create(_('Kurs anzeigen'),
-                                         PluginEngine::getLink($plugin,
-                                                               array('cid' => $course->id),
-                                                               'courses/show/'.$course->id,
-                                                               true)) ?>
-
-          <? $suppose_to_kill_link = \URLHelper::getLink(
-              "dispatch.php/my_courses/decline/$course->id",
-              array(),
-              true); ?>
-
-          <a class="kill" href="<?= $suppose_to_kill_link  ?>"><?= _("Mitgliedschaft beenden") ?></a>
       </article>
-
   <? endforeach ?>
   </section>
 <? else : ?>
