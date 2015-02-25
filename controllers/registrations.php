@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -122,15 +123,15 @@ class RegistrationsController extends MoocipController {
     private function createAccountAndRegister()
     {
         $this->userInput = array();
-
         foreach ($this->fields as $field) {
-            $fieldName = $field['fieldName'];
-            $fieldValue = Request::get($fieldName);
-            $this->userInput[$fieldName] = $fieldValue;
-
-            if ($field['required'] && trim($fieldValue) === '') {
-                $this->flash['error'] = _('Sie müssen alle Pflichtfelder ausfüllen!');
-                return;
+            if (isset($field['fieldName'])) {
+                $fieldName = $field['fieldName'];
+                $fieldValue = Request::get($fieldName);
+                $this->userInput[$fieldName] = $fieldValue;
+                if ($field['required'] && (trim($fieldValue) === '')) {
+                    $this->flash['error'] = _('Sie müssen alle Pflichtfelder ausfüllen!');
+                    return;
+                }
             }
         }
 
