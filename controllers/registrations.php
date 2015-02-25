@@ -330,8 +330,10 @@ class RegistrationsController extends MoocipController {
                 // map configured field names to user properties
                 if (isset($fieldNameMap[$fieldName])) {
                     $fieldName = $fieldNameMap[$fieldName];
+                    $fieldType = 'text';
                 } elseif ($this->isDataFieldFormField($fieldName)) {
                     $dataField = new \Datafield($fieldName);
+                    $fieldType = $dataField->type;
 
                     if ($dataField->type === 'selectbox') {
                         $choices = explode("\n", $dataField->typeparam);
@@ -354,6 +356,7 @@ class RegistrationsController extends MoocipController {
                     'label' => $label,
                     'required' => $required,
                     'choices' => $choices,
+                    'type' => $fieldType,
                 );
             } else {
                 $parsedFields[] = $field;

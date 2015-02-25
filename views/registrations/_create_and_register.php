@@ -35,6 +35,13 @@ $privacyPolicyUrl = PluginEngine::getLink($plugin, array(), 'registrations/priva
                         <option value="<?=htmlReady($choice)?>"<?=$userInput[$field['fieldName']] == $choice ? ' selected' : ''?>><?=htmlReady($choice)?></option>
                     <?php endforeach ?>
                 </select>
+            <?php elseif ($field['type'] === 'textarea'): ?>
+            <textarea<?= $field['required'] ? ' required' : '' ?>
+                name="<?= $field['fieldName'] ?>"
+                id="mooc_sign_up_<?= $field['fieldName'] ?>"
+                placeholder="<?= $field['label'] ?>"
+                cols="50"
+                rows="10"><?= htmlReady($userInput[$field['fieldName']]) ?></textarea>
             <?php else: ?>
             <input type="text"
                 name="<?= $field['fieldName'] ?>"
