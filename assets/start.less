@@ -1,3 +1,5 @@
+@import 'mixins';
+
 #mooc-course-list article {
   padding: 10px 10px;
   min-height: 100px;
@@ -34,27 +36,27 @@
 
 
 html.flexbox #mooc-course-list article {
-  display: flex;
-  flex-wrap: wrap;
+  .mixin-display-flex();
+  .mixin-flex-wrap(wrap);
 
   .description {
-    flex: 1 1 auto;
-    align-self: stretch;
+    .mixin-flex(1 1 auto);
+    .mixin-align-self(stretch);
 
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+    .mixin-display-flex();
+    .mixin-flex-direction(column);
+    .mixin-align-items(stretch);
   }
 
   h1 {
-    flex: 1 1;
+    .mixin-flex(1 1);
   }
 
   .controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
+    .mixin-display-flex();
+    .mixin-justify-content(space-between);
+    .mixin-align-items(baseline);
+    .mixin-flex-wrap(wrap);
   }
 }
 
