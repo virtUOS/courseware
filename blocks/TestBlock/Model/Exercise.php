@@ -114,13 +114,13 @@ class Exercise extends \SimpleORMap
 
         foreach ($this->answersStrategy->getAnswers() as $index => $answer) {
             $answers[] = array(
-                'text' => $answer,
-                'index' => $index,
-                'name' => $this->answersStrategy->getName($index),
-                'checked' => $this->answersStrategy->isSelected($index, $solution),
-                'checked_image' => $vipsUrl.'/images/choice_checked.png',
+                'text'            => $answer,
+                'index'           => $index,
+                'name'            => $this->answersStrategy->getName($index),
+                'checked'         => $this->answersStrategy->isSelected($index, $solution),
+                'checked_image'   => $vipsUrl.'/images/choice_checked.png',
                 'unchecked_image' => $vipsUrl.'/images/choice_unchecked.png',
-                'correct_answer' => $this->answersStrategy->isCorrect($index),
+                'correct_answer'  => $this->answersStrategy->isCorrect($index),
             );
         }
 

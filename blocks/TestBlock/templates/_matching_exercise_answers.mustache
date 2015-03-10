@@ -1,6 +1,6 @@
 <ul class="matching_exercise labels">
   {{#answers}}
-    <li>{{text.question}}</li>
+    <li>{{{text.question}}}</li>
   {{/answers}}
 </ul>
 
@@ -8,7 +8,7 @@
   <ul class="matching_exercise answers solution_answers">
     {{#user_answers}}
       <li id="item_{{index}}"{{#show_correction}}{{#text.correct}} class="correct_answer"{{/text.correct}}{{/show_correction}}>
-        {{text.answer}}
+        {{{text.answer}}}
         <input type="hidden" name="student_answer[{{index}}]" value="{{index}}">
       </li>
     {{/user_answers}}
@@ -19,7 +19,7 @@
   <ul class="matching_exercise answers exercise_answers">
     {{#answers}}
       <li id="item_{{index}}">
-        {{text.answer}}
+        {{{text.answer}}}
         <input type="hidden" name="student_answer[{{index}}]" value="{{index}}">
       </li>
     {{/answers}}

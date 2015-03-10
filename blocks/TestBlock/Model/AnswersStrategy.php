@@ -32,7 +32,7 @@ class AnswersStrategy implements AnswersStrategyInterface
      */
     public function getQuestion()
     {
-        return $this->vipsExercise->getQuestion();
+        return formatReady($this->vipsExercise->getQuestion());
     }
 
     /**

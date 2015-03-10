@@ -14,7 +14,7 @@ class MultipleChoiceAnswersStrategy extends AnswersStrategy
      */
     public function getAnswers()
     {
-        return $this->vipsExercise->answerArray;
+        return array_map('formatReady', $this->vipsExercise->answerArray);
     }
 
     /**

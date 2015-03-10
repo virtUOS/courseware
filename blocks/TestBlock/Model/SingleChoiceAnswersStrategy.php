@@ -14,7 +14,7 @@ class SingleChoiceAnswersStrategy extends AnswersStrategy
      */
     public function getAnswers()
     {
-        return $this->vipsExercise->answerArray[0];
+        return array_map('formatReady', $this->vipsExercise->answerArray[0]);
     }
 
     /**

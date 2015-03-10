@@ -18,8 +18,8 @@ class MatchingExerciseAnswersStrategy extends AnswersStrategy
 
         for ($i = 0; $i < count($this->vipsExercise->answerArray); $i++) {
             $entries[] = array(
-                'question' => $this->vipsExercise->defaultArray[$i],
-                'answer' => $this->vipsExercise->answerArray[$i],
+                'question' => formatReady($this->vipsExercise->defaultArray[$i]),
+                'answer'   => formatReady($this->vipsExercise->answerArray[$i]),
             );
         }
 
@@ -60,9 +60,9 @@ class MatchingExerciseAnswersStrategy extends AnswersStrategy
             }
 
             $entries[] = array(
-                'question' => $this->vipsExercise->defaultArray[$i],
-                'answer' => $this->vipsExercise->answerArray[$index],
-                'correct' => $correct,
+                'question' => formatReady($this->vipsExercise->defaultArray[$i]),
+                'answer'   => formatReady($this->vipsExercise->answerArray[$index]),
+                'correct'  => $correct,
             );
         }
 

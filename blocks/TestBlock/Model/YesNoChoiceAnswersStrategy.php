@@ -14,7 +14,7 @@ class YesNoChoiceAnswersStrategy extends SingleChoiceAnswersStrategy
      */
     public function getAnswers()
     {
-        return $this->vipsExercise->answerArray;
+        return array_map('formatReady', $this->vipsExercise->answerArray);
     }
 
     /**
