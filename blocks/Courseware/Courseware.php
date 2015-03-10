@@ -166,14 +166,14 @@ class Courseware extends Block {
         foreach ($collection as $item) {
             $result[] = $this->childToJSON($item, $selected, $showFields);
         }
-        return $result;
+        return array_filter($result);
     }
 
     private function childToJSON($child, $selected, $showFields)
     {
         /** @var \Mooc\DB\Block $child */
         if (!$this->getCurrentUser()->canRead($child)) {
-            continue;
+            return null;
         }
 
         if ($showFields) {
