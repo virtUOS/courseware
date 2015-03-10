@@ -11,12 +11,6 @@
         <li>
           <h3 class="title">{{ title }}</h3>
 
-          {{#cloze_answers}}
-            {{^show_solution}}
-              {{> _cloze_question}}
-              {{/show_solution}}
-          {{/cloze_answers}}
-
           {{^cloze_answers}}
             {{> _question}}
           {{/cloze_answers}}
@@ -46,6 +40,10 @@
 
           {{^show_solution}}
             {{> _exercise_form_begin}}
+
+            {{#cloze_answers}}
+              {{> _cloze_question}}
+            {{/cloze_answers}}
 
             {{#single_choice_answers}}
               {{> _single_choice_answers}}
