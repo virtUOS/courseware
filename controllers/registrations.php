@@ -16,7 +16,7 @@ class RegistrationsController extends MoocipController {
 
     public function terms_action()
     {
-        $this->terms = Config::get()->getValue(\Mooc\TERMS_OF_SERVICE_CONFIG_ID);
+        # just render template
     }
 
     public function privacy_policy_action()

@@ -17,6 +17,8 @@ $body_id = 'mooc-registrations-index';
   <?= $this->render_partial('registrations/_create_and_register') ?>
   <? $infobox = $this->render_partial('registrations/_infobox') ?>
 <? else : ?>
-  <?= $this->render_partial('registrations/_tos') ?>
+    <article class="tos">
+        <?= $this->render_partial('registrations/terms') ?>
+    </article>
   <?= $this->render_partial('registrations/_register') ?>
 <? endif ?>
