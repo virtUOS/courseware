@@ -84,7 +84,7 @@ class ClozeAnswersStrategy extends AnswersStrategy
 
                 $index++;
             } else {
-                $solutionString .= $questionPart;
+                $solutionString .= formatReady($questionPart);
             }
         }
 
