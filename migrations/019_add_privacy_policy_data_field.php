@@ -13,7 +13,7 @@ class AddPrivacyPolicyDataField extends Migration
 <h1>Datenschutzerklärung</h1>
 
 <p>
-  Super existe da per, qui tu europeo millennios registrate, lo libro immediatementevia.
+  Super da per, qui tu europeo millennios registrate, lo libro immediatementevia.
   Sine traduction es non. Un lateres ascoltar initialmente uso, uso sitos etiam
   message ha. Tu del gode americas introduction, svedese historiettas ma non,
   il qui vide linguistic grammatica. Iste articulo questiones lo sia, ha usate

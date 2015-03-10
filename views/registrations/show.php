@@ -4,7 +4,7 @@ $body_id = 'mooc-registrations-index';
 
 <h1><?= htmlReady($course->name) ?></h1>
 
-<h2><?= _('Vielen Danke für Ihre Anmeldung!') ?></h2>
+<h2><?= _('Vielen Dank für Ihre Anmeldung!') ?></h2>
 
 <div id="messages"></div>
 
