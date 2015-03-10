@@ -76,7 +76,7 @@ class ClozeAnswersStrategy extends AnswersStrategy
                     );
                 } else {
                     $solutionString .= sprintf(
-                        '<span class="incorrect_answer">%s</span> (%s)',
+                        '<span class="incorrect_answer">%s</span><span class="correction">[%s]</span>',
                         $solution[$index],
                         $correctAnswer
                     );

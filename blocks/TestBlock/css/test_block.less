@@ -31,8 +31,8 @@ section.TestBlock {
     li.correct_answer {
       span  {
         background: none repeat scroll 0 0 lightgreen;
-	border: 1px solid green;
-	padding: 2px 5px;
+        border: 1px solid green;
+        padding: 2px 5px;
       }
     }
 
@@ -71,11 +71,43 @@ section.TestBlock {
   }
 
   p.solution {
-    span.correct_answer {
+    .correct_answer {
       color: green;
     }
-    span.incorrect_answer {
+    .incorrect_answer {
       color: red;
+    }
+
+    &.cloze {
+      .correct_answer, .incorrect_answer, .correction {
+        margin-left: 0.25em;
+        margin-right: 0.25em;
+        white-space: pre;
+      }
+
+      .correct_answer, .incorrect_answer {
+        font-style: italic;
+
+        &:after {
+          padding-left: 0.2em;
+          vertical-align: middle;
+        }
+      }
+
+      .correct_answer:after {
+        content: url(../../../../assets/images/icons/16/green/accept.png);
+      }
+
+      .incorrect_answer:after {
+        content: url(../../../../assets/images/icons/16/red/decline.png);
+      }
+
+
+      .correction {
+        color: blue;
+        font-size: smaller;
+        padding-right: 0.5em;
+      }
     }
   }
 
