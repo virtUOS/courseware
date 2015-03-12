@@ -335,7 +335,7 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
         $cid = $this->getContext();
         $url = PluginEngine::getURL($this, compact('cid'), 'courseware', true);
 
-        $navigation = new Navigation('Courseware', $url);
+        $navigation = new Navigation(_('Courseware'), $url);
         $navigation->setImage('icons/16/white/group3.png');
         $navigation->setActiveImage('icons/16/black/group3.png');
 
