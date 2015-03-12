@@ -60,9 +60,10 @@ class MatchingExerciseAnswersStrategy extends AnswersStrategy
             }
 
             $entries[] = array(
-                'question' => formatReady($this->vipsExercise->defaultArray[$i]),
-                'answer'   => formatReady($this->vipsExercise->answerArray[$index]),
-                'correct'  => $correct,
+                'question'       => formatReady($this->vipsExercise->defaultArray[$i]),
+                'answer'         => formatReady($this->vipsExercise->answerArray[$index]),
+                'correct_answer' => formatReady($this->vipsExercise->answerArray[$this->vipsExercise->correctArray[$i]]),
+                'correct'        => $correct,
             );
         }
 

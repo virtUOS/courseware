@@ -35,40 +35,18 @@ section.TestBlock {
         padding: 2px 5px;
       }
     }
-
-    &.matching_exercise {
-      padding-bottom: 10px;
-      display: table-cell;
-      vertical-align: top;
-
-      li {
-        border-width: 1px;
-        border-style: dotted;
-        border-color: #808080;
-        margin: 4px;
-        padding: 1ex 1ex 1ex 2ex;
-      }
-
-      &.labels li {
-        margin-left: 0;
-        padding-left: 1ex;
-      }
-
-      &.answers {
-        &.solution_answers li.correct_answer {
-          border-color: green;
-          border-style: solid;
-        }
-
-        &.exercise_answers li {
-          background-image: @anfasser-bg-url;
-          background-position: 1px center;
-          background-repeat: no-repeat;
-          cursor: move;
-        }
-      }
-    }
   }
+
+  select[name="test_id"] {
+    display: block;
+    width: 400px;
+  }
+
+  a.edit-tests {
+    display: block;
+    float: right;
+  }
+
 
   p.solution {
     .correct_answer {
@@ -78,6 +56,8 @@ section.TestBlock {
       color: red;
     }
 
+
+    // **** CLOZE ****
     &.cloze {
       .correct_answer, .incorrect_answer, .correction {
         margin-left: 0.25em;
@@ -111,13 +91,59 @@ section.TestBlock {
     }
   }
 
-  select[name="test_id"] {
-    display: block;
-    width: 400px;
-  }
+  // **** MATCHING EXERCISE ****
+  .matching_exercise {
+    padding-bottom: 10px;
+    display: table-cell;
+    vertical-align: top;
 
-  a.edit-tests {
-    display: block;
-    float: right;
+    li {
+      border-width: 1px;
+      border-style: dotted;
+      border-color: #808080;
+      margin: 4px;
+      padding: 1ex 1ex 1ex 2ex;
+    }
+
+    &.labels li {
+      margin-left: 0;
+      padding-left: 1ex;
+    }
+
+    &.answers {
+      &.exercise_answers li {
+        background-image: @anfasser-bg-url;
+        background-position: 1px center;
+        background-repeat: no-repeat;
+        cursor: move;
+      }
+    }
+
+    &.solution {
+
+      .answer {
+        padding-left: 0.5em;
+
+        &:before {
+          content: "=>";
+          padding-right: 0.5em;
+          opacity: 0.5;
+          letter-spacing: -0.25em;
+        }
+      }
+
+      .correct_answer {
+        color: green;
+      }
+
+      .incorrect_answer {
+        color: red;
+      }
+
+      .correction {
+        color: blue;
+        font-size: smaller;
+      }
+    }
   }
 }

@@ -1,21 +1,9 @@
-<ul class="matching_exercise labels">
-  {{#answers}}
-    <li>{{{text.question}}}</li>
-  {{/answers}}
-</ul>
-
-{{#has_solution}}
-  <ul class="matching_exercise answers solution_answers">
-    {{#user_answers}}
-      <li id="item_{{index}}"{{#show_correction}}{{#text.correct}} class="correct_answer"{{/text.correct}}{{/show_correction}}>
-        {{{text.answer}}}
-        <input type="hidden" name="student_answer[{{index}}]" value="{{index}}">
-      </li>
-    {{/user_answers}}
-  </ul>
-{{/has_solution}}
-
 {{^has_solution}}
+  <ul class="matching_exercise labels">
+    {{#answers}}
+      <li>{{{text.question}}}</li>
+    {{/answers}}
+  </ul>
   <ul class="matching_exercise answers exercise_answers">
     {{#answers}}
       <li id="item_{{index}}">
@@ -24,4 +12,25 @@
       </li>
     {{/answers}}
   </ul>
+{{/has_solution}}
+
+
+{{#has_solution}}
+  <table class="matching_exercise solution">
+    {{#user_answers}}
+      <tr>
+        <td class="question">{{{text.question}}}</td>
+        <td class="answer{{#show_correction}} {{^text.correct}}in{{/text.correct}}correct_answer{{/show_correction}}">
+          {{{text.answer}}}
+        </td>
+        {{#show_correction}}
+          <td class="correction">
+            {{^text.correct}}
+              {{{text.correct_answer}}}
+            {{/text.correct}}
+          </td>
+        {{/show_correction}}
+      </tr>
+    {{/user_answers}}
+  </table>
 {{/has_solution}}
