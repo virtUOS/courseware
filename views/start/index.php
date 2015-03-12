@@ -37,7 +37,11 @@
       </article>
   <? endforeach ?>
   </section>
+
+  <?= \Studip\LinkButton::createEnroll('Für weiteren Kurs registrieren',
+                                 PluginEngine::getURL($plugin, array(), 'courses/index')) ?>
+
 <? else : ?>
   <p><?= _("Sie sind noch in keinem Mooc-Kurs eingetragen. ") ?></p>
-  <?= \Studip\LinkButton::create('Zur Kursliste', PluginEngine::getURL($plugin, array(), 'courses/index')) ?>
+  <?= \Studip\LinkButton::createEnroll('Zur Kursliste', PluginEngine::getURL($plugin, array(), 'courses/index')) ?>
 <? endif ?>
