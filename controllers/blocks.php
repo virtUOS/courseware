@@ -184,31 +184,6 @@ class BlocksController extends MoocipController {
         return $verb;
     }
 
-    function acceptsJSON() {
-        $negotiator   = new \Negotiation\FormatNegotiator();
-
-        $acceptHeader = $_SERVER['HTTP_ACCEPT'];
-        $priorities   = array('application/json', 'text/html');
-
-        $format = $negotiator->getBest($acceptHeader, $priorities);
-        return $format && $format->getValue() === $priorities[0];
-    }
-
-    private function json_error($reason, $status = 500, $data = null)
-    {
-        $this->response->set_status($status);
-        $payload = array(
-            'status' => 'error',
-            'reason' => $reason
-        );
-
-        if (isset($data)) {
-            $payload['data'] = (array) $data;
-        }
-
-        $this->render_json($payload);
-    }
-
     private function callBlockHandler($ui_block, $handler, $data)
     {
         try {

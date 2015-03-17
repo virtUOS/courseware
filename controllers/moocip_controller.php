@@ -110,4 +110,32 @@ class MoocipController extends StudipController {
     {
         return Request::option('view', 'student');
     }
+
+    // predicat returning true if the client wants JSON
+    public function acceptsJSON() {
+        $negotiator   = new \Negotiation\FormatNegotiator();
+
+        $acceptHeader = $_SERVER['HTTP_ACCEPT'];
+        $priorities   = array('application/json', 'text/html');
+
+        $format = $negotiator->getBest($acceptHeader, $priorities);
+        return $format && $format->getValue() === $priorities[0];
+    }
+
+    // display a JSON error
+    private function json_error($reason, $status = 500, $data = null)
+    {
+        $this->response->set_status($status);
+        $payload = array(
+            'status' => 'error',
+            'reason' => $reason
+        );
+
+        if (isset($data)) {
+            $payload['data'] = (array) $data;
+        }
+
+        $this->render_json($payload);
+    }
+
 }
