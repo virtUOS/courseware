@@ -141,4 +141,31 @@ class CoursesController extends MoocipController {
             $this->preview_image = '//img.youtube.com/vi/'.basename($this->preview_video).'/0.jpg';
         }
     }
+
+    public function leave_action($cid)
+    {
+        CSRFProtection::verifyUnsafeRequest();
+
+        $course  = Course::find($cid);
+        $user_id = $this->plugin->getCurrentUser()->id;
+
+        if (LockRules::Check($cid, 'participants')) {
+            $lockdata = LockRules::getObjectRule($cid);
+
+            $data = array('course' => $course->name);
+            if ($lockdata['description']) {
+                $data['description'] = formatLinks($lockdata['description']);
+            }
+
+            return $this->json_error(_('Das Abonnement der Veranstaltung kann nicht aufgehoben werden.'), 403, $data);
+        }
+
+        $old_school = new Seminar($course);
+        $status = $old_school->deleteMember($user_id);
+
+        if (!$status) {
+            return $this->json_error(_('Das Abonnement der Veranstaltung konnte nicht aufgehoben werden.'), 400);
+        }
+        $this->render_json(array('status' => 'success'));
+    }
 }

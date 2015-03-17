@@ -125,6 +125,7 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
         }
 
         PageLayout::addStylesheet($this->getPluginURL().'/assets/start.css');
+        PageLayout::addScript($this->getPluginURL().'/assets/js/moocip_widget.js');
 
         $template_factory = new Flexi_TemplateFactory(__DIR__.'/views');
         $template = $template_factory->open('start/index');
