@@ -26,15 +26,17 @@ endif;
 <h1><?= htmlReady($course->name) ?></h1>
 <p class=subtitle><?= htmlReady($course->untertitel) ?></p>
 
+<article class=requirements>
+  <h1>Voraussetzungen</h1>
+  <p><?= formatReady($course->vorrausetzungen) ?></p>
+</article>
+
 <article class=description>
   <h1>Kursbeschreibung</h1>
   <p><?= formatReady($course->beschreibung) ?></p>
 </article>
 
-<article class=requirements>
-  <h1>Voraussetzungen</h1>
-  <p><?= formatReady($course->vorrausetzungen) ?></p>
-</article>
+
 
 <div class=clear></div>
 
