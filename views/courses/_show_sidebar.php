@@ -4,6 +4,7 @@
 /** @var string $start */
 /** @var string $duration */
 /** @var string $hint */
+$perm = $GLOBALS['perm'];
 ?>
 
 <div id="preview" style="margin-left: -20px">
@@ -34,6 +35,9 @@
             echo formatReady($hint);
         endif;
         ?>
+        <? if (!$perm->have_studip_perm('autor', $course->id)): ?>
+        <?= \Studip\LinkButton::create("Zur Anmeldung", $controller->url_for('registrations/new', array('moocid' => $course->id))) ?>
+        <? endif ?>
     </div>
 </div>
 
