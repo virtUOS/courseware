@@ -132,6 +132,7 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
         $template->plugin = $this;
         $template->courses = $courses;
         $template->preview_images = $preview_images;
+        $template->title = _('Mooc.IP-Kurse');
 
         return $template;
     }
