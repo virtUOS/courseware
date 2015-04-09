@@ -24,7 +24,7 @@ $body_id = 'mooc-registrations-index';
 <br>
 <br>
 
-<form class="signin" method="post" action="<?= $controller->url_for('registrations/show/?moocid='. $course->getId()) ?>">
+<form class="signin" method="post" action="<?= $controller->url_for('courses/show/'. $course->getId() .'?cid=') ?>">
     <input type="text" name="username" placeholder="<?= _('Benutzername') ?>" value="<?= $user->username ?>" required><br>
     <input type="password" name="password" placeholder="<?= _('Passwort') ?>" required><br>
     <?= Studip\Button::create(_('Jetzt einloggen')) ?>

@@ -108,19 +108,25 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
             return null;
         }
 
-        $my_cids = $this->getCurrentUser()->course_memberships->pluck('seminar_id');
+        $my_cids       = $this->getCurrentUser()->course_memberships->pluck('seminar_id');
+        $my_admissions = $this->getCurrentUser()->admission_applications->pluck('seminar_id');
         $dfids = $this->container['datafields'];
 
         $courses = array();
         foreach (\Mooc\SemClass::getMoocSemClass()->getCourses() as $course) {
-            if (in_array($course->id, $my_cids)) {
+            if (in_array($course->id, $my_cids) !== false || in_array($course->id, $my_admissions) !== false) {
                 $datafields = array_reduce($course->datafields->toArray(), function ($memo, $elem) use ($dfids) {
                     if ($key = array_search($elem['datafield_id'], $dfids)) {
                         $memo[$key] = trim($elem['content']);
                     }
                     return $memo;
                 }, array());
-                $courses[$course->id] = compact('course', 'datafields');
+                
+                if (in_array($course->id, $my_admissions) !== false) {
+                    $prelim_courses[$course->id] = compact('course', 'datafields');
+                } else {
+                    $courses[$course->id] = compact('course', 'datafields');
+                }
             }
         }
 
@@ -131,6 +137,7 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
         $template = $template_factory->open('start/index');
         $template->plugin = $this;
         $template->courses = $courses;
+        $template->prelim_courses = $prelim_courses;
         $template->preview_images = $preview_images;
         $template->title = _('Mooc.IP-Kurse');
 

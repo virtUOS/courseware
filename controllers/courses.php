@@ -118,6 +118,13 @@ class CoursesController extends MoocipController {
             $this->plugin->fixCourseNavigation();
         }
 
+        $user_id = $this->plugin->getCurrentUser()->id;
+        $admission = new AdmissionApplication(array($user_id, $cid));
+
+        if (!$admission->isNew()) {
+            $this->preliminary = true;
+        }
+
         $this->courseware = \Mooc\DB\Block::findCourseware($cid);
         $this->course = Course::find($cid);
         /** @var \DataFieldEntry[] $localEntries */

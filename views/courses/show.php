@@ -23,6 +23,10 @@ else:
 endif;
 ?>
 
+<? if ($preliminary) : ?>
+    <?= MessageBox::info(_('Sie sind bereits für diesen Kurs eingetragen, allerdings können Sie auf die Kursinhalte erst zugreifen, sobald der Kurs begonnen hat!')) ?>
+<? endif ?>
+
 <h1><?= htmlReady($course->name) ?></h1>
 <p class=subtitle><?= htmlReady($course->untertitel) ?></p>
 

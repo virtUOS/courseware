@@ -35,7 +35,7 @@ $perm = $GLOBALS['perm'];
             echo formatReady($hint);
         endif;
         ?>
-        <? if (!$perm->have_studip_perm('autor', $course->id)): ?>
+        <? if (!$perm->have_studip_perm('autor', $course->id) && !$preliminary): ?>
         <?= \Studip\LinkButton::create("Zur Anmeldung", $controller->url_for('registrations/new', array('moocid' => $course->id))) ?>
         <? endif ?>
     </div>

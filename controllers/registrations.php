@@ -279,14 +279,25 @@ class RegistrationsController extends MoocipController {
 
     private function registerUserWithCourse($user, $course)
     {
-        $new = new CourseMember(array($course, $user->id));
-        if ($new->isNew()) {
-            $new->status = 'autor';
-            // TODO: since Stud.IP 3.0 this field does not exist anymore
-            #$new->admission_studiengang_id = 'all';
-            $new->label = '';
-            $new->store();
+        $sem = new Course($course);
+
+        if ($sem->admission_prelim) {
+            $new = new AdmissionApplication(array($user->id,  $course));
+
+            if ($new->isNew()) {
+                $new->status = 'accepted';
+                $new->store();
+            }
+        } else {
+            $new = new CourseMember(array($course, $user->id));
+
+            if ($new->isNew()) {
+                $new->status = 'autor';
+                $new->label = '';
+                $new->store();
+            }
         }
+        
     }
 
     /**
