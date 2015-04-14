@@ -1,0 +1,8 @@
+site_name: (M)OOC.IP
+pages:
+- [index.md, Home]
+- [basics.md, Einleitung]
+- [stucture.md, Strukturierung]
+- [development.md, Entwicklung]
+
+theme: readthedocs
