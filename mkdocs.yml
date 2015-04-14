@@ -2,7 +2,7 @@ site_name: MOOC.IP
 pages:
 - [index.md, Home]
 - [basics.md, Einleitung]
-- [stucture.md, Strukturierung]
+- [structure.md, Strukturierung]
 - [development.md, Entwicklung]
 
 theme: readthedocs
