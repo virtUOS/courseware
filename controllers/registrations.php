@@ -102,9 +102,8 @@ class RegistrationsController extends MoocipController {
             return $this->error('Nicht angemeldet!', 'registrations/new');
         }
 
-        $this->registerUserWithCourse($user, $this->cid);
-
-        $this->redirect('courses/show/' . $this->cid . '?cid=' . $this->cid);
+        $course = $this->registerUserWithCourse($user, $this->cid);
+        $this->redirectToCourse($course);
     }
 
     private function loginAndRegister()
@@ -114,9 +113,20 @@ class RegistrationsController extends MoocipController {
             return $this->error('Fehler beim Anmelden', 'registrations/new');
         }
 
-        $this->registerUserWithCourse($user, $this->cid);
+        $course = $this->registerUserWithCourse($user, $this->cid);
+        $this->redirectToCourse($course);
+    }
 
-        $this->redirect('courses/show/' . $this->cid . '?cid=' . $this->cid);
+    // hide implementation details when redirecting to a course
+    private function redirectToCourse($course)
+    {
+        $cid = $course->id;
+
+        if ($course->admission_prelim) {
+            $this->redirect('courses/show/' . $cid . '?moocid=' . $cid);
+        } else {
+            $this->redirect('courses/show/' . $cid . '?cid=' . $cid);
+        }
     }
 
     private function createAccountAndRegister()
@@ -277,19 +287,19 @@ class RegistrationsController extends MoocipController {
         $GLOBALS['MAIL_VALIDATE_BOX'] = false;
     }
 
-    private function registerUserWithCourse($user, $course)
+    private function registerUserWithCourse($user, $cid)
     {
-        $sem = new Course($course);
+        $course = new Course($cid);
 
-        if ($sem->admission_prelim) {
-            $new = new AdmissionApplication(array($user->id,  $course));
+        if ($course->admission_prelim) {
+            $new = new AdmissionApplication(array($user->id,  $cid));
 
             if ($new->isNew()) {
                 $new->status = 'accepted';
                 $new->store();
             }
         } else {
-            $new = new CourseMember(array($course, $user->id));
+            $new = new CourseMember(array($cid, $user->id));
 
             if ($new->isNew()) {
                 $new->status = 'autor';
@@ -297,7 +307,8 @@ class RegistrationsController extends MoocipController {
                 $new->store();
             }
         }
-        
+
+        return $course;
     }
 
     /**
