@@ -215,6 +215,14 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
         return $this->container['current_user'];
     }
 
+    /**
+     * @return Pimple
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
     /**********************************************************************/
     /* PRIVATE METHODS                                                    */
     /**********************************************************************/

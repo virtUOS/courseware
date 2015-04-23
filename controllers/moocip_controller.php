@@ -8,8 +8,9 @@ class MoocipController extends StudipController {
     public function __construct($dispatcher)
     {
         parent::__construct($dispatcher);
-        $this->plugin = $dispatcher->plugin;
-        $this->flash = Trails_Flash::instance();
+        $this->plugin    = $dispatcher->plugin;
+        $this->container = $this->plugin->getContainer();
+        $this->flash     = Trails_Flash::instance();
     }
 
     public function before_filter(&$action, &$args)
@@ -19,6 +20,8 @@ class MoocipController extends StudipController {
         $this->data = studip_utf8decode($this->parseRequestBody());
 
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base'));
+
+        $this->setDefaultPageTitle();
     }
 
     /**
@@ -138,4 +141,14 @@ class MoocipController extends StudipController {
         $this->render_json($payload);
     }
 
+    private function setDefaultPageTitle()
+    {
+        $title = Request::option('cid', false)
+               ? $_SESSION['SessSemName']['header_line'] . ' - '
+               : '';
+
+        $title .= $this->container['plugin_display_name'];
+
+        \PageLayout::setTitle($title);
+    }
 }

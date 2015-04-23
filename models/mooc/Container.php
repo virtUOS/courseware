@@ -15,6 +15,7 @@ class Container extends \Pimple
         parent::__construct();
 
         $this['plugin'] = $plugin;
+        $this['plugin_display_name'] = \Config::get()->getValue(\Mooc\PLUGIN_DISPLAY_NAME_ID);
 
         $this->setupEnv();
         $this->setupBlockStuff();
@@ -35,7 +36,7 @@ class Container extends \Pimple
 
 
         $this['cid'] = \Request::option('cid') ?: $GLOBALS['SessionSeminar'];
-        
+
         $this['datafields'] = array(
             'preview_image' => md5('(M)OOC-Preview-Image'),
             'preview_video' => md5('(M)OOC-Preview-Video (mp4)'),
