@@ -66,15 +66,9 @@ class PreliminarParticipants extends CronJob
                 echo '... alle Teilnehmenden wurden übertragen.' . "\n";
             }
 
-
-
             // change preliminary access to direct access for course
             unset($course);
         }
-
-        $fd = fopen('/tmp/cronjob.log', 'a');
-        fputs($fd, date('d.m.Ym H:i'));
-        fclose($fd);
 
         return true;
     }
