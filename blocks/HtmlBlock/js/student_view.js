@@ -16,6 +16,10 @@ define(['assets/js/student_view'],
 
         render: function() {
             return this;
+        },
+
+        postRender: function () {
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.el]);
         }
     });
 });
