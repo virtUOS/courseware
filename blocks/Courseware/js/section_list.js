@@ -119,8 +119,10 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             this._sortable.sortable({
                 items:       ".section",
                 handle:      ".handle",
-                containment: "parent",
-                distance:    5
+                axis:        "x",
+                tolerance:   "pointer",
+                distance:    5,
+                placeholder: "sortable-placeholder"
             });
 
             this._original_positions = this._get_positions();

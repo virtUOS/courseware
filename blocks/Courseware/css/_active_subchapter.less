@@ -7,68 +7,14 @@ ol.active-subchapter {
     float: left;
     margin: 0px 1px 0px 0px;
 
-    &.prev_next_navigation {
-      background-color: #bbb;
-      background-position: center center;
-      background-size: 20px;
-      background-repeat: no-repeat;
-      border-radius: 2px;
-
-      a {
-        background: transparent;
-      }
-
-      span {
-        display: block;
-        width: 35px;
-        height: 35px;
-        text-indent: -999px;
-        background-color: #eee;
-        background-position: center center;
-        background-size: 20px;
-        background-repeat: no-repeat;
-        border-radius: 2px;
-      }
-    }
-
-    &.prev_navigation {
-      background-image: url("@{blocks-icons-dir}/32/white/arr_1left.png");
-
-      a:hover {
-        background-image: url("@{blocks-icons-dir}/32/white/arr_1left.png");
-        background-position: center center;
-        background-size: 20px;
-        background-repeat: no-repeat;
-        background-color: #DDDDDD !important;
-      }
-
-      span {
-        background-image: url("@{blocks-icons-dir}/32/white/arr_1left.png");
-      }
-    }
-
-    &.next_navigation {
-      background-image: url("@{blocks-icons-dir}/32/white/arr_1right.png");
-
-      a:hover {
-        background-image: url("@{blocks-icons-dir}/32/white/arr_1right.png");
-        background-position: center center;
-        background-size: 20px;
-        background-repeat: no-repeat;
-        background-color: #DDDDDD;
-      }
-
-      span {
-        background-image: url("@{blocks-icons-dir}/32/white/arr_1right.png");
-      }
-    }
-
     & > a {
       background-color: #eee;
       background-size: 20px;
       color: transparent;
-      width: 35px;
-      height: 35px;
+
+      width: @section-icon-width;
+      height: @section-icon-height;
+
       padding: 0px;
       display: inline-block;
       border-radius: 2px;
@@ -119,20 +65,15 @@ ol.active-subchapter {
       }
     }
 
-    > a.handle {
+    > a span.handle {
       display: none;
 
-      line-height: 25px;
-      width: 25px;
-      padding: 5px;
-      background: #d0d0d0 @anfasser-bg-url center center no-repeat;
+      width: 15px;
+      height: @section-icon-height;
+
+      background: transparent @anfasser-bg-url no-repeat center center;
       cursor: move;
     }
-
-    &.selected > a.handle {
-      background-color: transparent;
-    }
-
 
     &.loading > a {
       background: url("@{blocks-images-dir}/ajax_indicator_small.gif") center center no-repeat;
@@ -143,9 +84,8 @@ ol.active-subchapter {
   .prev, .next {
     color: transparent;
 
-    display: block;
-    width: 35px;
-    height: 35px;
+    width: @section-icon-width;
+    height: @section-icon-height;
 
     background-color: #bbb;
     background-size: 20px;
@@ -170,24 +110,34 @@ ol.active-subchapter {
 
 
   // ***** SORTING SECTIONS *****
-  &.sorting > .controls {
+  &.sorting {
 
-    // hide all controls
-    button:not(.stop-sort-section) {
-      display: none;
+    > .controls {
+
+      // hide all controls
+      button:not(.stop-sort-section) {
+        display: none;
+      }
+
+      // but not the stop sorting button
+      button.stop-sort-section {
+      display: inline-block;
+      }
     }
 
-    // but not the stop sorting button
-    button.stop-sort-section {
-      display: inline-block;
+    .sortable-placeholder {
+      border: 1px dashed #bbb;
+      border-radius: 2px;
+      width: @section-icon-width + 15px;
+      height: @section-icon-height;
     }
   }
 
   &.ui-sortable li.section > a {
-    width: 50px;
-    border: 1px solid #24437c;
+    width: @section-icon-width + 15px;
+
     .handle {
-      display: inline;
+      display: inline-block;
     }
   }
 
