@@ -55,6 +55,7 @@ function zip()
         'assets',
         'blocks',
         'controllers',
+        'cronjobs',
         'docs',
         'export',
         'import',
