@@ -15,7 +15,7 @@ use Mooc\User;
  * @author  <tgloeggl@uos.de>
  * @author  <mlunzena@uos.de>
  */
-class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemPlugin
+class Mooc extends StudIPPlugin implements StandardPlugin
 {
     /**
      * @var Container
@@ -30,7 +30,6 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
 
         $this->setupAutoload();
         $this->setupContainer();
-        $this->setupNavigation();
 
         // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
         if ($this->isSlotModule() && !$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
@@ -97,52 +96,7 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
     {
         return null;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPortalTemplate()
-    {
-        // hide the widget if the Stud.IP version doesn't support them
-        if (!class_exists('WidgetHelper')) {
-            return null;
-        }
-
-        $my_cids       = $this->getCurrentUser()->course_memberships->pluck('seminar_id');
-        $my_admissions = $this->getCurrentUser()->admission_applications->pluck('seminar_id');
-        $dfids = $this->container['datafields'];
-
-        $courses = array();
-        foreach (\Mooc\SemClass::getMoocSemClass()->getCourses() as $course) {
-            if (in_array($course->id, $my_cids) !== false || in_array($course->id, $my_admissions) !== false) {
-                $datafields = array_reduce($course->datafields->toArray(), function ($memo, $elem) use ($dfids) {
-                    if ($key = array_search($elem['datafield_id'], $dfids)) {
-                        $memo[$key] = trim($elem['content']);
-                    }
-                    return $memo;
-                }, array());
-                
-                if (in_array($course->id, $my_admissions) !== false) {
-                    $prelim_courses[$course->id] = compact('course', 'datafields');
-                } else {
-                    $courses[$course->id] = compact('course', 'datafields');
-                }
-            }
-        }
-
-        PageLayout::addStylesheet($this->getPluginURL().'/assets/start.css');
-        PageLayout::addScript($this->getPluginURL().'/assets/js/moocip_widget.js');
-
-        $template_factory = new Flexi_TemplateFactory(__DIR__.'/views');
-        $template = $template_factory->open('start/index');
-        $template->plugin = $this;
-        $template->courses = $courses;
-        $template->prelim_courses = $prelim_courses;
-        $template->preview_images = $preview_images;
-        $template->title = _('Mooc.IP-Kurse');
-
-        return $template;
-    }
+    
 
     public function perform($unconsumed_path)
     {
@@ -232,31 +186,6 @@ class Mooc extends StudIPPlugin implements PortalPlugin, StandardPlugin, SystemP
         $this->container = new Mooc\Container($this);
     }
 
-    private function setupNavigation()
-    {
-        $moocid = Request::option('moocid');
-
-        $url_overview = PluginEngine::getURL($this, array(), 'courses/overview', true);
-        $url_courses = PluginEngine::getURL($this, array(), 'courses/index', true);
-
-        $navigation = new Navigation('MOOCs', $url_overview);
-        $navigation->setImage($GLOBALS['ABSOLUTE_URI_STUDIP'] . $this->getPluginPath() . '/assets/images/mooc.png');
-
-        if (Request::get('moocid')) {
-            $overview_url = PluginEngine::getURL($this, compact('moocid'), 'courses/show/' . $moocid, true);;
-            $overview_subnav = new Navigation(_('Übersicht'), $overview_url);
-            $overview_subnav->setImage(Assets::image_path('icons/16/white/seminar.png'));
-            $overview_subnav->setActiveImage(Assets::image_path('icons/16/black/seminar.png'));
-            $navigation->addSubnavigation("overview", $overview_subnav);
-
-            $navigation->addSubnavigation('registrations', $this->getRegistrationsNavigation());
-        } else {
-            #$navigation->addSubnavigation("overview", new Navigation(_('MOOCs'), $url_overview));
-            #$navigation->addSubnavigation("all", new Navigation(_('Alle Kurse'), $url_courses));
-        }
-
-        Navigation::addItem('/mooc', $navigation);
-    }
 
     private function setupAutoload()
     {
