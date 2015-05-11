@@ -15,7 +15,7 @@ use Mooc\User;
  * @author  <tgloeggl@uos.de>
  * @author  <mlunzena@uos.de>
  */
-class Mooc extends StudIPPlugin implements StandardPlugin
+class Courseware extends StudIPPlugin implements StandardPlugin
 {
     /**
      * @var Container
@@ -260,18 +260,6 @@ class Mooc extends StudIPPlugin implements StandardPlugin
             $navigation->addSubNavigation('leave', new Navigation(_('Austragen aus der Veranstaltung'),
                     'meine_seminare.php?auswahl='. $cid .'&cmd=suppose_to_kill'));
         }
-
-        return $navigation;
-    }
-
-    private function getRegistrationsNavigation()
-    {
-        $moocid = Request::option('moocid');
-        $url = PluginEngine::getURL($this, compact('moocid'), 'registrations/new', true);
-
-        $navigation = new Navigation('Anmeldung', $url);
-        $navigation->setImage(Assets::image_path('icons/16/white/door-enter.png'));
-        $navigation->setActiveImage(Assets::image_path('icons/16/black/door-enter.png'));
 
         return $navigation;
     }
