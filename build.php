@@ -50,7 +50,7 @@ function less()
 function zip()
 {
     $archive = new ZipArchive();
-    $archive->open('moocip.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+    $archive->open('courseware.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
     addDirectories($archive, array(
         'assets',
         'blocks',
