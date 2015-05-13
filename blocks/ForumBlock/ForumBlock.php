@@ -75,6 +75,9 @@ class ForumBlock extends Block
             // predefined category must have the id md5('mooc' . seminar_id)
             $category_id = md5('mooc' . $seminar_id);
 
+            // check preqrequisites for forum
+            \ForumEntry::checkRootEntry($seminar_id);
+
             // check, that correct categories and areas present
             if (!\ForumCat::get($category_id)) {
                 $stmt = \DBManager::get()->prepare("INSERT INTO forum_categories

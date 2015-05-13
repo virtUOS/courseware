@@ -126,7 +126,7 @@ class MoocipController extends StudipController {
     }
 
     // display a JSON error
-    private function json_error($reason, $status = 500, $data = null)
+    protected function json_error($reason, $status = 500, $data = null)
     {
         $this->response->set_status($status);
         $payload = array(
