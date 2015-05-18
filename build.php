@@ -65,7 +65,7 @@ function zip()
         'views',
     ), '/^(assets|blocks).*\.less$/');
     $archive->addFile('LICENSE');
-    $archive->addFile('Mooc.php');
+    $archive->addFile('Courseware.php');
     $archive->addFile('plugin.manifest');
     $archive->addFile('README.md');
     $archive->close();
