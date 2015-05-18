@@ -63,14 +63,17 @@ class SetupCourseware extends DBMigration {
           PRIMARY KEY (`block_id`,`user_id`)
         )");
 
-        Config::get()->create(\Mooc\PLUGIN_DISPLAY_NAME_ID, array(
-            'value'       => 'Mooc.IP',
-            'is_default'  => 1,
-            'type'        => 'string',
-            'range'       => 'global',
-            'section'     => 'global',
-            'description' => 'Angezeigter Name des Plugins'
-        ));
+
+        if (is_null(Config::get()->getValue(\Mooc\PLUGIN_DISPLAY_NAME_ID))) {
+            Config::get()->create(\Mooc\PLUGIN_DISPLAY_NAME_ID, array(
+                'value'       => 'Mooc.IP',
+                'is_default'  => 1,
+                'type'        => 'string',
+                'range'       => 'global',
+                'section'     => 'global',
+                'description' => 'Angezeigter Name des Plugins'
+            ));
+        }
 
         SimpleORMap::expireTableScheme();
     }
