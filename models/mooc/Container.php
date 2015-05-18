@@ -25,6 +25,7 @@ class Container extends \Pimple
     private function setupEnv()
     {
         $this['current_user_id'] = isset($GLOBALS['user']) ? $GLOBALS['user']->id : 'nobody';
+        $this['wysiwyg_refined'] = method_exists('Request', 'html');
 
         $this['current_user'] = function ($c) {
             $user = new User($c, $c['current_user_id']);

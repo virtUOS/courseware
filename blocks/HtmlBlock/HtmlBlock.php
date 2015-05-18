@@ -46,7 +46,11 @@ class HtmlBlock extends Block
             $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
         }
 
-        $this->content = (string) $data['content'];
+        if($this->container['wysiwyg_refined']) {
+          $this->content = Markup::markAsHtml((string) Markup::purify((string) $data['content']));
+        } else {
+          $this->content = (string) $data['content'];
+        }
 
         return array('content' => $this->content);
     }
