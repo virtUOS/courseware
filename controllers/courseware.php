@@ -55,6 +55,6 @@ class CoursewareController extends MoocipController {
 
     private function addBlockStyles()
     {
-        return PageLayout::addStylesheet($GLOBALS['ABSOLUTE_URI_STUDIP'] . $this->plugin->getPluginPath() . '/assets/moocip.min.css');
+        return PageLayout::addStylesheet($GLOBALS['ABSOLUTE_URI_STUDIP'] . $this->plugin->getPluginPath() . '/assets/courseware.min.css');
     }
 }

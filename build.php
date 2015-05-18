@@ -125,7 +125,7 @@ function getAssets()
         $asset->setTargetPath(substr($sourcePath, 0, strrpos($sourcePath, '.')).'.css');
     }
 
-    $assets->setTargetPath('moocip.min.css');
+    $assets->setTargetPath('courseware.min.css');
 
     return $assets;
 }

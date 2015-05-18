@@ -21,7 +21,7 @@ Compile LESS Files
 ------------------
 
 Run the build script to compile the LESS files into CSS files and create the
-minified productive CSS file (namely ``assets/moocip.min.css``):
+minified productive CSS file (namely ``assets/courseware.min.css``):
 
 ```bash
 $ php build.php less
