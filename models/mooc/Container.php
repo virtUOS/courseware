@@ -35,16 +35,7 @@ class Container extends \Pimple
             return $user;
         };
 
-
         $this['cid'] = \Request::option('cid') ?: $GLOBALS['SessionSeminar'];
-
-        $this['datafields'] = array(
-            'preview_image' => md5('(M)OOC-Preview-Image'),
-            'preview_video' => md5('(M)OOC-Preview-Video (mp4)'),
-            'start'         => md5('(M)OOC Startdatum'),
-            'duration'      => md5('(M)OOC Dauer'),
-            'hint'          => md5('(M)OOC Hinweise')
-        );
     }
 
 
