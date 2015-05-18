@@ -56,14 +56,14 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     {
         $tabs = array();
 
-        if ($this->isSlotModule()) {
-            $tabs['mooc_overview']   = $this->getOverviewNavigation();
-            $tabs['mooc_courseware'] = $this->getCoursewareNavigation();
-        }
+        $cid = $this->getContext();
+        $url = PluginEngine::getURL($this, compact('cid'), 'courseware', true);
 
-        else {
-            $tabs['mooc_courseware'] = $this->getCoursewareNavigation();
-        }
+        $navigation = new Navigation(_('Courseware'), $url);
+        $navigation->setImage('icons/16/white/group3.png');
+        $navigation->setActiveImage('icons/16/black/group3.png');
+
+        $tabs['mooc_courseware'] = $navigation;
 
         if (!$this->container['current_user']->hasPerm($course_id, 'dozent')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
@@ -119,14 +119,6 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     public function getContext()
     {
         return Request::option('cid') ?: $GLOBALS['SessionSeminar'];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getDataFields()
-    {
-        return $this->container['datafields'];
     }
 
     /**
@@ -192,33 +184,6 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         StudipAutoloader::addAutoloadPath(__DIR__ . '/models');
     }
 
-    public function fixCourseNavigation()
-    {
-        // don't do anything if we are not in a course context
-        if (!$this->getContext()) {
-            return;
-        }
-
-        // don't do anything if there already is an overview item
-        if (Navigation::hasItem('/course/overview') || Navigation::hasItem('/course/mooc_overview')) {
-            return;
-        }
-
-        /** @var Navigation $courseNavigation */
-        $courseNavigation = Navigation::getItem('/course');
-        $it = $courseNavigation->getIterator();
-
-        Navigation::insertItem('/course/mooc_courseware', $this->getCoursewareNavigation(), $it->count() === 0 ? null : $it->key());
-
-        if (Navigation::hasItem('/course/mooc_courseware/index')) {
-            Navigation::activateItem('/course/mooc_courseware/index');
-        } elseif (Navigation::hasItem('/course/main')) {
-            Navigation::activateItem('/course/main');
-        } else {
-            Navigation::activateItem('/course/mooc_courseware');
-        }
-    }
-
     private function getSemClass()
     {
         global $SEM_CLASS, $SEM_TYPE, $SessSemName;
@@ -234,76 +199,10 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         return $this->getSemClass()->isSlotModule(get_class($this));
     }
 
-
-    private function getOverviewNavigation()
-    {
-        $cid = $this->getContext();
-        $url = PluginEngine::getURL($this, compact('cid'), 'courses/show/' . $cid, true);
-
-        $navigation = new Navigation(_('Übersicht'), $url);
-        $navigation->setImage(Assets::image_path('icons/16/white/seminar.png'));
-        $navigation->setActiveImage(Assets::image_path('icons/16/black/seminar.png'));
-
-        $course = Course::find($cid);
-        $sem_class = self::getMoocSemClass();
-
-        $navigation->addSubNavigation('overview', new Navigation(_('Übersicht'), $url));
-
-        if ($this->container['current_user']->hasPerm($cid, 'admin')
-                && !$sem_class['studygroup_mode']
-                && ($sem_class->getSlotModule("admin"))) {
-            $navigation->addSubNavigation('admin', new Navigation(_('Administration dieser Veranstaltung'), 'adminarea_start.php?new_sem=TRUE'));
-        }
-
-        if (!$course->admission_binding && !$this->container['current_user']->hasPerm($cid, 'tutor')
-                && $this->container['current_user_id'] != 'nobody') {
-            $navigation->addSubNavigation('leave', new Navigation(_('Austragen aus der Veranstaltung'),
-                    'meine_seminare.php?auswahl='. $cid .'&cmd=suppose_to_kill'));
-        }
-
-        return $navigation;
-    }
-
-    private function getCoursewareNavigation()
-    {
-        $cid = $this->getContext();
-        $url = PluginEngine::getURL($this, compact('cid'), 'courseware', true);
-
-        $navigation = new Navigation(_('Courseware'), $url);
-        $navigation->setImage('icons/16/white/group3.png');
-        $navigation->setActiveImage('icons/16/black/group3.png');
-
-        return $navigation;
-    }
-
     static function onEnable($id)
     {
         // enable nobody role by default
         RolePersistence::assignPluginRoles($id, array(7));
-
-        self::insertMoocIntoOverviewSlot();
-    }
-
-    static function onDisable($id)
-    {
-        self::removeMoocFromOverviewSlot();
-    }
-
-    const OVERVIEW_SLOT = 'overview';
-
-    private static function insertMoocIntoOverviewSlot()
-    {
-        $sem_class = self::getMoocSemClass();
-        $sem_class->setSlotModule(self::OVERVIEW_SLOT, __CLASS__);
-        $sem_class->store();
-    }
-
-    private static function removeMoocFromOverviewSlot()
-    {
-        $sem_class = self::getMoocSemClass();
-        $default_module = SemClass::getDefaultSemClass()->getSlotModule(self::OVERVIEW_SLOT);
-        $sem_class->setSlotModule(self::OVERVIEW_SLOT, $default_module);
-        $sem_class->store();
     }
 
     private function setupCompatibility()
