@@ -47,7 +47,7 @@ class HtmlBlock extends Block
         }
 
         if($this->container['wysiwyg_refined']) {
-          $this->content = Markup::markAsHtml((string) Markup::purify((string) $data['content']));
+          $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
         } else {
           $this->content = (string) $data['content'];
         }
