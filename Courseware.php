@@ -306,18 +306,6 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $sem_class->store();
     }
 
-    private static function getMoocSemClass()
-    {
-        return new SemClass(
-            intval(self::getMoocSemClassID()));
-    }
-
-    private static function getMoocSemClassID()
-    {
-        $id = Config::get()->getValue(\Mooc\SEM_CLASS_CONFIG_ID);
-        return $id;
-    }
-
     private function setupCompatibility()
     {
         if (!class_exists('\\Metrics')) {
