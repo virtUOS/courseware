@@ -54,7 +54,10 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $cid = $this->getContext();
         $url = PluginEngine::getURL($this, compact('cid'), 'courseware', true);
 
-        $navigation = new Navigation(_('Courseware'), $url);
+
+        $courseware = $this->container['current_courseware'];
+
+        $navigation = new Navigation($courseware->title, $url);
         $navigation->setImage('icons/16/white/group3.png');
         $navigation->setActiveImage('icons/16/black/group3.png');
 
