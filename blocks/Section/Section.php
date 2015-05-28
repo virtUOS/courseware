@@ -49,6 +49,7 @@ class Section extends Block {
             function (Block $child) use ($context) {
                 $json = $child->toJSON();
                 $json['block_content'] = $child->render('student', $context);
+                $json['view_name'] = 'student';
                 return $json;
             }
         );
