@@ -9,9 +9,14 @@ use Mooc\UI\Errors\BadRequest;
  */
 class Courseware extends Block {
 
+    const PROGRESSION_FREE = 'free';
+    const PROGRESSION_SEQ  = 'seq';
+
+
     function initialize()
     {
         $this->defineField('lastSelected', \Mooc\SCOPE_USER, null);
+        $this->defineField('progression',  \Mooc\SCOPE_BLOCK, self::PROGRESSION_FREE);
     }
 
     function student_view($context = array())
@@ -117,6 +122,23 @@ class Courseware extends Block {
         return 'http://moocip.de/schema/courseware/courseware-1.0.xsd';
     }
 
+
+    // set type of course progression
+    //
+    // 'free': student may navigate to sub/chapters of choice
+    //
+    // 'seq':  student may only navigate to completed sub/chapters
+    //         and to the next sub/chapter after the last completed
+    //         sub/chapter
+    public function setProgressionType($type)
+    {
+        if (in_array($type, array(self::PROGRESSION_FREE, self::PROGRESSION_SEQ))) {
+            $this->progression = $type;
+            return true;
+        }
+
+        return false;
+    }
 
     // ******** PRIVATE FUNCTIONS ********
 

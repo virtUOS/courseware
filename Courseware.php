@@ -51,17 +51,20 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     {
         $tabs = array();
 
-        $cid = $this->getContext();
-        $url = PluginEngine::getURL($this, compact('cid'), 'courseware', true);
-
-
         $courseware = $this->container['current_courseware'];
 
-        $navigation = new Navigation($courseware->title, $url);
+        $navigation = new Navigation($courseware->title,
+                                     PluginEngine::getURL($this, compact('cid'), 'courseware', true));
         $navigation->setImage('icons/16/white/group3.png');
         $navigation->setActiveImage('icons/16/black/group3.png');
 
         $tabs['mooc_courseware'] = $navigation;
+
+        $navigation->addSubnavigation('index',    clone $navigation);
+        $navigation->addSubnavigation('settings',
+                                      new Navigation(_("Einstellungen"),
+                                                     PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true)));
+
 
         if (!$this->container['current_user']->hasPerm($course_id, 'dozent')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);

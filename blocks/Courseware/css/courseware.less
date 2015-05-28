@@ -8,8 +8,15 @@ input::-moz-focus-inner {
   padding: 0;
 }
 
-#mooc-courseware-index #layout_container {
-  position: relative;
+#mooc-courseware-index {
+  #layout_container {
+    position: relative;
+  }
+
+  /* FIXME: hide sidebar for now */
+  #layout-sidebar {
+    display: none;
+  }
 }
 
 section#courseware {
