@@ -140,6 +140,12 @@ class Courseware extends Block {
         return false;
     }
 
+    // return this courseware's type of progression
+    public function getProgressionType()
+    {
+        return $this->progression;
+    }
+
     // ******** PRIVATE FUNCTIONS ********
 
     private function getSelected($context)

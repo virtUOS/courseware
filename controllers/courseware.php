@@ -98,7 +98,7 @@ class CoursewareController extends MoocipController {
             $this->storeCoursewareProgressionType($courseware_settings['progression']);
         }
 
-        $this->courseware_block->getModel()->store();
+        $this->courseware_block->save();
     }
 
     private function storeCoursewareTitle($title0)

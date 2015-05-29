@@ -4,6 +4,7 @@ namespace Mooc\UI\Section;
 use Mooc\UI\Block;
 use Mooc\UI\Errors\AccessDenied;
 use Mooc\UI\Errors\BadRequest;
+use \Mooc\UI\Courseware\Courseware;
 
 /**
  * @property bool   $visited
@@ -36,6 +37,9 @@ class Section extends Block {
 
     function student_view($context = array())
     {
+        if (!$this->isAuthorized()) {
+            return array('inactive' => true);
+        }
 
         if (!$this->visited) {
             $this->visited = true;
@@ -165,6 +169,12 @@ class Section extends Block {
         }
     }
 
+
+    /////////////////////
+    // PRIVATE HELPERS //
+    /////////////////////
+
+
     /**
      * Returns the available block types.
      *
@@ -173,8 +183,6 @@ class Section extends Block {
     private function getBlockTypes()
     {
         $blockTypes = array();
-
-
 
         foreach ($this->getBlockFactory()->getContentBlockClasses() as $type) {
             $className = '\Mooc\UI\\'.$type.'\\'.$type;
@@ -231,5 +239,60 @@ class Section extends Block {
             }
         }
         $this->icon = $highest_icon;
+    }
+
+
+    // check for user's authorization
+    private function isAuthorized()
+    {
+
+        // on sequential courseware progression a student may only
+        // access this section if he completed this or the previous
+        // sub/chapter
+        if (!$this->container['current_user']->canUpdate($this->_model)) {
+            $courseware = $this->container['current_courseware'];
+            if ($courseware->getProgressionType() === Courseware::PROGRESSION_SEQ
+                && !$this->checkSeqCompletion()) {
+
+                return false;
+            }
+        }
+
+        // else user may access this section
+        return true;
+    }
+
+    private function checkSeqCompletion()
+    {
+        $uid = $this->container['current_user_id'];
+        $sub = $this->_model->parent;
+
+        // proceed if this subchapter has been completed by this user
+        if ($sub->hasUserCompleted($uid)) {
+            return true;
+        }
+
+        // else check the previous (sub)chapter for completion
+        else {
+
+            // get previous subchapter
+            $previous = $sub->previousSibling();
+
+            // if this section's subchapter is the first of the
+            // chapter, there is no previous subchapter. Get the
+            // previous chapter instead.
+            if (!$previous) {
+                $previous = $sub->parent->previousSibling();
+            }
+
+            // if there is no previous chapter, this section is
+            // the very first
+            if (!$previous) {
+                return true;
+            }
+
+            // else check the previous (sub)chapter for completion
+            return $previous->hasUserCompleted($uid);
+        }
     }
 }
