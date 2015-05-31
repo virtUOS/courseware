@@ -1,1 +1,25 @@
-Student-View des DiscussionBlock
+{{^inactive}}
+  Student-View des DiscussionBlock
+
+  {{#threads}}
+    <article class="thread loading" id="{{thread.topic_id}}">
+      <header>
+        <h1>{{thread.description}}</h1>
+      </header>
+      <ul class="comments"></ul>
+
+      <div class="writer">
+        <textarea placeholder="{{#i18n}}Kommentiere dies{{/i18n}}"
+                  aria-label="{{#i18n}}Kommentiere dies{{/i18n}}"></textarea>
+      </div>
+
+    </article>
+  {{/threads}}
+
+{{/inactive}}
+
+{{#inactive}}
+<div class="messagebox messagebox_info">
+    {{#i18n}}Für diesen Diskussionsblock muss "Blubber" in dieser Veranstaltung eingeschaltet werden..{{/i18n}}
+</div>
+{{/inactive}}
