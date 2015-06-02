@@ -8,6 +8,9 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/templates'], funct
         },
 
         initialize: function(options) {
+        },
+
+        initializeFromDOM: function () {
             // complete model by retrieving the attributes from the
             // DOM instead of making a roundtrip to the server
             this.model.set({

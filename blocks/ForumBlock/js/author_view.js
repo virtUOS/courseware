@@ -12,13 +12,15 @@ define(['assets/js/author_view', 'assets/js/url'],
         },
 
         initialize: function() {
+            Backbone.on('beforemodeswitch', this.onModeSwitch, this);
+            Backbone.on('beforenavigate', this.onNavigate, this);
+        },
+
+        initializeFromDOM: function() {
             var $section = this.$el.closest('section.ForumBlock');
             var $sortingButtons = jQuery('button.lower', $section);
             $sortingButtons = $sortingButtons.add(jQuery('button.raise', $section));
             $sortingButtons.addClass('no-sorting');
-
-            Backbone.on('beforemodeswitch', this.onModeSwitch, this);
-            Backbone.on('beforenavigate', this.onNavigate, this);
         },
 
         onNavigate: function(event){

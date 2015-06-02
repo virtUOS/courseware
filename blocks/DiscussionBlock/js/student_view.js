@@ -18,19 +18,20 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
 
         initialize: function (options) {
             this.threads = new ThreadsCollection();
-            this.threads.reset(
-                _.map(this.$('article.thread'), function(el) {
-                    return new Thread({ id: $(el).attr('id') });
-                })
-            );
 
             this.listenTo(this.threads, 'change', this.render);
             this.listenTo(this.threads, 'update', this.render);
         },
 
-        render: function() {
-            console.log("rendering DiscussionBlock");
+        initializeFromDOM: function() {
+            this.threads.reset(
+                _.map(this.$('article.thread'), function(el) {
+                    return new Thread({ id: $(el).attr('id') });
+                })
+            );
+        },
 
+        render: function() {
             this.threads.each(function (thread) {
                 // clear the comments list
                 var ul = this.$('#' + thread.id + ' ul').empty();
