@@ -9,7 +9,13 @@
     {{^skip_entry}}
       <ul class="exercise">
         <li>
-          <h3 class="title">{{ title }}</h3>
+            <h3 class="title">{{ title }}</h3>
+          {{#tryagain}}
+            <p style="color:red">Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.</p>
+          {{/tryagain}}
+          {{#correct}}
+            <p style="color:green">Ihre Lösung ist korrekt!</p>
+          {{/correct}}
 
           {{^cloze_answers}}
             {{> _question}}
