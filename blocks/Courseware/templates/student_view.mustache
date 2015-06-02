@@ -20,32 +20,76 @@
     <button class="author" data-title="Autorenmodus"></button>
   </div>
 
-  <ol class=chapters>
+  <aside>
+    <ol class=chapters>
 
-    {{#chapters}}
-      {{> chapter}}
-    {{/chapters}}
+      {{#chapters}}
+        {{> chapter}}
+      {{/chapters}}
 
-    <li class=no-content>{{#i18n}}Keine Kapitel{{/i18n}}</li>
-    <li class=controls>
-      <button class=add-chapter>{{#i18n}}Kapitel einfügen{{/i18n}}</button>
-      <button class=init-sort-chapter>{{#i18n}}Kapitel sortieren{{/i18n}}</button>
-      <button class=stop-sort-chapter>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
+      <li class=no-content>{{#i18n}}Keine Kapitel{{/i18n}}</li>
+      <li class=controls>
+        <button class=add-chapter>{{#i18n}}Kapitel einfügen{{/i18n}}</button>
+        <button class=init-sort-chapter>{{#i18n}}Kapitel sortieren{{/i18n}}</button>
+        <button class=stop-sort-chapter>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
 
-      <a class="button export" href="{{#plugin_url}}export{{/plugin_url}}">
-        {{#i18n}}Export{{/i18n}}
-      </a>
+        <a class="button export" href="{{#plugin_url}}export{{/plugin_url}}">
+          {{#i18n}}Export{{/i18n}}
+        </a>
 
-      <a class="button import" href="{{#plugin_url}}import{{/plugin_url}}">
-        {{#i18n}}Import{{/i18n}}
-      </a>
+        <a class="button import" href="{{#plugin_url}}import{{/plugin_url}}">
+          {{#i18n}}Import{{/i18n}}
+        </a>
 
-      <a class="button settings" href="{{#plugin_url}}courseware/settings{{/plugin_url}}">
-        {{#i18n}}Einstellungen{{/i18n}}
-      </a>
+        <a class="button settings" href="{{#plugin_url}}courseware/settings{{/plugin_url}}">
+          {{#i18n}}Einstellungen{{/i18n}}
+        </a>
 
-    </li>
-  </ol>
+      </li>
+    </ol>
+
+    {{#active_chapter}}
+      {{#aside_section}}
+        <section class="aside-section"
+          data-blockid={{id}}
+          data-parentid="{{parent_id}}"
+          data-parenttype="Chapter"
+          data-title="{{title}}"
+          data-type="Section">
+
+          <header>
+            <h1>
+              {{#i18n}}Sidebar für {{/i18n}}
+                "{{active_chapter.title}}"
+            </h1>
+          </header>
+
+          {{{html}}}
+        </section>
+      {{/aside_section}}
+    {{/active_chapter}}
+
+    {{#active_subchapter}}
+      {{#aside_section}}
+        <section class="aside-section"
+          data-blockid={{id}}
+          data-parentid="{{parent_id}}"
+          data-parenttype="Subchapter"
+          data-title="{{title}}"
+          data-type="Section">
+
+          <header>
+            <h1>
+              {{#i18n}}Sidebar für {{/i18n}}
+                "{{active_subchapter.title}}"
+            </h1>
+          </header>
+
+          {{{html}}}
+        </section>
+      {{/aside_section}}
+    {{/active_subchapter}}
+  </aside>
 
   {{> active_subchapter}}
 

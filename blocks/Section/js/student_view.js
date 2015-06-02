@@ -25,7 +25,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
             "click .title .edit":     "editSection",
             "click .title .trash":    "destroySection",
 
-            "click .add-block-type":  "addNewBlock",
+            "click .add-block":       "addNewBlock",
 
             // child block stuff
 
@@ -103,7 +103,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                         }
                     )
                     .always(function () {
-                        self.refreshBlockTypes(self.model.id, self.$('div.block-types'));
+                        self.refreshBlockTypes(self.model.id, self.$('.block-types'));
                     })
                     .done();
             }
@@ -150,8 +150,9 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
             var view = this,
                 $button = jQuery(event.target),
-                block_type = $button.attr("data-blocktype"),
-                block_sub_type = $button.attr("data-blocksubtype");
+                $option = $button.prev('select').find(':selected'),
+                block_type = $option.attr("data-blocktype"),
+                block_sub_type = $option.attr("data-blocksubtype");
 
             $button.prop("disabled", true).addClass("loading");
 
@@ -187,7 +188,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
                 .always(function () {
                     $button.prop("disabled", false).removeClass("loading");
-                    view.refreshBlockTypes(view.model.id, view.$('div.block-types'));
+                    view.refreshBlockTypes(view.model.id, view.$('.block-types'));
                 })
                 .done();
         },
@@ -278,7 +279,9 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                 this.model.destroy()
                     .done(
                         function () {
-                            helper.navigateTo(parent_id);
+                            if (parent_id) {
+                                helper.navigateTo(parent_id);
+                            }
                         },
                         function (error) {
                             var errorMessage = 'Could not remove the section: '+jQuery.parseJSON(error.responseText).reason;

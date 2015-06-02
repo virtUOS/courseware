@@ -127,10 +127,9 @@ class Block extends \SimpleORMap implements \Serializable
         return static::findBySQL('parent_id = ? ORDER BY position ASC', array($id));
     }
 
-
     public static function findCourseware($cid)
     {
-        return current(self::findBySQL('seminar_id = ? AND parent_id IS NULL LIMIT 1', array($cid)));
+        return current(self::findBySQL('seminar_id = ? AND type = ? LIMIT 1', array($cid, 'Courseware')));
     }
 
     /**
@@ -323,5 +322,20 @@ class Block extends \SimpleORMap implements \Serializable
             $progress = new UserProgress(array($this->id, $uid));
             return $progress->getPercentage() === 1;
         }
+    }
+
+
+    public function getContentChildren()
+    {
+        return $this->children->filter(function ($child) {
+            return !in_array($child->type, Block::getStructuralBlockClasses());
+        });
+    }
+
+    public function getStructuralChildren()
+    {
+        return $this->children->filter(function ($child) {
+            return in_array($child->type, Block::getStructuralBlockClasses());
+        });
     }
 }
