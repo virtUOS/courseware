@@ -38,7 +38,8 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
         initialize: function() {
             _.each(jQuery('section.block'), function (element) {
-                this.initializeBlock(element, undefined, "student");
+                var block = this.initializeBlock(element, undefined, "student");
+                block.initializeFromDOM();
             }, this);
 
             this.listenTo(Backbone, "modeswitch", this.switchMode, this);
