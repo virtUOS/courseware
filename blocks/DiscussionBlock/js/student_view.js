@@ -72,6 +72,7 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
             }
 
             this.alreadyWriting = true;
+            $textarea.val('');
 
             Q(jQuery.ajax({
                 url: STUDIP.ABSOLUTE_URI_STUDIP + 'plugins.php/blubber/streams/comment',
@@ -91,42 +92,15 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
                     function (response) {
                         self.alreadyWriting = false;
 
-                        console.log("added comment", response);
                         var thread = self.threads.findWhere({ id: thread_id });
                         thread.addComment(response.content);
 
-
-
-                        //insertComment(thread, response.posting_id, response.mkdate, response.content);
-
-                        var insertComment = function (thread_id, posting_id, mkdate, comment) {
-                            if (jQuery("#posting_" + thread_id + " ul.comments > li").length === 0) {
-                                jQuery(comment).appendTo("#posting_" + thread_id + " ul.comments").hide().fadeIn();
-                            } else {
-                                var already_inserted = false;
-                                jQuery("#posting_" + thread_id + " ul.comments > li").each(function (index, li) {
-                                    if (!already_inserted && jQuery(li).attr("mkdate") > mkdate) {
-                                        jQuery(comment).insertBefore(li).hide().fadeIn();
-                                        already_inserted = true;
-                                    }
-                                });
-                                if (!already_inserted) {
-                                    var top = jQuery(document).scrollTop();
-                                    jQuery(comment).appendTo("#posting_" + thread_id + " ul.comments").hide().fadeIn();
-                                    var comment_top = jQuery("#posting_" + posting_id).offset().top;
-                                    var height = jQuery("#posting_" + posting_id).height() +
-                                            + 15; //2 * padding + 1 wegen des Border
-                                    if (comment_top < top) {
-                                        jQuery(document).scrollTop(top + height);
-                                    }
-                                }
-                            }
-                        };
                     },
 
                     // error
                     function (error) {
                         self.alreadyWriting = false;
+                        $textarea.val(content);
 
                         var errorMessage = 'Could not send comment: '+jQuery.parseJSON(error.responseText).reason;
                         alert(errorMessage);

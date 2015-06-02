@@ -34,6 +34,15 @@ class DiscussionBlock extends Block
         return array();
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isEditable()
+    {
+        return false;
+    }
+
     /////////////////////
     // PRIVATE HELPERS //
     /////////////////////

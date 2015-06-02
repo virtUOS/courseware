@@ -45,8 +45,8 @@ class Discussion
         $cid       = $this->container['cid'];
         $author_id = $this->container['current_user_id'];
         $content   = $this->group
-                   ? sprintf("Gruppendiskussion der Gruppe '%s'", $this->group->name)
-                   : "Gruppendiskussion";
+                   ? sprintf("Dialog Gruppe '%s'", $this->group->name)
+                   : "Kommentare";
 
         $thread = new \BlubberPosting($thread_id);
 
