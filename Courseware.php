@@ -66,9 +66,16 @@ class Courseware extends StudIPPlugin implements StandardPlugin
                                                      PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true)));
 
 
+        // tabs for students
         if (!$this->container['current_user']->hasPerm($course_id, 'dozent')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
             $tabs['mooc_progress'] = new Navigation(_('Fortschrittsübersicht'), $progress_url);
+        }
+
+        // tabs for tutors and up
+        else {
+            $discussions_url = PluginEngine::getURL($this, compact('cid'), 'courseware/discussions', true);
+            $tabs['mooc_discussions'] = new Navigation(_('Kommunikation'), $discussions_url);
         }
 
         return $tabs;

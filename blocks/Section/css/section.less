@@ -209,9 +209,15 @@ button.stop-sort-block {
   }
 }
 
-// hide header of aside sections unless authoring
 &.view-student .aside-section {
+
+  // hide header of aside sections unless authoring
   > header {
+    display: none;
+  }
+
+  // do not show "no-content" message to empty aside sections
+  .no-content {
     display: none;
   }
 }

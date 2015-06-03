@@ -46,7 +46,7 @@
      })
    });
 
-   require(['assets/js/main-courseware']);
+   require(['assets/js/<?= $main ?>']);
 
  }());
 </script>
