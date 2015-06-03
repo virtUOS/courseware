@@ -539,6 +539,7 @@ class TestBlock extends Block
 
         if ($this->test) {
             $numberofex =  count($this->test->exercises);
+            $exindex = 1;
             foreach ($this->test->exercises as $exercise) {
                 /** @var \Mooc\UI\TestBlock\Model\Exercise $exercise */
 
@@ -568,7 +569,8 @@ class TestBlock extends Block
                     'solution' => $exercise->getAnswersStrategy()->getSolution($exercise->getVipsSolutionFor($this->test, $user)),
                     'solving_allowed' => $exercise->solvingAllowed($this->test, $user),
                     'number_of_answers' => count($answers),
-                    'number_of_exercise' => $numberofex,
+                    'number_of_exercises' => $numberofex,
+                    'exercise_index' => $exindex++,
                     $exercise->getAnswersStrategy()->getTemplate() => true,
                     'user_answers' => $userAnswers,
                 );

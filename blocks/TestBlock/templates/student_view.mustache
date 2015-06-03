@@ -11,11 +11,12 @@
       <ul class="exercise" id="exercise{{id}}">
         <li>
           <div class="exercisetitle">
-              <button name="exercisenav" class="exercisenavbutton exercisenavback" button-data='{"id":"{{id}}", "numexes": "{{number_of_exercise}}", "direction": "back" }'>zurück</button>
-              {{ title }}
-              <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{id}}", "numexes": "{{number_of_exercise}}" , "direction": "next"}'>weiter</button>
+              <button name="exercisenav" class="exercisenavbutton exercisenavback" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}", "direction": "back" }'></button>
+              Frage {{exercise_index}} / {{number_of_exercises}}
+              <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}" , "direction": "next"}'></button>
           </div>
-          <h3 class="testblock-progress" >Frage {{id}} / {{number_of_exercise}}</h3>
+          <div class="exercise-content">
+          <h3 class="exercise-title" >{{ title }}</h3>
           {{^cloze_answers}}
             {{> _question}}
           {{/cloze_answers}}
@@ -68,6 +69,7 @@
 
             {{> _exercise_form_end}}
           {{/show_solution}}
+          </div>
         </li>
       </ul>
       {{/skip_entry}}
