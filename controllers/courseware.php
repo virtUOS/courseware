@@ -61,6 +61,9 @@ class CoursewareController extends MoocipController {
 
 
         $this->blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? AND type = ?', array($this->container['cid'], 'DiscussionBlock'));
+
+        // add CSS
+        $this->addBlockStyles();
     }
 
     /////////////////////
