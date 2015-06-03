@@ -1,22 +1,21 @@
 {{#active}}
-  <h2>{{title}}</h2>
-
+  
+  <h2 class="testblock-header">{{title}}</h2>
+  
   {{#description}}
     <div class="description">{{{description}}}</div>
   {{/description}}
 
   {{#exercises}}
     {{^skip_entry}}
-      <ul class="exercise">
+      <ul class="exercise" id="exercise{{id}}">
         <li>
-            <h3 class="title">{{ title }}</h3>
-          {{#tryagain}}
-            <p style="color:red">Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.</p>
-          {{/tryagain}}
-          {{#correct}}
-            <p style="color:green">Ihre Lösung ist korrekt!</p>
-          {{/correct}}
-
+          <div class="exercisetitle">
+              <button name="exercisenav" class="exercisenavbutton exercisenavback" button-data='{"id":"{{id}}", "numexes": "{{number_of_exercise}}", "direction": "back" }'>zurÃ¼ck</button>
+              {{ title }}
+              <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{id}}", "numexes": "{{number_of_exercise}}" , "direction": "next"}'>weiter</button>
+          </div>
+          <h3 class="testblock-progress" >Frage {{id}} / {{number_of_exercise}}</h3>
           {{^cloze_answers}}
             {{> _question}}
           {{/cloze_answers}}
@@ -72,8 +71,9 @@
         </li>
       </ul>
       {{/skip_entry}}
+     
   {{/exercises}}
-
+  
   {{^exercises}}
     {{#i18n}}Keine Aufgaben.{{/i18n}}
   {{/exercises}}
