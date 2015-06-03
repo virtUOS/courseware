@@ -2,4 +2,4 @@
 
 <?= $courseware_block->render($view, $context) ?>
 
-<?= $this->render_partial('courseware/_requirejs', array('main' => 'main-courseware') ?>
+<?= $this->render_partial('courseware/_requirejs', array('main' => 'main-courseware')); ?>
