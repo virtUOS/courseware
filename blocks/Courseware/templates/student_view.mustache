@@ -32,6 +32,9 @@
         <button class=add-chapter>{{#i18n}}Kapitel einfügen{{/i18n}}</button>
         <button class=init-sort-chapter>{{#i18n}}Kapitel sortieren{{/i18n}}</button>
         <button class=stop-sort-chapter>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
+        {{^active_chapter.aside_section}}
+          <button class=activate-aside-section>{{#i18n}}Seitenblöcke aktivieren{{/i18n}}</button>
+        {{/active_chapter.aside_section}}
 
         <a class="button export" href="{{#plugin_url}}export{{/plugin_url}}">
           {{#i18n}}Export{{/i18n}}
