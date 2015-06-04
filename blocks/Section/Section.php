@@ -266,11 +266,16 @@ class Section extends Block {
     {
         $uid = $this->container['current_user_id'];
         $sub = $this->_model->parent;
-
+        
+        // TODO: solve in a more elegant way
+        if (!$sub) {
+            return true;
+        }
         // proceed if this subchapter has been completed by this user
         if ($sub->hasUserCompleted($uid)) {
             return true;
         }
+        
 
         // else check the previous (sub)chapter for completion
         else {
