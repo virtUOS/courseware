@@ -34,7 +34,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
         if ($this->isSlotModule()){ 
             Navigation::removeItem('/course/members');
-            Navigation::removeItem('/course/files');
+            // Navigation::removeItem('/course/files'); // TT DOUBLE HACK, no WYSIWYG-Upload if file tab is invisible...
             Navigation::removeItem('/course/blubberforum');
             if(!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
                 Navigation::removeItem('/course/vipsplugin');
