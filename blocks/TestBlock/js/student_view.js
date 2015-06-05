@@ -5,8 +5,9 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         events: {
             'click button[name=reset-exercise]': function (event) {
                 var $form = this.$(event.target).closest('form');
+                console.log(this.$el.find(".exercise"));
                 var view = this;
-                var $exercise_id = $form.find("input[name='exercise_id']").val();
+                var $exercise_index = $form.find("input[name='exercise_index']").val();
                 if (confirm('Soll die Antwort zurückgesetzt werden?')) {
                     helper
                         .callHandler(this.model.id, 'exercise_reset', $form.serialize())
@@ -14,7 +15,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                             function () {
                                 $.when(view.renderServerSide()).done(function(){
                                    $('.exercise').hide();
-                                   $('#exercise'+$exercise_id).show();
+                                   $('#exercise'+$exercise_index).show();
                                 });                                
                             },
                             function () {
@@ -29,14 +30,14 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
             'click button[name=submit-exercise]': function (event) {
                 var $form = this.$(event.target).closest('form');
                 var view = this;
-                var $exercise_id = $form.find("input[name='exercise_id']").val();
+                var $exercise_index = $form.find("input[name='exercise_index']").val();
                 helper
                     .callHandler(this.model.id, 'exercise_submit', $form.serialize())
                     .then(
                         function () {
                             $.when(view.renderServerSide()).done(function(){
                                    $('.exercise').hide();
-                                   $('#exercise'+$exercise_id).show();
+                                   $('#exercise'+$exercise_index).show();
                             });  
                         },
                         function () {
