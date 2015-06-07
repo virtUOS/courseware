@@ -5,6 +5,8 @@ class ProgressController extends MoocipController {
     public function before_filter(&$action, &$args)
     {
         parent::before_filter($action, $args);
+        PageLayout::addStylesheet($GLOBALS['ABSOLUTE_URI_STUDIP'] . $this->plugin->getPluginPath() . '/assets/courseware.min.css');
+
     }
 
     public function index_action()
@@ -13,10 +15,31 @@ class ProgressController extends MoocipController {
             Navigation::activateItem("/course/mooc_progress");
         }
 
+        $this->mode = $GLOBALS['perm']->have_studip_perm("tutor", $this->plugin->getCourseId()) ? 'total' : 'single';
+        $this->members = CourseMember::findByCourseAndStatus($this->plugin->getCourseId(), 'autor');
+
+        $uid = NULL;
+        $this->current_user = NULL; // expose current user to template
+        if ($this->mode == 'total') { // list all participants
+            if (Request::option('uid')) { // one participant selected
+                foreach ($this->members as $m) {
+                    if ($m->user_id == Request::option('uid')) {
+                        $uid = $m->user_id;
+                        $this->current_user = $m;
+                    }
+                }
+            } else if ($this->members) {  // no one selected: take first, if there are participants at all
+                $uid = $this->members[0]->user_id;
+                $this->current_user = $this->members[0];
+            }
+        } else { // single mode: only show my results
+            $uid = $this->plugin->getCurrentUserId();
+        }
+
         $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position', array($this->plugin->getCourseId()));
         $bids   = array_map(function ($block) { return (int) $block->id; }, $blocks);
         $progress = array_reduce(
-            \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id = ?', array($bids, $this->plugin->getCurrentUserId())),
+            \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id = ?', array($bids, $uid)),
             function ($memo, $item) {
                 $memo[$item->block_id] = array(
                     'grade' => $item->grade,
@@ -37,6 +60,14 @@ class ProgressController extends MoocipController {
 
         $this->courseware = current($grouped['']);
         $this->buildTree($grouped, $progress, $this->courseware);
+
+        // show discussions
+        $this->blocks = \Mooc\DB\Block::findBySQL('id=115 AND seminar_id = ? AND type = ?', array($this->plugin->getCourseId(), 'DiscussionBlock'));
+        // TODO: This is a hack just for tomorrow (8.6.2015)
+
+        // add CSS
+        $this->addBlockStyles();
+
     }
 
     private function buildTree($grouped, $progress, &$root)
@@ -102,4 +133,16 @@ class ProgressController extends MoocipController {
                     $block['children'])
             ) / sizeof($block['children']);
     }
+
+    // include the stylesheets of all default block types
+    private function addBlockStyles()
+    {
+        return PageLayout::addStylesheet(
+            $GLOBALS['ABSOLUTE_URI_STUDIP'] .
+            $this->plugin->getPluginPath() .
+            '/assets/courseware.min.css');
+    }
+
 }
+
+

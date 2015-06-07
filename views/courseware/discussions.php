@@ -33,7 +33,8 @@
 
         <header>
             <h1>
-                <a href="<?= $url ?>"> <?= htmlReady($link) ?> </a>
+                <?= htmlReady($link) ?>
+                <!-- <a href="<?= $url ?>"> <?= htmlReady($link) ?> </a> -->
             </h1>
         </header>
 

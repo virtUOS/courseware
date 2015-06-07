@@ -32,8 +32,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $this->setupContainer();
 
         // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
-        if ($this->isSlotModule()){ 
-            Navigation::removeItem('/course/members');
+        if ($this->isSlotModule()){
             // Navigation::removeItem('/course/files'); // TT DOUBLE HACK, no WYSIWYG-Upload if file tab is invisible...
             Navigation::removeItem('/course/blubberforum');
             if(!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
@@ -71,6 +70,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin
                                                      PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true)));
 
 
+        $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
+
         // tabs for students
         if (!$this->container['current_user']->hasPerm($course_id, 'dozent')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
@@ -80,6 +81,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         // tabs for tutors and up
         else {
             $discussions_url = PluginEngine::getURL($this, compact('cid'), 'courseware/discussions', true);
+            $tabs['mooc_progress'] = new Navigation(_('Fortschrittsübersicht'), $progress_url);
             $tabs['mooc_discussions'] = new Navigation(_('Kommunikation'), $discussions_url);
         }
 

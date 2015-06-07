@@ -8,7 +8,7 @@ use Mooc\UI\Block;
  */
 class DiscussionBlock extends Block
 {
-    const NAME = 'Diskussion';
+    const NAME = 'Gruppendiskussion';
 
     function initialize()
     {
