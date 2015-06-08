@@ -19,8 +19,6 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
     return StudentView.extend({
 
-        children: {},
-
         events: {
             "click .title .edit":     "editSection",
             "click .title .trash":    "destroySection",
@@ -37,7 +35,9 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
         },
 
         initialize: function() {
-            _.each(jQuery('section.block'), function (element) {
+            this.children = {};
+
+            _.each(this.$('section.block'), function (element) {
                 var block = this.initializeBlock(element, undefined, "student");
                 block.initializeFromDOM();
             }, this);
