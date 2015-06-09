@@ -166,7 +166,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                             view_name = model.get("editable") ? "author" : "student",
                             block_stub = view.appendBlockStub(model, view_name),
                             $el = block_stub.$el.closest("section.block"),
-                            block_name = $button.html();
+                            block_name = $option.html();
 
                         $el.addClass("loading");
                         block_stub.renderServerSide().then(function () {
