@@ -18,6 +18,9 @@ $progress = function ($block, $format = "") {
           <li class="chapter <?= ($current_user && $m->user_id == $current_user->user_id) ? "selected":"" ?>">
             <div class="title">
               <a class="navigate" href="<?= $controller->url_for('progress', array('uid' => $m->user_id)) ?>">
+                <span class="user_avatar">
+                    <?=Avatar::getAvatar($m->user_id)->getImageTag(Avatar::NORMAL);?>
+                </span>
                 <?= $m->getUserFullname(); ?>
               </a>
             </div>
@@ -33,6 +36,11 @@ $progress = function ($block, $format = "") {
                       <a class="navigate" href="#comm">Kommunikation</a>
                     </div>
                   </li>
+                    <li class="subchapter">
+                        <div class="title">
+                            <a href="<?=URLHelper::getLink('dispatch.php/profile?username=' . $m->username)?>" class="navigate">Profil</a>
+                        </div>
+                    </li>
                 </ol>
             <? endif ?>
           </li>
