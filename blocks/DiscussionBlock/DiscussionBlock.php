@@ -74,9 +74,10 @@ class DiscussionBlock extends Block
         else {
             $groups = $this->getStatusgruppenByCourse();
 
-            $threads = $groups->map(function ($group) use ($container, $block_id) {
-                    return new Discussion($container, $block_id, $group);
-            });
+            $threads = array_values(
+                $groups->map(function ($group) use ($container, $block_id) {
+                        return new Discussion($container, $block_id, $group);
+                    }));
 
             // authors and users w/o groups and everyone else gets the
             // default group too
