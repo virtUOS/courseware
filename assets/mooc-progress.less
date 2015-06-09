@@ -1,3 +1,5 @@
+@import './mixins-blubber';
+
 #mooc-progress-index #layout_container {
 
   // TODO move to OHN-layout
@@ -99,6 +101,9 @@
   article.thread {
     margin-top: 3em;
   }
+
+  // include blubber-style discussion threads' styling
+  .discussion-thread();
 }
 
 html.flexbox #mooc-progress-index #layout_container {
