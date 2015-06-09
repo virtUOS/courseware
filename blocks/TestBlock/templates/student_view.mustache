@@ -18,10 +18,10 @@
           <div class="exercise-content">
           <h3 class="exercise-title" >{{ title }}</h3>
           {{#tryagain}}
-              <p style="color:red">Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.</p>
+              <p class="exercise-tryagain">Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.</p>
           {{/tryagain}}
           {{#correct}}
-              <p style="color:green">Ihre Lösung ist korrekt!</p>
+              <p class="exercise-correct">Ihre Lösung ist korrekt!</p>
           {{/correct}}
           {{^cloze_answers}}
             {{> _question}}
