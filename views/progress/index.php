@@ -43,7 +43,7 @@ $progress = function ($block, $format = "") {
 <a name="progress"></a>
   <div class=" <?=$mode=='total' ? 'active-section':''?>">
 
-    <h1>Fortschrittsübersicht <? if ($mode=='total' && $current_user) echo "für ".$current_user->getUserFullname(); ?></h1>
+    <h1>Fortschrittsübersicht <? if ($mode=='total' && $current_user) echo "für ".$current_user->getFullname(); ?></h1>
 
     <table class=chapters>
       <? foreach ($courseware['children'] as $chapter) : ?>
@@ -83,38 +83,35 @@ $progress = function ($block, $format = "") {
       <? endforeach ?>
     </table>
 
-      <p>&nbsp;</p>
-      <a name="comm"></a>
-<h1>
-    Persönliche Kommunikation mit <? if ($mode=='total' && $current_user) echo $current_user->getUserFullname(); else echo "dem Referenten"; ?>
-    <!-- TODO: Referent ersetzen -->
-</h1>
 
-<? foreach ($blocks as $block ) : ?>
+    <? $thread = $discussion->thread; ?>
 
-    <?
-    $ui_block = $container['block_factory']->makeBlock($block);
-    $html = $ui_block->render('student', array());
-    ?>
+    <div id="comm" class="block-content">
 
-    <section class="contentbox">
+    <article class="thread loading" id="<?= htmlReady($thread->id) ?>">
+        <header>
+            <h1>
+                Persönliche Kommunikation mit
+                <? if ($mode=='total' && $current_user) : ?>
+                    <?= $current_user->getFullname() ?>
+                <? else: ?>
+                    <?= _("dem Referenten") ?>
+                <? endif ?>
+            </h1>
+        </header>
+        <ul class="comments"></ul>
 
-        <section id=block-<?= $block->id ?>
-                 class="block <?= $block->type ?>"
-                 data-blockid="<?= $block->id ?>"
-                 data-blocktype="<?= $block->type ?>">
+        <div class="writer">
+            <textarea placeholder="<?= _("Kommentiere dies") ?>"
+                      aria-label="<?= _("Kommentiere dies") ?>"></textarea>
+        </div>
 
-            <div class="block-content" data-view="student">
-                <?= $html ?>
-            </div>
-        </section>
+    </article>
 
-
-    </section>
-<? endforeach ?>
+    </div>
 
 </section>
 
 </div>
 
-<?= $this->render_partial('courseware/_requirejs', array('main' => 'main-discussions')) ?>
+<?= $this->render_partial('courseware/_requirejs', array('main' => 'main-progress')) ?>

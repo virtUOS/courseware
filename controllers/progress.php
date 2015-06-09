@@ -1,5 +1,7 @@
 <?php
 
+use Mooc\UI\DiscussionBlock\LecturerDiscussion;
+
 class ProgressController extends MoocipController {
 
     public function before_filter(&$action, &$args)
@@ -25,12 +27,13 @@ class ProgressController extends MoocipController {
                 foreach ($this->members as $m) {
                     if ($m->user_id == Request::option('uid')) {
                         $uid = $m->user_id;
-                        $this->current_user = $m;
+                        $this->current_user = $m->user;
                     }
                 }
             } else if ($this->members) {  // no one selected: take first, if there are participants at all
-                $uid = $this->members[0]->user_id;
-                $this->current_user = $this->members[0];
+                $m = $this->members[0];
+                $uid = $m->user_id;
+                $this->current_user = $m->user;
             }
         } else { // single mode: only show my results
             $uid = $this->plugin->getCurrentUserId();
@@ -61,13 +64,13 @@ class ProgressController extends MoocipController {
         $this->courseware = current($grouped['']);
         $this->buildTree($grouped, $progress, $this->courseware);
 
+
         // show discussions
-        $this->blocks = \Mooc\DB\Block::findBySQL('id=115 AND seminar_id = ? AND type = ?', array($this->plugin->getCourseId(), 'DiscussionBlock'));
+
         // TODO: This is a hack just for tomorrow (8.6.2015)
+        // $this->blocks = \Mooc\DB\Block::findBySQL('id=115 AND seminar_id = ? AND type = ?', array($this->plugin->getCourseId(), 'DiscussionBlock'));
 
-        // add CSS
-        $this->addBlockStyles();
-
+        $this->discussion = isset($this->current_user) ? new LecturerDiscussion($this->container, $this->current_user) : null;
     }
 
     private function buildTree($grouped, $progress, &$root)
