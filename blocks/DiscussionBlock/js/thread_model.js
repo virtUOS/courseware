@@ -41,7 +41,7 @@ define(['q', 'backbone', 'underscore'], function (Q, Backbone, _) {
 
                 // error
                 function (error) {
-                    this.set('$error', error);
+                    self.set('$error', error);
                     console.log(error);
                 });
         },
