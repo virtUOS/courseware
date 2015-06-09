@@ -65,7 +65,9 @@ class DiscussionBlock extends Block
             }
 
             else {
-                $threads = array(new Discussion($container, $block_id, null));
+                # TODO: removed for DFB
+                # $threads = array(new Discussion($container, $block_id, null));
+                $threads = array();
             }
 
         }
@@ -79,9 +81,10 @@ class DiscussionBlock extends Block
                         return new Discussion($container, $block_id, $group);
                     }));
 
-            // authors and users w/o groups and everyone else gets the
-            // default group too
-            $threads[] = new Discussion($container, $block_id, null);
+            # TODO: removed for DFB
+            # // authors and users w/o groups and everyone else gets the
+            # // default group too
+            # $threads[] = new Discussion($container, $block_id, null);
         }
 
         return $threads;
