@@ -50,6 +50,62 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
         postRender: function() {
             this.loadThreads();
             autosize(this.$('.writer textarea'));
+            var textarea = this.$('.writer textarea');
+            textarea.on("drop", function (event) {
+                event.preventDefault();
+                var files = 0;
+                var file_info = event.originalEvent.dataTransfer.files || {};
+                var data = new FormData();
+                var thread = textarea.closest('.thread').attr('id');
+                var context_id = STUDIP.URLHelper.parameters.cid;
+                var context_type = "course";
+
+                jQuery.each(file_info, function (index, file) {
+                    if (file.size > 0) {
+                        data.append(index, file);
+                        files += 1;
+                    }
+                });
+                if (files > 0) {
+                    jQuery(textarea).addClass("uploading");
+                    jQuery.ajax({
+                        'url': STUDIP.ABSOLUTE_URI_STUDIP + 'plugins.php/blubber/streams'
+                        + "/post_files?context=" + context_id
+                        + "&context_type=" + context_type
+                        + (context_type === "course" ? "&cid=" + context_id : ""),
+                        'data': data,
+                        'cache': false,
+                        'contentType': false,
+                        'processData': false,
+                        'type': 'POST',
+                        'xhr': function () {
+                            var xhr = jQuery.ajaxSettings.xhr();
+                            //workaround for FF<4 https://github.com/francois2metz/html5-formdata
+                            if (data.fake) {
+                                xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary=" + data.boundary);
+                                xhr.send = xhr.sendAsBinary;
+                            }
+                            return xhr;
+                        },
+                        'success': function (json) {
+                            if (typeof json.inserts === "object") {
+                                jQuery.each(json.inserts, function (index, text) {
+                                    jQuery(textarea).val(jQuery(textarea).val() + " " + text);
+                                });
+                            }
+                            if (typeof json.errors === "object") {
+                                alert(json.errors.join("\n"));
+                            } else if (typeof json.inserts !== "object") {
+                                alert("Fehler beim Dateiupload.");
+                            }
+                            jQuery(textarea).trigger("keydown");
+                        },
+                        'complete': function () {
+                            jQuery(textarea).removeClass("hovered").removeClass("uploading");
+                        }
+                    });
+                }
+            });
         },
 
         loadThreads: function() {
