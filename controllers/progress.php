@@ -37,6 +37,7 @@ class ProgressController extends MoocipController {
             }
         } else { // single mode: only show my results
             $uid = $this->plugin->getCurrentUserId();
+            $this->current_user = $this->container['current_user'];
         }
 
         $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position', array($this->plugin->getCourseId()));
@@ -66,10 +67,6 @@ class ProgressController extends MoocipController {
 
 
         // show discussions
-
-        // TODO: This is a hack just for tomorrow (8.6.2015)
-        // $this->blocks = \Mooc\DB\Block::findBySQL('id=115 AND seminar_id = ? AND type = ?', array($this->plugin->getCourseId(), 'DiscussionBlock'));
-
         $this->discussion = isset($this->current_user) ? new LecturerDiscussion($this->container, $this->current_user) : null;
     }
 
