@@ -11,6 +11,8 @@ define(['domReady!', 'scrollTo', './url', './block_types', './block_model'], fun
                 model: new BlockModel({})
             });
 
+        $el.find('article').addClass("open");
+
         block.initializeFromDOM();
         block.postRender();
     });
