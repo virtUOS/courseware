@@ -7,10 +7,11 @@ namespace Mooc\UI\DiscussionBlock;
 abstract class Discussion
 {
 
-    public function __construct($container)
+    public function __construct($cid, $user)
     {
-        $this->container = $container;
-        $this->thread    = $this->findOrCreateBlubberThread();
+        $this->cid    = $cid;
+        $this->user   = $user;
+        $this->thread = $this->findOrCreateBlubberThread();
     }
 
     abstract protected function getDefaultDescription();
@@ -42,17 +43,14 @@ abstract class Discussion
     private function createBlubberThread()
     {
         $thread_id = $this->generateMD5();
-        $cid       = $this->container['cid'];
-        $author_id = $this->container['current_user_id'];
-
         $thread = new \BlubberPosting($thread_id);
 
         $data = array(
             'context_type' => 'course',
             'root_id'      => $thread_id,
             'parent_id'    => 0,
-            'seminar_id'   => $cid,
-            'user_id'      => $author->id,
+            'seminar_id'   => $this->cid,
+            'user_id'      => $this->user->id,
             'name'         => $this->getDefaultName(),
             'description'  => $this->getDefaultDescription()
         );

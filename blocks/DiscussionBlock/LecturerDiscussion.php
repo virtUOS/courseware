@@ -9,16 +9,9 @@ namespace Mooc\UI\DiscussionBlock;
  */
 class LecturerDiscussion extends  Discussion
 {
-
-    public function __construct($container, \User $participant)
-    {
-        $this->participant = $participant;
-        parent::__construct($container);
-    }
-
     protected function getDefaultDescription()
     {
-        return sprintf("Teilnehmerkommunikation mit '%s'", $this->participant->getFullName());
+        return sprintf("Teilnehmerkommunikation mit '%s'", $this->user->getFullName());
     }
 
     protected function getDefaultName()
@@ -28,6 +21,6 @@ class LecturerDiscussion extends  Discussion
 
     protected function generateID()
     {
-        return sprintf("user-%s", $this->participant->username);
+        return sprintf("user-%s", $this->user->username);
     }
 }

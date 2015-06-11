@@ -26,7 +26,15 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
         initializeFromDOM: function() {
             this.threads.reset(
                 _.map(this.$('article.thread'), function(el) {
-                    return new Thread({ id: $(el).attr('id') });
+                    var id = $(el).attr('id'),
+                        cid = $(el).attr('data-cid');
+
+                    // TODO: this should probably go to ThreadModel
+                    if (!id || id === '' || !cid || cid === '') {
+                        throw new Error("Could not initialize DiscussionBlock from DOM");
+                    }
+
+                    return new Thread({ id: id, cid: cid });
                 })
             );
         },
@@ -50,6 +58,9 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
         postRender: function() {
             this.loadThreads();
             autosize(this.$('.comment-writer textarea'));
+
+            // TODO: clean this up; put event handling into
+            //       this.events etc.
             var textarea = this.$('.comment-writer textarea');
             textarea.on("drop", function (event) {
                 event.preventDefault();
@@ -57,7 +68,7 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
                 var file_info = event.originalEvent.dataTransfer.files || {};
                 var data = new FormData();
                 var thread = textarea.closest('.thread').attr('id');
-                var context_id = STUDIP.URLHelper.parameters.cid;
+                var context_id = textarea.closest('.thread').attr('data-cid');
                 var context_type = "course";
 
                 jQuery.each(file_info, function (index, file) {
@@ -117,10 +128,13 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
 
         alreadyWriting: false,
 
+        // TODO: put this into ThreadModel
         write: function (textarea) {
             var $textarea = this.$(textarea),
                 content = $textarea.val(),
-                thread_id = $textarea.closest('.thread').attr('id'),
+                $thread_el = $textarea.closest('.thread'),
+                thread_id = $thread_el.attr('id'),
+                cid = $thread_el.attr('data-cid'),
                 self = this;
 
             if (!content || this.alreadyWriting) {
@@ -133,7 +147,7 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
             Q(jQuery.ajax({
                 url: STUDIP.ABSOLUTE_URI_STUDIP + 'plugins.php/blubber/streams/comment',
                 data: {
-                    context:      STUDIP.URLHelper.parameters.cid,
+                    context:      cid,
                     context_type: 'course',
                     thread:       thread_id,
                     content:      content
@@ -158,7 +172,8 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
                         self.alreadyWriting = false;
                         $textarea.val(content);
 
-                        var errorMessage = 'Could not send comment: '+jQuery.parseJSON(error.responseText).reason;
+                        var errorMessage = ['Could not send comment:'
+                                            + jQuery.parseJSON(error.responseText).reason].join('');
                         alert(errorMessage);
                         console.log(errorMessage, arguments);
                     })

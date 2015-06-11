@@ -22,7 +22,7 @@ define(['q', 'backbone', 'underscore'], function (Q, Backbone, _) {
                 url: STUDIP.ABSOLUTE_URI_STUDIP + 'plugins.php/blubber/streams/more_comments',
                 data: {
                     thread_id: this.id,
-                    cid:       STUDIP.URLHelper.parameters.cid,
+                    cid:       this.cid,
                     count:     'all'
                 },
                 dataType: 'json',

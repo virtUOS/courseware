@@ -67,7 +67,7 @@ class ProgressController extends MoocipController {
 
 
         // show discussions
-        $this->discussion = isset($this->current_user) ? new LecturerDiscussion($this->container, $this->current_user) : null;
+        $this->discussion = isset($this->current_user) ? new LecturerDiscussion($this->container['cid'], $this->current_user) : null;
     }
 
     private function buildTree($grouped, $progress, &$root)

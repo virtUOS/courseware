@@ -9,11 +9,11 @@ namespace Mooc\UI\DiscussionBlock;
 class GroupDiscussion extends  Discussion
 {
 
-    public function __construct($container, $block_id, $group)
+    public function __construct($cid, $user, $block_id, $group)
     {
         $this->block_id  = $block_id;
         $this->group     = $group;
-        parent::__construct($container);
+        parent::__construct($cid, $user);
     }
 
     protected function getDefaultDescription()

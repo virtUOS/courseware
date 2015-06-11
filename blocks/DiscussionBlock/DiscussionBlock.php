@@ -60,13 +60,13 @@ class DiscussionBlock extends Block
 
             if (sizeof($groups)) {
                 $threads = $groups->map(function ($group) use ($container, $block_id) {
-                        return new GroupDiscussion($container, $block_id, $group);
+                        return new GroupDiscussion($container['cid'], $container['current_user'], $block_id, $group);
                     });
             }
 
             else {
                 # TODO: removed for DFB
-                # $threads = array(new GroupDiscussion($container, $block_id, null));
+                # $threads = array(new GroupDiscussion($container['cid'], $container['current_user'], $block_id, null));
                 $threads = array();
             }
 
@@ -78,13 +78,13 @@ class DiscussionBlock extends Block
 
             $threads = array_values(
                 $groups->map(function ($group) use ($container, $block_id) {
-                        return new GroupDiscussion($container, $block_id, $group);
+                        return new GroupDiscussion($container['cid'], $container['current_user'], $block_id, $group);
                     }));
 
             # TODO: removed for DFB
             # // authors and users w/o groups and everyone else gets the
             # // default group too
-            # $threads[] = new GroupDiscussion($container, $block_id, null);
+            # $threads[] = new GroupDiscussion($container['cid'], $container['current_user'], $block_id, null);
         }
 
         return $threads;

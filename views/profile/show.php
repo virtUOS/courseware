@@ -7,10 +7,10 @@
 
     <div class="block-content DiscussionBlock">
 
-        <article class="thread open loading" id="<?= htmlReady($thread->id) ?>">
+        <article class="thread loading" id="<?= htmlReady($thread->id) ?>" data-cid="<?= htmlReady($discussion->cid) ?>">
             <header>
                 <h1>
-                    <?= Course::find($thread->seminar_id)->name ?>
+                    <?= Course::find($discussion->cid)->name ?>
                 </h1>
             </header>
             <ul class="comments"></ul>
@@ -24,9 +24,5 @@
 
     </div>
 <? endforeach ?>
-
-<script>
-    STUDIP.URLHelper.parameters.cid = "<?= $cid ?>";
-</script>
 
 <?= $this->render_partial('courseware/_requirejs', array('main' => 'main-profile')) ?>

@@ -96,7 +96,7 @@ $progress = function ($block, $format = "") {
 
     <div id="comm" class="block-content">
 
-    <article class="thread loading" id="<?= htmlReady($thread->id) ?>">
+    <article class="thread loading" id="<?= htmlReady($thread->id) ?>" data-cid="<?= htmlReady($discussion->cid) ?>">
         <header>
             <h1>
                 Persönliche Kommunikation mit

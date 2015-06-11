@@ -115,25 +115,37 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     // homepageplugin template method
     public function getHomepageTemplate($user_id)
     {
-        if ($user_id === $this->container['current_user_id']) {
+
+        $user = $this->container['current_user'];
+
+        // show contentbox only when visiting one's own page
+        if ($user_id === $user->id) {
+
+            // get all the courses with Courseware plugin activation
+            $pid = $this->getPluginId();
+            $pm  = \PluginManager::getInstance();
+            $my_courses = $this->container['current_user']->course_memberships->filter(function ($cm) use ($pid, $pm) {
+                    return $pm->isPluginActivated($pid, $cm->seminar_id);
+                });
+
+            // cannot show any discussions
+            if (!sizeof($my_courses)) {
+                return null;
+            }
+
+            $discussions = array();
+            foreach ($my_courses as $my_course) {
+                if ($my_course->status === 'autor') {
+                    $discussions[] = new \Mooc\UI\DiscussionBlock\LecturerDiscussion($my_course->seminar_id, $user);
+                }
+            }
 
             $templatefactory = new Flexi_TemplateFactory(__DIR__ . '/views');
             $template = $templatefactory->open("profile/show.php");
 
-            // TODO this is evil, do it in another way; cid must be
-            // discussion specific too
-            $fixme = clone $this->container;
-            $template->cid = $fixme['cid'] = '2ddeaababa7d8531b49c2db9370dd81b';
-            #$template->cid = $fixme['cid'] = 'd6cab10f6cabacd61993618a2e6419d1';
-
-            # TODO: eigentlich eher so
-            # CourseMember::findBySQL("INNER JOIN plugins_activated ON poiid=CONCAT('sem',seminar_id) AND state='on' AND pluginid=? WHERE user_id=?")
-
-            $disc = new \Mooc\UI\DiscussionBlock\LecturerDiscussion($this->container, $this->container['current_user']);
-            $template->discussions = array($disc);
-
-            $template->plugin = $this;
-            $template->container = $this->container;
+            $template->discussions = $discussions;
+            $template->plugin      = $this;
+            $template->container   = $this->container;
 
             PageLayout::addStylesheet($this->getPluginURL().'/assets/mooc-profile.css');
 
