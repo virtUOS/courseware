@@ -40,7 +40,4 @@ define(['domReady!', 'scrollTo', './url', './block_types', './block_model'], fun
     }
 
     var blocks = _.map($els, initializeBlock);
-
-    jQuery('section.contentbox article').addClass('open');
-
 });

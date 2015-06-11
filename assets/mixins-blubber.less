@@ -7,6 +7,10 @@
     margin-left:  -4px;
     margin-right: -4px;
 
+    header a {
+      width: 100%;
+    }
+
     ul.comments {
       background-color: #e7ebf1;
       list-style-type: none;
@@ -98,6 +102,22 @@
 
         min-height: 2em;
         max-heigth: 6em;
+      }
+    }
+
+    // remove link outline
+    a:focus, a:active {
+      outline:0;
+    }
+
+    // toggle comments on expanding/collapsing thread
+    .comments, .comment-writer {
+      display: none;
+    }
+
+    &.open {
+      .comments, .comment-writer {
+        display: block;
       }
     }
 

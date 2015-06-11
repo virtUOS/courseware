@@ -12,7 +12,9 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
                     this.write(event.target);
                     event.preventDefault();
                 }
-            }
+            },
+
+            'click article.thread a h1': 'expandOrCollapseThread'
         },
 
 
@@ -178,6 +180,12 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
                         console.log(errorMessage, arguments);
                     })
                 .done();
+        },
+
+        expandOrCollapseThread: function (event) {
+            event.preventDefault();
+            var $thread = this.$(event.target).closest('article');
+            $thread.toggleClass("open");
         }
     });
 });
