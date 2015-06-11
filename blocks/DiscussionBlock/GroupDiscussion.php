@@ -20,7 +20,7 @@ class GroupDiscussion extends  Discussion
     {
         return $this->group
             ? sprintf("Gruppendiskussion '%s'", $this->group->name)
-            : "Kommentare";
+            : "Diskussion";
     }
 
     protected function getDefaultName()
