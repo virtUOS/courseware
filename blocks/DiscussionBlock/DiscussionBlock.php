@@ -64,11 +64,35 @@ class DiscussionBlock extends Block
 
     private function getThreadsOfUser()
     {
+        $discussion_type = $this->_model->sub_type;
+
+        switch ($discussion_type) {
+
+        default:
+        case self::SUBTYPE_ALL:
+            return $this->getThreadsOfUserInAll();
+            break;
+
+
+        case self::SUBTYPE_GROUPS:
+            return $this->getThreadsOfUserInGroups();
+            break;
+        }
+    }
+
+    private function getThreadsOfUserInAll()
+    {
+        return array(new GroupDiscussion($this->container['cid'], $this->container['current_user'], $this->id, null));
+    }
+
+    private function getThreadsOfUserInGroups()
+    {
         $container = $this->container;
         $block_id = $this->id;
+        $user_is_author = !$container['current_user']->canUpdate($this->_model);
 
         // students get only their corresponding statusgruppen
-        if (!$container['current_user']->canUpdate($this->_model)) {
+        if ($user_is_author) {
 
             $groups = $this->getStatusgruppenByCourseAndUser();
 
