@@ -110,19 +110,6 @@
       outline:0;
     }
 
-    // toggle comments on expanding/collapsing thread
-    .comments, .comment-writer {
-      display: none;
-    }
-
-    &.open {
-      .comments, .comment-writer {
-        display: block;
-      }
-    }
-
-
-
     &.loading {
 
       h1 {
@@ -135,6 +122,19 @@
 
       .comment-writer {
         display: none;
+      }
+    }
+  }
+
+  // toggle comments on expanding/collapsing thread in a contentbox
+  .contentbox article.thread {
+    .comments, .comment-writer {
+      display: none;
+    }
+
+    &.open {
+      .comments, .comment-writer {
+        display: block;
       }
     }
   }
