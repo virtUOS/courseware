@@ -8,7 +8,7 @@ use Mooc\UI\Block;
  */
 class DiscussionBlock extends Block
 {
-    const NAME = 'Gruppendiskussion';
+    const NAME = 'Diskussion';
 
     function initialize()
     {
@@ -41,6 +41,20 @@ class DiscussionBlock extends Block
     public function isEditable()
     {
         return false;
+    }
+
+    const SUBTYPE_ALL    = 'inall';
+    const SUBTYPE_GROUPS = 'ingroups';
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubTypes()
+    {
+        return array(
+            self::SUBTYPE_ALL    => _('gemeinsam'),
+            self::SUBTYPE_GROUPS => _('in Gruppen')
+        );
     }
 
     /////////////////////
