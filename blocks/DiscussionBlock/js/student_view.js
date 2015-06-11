@@ -7,7 +7,7 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
 
     return StudentView.extend({
         events: {
-            'keydown .writer textarea': function (event) {
+            'keydown .comment-writer textarea': function (event) {
                 if (event.keyCode === 13 && !event.altKey && !event.ctrlKey && !event.shiftKey) {
                     this.write(event.target);
                     event.preventDefault();
@@ -49,8 +49,8 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
 
         postRender: function() {
             this.loadThreads();
-            autosize(this.$('.writer textarea'));
-            var textarea = this.$('.writer textarea');
+            autosize(this.$('.comment-writer textarea'));
+            var textarea = this.$('.comment-writer textarea');
             textarea.on("drop", function (event) {
                 event.preventDefault();
                 var files = 0;

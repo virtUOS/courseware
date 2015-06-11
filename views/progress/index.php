@@ -109,7 +109,7 @@ $progress = function ($block, $format = "") {
         </header>
         <ul class="comments"></ul>
 
-        <div class="writer">
+        <div class="comment-writer">
             <textarea placeholder="<?= _("Kommentiere dies") ?>"
                       aria-label="<?= _("Kommentiere dies") ?>"></textarea>
         </div>
