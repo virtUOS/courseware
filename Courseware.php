@@ -73,7 +73,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
 
         // tabs for students
-        if (!$this->container['current_user']->hasPerm($course_id, 'dozent')) {
+        if (!$this->container['current_user']->hasPerm($course_id, 'tutor')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
             $tabs['mooc_progress'] = new Navigation(_('Fortschrittsübersicht'), $progress_url);
         }
