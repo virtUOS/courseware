@@ -59,9 +59,7 @@ class CoursewareController extends MoocipController {
             throw new Trails_Exception(401);
         }
 
-
-        $this->blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? AND type = ? AND parent_id', array($this->container['cid'], 'DiscussionBlock'));
-        // TODO: parent_id != NULL kann wieder weg, wenn es echte persönliche kommunikationsblöcke gibt
+        $this->blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? AND type = ?', array($this->container['cid'], 'DiscussionBlock'));
 
         // add CSS
         $this->addBlockStyles();
