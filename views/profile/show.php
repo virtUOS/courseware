@@ -1,4 +1,5 @@
 <? $title = _("Dialog mit dem Ausbilder"); ?>
+<? $contentbox_id = "courseware-profile"; ?>
 
 <? foreach ($discussions as $discussion) : ?>
 
