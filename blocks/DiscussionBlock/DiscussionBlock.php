@@ -97,9 +97,10 @@ class DiscussionBlock extends Block
             $groups = $this->getStatusgruppenByCourseAndUser();
 
             if (sizeof($groups)) {
-                $threads = $groups->map(function ($group) use ($container, $block_id) {
-                        return new GroupDiscussion($container['cid'], $container['current_user'], $block_id, $group);
-                    });
+                $threads = array_values(
+                    $groups->map(function ($group) use ($container, $block_id) {
+                            return new GroupDiscussion($container['cid'], $container['current_user'], $block_id, $group);
+                        }));
             }
 
             else {
