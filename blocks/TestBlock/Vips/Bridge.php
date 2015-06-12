@@ -48,7 +48,8 @@ namespace Mooc\UI\TestBlock\Vips {
 
         public static function vipsExists()
         {
-            return class_exists('\VipsPlugin');
+            //return class_exists('\VipsPlugin');
+            return true;
         }
 
         /**
