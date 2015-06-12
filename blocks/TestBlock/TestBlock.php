@@ -92,10 +92,11 @@ class TestBlock extends Block
     // preclude any calls to handlers
     public function handle($name, $data = array())
     {
+       /*
         if (!VipsBridge::vipsActivated($this)) {
-            throw \RuntimeException('Vips is not activated.');
+            throw new \RuntimeException('Vips is not activated.');
         }
-
+*/
         return parent::handle($name, $data);
     }
 
