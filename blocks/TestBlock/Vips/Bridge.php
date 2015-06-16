@@ -38,10 +38,10 @@ namespace Mooc\UI\TestBlock\Vips {
             return \PluginEngine::getPlugin('VipsPlugin');
         }
 
+        // predicate checking for an activated VipsPlugin
         public static function vipsExists()
         {
-            //return class_exists('\VipsPlugin');
-            return true;
+            return !!self::getVipsPlugin();
         }
 
         /**
