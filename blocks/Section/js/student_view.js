@@ -150,7 +150,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
             var view = this,
                 $button = jQuery(event.target),
-                $option = $button.prev('select').find(':selected'),
+                $option = $button.closest('.block-adder').find(':selected'),
                 block_type = $option.attr("data-blocktype"),
                 block_sub_type = $option.attr("data-blocksubtype");
 
