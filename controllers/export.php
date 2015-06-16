@@ -26,7 +26,7 @@ class ExportController extends MoocipController
 
         // dump the XML to the filesystem
         $export = new XmlExport($this->plugin->getBlockFactory());
-        $courseware = $this->container['current_courseware'];
+        $courseware = $this->plugin->getBlockFactory()->makeBlock($this->plugin->getCoursewareFactory()->makeCourseware($this->plugin->getCourseId()));
         foreach ($courseware->getFiles() as $file) {
             if (trim($file['url']) !== '') {
                 continue;

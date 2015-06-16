@@ -1,4 +1,4 @@
-Courseware - Plugin für Stud.IP
+(M)OOC.IP - Plugin für Stud.IP
 ==============================
 
 Development

@@ -44,11 +44,6 @@ class Container extends \Pimple
         $this['courseware_factory'] = function ($c) {
             return new CoursewareFactory($c);
         };
-
-        $this['current_courseware'] = function ($c) {
-            $courseware_model = $c['courseware_factory']->makeCourseware($c['cid']);
-            return $c['block_factory']->makeBlock($courseware_model);
-        };
     }
 
     private function setupBlockStuff()

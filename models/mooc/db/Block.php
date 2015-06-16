@@ -127,9 +127,10 @@ class Block extends \SimpleORMap implements \Serializable
         return static::findBySQL('parent_id = ? ORDER BY position ASC', array($id));
     }
 
+
     public static function findCourseware($cid)
     {
-        return current(self::findBySQL('seminar_id = ? AND type = ? LIMIT 1', array($cid, 'Courseware')));
+        return current(self::findBySQL('seminar_id = ? AND parent_id IS NULL LIMIT 1', array($cid)));
     }
 
     /**
@@ -294,48 +295,5 @@ class Block extends \SimpleORMap implements \Serializable
                               substr(strtolower($callback_type), strlen('after_')));
             \Metrics::increment($metric);
         }
-    }
-
-    // has the given user completed (progress = 100%) this content
-    // block or all of its descendent content blocks
-    public function hasUserCompleted($uid)
-    {
-        // structural blocks compute their score using their non-structural descendants
-        if ($this->isStructuralBlock()) {
-
-            // empty structural blocks are not completed
-            if (sizeof($this->children) === 0) {
-                return false;
-            }
-
-            $completings = array();
-            foreach ($this->children as $child) {
-                $completings[] = $child->hasUserCompleted($uid);
-            }
-            $status = array_search(false, array_flatten($completings)) === FALSE;
-
-            return $status;
-
-        }
-
-        else {
-            $progress = new UserProgress(array($this->id, $uid));
-            return $progress->getPercentage() === 1;
-        }
-    }
-
-
-    public function getContentChildren()
-    {
-        return $this->children->filter(function ($child) {
-            return !in_array($child->type, Block::getStructuralBlockClasses());
-        });
-    }
-
-    public function getStructuralChildren()
-    {
-        return $this->children->filter(function ($child) {
-            return in_array($child->type, Block::getStructuralBlockClasses());
-        });
     }
 }

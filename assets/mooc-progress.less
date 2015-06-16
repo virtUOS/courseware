@@ -1,5 +1,3 @@
-@import './mixins-blubber';
-
 #mooc-progress-index #layout_container {
 
   // TODO move to OHN-layout
@@ -63,23 +61,10 @@
         height: 20px;
 
         /* For IE10 */
-        color: #006533;
-        background: #006533;
+        color: blue;
 
         font-size: .6em;
         line-height: 1.5em;
-      }
-
-      progress::-webkit-progress-value {
-        background: #006533;
-      }
-
-      progress::-webkit-progress-bar {
-        background: #bbbbbb;
-      }
-
-      progress::-moz-progress-bar {
-        background: #006533;
       }
 
       a {
@@ -109,14 +94,6 @@
       }
     }
   }
-
-
-  article.thread {
-    margin-top: 3em;
-  }
-
-  // include blubber-style discussion threads' styling
-  .discussion-thread();
 }
 
 html.flexbox #mooc-progress-index #layout_container {
@@ -160,12 +137,4 @@ html.flexbox #mooc-progress-index #layout_container {
     }
 
   }
-}
-
-// small avatars in participant list
-.user_avatar .avatar-normal {
-  border-radius: 60px;
-  height: 30px;
-  margin: 3px 5px -10px 3px;
-  width: 30px;
 }

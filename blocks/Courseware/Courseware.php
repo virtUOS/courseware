@@ -1,8 +1,6 @@
 <?
 namespace Mooc\UI\Courseware;
 
-use Mooc\DB\Field;
-
 use Mooc\UI\Block;
 use Mooc\UI\Errors\BadRequest;
 
@@ -11,14 +9,9 @@ use Mooc\UI\Errors\BadRequest;
  */
 class Courseware extends Block {
 
-    const PROGRESSION_FREE = 'free';
-    const PROGRESSION_SEQ  = 'seq';
-
-
     function initialize()
     {
         $this->defineField('lastSelected', \Mooc\SCOPE_USER, null);
-        $this->defineField('progression',  \Mooc\SCOPE_BLOCK, self::PROGRESSION_FREE);
     }
 
     function student_view($context = array())
@@ -46,26 +39,12 @@ class Courseware extends Block {
             $section_nav = $this->getNeighborSections($section);
         }
 
-        // prepare active chapter data
-        $active_chapter = null;
-        if ($chapter) {
-            $active_chapter = $chapter->toArray();
-            $active_chapter['aside_section'] = $this->findAsideSection($chapter);
-        }
-
-        // prepare active subchapter data
-        $active_subchapter = null;
-        if ($subchapter) {
-            $active_subchapter = $subchapter->toArray();
-            $active_subchapter['aside_section'] = $this->findAsideSection($subchapter);
-        }
-
         return array_merge($tree, array(
             'user_may_author'   => $this->getCurrentUser()->canUpdate($this->_model),
             'section_nav'       => $section_nav,
             'courseware'        => $courseware,
-            'active_chapter'    => $active_chapter,
-            'active_subchapter' => $active_subchapter,
+            'active_chapter'    => $chapter    ? $chapter->toArray()    : null,
+            'active_subchapter' => $subchapter ? $subchapter->toArray() : null,
             'active_section'    => $active_section));
     }
 
@@ -108,39 +87,6 @@ class Courseware extends Block {
         return $new_positions;
     }
 
-    public function activateAsideSection_handler($data)
-    {
-        // block_id is required
-        if (!isset($data['block_id'])) {
-            throw new BadRequest("block_id is required.");
-        }
-
-        // there must be such a block
-        if (!$chap = \Mooc\DB\Block::find($data['block_id'])) {
-            throw new BadRequest("There is no such block.");
-        }
-
-        // the block must be a Chapter or Subchapter
-        if (!in_array($chap->type, words("Chapter Subchapter"))) {
-            throw new BadRequest("Only chapters and subchapters may have aside sections.");
-        }
-
-        $title = 'AsideSection for block ' . $data['block_id'];
-        $section = $this->createAnyBlock(NULL, 'Section', compact('title'));
-
-        // now store a link to this section
-        $field = new Field(array($data['block_id'], '', 'aside_section'));
-        $field->content = $section->id;
-
-        $status = $field->store();
-
-        if (!$status) {
-            throw new \RuntimeException("Could not activate aside section.");
-        }
-
-        return array('status' => 'ok');
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -172,51 +118,7 @@ class Courseware extends Block {
     }
 
 
-    // set type of course progression
-    //
-    // 'free': student may navigate to sub/chapters of choice
-    //
-    // 'seq':  student may only navigate to completed sub/chapters
-    //         and to the next sub/chapter after the last completed
-    //         sub/chapter
-    public function setProgressionType($type)
-    {
-        if (in_array($type, array(self::PROGRESSION_FREE, self::PROGRESSION_SEQ))) {
-            $this->progression = $type;
-            return true;
-        }
-
-        return false;
-    }
-
-    // return this courseware's type of progression
-    public function getProgressionType()
-    {
-        return $this->progression;
-    }
-
-    ///////////////////////
-    // PRIVATE FUNCTIONS //
-    ///////////////////////
-
-    // structural blocks may have a field calles 'aside_section'
-    // containing the ID of a block of type 'Section' which is shown
-    // in the sidebar whenever this structural block is active
-    private function findAsideSection($structure_block)
-    {
-        if ($aside_field = Field::find(array($structure_block->id, '', 'aside_section'))) {
-            if ($aside_block = \Mooc\DB\Block::find($aside_field->content)) {
-                return array(
-                    'id'        => $aside_block->id,
-                    'title'     => $aside_block->title,
-                    'parent_id' => $structure_block->id,
-                    'html'      => $this->getBlockFactory()->makeBlock($aside_block)->render('student', $context)
-                );
-            }
-        }
-
-        return null;
-    }
+    // ******** PRIVATE FUNCTIONS ********
 
     private function getSelected($context)
     {
@@ -416,7 +318,7 @@ class Courseware extends Block {
         $block = new \Mooc\DB\Block();
         $block->setData(array(
             'seminar_id'       => $this->_model->seminar_id,
-            'parent_id'        => is_object($parent) ? $parent->id : $parent,
+            'parent_id'        => $parent->id,
             'type'             => $type,
             'title'            => $data['title'],
             'publication_date' => $data['publication_date']

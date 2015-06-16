@@ -31,7 +31,6 @@ class UserProgress extends \SimpleORMap
 
         if ($this->isNew()) {
             $this->grade = 0;
-            $this->max_grade = 1;
         }
     }
 
@@ -45,12 +44,6 @@ class UserProgress extends \SimpleORMap
         krsort($data);
 
         return parent::setData($data, $reset);
-    }
-
-    // get progress as a percentage [0.0, 1.0]
-    public function getPercentage()
-    {
-        return $this->max_grade > 0 ? ($this->grade / $this->max_grade) : 0;
     }
 
     /**

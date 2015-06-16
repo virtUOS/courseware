@@ -1,22 +1,15 @@
-{{^inactive}}
-  {{> title}}
+{{> title}}
 
-  {{#blocks}}
-    {{> block_wrapper}}
-  {{/blocks}}
+{{#blocks}}
+  {{> block_wrapper}}
+{{/blocks}}
 
-  <div class=no-content>
-    <p>{{#i18n}}Keine Inhaltsblöcke{{/i18n}}</p>
-  </div>
-
-  <div class=block-adder>
-    <h3>Block hinzufügen</h3>
-    {{> block_types_view}}
-  </div>
-{{/inactive}}
-
-{{#inactive}}
-<div class="messagebox messagebox_info">
-    {{#i18n}}Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+<div class=no-content>
+  <p>{{#i18n}}Keine Inhaltsblöcke{{/i18n}}</p>
 </div>
-{{/inactive}}
+
+<div class=block-adder>
+  <h3>Block hinzufügen:</h3>
+
+  {{> block_types_view}}
+</div>

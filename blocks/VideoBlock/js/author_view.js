@@ -6,7 +6,7 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
         events: {
             "click button[name=save]": "saveVideo",
             "click button[name=cancel]": "switchBack",
-	    "change select#videotype": "selection",
+	    "click #videotype option": "selection",
 	    "click button[name=preview]": "preview"
         },
         initialize: function(options) {
@@ -23,13 +23,8 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
         },
 	selection: function() {
 		var videotype = this.$('#videotype').val();
-		if (videotype == 'youtube') {
-            this.$('#videosrcname').html('YouTube ID');
-        } else if (videotype == 'dfb') {
-            this.$('#videosrcname').html('DFB-TV-ID (z.B. 11019)');
-        } else {
-            this.$('#videosrcname').html('URL');
-        }
+		if (videotype == 'youtube') this.$('#videosrcname').html('YouTube ID');
+		else this.$('#videosrcname').html('URL');
 		Utils.resetVideoData(this);
 		Utils.setVideoData(this, this.$('#videourl').text(), videotype);
 	},

@@ -20,7 +20,6 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         chaptersView:      null,
         sectionsView:      null,
         activeSectionView: null,
-        asideSectionViews: [],
 
         events: {
             "click .mode-switch .student": "switchToStudentMode",
@@ -42,28 +41,7 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         },
 
         _initializeChildren: function() {
-            this.activeSectionView = this._createSectionFromElement('.active-section');
-
-            this.chaptersView = new ChapterListView({ el: '.chapters', model: this.model });
-            this.sectionsView = new SectionListView({
-                el: '.active-subchapter',
-                model: this.model,
-                active_section: this.activeSectionView.model
-            });
-
-            var aside_sections = this.$('.aside-section');
-            if (aside_sections.length) {
-                this.asideSectionViews = _.map(
-                    aside_sections,
-                    function (el) {
-                        return this._createSectionFromElement(el);
-                    },
-                    this);
-            }
-        },
-
-        _createSectionFromElement: function (el) {
-            var $section = this.$(el),
+            var $section = this.$('.active-section'),
                 section_model = new BlockModel({
                     type:      "Section",
                     id:        $section.attr("data-blockid"),
@@ -71,18 +49,22 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
                     title:     $section.attr("data-title")
                 });
 
-            return block_types
+            this.activeSectionView = block_types
                 .findByName("Section")
                 .createView("student", { el: $section[0], model: section_model });
+
+            this.chaptersView = new ChapterListView({ el: '.chapters', model: this.model });
+            this.sectionsView = new SectionListView({
+                el: '.active-subchapter',
+                model: this.model,
+                active_section: section_model
+            });
+
+
         },
 
         remove: function() {
             StudentView.prototype.remove.call(this);
-
-             if (this.asideSectionViews.length) {
-                _.invoke(this.asideSectionViews, 'remove');
-            }
-
             if (this.chaptersView) {
                 this.chaptersView.remove();
             }
@@ -99,11 +81,6 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         },
 
         postRender: function() {
-
-            if (this.asideSectionViews.length) {
-                _.invoke(this.asideSectionViews, 'postRender');
-            }
-
             if (this.chaptersView) {
                 this.chaptersView.postRender();
             }
@@ -118,20 +95,20 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         },
 
         navigateTo: function (event) {
-            var navigate = true;
+	    var navigate = true;
             event.preventDefault();
             Backbone.on('preventnavigateto', function(preventNavigateTo){
                 if(preventNavigateTo){
-                        navigate = false;
-                }
+			navigate = false;
+		}
             });
             var beforeNavigateEvent = {isUserInputHandled : false };
-
+	
             Backbone.trigger("beforenavigate", beforeNavigateEvent);
             if (this.$el.hasClass("loading")) {
                 return;
             }
-            if (navigate){
+	    if (navigate){
                 this.$el.addClass("loading");
 
                 var $parent = jQuery(event.target).closest("[data-blockid]"),
@@ -140,7 +117,7 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
                 helper.navigateTo(id);
             }
             else return false;
-
+	    
         },
 
         switchToStudentMode: function () {

@@ -34,10 +34,4 @@ class BlubberController extends MoocipController
         $courseStream['filter_hashtags'] = array('block-'.$blockId);
         $this->threads = $courseStream->fetchThreads(0, 11);
     }
-
-    // TODO: fixed diesen Fehler: Fatal error: Call to undefined
-    // method BlubberController::addTagCloudWidgetToSidebar() in
-    // /Projects/dfb/stud-ip-v3-2/public/plugins_packages/core/Blubber/views/streams/forum.php
-    // on line 73
-    public function addTagCloudWidgetToSidebar() {}
 }

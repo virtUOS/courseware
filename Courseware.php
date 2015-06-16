@@ -32,12 +32,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $this->setupContainer();
 
         // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
-        if ($this->isSlotModule()){
-            // Navigation::removeItem('/course/files'); // TT DOUBLE HACK, no WYSIWYG-Upload if file tab is invisible...
-            Navigation::removeItem('/course/blubberforum');
-            if(!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
-                Navigation::removeItem('/course/vipsplugin');
-            }
+        if ($this->isSlotModule() && !$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
+            Navigation::removeItem('/course/vipsplugin');
         }
     }
 
@@ -55,34 +51,18 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     {
         $tabs = array();
 
-        $courseware = $this->container['current_courseware'];
+        $cid = $this->getContext();
+        $url = PluginEngine::getURL($this, compact('cid'), 'courseware', true);
 
-        $navigation = new Navigation($courseware->title,
-                                     PluginEngine::getURL($this, compact('cid'), 'courseware', true));
+        $navigation = new Navigation(_('Courseware'), $url);
         $navigation->setImage('icons/16/white/group3.png');
         $navigation->setActiveImage('icons/16/black/group3.png');
 
         $tabs['mooc_courseware'] = $navigation;
 
-        $navigation->addSubnavigation('index',    clone $navigation);
-        $navigation->addSubnavigation('settings',
-                                      new Navigation(_("Einstellungen"),
-                                                     PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true)));
-
-
-        $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
-
-        // tabs for students
-        if (!$this->container['current_user']->hasPerm($course_id, 'tutor')) {
+        if (!$this->container['current_user']->hasPerm($course_id, 'dozent')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
             $tabs['mooc_progress'] = new Navigation(_('Fortschrittsübersicht'), $progress_url);
-        }
-
-        // tabs for tutors and up
-        else {
-            $discussions_url = PluginEngine::getURL($this, compact('cid'), 'courseware/discussions', true);
-            $tabs['mooc_progress'] = new Navigation(_('Fortschrittsübersicht'), $progress_url);
-            $tabs['mooc_discussions'] = new Navigation(_('Kommunikation'), $discussions_url);
         }
 
         return $tabs;
@@ -111,49 +91,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     {
         return null;
     }
-
-    // homepageplugin template method
-    public function getHomepageTemplate($user_id)
-    {
-
-        $user = $this->container['current_user'];
-
-        // show contentbox only when visiting one's own page
-        if ($user_id === $user->id) {
-
-            // get all the courses with Courseware plugin activation
-            $pid = $this->getPluginId();
-            $pm  = \PluginManager::getInstance();
-            $my_courses = $this->container['current_user']->course_memberships->filter(function ($cm) use ($pid, $pm) {
-                    return $pm->isPluginActivated($pid, $cm->seminar_id);
-                });
-
-            // cannot show any discussions
-            if (!sizeof($my_courses)) {
-                return null;
-            }
-
-            $discussions = array();
-            foreach ($my_courses as $my_course) {
-                if ($my_course->status === 'autor') {
-                    $discussions[] = new \Mooc\UI\DiscussionBlock\LecturerDiscussion($my_course->seminar_id, $user);
-                }
-            }
-
-            $templatefactory = new Flexi_TemplateFactory(__DIR__ . '/views');
-            $template = $templatefactory->open("profile/show.php");
-
-            $template->discussions = $discussions;
-            $template->plugin      = $this;
-            $template->container   = $this->container;
-
-            PageLayout::addStylesheet($this->getPluginURL().'/assets/mooc-profile.css');
-
-            return $template;
-        } else {
-            return null;
-        }
-    }
+    
 
     public function perform($unconsumed_path)
     {
@@ -247,16 +185,13 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         return $SEM_CLASS[$SEM_TYPE[$SessSemName['art_num']]['class']];
     }
 
-
-    //HACKED
     private function isSlotModule()
     {
         if (!$this->getSemClass()) {
             return false;
         }
-        return true;
-        //TODO: why does it always return false?
-        //return $this->getSemClass()->isSlotModule(get_class($this));
+
+        return $this->getSemClass()->isSlotModule(get_class($this));
     }
 
     static function onEnable($id)

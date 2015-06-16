@@ -19,11 +19,13 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
     return StudentView.extend({
 
+        children: {},
+
         events: {
             "click .title .edit":     "editSection",
             "click .title .trash":    "destroySection",
 
-            "click .add-block":       "addNewBlock",
+            "click .add-block-type":  "addNewBlock",
 
             // child block stuff
 
@@ -35,11 +37,8 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
         },
 
         initialize: function() {
-            this.children = {};
-
-            _.each(this.$('section.block'), function (element) {
-                var block = this.initializeBlock(element, undefined, "student");
-                block.initializeFromDOM();
+            _.each(jQuery('section.block'), function (element) {
+                this.initializeBlock(element, undefined, "student");
             }, this);
 
             this.listenTo(Backbone, "modeswitch", this.switchMode, this);
@@ -103,7 +102,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                         }
                     )
                     .always(function () {
-                        self.refreshBlockTypes(self.model.id, self.$('.block-types'));
+                        self.refreshBlockTypes(self.model.id, self.$('div.block-types'));
                     })
                     .done();
             }
@@ -129,7 +128,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
             block_view.remove();
 
             // create new view
-            var el = jQuery("<div class='block-content'/>").attr('data-view', view_name);
+            var el = jQuery("<div class='block-content'/>");
             $block_wrapper.append(el).addClass("loading");
 
             var view = block_types
@@ -150,9 +149,8 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
             var view = this,
                 $button = jQuery(event.target),
-                $option = $button.prev('select').find(':selected'),
-                block_type = $option.attr("data-blocktype"),
-                block_sub_type = $option.attr("data-blocksubtype");
+                block_type = $button.attr("data-blocktype"),
+                block_sub_type = $button.attr("data-blocksubtype");
 
             $button.prop("disabled", true).addClass("loading");
 
@@ -166,7 +164,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                             view_name = model.get("editable") ? "author" : "student",
                             block_stub = view.appendBlockStub(model, view_name),
                             $el = block_stub.$el.closest("section.block"),
-                            block_name = $option.html();
+                            block_name = $button.html();
 
                         $el.addClass("loading");
                         block_stub.renderServerSide().then(function () {
@@ -188,7 +186,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
                 .always(function () {
                     $button.prop("disabled", false).removeClass("loading");
-                    view.refreshBlockTypes(view.model.id, view.$('.block-types'));
+                    view.refreshBlockTypes(view.model.id, view.$('div.block-types'));
                 })
                 .done();
         },
@@ -279,9 +277,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                 this.model.destroy()
                     .done(
                         function () {
-                            if (parent_id) {
-                                helper.navigateTo(parent_id);
-                            }
+                            helper.navigateTo(parent_id);
                         },
                         function (error) {
                             var errorMessage = 'Could not remove the section: '+jQuery.parseJSON(error.responseText).reason;

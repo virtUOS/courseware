@@ -19,9 +19,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
             "click .init-sort-subchapter": "initSorting",
 
             "click .stop-sort-chapter":    "stopSorting",
-            "click .stop-sort-subchapter": "stopSorting",
-
-            "click .activate-aside-section": "activateAsideSection"
+            "click .stop-sort-subchapter": "stopSorting"
         },
 
         initialize: function() {
@@ -287,31 +285,6 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
             this._original_positions = this._sortable = null;
             this.$el.removeClass("sorting");
-        },
-
-        activateAsideSection: function (event) {
-            var $button = jQuery(event.target),
-                block_id = $button.closest('ol').find('.selected').data('blockid');
-
-            $button.prop('disabled', true).addClass('loading');
-
-            helper.callHandler(this.model.id, 'activateAsideSection', { block_id: block_id })
-                .then(
-                    // success
-                    function () {
-                        helper.reload();
-                    },
-
-                    // error
-                    function (error) {
-                        $button.prop('disabled', false).removeClass('loading');
-
-                        var errorMessage = 'Could not activate the aside section: ' + jQuery.parseJSON(error.responseText).reason;
-                        alert(errorMessage);
-                        console.log(errorMessage, arguments);
-                    }
-                )
-                .done();
         }
     });
 });

@@ -31,8 +31,6 @@ class BlocksController extends MoocipController {
                 $json['fields'] = $ui_block->getFields();
             }
 
-            $json['grade'] = $ui_block->getProgress()->grade;
-
             $this->render_json($json);
         }
 
