@@ -103,7 +103,28 @@ section#courseware {
 
   .block-adder {
     padding-top: 1em;
-
+    margin-bottom: 4em;
+    .styled-select {
+        float:left;
+        margin-right: 10px;
+        background: #eee url("../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat scroll right 10px center;
+        border: 1px solid #d0d0d0;
+        border-radius: 2px;
+        height: 34px;
+        overflow: hidden;
+        width: 240px;
+        > select {
+            background: transparent;
+            width: 268px;
+            padding: 5px;
+            font-size: 16px;
+            line-height: 1;
+            border: 0;
+            border-radius: 0;
+            height: 34px;
+            -webkit-appearance: none;
+        }
+    }
     select, button.add-block {
       height: 35px;
       vertical-align: middle;
@@ -111,6 +132,7 @@ section#courseware {
 
     button.add-block {
       .courseware-btn;
+      float:left;
       margin: 0;
       width: initial;
       text-align: left;

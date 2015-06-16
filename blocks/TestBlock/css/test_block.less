@@ -13,6 +13,74 @@ section.TestBlock {
     list-style-type: none;
 
     &.exercise {
+      &:not(#exercise1) {
+        display: none;
+      }
+      .exercisetitle {
+        min-width: 10%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        background-color: #eee;
+        color: #28497c;
+        font-size: 14px;
+        line-height: 20px;
+        padding: 10px 20px;
+        position: relative;
+        margin: 0 0 20px 0;
+        text-transform: uppercase;
+        text-align: center;
+        .exercisenavbutton{
+            position: absolute;
+            border: none;
+            height: 20px;
+            width: 20px;
+            margin: 2px 12px;
+            &.exercisenavback {
+                left: 0;
+                background: url("../../../../assets/images/icons/16/blue/arr_1left.png") no-repeat scroll 0 0 ;
+            }
+            &.exercisenavnext {
+                right: 0;
+                background: url("../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat scroll 0 0;
+            }
+        }
+      }
+      .exercise-content {
+        padding: 0 10px;
+        .exercise-title {
+            text-align: center;
+            color: #000;
+        }
+        form {
+          text-transform: none;
+          font-size: 100%;
+          font-weight: 400;
+        }
+        .answer, label {
+            font-size: 16px;
+            font-weight: normal;
+            line-height: 32px;
+            padding-left: 5px;
+            text-transform: none;
+        }
+        select {
+        margin: 0 5px;
+        }
+
+        .cloze.solution {
+          margin-bottom: 8px;
+        }
+
+        p img {
+          margin-top: 12px;
+          margin-bttom: 12px;
+        }
+      }
       & > li:after {
         content: '';
         display: block;
