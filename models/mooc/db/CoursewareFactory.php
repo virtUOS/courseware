@@ -42,7 +42,7 @@ class CoursewareFactory
 
     private function createCourseware($cid)
     {
-        $courseware = $this->createGenericBlock($cid, 'Courseware', _('Neue Courseware'));
+        $courseware = $this->createGenericBlock($cid, 'Courseware', _('Courseware'));
 
         $this->createChapter($courseware, _("Kapitel") . " 1");
         $this->createChapter($courseware, _("Kapitel") . " 2");
