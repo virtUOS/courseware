@@ -53,7 +53,7 @@ class User extends \User
     public function canUpdate($model)
     {
         if ($model instanceof Block) {
-            return $this->hasPerm($model->seminar_id, 'dozent');
+            return $this->hasPerm($model->seminar_id, 'tutor');
         }
 
         throw new \RuntimeException('not implemented: ' . __METHOD__);
