@@ -23,7 +23,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
             "click .title .edit":     "editSection",
             "click .title .trash":    "destroySection",
 
-            "click .add-block-type":  "addNewBlock",
+            "click .add-block":       "addNewBlock",
 
             // child block stuff
 
@@ -35,11 +35,13 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
         },
 
         initialize: function() {
-            _.each(jQuery('section.block'), function (element) {
-                this.initializeBlock(element, undefined, "student");
-            }, this);
             this.children = {};
 
+            _.each(this.$('section.block'), function (element) {
+                var block = this.initializeBlock(element, undefined, "student");
+                block.initializeFromDOM();
+            }, this);
+            
             this.listenTo(Backbone, "modeswitch", this.switchMode, this);
         },
 
@@ -103,7 +105,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                         }
                     )
                     .always(function () {
-                        self.refreshBlockTypes(self.model.id, self.$('div.block-types'));
+                        self.refreshBlockTypes(self.model.id, self.$('.block-types'));
                     })
                     .done();
             }
@@ -150,8 +152,9 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
             var view = this,
                 $button = jQuery(event.target),
-                block_type = $button.attr("data-blocktype"),
-                block_sub_type = $button.attr("data-blocksubtype");
+                $option = $button.closest('.block-adder').find(':selected'),
+                block_type = $option.attr("data-blocktype"),
+                block_sub_type = $option.attr("data-blocksubtype");
 
             $button.prop("disabled", true).addClass("loading");
 
@@ -165,7 +168,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                             view_name = model.get("editable") ? "author" : "student",
                             block_stub = view.appendBlockStub(model, view_name),
                             $el = block_stub.$el.closest("section.block"),
-                            block_name = $button.html();
+                            block_name = $option.html();
 
                         $el.addClass("loading");
                         block_stub.renderServerSide().then(function () {
@@ -187,7 +190,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
                 .always(function () {
                     $button.prop("disabled", false).removeClass("loading");
-                    view.refreshBlockTypes(view.model.id, view.$('div.block-types'));
+                    view.refreshBlockTypes(view.model.id, view.$('.block-types'));
                 })
                 .done();
         },

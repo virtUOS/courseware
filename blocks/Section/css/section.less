@@ -1,6 +1,8 @@
 @import '../../../assets/variables';
 @import '../../../assets/mixins';
 
+section#courseware {
+
 .active-section {
   clear:both;
   padding-top: 1em;
@@ -100,10 +102,48 @@
 
   .block-adder {
     padding-top: 1em;
+    margin-bottom: 4em;
+    .styled-select {
+        float:left;
+        margin-right: 5px;
+        background: #eee url("../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat scroll right 10px center;
+        border: 1px solid #d0d0d0;
+        border-radius: 2px;
+        height: 34px;
+        overflow: hidden;
+        width: (@sidebar-width -50);
+        > select {
+            background: transparent;
+            width: (@sidebar-width -10);
+            padding: 5px;
+            font-size: 16px;
+            line-height: 1;
+            border: 0;
+            border-radius: 0;
+            height: 34px;
+            -webkit-appearance: none;
+        }
+    }
+    select, button.add-block {
+      height: 35px;
+      vertical-align: middle;
+    }
 
-    button {
+    button.add-block {
       .courseware-btn;
-      min-width: 100px;
+      float:left;
+      margin: 0;
+      width: initial;
+      text-align: left;
+
+      background-image: url("@{blocks-icons-dir}/16/blue/add.png");
+      background-position: 6px center;
+      padding-left: 28px;
+
+      &.loading {
+        background-image: url("@{blocks-images-dir}/ajax_indicator_small.gif");
+        background-position: 10px center;
+      }
     }
   }
 
@@ -130,7 +170,7 @@
 }
 
 
-#courseware.view-author .active-section section.block {
+&.view-author .active-section section.block {
   box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.1);
   padding: 0px;
 
@@ -159,20 +199,12 @@ button.stop-sort-block {
   display: none;
 }
 
-button.add-block-type {
-  background-image: url("@{blocks-icons-dir}/16/blue/add.png");
-  background-position: 6px center;
-}
 
-.active-section .block-adder .add-block-type.loading {
-  background-image: url("@{blocks-images-dir}/ajax_indicator_small.gif");
-  background-position: 10px center;
-}
-
-#courseware {
-  &.view-student .active-section {
+&.view-student {
+  .active-section {
     div.controls, .block-adder, button.init-sort-block {
       display: none;
     }
   }
+}
 }
