@@ -20,25 +20,34 @@
     <button class="author" data-title="Autorenmodus"></button>
   </div>
 
-  <ol class=chapters>
+  <aside>
+    <ol class=chapters>
 
-    {{#chapters}}
-      {{> chapter}}
-    {{/chapters}}
+      {{#chapters}}
+        {{> chapter}}
+      {{/chapters}}
 
-    <li class=no-content>{{#i18n}}Keine Kapitel{{/i18n}}</li>
-    <li class=controls>
-      <button class=add-chapter>{{#i18n}}Kapitel einfügen{{/i18n}}</button>
-      <button class=init-sort-chapter>{{#i18n}}Kapitel sortieren{{/i18n}}</button>
-      <button class=stop-sort-chapter>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
+      <li class=no-content>{{#i18n}}Keine Kapitel{{/i18n}}</li>
+      <li class=controls>
+        <button class=add-chapter>{{#i18n}}Kapitel einfügen{{/i18n}}</button>
+        <button class=init-sort-chapter>{{#i18n}}Kapitel sortieren{{/i18n}}</button>
+        <button class=stop-sort-chapter>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
 
-      <a class="button export" href="{{#plugin_url}}export{{/plugin_url}}"> Export </a>
-      <a class="button import" href="{{#plugin_url}}import{{/plugin_url}}"> Import </a>
-    </li>
-  </ol>
+        <a class="button export" href="{{#plugin_url}}export{{/plugin_url}}">
+          {{#i18n}}Export{{/i18n}}
+        </a>
+
+        <a class="button import" href="{{#plugin_url}}import{{/plugin_url}}">
+          {{#i18n}}Import{{/i18n}}
+        </a>
+
         <a class="button settings" href="{{#plugin_url}}courseware/settings{{/plugin_url}}">
           {{#i18n}}Einstellungen{{/i18n}}
         </a>
+
+      </li>
+    </ol>
+  </aside>
 
   {{> active_subchapter}}
 
