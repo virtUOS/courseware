@@ -295,4 +295,20 @@ class Block extends \SimpleORMap implements \Serializable
             \Metrics::increment($metric);
         }
     }
+
+
+
+    public function getContentChildren()
+    {
+        return $this->children->filter(function ($child) {
+            return !in_array($child->type, Block::getStructuralBlockClasses());
+        });
+    }
+
+    public function getStructuralChildren()
+    {
+        return $this->children->filter(function ($child) {
+            return in_array($child->type, Block::getStructuralBlockClasses());
+        });
+    }
 }
