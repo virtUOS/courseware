@@ -49,20 +49,31 @@ class Courseware extends StudIPPlugin implements StandardPlugin
      */
     public function getTabNavigation($course_id)
     {
+        $cid = $course_id;
         $tabs = array();
 
-        $cid = $this->getContext();
-        $url = PluginEngine::getURL($this, compact('cid'), 'courseware', true);
+        $courseware = $this->container['current_courseware'];
 
-        $navigation = new Navigation(_('Courseware'), $url);
+        $navigation = new Navigation($courseware->title,
+                                     PluginEngine::getURL($this, compact('cid'), 'courseware', true));
         $navigation->setImage('icons/16/white/group3.png');
         $navigation->setActiveImage('icons/16/black/group3.png');
 
         $tabs['mooc_courseware'] = $navigation;
 
-        if (!$this->container['current_user']->hasPerm($course_id, 'dozent')) {
+        $navigation->addSubnavigation('index',    clone $navigation);
+        $navigation->addSubnavigation('settings',
+                                      new Navigation(_("Einstellungen"),
+                                                     PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true)));
+
+        // tabs for students
+        if (!$this->container['current_user']->hasPerm($course_id, 'tutor')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
             $tabs['mooc_progress'] = new Navigation(_('Fortschrittsübersicht'), $progress_url);
+        }
+
+        // tabs for tutors and up
+        else {
         }
 
         return $tabs;
