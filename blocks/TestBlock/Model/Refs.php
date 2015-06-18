@@ -35,4 +35,15 @@ class Refs extends \SimpleORMap {
 
     }
 
+
+    // HACK: vips_exercise_ref hat keinen PK, tu so als ob
+    // ALTER TABLE `vips_exercise_ref` ADD PRIMARY KEY ( `exercise_id` , `test_id` ) ;
+    protected function getTableScheme()
+    {
+        $scheme = parent::getTableScheme();
+        if (!is_array($this->pk)) {
+            self::$schemes['vips_exercise_ref']['pk'] = $this->pk = array('exercise_id', 'test_id');
+        }
+        return $scheme;
+    }
 }
