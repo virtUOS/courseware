@@ -4,58 +4,74 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
     return StudentView.extend({
         events: {
             'click button[name=reset-exercise]': function (event) {
-                var $form = this.$(event.target).closest('form');
-                console.log(this.$el.find(".exercise"));
-                var view = this;
-                var $exercise_index = $form.find("input[name='exercise_index']").val();
+                var $form = this.$(event.target).closest('form'),
+                    view = this,
+                    $exercise_index = $form.find("input[name='exercise_index']").val();
+
                 if (confirm('Soll die Antwort zurückgesetzt werden?')) {
-                    helper
-                        .callHandler(this.model.id, 'exercise_reset', $form.serialize())
+                    helper.callHandler(this.model.id, 'exercise_reset', $form.serialize())
                         .then(
                             function () {
-                                $.when(view.renderServerSide()).done(function(){
-                                   $('.exercise').hide();
-                                   $('#exercise'+$exercise_index).show();
-                                });                                
+                                return view.renderServerSide();
                             },
                             function () {
                                 console.log('failed to reset the exercise');
                             }
-                        ).done();
-                    
+                        )
+                        .then(function () {
+                            this.$('.exercise').hide();
+                            this.$('#exercise' + $exercise_index).show();
+                        })
+                        .done();
                 }
 
                 return false;
             },
+
             'click button[name=submit-exercise]': function (event) {
-                var $form = this.$(event.target).closest('form');
-                var view = this;
-                var $exercise_index = $form.find("input[name='exercise_index']").val();
-                helper
-                    .callHandler(this.model.id, 'exercise_submit', $form.serialize())
+                var $form = this.$(event.target).closest('form'),
+                    view = this,
+                    $exercise_index = $form.find("input[name='exercise_index']").val();
+
+                helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
                     .then(
                         function () {
-                            $.when(view.renderServerSide()).done(function(){
-                                   $('.exercise').hide();
-                                   $('#exercise'+$exercise_index).show();
-                            });  
+                            return view.renderServerSide();
                         },
                         function () {
                             console.log('failed to store the solution');
                         }
-                    ).done();
-                
+                    )
+                    .then(function () {
+                        this.$('.exercise').hide();
+                        this.$('#exercise' + $exercise_index).show();
+                    })
+                    .done();
+
                 return false;
             },
+
             'click button[name=exercisenav]': function (event){
-                    var options = $.parseJSON(this.$(event.target).attr('button-data'));
-                    var $num =parseInt(options.id);
-                    if(options.direction == "next") $num++;
-                    else $num--;
-                    if ($num > parseInt(options.numexes)) $num = 1;
-                    if ($num < 1) $num = parseInt(options.numexes); 
-                    $('.exercise').hide();
-                    $('#exercise'+$num).show();
+                var options = $.parseJSON(this.$(event.target).attr('button-data')),
+                    $num = parseInt(options.id);
+
+                if (options.direction == 'next') {
+                    $num++;
+                } else {
+                    $num--;
+                }
+
+                if ($num > parseInt(options.numexes, 10)) {
+                    $num = 1;
+                }
+
+                if ($num < 1) {
+                    $num = parseInt(options.numexes, 10);
+                }
+
+                // FIXME
+                $('.exercise').hide();
+                $('#exercise'+$num).show();
             }
         },
 
@@ -84,17 +100,20 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     }
                 }
             };
-            jQuery('ul.exercise_answers', this.$el).each(function () {
-                var $sortableAnswers = $(this);
-                var $sortableLabels = $('ul.matching_exercise.labels', $(this).parent());
-                fixAnswersHeight($('li', $sortableAnswers), $('li', $sortableLabels));
+
+            this.$('ul.exercise_answers').each(function () {
+                var $sortableAnswers = $(this),
+                    $sortableLabels = $sortableAnswers.parent().find('ul.matching_exercise.labels');
+
+                fixAnswersHeight($sortableAnswers.find('li'), $sortableLabels.find('li'));
+
                 $sortableAnswers.sortable({
                     axis: 'y',
                     containment: $sortableAnswers,
                     tolerance: 'pointer',
                     update: function () {
                         view.moveChoice($sortableAnswers);
-                        fixAnswersHeight($('li', $sortableAnswers), $('li', $sortableLabels));
+                        fixAnswersHeight($sortableAnswers.find('li'), $sortableLabels.find('li'));
                     },
                     sort: function (event, ui) {
                         // this workaround is needed, otherwise, sortable items
@@ -105,7 +124,6 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     }
                 });
             });
-            
         },
 
         moveChoice: function ($sortableAnswers) {
