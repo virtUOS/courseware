@@ -348,7 +348,7 @@ class Courseware extends Block {
         $block = new \Mooc\DB\Block();
         $block->setData(array(
             'seminar_id'       => $this->_model->seminar_id,
-            'parent_id'        => $parent->id,
+            'parent_id'        => is_object($parent) ? $parent->id : $parent,
             'type'             => $type,
             'title'            => $data['title'],
             'publication_date' => $data['publication_date']
