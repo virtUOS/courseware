@@ -15,7 +15,7 @@ use Mooc\User;
  * @author  <tgloeggl@uos.de>
  * @author  <mlunzena@uos.de>
  */
-class Courseware extends StudIPPlugin implements StandardPlugin
+class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
 {
     /**
      * @var Container
@@ -102,7 +102,49 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     {
         return null;
     }
-    
+
+    // homepageplugin template method
+    public function getHomepageTemplate($user_id)
+    {
+
+        $user = $this->container['current_user'];
+
+        // show contentbox only when visiting one's own page
+        if ($user_id === $user->id) {
+
+            // get all the courses with Courseware plugin activation
+            $pid = $this->getPluginId();
+            $pm  = \PluginManager::getInstance();
+            $my_courses = $this->container['current_user']->course_memberships->filter(function ($cm) use ($pid, $pm) {
+                    return $pm->isPluginActivated($pid, $cm->seminar_id);
+                });
+
+            // cannot show any discussions
+            if (!sizeof($my_courses)) {
+                return null;
+            }
+
+            $discussions = array();
+            foreach ($my_courses as $my_course) {
+                if ($my_course->status === 'autor') {
+                    $discussions[] = new \Mooc\UI\DiscussionBlock\LecturerDiscussion($my_course->seminar_id, $user);
+                }
+            }
+
+            $templatefactory = new Flexi_TemplateFactory(__DIR__ . '/views');
+            $template = $templatefactory->open("profile/show.php");
+
+            $template->discussions = $discussions;
+            $template->plugin      = $this;
+            $template->container   = $this->container;
+
+            PageLayout::addStylesheet($this->getPluginURL().'/assets/mooc-profile.css');
+
+            return $template;
+        } else {
+            return null;
+        }
+    }
 
     public function perform($unconsumed_path)
     {
