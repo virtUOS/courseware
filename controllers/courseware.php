@@ -49,6 +49,21 @@ class CoursewareController extends MoocipController {
         }
     }
 
+    public function discussions_action()
+    {
+        if (Navigation::hasItem('/course/mooc_discussions')) {
+            Navigation::activateItem('/course/mooc_discussions');
+        }
+
+        if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->plugin->getCourseId())) {
+            throw new Trails_Exception(401);
+        }
+
+        $this->blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? AND type = ?', array($this->container['cid'], 'DiscussionBlock'));
+
+        // add CSS
+        $this->addBlockStyles();
+    }
 
     /////////////////////
     // PRIVATE HELPERS //

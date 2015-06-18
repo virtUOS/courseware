@@ -74,6 +74,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         // tabs for tutors and up
         else {
+            $discussions_url = PluginEngine::getURL($this, compact('cid'), 'courseware/discussions', true);
+            $tabs['mooc_discussions'] = new Navigation(_('Kommunikation'), $discussions_url);
         }
 
         return $tabs;
