@@ -1,16 +1,33 @@
 {{#active}}
-  <h2>{{title}}</h2>
-
+  
+  <h2 class="testblock-header">{{title}}</h2>
+  
   {{#description}}
     <div class="description">{{{description}}}</div>
   {{/description}}
 
   {{#exercises}}
     {{^skip_entry}}
-      <ul class="exercise">
+      <ul class="exercise" id="exercise{{exercise_index}}">
         <li>
-          <h3 class="title">{{ title }}</h3>
-
+          <div class="exercisetitle">
+              <button name="exercisenav" class="exercisenavbutton exercisenavback" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}", "direction": "back" }'></button>
+              Frage {{exercise_index}} / {{number_of_exercises}}
+              <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}" , "direction": "next"}'></button>
+          </div>
+          <div class="exercise-content">
+          {{#solved_completely}}
+              <div class="messagebox messagebox_success">
+                  {{#i18n}}Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
+              </div>
+          {{/solved_completely}}
+          <h3 class="exercise-title" >{{ title }}</h3>
+          {{#tryagain}}
+              <p class="exercise-tryagain">Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.</p>
+          {{/tryagain}}
+          {{#correct}}
+              <p class="exercise-correct">Ihre Lösung ist korrekt!</p>
+          {{/correct}}
           {{^cloze_answers}}
             {{> _question}}
           {{/cloze_answers}}
@@ -63,11 +80,13 @@
 
             {{> _exercise_form_end}}
           {{/show_solution}}
+          </div>
         </li>
       </ul>
       {{/skip_entry}}
+     
   {{/exercises}}
-
+  
   {{^exercises}}
     {{#i18n}}Keine Aufgaben.{{/i18n}}
   {{/exercises}}

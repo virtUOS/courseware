@@ -35,20 +35,13 @@ namespace Mooc\UI\TestBlock\Vips {
          */
         public static function getVipsPlugin()
         {
-            if (!static::vipsExists()) {
-                return null;
-            }
-
-            if (static::$vipsPlugin === null) {
-                static::$vipsPlugin = new \VipsPlugin();
-            }
-
-            return static::$vipsPlugin;
+            return \PluginEngine::getPlugin('VipsPlugin');
         }
 
+        // predicate checking for an activated VipsPlugin
         public static function vipsExists()
         {
-            return class_exists('\VipsPlugin');
+            return !!self::getVipsPlugin();
         }
 
         /**

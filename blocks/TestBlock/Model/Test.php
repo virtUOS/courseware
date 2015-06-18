@@ -16,6 +16,8 @@ class Test extends \SimpleORMap
 {
     public function __construct($id = null)
     {
+
+
         $this->db_table = 'vips_test';
 
         $this->has_and_belongs_to_many['exercises'] = array(
@@ -27,7 +29,24 @@ class Test extends \SimpleORMap
             'on_store' => true,
         );
 
+        $this->has_many['refs'] = array(
+            'class_name' => 'Mooc\UI\TestBlock\Model\Refs',
+            'foreign_key' => 'id',
+            'assoc_foreign_key' => 'test_id',
+        );
+
         parent::__construct($id);
+
+
+        foreach ($this->exercises as $exc) {
+            //$exc->setPoints($this->refs->findBySQL("exercise_id=?", array($exc->id))->points);
+            //var_dump($this->refs->findBySQL("exercise_id=?", array($exc->id))[0][0]->points);
+            //var_dump($exc->setPoints($this->refs->findByExercise_id($exc->id)->points);
+            $exc->setPoints($this->refs->filter(function ($ref) use ($exc) {
+                return $exc->id == $ref->exercise_id;
+            })->first()->points);
+        }
+
     }
 
     public function isSelfTest()

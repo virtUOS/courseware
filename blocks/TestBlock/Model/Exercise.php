@@ -25,6 +25,11 @@ class Exercise extends \SimpleORMap
     private $vipsSolutions;
 
     /**
+     * @var float Maximum points for this excercise in the context of current test
+     */
+    private $points;
+
+    /**
      * @var AnswersStrategyInterface The exercise's answers strategy
      */
     private $answersStrategy;
@@ -52,6 +57,26 @@ class Exercise extends \SimpleORMap
         }
 
         return $returnValue;
+    }
+
+    /**
+     * Set max points
+     * @var p float points
+     *
+     * @return float the points
+     */
+    public function setPoints($p) {
+        $this->points = $p;
+        return $this->points;
+    }
+
+    /**
+     * Get max points
+     *
+     * @return float points
+     */
+    public function getPoints() {
+        return $this->points;
     }
 
     /**
@@ -149,6 +174,7 @@ class Exercise extends \SimpleORMap
                 'index' => $index,
                 'text' => $answer,
                 'correct' => $this->answersStrategy->isUserAnswerCorrect($answer, $index),
+                'points' => $solution->points,
                 'correct_image' => \Assets::image_path('icons/16/green/accept'),
                 'incorrect_image' => \Assets::image_path('icons/16/red/decline'),
             );
@@ -249,10 +275,11 @@ class Exercise extends \SimpleORMap
      */
     public function getVipsSolutionFor(Test $test, \Seminar_User $user)
     {
+
+
         if (!$this->hasSolutionFor($test, $user)) {
             return null;
         }
-
         return $this->vipsSolutions[$test->getId()][$user->cfg->getUserId()];
     }
 

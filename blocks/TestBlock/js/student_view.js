@@ -5,19 +5,24 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         events: {
             'click button[name=reset-exercise]': function (event) {
                 var $form = this.$(event.target).closest('form');
+                console.log(this.$el.find(".exercise"));
                 var view = this;
-
+                var $exercise_index = $form.find("input[name='exercise_index']").val();
                 if (confirm('Soll die Antwort zurückgesetzt werden?')) {
                     helper
                         .callHandler(this.model.id, 'exercise_reset', $form.serialize())
                         .then(
                             function () {
-                                view.renderServerSide();
+                                $.when(view.renderServerSide()).done(function(){
+                                   $('.exercise').hide();
+                                   $('#exercise'+$exercise_index).show();
+                                });                                
                             },
                             function () {
                                 console.log('failed to reset the exercise');
                             }
                         ).done();
+                    
                 }
 
                 return false;
@@ -25,19 +30,32 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
             'click button[name=submit-exercise]': function (event) {
                 var $form = this.$(event.target).closest('form');
                 var view = this;
-
+                var $exercise_index = $form.find("input[name='exercise_index']").val();
                 helper
                     .callHandler(this.model.id, 'exercise_submit', $form.serialize())
                     .then(
                         function () {
-                            view.renderServerSide();
+                            $.when(view.renderServerSide()).done(function(){
+                                   $('.exercise').hide();
+                                   $('#exercise'+$exercise_index).show();
+                            });  
                         },
                         function () {
                             console.log('failed to store the solution');
                         }
                     ).done();
-
+                
                 return false;
+            },
+            'click button[name=exercisenav]': function (event){
+                    var options = $.parseJSON(this.$(event.target).attr('button-data'));
+                    var $num =parseInt(options.id);
+                    if(options.direction == "next") $num++;
+                    else $num--;
+                    if ($num > parseInt(options.numexes)) $num = 1;
+                    if ($num < 1) $num = parseInt(options.numexes); 
+                    $('.exercise').hide();
+                    $('#exercise'+$num).show();
             }
         },
 
@@ -87,6 +105,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     }
                 });
             });
+            
         },
 
         moveChoice: function ($sortableAnswers) {

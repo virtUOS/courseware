@@ -92,8 +92,9 @@ class TestBlock extends Block
     // preclude any calls to handlers
     public function handle($name, $data = array())
     {
+       
         if (!VipsBridge::vipsActivated($this)) {
-            throw \RuntimeException('Vips is not activated.');
+            throw new \RuntimeException('Vips is not activated.');
         }
 
         return parent::handle($name, $data);
@@ -187,17 +188,14 @@ class TestBlock extends Block
             $stmt->execute();
         }
 
-        $progress = $this->getProgress();
-        $progress->max_grade = count($this->test->exercises);
-        $progress->grade--;
-        $progress->store();
+        $this->calcGrades();
 
         return array();
     }
 
     public function exercise_submit_handler($data)
     {
-        global $vipsPlugin, $vipsTemplateFactory;
+        global $vipsPlugin, $vipsTemplateFactory, $user;
 
         parse_str($data, $requestParams);
 
@@ -211,13 +209,27 @@ class TestBlock extends Block
         \submit_exercise('sheets');
         ob_clean();
 
-        $progress = $this->getProgress();
-        $progress->max_grade = count($this->test->exercises);
-        $progress->grade++;
-        $progress->store();
+        $this->calcGrades();
 
         return array();
-    }
+     }
+
+     public function calcGrades()
+     {
+         global $user;
+         $progress = $this->getProgress();
+         $progress->max_grade = count($this->test->exercises);
+         $progress->grade = 0;
+
+         foreach ($this->test->exercises as $exc) {
+             $solution = $exc->getSolutionFor($this->test, $user);
+             $correct = $solution ? ($exc->getPoints() == $solution->points) : false;
+             if ($correct) {
+                 $progress->grade++;
+             }
+         }
+
+     }
 
     /**
      * {@inheritdoc}
@@ -538,6 +550,8 @@ class TestBlock extends Block
         $exercises = array();
 
         if ($this->test) {
+            $numberofex =  count($this->test->exercises);
+            $exindex = 1;
             foreach ($this->test->exercises as $exercise) {
                 /** @var \Mooc\UI\TestBlock\Model\Exercise $exercise */
 
@@ -548,6 +562,11 @@ class TestBlock extends Block
 
                 $answers = $exercise->getAnswers($this->test, $user);
                 $userAnswers = $exercise->getUserAnswers($this->test, $user);
+
+                // TT: determine if a correct solution has been handed in
+                $solution = $exercise->getSolutionFor($this->test, $user);
+                $correct = $solution ? ($exercise->getPoints() == $solution->points) : false;
+
                 $entry = array(
                     'exercise_type' => $exercise->getType(),
                     $exercise->getType() => 1,
@@ -556,7 +575,7 @@ class TestBlock extends Block
                     'self_test' => $this->test->isSelfTest(),
                     'exercise_sheet' => $this->test->isExerciseSheet(),
                     'show_correction' => $this->test->showCorrection(),
-                    'show_solution' => $exercise->showSolutionFor($this->test, $user),
+                    'show_solution' => $exercise->showSolutionFor($this->test, $user) && $correct,
                     'title' => $exercise->getTitle(),
                     'question' => $exercise->getQuestion(),
                     'answers' => $answers,
@@ -567,8 +586,12 @@ class TestBlock extends Block
                     'solution' => $exercise->getAnswersStrategy()->getSolution($exercise->getVipsSolutionFor($this->test, $user)),
                     'solving_allowed' => $exercise->solvingAllowed($this->test, $user),
                     'number_of_answers' => count($answers),
+                    'number_of_exercises' => $numberofex,
+                    'exercise_index' => $exindex++,
                     $exercise->getAnswersStrategy()->getTemplate() => true,
                     'user_answers' => $userAnswers,
+                    'correct' => $correct,
+                    'tryagain' => $solution && !$correct,
                 );
                 $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
                 $exercises[] = $entry;
@@ -578,7 +601,8 @@ class TestBlock extends Block
         return array(
             'title'       => $this->test->title,
             'description' => nl2br(htmlReady($this->test->description)),
-            'exercises'   => $exercises
+            'exercises'   => $exercises,
+            'solved_completely' => $this->getProgress()->max_grade == $this->getProgress()->grade // all exercises solved?
         );
     }
 
