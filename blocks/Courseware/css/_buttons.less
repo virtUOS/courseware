@@ -1,7 +1,7 @@
 // ***** BUTTON STYLE *****
 
-> .chapters > .controls > button,
-> .chapters > .chapter > .subchapters > .controls > button,
+.chapters > .controls > button,
+.chapters > .chapter > .subchapters > .controls > button,
 .active-subchapter > .controls > button {
   .courseware-btn;
   margin: 4px 0px 0px;
@@ -50,5 +50,15 @@ button {
   &.stop-sort-section {
     background: url("@{blocks-icons-dir}/16/blue/accept.png") 6px center no-repeat #E9E9E9;
     display: none;
+  }
+}
+
+a {
+  &.button {
+    .courseware-btn;
+    padding: 9px 6px;
+    margin: 10px 5px 0;
+    background-image: none;
+    background-color: #e9e9e9;
   }
 }
