@@ -238,7 +238,7 @@ abstract class Block {
     public function traverseChildren($callback) {
         $results = array();
 
-        foreach ($this->_model->children as $child_model) {
+        foreach ($this->_model->getContentChildren() as $child_model) {
             $child = $this->getBlockFactory()->makeBlock($child_model);
             if ($child) {
                 $results[] = $callback($child, $this->container);
