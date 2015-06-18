@@ -19,8 +19,6 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
     return StudentView.extend({
 
-        children: {},
-
         events: {
             "click .title .edit":     "editSection",
             "click .title .trash":    "destroySection",
@@ -40,6 +38,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
             _.each(jQuery('section.block'), function (element) {
                 this.initializeBlock(element, undefined, "student");
             }, this);
+            this.children = {};
 
             this.listenTo(Backbone, "modeswitch", this.switchMode, this);
         },
@@ -64,11 +63,13 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
         },
 
         switchMode: function (view) {
+            
             if (view === "student") {
                 _.each(this.children, function (child, child_id) {
                     this.switchView(child_id, view);
                 }, this);
             }
+            
         },
 
         switchToAuthorView: function (event) {
@@ -110,7 +111,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
 
         switchView: function (block_id, view_name) {
-
+            
             var block_view = this.children[block_id],
                 model = block_view.model,
                 $block_wrapper = block_view.$el.closest('section.block');
@@ -277,7 +278,9 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                 this.model.destroy()
                     .done(
                         function () {
-                            helper.navigateTo(parent_id);
+                            if (parent_id) {
+                                helper.navigateTo(parent_id);
+                            }
                         },
                         function (error) {
                             var errorMessage = 'Could not remove the section: '+jQuery.parseJSON(error.responseText).reason;
