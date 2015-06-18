@@ -89,7 +89,7 @@ define({
             view.$('#videocontrols').prop('disabled', true);
 
             if (this.getVideoType(url) == 'youtube') {
-                var youtubeid = url.slice(29).split("?",1);
+                var youtubeid = url.slice(24).split("?",1);
                 view.$('#videosrc').val(youtubeid);
                 var start = url.slice(url.indexOf("start=")+6, url.length);
                 start = start.split("&", 1);

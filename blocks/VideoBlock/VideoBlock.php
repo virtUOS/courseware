@@ -11,8 +11,6 @@ class VideoBlock extends Block
 {
     const NAME = 'Video';
 
-    const YOUTUBE_PATTERN = '/^.*(youtu.be\/|v\/|embed\/|watch\?|youtube.com\/|user\|watch\?|feature=player_embedded\&|\/[^#]*#([^\/]*?\/)*)\??v?=?([^#\&\?]*).*/i';
-
     function initialize()
     {
         $this->defineField('url', \Mooc\SCOPE_BLOCK, '');
@@ -23,19 +21,19 @@ class VideoBlock extends Block
         // on view: grade with 100%
         $this->setGrade(1.0);
 
-        return array('url' => $this->cleanUpYouTubeUrl($this->url));
+        return array('url' => $this->url);
     }
 
     function author_view()
     {
-        return array('url' => $this->cleanUpYouTubeUrl($this->url));
+        return array('url' => $this->url);
     }
 
     function save_handler($data)
     {
         $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
 
-        $this->url = static::cleanUpYouTubeUrl((string) $data['url']);
+        $this->url = (string) $data['url'];
         return array('url' => $this->url);
     }
 
@@ -73,41 +71,5 @@ class VideoBlock extends Block
         }
 
         $this->save();
-    }
-
-    /**
-     * Cleans up YouTube URLs if necessary.
-     *
-     * YouTube does not support URLs like http://www.youtube.com/watch?v=<ID>
-     * to be embedded in iframes. The URL pattern has to be
-     * http://www.youtube.com/embed/<ID>
-     *
-     * @param string $url The URL to clean up
-     *
-     * @return string The cleaned up URL
-     */
-    public static function cleanUpYouTubeUrl($url)
-    {
-        if (!preg_match(self::YOUTUBE_PATTERN, $url)) {
-            return $url;
-        }
-
-        $parts = parse_url($url);
-
-        if (!isset($parts['query'])) {
-            return $url;
-        }
-
-        parse_str($parts['query'], $params);
-        $parts['path'] = '/embed/'.$params['v'];
-        unset($params['v']);
-
-        $url = $parts['scheme'].'://'.$parts['host'].$parts['path'];
-
-        if (count($params) > 0) {
-            $url .= '?'.http_build_query($params);
-        }
-
-        return $url;
     }
 }
