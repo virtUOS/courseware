@@ -8,8 +8,15 @@ input::-moz-focus-inner {
   padding: 0;
 }
 
-#mooc-courseware-index #layout_container {
-  position: relative;
+#mooc-courseware-index {
+  #layout_container {
+    position: relative;
+  }
+
+  /* FIXME: hide sidebar for now */
+  #layout-sidebar {
+    display: none;
+  }
 }
 
 section#courseware {
@@ -19,7 +26,7 @@ section#courseware {
   padding-left: @sidebar-overall-width;
   max-width: @courseware-max-width;
 
-  ol {
+  ol.chapters, ol.subchapters, ol.active-subchapter {
     list-style: none;
 
     li + li.no-content {
