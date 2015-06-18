@@ -53,6 +53,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
      */
     public function getTabNavigation($course_id)
     {
+        $cid = $course_id;
         $tabs = array();
 
         $courseware = $this->container['current_courseware'];
