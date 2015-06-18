@@ -29,14 +29,14 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
             this.threads.reset(
                 _.map(this.$('article.thread'), function(el) {
                     var id = $(el).attr('id'),
-                        cid = $(el).attr('data-cid');
+                        courseid = $(el).attr('data-courseid');
 
                     // TODO: this should probably go to ThreadModel
-                    if (!id || id === '' || !cid || cid === '') {
+                    if (!id || id === '' || !courseid || courseid === '') {
                         throw new Error("Could not initialize DiscussionBlock from DOM");
                     }
 
-                    return new Thread({ id: id, cid: cid });
+                    return new Thread({ id: id, courseid: courseid });
                 })
             );
         },
@@ -70,7 +70,7 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
                 var file_info = event.originalEvent.dataTransfer.files || {};
                 var data = new FormData();
                 var thread = textarea.closest('.thread').attr('id');
-                var context_id = textarea.closest('.thread').attr('data-cid');
+                var context_id = textarea.closest('.thread').attr('data-courseid');
                 var context_type = "course";
 
                 jQuery.each(file_info, function (index, file) {
@@ -136,7 +136,7 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
                 content = $textarea.val(),
                 $thread_el = $textarea.closest('.thread'),
                 thread_id = $thread_el.attr('id'),
-                cid = $thread_el.attr('data-cid'),
+                courseid = $thread_el.attr('data-courseid'),
                 self = this;
 
             if (!content || this.alreadyWriting) {
@@ -149,7 +149,7 @@ define(['q', 'underscore', 'autosize', 'assets/js/student_view', 'assets/js/url'
             Q(jQuery.ajax({
                 url: STUDIP.ABSOLUTE_URI_STUDIP + 'plugins.php/blubber/streams/comment',
                 data: {
-                    context:      cid,
+                    context:      courseid,
                     context_type: 'course',
                     thread:       thread_id,
                     content:      content
