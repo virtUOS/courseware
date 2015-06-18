@@ -41,7 +41,18 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         },
 
         _initializeChildren: function() {
-            var $section = this.$('.active-section'),
+            this.activeSectionView = this._createSectionFromElement('.active-section');
+
+            this.chaptersView = new ChapterListView({ el: '.chapters', model: this.model });
+            this.sectionsView = new SectionListView({
+                el: '.active-subchapter',
+                model: this.model,
+                active_section: this.activeSectionView.model
+            });
+        },
+
+        _createSectionFromElement: function (el) {
+            var $section = this.$(el),
                 section_model = new BlockModel({
                     type:      "Section",
                     id:        $section.attr("data-blockid"),
@@ -49,18 +60,9 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
                     title:     $section.attr("data-title")
                 });
 
-            this.activeSectionView = block_types
+            return block_types
                 .findByName("Section")
                 .createView("student", { el: $section[0], model: section_model });
-
-            this.chaptersView = new ChapterListView({ el: '.chapters', model: this.model });
-            this.sectionsView = new SectionListView({
-                el: '.active-subchapter',
-                model: this.model,
-                active_section: section_model
-            });
-
-
         },
 
         remove: function() {
@@ -95,20 +97,20 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         },
 
         navigateTo: function (event) {
-	    var navigate = true;
+            var navigate = true;
             event.preventDefault();
             Backbone.on('preventnavigateto', function(preventNavigateTo){
                 if(preventNavigateTo){
-			navigate = false;
-		}
+                        navigate = false;
+                }
             });
             var beforeNavigateEvent = {isUserInputHandled : false };
-	
+
             Backbone.trigger("beforenavigate", beforeNavigateEvent);
             if (this.$el.hasClass("loading")) {
                 return;
             }
-	    if (navigate){
+            if (navigate){
                 this.$el.addClass("loading");
 
                 var $parent = jQuery(event.target).closest("[data-blockid]"),
@@ -117,7 +119,7 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
                 helper.navigateTo(id);
             }
             else return false;
-	    
+
         },
 
         switchToStudentMode: function () {
