@@ -4,9 +4,12 @@
 <?
   $block_types = $plugin->getBlockFactory()->getBlockClasses();
 
-  $blocks_url     = current(explode("?", $controller->url_for("blocks")));
-  $courseware_url = current(explode("?", $controller->url_for("courseware")));
-  $plugin_url     = PluginEngine::getURL($plugin, array(), '', true);
+
+
+
+  $blocks_url     = PluginEngine::getURL($plugin, array(), "blocks",     true);
+  $courseware_url = PluginEngine::getURL($plugin, array(), "courseware", true);
+  $plugin_url     = PluginEngine::getURL($plugin, array(), "",           true);
 
   $src_dir = $plugin->getPluginURL() . '/assets/js/';
  ?>
