@@ -129,7 +129,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
             block_view.remove();
 
             // create new view
-            var el = jQuery("<div class='block-content'/>");
+            var el = jQuery("<div class='block-content'/>").attr('data-view', view_name);
             $block_wrapper.append(el).addClass("loading");
 
             var view = block_types
