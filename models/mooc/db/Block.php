@@ -296,6 +296,33 @@ class Block extends \SimpleORMap implements \Serializable
         }
     }
 
+    // has the given user completed (progress = 100%) this content
+    // block or all of its descendent content blocks
+    public function hasUserCompleted($uid)
+    {
+        // structural blocks compute their score using their non-structural descendants
+        if ($this->isStructuralBlock()) {
+
+            // empty structural blocks are not completed
+            if (sizeof($this->children) === 0) {
+                return false;
+            }
+
+            $completings = array();
+            foreach ($this->children as $child) {
+                $completings[] = $child->hasUserCompleted($uid);
+            }
+            $status = array_search(false, array_flatten($completings)) === FALSE;
+
+            return $status;
+
+        }
+
+        else {
+            $progress = new UserProgress(array($this->id, $uid));
+            return $progress->getPercentage() === 1;
+        }
+    }
 
 
     public function getContentChildren()
