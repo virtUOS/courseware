@@ -6,7 +6,7 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
         events: {
             "click button[name=save]": "saveVideo",
             "click button[name=cancel]": "switchBack",
-	    "click #videotype option": "selection",
+	    "change select#videotype": "selection",
 	    "click button[name=preview]": "preview"
         },
         initialize: function(options) {
