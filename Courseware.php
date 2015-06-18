@@ -15,7 +15,7 @@ use Mooc\User;
  * @author  <tgloeggl@uos.de>
  * @author  <mlunzena@uos.de>
  */
-class Courseware extends StudIPPlugin implements StandardPlugin
+class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
 {
     /**
      * @var Container
