@@ -32,6 +32,9 @@
         <button class=add-chapter>{{#i18n}}Kapitel einfügen{{/i18n}}</button>
         <button class=init-sort-chapter>{{#i18n}}Kapitel sortieren{{/i18n}}</button>
         <button class=stop-sort-chapter>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
+        {{^active_chapter.aside_section}}
+          <button class=activate-aside-section>{{#i18n}}Seitenblöcke aktivieren{{/i18n}}</button>
+        {{/active_chapter.aside_section}}
 
         <a class="button export" href="{{#plugin_url}}export{{/plugin_url}}">
           {{#i18n}}Export{{/i18n}}
@@ -47,6 +50,48 @@
 
       </li>
     </ol>
+
+    {{#active_chapter}}
+      {{#aside_section}}
+        <section class="aside-section"
+          data-blockid={{id}}
+          data-parentid="{{parent_id}}"
+          data-parenttype="Chapter"
+          data-title="{{title}}"
+          data-type="Section">
+
+          <header>
+            <h1>
+              {{#i18n}}Sidebar für {{/i18n}}
+                "{{active_chapter.title}}"
+            </h1>
+          </header>
+
+          {{{html}}}
+        </section>
+      {{/aside_section}}
+    {{/active_chapter}}
+
+    {{#active_subchapter}}
+      {{#aside_section}}
+        <section class="aside-section"
+          data-blockid={{id}}
+          data-parentid="{{parent_id}}"
+          data-parenttype="Subchapter"
+          data-title="{{title}}"
+          data-type="Section">
+
+          <header>
+            <h1>
+              {{#i18n}}Sidebar für {{/i18n}}
+                "{{active_subchapter.title}}"
+            </h1>
+          </header>
+
+          {{{html}}}
+        </section>
+      {{/aside_section}}
+    {{/active_subchapter}}
   </aside>
 
   {{> active_subchapter}}

@@ -20,6 +20,7 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         chaptersView:      null,
         sectionsView:      null,
         activeSectionView: null,
+        asideSectionViews: [],
 
         events: {
             "click .mode-switch .student": "switchToStudentMode",
@@ -49,6 +50,16 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
                 model: this.model,
                 active_section: this.activeSectionView.model
             });
+
+            var aside_sections = this.$('.aside-section');
+            if (aside_sections.length) {
+                this.asideSectionViews = _.map(
+                    aside_sections,
+                    function (el) {
+                        return this._createSectionFromElement(el);
+                    },
+                    this);
+            }
         },
 
         _createSectionFromElement: function (el) {
@@ -67,6 +78,11 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
 
         remove: function() {
             StudentView.prototype.remove.call(this);
+
+             if (this.asideSectionViews.length) {
+                _.invoke(this.asideSectionViews, 'remove');
+            }
+
             if (this.chaptersView) {
                 this.chaptersView.remove();
             }
@@ -83,6 +99,11 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         },
 
         postRender: function() {
+
+            if (this.asideSectionViews.length) {
+                _.invoke(this.asideSectionViews, 'postRender');
+            }
+
             if (this.chaptersView) {
                 this.chaptersView.postRender();
             }
