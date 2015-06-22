@@ -25,6 +25,9 @@ class HtmlBlock extends Block
 
     function author_view()
     {
+        if ($this->container['wysiwyg_refined']) {
+            $this->content = wysiwygReady($this->content);
+        }
         return $this->toJSON();
     }
 
@@ -47,7 +50,7 @@ class HtmlBlock extends Block
         }
 
         if($this->container['wysiwyg_refined']) {
-          $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
+            $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
         } else {
           $this->content = (string) $data['content'];
         }
