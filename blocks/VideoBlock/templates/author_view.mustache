@@ -1,4 +1,4 @@
-<div class="video-wrapper">
+<div class="video-wrapper {{aspect}}">
   <iframe src="{{url}}" scrolling="no" allowfullscreen></iframe>
 </div>
 <p id="videourl">{{url}}</p>
@@ -14,6 +14,7 @@ Video-Typ: <select id="videotype">
 <div id="videosettings">
     <span>Video automatisch starten<input type="checkbox" id="videoautostart" ></span>
     <span>Kontrollelemente verstecken<input type="checkbox" id="videocontrols" ></span> <br/>
+    <span>Seitenverh&auml;ltnis<input type="radio" id="videoaspect169" name="videoaspect" value="aspect-169" checked>16:9 <input type="radio" id="videoaspect43" name="videoaspect" value="aspect-43">4:3</span> <br/>
     <span>Start<input id="videostartmin" type="number" min="0" placeholder="min" ><input id="videostartsec" type="number" step="1" max="59" min="0" placeholder="sek"></span> 
     <span>Ende<input id="videoendmin" type="number" min="0" placeholder="min"><input id="videoendsec" type="number" step="1" max="59" min="0" placeholder="sek"></span> <br/>
 </div>

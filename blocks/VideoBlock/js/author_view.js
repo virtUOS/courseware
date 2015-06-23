@@ -35,19 +35,22 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
         },
         preview: function() {
             var videourl = this.$('#videourl'), videotype = this.$('#videotype').val(), url = Utils.getUrl(this, videotype);
+            var aspect = this.$('input[name="videoaspect"]:checked').val();
             if(url != '') {
                 this.$('iframe').show();
                 videourl.html(url);
                 Utils.showPreview(this, url);
+                this.$('.video-wrapper').attr('class', 'video-wrapper '+aspect);
             }
             else this.selection();
         },
         saveVideo: function() {
             this.preview();
             var url = this.$('#videourl').text(), status = this.$('.status');
+            var aspect = this.$('input[name="videoaspect"]:checked').val();
             status.text('Speichere Änderungen...');
             var view = this;
-            helper.callHandler(this.model.id, 'save', { url: url }).then(
+            helper.callHandler(this.model.id, 'save', { url: url, aspect: aspect}).then(
                 function() {
                     status.text('Änderungen wurden gespeichert.');
                     view.switchBack();
