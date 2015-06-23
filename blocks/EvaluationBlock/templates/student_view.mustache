@@ -1,0 +1,22 @@
+{{#active}}
+    <h2>Evaluationen</h2>
+
+    <article class="mooc_evaluations">
+
+        {{^content}}
+            Es wurde bisher keine Evaluation erstellt!
+        {{/content}}
+
+        {{# content}}
+            <section>
+                <h3>{{title}}</h3>
+                <p>{{{description}}}</p>
+                <a href="{{link}}" class="button" data-dialog target="_blank">Anzeigen</a>
+            </section>
+        {{/ content}}
+    </article>
+{{/active}}
+
+{{^active}}
+        {{> _evaluation_deactivated}}
+{{/active}}
