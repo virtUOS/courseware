@@ -55,9 +55,9 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
             var $section = this.$(el),
                 section_model = new BlockModel({
                     type:      "Section",
-                    id:        $section.attr("data-blockid"),
-                    parent_id: $section.attr("data-parentid"),
-                    title:     $section.attr("data-title")
+                    id:        $section.data('blockid'),
+                    parent_id: $section.data('parentid'),
+                    title:     $section.data('title')
                 });
 
             return block_types
