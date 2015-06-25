@@ -31,7 +31,7 @@ class ClozeAnswersStrategy extends AnswersStrategy
                 $question .= '<input type="text" name="answer_'.$index.'">';
                 $index++;
             } else {
-                $question .= formatReady($questionPart);
+                $question .= formatReady($questionPart, FALSE);
             }
         }
 
