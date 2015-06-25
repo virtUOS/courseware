@@ -4,18 +4,7 @@
   data-type=Chapter
   {{#dom_title}}title="{{dom_title}}"{{/dom_title}}>
 
-  <div class=title>
-    <span class=handle>#</span>
-    <a class="navigate"
-      href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}">
-        {{title}}
-    </a>
-
-    <span class=controls>
-      <button class="edit" data-title="{{#i18n}}Kapiteltitel bearbeiten{{/i18n}}">{{#i18n}}Ändern{{/i18n}}</button>
-      <button class="trash" data-title="{{#i18n}}Gesamtes Kapitel löschen{{/i18n}}">{{#i18n}}Entfernen{{/i18n}}</button>
-    </span>
-  </div>
+  {{> chapter_title}}
 
   {{#selected}}
     <ol class=subchapters>
