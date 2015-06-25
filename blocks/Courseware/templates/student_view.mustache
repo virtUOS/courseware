@@ -63,7 +63,7 @@
           <header>
             <h1>
               {{#i18n}}Sidebar für {{/i18n}}
-                "{{active_chapter.title}}"
+                {{#titleize}}{{active_chapter.title}}{{/titleize}}
             </h1>
           </header>
 
@@ -84,7 +84,7 @@
           <header>
             <h1>
               {{#i18n}}Sidebar für {{/i18n}}
-                "{{active_subchapter.title}}"
+                {{#titleize}}{{active_subchapter.title}}{{/titleize}}
             </h1>
           </header>
 
