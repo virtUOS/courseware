@@ -4,6 +4,14 @@ $body_id = 'mooc-progress-index';
 $progress = function ($block, $format = "") {
     return ceil($block['progress'] * 100) . $format;
 };
+
+// FIXME: DRY this; titleize is already defined in models/mooc/Container.php
+$titleize = function ($content) {
+    if (preg_match('/^\+\+/', $content)) {
+        $content = "<span class=indented>" . substr($content, 2) . "</span>";
+    }
+    return $content;
+};
 ?>
 
 
@@ -14,7 +22,7 @@ $progress = function ($block, $format = "") {
   <? foreach ($courseware['children'] as $chapter) : ?>
     <tr class=chapter>
       <th colspan=2>
-        <?= htmlReady($chapter['title']) ?>
+        <?= $titleize(htmlReady($chapter['title'])) ?>
         <? if (sizeof($chapter['children'])) : ?>
           <span class=progress><?= $progress($chapter, "%") ?></span>
         <? endif ?>
@@ -24,7 +32,7 @@ $progress = function ($block, $format = "") {
     <? foreach ($chapter['children'] as $subchapter) : ?>
       <tr class=subchapter>
         <th>
-          <?= htmlReady($subchapter['title']) ?>
+          <?= $titleize(htmlReady($subchapter['title'])) ?>
           <? if (sizeof($subchapter['children'])) : ?>
             <span class=progress><?= $progress($subchapter, "%") ?></span>
           <? endif ?>
