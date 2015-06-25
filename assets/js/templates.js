@@ -14,6 +14,15 @@ define(['module', 'mustache', './url'], function (module, Mustache, url_helper) 
             return function (text, render) {
                 return url_helper.plugin_url(render(text));
             };
+        },
+        titleize: function ()  {
+            return function (text, render) {
+                var content = render(text);
+                if (content.match(/^\+\+/)) {
+                    content = "<span class=indented>" + content.substr(2) + "</span>";
+                }
+                return content;
+            };
         }
     };
 
