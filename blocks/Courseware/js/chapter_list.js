@@ -114,7 +114,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
         editStructure: function (event) {
             var $parent = jQuery(event.target).closest("[data-blockid]"),
                 model = this._modelFromElement($parent),
-                $title, title, orig_model, view, updateListItem;
+                $title_el, orig_model, view, updateListItem;
 
             if (model.isNew()) {
                 return;
@@ -124,15 +124,22 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 throw "ERROR";
             }
 
-            $title = $parent.find("> .title");
-            title = $title.find("a").text().trim();
-            model.set("title", title);
+            $title_el = $parent.find("> .title");
 
             orig_model = model.clone();
 
             view = new EditView({ model: model });
             updateListItem = function (model) {
-                $title.find("a").text(model.get('title'));
+
+                var title_tmpl = templates('Courseware',
+                                           model.get('type').toLowerCase() + '_title',
+                                           model.toJSON());
+
+                // update title
+                $title_el.replaceWith(title_tmpl);
+
+                // keep this synced
+                $parent.data('title', model.get('title'));
 
                 if (model.get("publication_date") != null && !isNaN(model.get("publication_date"))) {
                     var date = new Date(model.get("publication_date") * 1000);
@@ -156,13 +163,13 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 }
             };
 
-            $title.hide().before(view.el);
+            $title_el.hide().before(view.el);
             view.postRender();
 
             view.promise()
                 .fin(function () {
                     view.remove();
-                    $title.show();
+                    $title_el.show();
                 })
                 .then(function (model) {
                     $parent.addClass("loading");
@@ -190,9 +197,10 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
 
         _modelFromElement: function (element) {
             var values = {
-                id: element.attr("data-blockid"),
-                type: element.attr("data-type"),
-                publication_date: parseInt(element.attr("data-publication"), 10)
+                id: element.data('blockid'),
+                title: element.data('title'),
+                type: element.data('type'),
+                publication_date: parseInt(element.data('publication'), 10)
             };
 
             return new BlockModel(values);
