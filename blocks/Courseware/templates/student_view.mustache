@@ -7,10 +7,10 @@
   <nav class=breadcrumb>
     <ul>
       {{#active_chapter}}
-        <li><a href="#">{{title}}</a></li>
+        <li><a href="#">{{#titleize}}{{title}}{{/titleize}}</a></li>
       {{/active_chapter}}
       {{#active_subchapter}}
-        <li>» <a href="#">{{title}}</a></li>
+        <li>» <a href="#">{{#titleize}}{{title}}{{/titleize}}</a></li>
       {{/active_subchapter}}
     </ul>
   </nav>

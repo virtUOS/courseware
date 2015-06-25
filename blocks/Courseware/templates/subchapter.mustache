@@ -1,20 +1,10 @@
 <li class="subchapter{{#selected}} selected{{/selected}}{{#unpublished}} unpublished{{/unpublished}}"
   data-blockid="{{id}}"
+  data-title="{{title}}"
   data-publication="{{publication_date}}"
   data-type=Subchapter
   {{#dom_title}}title="{{dom_title}}"{{/dom_title}}>
 
-  <div class=title>
-    <span class=handle>#</span>
-    <a class="navigate"
-      href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}">
-        {{title}}
-    </a>
-
-    <span class=controls>
-      <button class="edit" data-title="{{#i18n}}Titel des Unterkapitels bearbeiten{{/i18n}}">{{#i18n}}Ändern{{/i18n}}</button>
-      <button class="trash" data-title="{{#i18n}}Gesamtes Unterkapitel löschen{{/i18n}}">{{#i18n}}Entfernen{{/i18n}}</button>
-    </span>
-  </div>
+  {{> subchapter_title}}
 
 </li>

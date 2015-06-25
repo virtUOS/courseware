@@ -74,6 +74,14 @@ class Container extends \Pimple
 
             'plugin_url' => function ($text, $helper) use ($c) {
                 return \PluginEngine::getURL($c['plugin'], array(), $helper->render($text));
+            },
+
+            'titleize' => function ($text, $helper) {
+                $content = $helper->render($text);
+                if (preg_match('/^\+\+/', $content)) {
+                    $content = "<span class=indented>" . substr($content, 2) . "</span>";
+                }
+                return $content;
             }
         );
     }
