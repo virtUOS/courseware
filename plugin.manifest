@@ -4,3 +4,5 @@ origin=virtUOS
 version=1.0
 homepage=https://github.com/virtuos/mooc.ip
 studipMinVersion=3.0
+descriptionShort=Interaktive multimediale Lernmodule erstellen und bereitstellen.
+descriptionLong=Mit der Courseware können Sie interaktive multimediale Lernmodule erstellen und nutzen. Die Module sind in Kapitel, Unterkapitel und Abschnitte unterteilt und können aus Textblöcken, Videosequenzen, Aufgaben (benötigt das Vips-Plugin) und Kommunkationselementen bestehen. Fertige Module können exportiert und in andere Kurse oder andere Installationen importiert werden.

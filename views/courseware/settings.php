@@ -28,10 +28,7 @@ use Mooc\UI\Courseware\Courseware;
                     <label for="courseware-title">
                         <?= _('Titel der Courseware') ?><br>
                         <dfn id="courseware-title-description">
-                            Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna
-                            aliqua.
+                            <?= _('Der Titel der Courseware erscheint als Beschriftung des Courseware-Reiters. Sie können den Reiter also z.B. auch "Online-Skript", "Lernmodul" o.ä. nennen.'); ?>
                         </dfn>
                     </label>
                 </td>
@@ -45,9 +42,7 @@ use Mooc\UI\Courseware\Courseware;
                     <label for="courseware-progression">
                         <?= _('Art der Kapitelabfolge') ?><br>
                         <dfn id="courseware-progression-description">
-                            Ut enimad minim veniam, quis nostrud
-                            exercitation ullamco laboris nisi ut
-                            aliquip ex ea commodo consequat.
+                            <?= _('Bei freier Kapitelabfolge können alle sichtbaren Kapitel in beliebiger Reihenfolge ausgewählt werden. Bei sequentieller Abfolge müssen alle vorangehenden Unterkapitel erfolgreich abgeschlossen sein, damit ein Unterkapitel ausgewählt und angezeigt werden kann.'); ?>
                         </dfn>
                     </label>
                 </td>
