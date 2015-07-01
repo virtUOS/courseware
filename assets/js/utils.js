@@ -47,6 +47,9 @@ define({
                 url = this.buildMatterhornLink(matterhornurl, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoautostart').is(':checked'), view.$('#videocontrols').is(':checked'));
                 view.$('#videosrc').val(matterhornurl);
                 break;
+            case 'dfb':
+                url = "//tv.dfb.de/player_frame.php?view=" + view.$('#videosrc').val();
+                break;
             case 'url':
                 url = view.$('#videosrc').val();
                 break;
@@ -67,6 +70,8 @@ define({
             videotype = "youtube";
         } else if (url.indexOf("engage") != -1) {
             videotype = "matterhorn";
+        } else if (url.indexOf("tv.dfb.de") != -1) {
+            videotype = "dfb";
         } else {
             videotype = "url";
         }
@@ -76,13 +81,18 @@ define({
 
     resetVideoData: function (view) {
         view.$('#videosrc').val('');
-        view.$('#videosettings input').val('').removeAttr('checked').removeAttr('selected').prop('disabled', false);
+        view.$('#videosettings input:not([name="videoaspect"])').val('').removeAttr('checked').removeAttr('selected').prop('disabled', false);
     },
 
     setVideoData: function (view, url, videotype) {
+        view.$('#videosettings input').prop('disabled', false);
+        
         if (videotype == 'youtube') {
             view.$('#videocontrols').prop('disabled', true);
-
+            
+            if(view.$('.video-wrapper').hasClass('aspect-43')) view.$('#videoaspect43').prop('checked', true);
+            else view.$('#videoaspect169').prop('checked', true);
+            
             if (this.getVideoType(url) == 'youtube') {
                 var youtubeid = url.slice(24).split("?",1);
                 view.$('#videosrc').val(youtubeid);
@@ -140,8 +150,16 @@ define({
             }
         }
 
-        if (videotype == 'url') {
+        if (videotype == 'dfb') {
             view.$('#videosettings input').prop('disabled', true);
+            view.$('#videoaspect169').prop('checked', true);
+            if (this.getVideoType(url) == 'url') {
+                view.$('#videosrc').val(url);
+            }
+        }
+
+        if (videotype == 'url') {
+            view.$('#videosettings input:not([name="videoaspect"])').prop('disabled', true);
 
             if (this.getVideoType(url) == 'url') {
                 view.$('#videosrc').val(url);
@@ -184,7 +202,6 @@ define({
                 url += '?autoplay=1';
             }
         }
-
         return url;
     },
 
