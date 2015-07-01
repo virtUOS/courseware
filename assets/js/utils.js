@@ -81,12 +81,20 @@ define({
 
     resetVideoData: function (view) {
         view.$('#videosrc').val('');
-        view.$('#videosettings input').val('').removeAttr('checked').removeAttr('selected').prop('disabled', false);
+        view.$('#videosettings input:not([name="videoaspect"])').val('').removeAttr('checked').removeAttr('selected').prop('disabled', false);
     },
 
     setVideoData: function (view, url, videotype) {
+        view.$('#videosettings input').prop('disabled', false);
+
         if (videotype == 'youtube') {
             view.$('#videocontrols').prop('disabled', true);
+
+            if(view.$('.video-wrapper').hasClass('aspect-43')) {
+                view.$('#videoaspect43').prop('checked', true);
+            } else {
+                view.$('#videoaspect169').prop('checked', true);
+            }
 
             if (this.getVideoType(url) == 'youtube') {
                 var youtubeid = url.slice(24).split("?",1);
@@ -147,14 +155,14 @@ define({
 
         if (videotype == 'dfb') {
             view.$('#videosettings input').prop('disabled', true);
-
+            view.$('#videoaspect169').prop('checked', true);
             if (this.getVideoType(url) == 'url') {
                 view.$('#videosrc').val(url);
             }
         }
 
         if (videotype == 'url') {
-            view.$('#videosettings input').prop('disabled', true);
+            view.$('#videosettings input:not([name="videoaspect"])').prop('disabled', true);
 
             if (this.getVideoType(url) == 'url') {
                 view.$('#videosrc').val(url);
@@ -197,7 +205,6 @@ define({
                 url += '?autoplay=1';
             }
         }
-
         return url;
     },
 
