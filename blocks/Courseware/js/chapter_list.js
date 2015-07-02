@@ -155,7 +155,7 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 }
 
                 if ($parent.attr('data-publication') != "") {
-                    $parent.attr('title', new Date($parent.attr('data-publication') * 1000).format('d.m.Y'));
+                    $parent.attr('title', 'Sichtbar ab: '.toLocaleString() + new Date($parent.attr('data-publication') * 1000).format('d.m.Y'));
                 } else {
                     $parent.attr('title', '');
                 }
