@@ -35,6 +35,9 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         if ($this->isSlotModule() && !$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
             Navigation::removeItem('/course/vipsplugin');
         }
+
+        // markup for link element to courseware
+        StudipFormat::addStudipMarkup('courseware', '\[(mooc-forumblock):([0-9]{1,32})\]', NULL, 'Mooc::markupForumLink');
     }
 
     // bei Aufruf des Plugins über plugin.php/mooc/...
@@ -216,5 +219,18 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         if (!class_exists('\\Metrics')) {
             require_once __DIR__ . '/models/Metrics.v3_0.php';
         }
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * *
+     * * * * *   F O R U M   M A R K U P   * * * * *
+     * * * * * * * * * * * * * * * * * * * * * * * */
+
+    static function markupForumLink($markup, $matches, $contents)
+    {
+        // create a widget for given id (md5 hash - ensured by markup regex)
+        return '<span class="mooc-forumblock">'
+            . '<a href="'. PluginEngine::getLink('mooc' , array('selected' => $matches[2]), 'courseware') .'">'
+            . _('Zurück zur Courseware')
+            . '</a></span>';
     }
 }
