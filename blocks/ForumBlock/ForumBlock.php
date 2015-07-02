@@ -67,7 +67,11 @@ class ForumBlock extends Block
 
     private function connectToArea($area_id)
     {
-        if ($area_id == -1 || !\ForumEntry::getConstraints($area_id)) {
+        $old_area_id = $this->area_id;
+
+        $entry = \ForumEntry::getConstraints($area_id);
+
+        if ($area_id == -1 || !$entry) {
             // create new area and create default category if not present
             $seminar_id = $this->container['cid'];
             $user_id    = $this->container['current_user']->id;
@@ -99,9 +103,30 @@ class ForumBlock extends Block
                 'author_host' => getenv('REMOTE_ADDR')
             ), $seminar_id);
 
+            $entry = \ForumEntry::getConstraints($this->area_id);
+
             \ForumCat::addArea($category_id, $this->area_id);
         } else {
             $this->area_id = $area_id;
+        }
+
+        // add the backlink if neccessary
+        $selected = $this->_model->parent_id;
+
+        // if the current section is not added as a backlink yet, add it
+        if (strpos($entry['content'], '[mooc-forumblock:'. $selected .']') === false) {
+            $new_content = \ForumEntry::killEdit($entry['content']) . "\n". '[mooc-forumblock:'. $selected .']';
+            \ForumEntry::update($this->area_id, $entry['name'], $new_content);
+        }
+
+        // remove old backlink from previously connected area
+        if ($old_area_id != -1) {
+            $old_entry = \ForumEntry::getConstraints($old_area_id);
+
+            if (strpos($old_entry['content'], '[mooc-forumblock:'. $selected .']') !== false) {
+                $new_content = str_replace('[mooc-forumblock:'. $selected .']', '', $old_entry['content']);
+                \ForumEntry::update($old_area_id, $old_entry['name'], $new_content);
+            }
         }
     }
 
