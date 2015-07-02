@@ -51,6 +51,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
     {
         PageLayout::setTitle($_SESSION['SessSemName']['header_line'] . ' - ' . $this->getPluginname());
         PageLayout::addStylesheet($this->getPluginURL().'/assets/style.css');
+        PageLayout::setHelpKeyword("MoocIP.Courseware"); // Hilfeseite im Hilfewiki
+        $this->getHelpbarContent();
     }
 
     /**
@@ -82,8 +84,9 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
         if (!$this->container['current_user']->hasPerm($course_id, 'tutor')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
             $tabs['mooc_progress'] = new Navigation(_('Fortschrittsübersicht'), $progress_url);
+            $tabs['mooc_progress']->setImage('icons/16/white/group3.png');
+            $tabs['mooc_progress']->setActiveImage('icons/16/black/group3.png');
         }
-
         // tabs for tutors and up
         else {
             $discussions_url = PluginEngine::getURL($this, compact('cid'), 'courseware/discussions', true);
@@ -235,6 +238,26 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
     /**********************************************************************/
     /* PRIVATE METHODS                                                    */
     /**********************************************************************/
+
+    /*
+     * Hilfeinhalte
+     */
+    protected function getHelpbarContent()
+    {
+
+        $can_edit = $GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid']);
+
+        if ($can_edit) {
+            $description = _("Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. Schalten Sie zwischen Teilnehmenden-Sicht und Editier-Modus um und fügen Sie Abschnitte und Blöcke (Text und Bild, Video, Diskussion, Quiz)  hinzu. Aufgaben erstellen und verwalten Sie mit dem Vips-Plugin und binden Sie dann in einen Courseware-Abschnitt ein.");
+            Helpbar::get()->addPlainText(_('Information'), $description, 'icons/16/white/info-circle.png');
+
+            $tip = _("Sie können den Courseware-Reiter umbennen! Wählen Sie dazu den Punkt 'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden.");
+            Helpbar::get()->addPlainText(_('Tipp'), $tip, 'icons/16/white/info-circle.png');
+        } else {
+            $description = _("Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, Kommunikationselemente und kleine Quizzes beinhalten. Ihren Bearbeitungsfortschritt sehen Sie auf einen Blick im Reiter Fortschrittsübersicht.");
+            Helpbar::get()->addPlainText(_('Hinweis'), $description, 'icons/16/white/info-circle.png');
+        }
+    }
 
     private function setupContainer()
     {
