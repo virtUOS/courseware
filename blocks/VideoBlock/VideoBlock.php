@@ -81,7 +81,7 @@ class VideoBlock extends Block
         }
         
         if (isset($properties['aspect'])) {
-            $this->height = $properties['aspect'];
+            $this->aspect = $properties['aspect'];
         }
 
         $this->save();
