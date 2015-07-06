@@ -54,6 +54,7 @@ class ClozeAnswersStrategy extends AnswersStrategy
             if (is_array($questionPart)) {
                 $correct = false;
                 $correctAnswer = '';
+                $answerList = array();
 
                 foreach ($questionPart as $answer) {
                     if ($answer['points'] != 1) {
@@ -66,7 +67,7 @@ class ClozeAnswersStrategy extends AnswersStrategy
                         $correct = true;
                     }
 
-                    break;
+                    $answerList[] = $correctAnswer;
                 }
 
                 if ($correct) {
@@ -78,7 +79,7 @@ class ClozeAnswersStrategy extends AnswersStrategy
                     $solutionString .= sprintf(
                         '<span class="incorrect_answer">%s</span><span class="correction">[%s]</span>',
                         $solution[$index],
-                        $correctAnswer
+                        implode('|', $answerList)
                     );
                 }
 
