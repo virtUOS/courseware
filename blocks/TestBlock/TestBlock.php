@@ -609,7 +609,7 @@ class TestBlock extends Block
     /**
      * {@inheritdoc}
      */
-    public static function additionalInstanceAllowed(Section $section, $subType = null)
+    public static function additionalInstanceAllowed($container, Section $section, $subType = null)
     {
         return VipsBridge::vipsActivated($section);
     }

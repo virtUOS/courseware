@@ -91,7 +91,7 @@ class Section extends Block {
 
         $className = '\Mooc\UI\\'.$data['type'].'\\'.$data['type'];
 
-        if (!call_user_func(array($className, 'additionalInstanceAllowed'), $this, $data['sub_type'])) {
+        if (!call_user_func(array($className, 'additionalInstanceAllowed'), $this->container, $this, $data['sub_type'])) {
             throw new BadRequest('No additional '.$data['type'].' allowed');
         }
 
@@ -198,7 +198,7 @@ class Section extends Block {
             if (count($subTypes) > 0) {
                 foreach ($subTypes as $subType => $name)  {
 
-                    if (!$className::additionalInstanceAllowed($this, $subType)) {
+                    if (!$className::additionalInstanceAllowed($this->container, $this, $subType)) {
                         continue;
                     }
 
@@ -209,7 +209,7 @@ class Section extends Block {
                     );
                 }
             } else {
-                if ($className::additionalInstanceAllowed($this)) {
+                if ($className::additionalInstanceAllowed($this->container, $this)) {
                     $blockTypes[] = array(
                         'type'     => $type,
                         'sub_type' => null,
