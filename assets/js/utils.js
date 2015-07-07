@@ -47,9 +47,6 @@ define({
                 url = this.buildMatterhornLink(matterhornurl, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoautostart').is(':checked'), view.$('#videocontrols').is(':checked'));
                 view.$('#videosrc').val(matterhornurl);
                 break;
-            case 'dfb':
-                url = "//tv.dfb.de/player_frame.php?view=" + view.$('#videosrc').val();
-                break;
             case 'url':
                 url = view.$('#videosrc').val();
                 break;
@@ -70,8 +67,6 @@ define({
             videotype = "youtube";
         } else if (url.indexOf("engage") != -1) {
             videotype = "matterhorn";
-        } else if (url.indexOf("tv.dfb.de") != -1) {
-            videotype = "dfb";
         } else {
             videotype = "url";
         }
@@ -147,14 +142,6 @@ define({
                     view.$('#videostartmin').val(start[0]);
                     view.$('#videostartsec').val(start[1].split("s",1));
                 }
-            }
-        }
-
-        if (videotype == 'dfb') {
-            view.$('#videosettings input').prop('disabled', true);
-            view.$('#videoaspect169').prop('checked', true);
-            if (this.getVideoType(url) == 'url') {
-                view.$('#videosrc').val(url);
             }
         }
 
