@@ -31,10 +31,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $this->setupAutoload();
         $this->setupContainer();
 
-        // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
-        if ($this->isSlotModule() && !$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
-            Navigation::removeItem('/course/vipsplugin');
-        }
+        $this->setupNavigation();
 
         // markup for link element to courseware
         StudipFormat::addStudipMarkup('courseware', '\[(mooc-forumblock):([0-9]{1,32})\]', NULL, 'Mooc::markupForumLink');
@@ -217,19 +214,27 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         StudipAutoloader::addAutoloadPath(__DIR__ . '/models');
     }
 
+    private function setupNavigation()
+    {
+        // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
+        if (!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
+            Navigation::removeItem('/course/vipsplugin');
+        }
+
+        // FIXME: hier den Courseware-Block in die Hand zu bekommen,
+        //        ist definitiv falsch.
+        $courseware = $this->container['current_courseware'];
+
+        // hide blubber tab if the discussion block is active
+        if ($courseware->getDiscussionBlockActivation()) {
+            Navigation::removeItem('/course/blubberforum');
+        }
+    }
+
     private function getSemClass()
     {
         global $SEM_CLASS, $SEM_TYPE, $SessSemName;
         return $SEM_CLASS[$SEM_TYPE[$SessSemName['art_num']]['class']];
-    }
-
-    private function isSlotModule()
-    {
-        if (!$this->getSemClass()) {
-            return false;
-        }
-
-        return $this->getSemClass()->isSlotModule(get_class($this));
     }
 
     static function onEnable($id)

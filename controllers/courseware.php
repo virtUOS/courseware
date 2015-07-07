@@ -45,7 +45,8 @@ class CoursewareController extends MoocipController {
             CSRFProtection::verifyUnsafeRequest();
             $this->storeSettings();
 
-            PageLayout::postMessage(MessageBox::success(_("Die Einstellungen wurden gespeichert.")));
+            $this->flash['success'] = _("Die Einstellungen wurden gespeichert.");
+            return $this->redirect('courseware/settings');
         }
     }
 
@@ -98,9 +99,18 @@ class CoursewareController extends MoocipController {
             $this->storeCoursewareTitle($courseware_settings['title']);
         }
 
+
+        ////////////////////////////
+        // COURSEWARE PROGRESSION //
+        ////////////////////////////
         if (isset($courseware_settings['progression'])) {
             $this->storeCoursewareProgressionType($courseware_settings['progression']);
         }
+
+        /////////////////////////////////
+        // DISCUSSION BLOCK ACTIVATION //
+        /////////////////////////////////
+        $this->storeDiscussionBlockActivation(isset($courseware_settings['discussionblock_activation']) ? true : false);
 
         $this->courseware_block->save();
     }
@@ -119,6 +129,13 @@ class CoursewareController extends MoocipController {
     private function storeCoursewareProgressionType($type)
     {
         if (!$this->courseware_block->setProgressionType($type)) {
+            // TODO: send a message back
+        }
+    }
+
+    private function storeDiscussionBlockActivation($active)
+    {
+        if (!$this->courseware_block->setDiscussionBlockActivation($active)) {
             // TODO: send a message back
         }
     }

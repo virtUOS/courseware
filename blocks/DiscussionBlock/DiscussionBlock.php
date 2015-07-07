@@ -10,6 +10,12 @@ class DiscussionBlock extends Block
 {
     const NAME = 'Diskussion';
 
+    public static function additionalInstanceAllowed($container)
+    {
+        return $container['current_courseware']->getDiscussionBlockActivation();
+    }
+
+
     function initialize()
     {
     }
