@@ -48,7 +48,8 @@ class TestBlock extends Block
     public static function getSubTypes()
     {
         return array(
-            'exam' => _('Klausur'),
+            // removed via https://github.com/virtUOS/courseware/issues/19
+            // 'exam' => _('Klausur'),
             'selftest' => _('Selbsttest'),
             'practice' => _('Übungsblatt'),
         );
