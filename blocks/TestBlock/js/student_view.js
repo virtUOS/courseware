@@ -19,8 +19,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                             }
                         )
                         .then(function () {
-                            this.$('.exercise').hide();
-                            this.$('#exercise' + $exercise_index).show();
+                            view.$('.exercise').hide();
+                            view.$('#exercise' + $exercise_index).show();
                         })
                         .done();
                 }
@@ -43,8 +43,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         }
                     )
                     .then(function () {
-                        this.$('.exercise').hide();
-                        this.$('#exercise' + $exercise_index).show();
+                        view.$('.exercise').hide();
+                        view.$('#exercise' + $exercise_index).show();
                     })
                     .done();
 
