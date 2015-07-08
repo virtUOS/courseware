@@ -36,7 +36,9 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
             // Navigation::removeItem('/course/files'); // TT DOUBLE HACK, no WYSIWYG-Upload if file tab is invisible...
             Navigation::removeItem('/course/blubberforum');
             if(!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
-                Navigation::removeItem('/course/vipsplugin');
+                if(Navigation::hasItem('/course/vipsplugin')){
+                    Navigation::removeItem('/course/vipsplugin');
+                }
             }
         }
     }
