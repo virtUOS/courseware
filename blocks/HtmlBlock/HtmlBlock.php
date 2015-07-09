@@ -25,12 +25,12 @@ class HtmlBlock extends Block
 
     function author_view()
     {
-        $result = $this->toJSON();
-        
         if ($this->container['wysiwyg_refined']) {
-            $result['content'] = studip_utf8encode(wysiwygReady($this->content));
+            $content = wysiwygReady($this->content);
+        } else {
+            $content = htmlReady($this->content);
         }
-        return $result;
+        return compact('content');
     }
 
     /**
