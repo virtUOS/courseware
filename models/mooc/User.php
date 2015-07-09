@@ -31,7 +31,7 @@ class User extends \User
     public function canCreate($model)
     {
         if ($model instanceof Block) {
-            return $this->hasPerm($model->seminar_id, 'dozent');
+            return $this->canEditBlock($model);
         }
 
         throw new \RuntimeException('not implemented: ' . __METHOD__);
@@ -53,7 +53,7 @@ class User extends \User
     public function canUpdate($model)
     {
         if ($model instanceof Block) {
-            return $this->hasPerm($model->seminar_id, 'tutor');
+            return $this->canEditBlock($model);
         }
 
         throw new \RuntimeException('not implemented: ' . __METHOD__);
@@ -62,7 +62,7 @@ class User extends \User
     public function canDelete($model)
     {
         if ($model instanceof Block) {
-            return $this->hasPerm($model->seminar_id, 'dozent');
+            return $this->canEditBlock($model);
         }
 
         throw new \RuntimeException('not implemented: ' . __METHOD__);
@@ -74,14 +74,34 @@ class User extends \User
             return false;
         }
 
-        /** @var \Seminar_Perm $perm */
-        $perm = $GLOBALS['perm'];
-
-        return $perm->have_studip_perm($perm_level, $cid, $this->id);
+        return $GLOBALS['perm']->have_studip_perm($perm_level, $cid, $this->id);
     }
 
-    public function getPerm()
+    public function getPerm($cid)
     {
-        return $this->perms;
+        if (!$cid) {
+            return false;
+        }
+
+        return $GLOBALS['perm']->get_studip_perm($cid, $this->id);
+    }
+
+    /////////////////////
+    // PRIVATE HELPERS //
+    /////////////////////
+
+    // get the editing permission level from the courseware's settings
+    private function canEditBlock($block)
+    {
+        // optimistically get the current courseware
+        $courseware = $this->container['current_courseware'];
+
+        // if the $block is not a descendant of it, get its courseware
+        if ($courseware->seminar_id !== $block->seminar_id) {
+            $courseware_model = $this->container['courseware_factory']->makeCourseware($block->seminar_id);
+            $courseware = $this->container['block_factory']->makeBlock($courseware_model);
+        }
+
+        return $this->hasPerm($block->seminar_id, $courseware->getEditingPermission());
     }
 }

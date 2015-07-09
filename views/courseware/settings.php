@@ -60,6 +60,10 @@ if ($flash['success']) {
                 </td>
             </tr>
 
+
+            <?= $this->render_partial('courseware/_settings_editing_permission') ?>
+
+
             <tr>
                 <th colspan="2"><?= _('Blockeinstellungen') ?></th>
             </tr>
