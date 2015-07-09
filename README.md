@@ -1,6 +1,8 @@
 Courseware - Plugin für Stud.IP
 ==============================
 
+Mit der Courseware können Sie interaktive multimediale Lernmodule erstellen und nutzen. Die Module sind in Kapitel, Unterkapitel und Abschnitte unterteilt und können aus Textblöcken, Videosequenzen, Aufgaben (benötigt das Vips-Plugin) und Kommunkationselementen bestehen. Fertige Module können exportiert und in andere Kurse oder andere Installationen importiert werden.
+
 Development
 -----------
 
