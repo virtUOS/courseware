@@ -201,7 +201,8 @@ class TestBlock extends Block
         parse_str($data, $requestParams);
 
         foreach ($requestParams as $key => $value) {
-            $_POST[$key] = $value;
+            // TODO: Why don't we use $data directly?
+            $_POST[$key] = studip_utf8decode($value);
         }
 
         $vipsPlugin = VipsBridge::getVipsPlugin();
