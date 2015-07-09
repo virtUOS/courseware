@@ -288,12 +288,6 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
         //return $this->getSemClass()->isSlotModule(get_class($this));
     }
 
-    static function onEnable($id)
-    {
-        // enable nobody role by default
-        RolePersistence::assignPluginRoles($id, array(7));
-    }
-
     private function setupCompatibility()
     {
         if (!class_exists('\\Metrics')) {
