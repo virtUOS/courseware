@@ -109,18 +109,14 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
 
                 $sortableAnswers.sortable({
                     axis: 'y',
-                    containment: $sortableAnswers,
-                    tolerance: 'pointer',
+                    cursor: 'move',
+                    forcePlaceholderSize: true,
+                    change: function () {
+                        fixAnswersHeight($sortableAnswers.find('li'), $sortableLabels.find('li'));
+                    },
                     update: function () {
                         view.moveChoice($sortableAnswers);
                         fixAnswersHeight($sortableAnswers.find('li'), $sortableLabels.find('li'));
-                    },
-                    sort: function (event, ui) {
-                        // this workaround is needed, otherwise, sortable items
-                        // would jump when the user scrolled down before sorting
-                        ui.helper.css({
-                            top : ui.position.top + $(window).scrollTop() + 'px'
-                        });
                     }
                 });
             });
