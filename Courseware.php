@@ -239,12 +239,6 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         return $SEM_CLASS[$SEM_TYPE[$SessSemName['art_num']]['class']];
     }
 
-    static function onEnable($id)
-    {
-        // enable nobody role by default
-        RolePersistence::assignPluginRoles($id, array(7));
-    }
-
     private function setupCompatibility()
     {
         if (!class_exists('\\Metrics')) {
