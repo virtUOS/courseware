@@ -1,5 +1,7 @@
 <?php
 
+use Mooc\UI\Courseware\Courseware;
+
 class CoursewareController extends MoocipController {
 
     public function before_filter(&$action, &$args)
@@ -30,7 +32,7 @@ class CoursewareController extends MoocipController {
     }
 
 
-    // show this course's settings page
+    // show this course's settings page but only to tutors+
     public function settings_action()
     {
         // only tutor+ may visit this page
@@ -42,6 +44,13 @@ class CoursewareController extends MoocipController {
             Navigation::activateItem('/course/mooc_courseware/settings');
         }
 
+        $user = $this->container['current_user'];
+
+        if (!$user->hasPerm($this->container['cid'], 'tutor')) {
+            throw new Trails_Exception(401);
+        }
+
+        $this->is_tutor = $user->getPerm($this->container['cid']) === 'tutor';
 
         if (Request::isPost()) {
             CSRFProtection::verifyUnsafeRequest();
@@ -115,9 +124,17 @@ class CoursewareController extends MoocipController {
             $this->storeCoursewareTitle($courseware_settings['title']);
         }
 
+        ////////////////////////////
+        // COURSEWARE PROGRESSION //
+        ////////////////////////////
         if (isset($courseware_settings['progression'])) {
             $this->storeCoursewareProgressionType($courseware_settings['progression']);
         }
+
+        ////////////////////////
+        // EDITING PERMISSION //
+        ////////////////////////
+        $this->storeEditingPermission(isset($courseware_settings['editing_permission']) ? true : false);
 
         $this->courseware_block->save();
     }
@@ -136,6 +153,31 @@ class CoursewareController extends MoocipController {
     private function storeCoursewareProgressionType($type)
     {
         if (!$this->courseware_block->setProgressionType($type)) {
+            // TODO: send a message back
+        }
+    }
+
+    private function storeDiscussionBlockActivation($active)
+    {
+        if (!$this->courseware_block->setDiscussionBlockActivation($active)) {
+            // TODO: send a message back
+        }
+    }
+
+    private function storeEditingPermission($tutor_may_edit)
+    {
+        $perm = $tutor_may_edit
+              ? Courseware::EDITING_PERMISSION_TUTOR
+              : Courseware::EDITING_PERMISSION_DOZENT;
+
+        // tutors may not edit the courseware, thus they may not edit
+        // this setting
+        if ($perm === Courseware::EDITING_PERMISSION_DOZENT &&
+            $this->container['current_user']->getPerm($this->container['cid']) === 'tutor') {
+            throw new Trails_Exception(401, _("Tutoren können diese Einstellung nicht speichern."));
+        }
+
+        if (!$this->courseware_block->setEditingPermission($perm)) {
             // TODO: send a message back
         }
     }

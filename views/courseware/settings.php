@@ -54,6 +54,9 @@ use Mooc\UI\Courseware\Courseware;
                     </select>
                 </td>
             </tr>
+
+            <?= $this->render_partial('courseware/_settings_editing_permission') ?>
+
         </tbody>
 
         <tfoot>
