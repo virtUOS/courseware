@@ -12,14 +12,24 @@ class Courseware extends Block {
     const PROGRESSION_FREE = 'free';
     const PROGRESSION_SEQ  = 'seq';
 
+    // 'tutor' and 'dozent'  may edit courseware
+    const EDITING_PERMISSION_TUTOR  = 'tutor';
+
+    // only 'dozent'  may edit courseware
+    const EDITING_PERMISSION_DOZENT = 'dozent';
 
     function initialize()
     {
         $this->defineField('lastSelected', \Mooc\SCOPE_USER, null);
-        $this->defineField('progression',  \Mooc\SCOPE_BLOCK, self::PROGRESSION_FREE);
+
+        // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+        $this->defineField('progression', \Mooc\SCOPE_BLOCK, self::PROGRESSION_FREE);
 
         // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
         $this->defineField('discussionblock_activation', \Mooc\SCOPE_BLOCK, false);
+
+        // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+        $this->defineField('editing_permission', \Mooc\SCOPE_BLOCK, self::EDITING_PERMISSION_TUTOR);
     }
 
     function student_view($context = array())
@@ -181,6 +191,25 @@ class Courseware extends Block {
     public function getDiscussionBlockActivation()
     {
         return $this->discussionblock_activation;
+    }
+
+    // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+    // set perm level of editing permission
+    public function setEditingPermission($perm_level)
+    {
+        if (in_array($perm_level, array(self::EDITING_PERMISSION_TUTOR, self::EDITING_PERMISSION_DOZENT))) {
+            $this->editing_permission = $perm_level;
+            return true;
+        }
+
+        return false;
+    }
+
+    // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+    // get perm level of editing permission
+    public function getEditingPermission()
+    {
+        return $this->editing_permission;
     }
 
     ///////////////////////
