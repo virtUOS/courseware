@@ -92,7 +92,9 @@ class ForumBlock extends Block
             }
 
             // create new area
-            $this->area_id = md5(uniqid());
+            if ($this->area_id == -1) {
+                $this->area_id = md5(uniqid());
+            }
 
             \ForumEntry::insert(array(
                 'topic_id'    => $this->area_id,
@@ -154,5 +156,46 @@ class ForumBlock extends Block
         $this->connectToArea($data['area_id']);
 
         return array();
+    }
+
+    /* * * * * * * * * * * * * * * *
+     * *   I M - / E X P O R T   * *
+     * * * * * * * * * * * * * * * */
+
+    /**
+     * {@inheritdoc}
+     */
+    public function exportProperties()
+    {
+        return array('areaid' => $this->area_id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlNamespace()
+    {
+        return 'http://moocip.de/schema/block/forum/';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlSchemaLocation()
+    {
+        return 'http://moocip.de/schema/block/forum/forum-1.0.xsd';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function importProperties(array $properties)
+    {
+        if (isset($properties['areaid'])) {
+            $this->area_id = md5($properties['areaid'] . $this->container['cid']);
+            $this->connectToArea($this->area_id);
+        }
+
+        $this->save();
     }
 }
