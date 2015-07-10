@@ -25,9 +25,6 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
     public function __construct() {
         parent::__construct();
 
-        // adjust host system
-        $this->setupCompatibility();
-
         $this->setupAutoload();
         $this->setupContainer();
 
@@ -276,7 +273,6 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
         return $SEM_CLASS[$SEM_TYPE[$SessSemName['art_num']]['class']];
     }
 
-
     //HACKED
     private function isSlotModule()
     {
@@ -286,13 +282,6 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
         return true;
         //TODO: why does it always return false?
         //return $this->getSemClass()->isSlotModule(get_class($this));
-    }
-
-    private function setupCompatibility()
-    {
-        if (!class_exists('\\Metrics')) {
-            require_once __DIR__ . '/models/Metrics.v3_0.php';
-        }
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * *
