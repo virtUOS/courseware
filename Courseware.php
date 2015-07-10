@@ -260,15 +260,27 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
         }
     }
 
+    // setup Pimple container (only once!)
     private function setupContainer()
     {
-        $this->container = new Mooc\Container($this);
+        static $container;
+
+        if (!$container) {
+            $container = new Mooc\Container($this);
+        }
+
+        $this->container = $container;
     }
 
-
+    // autoload the models (only once!)
     private function setupAutoload()
     {
-        StudipAutoloader::addAutoloadPath(__DIR__ . '/models');
+        static $once;
+
+        if (!$once) {
+            $once = true;
+            StudipAutoloader::addAutoloadPath(__DIR__ . '/models');
+        }
     }
 
     private function getSemClass()
