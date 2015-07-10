@@ -8,7 +8,7 @@ use Mooc\UI\MustacheRenderer;
 /**
  * @author  <mlunzena@uos.de>
  */
-class Container extends \Pimple
+class Container extends \Pimple\Container
 {
     public function __construct($plugin)
     {
