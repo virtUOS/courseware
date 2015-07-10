@@ -19,6 +19,8 @@ class BlocksController extends MoocipController {
             $json = $block->toArray();
 
 
+            // FIXME: braucht irgendwer die children? Ich hab noch
+            // keine Stelle gefunden.
             $json['children'] = array();
             foreach ($block->children as $child) {
                 // TODO: Was genau braucht man von den Kindern?
