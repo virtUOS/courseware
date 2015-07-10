@@ -28,19 +28,23 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
         $this->setupAutoload();
         $this->setupContainer();
 
-        // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
-        if ($this->isSlotModule()){
-            // Navigation::removeItem('/course/files'); // TT DOUBLE HACK, no WYSIWYG-Upload if file tab is invisible...
-            Navigation::removeItem('/course/blubberforum');
-            if(!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
-                if(Navigation::hasItem('/course/vipsplugin')){
-                    Navigation::removeItem('/course/vipsplugin');
+        // more setup if this plugin is active in this course
+        if ($this->isActivated($this->container['cid'])) {
+
+            // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
+            if ($this->isSlotModule()) {
+                // Navigation::removeItem('/course/files'); // TT DOUBLE HACK, no WYSIWYG-Upload if file tab is invisible...
+                Navigation::removeItem('/course/blubberforum');
+                if(!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
+                    if(Navigation::hasItem('/course/vipsplugin')){
+                        Navigation::removeItem('/course/vipsplugin');
+                    }
                 }
             }
-        }
 
-        // markup for link element to courseware
-        StudipFormat::addStudipMarkup('courseware', '\[(mooc-forumblock):([0-9]{1,32})\]', NULL, 'Courseware::markupForumLink');
+            // markup for link element to courseware
+            StudipFormat::addStudipMarkup('courseware', '\[(mooc-forumblock):([0-9]{1,32})\]', NULL, 'Courseware::markupForumLink');
+        }
     }
 
     // bei Aufruf des Plugins über plugin.php/mooc/...
