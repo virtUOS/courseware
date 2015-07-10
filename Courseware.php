@@ -204,22 +204,34 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         }
     }
 
+    // setup Pimple container (only once!)
     private function setupContainer()
     {
-        $this->container = new Mooc\Container($this);
+        static $container;
+
+        if (!$container) {
+            $container = new Mooc\Container($this);
+        }
+
+        $this->container = $container;
     }
 
-
+    // autoload the models (only once!)
     private function setupAutoload()
     {
-        StudipAutoloader::addAutoloadPath(__DIR__ . '/models');
+        static $once;
+
+        if (!$once) {
+            $once = true;
+            StudipAutoloader::addAutoloadPath(__DIR__ . '/models');
+        }
     }
 
     private function setupNavigation()
     {
         // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
         if (!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
-            if(Navigation::hasItem('/course/vipsplugin')){
+            if (Navigation::hasItem('/course/vipsplugin')){
                 Navigation::removeItem('/course/vipsplugin');
             }
         }
