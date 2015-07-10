@@ -14,6 +14,10 @@ class ImportController extends MoocipController
     public function before_filter(&$action, &$args)
     {
         parent::before_filter($action, $args);
+
+        if (!$this->container['current_user']->canCreate($this->container['current_courseware'])) {
+            throw new Trails_Exception(401);
+        }
     }
 
 
@@ -91,8 +95,7 @@ class ImportController extends MoocipController
         unzip_file($filename, $tempDir);
 
         if ($this->validateUploadFile($tempDir, $this->errors)) {
-            $coursewareBlock = Block::findCourseware(Request::get('cid'));
-            $courseware = $this->plugin->getBlockFactory()->makeBlock($coursewareBlock);
+            $courseware = $this->container['current_courseware'];
             $importer = new XmlImport($this->plugin->getBlockFactory());
             $importer->import($tempDir, $courseware);
 

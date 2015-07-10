@@ -26,6 +26,8 @@ class DiscussionBlock extends Block
 
     function author_view()
     {
+        $this->authorizeUpdate();
+
         // cannot do anything withough blubber activated in this course
         if ($inactive = !self::blubberActivated($this)) {
             return compact('inactive');

@@ -63,6 +63,8 @@ class TestBlock extends Block
 
     public function author_view()
     {
+        $this->authorizeUpdate();
+
         if (!$active = VipsBridge::vipsActivated($this)) {
             return compact('active');
         }
@@ -93,7 +95,7 @@ class TestBlock extends Block
     // preclude any calls to handlers
     public function handle($name, $data = array())
     {
-       
+
         if (!VipsBridge::vipsActivated($this)) {
             throw new \RuntimeException('Vips is not activated.');
         }
@@ -105,7 +107,7 @@ class TestBlock extends Block
 
     public function modify_test_handler($testId)
     {
-        $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
+        $this->authorizeUpdate();
 
         // change the test id
         $this->test_id = $testId;
@@ -118,8 +120,7 @@ class TestBlock extends Block
 
     public function exercise_reset_handler($data)
     {
-        /** @var \Seminar_User $user */
-        global $user;
+        $user = $this->container['current_user'];
 
         parse_str($data, $requestData);
 
@@ -196,7 +197,9 @@ class TestBlock extends Block
 
     public function exercise_submit_handler($data)
     {
-        global $vipsPlugin, $vipsTemplateFactory, $user;
+        global $vipsPlugin, $vipsTemplateFactory;
+
+        $user = $this->container['current_user'];
 
         parse_str($data, $requestParams);
 

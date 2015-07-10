@@ -59,6 +59,17 @@ class MoocipController extends StudipController {
         $this->render_text(json_encode(studip_utf8encode($data)));
     }
 
+    /**
+     * Render Stud.IP specific HTML
+     *
+     * @param string $html  the WINDOWS-1252 encoded html string
+     */
+    function render_html($html)
+    {
+        $this->response->add_header('Content-Type', 'text/html;charset=windows-1252');
+        $this->render_text($html);
+    }
+
     function map_action($action)
     {
         \Metrics::increment(
@@ -139,6 +150,13 @@ class MoocipController extends StudipController {
         }
 
         $this->render_json($payload);
+    }
+
+    // display an HTML error
+    protected function html_error($reason, $status = 500)
+    {
+        $this->response->set_status($status);
+        $this->render_html(MessageBox::error($reason));
     }
 
     private function setDefaultPageTitle()

@@ -71,17 +71,19 @@ class Section extends Block {
      */
     function block_types_view()
     {
+        $this->authorizeUpdate();
+
         return array('content_block_types' => $this->getBlockTypes());
     }
 
     function add_content_block_handler($data) {
 
-        if (!isset($data['type'])) {
-            throw new BadRequest("Type required.");
+        if (!$this->container['current_user']->canCreate($this)) {
+            throw new Errors\AccessDenied(_("Sie sind nicht berechtigt Blöcke anzulegen."));
         }
 
-        if (!$this->getCurrentUser()->canCreate($this->_model)) {
-            throw new AccessDenied();
+        if (!isset($data['type'])) {
+            throw new BadRequest("Type required.");
         }
 
         $types = $this->getBlockFactory()->getContentBlockClasses();
@@ -118,17 +120,17 @@ class Section extends Block {
 
     function remove_content_block_handler($data) {
 
+        if (!$this->container['current_user']->canUpdate($this)) {
+            throw new Errors\AccessDenied(_("Sie sind nicht berechtigt Blöcke zu löschen."));
+        }
+
         if (!isset($data['child_id'])) {
             throw new BadRequest("Child ID required");
         }
 
-        $child = $this->_model->children->findOneBy("id", (int) $data['child_id']);
+        $child = $this->_model->children->findOneBy('id', (int) $data['child_id']);
         if (!$child) {
             throw new BadRequest("No such child");
-        }
-
-        if (!$this->getCurrentUser()->canDelete($child)) {
-            throw new BadRequest("Access denied");
         }
 
         $child->delete();
@@ -249,7 +251,7 @@ class Section extends Block {
         // on sequential courseware progression a student may only
         // access this section if he completed this or the previous
         // sub/chapter
-        if (!$this->container['current_user']->canUpdate($this->_model)) {
+        if (!$this->container['current_user']->canUpdate($this)) {
             $courseware = $this->container['current_courseware'];
             if ($courseware->getProgressionType() === Courseware::PROGRESSION_SEQ
                 && !$this->checkSeqCompletion()) {
@@ -266,7 +268,7 @@ class Section extends Block {
     {
         $uid = $this->container['current_user_id'];
         $sub = $this->_model->parent;
-        
+
         // TODO: solve in a more elegant way
         if (!$sub) {
             return true;
@@ -275,7 +277,7 @@ class Section extends Block {
         if ($sub->hasUserCompleted($uid)) {
             return true;
         }
-        
+
 
         // else check the previous (sub)chapter for completion
         else {

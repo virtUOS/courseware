@@ -12,6 +12,10 @@ class ExportController extends MoocipController
     public function before_filter(&$action, &$args)
     {
         parent::before_filter($action, $args);
+
+        if (!$this->container['current_user']->canCreate($this->container['current_courseware'])) {
+            throw new Trails_Exception(401);
+        }
     }
 
     public function index_action()

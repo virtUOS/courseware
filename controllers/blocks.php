@@ -39,12 +39,7 @@ class BlocksController extends MoocipController {
 
         // wants HTML
         else {
-
-            $view = $this->getViewParam();
-            $context = clone Request::getInstance();
-
-            $this->response->add_header('Content-Type', 'text/html;charset=windows-1252');
-            $this->render_text($ui_block->render($view, $context));
+            $this->callBlockView($ui_block, $this->getViewParam(), clone Request::getInstance());
         }
     }
 
@@ -94,9 +89,8 @@ class BlocksController extends MoocipController {
 
         $block = $this->requireBlock($id);
 
-        if (!$this->plugin->getCurrentUser()->canUpdate($block->parent)) {
+        if (!$this->plugin->getCurrentUser()->canUpdate($block)) {
             $this->json_error('Access Denied', 401);
-
             return;
         }
 
@@ -125,7 +119,6 @@ class BlocksController extends MoocipController {
 
         if (!$this->plugin->getCurrentUser()->canDelete($block)) {
             $this->json_error('Access Denied', 401);
-
             return;
         }
 
@@ -145,6 +138,7 @@ class BlocksController extends MoocipController {
             throw new Trails_Exception(404);
         }
 
+        // FIXME: Ist es nötig cid und block->seminar_id zu überprüfen?
         if ($block->seminar_id === $this->plugin->getCourseId()) {
             // häh?
         }
@@ -187,6 +181,25 @@ class BlocksController extends MoocipController {
         return $verb;
     }
 
+    private function callBlockView($ui_block, $view, $context)
+    {
+        try {
+            $this->render_html($ui_block->render($view, $context));
+        }
+        catch (\Mooc\UI\Errors\AccessDenied $ade) {
+            $this->html_error($ade->getMessage(), 401);
+        }
+        catch (\Mooc\UI\Errors\BadRequest $bre) {
+            $this->html_error($bre->getMessage(), 400);
+        }
+        catch (\Mooc\UI\Errors\NotFound $nfe) {
+            $this->html_error('Not Found', 404);
+        }
+        catch (Exception $e) {
+            $this->html_error($e->getMessage());
+        }
+    }
+
     private function callBlockHandler($ui_block, $handler, $data)
     {
         try {
@@ -195,19 +208,15 @@ class BlocksController extends MoocipController {
         }
         catch (\Mooc\UI\Errors\AccessDenied $ade) {
             $this->json_error('Access Denied', 401);
-            return;
         }
         catch (\Mooc\UI\Errors\BadRequest $bre) {
             $this->json_error($bre->getMessage(), 400);
-            return;
         }
         catch (\Mooc\UI\Errors\NotFound $nfe) {
             $this->json_error('Not Found', 404);
-            return;
         }
         catch (Exception $e) {
             $this->json_error($e->getMessage());
-            return;
         }
     }
 }

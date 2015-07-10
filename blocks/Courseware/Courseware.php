@@ -71,6 +71,7 @@ class Courseware extends Block {
 
     function add_structure_handler($data)
     {
+        // only authors may add more structure
         $parent = $this->requireUpdatableParent($data);
 
         // we need a title
@@ -87,6 +88,7 @@ class Courseware extends Block {
 
     function update_positions_handler($data)
     {
+        // only authors may add more structure
         $parent = $this->requireUpdatableParent($data);
 
         // we need some positions
