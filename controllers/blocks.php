@@ -26,12 +26,11 @@ class BlocksController extends MoocipController {
             }
 
             // TODO: mlunzena: Warum sollten nicht-UI-Blöcke keine
-            // Fields haben?
+            // Fields oder Grades haben?
             if ($ui_block) {
                 $json['fields'] = $ui_block->getFields();
+                $json['grade'] = $ui_block->getProgress()->grade;
             }
-
-            $json['grade'] = $ui_block->getProgress()->grade;
 
             $this->render_json($json);
         }
