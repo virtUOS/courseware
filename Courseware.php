@@ -28,10 +28,14 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $this->setupAutoload();
         $this->setupContainer();
 
-        $this->setupNavigation();
+        // more setup if this plugin is active in this course
+        if ($this->isActivated($this->container['cid'])) {
 
-        // markup for link element to courseware
-        StudipFormat::addStudipMarkup('courseware', '\[(mooc-forumblock):([0-9]{1,32})\]', NULL, 'Courseware::markupForumLink');
+            // markup for link element to courseware
+            StudipFormat::addStudipMarkup('courseware', '\[(mooc-forumblock):([0-9]{1,32})\]', NULL, 'Courseware::markupForumLink');
+
+            $this->setupNavigation();
+        }
     }
 
     // bei Aufruf des Plugins über plugin.php/mooc/...
