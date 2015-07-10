@@ -1,7 +1,7 @@
 {
     "require": {
         "mustache/mustache": "~2.5",
-        "pimple/pimple": "~1.1",
+        "pimple/pimple": "~3.0",
         "symfony/dom-crawler": "~2.4",
         "willdurand/negotiation": "~1.3"
     },
