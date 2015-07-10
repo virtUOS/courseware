@@ -209,6 +209,8 @@ abstract class Block {
      * the fields of this block, and returns the return value of the
      * called method.
      *
+     * To report an error just throw one of the \Mooc\UI\Errors.
+     *
      * @param string $view_name the name of the view to call
      * @param array  $context   The execution context
      *
@@ -504,6 +506,14 @@ abstract class Block {
         // save the progress if there is one
         if (isset($this->_progress)) {
             $this->_progress->store();
+        }
+    }
+
+    // enforce current user with 'canUpdate' permission of this block
+    protected function authorizeUpdate()
+    {
+        if (!$this->container['current_user']->canUpdate($this)) {
+            throw new Errors\AccessDenied(_("Sie sind nicht berechtigt diesen Block zu editieren."));
         }
     }
 

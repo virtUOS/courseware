@@ -16,7 +16,7 @@ class VideoBlock extends Block
         $this->defineField('url', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('aspect', \Mooc\SCOPE_BLOCK, 'aspect-169');
     }
-    
+
     function array_rep() {
         return array(
             'url'    => $this->url,
@@ -26,24 +26,24 @@ class VideoBlock extends Block
 
     function student_view()
     {
-        // on view: grade with 100%
         $this->setGrade(1.0);
-
         return $this->array_rep();
     }
 
     function author_view()
     {
+        $this->authorizeUpdate();
+
         return $this->array_rep();
     }
 
     function save_handler($data)
     {
-        $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
+        $this->authorizeUpdate();
 
         $this->url = (string) $data['url'];
         $this->aspect = (string) $data['aspect'];
-        
+
         return $this->array_rep();
     }
 
@@ -79,7 +79,7 @@ class VideoBlock extends Block
         if (isset($properties['url'])) {
             $this->url = $properties['url'];
         }
-        
+
         if (isset($properties['aspect'])) {
             $this->aspect = $properties['aspect'];
         }

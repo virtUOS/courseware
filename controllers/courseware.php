@@ -33,13 +33,15 @@ class CoursewareController extends MoocipController {
     // show this course's settings page
     public function settings_action()
     {
+        // only tutor+ may visit this page
+        if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->plugin->getCourseId())) {
+            throw new Trails_Exception(401);
+        }
+
         if (Navigation::hasItem('/course/mooc_courseware/settings')) {
             Navigation::activateItem('/course/mooc_courseware/settings');
         }
 
-        if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->plugin->getCourseId())) {
-            throw new Trails_Exception(401);
-        }
 
         if (Request::isPost()) {
             CSRFProtection::verifyUnsafeRequest();

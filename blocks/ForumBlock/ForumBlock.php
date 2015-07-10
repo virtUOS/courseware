@@ -50,6 +50,8 @@ class ForumBlock extends Block
 
     public function author_view()
     {
+        $this->authorizeUpdate();
+
         $areas = \ForumEntry::getList('area', $this->container['cid']);
 
         if ($this->area_id != -1) {
@@ -148,9 +150,7 @@ class ForumBlock extends Block
 
     public function save_handler(array $data)
     {
-        if (!$this->getCurrentUser()->canUpdate($this->getModel())) {
-            throw new Errors\AccessDenied();
-        }
+        $this->authorizeUpdate();
 
         // store submitted connection
         $this->connectToArea($data['area_id']);

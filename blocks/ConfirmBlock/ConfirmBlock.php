@@ -27,12 +27,14 @@ class ConfirmBlock extends Block
 
     function author_view()
     {
+        $this->authorizeUpdate();
+
         return array(
             'title' => $this->title
         );
     }
 
-    // this is called when the user checks the checkbox
+    // this is called when any user checks the checkbox
     // set the grade to 100%
     function confirm_handler($data)
     {

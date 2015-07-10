@@ -42,6 +42,8 @@ class BlubberBlock extends Block
 
     public function author_view()
     {
+        $this->authorizeUpdate();
+
         if (!$active = self::blubberActivated($this)) {
             return compact('active');
         }

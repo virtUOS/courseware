@@ -22,13 +22,14 @@ class IFrameBlock extends Block
 
     function student_view()
     {
-        // on view: grade with 100%
         $this->setGrade(1.0);
         return $this->array_rep();
     }
 
     function author_view()
     {
+        $this->authorizeUpdate();
+
         return $this->toJSON();
     }
 
@@ -41,7 +42,7 @@ class IFrameBlock extends Block
      */
     public function save_handler(array $data)
     {
-        $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
+        $this->authorizeUpdate();
 
         $this->url = (string) $data['url'];
         $this->height = (int) $data['height'];

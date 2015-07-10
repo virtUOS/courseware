@@ -25,6 +25,8 @@ class HtmlBlock extends Block
 
     function author_view()
     {
+        $this->authorizeUpdate();
+
         if ($this->container['wysiwyg_refined']) {
             $content = wysiwygReady($this->content);
         } else {
@@ -37,19 +39,12 @@ class HtmlBlock extends Block
      * Updates the block's contents.
      *
      * @param array $data                  The request data
-     * @param bool  $isParentBlockRequired By default, a content block can only
-     *                                     be modified it a parent block does
-     *                                     exist. Pass false to bypass this check
-     *                                     (this is, for example, needed when
-     *                                     the course overview page is edited.
      *
      * @return array The block's data
      */
-    public function save_handler(array $data, $isParentBlockRequired = true)
+    public function save_handler(array $data)
     {
-        if ($isParentBlockRequired) {
-            $this->requireUpdatableParent(array('parent' => $this->getModel()->parent_id));
-        }
+        $this->authorizeUpdate();
 
         if($this->container['wysiwyg_refined']) {
             $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));

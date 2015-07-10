@@ -1,7 +1,8 @@
 <?php
 namespace Mooc;
 
-use Mooc\DB\Block;
+use Mooc\DB\Block as DbBlock;
+use Mooc\UI\Block as UiBlock;
 
 /**
  * @author  <mlunzena@uos.de>
@@ -30,7 +31,11 @@ class User extends \User
 
     public function canCreate($model)
     {
-        if ($model instanceof Block) {
+        if ($model instanceof UiBlock) {
+            $model = $model->getModel();
+        }
+
+        if ($model instanceof DbBlock) {
             return $this->hasPerm($model->seminar_id, 'dozent');
         }
 
@@ -39,11 +44,15 @@ class User extends \User
 
     public function canRead($model)
     {
+        if ($model instanceof UiBlock) {
+            $model = $model->getModel();
+        }
+
         if ($this->canUpdate($model)) {
             return true;
         }
 
-        if ($model instanceof Block) {
+        if ($model instanceof DbBlock) {
             return $model->isPublished() && $this->hasPerm($model->seminar_id, 'user');
         }
 
@@ -52,7 +61,11 @@ class User extends \User
 
     public function canUpdate($model)
     {
-        if ($model instanceof Block) {
+        if ($model instanceof UiBlock) {
+            $model = $model->getModel();
+        }
+
+        if ($model instanceof DbBlock) {
             return $this->hasPerm($model->seminar_id, 'tutor');
         }
 
@@ -61,7 +74,11 @@ class User extends \User
 
     public function canDelete($model)
     {
-        if ($model instanceof Block) {
+        if ($model instanceof UiBlock) {
+            $model = $model->getModel();
+        }
+
+        if ($model instanceof DbBlock) {
             return $this->hasPerm($model->seminar_id, 'dozent');
         }
 
