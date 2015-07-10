@@ -40,7 +40,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
         }
 
         // markup for link element to courseware
-        StudipFormat::addStudipMarkup('courseware', '\[(mooc-forumblock):([0-9]{1,32})\]', NULL, 'Mooc::markupForumLink');
+        StudipFormat::addStudipMarkup('courseware', '\[(mooc-forumblock):([0-9]{1,32})\]', NULL, 'Courseware::markupForumLink');
     }
 
     // bei Aufruf des Plugins über plugin.php/mooc/...
