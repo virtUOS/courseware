@@ -46,7 +46,7 @@ define(['q', 'backbone', 'assets/js/templates', 'dateFormat'],
                     dateFormat: $.datepicker.W3C
                 });
             }
-            this.$("input").get(0).focus();
+            this.$("input").get(0).select().focus();
         },
 
         promise: function () {
