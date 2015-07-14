@@ -17,6 +17,8 @@ class ClozeAnswersStrategy extends AnswersStrategy
         $question = '';
         $index = 0;
 
+        $answer_array = explode('[[]]', formatReady(implode('[[]]', $this->vipsExercise->answerArray)));
+
         foreach ($this->vipsExercise->question as $questionPart) {
             if (is_array($questionPart) && count($questionPart) > 1 && $this->vipsExercise->chooseItem) {
                 $question .= '<select name="answer_'.$index.'">';
@@ -31,7 +33,7 @@ class ClozeAnswersStrategy extends AnswersStrategy
                 $question .= '<input type="text" name="answer_'.$index.'">';
                 $index++;
             } else {
-                $question .= formatReady($questionPart, FALSE);
+                $question .= $answer_array[$index];
             }
         }
 
