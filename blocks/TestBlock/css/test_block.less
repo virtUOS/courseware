@@ -105,12 +105,17 @@ section.TestBlock {
       }
     }
 
-    li.correct_answer {
-      span  {
+    .caption {
+        font-weight: bold;
+        margin: 1em 0 0.5em 0;
+    }
+
+    p.correct_answer span, .correct_item {
         background: none repeat scroll 0 0 lightgreen;
         border: 1px solid green;
         padding: 2px 5px;
-      }
+        margin: 2px 0;
+        display: inline-block;
     }
   }
 
