@@ -29,7 +29,9 @@
               <p class="exercise-correct">Ihre Lösung ist korrekt!</p>
           {{/correct}}
           {{^cloze_answers}}
-            {{> _question}}
+            {{^free_text_answers}}
+              {{> _question}}
+            {{/free_text_answers}}
           {{/cloze_answers}}
 
           {{#show_solution}}

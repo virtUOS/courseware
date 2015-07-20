@@ -2,6 +2,8 @@
 
 namespace Mooc\UI\TestBlock\Model;
 
+use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
+
 /**
  * Answers strategy for free text exercises.
  *
@@ -26,6 +28,7 @@ class FreeTextAnswersStrategy extends AnswersStrategy
      */
     public function isUserAnswerCorrect($userAnswer, $index)
     {
+        #TODO: #FIXME siehe #379
         if ($this->vipsExercise->getType()) {
             return $userAnswer === $this->vipsExercise->answerArray[0];
         }
@@ -41,5 +44,17 @@ class FreeTextAnswersStrategy extends AnswersStrategy
         }
 
         return false;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSolution(array $solution = null)
+    {
+        #TODO: #FIXME get xml in a more convenient way!
+        $xml = $this->vipsExercise->genSolution(array('answer_0' => $solution[0]));
+
+        return $this->vipsExercise->getCorrectionTemplate($xml)->render();
     }
 }
