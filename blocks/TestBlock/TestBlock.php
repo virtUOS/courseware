@@ -38,7 +38,13 @@ class TestBlock extends Block
 
     public function initialize()
     {
+        global $vipsPlugin, $vipsTemplateFactory;
+
         $this->defineField('test_id', \Mooc\SCOPE_BLOCK, null);
+
+        $vipsPlugin = VipsBridge::getVipsPlugin();
+        $vipsTemplateFactory = new \Flexi_TemplateFactory(VipsBridge::getVipsPath().'/templates/');
+
         $this->loadRelatedTest();
     }
 

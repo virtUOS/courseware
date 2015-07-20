@@ -1,17 +1,1 @@
-<ul>
-  {{#user_answers}}
-    <li>
-      {{text}}
-
-      {{#show_correction}}
-        {{#correct}}
-          <img src="{{correct_image}}">
-        {{/correct}}
-
-        {{^correct}}
-          <img src="{{incorrect_image}}">
-        {{/correct}}
-      {{/show_correction}}
-    </li>
-  {{/user_answers}}
-</ul>
+<p class="free_text solution">{{{solution}}}</p>
