@@ -58,7 +58,13 @@ class TestBlock extends Block
     public function student_view()
     {
         $active = VipsBridge::vipsActivated($this);
-        return $active ? array_merge(compact('active'), $this->buildExercises()) : compact('active');
+        $typeOfThisTest = $this->test->type;
+        $typeOfThisTestBlock = $this->_model->sub_type;
+        $blockId = $this->_model->id;
+        
+        if ($typeOfThisTest == null) {return array('active' => $active, 'exercises' => false, 'typemismatch' => false);}
+        if ($typeOfThisTest !== $typeOfThisTestBlock) {return array('active' => $active, 'exercises' => false, 'typemismatch' => true);}
+        return $active ? array_merge(array('active' => $active, 'blockid' => $blockId), $this->buildExercises()) : compact('active');
     }
 
     public function author_view()
@@ -158,7 +164,7 @@ class TestBlock extends Block
         );
         $stmt->bindValue(':test_id', $testId);
         $stmt->bindValue(':exercise_id', $exerciseId);
-        $stmt->bindValue(':user_id', $user->cfg->getUserId());
+        $stmt->bindValue(':user_id', $user->id);
         $stmt->execute();
 
         // determine the number of solutions of the current user that do still
@@ -173,7 +179,7 @@ class TestBlock extends Block
               user_id = :user_id'
         );
         $stmt->bindValue(':test_id', $testId);
-        $stmt->bindValue(':user_id', $user->cfg->getUserId());
+        $stmt->bindValue(':user_id', $user->id);
         $stmt->execute();
 
         // there are no solutions left, clean the solve start time
@@ -186,7 +192,7 @@ class TestBlock extends Block
                   user_id = :user_id'
             );
             $stmt->bindValue(':test_id', $testId);
-            $stmt->bindValue(':user_id', $user->cfg->getUserId());
+            $stmt->bindValue(':user_id', $user->id);
             $stmt->execute();
         }
 
@@ -567,10 +573,17 @@ class TestBlock extends Block
 
                 $answers = $exercise->getAnswers($this->test, $user);
                 $userAnswers = $exercise->getUserAnswers($this->test, $user);
-
-                // TT: determine if a correct solution has been handed in
-                $solution = $exercise->getSolutionFor($this->test, $user);
-                $correct = $solution ? ($exercise->getPoints() == $solution->points) : false;
+                
+                if ($this->_model->sub_type == 'selftest') {
+                    // TT: determine if a correct solution has been handed in
+                    $solution = $exercise->getSolutionFor($this->test, $user);
+                    $correct = $solution ? ($exercise->getPoints() == $solution->points) : false;
+                    $tryagain = $solution && !$correct;
+                }
+                else {
+                    $correct =  false; 
+                    $tryagain = false;
+                }
 
                 $entry = array(
                     'exercise_type' => $exercise->getType(),
@@ -596,7 +609,7 @@ class TestBlock extends Block
                     $exercise->getAnswersStrategy()->getTemplate() => true,
                     'user_answers' => $userAnswers,
                     'correct' => $correct,
-                    'tryagain' => $solution && !$correct,
+                    'tryagain' => $tryagain
                 );
                 $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
                 $exercises[] = $entry;

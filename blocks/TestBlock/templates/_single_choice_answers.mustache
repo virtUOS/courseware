@@ -1,8 +1,8 @@
 <ul>
   {{#answers}}
     <li>
-      <input type="radio" name="{{name}}" value="{{index}}" id="exercise_{{exercise_index}}_answer_{{index}}">
-      <label for="exercise_{{exercise_index}}_answer_{{index}}">
+      <input type="radio" name="{{name}}" value="{{index}}" id="{{blockid}}_exercise_{{exercise_index}}_answer_{{index}}">
+      <label for="{{blockid}}_exercise_{{exercise_index}}_answer_{{index}}">
         {{{text}}}
       </label>
     </li>

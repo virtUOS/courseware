@@ -88,7 +88,12 @@
   {{/exercises}}
   
   {{^exercises}}
-    {{#i18n}}Keine Aufgaben.{{/i18n}}
+    {{#typemismatch}}
+        <p>Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten.</p>
+    {{/typemismatch}}
+    {{^typemismatch}}
+        {{#i18n}}Keine Aufgaben.{{/i18n}}
+    {{/typemismatch}}
   {{/exercises}}
 {{/active}}
 
