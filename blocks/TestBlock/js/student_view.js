@@ -6,7 +6,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
             'click button[name=reset-exercise]': function (event) {
                 var $form = this.$(event.target).closest('form'),
                     view = this,
-                    $exercise_index = $form.find("input[name='exercise_index']").val();
+                    $exercise_index = $form.find("input[name='exercise_index']").val(),
+                    $block = this.$el.parent();
 
                 if (confirm('Soll die Antwort zurückgesetzt werden?')) {
                     helper.callHandler(this.model.id, 'exercise_reset', $form.serialize())
@@ -19,8 +20,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                             }
                         )
                         .then(function () {
-                            view.$('.exercise').hide();
-                            view.$('#exercise' + $exercise_index).show();
+                            $block.find('.exercise').hide();
+                            $block.find('#exercise' + $exercise_index).show();
                         })
                         .done();
                 }
@@ -31,7 +32,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
             'click button[name=submit-exercise]': function (event) {
                 var $form = this.$(event.target).closest('form'),
                     view = this,
-                    $exercise_index = $form.find("input[name='exercise_index']").val();
+                    $exercise_index = $form.find("input[name='exercise_index']").val(),
+                    $block = this.$el.parent();
 
                 helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
                     .then(
@@ -43,8 +45,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         }
                     )
                     .then(function () {
-                        view.$('.exercise').hide();
-                        view.$('#exercise' + $exercise_index).show();
+                        $block.find('.exercise').hide();
+                        $block.find('#exercise' + $exercise_index).show();
                     })
                     .done();
 
@@ -53,7 +55,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
 
             'click button[name=exercisenav]': function (event){
                 var options = $.parseJSON(this.$(event.target).attr('button-data')),
-                    $num = parseInt(options.id);
+                    $num = parseInt(options.id),
+                    $block = this.$el.parent();
 
                 if (options.direction == 'next') {
                     $num++;
@@ -69,9 +72,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     $num = parseInt(options.numexes, 10);
                 }
 
-                // FIXME
-                $('.exercise').hide();
-                $('#exercise'+$num).show();
+                $block.find('.exercise').hide();
+                $block.find('#exercise'+$num).show();
             }
         },
 
