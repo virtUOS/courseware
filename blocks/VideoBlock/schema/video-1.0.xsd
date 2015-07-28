@@ -5,4 +5,5 @@
     elementFormDefault="qualified"
 >
     <xsd:attribute name="url" type="xsd:string" />
+    <xsd:attribute name="aspect" type="xsd:string" />
 </xsd:schema>
