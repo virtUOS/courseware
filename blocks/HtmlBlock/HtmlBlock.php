@@ -52,7 +52,7 @@ class HtmlBlock extends Block
           $this->content = (string) $data['content'];
         }
         */ 
-         $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
+        $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
         return array('content' => $this->content);
     }
 
@@ -94,7 +94,8 @@ class HtmlBlock extends Block
             });
         }
 
-        return $document->saveHTML();
+        //return $document->saveHTML();
+        return \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
     }
 
     /**
@@ -195,8 +196,7 @@ class HtmlBlock extends Block
             });
         }
 
-        //$this->content = $document->saveHTML();
-        $this->content = "Hello world!!!";
+        $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
         $this->save();
     }
 
