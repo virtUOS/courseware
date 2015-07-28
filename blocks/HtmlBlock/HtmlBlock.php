@@ -45,13 +45,14 @@ class HtmlBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-
+        /*
         if($this->container['wysiwyg_refined']) {
             $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
         } else {
           $this->content = (string) $data['content'];
         }
-
+        */ 
+         $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
         return array('content' => $this->content);
     }
 
@@ -194,7 +195,8 @@ class HtmlBlock extends Block
             });
         }
 
-        $this->content = $document->saveHTML();
+        //$this->content = $document->saveHTML();
+        $this->content = "Hello world!!!";
         $this->save();
     }
 
