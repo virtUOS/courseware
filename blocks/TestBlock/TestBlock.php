@@ -624,7 +624,7 @@ class TestBlock extends Block
 
         return array(
             'title'       => $this->test->title,
-            'description' => nl2br(htmlReady($this->test->description)),
+            'description' => formatReady($this->test->description),
             'exercises'   => $exercises,
             'solved_completely' => $this->getProgress()->max_grade == $this->getProgress()->grade // all exercises solved?
         );
