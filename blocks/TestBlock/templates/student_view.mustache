@@ -37,13 +37,19 @@
               {{> _free_text_solution}}
             {{/free_text_answers}}
 
+            {{#multiple_choice_answers}}
+              {{> _multiple_choice_solution}}
+            {{/multiple_choice_answers}}
+
             {{^free_text_answers}}
-              {{#matching_exercise_answers}}
-                {{> _matching_exercise_answers}}
-              {{/matching_exercise_answers}}
-              {{^matching_exercise_answers}}
-                {{> _solution.mustache}}
-              {{/matching_exercise_answers}}
+              {{^multiple_choice_answers}}
+                {{#matching_exercise_answers}}
+                  {{> _matching_exercise_answers}}
+                {{/matching_exercise_answers}}
+                {{^matching_exercise_answers}}
+                  {{> _solution.mustache}}
+                {{/matching_exercise_answers}}
+              {{/multiple_choice_answers}}
             {{/free_text_answers}}
 
             {{#cloze_answers}}
