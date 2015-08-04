@@ -14,30 +14,7 @@ class ClozeAnswersStrategy extends AnswersStrategy
      */
     public function getQuestion()
     {
-        $question = '';
-        $index = 0;
-
-        $answer_array = explode('[[]]', formatReady(implode('[[]]', $this->vipsExercise->answerArray)));
-
-        foreach ($this->vipsExercise->question as $questionPart) {
-            if (is_array($questionPart) && count($questionPart) > 1 && $this->vipsExercise->chooseItem) {
-                $question .= '<select name="answer_'.$index.'">';
-
-                foreach ($questionPart as $answer) {
-                    $question .= '<option>'.htmlReady($answer['content']).'</question>';
-                }
-
-                $question .= '</select>';
-                $index++;
-            } else if (is_array($questionPart)) {
-                $question .= '<input type="text" name="answer_'.$index.'">';
-                $index++;
-            } else {
-                $question .= $answer_array[$index];
-            }
-        }
-
-        return nl2br($question);
+        return $this->vipsExercise->getSolveTemplate()->render();
     }
 
     /**
@@ -45,52 +22,13 @@ class ClozeAnswersStrategy extends AnswersStrategy
      */
     public function getSolution(array $solution = null)
     {
-        if ($solution === null) {
-            return '';
+        $request = array();
+        foreach ($solution as $key => $value) {
+            $request['answer_' . $key] = $value;
         }
 
-        $solutionString = '';
-        $index = 0;
+        $xml = $this->vipsExercise->genSolution($request);
 
-        foreach ($this->vipsExercise->question as $questionPart) {
-            if (is_array($questionPart)) {
-                $correct = false;
-                $correctAnswer = '';
-                $answerList = array();
-
-                foreach ($questionPart as $answer) {
-                    if ($answer['points'] != 1) {
-                        continue;
-                    }
-
-                    $correctAnswer = $answer['content'];
-
-                    if ($correctAnswer == $solution[$index]) {
-                        $correct = true;
-                    }
-
-                    $answerList[] = $correctAnswer;
-                }
-
-                if ($correct) {
-                    $solutionString .= sprintf(
-                        '<span class="correct_answer">%s</span>',
-                        $solution[$index]
-                    );
-                } else {
-                    $solutionString .= sprintf(
-                        '<span class="incorrect_answer">%s</span><span class="correction">[%s]</span>',
-                        $solution[$index],
-                        implode('|', $answerList)
-                    );
-                }
-
-                $index++;
-            } else {
-                $solutionString .= formatReady($questionPart, FALSE);
-            }
-        }
-
-        return $solutionString;
+        return $this->vipsExercise->getCorrectionTemplate($xml)->render();
     }
 }
