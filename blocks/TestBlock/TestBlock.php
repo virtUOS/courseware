@@ -7,6 +7,7 @@ use Mooc\UI\Block;
 use Mooc\UI\Section\Section;
 use Mooc\UI\TestBlock\Model\Exercise;
 use Mooc\UI\TestBlock\Model\Test;
+use Mooc\UI\TestBlock\Model\Solution;
 use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
 
 /**
@@ -582,8 +583,9 @@ class TestBlock extends Block
                 
                 if ($this->_model->sub_type == 'selftest') {
                     // TT: determine if a correct solution has been handed in
-                    $solution = $exercise->getSolutionFor($this->test, $user);
-                    $correct = $solution ? ($exercise->getPoints() == $solution->points) : false;
+                    $solution = Solution::findOneBy($this->test, $exercise, $user);
+                    $evaluation = $exercise->getVipsExercise()->evaluate($solution->solution, $user->id);
+                    $correct = $evaluation['percent'] == 100;
                     $tryagain = $solution && !$correct;
                 }
                 else {
