@@ -5,6 +5,12 @@
   {{#description}}
     <div class="description">{{{description}}}</div>
   {{/description}}
+  
+  {{#available}}
+    <div class="messagebox messagebox_info">
+        Dieser Test ist zurzeit nicht verfügbar.
+    </div>
+  {{/available}}
 
   {{#exercises}}
     {{^skip_entry}}
@@ -15,19 +21,38 @@
               Frage {{exercise_index}} / {{number_of_exercises}}
               <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}" , "direction": "next"}'></button>
           </div>
-          <div class="exercise-content">
-          {{#solved_completely}}
+          
+            {{#has_solution}}
+              {{#tryagain}}
+                <div class="messagebox messagebox_error">
+                    Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.
+                </div>
+              {{/tryagain}}
+              {{#correct}}
+                <div class="messagebox messagebox_success">
+                    Ihre Lösung ist korrekt!
+                </div>
+              {{/correct}}
+              
+              {{^tryagain}}{{^correct}}
+                <div class="messagebox messagebox_info">
+                    Für diese Frage haben Sie bereits eine Antwort abgegeben.
+                </div>
+              {{/correct}}{{/tryagain}}
+            {{/has_solution}}
+            {{^self_test}}
+              <div class="messagebox messagebox_info submitinfo" style="display: none;">
+                Ihre Lösung wurde eingetragen.
+              </div>
+            {{/self_test}}
+            {{#solved_completely}}
               <div class="messagebox messagebox_success">
                   {{#i18n}}Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
               </div>
-          {{/solved_completely}}
+            {{/solved_completely}}
+          
+          <div class="exercise-content">
           <h3 class="exercise-title" >{{ title }}</h3>
-          {{#tryagain}}
-              <p class="exercise-tryagain">Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.</p>
-          {{/tryagain}}
-          {{#correct}}
-              <p class="exercise-correct">Ihre Lösung ist korrekt!</p>
-          {{/correct}}
           {{^cloze_answers}}
             {{^free_text_answers}}
               {{> _question}}
@@ -97,10 +122,14 @@
   
   {{^exercises}}
     {{#typemismatch}}
-        <p>Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten.</p>
+        <div class="messagebox messagebox_error">
+            Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten.
+        </div>
     {{/typemismatch}}
     {{^typemismatch}}
-        {{#i18n}}Keine Aufgaben.{{/i18n}}
+        <div class="messagebox messagebox_info">
+            {{#i18n}}Keine Aufgaben.{{/i18n}}
+        </div>
     {{/typemismatch}}
   {{/exercises}}
 {{/active}}
