@@ -47,6 +47,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     .then(function () {
                         $block.find('.exercise').hide();
                         $block.find('#exercise' + $exercise_index).show();
+                        $block.find(".submitinfo").slideDown(250).delay(1500).slideUp(250);
                     })
                     .done();
 
@@ -86,6 +87,15 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
 
         postRender: function () {
             var view = this;
+            var $form = this.$('.exercise-content form');
+            $form.each(function () {
+                    var $solution = $(this).find('input[name="solution"]').val();
+                    if ($solution == "") return false;
+                    var $radioid = $(this).find('label:contains('+$solution+')').attr('for');
+                    var $radio = $('#'+$radioid);
+                    $radio.attr("checked","checked");
+                    
+            }); 
             var fixAnswersHeight = function (labels, answers) {
                 for (var i = 0; i < labels.length && i < answers.length; i++) {
                     var answer = answers.eq(i);

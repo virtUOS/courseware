@@ -566,6 +566,8 @@ class TestBlock extends Block
         global $user;
 
         $exercises = array();
+        $available = false;
+        $solved_completely = true;
 
         if ($this->test) {
             $numberofex =  count($this->test->exercises);
@@ -580,19 +582,23 @@ class TestBlock extends Block
 
                 $answers = $exercise->getAnswers($this->test, $user);
                 $userAnswers = $exercise->getUserAnswers($this->test, $user);
-                
+                $correct =  false; 
+                $tryagain = false;
+                    
                 if ($this->_model->sub_type == 'selftest') {
                     // TT: determine if a correct solution has been handed in
                     $solution = Solution::findOneBy($this->test, $exercise, $user);
-                    $evaluation = $exercise->getVipsExercise()->evaluate($solution->solution, $user->id);
-                    $correct = $evaluation['percent'] == 100;
-                    $tryagain = $solution && !$correct;
+                    if ($solution) {
+                        $evaluation = $exercise->getVipsExercise()->evaluate($solution->solution, $user->id);
+                        $correct = $evaluation['percent'] == 100;
+                        $tryagain = $solution && !$correct;
+                    }
                 }
-                else {
-                    $correct =  false; 
-                    $tryagain = false;
+                
+                if ($correct ==  false) {
+                     $solved_completely = false;
                 }
-
+                
                 $entry = array(
                     'exercise_type' => $exercise->getType(),
                     $exercise->getType() => 1,
@@ -620,15 +626,18 @@ class TestBlock extends Block
                     'tryagain' => $tryagain
                 );
                 $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
+                $available = !$entry['show_solution'] && !$entry['solving_allowed']; //or correction is available
                 $exercises[] = $entry;
             }
         }
+        
 
         return array(
-            'title'       => $this->test->title,
-            'description' => formatReady($this->test->description),
-            'exercises'   => $exercises,
-            'solved_completely' => $this->getProgress()->max_grade == $this->getProgress()->grade // all exercises solved?
+            'title'              => $this->test->title,
+            'description'        => formatReady($this->test->description),
+            'exercises'          => $exercises,
+            'available'          => $available,
+            'solved_completely'  => $solved_completely
         );
     }
 
