@@ -16,9 +16,12 @@ class MustacheRenderer
         $block_template_dir = $ui_block->getBlockDir() . '/templates/';
         $loader = new \Mustache_Loader_FilesystemLoader($block_template_dir);
         $m = new \Mustache_Engine(array(
-            'loader'  => $loader,
-            'charset' => 'windows-1252',
-            'helpers' => $this->container['block_renderer_helpers']
+            'cache'            => $GLOBALS['TMP_PATH'] . DIRECTORY_SEPARATOR . 'courseware',
+            'charset'          => 'windows-1252',
+            'escape'           => function($value) { return htmlspecialchars($value, ENT_QUOTES, 'cp1252', false); },
+            'helpers'          => $this->container['block_renderer_helpers'],
+            'loader'           => $loader,
+            'strict_callables' => true
         ));
 
         return $m->render($view_name . '_view', $template_data);
