@@ -597,8 +597,8 @@ class TestBlock extends Block
                 
                 if ($correct ==  false) {
                      $solved_completely = false;
+                     
                 }
-                
                 $entry = array(
                     'exercise_type' => $exercise->getType(),
                     $exercise->getType() => 1,
@@ -622,6 +622,7 @@ class TestBlock extends Block
                     'exercise_index' => $exindex++,
                     $exercise->getAnswersStrategy()->getTemplate() => true,
                     'user_answers' => $userAnswers,
+                    'user_answers_string' => join(', ' , $exercise->getAnswersStrategy()->getUserAnswers($exercise->getVipsSolutionFor($this->test, $user))),
                     'correct' => $correct,
                     'tryagain' => $tryagain
                 );
