@@ -27,18 +27,21 @@ class XmlImport implements ImportInterface
     /**
      * {@inheritdoc}
      */
-    public function import($path, Courseware $context)
+    public function import($path, Courseware $courseware)
     {
         $dataFile = $path.'/data.xml';
         $document = new \DOMDocument();
         $document->loadXML(file_get_contents($dataFile));
         $coursewareNode = $document->documentElement;
-        $files = array();
 
+        $courseware->progression = $coursewareNode->getAttribute('progression');
+        $courseware->save();
+
+        $files = array();
         foreach ($coursewareNode->childNodes as $child) {
             if ($child instanceof \DOMElement) {
                 if  ($child->tagName === 'file') {
-                    $this->processFile($child, $context, $path, $files);
+                    $this->processFile($child, $courseware, $path, $files);
                 }
             }
         }
@@ -46,7 +49,7 @@ class XmlImport implements ImportInterface
         foreach ($coursewareNode->childNodes as $child) {
             if ($child instanceof \DOMElement) {
                 if ($child->tagName === 'chapter') {
-                    $this->processChapterNode($child, $context, $files);
+                    $this->processChapterNode($child, $courseware, $files);
                 }
             }
         }
