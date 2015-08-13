@@ -15,20 +15,38 @@
     </xsd:element>
 
     <xsd:complexType name="chapter">
+      <xsd:sequence>
+        <xsd:choice minOccurs="0" maxOccurs="1">
+            <xsd:element name="asidesection" type="asidesection" />
+        </xsd:choice>
         <xsd:choice minOccurs="0" maxOccurs="unbounded">
             <xsd:element name="subchapter" type="subchapter" />
         </xsd:choice>
-        <xsd:attribute name="title" type="xsd:string" use="required" />
+      </xsd:sequence>
+      <xsd:attribute name="title" type="xsd:string" use="required" />
     </xsd:complexType>
 
     <xsd:complexType name="subchapter">
-        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:sequence>
+          <xsd:choice minOccurs="0" maxOccurs="1">
+            <xsd:element name="asidesection" type="asidesection" />
+          </xsd:choice>
+          <xsd:choice minOccurs="0" maxOccurs="unbounded">
             <xsd:element name="section" type="section" />
-        </xsd:choice>
+          </xsd:choice>
+        </xsd:sequence>
         <xsd:attribute name="title" type="xsd:string" use="required" />
     </xsd:complexType>
 
     <xsd:complexType name="section">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="block" type="block" />
+        </xsd:choice>
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="asidesection">
         <xsd:choice minOccurs="0" maxOccurs="unbounded">
             <xsd:element name="block" type="block" />
         </xsd:choice>

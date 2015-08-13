@@ -16,10 +16,6 @@ class ExportController extends MoocipController
 
     public function index_action()
     {
-        $this->set_layout(null);
-        header('Content-Type: application/zip');
-        header('Content-Disposition: attachment; filename=courseware.zip');
-
         // create a temporary directory
         $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
         mkdir($tempDir);
@@ -36,10 +32,21 @@ class ExportController extends MoocipController
             mkdir($destination);
             copy($file['path'], $destination.'/'.$file['filename']);
         }
+
+        if (Request::submitted('plaintext')) {
+            $this->response->add_header('Content-Type', 'text/xml;charset=utf-8');
+            echo $export->export($courseware);
+            return $this->render_nothing();
+        }
+
         file_put_contents($tempDir.'/data.xml', $export->export($courseware));
 
         $zipFile = $GLOBALS['TMP_PATH'].'/'.uniqid().'.zip';
         create_zip_from_directory($tempDir, $zipFile);
+
+        $this->set_layout(null);
+        header('Content-Type: application/zip');
+        header('Content-Disposition: attachment; filename=courseware.zip');
 
         readfile($zipFile);
 

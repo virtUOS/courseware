@@ -92,6 +92,16 @@ class XmlVisitor extends AbstractVisitor
     {
         $this->enterNode($this->appendBlockNode('chapter', $chapter->title));
 
+        // visit a potential aside section
+        $aside_field = \Mooc\DB\Field::find(array($chapter->id, '', 'aside_section'));
+        if ($aside_field) {
+            if ($aside_block = \Mooc\DB\Block::find($aside_field->content)) {
+                $section = $this->blockFactory->makeBlock($aside_block);
+                $this->startVisitingAsideSection($section);
+                $this->endVisitingAsideSection($section);
+            }
+        }
+
         foreach ($chapter->children as $chapter) {
             $this->startVisitingSubChapter($chapter);
             $this->endVisitingSubChapter($chapter);
@@ -112,6 +122,16 @@ class XmlVisitor extends AbstractVisitor
     public function startVisitingSubChapter(Block $subChapter)
     {
         $this->enterNode($this->appendBlockNode('subchapter', $subChapter->title));
+
+        // visit a potential aside section
+        $aside_field = \Mooc\DB\Field::find(array($subChapter->id, '', 'aside_section'));
+        if ($aside_field) {
+            if ($aside_block = \Mooc\DB\Block::find($aside_field->content)) {
+                $section = $this->blockFactory->makeBlock($aside_block);
+                $this->startVisitingAsideSection($section);
+                $this->endVisitingAsideSection($section);
+            }
+        }
 
         foreach ($subChapter->children as $block) {
             $section = $this->blockFactory->makeBlock($block);
@@ -148,6 +168,30 @@ class XmlVisitor extends AbstractVisitor
      * {@inheritdoc}
      */
     public function endVisitingSection(Section $section)
+    {
+        $this->leaveNode();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function startVisitingAsideSection(Section $section)
+    {
+        $this->enterNode($this->appendBlockNode('asidesection', $section->title, array(
+            $this->createAttributeNode('icon', $section->icon),
+        )));
+
+        foreach ($section->getModel()->children as $block) {
+            $uiBlock = $this->blockFactory->makeBlock($block);
+            $this->startVisitingBlock($uiBlock);
+            $this->endVisitingBlock($uiBlock);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function endVisitingAsideSection(Section $section)
     {
         $this->leaveNode();
     }

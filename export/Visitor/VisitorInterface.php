@@ -28,6 +28,10 @@ interface VisitorInterface
 
     public function endVisitingSection(Section $section);
 
+    public function startVisitingAsideSection(Section $section);
+
+    public function endVisitingAsideSection(Section $section);
+
     public function startVisitingBlock(\Mooc\UI\Block $block);
 
     public function endVisitingBlock(\Mooc\UI\Block $block);
