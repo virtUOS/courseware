@@ -89,9 +89,15 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
             var view = this;
             var $form = this.$('.exercise-content form');
             $form.each(function () {
-                    var $solution = $(this).find('input[name="solution"]').val();
-                    if ($solution == "") return false;
-                    var $radioid = $(this).find('label:contains('+$solution+')').attr('for');
+                    var $exercise_type = $(this).find('input[name="exercise_type"]').val();
+                    if ($exercise_type != "sc_exercise") {
+                        return false;
+                    }           
+                    var $user_answers = $(this).find('input[name="user_answers_string"]').val();
+                    if (!($user_answers)){
+                         return false;
+                    }
+                    var $radioid = $(this).find('label:contains('+$user_answers+')').attr('for');
                     var $radio = $('#'+$radioid);
                     $radio.attr("checked","checked");
                     
