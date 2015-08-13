@@ -11,6 +11,7 @@
                 <xsd:element name="file" type="file" />
             </xsd:choice>
             <xsd:attribute name="title" type="xsd:string" use="required" />
+            <xsd:attribute name="progression" type="xsd:string"  />
         </xsd:complexType>
     </xsd:element>
 

@@ -46,7 +46,13 @@ class XmlVisitor extends AbstractVisitor
      */
     public function startVisitingCourseware(Courseware $courseware)
     {
-        $this->enterNode($this->appendBlockNode('courseware', $courseware->title));
+        $this->enterNode(
+            $this->appendBlockNode('courseware',
+                                   $courseware->title,
+                                   array(
+                                       $this->createAttributeNode('progression', $courseware->progression),
+                                   ))
+        );
         $this->addNamespace($courseware->getXmlNamespace(), $courseware->getXmlSchemaLocation());
         $this->addNamespace(
             'http://www.w3.org/2001/XMLSchema-instance',
