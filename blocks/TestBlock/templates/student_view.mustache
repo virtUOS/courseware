@@ -18,31 +18,31 @@
         <li>
           <div class="exercisetitle">
               <button name="exercisenav" class="exercisenavbutton exercisenavback" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}", "direction": "back" }'></button>
-              Frage {{exercise_index}} / {{number_of_exercises}}
+              {{#i18n}}Frage{{/i18n}} {{exercise_index}} / {{number_of_exercises}}
               <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}" , "direction": "next"}'></button>
           </div>
           
             {{#has_solution}}
               {{#tryagain}}
                 <div class="messagebox messagebox_error">
-                    Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.
+                    {{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.{{/i18n}}
                 </div>
               {{/tryagain}}
               {{#correct}}
                 <div class="messagebox messagebox_success">
-                    Ihre Lösung ist korrekt!
+                    {{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}
                 </div>
               {{/correct}}
               
               {{^tryagain}}{{^correct}}
-                <div class="messagebox messagebox_info">
-                    Für diese Frage haben Sie bereits eine Antwort abgegeben.
+                <div class="messagebox messagebox_info answerinfo">
+                    {{#i18n}}Für diese Frage haben Sie bereits eine Antwort abgegeben.{{/i18n}}
                 </div>
               {{/correct}}{{/tryagain}}
             {{/has_solution}}
             {{^self_test}}
               <div class="messagebox messagebox_info submitinfo" style="display: none;">
-                Ihre Lösung wurde eingetragen.
+                {{#i18n}}Ihre Lösung wurde eingetragen.{{/i18n}}
               </div>
             {{/self_test}}
             {{#solved_completely}}
@@ -117,7 +117,7 @@
   {{^exercises}}
     {{#typemismatch}}
         <div class="messagebox messagebox_error">
-            Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten.
+            {{#i18n}}Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten.{{/i18n}}
         </div>
     {{/typemismatch}}
     {{^typemismatch}}

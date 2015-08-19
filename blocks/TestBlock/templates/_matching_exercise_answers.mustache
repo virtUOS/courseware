@@ -1,4 +1,3 @@
-{{^has_solution}}
   <ul class="matching_exercise labels">
     {{#answers}}
       <li>{{{text.question}}}</li>
@@ -12,25 +11,4 @@
       </li>
     {{/answers}}
   </ul>
-{{/has_solution}}
 
-
-{{#has_solution}}
-  <table class="matching_exercise solution">
-    {{#user_answers}}
-      <tr>
-        <td class="question">{{{text.question}}}</td>
-        <td class="answer{{#show_correction}} {{^text.correct}}in{{/text.correct}}correct_answer{{/show_correction}}">
-          {{{text.answer}}}
-        </td>
-        {{#show_correction}}
-          <td class="correction">
-            {{^text.correct}}
-              {{{text.correct_answer}}}
-            {{/text.correct}}
-          </td>
-        {{/show_correction}}
-      </tr>
-    {{/user_answers}}
-  </table>
-{{/has_solution}}

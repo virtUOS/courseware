@@ -34,7 +34,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     view = this,
                     $exercise_index = $form.find("input[name='exercise_index']").val(),
                     $block = this.$el.parent();
-
+                    
                 helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
                     .then(
                         function () {
@@ -88,20 +88,47 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         postRender: function () {
             var view = this;
             var $form = this.$('.exercise-content form');
+            
             $form.each(function () {
                     var $exercise_type = $(this).find('input[name="exercise_type"]').val();
-                    if ($exercise_type != "sc_exercise") {
-                        return false;
-                    }           
                     var $user_answers = $(this).find('input[name="user_answers_string"]').val();
+                    var $thisform = $(this);
                     if (!($user_answers)){
-                         return false;
+                         return; //break the loop
                     }
-                    var $radioid = $(this).find('label:contains('+$user_answers+')').attr('for');
-                    var $radio = $('#'+$radioid);
-                    $radio.attr("checked","checked");
-                    
+                    else {
+                        switch ($exercise_type) {
+                            case "sc_exercise":
+                            case "yn_exercise":
+                                var $radioid = $thisform.find('label:contains('+$user_answers+')').attr('for');
+                                var $radio = $('#'+$radioid);
+                                $radio.attr("checked","checked");
+                                break;
+                            
+                            case "mc_exercise":
+                                var $mc_answers = $user_answers.split(",");
+                                $.each($mc_answers, function(index, value) {
+                                    var $checkboxid = $thisform.find('label:contains('+value+')').attr('for');
+                                    var $checkbox = $('#'+$checkboxid);
+                                    $checkbox.attr("checked","checked");
+                                });
+                                break;
+                            case "tb_exercise":
+                                var $textbox = $thisform.find('textarea');
+                                $textbox.val($user_answers);
+                                break;
+                                
+                            case "lt_exercise":
+                                var $textfield = $thisform.find('input[type="text"]');
+                                $textfield.val($user_answers);
+                                break;
+                            
+                            default:
+                                return false;
+                        }
+                    }
             }); 
+
             var fixAnswersHeight = function (labels, answers) {
                 for (var i = 0; i < labels.length && i < answers.length; i++) {
                     var answer = answers.eq(i);
