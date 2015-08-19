@@ -1,4 +1,9 @@
 {{#active}}
+{{#unsupported_question}}
+ <div class="messagebox messagebox_error">
+        {{#i18n}}Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!{{/i18n}}
+</div>
+{{/unsupported_question}}
   <a href="{{manage_tests_url}}" class="edit-tests">{{#i18n}}Aufgabenblätter verwalten{{/i18n}}</a>
 
     <select name="test_id">

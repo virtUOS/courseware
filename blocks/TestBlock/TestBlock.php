@@ -94,11 +94,21 @@ class TestBlock extends Block
                 'current_test'    => $this->test_id === $test->id,
             );
         }
+        
+        $unsupported = false;
+            
+        //count all unsupported exercises
+        foreach ($this->test->exercises as $exercise) {
+            if ($exercise->getAnswersStrategy() === null) {
+                $unsupported = true;
+            }
+        }
 
         return array(
-            'active'           => $active,
-            'manage_tests_url' => \PluginEngine::getURL(VipsBridge::getVipsPlugin(), array('action' => 'sheets'), 'show'),
-            'tests'            => $tests,
+            'active'                => $active,
+            'manage_tests_url'      => \PluginEngine::getURL(VipsBridge::getVipsPlugin(), array('action' => 'sheets'), 'show'),
+            'tests'                 => $tests,
+            'unsupported_question'  => $unsupported
         );
     }
 
@@ -570,7 +580,15 @@ class TestBlock extends Block
         $solved_completely = true;
 
         if ($this->test) {
-            $numberofex =  count($this->test->exercises);
+            $numberofex = 0;
+            
+            //count all supported exercises
+            foreach ($this->test->exercises as $exercise) {
+                // skip unsupported exercise types
+                if ($exercise->getAnswersStrategy() !== null) {
+                    ++$numberofex;
+                }
+            }
             $exindex = 1;
             foreach ($this->test->exercises as $exercise) {
                 /** @var \Mooc\UI\TestBlock\Model\Exercise $exercise */
@@ -609,7 +627,7 @@ class TestBlock extends Block
                     'show_correction' => $this->test->showCorrection(),
                     'show_solution' => $exercise->showSolutionFor($this->test, $user) && $correct,
                     'title' => $exercise->getTitle(),
-                    'question' => $exercise->getQuestion(),
+                    'question' => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $exercise->getQuestion() ),
                     'answers' => $answers,
                     'single-choice' => $exercise->isSingleChoice(),
                     'multiple-choice' => $exercise->isMultipleChoice(),
@@ -622,7 +640,7 @@ class TestBlock extends Block
                     'exercise_index' => $exindex++,
                     $exercise->getAnswersStrategy()->getTemplate() => true,
                     'user_answers' => $userAnswers,
-                    'user_answers_string' => join(', ' , $exercise->getAnswersStrategy()->getUserAnswers($exercise->getVipsSolutionFor($this->test, $user))),
+                    'user_answers_string' => join(',' , $exercise->getAnswersStrategy()->getUserAnswers($exercise->getVipsSolutionFor($this->test, $user))),
                     'correct' => $correct,
                     'tryagain' => $tryagain
                 );
