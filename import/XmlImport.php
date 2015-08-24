@@ -115,6 +115,7 @@ class XmlImport implements ImportInterface
         $chapter->type = 'Chapter';
         $chapter->parent = $courseware->getModel();
         $chapter->title = utf8_decode($node->getAttribute('title'));
+        $chapter->seminar_id = $courseware->getModel()->seminar_id;
         $chapter->store();
 
         foreach ($node->childNodes as $childNode) {
@@ -147,6 +148,7 @@ class XmlImport implements ImportInterface
         $subChapter->type = 'Subchapter';
         $subChapter->parent = $chapter;
         $subChapter->title = utf8_decode($node->getAttribute('title'));
+        $subChapter->seminar_id = $chapter->seminar_id;
         $subChapter->store();
 
         foreach ($node->childNodes as $childNode) {
@@ -179,6 +181,7 @@ class XmlImport implements ImportInterface
         $section->type = 'Section';
         $section->parent = $subChapter;
         $section->title = utf8_decode($node->getAttribute('title'));
+        $section->seminar_id = $subChapter->seminar_id;
         $section->store();
 
         /** @var \Mooc\UI\Section\Section $uiSection */
@@ -207,11 +210,13 @@ class XmlImport implements ImportInterface
         $section->type = 'Section';
         $section->parent_id = null;
         $section->title = utf8_decode($node->getAttribute('title'));
+        $section->seminar_id = $subChapter->seminar_id;
         $section->store();
 
         // store aside section's ID in sub/chapter's field
         $aside_field = new \Mooc\DB\Field(array($sub_chapter->id, '', 'aside_section'));
         $aside_field->content = $section->id;
+        $aside_field->seminar_id = $subChapter->seminar_id;
         $aside_field->store();
 
 
@@ -244,6 +249,7 @@ class XmlImport implements ImportInterface
         }
         $block->parent = $section->getModel();
         $block->title = utf8_decode($node->getAttribute('title'));
+        $block->seminar_id = $section->getModel()->seminar_id;
         $block->store();
 
         $section->updateIconWithBlock($block);
