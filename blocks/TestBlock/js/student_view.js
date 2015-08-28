@@ -75,6 +75,10 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
 
                 $block.find('.exercise').hide();
                 $block.find('#exercise'+$num).show();
+            },
+            
+            'click button[name=exercise-hint-button]': function (event) {
+                    $("#exercise-hint-"+this.$(event.target).attr("exercise-data")).toggle("slow");
             }
         },
 
