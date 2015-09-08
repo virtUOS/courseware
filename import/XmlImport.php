@@ -216,7 +216,6 @@ class XmlImport implements ImportInterface
         // store aside section's ID in sub/chapter's field
         $aside_field = new \Mooc\DB\Field(array($sub_chapter->id, '', 'aside_section'));
         $aside_field->content = $section->id;
-        $aside_field->seminar_id = $subChapter->seminar_id;
         $aside_field->store();
 
 
