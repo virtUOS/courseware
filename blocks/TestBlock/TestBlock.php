@@ -592,7 +592,7 @@ class TestBlock extends Block
             $exindex = 1;
             foreach ($this->test->exercises as $exercise) {
                 /** @var \Mooc\UI\TestBlock\Model\Exercise $exercise */
-
+                
                 // skip unsupported exercise types
                 if ($exercise->getAnswersStrategy() === null) {
                     continue;
@@ -642,7 +642,8 @@ class TestBlock extends Block
                     'user_answers' => $userAnswers,
                     'user_answers_string' => join(',' , $exercise->getAnswersStrategy()->getUserAnswers($exercise->getVipsSolutionFor($this->test, $user))),
                     'correct' => $correct,
-                    'tryagain' => $tryagain
+                    'tryagain' => $tryagain,
+                    'exercise_hint' => $exercise->getVipsExercise()->getHint()
                 );
                 $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
                 $available = !$entry['show_solution'] && !$entry['solving_allowed']; //or correction is available

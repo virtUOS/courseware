@@ -21,7 +21,7 @@
               {{#i18n}}Frage{{/i18n}} {{exercise_index}} / {{number_of_exercises}}
               <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}" , "direction": "next"}'></button>
           </div>
-          
+            
             {{#has_solution}}
               {{#tryagain}}
                 <div class="messagebox messagebox_error">
@@ -50,64 +50,71 @@
                   {{#i18n}}Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
               </div>
             {{/solved_completely}}
-          
           <div class="exercise-content">
-          <h3 class="exercise-title" >{{ title }}</h3>
-          {{^cloze_answers}}
-            {{^free_text_answers}}
-              {{> _question}}
-            {{/free_text_answers}}
-          {{/cloze_answers}}
+              {{#exercise_hint}}
+                <button name="exercise-hint-button" class="exercise-hint-button"  exercise-data="{{exercise_index}}"> </button>
+              {{/exercise_hint}}
+              <h3 class="exercise-title" >{{ title }}</h3>
+              {{^cloze_answers}}
+                {{^free_text_answers}}
+                  {{> _question}}
+                {{/free_text_answers}}
+              {{/cloze_answers}}
 
-          {{#show_solution}}
-            {{#free_text_answers}}
-              {{> _free_text_solution}}
-            {{/free_text_answers}}
+              {{#show_solution}}
+                {{#free_text_answers}}
+                  {{> _free_text_solution}}
+                {{/free_text_answers}}
 
-            {{^free_text_answers}}
-              {{#matching_exercise_answers}}
-                {{> _matching_exercise_answers}}
-              {{/matching_exercise_answers}}
-              {{^matching_exercise_answers}}
-                {{> _solution.mustache}}
-              {{/matching_exercise_answers}}
-            {{/free_text_answers}}
+                {{^free_text_answers}}
+                  {{#matching_exercise_answers}}
+                    {{> _matching_exercise_answers}}
+                  {{/matching_exercise_answers}}
+                  {{^matching_exercise_answers}}
+                    {{> _solution.mustache}}
+                  {{/matching_exercise_answers}}
+                {{/free_text_answers}}
 
-            {{#cloze_answers}}
-              {{> _cloze_solution}}
-            {{/cloze_answers}}
+                {{#cloze_answers}}
+                  {{> _cloze_solution}}
+                {{/cloze_answers}}
 
-            {{#self_test}}
-              {{> _reset_exercise}}
-            {{/self_test}}
-          {{/show_solution}}
+                {{#self_test}}
+                  {{> _reset_exercise}}
+                {{/self_test}}
+              {{/show_solution}}
 
-          {{^show_solution}}
-            {{> _exercise_form_begin}}
+              {{^show_solution}}
+                {{> _exercise_form_begin}}
 
-            {{#cloze_answers}}
-              {{> _vips_question}}
-            {{/cloze_answers}}
+                {{#cloze_answers}}
+                  {{> _vips_question}}
+                {{/cloze_answers}}
 
-            {{#single_choice_answers}}
-              {{> _single_choice_answers}}
-            {{/single_choice_answers}}
+                {{#single_choice_answers}}
+                  {{> _single_choice_answers}}
+                {{/single_choice_answers}}
 
-            {{#multiple_choice_answers}}
-              {{> _multiple_choice_answers}}
-            {{/multiple_choice_answers}}
+                {{#multiple_choice_answers}}
+                  {{> _multiple_choice_answers}}
+                {{/multiple_choice_answers}}
 
-            {{#free_text_answers}}
-              {{> _vips_question}}
-            {{/free_text_answers}}
+                {{#free_text_answers}}
+                  {{> _vips_question}}
+                {{/free_text_answers}}
 
-            {{#matching_exercise_answers}}
-              {{> _matching_exercise_answers}}
-            {{/matching_exercise_answers}}
+                {{#matching_exercise_answers}}
+                  {{> _matching_exercise_answers}}
+                {{/matching_exercise_answers}}
 
-            {{> _exercise_form_end}}
-          {{/show_solution}}
-          </div>
+                {{> _exercise_form_end}}
+              {{/show_solution}}
+              {{#exercise_hint}}
+                    <div class="exercise-hint" style="display: none;" id="exercise-hint-{{exercise_index}}">
+                        {{exercise_hint}}
+                    </div>
+                {{/exercise_hint}}
+            </div>
         </li>
       </ul>
       {{/skip_entry}}

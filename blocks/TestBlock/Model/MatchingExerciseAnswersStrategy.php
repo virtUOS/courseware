@@ -69,4 +69,14 @@ class MatchingExerciseAnswersStrategy extends AnswersStrategy
 
         return $entries;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSolution(array $solution = null)
+    {
+        $xml = $this->vipsExercise->genSolution(array('student_answer' => $solution));
+
+        return $this->vipsExercise->getCorrectionTemplate($xml)->render();
+    }
 }

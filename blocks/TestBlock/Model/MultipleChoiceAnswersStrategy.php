@@ -67,4 +67,23 @@ class MultipleChoiceAnswersStrategy extends AnswersStrategy
 
         return $userAnswers;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSolution(array $solution = null)
+    {
+        #var_dump($solution, $this->vipsExercise);
+
+        $request = array();
+        if (is_array($solution)) {
+            foreach ($solution as $key => $value) {
+                $request['answer_' . $key] = $value;
+            }
+        }
+
+        $xml = $this->vipsExercise->genSolution($request);
+
+        return $this->vipsExercise->getCorrectionTemplate($xml)->render();
+    }
 }
