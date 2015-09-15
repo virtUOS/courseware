@@ -59,6 +59,15 @@ class DiscussionBlock extends Block
         );
     }
 
+    const REQUIRED_COMMENT_LENGTH = 100;
+
+    public function onCommentCreated($comment)
+    {
+        if (strlen($comment->description) >= self::REQUIRED_COMMENT_LENGTH) {
+            $this->setGrade(1.0);
+        }
+    }
+
     /////////////////////
     // PRIVATE HELPERS //
     /////////////////////
