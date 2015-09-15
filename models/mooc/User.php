@@ -108,13 +108,13 @@ class User extends \User
     /////////////////////
 
     // get the editing permission level from the courseware's settings
-    private function canEditBlock($block)
+    private function canEditBlock(DbBlock $block)
     {
         // optimistically get the current courseware
         $courseware = $this->container['current_courseware'];
 
         // if the $block is not a descendant of it, get its courseware
-        if ($courseware->seminar_id !== $block->seminar_id) {
+        if ($courseware->getModel()->seminar_id !== $block->seminar_id) {
             $courseware_model = $this->container['courseware_factory']->makeCourseware($block->seminar_id);
             $courseware = $this->container['block_factory']->makeBlock($courseware_model);
         }
