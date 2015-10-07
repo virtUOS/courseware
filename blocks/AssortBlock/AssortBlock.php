@@ -40,9 +40,7 @@ class AssortBlock extends Block
     
     private function getBlocksInSection()
     {
-        $thisblockid = $this->__get(id);
-        $parent = (new \Mooc\DB\Block($thisblockid))->parent_id;
-        $children = (new \Mooc\DB\Block())->findByParent_id($parent);
+        $children = $this->getModel()->parent->children;
         $blocks = array();
         
         foreach($children as $child)
