@@ -21,12 +21,12 @@ define(['assets/js/author_view', 'assets/js/url'],
             var $view = this;
             $("section.block").show();
             
-            var $assorttype = $("#assorttype-selection-assort").val();
+            var $assorttype = $view.$(".assorttype-selection-assort").val();
             $view.$("input[name='assorttype']").removeAttr("checked");
             $view.$("input[name='assorttype'][value='"+$assorttype+"']").attr("checked", "checked");
            
             $view.$("input[name='assortblocks']").removeAttr("checked");
-            var $assortblocksselection = $("#assortblocks-selection-assort").val();
+            var $assortblocksselection = $view.$(".assortblocks-selection-assort").val();
             if ($assortblocksselection != ""){
                 var $assortblocks = JSON.parse($assortblocksselection);
                 $.each($assortblocks , function(){

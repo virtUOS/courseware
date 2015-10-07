@@ -47,7 +47,7 @@ class AssortBlock extends Block
         
         foreach($children as $child)
         {
-            if ($child["id"] !== $thisblockid){
+            if ($child["type"] !== "AssortBlock"){
                 $blocks[] = array('blockid' =>$child["id"]);
             }
             

@@ -8,14 +8,14 @@ define(['assets/js/student_view'], function (StudentView) {
         },
         
         postRender: function() {
-            var $assorttype = $("#assorttype-selection-assort").val();  
+            var $assorttype = this.$(".assorttype-selection-assort").val();  
             var $div = $("<div>", {class: "assortblock-content"});
             this.$el.append($div);
             if($assorttype == "tabs" || $assorttype == "vtabs") {
                 var $ul = $("<ul>");
                 $div.append($ul);
             }
-            var $assortblocks = JSON.parse($("#assortblocks-selection-assort").val());
+            var $assortblocks = JSON.parse(this.$(".assortblocks-selection-assort").val());
             $.each($assortblocks , function(){
                 var $id = this["id"];
                 var $name = this["name"];
