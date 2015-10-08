@@ -39,10 +39,14 @@ define(['assets/js/student_view'], function (StudentView) {
                     $div.accordion();
                     break;
                 case "tabs":
-                    $div.tabs();
+                    $div.tabs({
+                          heightStyle: "auto"
+                    });
                     break;
                 case "vtabs":
-                    $div.tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+                    $div.tabs({
+                          heightStyle: "fill"
+                    }).addClass( "ui-tabs-vertical ui-helper-clearfix" );
                     $div.find('li').removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
                     break;
             }

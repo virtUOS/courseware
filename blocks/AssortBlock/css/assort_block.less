@@ -26,38 +26,81 @@
 }
 /* END author mode*/
 
-/* vertical tabs */
-.ui-tabs-vertical { 
-    width: 55em; 
-    .ui-tabs-nav { 
-        padding: .2em .1em .2em .2em;
-        float: left;
-        width: 12em;
-        li { 
-            clear: left;
-            width: 100%;
-            border-bottom-width: 1px !important;
-            border-right-width: 0 !important;
-            margin: 0 -1px .2em 0;
-            
-            a {
-                display:block;
-            }
-        }
-        
-        .ui-tabs-active { 
-            padding-bottom: 0;
-            padding-right: .1em;
-            border-right-width: 1px;
+/* all tabs */
+.AssortBlock .ui-tabs{
+    border: thin solid #eaeaea;
+    .ui-state-active, .ui-state-default {
+        background-image: none;
+        cursor: pointer !important;;
+        border: none;
+        a {
+            color: #28497c;
+            cursor: pointer !important;;
         }
         
     }
-    
-    .ui-tabs-panel {
-        padding: 1em;
-        float: right;
-        width: 40em;
+    .ui-state-default {
+            background-color: #e9e9e9;
     }
+    .ui-state-active {
+            background-color: #fff;
+    }
+    .ui-widget-header {
+        border: none;
+        background-color: #899ab9;
+        
+    }
+}
+/* END all tabs*/
 
+/* vertical tabs */
+.AssortBlock {
+    .ui-tabs-vertical { 
+        width: 870px;
+        padding: 0;
+        .ui-tabs-nav { 
+            padding: .2em .1em .2em .2em;
+            float: left;
+            
+            li { 
+                clear: left;
+                width: 100%;
+                border-bottom-width: 1px !important;
+                border-right-width: 0 !important;
+                margin: 0 -1px .2em 0;
+                
+                a {
+                    display:block;
+                    width: 12em;
+                }
+            }
+            
+            .ui-tabs-active { 
+                padding-bottom: 0;
+                border-right-width: 1px;
+            }
+            
+        }
+        
+        .ui-tabs-panel {
+            padding: 1em;
+            margin-bottom: -300px; // a little hack!
+        }
+    
+    }
 }
 /* END vertical tabs*/
+
+/* accordion */
+.AssortBlock {
+    .ui-accordion-content {
+        padding: 1em;
+        border: thin solid #eaeaea;
+    }
+    .ui-accordion-header {
+        border: none;
+        color: #28497c;
+    }
+    
+}
+/* END accordion */
