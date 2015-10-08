@@ -22,7 +22,6 @@ define(['assets/js/author_view', 'assets/js/url'],
             $("section.block").show();
             
             var $assorttype = $view.$(".assorttype-selection-assort").val();
-            $view.$("input[name='assorttype']").removeAttr("checked");
             $view.$("input[name='assorttype'][value='"+$assorttype+"']").attr("checked", "checked");
            
             $view.$("input[name='assortblocks']").removeAttr("checked");
