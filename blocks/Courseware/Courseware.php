@@ -2,6 +2,8 @@
 namespace Mooc\UI\Courseware;
 
 use Mooc\DB\Field;
+use Mooc\DB\UserProgress;
+use Mooc\DB\Block as DbBlock;
 
 use Mooc\UI\Block;
 use Mooc\UI\Errors\BadRequest;
@@ -33,13 +35,34 @@ class Courseware extends Block {
 
     function student_view($context = array())
     {
+        //var_dump($this->getCurrentUser()->id);
+        $children42 = $this->getModel()->children;
+        foreach($children42 as $child42) {
+                foreach($child42->children as $child43) {
+                    foreach($child43->children as $child44) {
+                        foreach($child44->children as $child45) {
+                        $uid= $this->getCurrentUser()->id;
+                        $bid = $child45->id;
+                        $progress = UserProgress::findBySQL('block_id = ? AND user_id = ?', array($bid, $uid));
+                        foreach($progress as $item){
+                               // echo $item->grade / $item->max_grade;
+                        }
+                        //echo  "<br>";
+                        }
+                    }
+                }
+        }
+        
+        
+        
+        
+        
         $this->lastSelected = $this->getSelected($context);
 
         /** @var \Mooc\DB\Block $courseware */
         /** @var \Mooc\DB\Block $chapter */
         /** @var \Mooc\DB\Block $subchapter */
         $tree = $this->getPrunedChapterNodes(list($courseware, $chapter, $subchapter, $section) = $this->getSelectedPath($this->lastSelected));
-
         $active_section = array();
         if ($section && $this->getCurrentUser()->canRead($section)) {
             $active_section_block = $this->getBlockFactory()->makeBlock($section);
@@ -69,7 +92,9 @@ class Courseware extends Block {
             $active_subchapter = $subchapter->toArray();
             $active_subchapter['aside_section'] = $this->findAsideSection($subchapter);
         }
-
+        
+        $this->branchComplete($tree);
+        
         return array_merge($tree, array(
             'user_may_author'   => $this->getCurrentUser()->canUpdate($this->_model),
             'section_nav'       => $section_nav,
@@ -77,6 +102,29 @@ class Courseware extends Block {
             'active_chapter'    => $active_chapter,
             'active_subchapter' => $active_subchapter,
             'active_section'    => $active_section));
+    }
+    
+    function branchComplete(&$tree)
+    {
+        $subchapters = &$tree["subchapters"];
+        foreach ($subchapters as &$subchapter) {
+                $subchapterBlock = DbBlock::findOneBySQL("id = ?", array($subchapter["id"]));
+                $subchapter["complete"] = $this->subchapterComplete($subchapterBlock);
+        }
+    }
+    
+    function subchapterComplete($subchapterblock)
+    {
+        $complete = true;
+        $uid= $this->getCurrentUser()->id;
+        foreach($subchapterblock->children as $section) {
+            foreach($section->children as $block) {
+                $bid = $block->id;
+                $progress = UserProgress::findOneBySQL('block_id = ? AND user_id = ?', array($bid, $uid));
+                if($progress->grade / $progress->max_grade != 1) $complete = false;
+            }
+        }
+        return $complete;
     }
 
     function add_structure_handler($data)

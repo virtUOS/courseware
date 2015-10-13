@@ -15,6 +15,7 @@ class AssortBlock extends Block
 
     function student_view()
     {
+        $this->setGrade(1.0);
         return $this->getAttrArray();
     }
 
@@ -50,6 +51,7 @@ class AssortBlock extends Block
             }
             
         }
+       
         return array(
             'blocks'    => $blocks
         );
