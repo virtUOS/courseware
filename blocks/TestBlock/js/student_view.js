@@ -169,6 +169,9 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     }
                 });
             });
+
+            // re-format LaTeX stuff
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.el]);
         },
 
         moveChoice: function ($sortableAnswers) {

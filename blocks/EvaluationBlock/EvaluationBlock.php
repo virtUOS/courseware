@@ -18,6 +18,16 @@ class EvaluationBlock extends Block
         $this->defineField('evaluations', \Mooc\SCOPE_BLOCK, '');
     }
 
+    public function author_view()
+    {
+        if (!$active = self::evaluationActivated()) {
+            return compact('active');
+        }
+
+        return compact('active');
+    }
+
+
     function student_view()
     {
         if (!$active = self::evaluationActivated()) {

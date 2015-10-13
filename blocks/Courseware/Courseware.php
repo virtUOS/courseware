@@ -286,7 +286,7 @@ class Courseware extends Block {
             $json['unpublished'] = true;
         }
 
-        $json['dom_title'] = $child->publication_date ? date('d.m.Y', $child->publication_date) : '';
+        $json['dom_title'] = $child->publication_date ? _('Sichtbar ab: ') . date('d.m.Y', $child->publication_date) : '';
         $json['selected'] = $selected == $child->id;
         return $json;
     }
