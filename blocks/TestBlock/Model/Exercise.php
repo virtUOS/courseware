@@ -275,11 +275,10 @@ class Exercise extends \SimpleORMap
      */
     public function getVipsSolutionFor(Test $test, \Seminar_User $user)
     {
-
-
         if (!$this->hasSolutionFor($test, $user)) {
             return null;
         }
+
         return $this->vipsSolutions[$test->getId()][$user->cfg->getUserId()];
     }
 

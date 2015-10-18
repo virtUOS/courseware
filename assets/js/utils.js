@@ -223,18 +223,4 @@ define({
     showPreview: function (view, url) {
         view.$('iframe').attr('src', url);
     },
-
-    getVideoUrl: function(url) {
-        switch (this.getVideoType(url)) {
-            case 'youtube':
-                return this.buildYouTubeLink(this.getYouTubeId(url));
-            break;
-
-            case 'matterhorn':
-                return this.buildMatterhornLink(url);
-            break;
-        }
-
-        return url;
-    }
 });
