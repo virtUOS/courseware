@@ -1,0 +1,16 @@
+<label for="flipbook-pdf">Eine PDF Datei ausw&auml;hlen</label>
+<select type="text" id="flipbook-pdf" name="flipbook-pdf">
+    <option value="{{pdf}}" pdf_id="{{pdf_id}}" filename="{{pdf_filename}}" selected>{{pdf}}</option>
+    {{#pdffiles}}
+    <option value="{{name}}" pdf_id="{{dokument_id}}" filename="{{filename}}">{{name}}</option>
+    {{/pdffiles}}
+</select>
+<br>
+<!--
+<label for="pdf-upload">Eine PDF Datei hochladen</label>
+<input name="file" type="file" required multiple>
+<br>
+-->
+<button name=save class=button>Speichern</button>
+<button name=cancel class=button>Abbrechen</button>
+

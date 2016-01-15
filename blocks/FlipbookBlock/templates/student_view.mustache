@@ -1,0 +1,13 @@
+<div class="flipbook-controls flipbook-left-control"><div class="flipbook-arr-left"></div></div>
+<div id="flipbook" pages="{{pdf_pages}}">
+    {{#imagefiles}}
+    <div style="background-image:url( ../../sendfile.php?type=0&file_id={{dokument_id}}&file_name={{filename}});"></div>
+    {{/imagefiles}}
+</div>
+<div class="flipbook-controls flipbook-right-control"><div class="flipbook-arr-right"></div></div>
+<progress max="100" value="20"></progress>
+<div class="flipbook-info"><span class="flipbook-current"></span> von <span class="flipbook-allpages"></span></div>
+
+
+<!-- PDF DOWNLOAD  -->
+<div class=pdf><a href="../../sendfile.php?type=0&file_id={{pdf_id}}&file_name={{pdf_filename}}" target="_blank">{{pdf}}</a> mit {{pdf_pages}} Seiten</div>
