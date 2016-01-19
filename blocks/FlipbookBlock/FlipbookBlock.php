@@ -97,16 +97,6 @@ class FlipbookBlock extends Block
         return ;
     }
     
-
-    public function exportContents()
-    {
-        return ;
-    }
-
-    public function importContents($contents, array $files)
-    {
-        return;
-    }
     
     private function createImages($path)
     {
@@ -167,7 +157,8 @@ class FlipbookBlock extends Block
         $stmt = $db->prepare("SELECT * FROM `folder` WHERE `name` = :foldername");
         $stmt->bindParam(":foldername", $foldername);
         $stmt->execute();
-        return empty($stmt->fetchAll(\PDO::FETCH_ASSOC));
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return empty($result);
         
     }
     
@@ -208,6 +199,50 @@ class FlipbookBlock extends Block
         }
         return $filesarray;
     }
+    
+    public function exportProperties()
+    {
+       return array(
+        'pdf'                       => $this->pdf, 
+        'pdf_id'                    => $this->pdf_id,
+        'pdf_filename'              => $this->pdf_filename,
+        'pdf_pages'                 => $this->pdf_pages,
+        'flipbook_rootfolder_id'    => $this->flipbook_rootfolder_id,
+        'flipbook_imagefolder_id'   => $this->flipbook_imagefolder_id
+        );
+    }
+    
+    public function importProperties(array $properties)
+    {
+        if (isset($properties['pdf'])) {
+            $this->pdf = $properties['pdf'];
+        }
 
+        if (isset($properties['pdf_id'])) {
+            $this->pdf_id = $properties['pdf_id'];
+        }
+        
+        if (isset($properties['pdf_filename'])) {
+            $this->pdf_filename = $properties['pdf_filename'];
+        }
+        
+        if (isset($properties['pdf_pages'])) {
+            $this->pdf_pages = $properties['pdf_pages'];
+        }
+        
+        if (isset($properties['assorttype'])) {
+            $this->assorttype = $properties['assorttype'];
+        }
+        
+        if (isset($properties['flipbook_rootfolder_id'])) {
+            $this->flipbook_rootfolder_id = $properties['flipbook_rootfolder_id'];
+        }
+        
+        if (isset($properties['flipbook_imagefolder_id'])) {
+            $this->flipbook_imagefolder_id = $properties['flipbook_imagefolder_id'];
+        }
+
+        $this->save();
+    }
 
 }
