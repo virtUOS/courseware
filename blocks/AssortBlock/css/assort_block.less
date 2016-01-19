@@ -34,7 +34,7 @@
         cursor: pointer !important;;
         border: none;
         a {
-            color: #28497c;
+            color: #fff;
             cursor: pointer !important;;
         }
         
@@ -47,7 +47,7 @@
     }
     .ui-widget-header {
         border: none;
-        background-color: #899ab9;
+        background-color: #007f4b;
         
     }
 }
@@ -56,7 +56,6 @@
 /* vertical tabs */
 .AssortBlock {
     .ui-tabs-vertical { 
-        width: 870px;
         padding: 0;
         .ui-tabs-nav { 
             padding: .2em .1em .2em .2em;
@@ -72,6 +71,7 @@
                 a {
                     display:block;
                     width: 12em;
+                    color: #007f4b;
                 }
             }
             
@@ -91,6 +91,21 @@
 }
 /* END vertical tabs*/
 
+/* normal tabs */
+.AssortBlock {
+    .ui-tabs { 
+        .ui-tabs-nav { 
+            li { 
+                a {
+                    color: #007f4b;
+                }
+            }
+        }
+    
+    }
+}
+/* END normal tabs*/
+
 /* accordion */
 .AssortBlock {
     .ui-accordion-content {
@@ -99,7 +114,7 @@
     }
     .ui-accordion-header {
         border: none;
-        color: #28497c;
+        color: #fff;
     }
     
 }
