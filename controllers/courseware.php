@@ -2,7 +2,7 @@
 
 use Mooc\UI\Courseware\Courseware;
 
-class CoursewareController extends MoocipController {
+class CoursewareController extends CoursewareStudipController {
 
     public function before_filter(&$action, &$args)
     {

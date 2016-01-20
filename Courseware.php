@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/vendor/autoload.php';
 
-use Mooc\Container;
+use Courseware\Container;
 use Mooc\DB\CoursewareFactory;
 use Mooc\UI\BlockFactory;
 use Mooc\User;
@@ -210,7 +210,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         static $container;
 
         if (!$container) {
-            $container = new Mooc\Container($this);
+            $container = new Courseware\Container($this);
         }
 
         $this->container = $container;

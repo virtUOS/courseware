@@ -3,7 +3,7 @@
 /**
  * @author Christian Flothmann <christian.flothmann@uos.de>
  */
-class BlubberController extends MoocipController
+class BlubberController extends CoursewareStudipController
 {
     public function index_action($blockId)
     {

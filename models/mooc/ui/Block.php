@@ -1,7 +1,7 @@
 <?php
 namespace Mooc\UI;
 
-use Mooc\Container;
+use Courseware\Container;
 use Mooc\DB\Field;
 use Mooc\DB\UserProgress;
 

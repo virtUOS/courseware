@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @property \Mooc $plugin
+ * @property \Courseware $plugin
  */
-class MoocipController extends StudipController {
+class CoursewareStudipController extends StudipController {
 
     public function __construct($dispatcher)
     {
