@@ -6,7 +6,7 @@ section.FlipbookBlock {
     
     min-width: @width;
 
-    .flipbook-controls,  #flipbook { 
+    .flipbook-controls,  .flipbook { 
          box-sizing: border-box;
          vertical-align: top; 
          display: inline-block;
@@ -41,8 +41,8 @@ section.FlipbookBlock {
         margin: (@height / 2)-24 auto;
     }
 
-    #flipbook{
-        width:645px;
+    .flipbook{
+        width: @width - 48px;
         height:@height;
         
         .turn-page {
@@ -54,7 +54,7 @@ section.FlipbookBlock {
     progress {
         border: 0;
         height: 12px;
-        width: @width;
+        width: @width + 7px;
         margin: 0;
         background-color: rgba(223, 223, 223, 0.4);
     }
@@ -75,18 +75,23 @@ section.FlipbookBlock {
         width: 100%;
     }
     
-    #info {
-        width: @width;
-        margin-top: 20px auto;
+    .flipbookoverlay {
+        opacity : 1.0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #fff;
+        width: 100%;
+        z-index: 5000;
+        display: none;
+    }
+    .flipbookimgfull-container {
+        margin: 0 auto;
+        border: solid thin #ccc;
         
-        p {
-        text-align: center;
-        background-color: rgba(0, 127, 75, 0.25); 
-        line-height: 36px;
-        font-size: 16px;
-        margin : 20px 26px;
-        width: @width; 
-        }
+    }
+    .flipbookimgfull {
+        display: none;
     }
 
 }
