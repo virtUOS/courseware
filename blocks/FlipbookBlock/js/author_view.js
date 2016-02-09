@@ -44,7 +44,7 @@ define(['assets/js/author_view', 'assets/js/url'],
         },
 
         onSave: function (event) {
-            var $pdf = this.$("#flipbook-pdf"),
+            var $pdf = this.$el.find(".flipbook-pdf"),
                 view = this;
                 
             var $pdf_name = $pdf.val();

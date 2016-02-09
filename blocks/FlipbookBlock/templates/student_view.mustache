@@ -1,7 +1,7 @@
 <div class="flipbook-controls flipbook-left-control"><div class="flipbook-arr-left"></div></div>
 <div class="flipbook" pages="{{pdf_pages}}">
     {{#imagefiles}}
-    <div class="flipbookimage" style="background-image:url( ../../sendfile.php?type=0&file_id={{dokument_id}}&file_name={{filename}});" image-data="{{filename}}"></div>
+    <div class="flipbookimage" style="background-image:url( ../../sendfile.php?type=0&file_id={{dokument_id}}&file_name={{filename}});" ></div>
     {{/imagefiles}}
 </div>
 <div class="flipbook-controls flipbook-right-control"><div class="flipbook-arr-right"></div></div>
@@ -12,6 +12,7 @@
 <!-- PDF DOWNLOAD  -->
 <div class=pdf><a href="../../sendfile.php?type=0&file_id={{pdf_id}}&file_name={{pdf_filename}}" target="_blank">{{pdf}}</a> mit {{pdf_pages}} Seiten</div>
 
+<!-- Fullscreen Button-->
 <button class="flipbookfullon">Vollbild</button>
 <div class="flipbookoverlay">
     <button class="flipbookfulloff">schlie&szlig;en</button>

@@ -211,6 +211,22 @@ class FlipbookBlock extends Block
         'flipbook_imagefolder_id'   => $this->flipbook_imagefolder_id
         );
     }
+    public function getFiles()
+    {
+        $document = new \StudipDocument($this->pdf_id);
+        $files[] = array (
+            'id' => $this->pdf_id,
+            'name' => $this->pdf_filename,
+            'description' => $document->description,
+            'filename' => $document->filename,
+            'filesize' => $document->filesize,
+            'url' => $document->url,
+            'path' => get_upload_file_path($this->pdf_id),
+        );
+        return $files;
+    }
+    
+    
     
     public function importProperties(array $properties)
     {
