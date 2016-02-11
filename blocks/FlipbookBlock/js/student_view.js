@@ -76,15 +76,6 @@ define(['assets/js/student_view', 'assets/js/vendor/turn/turn'],
                 return false;
             });
             
-            $(window).bind('keydown', function(e){
-    
-                if (e.keyCode==37)
-                    $flipbook.turn('previous');
-                else if (e.keyCode==39)
-                    $flipbook.turn('next');
-                    
-            });
-            
             this.$el.find('.flipbookfullon').on('click', function(e){
                 var $height = $(window).height();
                 var $width = $(window).width();
@@ -113,12 +104,32 @@ define(['assets/js/student_view', 'assets/js/vendor/turn/turn'],
                 $('body').css("overflow", "hidden");
             });
             
+            function disableFullscreen() 
+            {
+				$(".flipbookoverlay").hide();
+                $(".flipbookimgfull").hide();
+                $('body').css("overflow", "auto");
+			}
+            
             this.$el.find(".flipbookfulloff").on("click", function(e){
-                 $(".flipbookoverlay").hide();
-                 $(".flipbookimgfull").hide();
-                 $('body').css("overflow", "auto");
+                 disableFullscreen();
             });
             
+            $(window).bind('keydown', function(e){
+				switch (e.keyCode){
+                case 37: // cursor left
+                    $flipbook.turn('previous');
+                    break;
+                case 39: // cursor right
+                    $flipbook.turn('next');
+                    break;
+                case 27: // esc
+					disableFullscreen();
+					break;
+                }
+                console.log(e.keyCode);
+                    
+            });
 
         }
     });

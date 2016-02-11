@@ -6,14 +6,24 @@
 </div>
 <div class="flipbook-controls flipbook-right-control"><div class="flipbook-arr-right"></div></div>
 <progress max="100" value="20"></progress>
-<div class="flipbook-info"><span class="flipbook-current"></span> von <span class="flipbook-allpages"></span></div>
+<div class="flipbook-info">
+	<span class="flipbook-current"></span> von <span class="flipbook-allpages"></span>
+	<!-- Fullscreen Button-->
+	<button class="button flipbookfullon">
+		<image class="fullon-icon" height="16" width="16" alt="Vollbild" src="../../assets/images/icons/16/blue/visibility-visible.png" xlink:href="../../studip/assets/images/icons/blue/visibility-visible.svg"/>
+		Vollbild
+	</button>
+</div>
 
 
 <!-- PDF DOWNLOAD  -->
-<div class=pdf><a href="../../sendfile.php?type=0&file_id={{pdf_id}}&file_name={{pdf_filename}}" target="_blank">{{pdf}}</a> mit {{pdf_pages}} Seiten</div>
+<div class=pdf>
+	<a href="../../sendfile.php?type=0&file_id={{pdf_id}}&file_name={{pdf_filename}}" target="_blank">
+		<image class="flipbook-pdficon" height="16" width="16" alt="file-pdf" src="../../assets/images/icons/16/blue/file-pdf.png" xlink:href="../../studip/assets/images/icons/blue/file-pdf.svg"/>
+		{{pdf}}
+	</a>
+</div>
 
-<!-- Fullscreen Button-->
-<button class="flipbookfullon">Vollbild</button>
 <div class="flipbookoverlay">
     <button class="flipbookfulloff">schlie&szlig;en</button>
     <div class="flipbookimgfull-container">
