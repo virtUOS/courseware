@@ -35,28 +35,6 @@ class Courseware extends Block {
 
     function student_view($context = array())
     {
-        //var_dump($this->getCurrentUser()->id);
-        $children42 = $this->getModel()->children;
-        foreach($children42 as $child42) {
-                foreach($child42->children as $child43) {
-                    foreach($child43->children as $child44) {
-                        foreach($child44->children as $child45) {
-                        $uid= $this->getCurrentUser()->id;
-                        $bid = $child45->id;
-                        $progress = UserProgress::findBySQL('block_id = ? AND user_id = ?', array($bid, $uid));
-                        foreach($progress as $item){
-                               // echo $item->grade / $item->max_grade;
-                        }
-                        //echo  "<br>";
-                        }
-                    }
-                }
-        }
-        
-        
-        
-        
-        
         $this->lastSelected = $this->getSelected($context);
 
         /** @var \Mooc\DB\Block $courseware */
@@ -92,9 +70,9 @@ class Courseware extends Block {
             $active_subchapter = $subchapter->toArray();
             $active_subchapter['aside_section'] = $this->findAsideSection($subchapter);
         }
-        
+
         $this->branchComplete($tree);
-        
+
         return array_merge($tree, array(
             'user_may_author'   => $this->getCurrentUser()->canUpdate($this->_model),
             'section_nav'       => $section_nav,
@@ -103,7 +81,7 @@ class Courseware extends Block {
             'active_subchapter' => $active_subchapter,
             'active_section'    => $active_section));
     }
-    
+
     function branchComplete(&$tree)
     {
         $subchapters = &$tree["subchapters"];
@@ -112,7 +90,7 @@ class Courseware extends Block {
                 $subchapter["complete"] = $this->subchapterComplete($subchapterBlock);
         }
     }
-    
+
     function subchapterComplete($subchapterblock)
     {
         $complete = true;
