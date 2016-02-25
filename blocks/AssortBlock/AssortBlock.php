@@ -56,4 +56,44 @@ class AssortBlock extends Block
             'blocks'    => $blocks
         );
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function exportProperties()
+    {
+       return array('assortblocks' => $this->assortblocks, 'assorttype' => $this->assorttype);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlNamespace()
+    {
+        return 'http://moocip.de/schema/block/assort/';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlSchemaLocation()
+    {
+        return 'http://moocip.de/schema/block/assort/assort-1.0.xsd';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function importProperties(array $properties)
+    {
+        if (isset($properties['assortblocks'])) {
+            $this->assortblocks = $properties['assortblocks'];
+        }
+
+        if (isset($properties['assorttype'])) {
+            $this->assorttype = $properties['assorttype'];
+        }
+
+        $this->save();
+    }
 }

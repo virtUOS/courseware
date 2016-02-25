@@ -4,5 +4,6 @@
     targetNamespace="http://moocip.de/schema/block/assort/"
     elementFormDefault="qualified"
 >
-    <xsd:attribute name="blocks" type="xsd:string" />
+    <xsd:attribute name="assortblocks" type="xsd:string" />
+    <xsd:attribute name="assorttype" type="xsd:string" />
 </xsd:schema>
