@@ -195,6 +195,10 @@ class Section extends Block {
                 $readableName = constant($nameConstant);
             }
 
+            if (!class_exists($className)) {
+                continue;
+            }
+
             $subTypes = call_user_func(array($className, 'getSubTypes'));
 
             if (count($subTypes) > 0) {
