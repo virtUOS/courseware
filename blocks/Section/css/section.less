@@ -3,7 +3,8 @@
 
 section#courseware {
 
-.active-section {
+.active-section,
+.aside-section {
   clear:both;
   padding-top: 1em;
   width: 100%;
@@ -170,6 +171,7 @@ section#courseware {
 }
 
 
+&.view-author .aside-section section.block,
 &.view-author .active-section section.block {
   box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.1);
   padding: 0px;
@@ -201,10 +203,44 @@ button.stop-sort-block {
 
 
 &.view-student {
-  .active-section {
+  .active-section, .aside-section {
     div.controls, .block-adder, button.init-sort-block {
       display: none;
     }
+  }
+}
+
+
+//////////////////
+// ASIDE STYLES //
+//////////////////
+
+.aside-section {
+
+  // do not show section's title
+  > .title {
+    display: none;
+  }
+
+  // minify block adding button
+  .block-adder button.add-block {
+    min-width: auto;
+    color: transparent;
+    width: 35px;
+    background-position: center center;
+  }
+}
+
+&.view-student .aside-section {
+
+  // hide header of aside sections unless authoring
+  > header {
+    display: none;
+  }
+
+  // do not show "no-content" message to empty aside sections
+  .no-content {
+    display: none;
   }
 }
 }
