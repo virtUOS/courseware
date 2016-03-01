@@ -2,6 +2,8 @@
 namespace Mooc\UI\Courseware;
 
 use Mooc\DB\Field;
+use Mooc\DB\UserProgress;
+use Mooc\DB\Block as DbBlock;
 use Mooc\UI\Block;
 use Mooc\UI\Errors\BadRequest;
 
@@ -72,6 +74,7 @@ class Courseware extends Block {
             $active_subchapter['aside_section'] = $this->findAsideSection($subchapter);
         }
 
+        $this->branchComplete($tree);
 
         return array_merge($tree, array(
             'user_may_author'   => $this->getCurrentUser()->canUpdate($this->_model),
@@ -80,6 +83,29 @@ class Courseware extends Block {
             'active_chapter'    => $active_chapter,
             'active_subchapter' => $active_subchapter,
             'active_section'    => $active_section));
+    }
+
+    function branchComplete(&$tree)
+    {
+        $subchapters = &$tree["subchapters"];
+        foreach ($subchapters as &$subchapter) {
+                $subchapterBlock = DbBlock::findOneBySQL("id = ?", array($subchapter["id"]));
+                $subchapter["complete"] = $this->subchapterComplete($subchapterBlock);
+        }
+    }
+
+    function subchapterComplete($subchapterblock)
+    {
+        $complete = true;
+        $uid= $this->getCurrentUser()->id;
+        foreach($subchapterblock->children as $section) {
+            foreach($section->children as $block) {
+                $bid = $block->id;
+                $progress = UserProgress::findOneBySQL('block_id = ? AND user_id = ?', array($bid, $uid));
+                if($progress->grade / $progress->max_grade != 1) $complete = false;
+            }
+        }
+        return $complete;
     }
 
     function add_structure_handler($data)
