@@ -12,7 +12,7 @@ use Mooc\UI\Section\Section;
  */
 class BlubberBlock extends Block
 {
-    const NAME = 'Diskussion';
+    const NAME = 'Blubber';
 
     public function student_view()
     {
