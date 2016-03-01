@@ -19,6 +19,9 @@
         <button class=add-subchapter>{{#i18n}}Unterkapitel einfügen{{/i18n}}</button>
         <button class=init-sort-subchapter>{{#i18n}}Unterkapitel sortieren{{/i18n}}</button>
         <button class=stop-sort-subchapter>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
+        {{^active_subchapter.aside_section}}
+          <button class=activate-aside-section>{{#i18n}}Seitenblöcke aktivieren{{/i18n}}</button>
+        {{/active_subchapter.aside_section}}
       </li>
       <div class="clear"></div>
     </ol>
