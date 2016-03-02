@@ -122,6 +122,8 @@ abstract class AnswersStrategy implements AnswersStrategyInterface
                 break;
             case 'rnd_exercise':
                 $className = 'RandomExerciseAnswersStrategy';
+            case 'me_exercise':
+                $className = 'MathematicalTermStrategy';
                 break;
         }
 
