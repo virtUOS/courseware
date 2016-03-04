@@ -45,14 +45,12 @@ class HtmlBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        /*
-        if($this->container['wysiwyg_refined']) {
+        if ($this->container['version']->newerThan(3.1)) {
             $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
         } else {
           $this->content = (string) $data['content'];
         }
-        */ 
-        $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
+
         return array('content' => $this->content);
     }
 
