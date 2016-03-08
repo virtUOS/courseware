@@ -49,6 +49,20 @@ define({
                 break;
             case 'url':
                 url = view.$('#videosrc').val();
+
+                if (url.match(/youtube\.(com|de)/)) {                           // do we have a youtube url?
+                    var youtubeid = url.split('v=')[1];
+                    var ampersandPosition = youtubeid.indexOf('&');
+                    if (ampersandPosition != -1) {
+                        youtubeid = video_id.substring(0, ampersandPosition);
+                    }
+
+                    // generate usable youtube url and set the appropriate values in the view
+                    url = this.buildYouTubeLink(youtubeid, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoendmin').val(),view.$('#videoendsec').val(),view.$('#videoautostart').is(':checked'));
+                    view.$('#videosrc').val(youtubeid);
+                    view.$('#videotype').val('youtube');
+                }
+
                 break;
         }
 
@@ -81,13 +95,13 @@ define({
 
     setVideoData: function (view, url, videotype) {
         view.$('#videosettings input').prop('disabled', false);
-        
+
         if (videotype == 'youtube') {
             view.$('#videocontrols').prop('disabled', true);
-            
+
             if(view.$('.video-wrapper').hasClass('aspect-43')) view.$('#videoaspect43').prop('checked', true);
             else view.$('#videoaspect169').prop('checked', true);
-            
+
             if (this.getVideoType(url) == 'youtube') {
                 var youtubeid = url.slice(24).split("?",1);
                 view.$('#videosrc').val(youtubeid);
