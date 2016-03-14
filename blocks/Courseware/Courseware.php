@@ -355,7 +355,7 @@ class Courseware extends Block {
         foreach ($collection as $item) {
             $result[] = $this->childToJSON($item, $selected, $showFields);
         }
-        return array_filter($result);
+        return array_values(array_filter($result));
     }
 
     private function childToJSON($child, $selected, $showFields)
