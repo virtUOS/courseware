@@ -44,7 +44,7 @@ define(['assets/js/author_view', 'assets/js/url'],
             this.$('input[name="assortblocks"]:checked').each(function(){
                 var $id = $(this).val();
                 var $name = $("#blockname-"+$id).val();
-                $assortblocksarray.push({id : $id , name : $name});
+                $assortblocksarray.push({id : $id , name : $name, hash: ''});
             });
             helper
                 .callHandler(this.model.id, "save", {assortblocks: $assortblocksarray, assorttype: $assorttype})

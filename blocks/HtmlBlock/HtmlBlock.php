@@ -52,7 +52,7 @@ class HtmlBlock extends Block
           $this->content = (string) $data['content'];
         }
         */ 
-        $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
+        $this->content = rtrim(\STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content'])));
         return array('content' => $this->content);
     }
 

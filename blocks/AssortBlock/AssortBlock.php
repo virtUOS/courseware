@@ -11,8 +11,6 @@ class AssortBlock extends Block
     {
         $this->defineField('assortblocks', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('assorttype', \Mooc\SCOPE_BLOCK, '');
-        // for testing only
-        //$this->defineField('assorthash', \Mooc\SCOPE_BLOCK, '');
     }
 
     function student_view()
@@ -31,17 +29,13 @@ class AssortBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        $assortblocks = json_decode($data['assortblocks']);
-        // get all blocks
-        // get hash for all blocks
-        // encode json
-        // $this->assortblocks = $assortblocks;
-       
-        // for testing only
-        //$this->assorttype = $data['assorttype'];$this->assorthash = $this->getBlockHash('42');
-        
-        
-        
+        $this->assorttype = $data['assorttype'];
+        // string to json and json to array with objects
+        $assortblocks = json_decode(json_encode($data['assortblocks']));
+        foreach ($assortblocks as $block) {
+           $block->hash = $this->getBlockHash($block->id);
+        }
+        $this->assortblocks = json_encode($assortblocks);
         return $this->getAttrArray();
     }
     
@@ -70,29 +64,26 @@ class AssortBlock extends Block
 
     private function getBlockHash($blockid)
     {
-		$block = \Mooc\DB\Block::find($blockid);
-		switch ($block->type) {
-			case "HtmlBlock":
-				$name = 'content';
-				break;
-				
-			case "VideoBlock":
-				$name = 'url';
-				break;
-			
-			case "TestBlock":
-				$name = '';
-				break;
-			case "IFrameBlock":
-				$name = "url";
-				break;
-		}
-		
-		$field = current(\Mooc\DB\Field::findBySQL('user_id = "" AND name = ? AND block_id = ?', array($name , $block->id)));
-		$hash = hash('md5', $field->json_data);
-		
-		return $hash;
-	}
+        $block = \Mooc\DB\Block::find($blockid);
+        switch ($block->type) {
+            case "HtmlBlock":
+                $name = 'content';
+                break;
+                
+            case "VideoBlock":
+                $name = 'url';
+                break;
+                
+            case "IFrameBlock":
+                $name = "url";
+                break;
+        }
+        
+        $field = current(\Mooc\DB\Field::findBySQL('user_id = "" AND name = ? AND block_id = ?', array($name , $block->id)));
+        $hash = hash('md5', $field->json_data);
+        
+        return $hash;
+    }
     
     public function exportProperties()
     {
@@ -121,7 +112,33 @@ class AssortBlock extends Block
     public function importProperties(array $properties)
     {
         if (isset($properties['assortblocks'])) {
-            $this->assortblocks = $properties['assortblocks'];
+            $model = $this->getModel();
+            $assortblocks = json_decode($properties['assortblocks']);
+            $size = count($assortblocks);
+            
+            foreach ($assortblocks as $i => $block) {
+                if($model->previousSibling()) {
+                    $modelP = $model->previousSibling();
+                }
+                $blockfound = false;
+                $s = 0;
+                do {
+                    if($modelP){
+                        
+                        if ($block->hash == $this->getBlockHash($modelP->id)) {
+                            $block->id = $modelP->id;
+                            $blockfound = true;
+                        }
+                        else {
+                            $modelP = $modelP->previousSibling();
+                        }
+                    }
+                    $s++;
+                } while ((!$blockfound)&&($s != $size));
+                
+                if (!$blockfound) {unset($assortblocks[$i]);}
+            }
+            $this->assortblocks = json_encode($assortblocks); 
         }
 
         if (isset($properties['assorttype'])) {
@@ -130,4 +147,5 @@ class AssortBlock extends Block
 
         $this->save();
     }
+    
 }
