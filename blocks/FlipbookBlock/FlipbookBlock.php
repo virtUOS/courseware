@@ -15,8 +15,8 @@ use Symfony\Component\DomCrawler\Crawler;
 class FlipbookBlock extends Block
 {
     const NAME = 'Flipbook';
-    const FOLDER_NAME = 'Flipbook Uploads';
-    const FOLDER_DESCRIPTION = 'PDF Dateien die als Flipbook dargestellt werden können.';
+    const FOLDER_NAME = 'Allgemeiner Dateiordner';
+    const FOLDER_DESCRIPTION = 'Ablage für allgemeine Ordner und Dokumente der Veranstaltung';
 
     function initialize()
     {
@@ -33,6 +33,9 @@ class FlipbookBlock extends Block
     {
         $this->setGrade(1.0);
         $imagefiles = $this->showFiles($this->flipbook_imagefolder_id, "jpg");
+        
+        // Dateien zählen
+        $this->pdf_pages = count($imagefiles);
              
         return array(
             'pdf'                    => $this->pdf,
@@ -60,25 +63,13 @@ class FlipbookBlock extends Block
     
     public function save_handler(array $data)
     {
-        global $TMP_PATH;
-        
         $this->authorizeUpdate();
         $this->pdf_id = (string) $data['pdf_id'];
         $this->pdf = (string) $data['pdf'];
         $this->pdf_filename = (new \StudipDocument($this->pdf_id))->getValue(filename);
         
         if ($this->folderNotExists("$this->pdf Imagefolder")) {
-            
-            $path = "$TMP_PATH/courseware/$this->pdf_id";
-            mkdir($path, 0777, true);
-            $this->createImages($path);
-            
-            // Dateien zählen
-            $fi = new \FilesystemIterator($path, \FilesystemIterator::SKIP_DOTS);
-            $this->pdf_pages = iterator_count($fi);
-
-            // Temporäre Dateien entfernen
-            $this->delTree($path);
+            $this->createImages();
         } else {
             $this->setImageFolder("$this->pdf Imagefolder");
         }
@@ -98,8 +89,11 @@ class FlipbookBlock extends Block
     }
     
     
-    private function createImages($path)
+    private function createImages()
     {
+        global $TMP_PATH;
+        $path = "$TMP_PATH/courseware/$this->pdf_id";
+        mkdir($path, 0777, true);
         
         //Bilder erstellen
         $pdf = get_upload_file_path($this->pdf_id);
@@ -138,7 +132,8 @@ class FlipbookBlock extends Block
                 $response = $e->getMessage();
         }
         
-        
+        // Temporäre Dateien entfernen
+        $this->delTree($path);
         
         return;
     }
@@ -200,15 +195,27 @@ class FlipbookBlock extends Block
         return $filesarray;
     }
     
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlNamespace()
+    {
+        return 'http://moocip.de/schema/block/flipbook/';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlSchemaLocation()
+    {
+        return 'http://moocip.de/schema/block/flipbook/flipbook-1.0.xsd';
+    }
+    
     public function exportProperties()
     {
        return array(
         'pdf'                       => $this->pdf, 
-        'pdf_id'                    => $this->pdf_id,
-        'pdf_filename'              => $this->pdf_filename,
-        'pdf_pages'                 => $this->pdf_pages,
-        'flipbook_rootfolder_id'    => $this->flipbook_rootfolder_id,
-        'flipbook_imagefolder_id'   => $this->flipbook_imagefolder_id
+        'pdf_filename'              => $this->pdf_filename
         );
     }
     public function getFiles()
@@ -234,31 +241,29 @@ class FlipbookBlock extends Block
             $this->pdf = $properties['pdf'];
         }
 
-        if (isset($properties['pdf_id'])) {
-            $this->pdf_id = $properties['pdf_id'];
-        }
-        
         if (isset($properties['pdf_filename'])) {
             $this->pdf_filename = $properties['pdf_filename'];
         }
         
-        if (isset($properties['pdf_pages'])) {
-            $this->pdf_pages = $properties['pdf_pages'];
-        }
-        
-        if (isset($properties['assorttype'])) {
-            $this->assorttype = $properties['assorttype'];
-        }
-        
-        if (isset($properties['flipbook_rootfolder_id'])) {
-            $this->flipbook_rootfolder_id = $properties['flipbook_rootfolder_id'];
-        }
-        
-        if (isset($properties['flipbook_imagefolder_id'])) {
-            $this->flipbook_imagefolder_id = $properties['flipbook_imagefolder_id'];
-        }
-
         $this->save();
     }
+    
+    public function importContents($contents, array $files)
+    {
+        $file = reset($files);
+        $this->pdf = $file->name;
+        $document =  current(\StudipDocument::findBySQL('filename = ?', array($this->pdf)));
+        $this->pdf_id = $document->dokument_id;
+                
+        // create images
+        if ($this->folderNotExists("$this->pdf Imagefolder")) {
+            $this->createImages();
+        } else {
+            $this->setImageFolder("$this->pdf Imagefolder");
+        }
+        
+        $this->save();
+    }
+    
 
 }

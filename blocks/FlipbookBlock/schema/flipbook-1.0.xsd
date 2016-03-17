@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/flipbook/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/flipbook/"
+    elementFormDefault="qualified"
+>
+    <xsd:attribute name="pdf" type="xsd:string" />
+    <xsd:attribute name="pdf_filename" type="xsd:string" />
+    <xsd:attribute name="pdf_pages" type="xsd:string" />
+</xsd:schema>
