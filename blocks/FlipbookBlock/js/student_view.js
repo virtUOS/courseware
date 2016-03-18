@@ -80,9 +80,19 @@ define(['assets/js/student_view', 'assets/js/vendor/turn/turn'],
                 var $height = $(window).height();
                 var $width = $(window).width();
                 //console.log("height: "+$height+" width: "+$width);
-                $(".flipbookoverlay").height($height).show();
-                $('.flipbookimgfull').height($height*0.95);
-                $('.flipbookimgfull-container').height($height*0.95).width(($('.flipbookimgfull').width()*2)+5);
+                $(".flipbookoverlay").height("0px").width("0px").show().css({"top": $height/2, "left": $width/2}).animate({
+                  height: $height,
+                  width : $width,
+                  top: 0,
+                  left: 0
+                }, 600);
+               $('.flipbookimgfull').height($height*0.95);
+               $('.flipbookimgfull-container').height($height*0.95).width((($('.flipbookimgfull').width()*2)+5));
+               var $top = ($height -  $('.flipbookimgfull-container').height()) /2;
+               console.log($top);
+               $('.flipbookimgfull-container').css({"position": "relative", "top": $top});
+               $(".flipbookfulloff").css({"position": "relative", "top": $top});
+                
                 
                 
                 
