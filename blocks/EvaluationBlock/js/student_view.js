@@ -1,21 +1,21 @@
 define(['assets/js/student_view'],
-    function (StudentView) {
+       function (StudentView) {
 
-        'use strict';
+    'use strict';
 
-        return StudentView.extend({
-            events: {
-            },
+    return StudentView.extend({
+        events: {
+        },
 
-            initialize: function() {
-            },
+        initialize: function() {
+        },
 
-            render: function() {
-                return this;
-            },
+        render: function() {
+            return this;
+        },
 
-            postRender: function () {
+        postRender: function () {
 
-            }
-        });
+        }
     });
+});

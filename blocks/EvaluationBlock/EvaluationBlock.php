@@ -7,7 +7,7 @@ use Mooc\UI\Block;
 /**
  * Display the course evaluations in a (M)ooc.IP block.
  *
- * @author Andrï¿½ Klaï¿½en <klassen@elan-ev.de>
+ * @author André Klaßen <klassen@elan-ev.de>
  */
 class EvaluationBlock extends Block
 {
