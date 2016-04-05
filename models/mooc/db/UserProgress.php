@@ -70,6 +70,12 @@ class UserProgress extends \SimpleORMap
      */
     protected function setGrade($grade)
     {
+        // special case: called when instantiating without params
+        if ($grade === null) {
+            $this->content['grade'] = null;
+            return;
+        }
+
         if ($this->max_grade === null || $this->max_grade == 0) {
             $this->max_grade = 1;
         }
