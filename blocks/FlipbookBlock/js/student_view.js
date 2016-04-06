@@ -21,27 +21,53 @@ define(['assets/js/student_view', 'assets/js/vendor/turn/turn'],
         postRender: function () {
             var $flipbook = this.$el.find('.flipbook');
             
-            $flipbook.turn({
-                display: 'double',
-                acceleration: true,
-                gradients: !$.isTouch,
-                elevation:50,
-                when: {
-                    turned: function(e, page) {
-                        
-                        var $current = $(this).turn('view');
-                        var $allpages = $(this).attr("pages");
-                        
-                        if ($current[0] == 0) $(".flipbook-current").html($current[1]);
-                        else if ($current[1] == 0) $(".flipbook-current").html($current[0]);
-                        else $(".flipbook-current").html($current[0] +"/"+ $current[1]);
-                        $(".flipbook-allpages").html($allpages);
-                        if($allpages != 0) {
-                            $("progress").val($current[0]/$allpages*100);
+            var $flipbookimg = this.$el.find('.flipbookoverlay').find('.flipbookimgfull').first()[0];
+            var $imgheight = $flipbookimg.naturalHeight;
+            var $imgwidth = $flipbookimg.naturalWidth;
+            var $portrait = $imgheight > $imgwidth;
+            if ($portrait) {
+                $flipbook.turn({
+                    display: 'double',
+                    acceleration: true,
+                    gradients: !$.isTouch,
+                    elevation:50,
+                    when: {
+                        turned: function(e, page) {
+                            
+                            var $current = $(this).turn('view');
+                            var $allpages = $(this).attr("pages");
+                            
+                            if ($current[0] == 0) $(".flipbook-current").html($current[1]);
+                            else if ($current[1] == 0) $(".flipbook-current").html($current[0]);
+                            else $(".flipbook-current").html($current[0] +"/"+ $current[1]);
+                            $(".flipbook-allpages").html($allpages);
+                            if($allpages != 0) {
+                                $("progress").val($current[0]/$allpages*100);
+                            }
                         }
                     }
-                }
-            });
+                });
+            } else {
+                $flipbook.turn({
+                    display: 'single',
+                    acceleration: true,
+                    gradients: !$.isTouch,
+                    elevation:50,
+                    when: {
+                        turned: function(e, page) {
+                            
+                            var $current = $(this).turn('view');
+                            var $allpages = $(this).attr("pages");
+                            $(".flipbook-current").html($current[0]);
+                      
+                            $(".flipbook-allpages").html($allpages);
+                            if($allpages != 0) {
+                                $("progress").val($current[0]/$allpages*100);
+                            }
+                        }
+                    }
+                });
+            }
             
             $(".flipbook-left-control").click(function(){
                     $flipbook.turn('previous');
@@ -87,7 +113,8 @@ define(['assets/js/student_view', 'assets/js/vendor/turn/turn'],
                   left: 0
                 }, 600);
                $('.flipbookimgfull').height($height*0.95);
-               $('.flipbookimgfull-container').height($height*0.95).width((($('.flipbookimgfull').width()*2)+5));
+               if ($portrait) {$('.flipbookimgfull-container').height($height*0.95).width((($('.flipbookimgfull').width()*2)+5));}
+               else {$('.flipbookimgfull-container').height($height*0.95).width($('.flipbookimgfull').width());}
                var $top = ($height -  $('.flipbookimgfull-container').height()) /2;
                console.log($top);
                $('.flipbookimgfull-container').css({"position": "relative", "top": $top});
