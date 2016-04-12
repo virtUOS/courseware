@@ -18,14 +18,19 @@ class ForumBlock extends Block
     {
         $this->defineField('area_id', \Mooc\SCOPE_BLOCK, -1);
 
+        if (self::forumActivated($this)) {
         // check, if we lost our connected area
         if ($this->area_id != -1 && !\ForumEntry::getConstraints($this->area_id)) {
             $this->area_id = -1;
         }
     }
+    }
 
     public function student_view()
     {
+        if ($inactive = !self::forumActivated($this)) {
+            return compact('inactive');
+        }
         // on view: grade with 100%
         $this->setGrade(1.0);
 
@@ -50,6 +55,9 @@ class ForumBlock extends Block
 
     public function author_view()
     {
+        if ($inactive = !self::forumActivated($this)) {
+            return compact('inactive');
+        }
         $this->authorizeUpdate();
 
         $areas = \ForumEntry::getList('area', $this->container['cid']);
@@ -197,5 +205,18 @@ class ForumBlock extends Block
         }
 
         $this->save();
+    }
+
+    /**
+     * Check if the forum is activated in the selected course
+     *
+     * @param type $block
+     * @return type
+     */
+    private static function forumActivated($block)
+    {
+        $plugin_manager = \PluginManager::getInstance();
+        $plugin_info = $plugin_manager->getPluginInfo('CoreForum');
+        return $plugin_manager->isPluginActivated($plugin_info['id'], $block->getModel()->seminar_id);
     }
 }
