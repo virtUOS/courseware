@@ -11,6 +11,7 @@ use Mooc\Import\XmlImport;
  */
 class ImportController extends CoursewareStudipController
 {
+
     public function before_filter(&$action, &$args)
     {
         parent::before_filter($action, $args);
@@ -18,6 +19,7 @@ class ImportController extends CoursewareStudipController
         if (!$this->container['current_user']->canCreate($this->container['current_courseware'])) {
             throw new Trails_Exception(401);
         }
+        Navigation::activateItem('course/mooc_courseware');
     }
 
 
@@ -26,12 +28,16 @@ class ImportController extends CoursewareStudipController
         $this->errors = array();
 
         // upload filed
-        if (Request::method() == 'POST' && Request::option('subcmd')=='upload') {
+        if (Request::method() == 'POST' && Request::option('subcmd')=='upload' && Request::get('cancel') !== "") {
             if (count($this->errors) === 0) {
                 $this->installModule($_FILES['import_file']['tmp_name']);
             }
 
-        // search for content modules from marketplace
+        // cancel button clicked
+        } else if (Request::submitted('cancel')) {
+            $this->redirect(PluginEngine::getURL($this->plugin, array(), 'courseware'));
+
+            // search for content modules from marketplace
         } else if (Request::method() == 'POST' && Request::option('subcmd')=='search') {
             require_once('lib/plugins/engine/PluginRepository.class.php');
             $repo = new PluginRepository('http://content.moocip.de/?dispatch=xml');
