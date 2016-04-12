@@ -5,7 +5,7 @@ require_once __DIR__.'/vendor/autoload.php';
 use Courseware\Container;
 use Mooc\DB\CoursewareFactory;
 use Mooc\UI\BlockFactory;
-use Mooc\User;
+use Courseware\User;
 
 /**
  * MoocIP.class.php
