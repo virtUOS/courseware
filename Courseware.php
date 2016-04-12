@@ -31,19 +31,10 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
         // more setup if this plugin is active in this course
         if ($this->isActivated($this->container['cid'])) {
 
-            // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
-            if ($this->isSlotModule()) {
-                // Navigation::removeItem('/course/files'); // TT DOUBLE HACK, no WYSIWYG-Upload if file tab is invisible...
-                Navigation::removeItem('/course/blubberforum');
-                if(!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
-                    if(Navigation::hasItem('/course/vipsplugin')){
-                        Navigation::removeItem('/course/vipsplugin');
-                    }
-                }
-            }
-
             // markup for link element to courseware
             StudipFormat::addStudipMarkup('courseware', '\[(mooc-forumblock):([0-9]{1,32})\]', NULL, 'Courseware::markupForumLink');
+
+            $this->setupNavigation();
         }
     }
 
@@ -283,21 +274,28 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
         }
     }
 
+    private function setupNavigation()
+    {
+        // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
+        if (!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
+            if (Navigation::hasItem('/course/vipsplugin')){
+                Navigation::removeItem('/course/vipsplugin');
+            }
+        }
+
+        // FIXME: hier den Courseware-Block in die Hand zu bekommen,
+        //        ist definitiv falsch.
+        $courseware = $this->container['current_courseware'];
+
+        // hide blubber tab if the discussion block is active
+        if ($courseware->getDiscussionBlockActivation()) {
+            Navigation::removeItem('/course/blubberforum');
+        }
+    }
     private function getSemClass()
     {
         global $SEM_CLASS, $SEM_TYPE, $SessSemName;
         return $SEM_CLASS[$SEM_TYPE[$SessSemName['art_num']]['class']];
-    }
-
-    //HACKED
-    private function isSlotModule()
-    {
-        if (!$this->getSemClass()) {
-            return false;
-        }
-        return true;
-        //TODO: why does it always return false?
-        //return $this->getSemClass()->isSlotModule(get_class($this));
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * *

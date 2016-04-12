@@ -1,6 +1,10 @@
 <?
 use Studip\Button;
 use Mooc\UI\Courseware\Courseware;
+
+if ($flash['success']) {
+    PageLayout::postMessage(MessageBox::success($flash['success']));
+}
 ?>
 
 <form method="post" action="<?= $controller->url_for('courseware/settings') ?>">

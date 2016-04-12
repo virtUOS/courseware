@@ -52,6 +52,18 @@ define({
                 break;
             case 'url':
                 url = view.$('#videosrc').val();
+                if (url.match(/youtube\.(com|de)/)) {                           // do we have a youtube url?
+                    var youtubeid = url.split('v=')[1];
+                    var ampersandPosition = youtubeid.indexOf('&');
+                    if (ampersandPosition != -1) {
+                        youtubeid = video_id.substring(0, ampersandPosition);
+                    }
+
+                    // generate usable youtube url and set the appropriate values in the view
+                    url = this.buildYouTubeLink(youtubeid, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoendmin').val(),view.$('#videoendsec').val(),view.$('#videoautostart').is(':checked'));
+                    view.$('#videosrc').val(youtubeid);
+                    view.$('#videotype').val('youtube');
+                }
                 break;
         }
 
@@ -240,17 +252,4 @@ define({
         view.$('iframe').attr('src', url);
     },
 
-    getVideoUrl: function(url) {
-        switch (this.getVideoType(url)) {
-            case 'youtube':
-                return this.buildYouTubeLink(this.getYouTubeId(url));
-            break;
-
-            case 'matterhorn':
-                return this.buildMatterhornLink(url);
-            break;
-        }
-
-        return url;
-    }
 });

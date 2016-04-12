@@ -56,7 +56,8 @@ class CoursewareController extends CoursewareStudipController {
             CSRFProtection::verifyUnsafeRequest();
             $this->storeSettings();
 
-            PageLayout::postMessage(MessageBox::success(_("Die Einstellungen wurden gespeichert.")));
+            $this->flash['success'] = _("Die Einstellungen wurden gespeichert.");
+            return $this->redirect('courseware/settings');
         }
     }
 

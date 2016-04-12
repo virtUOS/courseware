@@ -33,7 +33,7 @@ class Field extends \SimpleORMap
             'foreign_key' => 'block_id');
 
         $this->belongs_to['user'] = array(
-            'class_name'  => 'User',
+            'class_name'  => '\\User',
             'foreign_key' => 'user_id');
 
 

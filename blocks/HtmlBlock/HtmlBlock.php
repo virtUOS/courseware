@@ -45,14 +45,11 @@ class HtmlBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        /*
-        if($this->container['wysiwyg_refined']) {
+        if ($this->container['version']->newerThan(3.1)) {
             $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
         } else {
           $this->content = (string) $data['content'];
         }
-        */ 
-        $this->content = rtrim(\STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content'])));
         return array('content' => $this->content);
     }
 
@@ -94,8 +91,11 @@ class HtmlBlock extends Block
             });
         }
 
-        //return $document->saveHTML();
+        if ($this->container['version']->newerThan(3.1)) {
         return \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
+        } else {
+            return $document->saveHTML();
+        }
     }
 
     /**
@@ -196,7 +196,11 @@ class HtmlBlock extends Block
             });
         }
 
+        if ($this->container['version']->newerThan(3.1)) {
         $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
+        } else {
+            $this->content = $document->saveHTML();
+        }
         $this->save();
     }
 

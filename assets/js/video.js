@@ -3,6 +3,7 @@ define(['utils'], function (Utils) {
     
     return {
         init: function() {
+            jQuery('#preview_video').click(function() {
             var $iFrame = $('iframe', $('#videobox'));
 
             // skip processing if there are not video iframes
@@ -10,16 +11,29 @@ define(['utils'], function (Utils) {
                 return;
             }
 
-            $iFrame.attr('src', Utils.getVideoUrl($iFrame.attr('src')));
+                var url = $iFrame.attr('data-url');
 
-            jQuery('#preview_video').click(function() {
+                switch (Utils.getVideoType(url)) {
+                    case 'youtube':
+                        url = Utils.buildYouTubeLink(Utils.getYouTubeId(url), '', '', '', '', true);
+                    break;
+
+                  case 'matterhorn':
+                        url = Utils.buildMatterhornLink(url);
+                    break;
+                }
+
+                $iFrame.attr('src', url);
                 jQuery('#videobox').dialog({ 
                     width: '580',
                     height: '400',
                     resizable: false,
                     modal: true,
                     draggable: false,
-                    title: 'Vorschauvideo'.toLocaleString()
+                    title: 'Vorschauvideo'.toLocaleString(),
+                    close: function() {
+                        $('#videobox iframe').attr('src', 'about:blank');
+                    }
                 }).show();
             });
         }
