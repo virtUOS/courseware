@@ -1,6 +1,6 @@
 <?php
 
-class BlocksController extends MoocipController {
+class BlocksController extends CoursewareStudipController {
 
     function before_filter(&$action, &$args)
     {

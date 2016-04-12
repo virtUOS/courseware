@@ -239,25 +239,6 @@ class Courseware extends Block {
     // PRIVATE FUNCTIONS //
     ///////////////////////
 
-    // structural blocks may have a field calles 'aside_section'
-    // containing the ID of a block of type 'Section' which is shown
-    // in the sidebar whenever this structural block is active
-    private function findAsideSection($structure_block)
-    {
-        if ($aside_field = Field::find(array($structure_block->id, '', 'aside_section'))) {
-            if ($aside_block = \Mooc\DB\Block::find($aside_field->content)) {
-                return array(
-                    'id'        => $aside_block->id,
-                    'title'     => $aside_block->title,
-                    'parent_id' => $structure_block->id,
-                    'html'      => $this->getBlockFactory()->makeBlock($aside_block)->render('student', $context)
-                );
-            }
-        }
-
-        return null;
-    }
-
     // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
     // set perm level of editing permission
     public function setEditingPermission($perm_level)
@@ -280,6 +261,25 @@ class Courseware extends Block {
     ///////////////////////
     // PRIVATE FUNCTIONS //
     ///////////////////////
+
+    // structural blocks may have a field calles 'aside_section'
+    // containing the ID of a block of type 'Section' which is shown
+    // in the sidebar whenever this structural block is active
+    private function findAsideSection($structure_block)
+    {
+        if ($aside_field = Field::find(array($structure_block->id, '', 'aside_section'))) {
+            if ($aside_block = \Mooc\DB\Block::find($aside_field->content)) {
+                return array(
+                    'id'        => $aside_block->id,
+                    'title'     => $aside_block->title,
+                    'parent_id' => $structure_block->id,
+                    'html'      => $this->getBlockFactory()->makeBlock($aside_block)->render('student', $context)
+                );
+            }
+        }
+
+        return null;
+    }
 
     private function getSelected($context)
     {
@@ -327,7 +327,7 @@ class Courseware extends Block {
         foreach ($collection as $item) {
             $result[] = $this->childToJSON($item, $selected, $showFields);
         }
-        return array_filter($result);
+        return array_values(array_filter($result));
     }
 
     private function childToJSON($child, $selected, $showFields)

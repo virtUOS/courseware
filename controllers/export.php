@@ -7,7 +7,7 @@ use Mooc\Export\XmlExport;
  *
  * @author Christian Flothmann <christian.flothmann@uos.de>
  */
-class ExportController extends MoocipController
+class ExportController extends CoursewareStudipController
 {
     public function before_filter(&$action, &$args)
     {

@@ -1,5 +1,5 @@
 <?php
-namespace Mooc;
+namespace Courseware;
 
 use Mooc\DB\Block as DbBlock;
 use Mooc\UI\Block as UiBlock;
@@ -19,7 +19,7 @@ class User extends \User
      * corresponding record from db if available, if not preset primary key
      * with given value. Give null to create new record
      *
-     * @param \Mooc\Container $container  the DI container to use
+     * @param \Courseware\Container $container  the DI container to use
      * @param mixed           $id         primary key of table
      */
     function __construct(Container $container, $id = null)

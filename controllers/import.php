@@ -9,7 +9,7 @@ use Mooc\Import\XmlImport;
  *
  * @author Christian Flothmann <christian.flothmann@uos.de>
  */
-class ImportController extends MoocipController
+class ImportController extends CoursewareStudipController
 {
     public function before_filter(&$action, &$args)
     {
