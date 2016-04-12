@@ -16,7 +16,7 @@ class SetupCourseware extends DBMigration {
     }
 
     public function up () {
-      
+
         $db = DBManager::get();
 
         // check if Mooc.IP is already installed and the schema-version of Mooc.IP
@@ -32,7 +32,7 @@ class SetupCourseware extends DBMigration {
         }
 
         // if no Mooc.IP-installion is found, create the courseware tables
-        
+
         $db->exec("CREATE TABLE IF NOT EXISTS `mooc_blocks` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
           `type` varchar(64) NOT NULL,
@@ -66,13 +66,13 @@ class SetupCourseware extends DBMigration {
 
         if (is_null(Config::get()->getValue(\Mooc\PLUGIN_DISPLAY_NAME_ID))) {
             Config::get()->create(\Mooc\PLUGIN_DISPLAY_NAME_ID, array(
-                'value'       => 'Mooc.IP',
-                'is_default'  => 1,
-                'type'        => 'string',
-                'range'       => 'global',
-                'section'     => 'global',
-                'description' => 'Angezeigter Name des Plugins'
-            ));
+                                      'value'       => 'Mooc.IP',
+                                      'is_default'  => 1,
+                                      'type'        => 'string',
+                                      'range'       => 'global',
+                                      'section'     => 'global',
+                                      'description' => 'Angezeigter Name des Plugins'
+                                  ));
         }
 
         SimpleORMap::expireTableScheme();
@@ -87,9 +87,9 @@ class SetupCourseware extends DBMigration {
         DBManager::get()->exec("DROP TABLE mooc_blocks");
         DBManager::get()->exec("DROP TABLE mooc_userprogress");
         DBManager::get()->exec("DROP TABLE mooc_fields");
-        
+
         Config::get()->delete(\Mooc\PLUGIN_DISPLAY_NAME_ID);
-        
+
         SimpleORMap::expireTableScheme();
     }
 }

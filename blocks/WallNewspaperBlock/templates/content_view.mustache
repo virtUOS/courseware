@@ -1,0 +1,59 @@
+<header class="{{#$loading}}loading{{/$loading}}">
+  <h1>{{title}}</h1>
+  <nav>
+    {{^editing}}
+      <button type="button" class="edit">{{#i18n}}Ändern{{/i18n}}</button>
+    {{/editing}}
+  </nav>
+</header>
+
+{{^editing}}
+  <section class="video{{^video}} video-empty{{/video}}">
+    {{#video}}
+        <iframe src="{{video}}" scrolling="no" allowfullscreen></iframe>
+    {{/video}}
+    {{^video}}
+        <div class="messagebox messagebox_info">
+            {{#i18n}}Für dieses Thema ist noch kein Video konfiguriert.{{/i18n}}
+        </div>
+    {{/video}}
+  </section>
+  <section class="text{{^text}} text-empty{{/text}}">
+      {{#text}}
+          {{{text}}}
+      {{/text}}
+
+      {{^text}}
+          <div class="messagebox messagebox_info">
+              {{#i18n}}Für dieses Thema ist noch kein Text konfiguriert.{{/i18n}}
+          </div>
+      {{/text}}
+  </section>
+{{/editing}}
+
+{{#editing}}
+    <form class="edit">
+
+        <label class="edit-video-type">
+            Art des Videos:
+            <select name="video_type">
+                {{#types}}
+                <option value="{{type}}" {{#selected}}selected{{/selected}}>{{type}}</option>
+                {{/types}}
+            </select>
+        </label>
+
+        <label class="edit-video-url">
+            URL des Videos:
+            <input type="text" name="video_url" value="{{video}}" placeholder="{{placeholder}}">
+        </label>
+
+        <label class="edit-text">
+            Text:
+            <textarea class="add_toolbar wysiwyg" name=text placeholder="{{#i18n}}Geben Sie hier den Text ein{{/i18n}}">{{{text}}}</textarea>
+        </label>
+
+        <button class=button name=save >{{#i18n}}Speichern{{/i18n}}</button>
+        <button class=button name=cancel type=button>{{#i18n}}Abbrechen{{/i18n}}</button>
+    </form>
+{{/editing}}

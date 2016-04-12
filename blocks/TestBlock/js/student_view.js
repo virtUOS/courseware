@@ -34,10 +34,13 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     view = this,
                     $exercise_index = $form.find("input[name='exercise_index']").val(),
                     $block = this.$el.parent();
-                    
+
                 helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
                     .then(
-                        function () {
+                        function (response) {
+                            if (response && response.grade && _.isFinite(response.grade)) {
+                                view.trigger('TestBlock:graded', response.grade);
+                            }
                             return view.renderServerSide();
                         },
                         function () {

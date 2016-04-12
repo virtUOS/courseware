@@ -59,29 +59,15 @@ class BlockFactory {
      *
      * @param string $name The block name
      *
-     * @return \Mooc\UI\Block The block instance or null if no block could be
-     *                        found
+     * @return string The block's fully qualified classname or null if
+     *                that block could not be found
      */
     public function getBlockByName($name)
     {
         $name = strtolower($name);
         $this->buildBlockClassCache();
 
-        if (!isset($this->blockClasses[$name])) {
-            return null;
-        }
-
-        $fqcn = $this->blockClasses[$name];
-        $className = $fqcn;
-
-        if (preg_match('/\\\\(\w+)$/', $className, $matches)) {
-            $className = $matches[1];
-        }
-
-        $block = new \Mooc\DB\Block();
-        $block->type = $className;
-
-        return new $fqcn($this->container, $block);
+        return isset($this->blockClasses[$name]) ? $this->blockClasses[$name] : null;
     }
 
     // TODO

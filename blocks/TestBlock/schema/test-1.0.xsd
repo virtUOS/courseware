@@ -50,6 +50,8 @@
             <xsd:element name="Answer" type="answer" minOccurs="0" maxOccurs="unbounded" />
             <xsd:element name="ChooseItem" type="xsd:integer" />
             <xsd:element name="AnswerDefault" type="xsd:string" />
+            <xsd:element name="MistakeComment" type="xsd:string" />
+            <xsd:element name="CharacterPicker" type="xsd:string" />
         </xsd:choice>
         <xsd:attribute name="ID" type="xsd:string" />
         <xsd:attribute name="Type" type="xsd:string" />
@@ -83,7 +85,7 @@
         <xsd:simpleContent>
             <xsd:extension base="xsd:string">
                 <xsd:attribute name="group" type="xsd:integer" />
-                <xsd:attribute name="Correct" type="xsd:float" />
+                <xsd:attribute name="Correct" type="xsd:string" />
                 <xsd:attribute name="Default" type="xsd:integer" />
                 <xsd:attribute name="ID" type="xsd:integer" />
             </xsd:extension>

@@ -98,9 +98,11 @@ class TestBlock extends Block
         $unsupported = false;
             
         //count all unsupported exercises
-        foreach ($this->test->exercises as $exercise) {
-            if ($exercise->getAnswersStrategy() === null) {
-                $unsupported = true;
+        if ($this->test) {
+            foreach ($this->test->exercises as $exercise) {
+                if ($exercise->getAnswersStrategy() === null) {
+                    $unsupported = true;
+                }
             }
         }
 
@@ -237,9 +239,11 @@ class TestBlock extends Block
         \submit_exercise('sheets');
         ob_clean();
 
-        $this->calcGrades();
+        $progress = $this->calcGrades();
 
-        return array();
+        return array(
+            'grade' => $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0
+        );
      }
 
      public function calcGrades()
@@ -257,6 +261,7 @@ class TestBlock extends Block
              }
          }
 
+         return $progress;
      }
 
     /**

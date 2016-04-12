@@ -1,0 +1,64 @@
+<section class="mode-student">
+    {{#hasCompletedAgeGroups}}
+        <header>
+            <h2>
+                Bitte wählen Sie nun die Lernerfolgskontrolle für Ihre Altersklasse aus!
+            </h2>
+        </header>
+
+        <form class="selectSelfTest">
+            <select>
+                {{#ageGroups}}
+                    {{#$thoroughlyComplete}} <option value="{{id}}" {{blockSelected}} {{^hasSelfTest}}disabled{{/hasSelfTest}}> {{title}} </option> {{/$thoroughlyComplete}}
+                {{/ageGroups}}
+            </select>
+
+            <fieldset>
+                <button name=select class=button>Auswählen</button>
+            </fieldset>
+        </form>
+
+        {{#selectedSelfTest}}
+            <p>
+                Beantworten Sie bitte die folgenden Fragen, um zur nächsten Lektion zu gelangen:
+            </p>
+        {{/selectedSelfTest}}
+    {{/hasCompletedAgeGroups}}
+</section>
+
+<section class="mode-author">
+    <header>
+        <h2>
+            Ordnen Sie bitte jeder Altersklasse einen Selbsttest zu!
+        </h2>
+    </header>
+
+    <form class="ageGroupsTests {{formMode}}">
+        <table>
+            <tr>
+                <th>Alterklasse</th>
+                <th>Selbsttest</th>
+            </tr>
+
+            {{#ageGroups}}
+                <tr>
+                    <td>{{title}}</td>
+                    <td>
+                        <select data-age-group-id="{{id}}">
+                            <option value="">Wählen Sie einen Selbsttest:</option>
+                            {{#tests}}
+                                <option value="{{id}}" {{testSelected}}>
+                                    {{title}} ({{#created}}{{#i18n}}erstellt am{{/i18n}} {{created}}, {{/created}}{{exercises_count}} {{#i18n}}Fragen{{/i18n}})
+                                </option>
+                            {{/tests}}
+                        </select>
+                    </td>
+                </tr>
+            {{/ageGroups}}
+        </table>
+
+        <fieldset>
+            <button name=save class=button>Speichern</button>
+        </fieldset>
+    </form>
+</section>

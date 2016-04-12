@@ -1,0 +1,51 @@
+section.WallNewspaperSidebarBlock {
+  div.content {
+    img {
+      max-width: 100%;
+    }
+
+    &:after {
+      content: ".";
+      display: block;
+      visibility: hidden;
+      clear: both;
+    }
+  }
+
+  form {
+
+    fieldset {
+      margin-bottom: 1em;
+      border: none;
+      padding-top: 1em;
+      padding-bottom: 1em;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0.25em;
+    }
+
+    label {
+      text-transform: initial !important;
+    }
+
+    input[type=radio] {
+      margin-right: 0.75em;
+    }
+
+
+    textarea {
+      width: 100%;
+    }
+
+    button {
+    }
+
+  }
+}
+
+#courseware section.WallNewspaperSidebarBlock form button,
+#courseware section.WallNewspaperSidebarBlock form button:hover {
+  margin: 0 !important;
+}
