@@ -288,9 +288,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
         $courseware = $this->container['current_courseware'];
 
         // hide blubber tab if the discussion block is active
-        if ($courseware->getDiscussionBlockActivation()) {
-            Navigation::removeItem('/course/blubberforum');
-        }
+        Navigation::removeItem('/course/blubberforum');
     }
     private function getSemClass()
     {
