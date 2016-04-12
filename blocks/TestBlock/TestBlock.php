@@ -32,11 +32,6 @@ class TestBlock extends Block
      */
     private static $importedExercises = array();
 
-    public function __construct(Container $container, \SimpleORMap $model)
-    {
-        parent::__construct($container, $model);
-    }
-
     public function initialize()
     {
         global $vipsPlugin, $vipsTemplateFactory;
@@ -68,7 +63,7 @@ class TestBlock extends Block
         $typeOfThisTest = $this->test->type;
         $typeOfThisTestBlock = $this->_model->sub_type;
         $blockId = $this->_model->id;
-        
+
         if ($typeOfThisTest == null) {
             return array(
                 'active'       => $active,
@@ -113,13 +108,15 @@ class TestBlock extends Block
                 'current_test'    => $this->test_id === $test->id,
             );
         }
-        
-        $unsupported = false;
-            
+
+        $unsupported_question = false;
+
         //count all unsupported exercises
-        foreach ($this->test->exercises as $exercise) {
-            if ($exercise->getAnswersStrategy() === null) {
-                $unsupported = true;
+        if ($this->test) {
+            foreach ($this->test->exercises as $exercise) {
+                if ($exercise->getAnswersStrategy() === null) {
+                    $unsupported_question = true;
+                }
             }
         }
 
@@ -127,7 +124,7 @@ class TestBlock extends Block
             'active'                => $active,
             'manage_tests_url'      => \PluginEngine::getURL(VipsBridge::getVipsPlugin(), array('action' => 'sheets'), 'show'),
             'tests'                 => $tests,
-            'unsupported_question'  => $unsupported
+            'unsupported_question'  => $unsupported_question
         );
     }
 
@@ -558,7 +555,7 @@ class TestBlock extends Block
 
         if ($this->test) {
             $numberofex = 0;
-            
+
             //count all supported exercises
             foreach ($this->test->exercises as $exercise) {
                 // skip unsupported exercise types
@@ -569,7 +566,7 @@ class TestBlock extends Block
             $exindex = 1;
             foreach ($this->test->exercises as $exercise) {
                 /** @var \Mooc\UI\TestBlock\Model\Exercise $exercise */
-                
+
                 // skip unsupported exercise types
                 if ($exercise->getAnswersStrategy() === null) {
                     continue;
@@ -577,9 +574,9 @@ class TestBlock extends Block
 
                 $answers = $exercise->getAnswers($this->test, $user);
                 $userAnswers = $exercise->getUserAnswers($this->test, $user);
-                $correct =  false; 
+                $correct =  false;
                 $tryagain = false;
-                    
+
                 if ($this->_model->sub_type == 'selftest') {
                     // TT: determine if a correct solution has been handed in
                     $solution = Solution::findOneBy($this->test, $exercise, $user);
@@ -589,10 +586,10 @@ class TestBlock extends Block
                         $tryagain = $solution && !$correct;
                     }
                 }
-                
+
                 if ($correct ==  false) {
                      $solved_completely = false;
-                     
+
                 }
                 $entry = array(
                     'exercise_type' => $exercise->getType(),
@@ -628,7 +625,7 @@ class TestBlock extends Block
                 $exercises[] = $entry;
             }
         }
-        
+
         // check, if there ist at least one visible exercise
         $exercises_available = false;
         foreach ($exercises as $ex) {
