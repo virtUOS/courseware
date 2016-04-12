@@ -99,8 +99,11 @@ define({
         if (videotype == 'youtube') {
             view.$('#videocontrols').prop('disabled', true);
 
-            if(view.$('.video-wrapper').hasClass('aspect-43')) view.$('#videoaspect43').prop('checked', true);
-            else view.$('#videoaspect169').prop('checked', true);
+            if(view.$('.video-wrapper').hasClass('aspect-43')) {
+                view.$('#videoaspect43').prop('checked', true);
+            } else {
+                view.$('#videoaspect169').prop('checked', true);
+            }
 
             if (this.getVideoType(url) == 'youtube') {
                 var youtubeid = url.slice(24).split("?",1);
