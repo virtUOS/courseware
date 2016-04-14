@@ -92,8 +92,8 @@ class HtmlBlock extends Block
                 $element->setAttribute('src', $block->buildUrl('http://internal.moocip.de', '/sendfile.php', $components));
             });
         }
- 
-        if ($this->container['version']->newerThan(3.1)) {
+
+        if ($this->container['version']->newerThan(3.1) || $this->container['wysiwyg_refined']) {
             return \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
         } else {
             return $document->saveHTML();
@@ -198,7 +198,7 @@ class HtmlBlock extends Block
             });
         }
 
-        if ($this->container['version']->newerThan(3.1)) {
+        if ($this->container['version']->newerThan(3.1) || $this->container['wysiwyg_refined']) {
             $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
         } else {
             $this->content = $document->saveHTML();
