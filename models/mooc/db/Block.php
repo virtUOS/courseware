@@ -92,7 +92,8 @@ class Block extends \SimpleORMap implements \Serializable
      */
     protected function ensurePositionId()
     {
-        if ($this->parent_id !== null && $this->position === '0') {
+        // Check for new and old version
+        if ($this->parent_id !== null && !$this->position) {
             $this->position = static::countBySQL(
                 'parent_id = ? ORDER BY position ASC',
                 array($this->parent_id)
