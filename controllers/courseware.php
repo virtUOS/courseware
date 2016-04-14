@@ -131,6 +131,10 @@ class CoursewareController extends CoursewareStudipController {
         if (isset($courseware_settings['progression'])) {
             $this->storeCoursewareProgressionType($courseware_settings['progression']);
         }
+        /////////////////////////////////
+        // DISCUSSION BLOCK ACTIVATION //
+        /////////////////////////////////
+        $this->storeDiscussionBlockActivation(isset($courseware_settings['discussionblock_activation']) ? true : false);
 
         ////////////////////////
         // EDITING PERMISSION //

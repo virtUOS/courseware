@@ -21,11 +21,9 @@ if ($flash['success']) {
         </caption>
 
         <tbody>
-            <!--
             <tr>
                 <th colspan="2"><?= _('Allgemeines') ?></th>
             </tr>
-            -->
 
             <tr>
                 <td>
@@ -60,6 +58,11 @@ if ($flash['success']) {
             </tr>
 
             <?= $this->render_partial('courseware/_settings_editing_permission') ?>
+            <tr>
+                <th colspan="2"><?= _('Blockeinstellungen') ?></th>
+            </tr>
+
+            <?= $this->render_partial('courseware/_settings_discussionblock') ?>
 
         </tbody>
 

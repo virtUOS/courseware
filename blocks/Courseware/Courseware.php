@@ -30,6 +30,9 @@ class Courseware extends Block {
         $this->defineField('progression', \Mooc\SCOPE_BLOCK, self::PROGRESSION_FREE);
 
         // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+        $this->defineField('discussionblock_activation', \Mooc\SCOPE_BLOCK, false);
+
+        // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
         $this->defineField('editing_permission', \Mooc\SCOPE_BLOCK, self::EDITING_PERMISSION_TUTOR);
     }
 
@@ -235,9 +238,37 @@ class Courseware extends Block {
         return $this->progression;
     }
 
-    ///////////////////////
-    // PRIVATE FUNCTIONS //
-    ///////////////////////
+    // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+    // set activation of the DiscussionBlock specific to this courseware
+    public function setDiscussionBlockActivation($active)
+    {
+        $active = !!$active;
+
+        // 1. activate Blubber plugin for this course
+        $plugin_manager = \PluginManager::getInstance();
+        $blubber_info = $plugin_manager->getPluginInfo('Blubber');
+        $pid = $blubber_info['id'];
+        $cid = $this->_model->seminar_id;
+
+        if ($active && !$plugin_manager->isPluginActivated($pid, $cid)) {
+            if (!$success = $plugin_manager->setPluginActivated($pid, $cid, $active)) {
+                return false;
+            }
+        }
+
+        // 2. set field 'discussionblock_activation'
+        $this->discussionblock_activation = $active;
+
+        // success!
+        return true;
+    }
+
+    // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+    // set activation of the DiscussionBlock specific to this courseware
+    public function getDiscussionBlockActivation()
+    {
+        return $this->discussionblock_activation;
+    }
 
     // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
     // set perm level of editing permission
