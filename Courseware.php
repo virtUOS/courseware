@@ -265,7 +265,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     {
         // create a widget for given id (md5 hash - ensured by markup regex)
         return '<span class="mooc-forumblock">'
-            . '<a href="'. PluginEngine::getLink('mooc' , array('selected' => $matches[2]), 'courseware') .'">'
+            . '<a href="'. PluginEngine::getLink('courseware' , array('selected' => $matches[2]), 'courseware') .'">'
             . _('Zurück zur Courseware')
             . '</a></span>';
     }
