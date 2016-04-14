@@ -22,7 +22,7 @@ if (count($errors) > 0) {
     <div>
         <?php
         echo Studip\Button::createAccept();
-        echo Studip\Button::createCancel();
+        echo Studip\LinkButton::createCancel(_('Abbrechen'), PluginEngine::getURL($this->plugin, array(), 'courseware'));
         ?>
     </div>
 </form>
