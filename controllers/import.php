@@ -18,6 +18,7 @@ class ImportController extends CoursewareStudipController
         if (!$this->container['current_user']->canCreate($this->container['current_courseware'])) {
             throw new Trails_Exception(401);
         }
+        Navigation::activateItem('course/mooc_courseware');
     }
 
 

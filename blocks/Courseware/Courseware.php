@@ -448,7 +448,7 @@ class Courseware extends Block {
             // aside section
             else {
                 // find aside's "parent" sub/chapter
-                // TODO: gruseliger Hack, um das Unter/Kapitel zu finden, in dem die Section eingehÃ¤ngt ist.
+                // TODO: gruseliger Hack, um das Unter/Kapitel zu finden, in dem die Section eingehängt ist.
                 $field = current(\Mooc\DB\Field::findBySQL('user_id = "" AND name = "aside_section" AND json_data = ?', array(json_encode($block->id))));
                 return $field->block;
             }
