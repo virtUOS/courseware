@@ -38,6 +38,11 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         }
     }
 
+    public function getPluginname()
+    {
+        return 'MOOC.IP - Courseware';
+    }
+
     // bei Aufruf des Plugins über plugin.php/mooc/...
     public function initialize ()
     {
