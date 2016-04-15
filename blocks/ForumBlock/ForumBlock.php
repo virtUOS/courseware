@@ -102,9 +102,7 @@ class ForumBlock extends Block
             }
 
             // create new area
-            if ($this->area_id == -1) {
-                $this->area_id = md5(uniqid());
-            }
+            $this->area_id = md5(uniqid());
 
             \ForumEntry::insert(array(
                 'topic_id'    => $this->area_id,

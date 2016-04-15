@@ -38,6 +38,11 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
         }
     }
 
+    public function getPluginname()
+    {
+        return 'MOOC.IP - Courseware';
+    }
+
     // bei Aufruf des Plugins über plugin.php/mooc/...
     public function initialize ()
     {
@@ -306,7 +311,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
     {
         // create a widget for given id (md5 hash - ensured by markup regex)
         return '<span class="mooc-forumblock">'
-            . '<a href="'. PluginEngine::getLink('mooc' , array('selected' => $matches[2]), 'courseware') .'">'
+            . '<a href="'. PluginEngine::getLink('courseware' , array('selected' => $matches[2]), 'courseware') .'">'
             . _('Zurück zur Courseware')
             . '</a></span>';
     }
