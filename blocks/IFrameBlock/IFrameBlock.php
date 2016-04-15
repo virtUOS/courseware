@@ -11,12 +11,37 @@ class IFrameBlock extends Block
     {
         $this->defineField('url',    \Mooc\SCOPE_BLOCK, "http://studip.de");
         $this->defineField('height', \Mooc\SCOPE_BLOCK, 600);
+        $this->defineField('href1', \Mooc\SCOPE_BLOCK, "");
+	$this->defineField('linktitle1', \Mooc\SCOPE_BLOCK, "");
+	$this->defineField('href2', \Mooc\SCOPE_BLOCK, "");
+	$this->defineField('linktitle2', \Mooc\SCOPE_BLOCK, "");
+	$this->defineField('href3', \Mooc\SCOPE_BLOCK, "");
+	$this->defineField('linktitle3', \Mooc\SCOPE_BLOCK, "");
     }
 
     function array_rep() {
+    
+        $sep1 = "";
+		$sep2 = "";
+
+		if($this->linktitle2){
+			$sep1 = "from";
+		}
+		if($this->linktitle3){
+			$sep2 = " - ";
+		}
+        
         return array(
             'url'    => $this->url,
-            'height' => $this->height
+            'height' => $this->height,
+            'linktitle1' => $this->linktitle1,
+            'linktitle2' => $this->linktitle2,
+            'linktitle3' => $this->linktitle3,
+            'href1' => $this->href1,
+            'href2' => $this->href2,
+            'href3' => $this->href3,
+            'sep1' => $sep1,
+            'sep2' => $sep2
         );
     }
 
@@ -47,6 +72,12 @@ class IFrameBlock extends Block
 
         $this->url = (string) $data['url'];
         $this->height = (int) $data['height'];
+		$this->linktitle1 = (string) $data['linktitle1'];
+		$this->href1 = (string) $data['href1'];
+		$this->linktitle2 = (string) $data['linktitle2'];
+		$this->href2 = (string) $data['href2'];
+		$this->linktitle3 = (string) $data['linktitle3'];
+		$this->href3 = (string) $data['href3'];
 
         return $this->array_rep();
     }

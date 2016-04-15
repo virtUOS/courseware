@@ -1,6 +1,23 @@
 <p>Tragen Sie in das Feld URL(Uniform Resource Locator) die Adresse der Seite ein die im iFrame erscheinen soll.<br/>
 Bitte beachten Sie, dass manche Seiten die Darstellung in einem iFrame blockieren.</p>
-URL: <input class=urlinput type=text size=20 value={{fields.url}}> <br>
-Höhe: <input class=heightinput type=text size=4 value={{fields.height}}> Pixel <br>
+URL oder Embedcode: <input class=urlinput type=text size=20 value={{fields.url}}> <br>
+Höhe: <input class=heightinput type=text size=4 value={{fields.height}}> Pixel <br><br>
+
+Für Quellangaben oder Namensnennung nach CC können Sie <b>optional</b> weitere Angaben machen: <br>
+<table>
+<tr>
+<td><b>Werk</b></td>  
+<td>Link: <input class=href1input type=text size=20 value={{fields.href1}}> </td>
+<td>Titel: &nbsp;&nbsp; <input class=linktitle1input type=text size=20 value={{fields.linktitle1}}> </td></tr>
+<tr>
+<td><b>Autor</b></td>
+<td>Link: <input class=href2input type=text size=20 value={{fields.href2}}> </td>
+<td>Name: <input class=linktitle2input type=text size=20 value={{fields.linktitle2}}> </td></tr>
+<tr>
+<td><b>Plattform oder Lizenz</b></td>
+<td>Link: <input class=href3input type=text size=20 value={{fields.href3}}></td>
+<td>Titel: &nbsp;&nbsp; <input class=linktitle3input type=text size=20 value={{fields.linktitle3}}> </td></tr> 
+</table>
+
 <button name=save class=button>Speichern</button>
 <button name=cancel class=button>Abbrechen</button>
