@@ -1,6 +1,28 @@
 define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helper) {
     'use strict';
 
+    function updateSizes(tableElement, onResizeEvent) {
+        var columns = tableElement.find('#rh_labels, #rh_list');
+        var items = tableElement.find('.rh_label, .rh_item');
+        var maxHeight = 0;
+
+        if (onResizeEvent) {
+            // reset to default sizes
+            items.css('height', 'auto');
+            columns.css('width', 'auto');
+        }
+
+        items.each(function(i, item) {
+            maxHeight = Math.max(maxHeight, jQuery(item).height());
+        });
+
+        // set to fixes sizes again
+        items.height(maxHeight);
+        columns.width(function(index, width) {
+            return width;
+        });
+    }
+
     return StudentView.extend({
         events: {
             'click button[name=reset-exercise]': function (event) {
@@ -8,6 +30,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     view = this,
                     $exercise_index = $form.find("input[name='exercise_index']").val(),
                     $block = this.$el.parent();
+
+                var $this_block = this; // We need 'this' in the handler for postRender functions
 
                 if (confirm('Soll die Antwort zurückgesetzt werden?')) {
                     helper.callHandler(this.model.id, 'exercise_reset', $form.serialize())
@@ -21,11 +45,10 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         )
                         .then(function () {
                             $block.find('.exercise').hide();
-                            $block.find('#exercise' + $exercise_index).show();
+                            $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
                         })
                         .done();
                 }
-
                 return false;
             },
 
@@ -34,6 +57,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     view = this,
                     $exercise_index = $form.find("input[name='exercise_index']").val(),
                     $block = this.$el.parent();
+
+                var $this_block = this; // We need 'this' in the handler for postRender functions
             
                 helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
                     .then(
@@ -46,7 +71,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     )
                     .then(function () {
                         $block.find('.exercise').hide();
-                        $block.find('#exercise' + $exercise_index).show();
+                        $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
                         $block.find(".submitinfo").slideDown(250).delay(1500).slideUp(250);
                     })
                     .done();
@@ -74,7 +99,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 }
 
                 $block.find('.exercise').hide();
-                $block.find('#exercise'+$num).show();
+                this.postRenderExercise($block.find('#exercise'+$num).show());
             },
             
             'click button[name=exercise-hint-button]': function (event) {
@@ -133,6 +158,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     }
             }); 
 
+            /*
             var fixAnswersHeight = function (labels, answers) {
                 for (var i = 0; i < labels.length && i < answers.length; i++) {
                     var answer = answers.eq(i);
@@ -169,14 +195,58 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     }
                 });
             });
+            */
+
+            // search for rh_lists
+            var $firstExercise = this.$('ul.exercise').eq(0);
+            this.postRenderExercise($firstExercise);
 
             // re-format LaTeX stuff
             MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.el]);
         },
 
+
+        postRenderExercise: function ($exerciseElement) {
+
+            // für Zuordnungsaufgaben
+            $exerciseElement.find('#rh_list').each(function (index, rhListEl) {
+                createSortable(jQuery(rhListEl));
+            });
+
+
+
+
+            // helper functions
+
+            function createSortable($element)
+            {
+                updateSizes($element.closest('table'));
+
+                $element.sortable({
+                    axis: 'y',
+                    containment: 'parent',
+                    item: '> .rh_item',
+                    tolerance: 'pointer',
+                    update: moveChoice($element)
+                });
+            }
+
+            function moveChoice($element)
+            {
+                return function (event) {
+                    var items = $element.sortable('toArray');
+
+                    for (var i = 0; i < items.length; ++i) {
+                        $element.find('#' + items[i] + ' > input').attr('value', i);
+                    }
+                }
+            }
+
+        },
+
         moveChoice: function ($sortableAnswers) {
             var items = $sortableAnswers.sortable('toArray');
-            var $inputs = jQuery('input', $sortableAnswers);
+            var $inputs = $sortableAnswers.find('input');
 
             for (var i = 0; i < items.length; i++) {
                 $inputs.eq(i).val(i);
