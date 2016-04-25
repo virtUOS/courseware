@@ -110,6 +110,23 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
             }
 
             tooltip(this.$el, 'button');
+
+            // get max height from content and sidebar
+            var $contentheight = 0;
+            var $asideheight = 0;
+            this.$el.children().each(function(){
+                if ($(this).is("aside")){
+                $asideheight = $(this).outerHeight();
+                }else {
+                   $contentheight += $(this).outerHeight();
+                }
+            });
+            if ($contentheight < $asideheight) {
+                this.$el.height($asideheight);
+            } else {
+                this.$el.height($contentheight);
+            }
+
         },
 
         navigateTo: function (event) {
@@ -164,15 +181,15 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
                 this.$el.removeClass("view-author").addClass("view-student");
                 clearHash(this.el);
                 Backbone.trigger("modeswitch", "student");
+                this.postRender();
             }
-            this.postRender();
         },
 
         switchToAuthorMode: function () {
             this.$el.removeClass("view-student").addClass("view-author");
             setHash(this.el, "author");
             Backbone.trigger("modeswitch", "author");
-            this.postRender(); // resize height
+            this.postRender();
         }
     });
 });
