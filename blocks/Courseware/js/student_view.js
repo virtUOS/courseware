@@ -110,6 +110,7 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
             }
 
             tooltip(this.$el, 'button');
+            this.resizeColumnHeights();
         },
 
         navigateTo: function (event) {
