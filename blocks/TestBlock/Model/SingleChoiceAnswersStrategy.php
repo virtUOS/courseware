@@ -60,14 +60,4 @@ class SingleChoiceAnswersStrategy extends AnswersStrategy
 
         return array($answers[$solution[0]]);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getSolution(array $solution = null)
-    {
-        $xml = $this->vipsExercise->genSolution(array('answer_0' => $solution[0]));
-
-        return $this->vipsExercise->getCorrectionTemplate($xml)->render();
-    }
 }

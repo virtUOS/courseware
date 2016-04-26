@@ -2,7 +2,7 @@
 
 namespace Mooc\UI\TestBlock;
 
-use Courseware\Container;
+use Mooc\Container;
 use Mooc\UI\Block;
 use Mooc\UI\Section\Section;
 use Mooc\UI\TestBlock\Model\Exercise;
@@ -31,6 +31,11 @@ class TestBlock extends Block
      * @var array Cache of imported exercises, used to avoid creating exercises twice during imports
      */
     private static $importedExercises = array();
+
+    public function __construct(Container $container, \SimpleORMap $model)
+    {
+        parent::__construct($container, $model);
+    }
 
     public function initialize()
     {
@@ -63,29 +68,10 @@ class TestBlock extends Block
         $typeOfThisTest = $this->test->type;
         $typeOfThisTestBlock = $this->_model->sub_type;
         $blockId = $this->_model->id;
-
-        if ($typeOfThisTest == null) {
-            return array(
-                'active'       => $active,
-                'exercises'    => false,
-                'typemismatch' => false
-            );
-        }
-
-        if ($typeOfThisTest !== $typeOfThisTestBlock) {
-            return array(
-                'active'       => $active,
-                'exercises'    => false,
-                'typemismatch' => true
-            );
-        }
-
-        return $active
-            ? array_merge(array(
-                    'active'  => $active,
-                    'blockid' => $blockId
-                ), $this->buildExercises())
-            : compact('active');
+        
+        if ($typeOfThisTest == null) {return array('active' => $active, 'exercises' => false, 'typemismatch' => false);}
+        if ($typeOfThisTest !== $typeOfThisTestBlock) {return array('active' => $active, 'exercises' => false, 'typemismatch' => true);}
+        return $active ? array_merge(array('active' => $active, 'blockid' => $blockId), $this->buildExercises()) : compact('active');
     }
 
     public function author_view()
@@ -108,15 +94,13 @@ class TestBlock extends Block
                 'current_test'    => $this->test_id === $test->id,
             );
         }
-
-        $unsupported_question = false;
-
+        
+        $unsupported = false;
+            
         //count all unsupported exercises
-        if ($this->test) {
-            foreach ($this->test->exercises as $exercise) {
-                if ($exercise->getAnswersStrategy() === null) {
-                    $unsupported_question = true;
-                }
+        foreach ($this->test->exercises as $exercise) {
+            if ($exercise->getAnswersStrategy() === null) {
+                $unsupported = true;
             }
         }
 
@@ -124,7 +108,7 @@ class TestBlock extends Block
             'active'                => $active,
             'manage_tests_url'      => \PluginEngine::getURL(VipsBridge::getVipsPlugin(), array('action' => 'sheets'), 'show'),
             'tests'                 => $tests,
-            'unsupported_question'  => $unsupported_question
+            'unsupported_question'  => $unsupported
         );
     }
 
@@ -163,23 +147,71 @@ class TestBlock extends Block
 
         parse_str($data, $requestData);
 
-        $test_id     = $requestData['test_id'];
-        $exercise_id = $requestData['exercise_id'];
+        $testId = $requestData['test_id'];
+        $exerciseId = $requestData['exercise_id'];
 
-        check_test_access($test_id);
+        \check_test_access($testId);
 
-        $test = \VipsTest::find($test_id);
+        $db = \DBManager::get();
 
-        $start = $test->getStart();
-        $end = $test->getEnd();
-        $now = date('Y-m-d H:i:s');
+        // do not allow to delete solutions if the test is no selftest
+        $stmt = $db->prepare(
+            'SELECT
+              type
+            FROM
+              vips_test
+            WHERE
+              id = :test_id'
+        );
+        $stmt->bindValue(':test_id', $testId);
+        $stmt->execute();
 
-        // not yet started or already ended
-        if ($start > $now || $now > $end) {
-            throw new \Exception(_('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
+        if ($stmt->fetchColumn() != 'selftest') {
+            return false;
         }
 
-        $test->deleteSolution($user->id, $exercise_id);
+        // delete the solution
+        $stmt = $db->prepare(
+            'DELETE FROM
+              vips_solution
+            WHERE
+              test_id = :test_id AND
+              exercise_id = :exercise_id AND
+              user_id = :user_id'
+        );
+        $stmt->bindValue(':test_id', $testId);
+        $stmt->bindValue(':exercise_id', $exerciseId);
+        $stmt->bindValue(':user_id', $user->id);
+        $stmt->execute();
+
+        // determine the number of solutions of the current user that do still
+        // exist
+        $stmt = $db->prepare(
+            'SELECT
+              COUNT(*)
+            FROM
+              vips_solution
+            WHERE
+              test_id = :test_id AND
+              user_id = :user_id'
+        );
+        $stmt->bindValue(':test_id', $testId);
+        $stmt->bindValue(':user_id', $user->id);
+        $stmt->execute();
+
+        // there are no solutions left, clean the solve start time
+        if ($stmt->fetchColumn() == 0) {
+            $stmt = $db->prepare(
+                'DELETE FROM
+                  vips_aufgaben_zeit
+                WHERE
+                  test_id = :test_id AND
+                  user_id = :user_id'
+            );
+            $stmt->bindValue(':test_id', $testId);
+            $stmt->bindValue(':user_id', $user->id);
+            $stmt->execute();
+        }
 
         $this->calcGrades();
 
@@ -188,28 +220,22 @@ class TestBlock extends Block
 
     public function exercise_submit_handler($data)
     {
+        global $vipsPlugin, $vipsTemplateFactory;
+
+        $user = $this->container['current_user'];
+
         parse_str($data, $requestParams);
-        $requestParams = studip_utf8decode($requestParams);
 
-        $test_id = $requestParams['assignment_id'];
-        $exercise_id = $requestParams['exercise_id'];
-
-        check_exercise_access($exercise_id, $test_id);
-
-        $test     = \VipsTest::find($test_id);
-        $exercise = \Exercise::find($exercise_id);
-
-        $start = $test->getStart();
-        $end = $test->getEnd();
-        $now = date('Y-m-d H:i:s');
-
-        // not yet started or already ended
-        if ($start > $now || $now > $end) {
-            throw new \Exception(_('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
+        foreach ($requestParams as $key => $value) {
+            // TODO: Why don't we use $data directly?
+            $_POST[$key] = studip_utf8decode($value);
         }
 
-        $solution = $exercise->getSolutionFromRequest($requestParams);
-        $test->storeSolution($solution);
+        $vipsPlugin = VipsBridge::getVipsPlugin();
+        $vipsTemplateFactory = new \Flexi_TemplateFactory(VipsBridge::getVipsPath().'/templates/');
+
+        \submit_exercise('sheets');
+        ob_clean();
 
         $this->calcGrades();
 
@@ -393,7 +419,7 @@ class TestBlock extends Block
             return array();
         }
 
-        $descriptionNode = $document->createElement($alias.':description', utf8_encode($this->test->description));
+        $descriptionNode = $document->createElement($alias.':description', $this->test->description);
         $exercisesNode = $document->createElement($alias.':exercises');
 
         foreach ($this->test->exercises as $exercise) {
@@ -555,7 +581,7 @@ class TestBlock extends Block
 
         if ($this->test) {
             $numberofex = 0;
-
+            
             //count all supported exercises
             foreach ($this->test->exercises as $exercise) {
                 // skip unsupported exercise types
@@ -566,7 +592,7 @@ class TestBlock extends Block
             $exindex = 1;
             foreach ($this->test->exercises as $exercise) {
                 /** @var \Mooc\UI\TestBlock\Model\Exercise $exercise */
-
+                
                 // skip unsupported exercise types
                 if ($exercise->getAnswersStrategy() === null) {
                     continue;
@@ -574,9 +600,9 @@ class TestBlock extends Block
 
                 $answers = $exercise->getAnswers($this->test, $user);
                 $userAnswers = $exercise->getUserAnswers($this->test, $user);
-                $correct =  false;
+                $correct =  false; 
                 $tryagain = false;
-
+                    
                 if ($this->_model->sub_type == 'selftest') {
                     // TT: determine if a correct solution has been handed in
                     $solution = Solution::findOneBy($this->test, $exercise, $user);
@@ -586,10 +612,10 @@ class TestBlock extends Block
                         $tryagain = $solution && !$correct;
                     }
                 }
-
+                
                 if ($correct ==  false) {
                      $solved_completely = false;
-
+                     
                 }
                 $entry = array(
                     'exercise_type' => $exercise->getType(),
@@ -617,7 +643,6 @@ class TestBlock extends Block
                     'user_answers_string' => join(',' , $exercise->getAnswersStrategy()->getUserAnswers($exercise->getVipsSolutionFor($this->test, $user))),
                     'correct' => $correct,
                     'tryagain' => $tryagain,
-                    'character_picker' => $exercise->getVipsExercise()->characterPicker,
                     'exercise_hint' => $exercise->getVipsExercise()->getHint()
                 );
                 $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
@@ -625,22 +650,13 @@ class TestBlock extends Block
                 $exercises[] = $entry;
             }
         }
-
-        // check, if there ist at least one visible exercise
-        $exercises_available = false;
-        foreach ($exercises as $ex) {
-            if (!$ex['skip_entry']) {
-                $exercises_available = true;
-                break;
-            }
-        }
+        
 
         return array(
             'title'              => $this->test->title,
             'description'        => formatReady($this->test->description),
             'exercises'          => $exercises,
             'available'          => $available,
-            'exercises_available' => $exercises_available,
             'solved_completely'  => $solved_completely
         );
     }

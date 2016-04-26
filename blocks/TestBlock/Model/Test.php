@@ -16,6 +16,8 @@ class Test extends \SimpleORMap
 {
     public function __construct($id = null)
     {
+
+
         $this->db_table = 'vips_test';
 
         $this->has_and_belongs_to_many['exercises'] = array(
@@ -37,6 +39,9 @@ class Test extends \SimpleORMap
 
 
         foreach ($this->exercises as $exc) {
+            //$exc->setPoints($this->refs->findBySQL("exercise_id=?", array($exc->id))->points);
+            //var_dump($this->refs->findBySQL("exercise_id=?", array($exc->id))[0][0]->points);
+            //var_dump($exc->setPoints($this->refs->findByExercise_id($exc->id)->points);
             $exc->setPoints($this->refs->filter(function ($ref) use ($exc) {
                 return $exc->id == $ref->exercise_id;
             })->first()->points);

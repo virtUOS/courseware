@@ -73,6 +73,8 @@ class MultipleChoiceAnswersStrategy extends AnswersStrategy
      */
     public function getSolution(array $solution = null)
     {
+        #var_dump($solution, $this->vipsExercise);
+
         $request = array();
         if (is_array($solution)) {
             foreach ($solution as $key => $value) {

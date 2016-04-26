@@ -7,7 +7,7 @@ namespace Mooc\UI\TestBlock\Model;
  *
  * @author Christian Flothmann <christian.flothmann@uos.de>
  */
-abstract class AnswersStrategy implements AnswersStrategyInterface
+class AnswersStrategy implements AnswersStrategyInterface
 {
     /**
      * @var \Exercise The Vips exercise
@@ -32,7 +32,7 @@ abstract class AnswersStrategy implements AnswersStrategyInterface
      */
     public function getQuestion()
     {
-        return $this->vipsExercise->getSolveTemplate()->render();
+        return formatReady($this->vipsExercise->getQuestion());
     }
 
     /**
@@ -122,8 +122,6 @@ abstract class AnswersStrategy implements AnswersStrategyInterface
                 break;
             case 'rnd_exercise':
                 $className = 'RandomExerciseAnswersStrategy';
-            case 'me_exercise':
-                $className = 'MathematicalTermStrategy';
                 break;
         }
 
@@ -150,5 +148,13 @@ abstract class AnswersStrategy implements AnswersStrategyInterface
     public function isUserAnswerCorrect($answer, $index)
     {
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSolution(array $solution = null)
+    {
+        return implode(', ', $this->getUserAnswers($solution));
     }
 }

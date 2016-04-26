@@ -1,0 +1,14 @@
+  <ul class="matching_exercise labels">
+    {{#answers}}
+      <li>{{{text.question}}}</li>
+    {{/answers}}
+  </ul>
+  <ul class="matching_exercise answers exercise_answers">
+    {{#answers}}
+      <li id="item_{{index}}">
+        {{{text.answer}}}
+        <input type="hidden" name="student_answer[{{index}}]" value="{{index}}">
+      </li>
+    {{/answers}}
+  </ul>
+
