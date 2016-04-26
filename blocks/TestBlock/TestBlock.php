@@ -2,7 +2,7 @@
 
 namespace Mooc\UI\TestBlock;
 
-use Mooc\Container;
+use Courseware\Container;
 use Mooc\UI\Block;
 use Mooc\UI\Section\Section;
 use Mooc\UI\TestBlock\Model\Exercise;
