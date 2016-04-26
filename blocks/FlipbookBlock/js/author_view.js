@@ -50,7 +50,6 @@ define(['assets/js/author_view', 'assets/js/url'],
             var $pdf_name = $pdf.val();
             var $pdf_id = $pdf.find('option:selected').attr("pdf_id");
             var $pdf_filename = $pdf.find('option:selected').attr("filename");
-            console.log($pdf_id );
                 
             //textarea.remove();
             helper

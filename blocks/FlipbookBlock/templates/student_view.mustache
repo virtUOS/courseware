@@ -1,3 +1,4 @@
+{{#pdf_id}}
 <div class="flipbook-controls flipbook-left-control"><div class="flipbook-arr-left"></div></div>
 <div class="flipbook" pages="{{pdf_pages}}">
     {{#imagefiles}}
@@ -34,3 +35,7 @@
     {{/imagefiles}}
     </div>
 </div>
+{{/pdf_id}}
+{{^pdf_id}}
+<p>Es wurde noch kein Flipbook angelegt!</p>
+{{/pdf_id}}

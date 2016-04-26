@@ -64,16 +64,25 @@ class FlipbookBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        $this->pdf_id = (string) $data['pdf_id'];
-        $this->pdf = (string) $data['pdf'];
-        $this->pdf_filename = (new \StudipDocument($this->pdf_id))->getValue(filename);
         
-        if ($this->folderNotExists("$this->pdf Imagefolder")) {
-            $this->createImages();
+        if (isset ($data['pdf'])) {
+            $this->pdf_id = (string) $data['pdf_id'];
+            $this->pdf = (string) $data['pdf'];
+            
+            $this->pdf_filename = (new \StudipDocument($this->pdf_id))->getValue(filename);
+        
+            if ($this->folderNotExists("$this->pdf Imagefolder")) {
+                $this->createImages();
+            } else {
+                $this->setImageFolder("$this->pdf Imagefolder");
+            }
+             
         } else {
-            $this->setImageFolder("$this->pdf Imagefolder");
+            $this->pdf = "";
+            $this->pdf_id = "";
         }
-        return  ;
+        
+        return;
         
     }
     
