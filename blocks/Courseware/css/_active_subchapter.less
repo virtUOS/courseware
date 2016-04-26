@@ -37,7 +37,13 @@ ol.active-subchapter {
       }
 
       & > a {
-        background-color: #f8f8f8;
+        //background-color: #f8f8f8;
+        background-color: lightgrey;
+        &[data-icon=""]         { .bgImg(infopage,   "black", 32); }
+        &[data-icon="chat"]     { .bgImg(chat,       "black", 32); }
+        &[data-icon="document"] { .bgImg(infopage,   "black", 32); }
+        &[data-icon="task"]     { .bgImg(question,   "black", 32); }
+        &[data-icon="video"]    { .bgImg(video,      "black", 32); }
       }
     }
 
