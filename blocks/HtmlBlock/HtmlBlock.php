@@ -45,14 +45,12 @@ class HtmlBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        /*
-        if($this->container['wysiwyg_refined']) {
+        // second param in if-block is special case for uos. old studip with new wysiwyg
+        if ($this->container['version']->newerThan(3.1) || $this->container['wysiwyg_refined']) {
             $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
         } else {
           $this->content = (string) $data['content'];
         }
-        */ 
-        $this->content = rtrim(\STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content'])));
         return array('content' => $this->content);
     }
 
@@ -94,8 +92,11 @@ class HtmlBlock extends Block
             });
         }
 
-        //return $document->saveHTML();
-        return \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
+        if ($this->container['version']->newerThan(3.1) || $this->container['wysiwyg_refined']) {
+            return \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
+        } else {
+            return $document->saveHTML();
+        }
     }
 
     /**
@@ -196,7 +197,11 @@ class HtmlBlock extends Block
             });
         }
 
-        $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
+        if ($this->container['version']->newerThan(3.1) || $this->container['wysiwyg_refined']) {
+            $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
+        } else {
+            $this->content = $document->saveHTML();
+        }
         $this->save();
     }
 

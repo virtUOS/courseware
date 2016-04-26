@@ -25,6 +25,7 @@ class Section extends Block {
     // mapping of block types to icons
     private static $map_blocks_to_icons = array(
         'BlubberBlock' => self::ICON_CHAT,
+        'ForumBlock'   => self::ICON_CHAT,
         'VideoBlock'   => self::ICON_VIDEO,
         'TestBlock'    => self::ICON_TASK
     );
@@ -193,6 +194,10 @@ class Section extends Block {
 
             if (defined($nameConstant)) {
                 $readableName = constant($nameConstant);
+            }
+
+            if (!class_exists($className)) {
+                continue;
             }
 
             $subTypes = call_user_func(array($className, 'getSubTypes'));

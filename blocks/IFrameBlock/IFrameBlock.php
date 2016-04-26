@@ -22,6 +22,7 @@ class IFrameBlock extends Block
 
     function student_view()
     {
+        // on view: grade with 100%
         $this->setGrade(1.0);
         return $this->array_rep();
     }

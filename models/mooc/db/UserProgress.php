@@ -74,7 +74,7 @@ class UserProgress extends \SimpleORMap
             $this->max_grade = 1;
         }
 
-        if (!is_numeric($grade) || $grade < 0 || $grade > $this->max_grade) {
+        if (is_numeric($grade) && ( $grade < 0 || $grade > $this->max_grade )) {
             throw new \InvalidArgumentException('Grade must be within [0..'.$this->max_grade.'].');
         }
         $this->content['grade'] = $grade;

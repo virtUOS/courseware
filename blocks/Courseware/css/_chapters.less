@@ -1,4 +1,4 @@
-aside {
+> aside {
   position:absolute;
   top: 0;
   left: 0;
@@ -237,4 +237,15 @@ ol.subchapters {
       opacity: 0.5;
     }
   }
+  span.complete {
+    display: none;
+  }
+}
+
+/* do not show activate-aside-section if there is nothing selected */
+.activate-aside-section {
+  display: none;
+}
+li.selected ~ li.controls .activate-aside-section {
+  display: inline-block;
 }

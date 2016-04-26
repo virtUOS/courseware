@@ -64,6 +64,10 @@ class BlubberBlock extends Block
      */
     public static function additionalInstanceAllowed($container, Section $section, $subType = null)
     {
+        // deactivate new Blubber blocks
+        // see https://github.com/virtUOS/courseware/issues/31
+        return false;
+
         if (!self::blubberActivated($section)) {
             return false;
         }

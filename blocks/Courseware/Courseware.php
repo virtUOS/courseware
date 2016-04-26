@@ -30,6 +30,9 @@ class Courseware extends Block {
         $this->defineField('progression', \Mooc\SCOPE_BLOCK, self::PROGRESSION_FREE);
 
         // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+        $this->defineField('discussionblock_activation', \Mooc\SCOPE_BLOCK, false);
+
+        // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
         $this->defineField('editing_permission', \Mooc\SCOPE_BLOCK, self::EDITING_PERMISSION_TUTOR);
     }
 
@@ -235,27 +238,36 @@ class Courseware extends Block {
         return $this->progression;
     }
 
-    ///////////////////////
-    // PRIVATE FUNCTIONS //
-    ///////////////////////
-
-    // structural blocks may have a field calles 'aside_section'
-    // containing the ID of a block of type 'Section' which is shown
-    // in the sidebar whenever this structural block is active
-    private function findAsideSection($structure_block)
+    // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+    // set activation of the DiscussionBlock specific to this courseware
+    public function setDiscussionBlockActivation($active)
     {
-        if ($aside_field = Field::find(array($structure_block->id, '', 'aside_section'))) {
-            if ($aside_block = \Mooc\DB\Block::find($aside_field->content)) {
-                return array(
-                    'id'        => $aside_block->id,
-                    'title'     => $aside_block->title,
-                    'parent_id' => $structure_block->id,
-                    'html'      => $this->getBlockFactory()->makeBlock($aside_block)->render('student', $context)
-                );
+        $active = !!$active;
+
+        // 1. activate Blubber plugin for this course
+        $plugin_manager = \PluginManager::getInstance();
+        $blubber_info = $plugin_manager->getPluginInfo('Blubber');
+        $pid = $blubber_info['id'];
+        $cid = $this->_model->seminar_id;
+
+        if ($active && !$plugin_manager->isPluginActivated($pid, $cid)) {
+            if (!$success = $plugin_manager->setPluginActivated($pid, $cid, $active)) {
+                return false;
             }
         }
 
-        return null;
+        // 2. set field 'discussionblock_activation'
+        $this->discussionblock_activation = $active;
+
+        // success!
+        return true;
+    }
+
+    // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+    // set activation of the DiscussionBlock specific to this courseware
+    public function getDiscussionBlockActivation()
+    {
+        return $this->discussionblock_activation;
     }
 
     // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
@@ -280,6 +292,25 @@ class Courseware extends Block {
     ///////////////////////
     // PRIVATE FUNCTIONS //
     ///////////////////////
+
+    // structural blocks may have a field calles 'aside_section'
+    // containing the ID of a block of type 'Section' which is shown
+    // in the sidebar whenever this structural block is active
+    private function findAsideSection($structure_block)
+    {
+        if ($aside_field = Field::find(array($structure_block->id, '', 'aside_section'))) {
+            if ($aside_block = \Mooc\DB\Block::find($aside_field->content)) {
+                return array(
+                    'id'        => $aside_block->id,
+                    'title'     => $aside_block->title,
+                    'parent_id' => $structure_block->id,
+                    'html'      => $this->getBlockFactory()->makeBlock($aside_block)->render('student', $context)
+                );
+            }
+        }
+
+        return null;
+    }
 
     private function getSelected($context)
     {
@@ -324,10 +355,12 @@ class Courseware extends Block {
     private function childrenToJSON($collection, $selected, $showFields = false)
     {
         $result = array();
-        foreach ($collection as $item) {
-            $result[] = $this->childToJSON($item, $selected, $showFields);
+        if ($collection) {
+            foreach ($collection as $item) {
+                $result[] = $this->childToJSON($item, $selected, $showFields);
+            }
         }
-        return array_filter($result);
+        return array_values(array_filter($result));
     }
 
     private function childToJSON($child, $selected, $showFields)

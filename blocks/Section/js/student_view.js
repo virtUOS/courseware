@@ -60,6 +60,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                     block.postRender();
                 }
             });
+            // TODO
             $("#courseware").css("min-height",$("#courseware > aside").height()+"px");
             tooltip(this.$el, 'button.edit,button.trash');
         },

@@ -2,7 +2,7 @@
 
 use Mooc\UI\DiscussionBlock\LecturerDiscussion;
 
-class ProgressController extends MoocipController {
+class ProgressController extends CoursewareStudipController {
 
     public function before_filter(&$action, &$args)
     {

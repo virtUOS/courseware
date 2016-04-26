@@ -17,6 +17,6 @@
             "Mooc\\UI\\": "blocks/"
         },
         "classmap": ["controllers/"],
-        "files": ["models/mooc/constants.php"]
+        "files": ["models/courseware/constants.php"]
     }
 }

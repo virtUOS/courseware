@@ -4,8 +4,16 @@ define(['assets/js/student_view'],
     'use strict';
 
     return StudentView.extend({
+        events: {
+        },
+
+        initialize: function() {
+        },
         render: function() {
             return this;
+        },
+
+        postRender: function () {
         }
     });
 });

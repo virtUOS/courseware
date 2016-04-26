@@ -12,7 +12,7 @@ class CoursewareFactory
     /**
      * Constructs a new CoursewareFactory
      *
-     * @param \Mooc\Container $c  the DI container to use
+     * @param \Courseware\Container $c  the DI container to use
      */
     public function __construct($c)
     {

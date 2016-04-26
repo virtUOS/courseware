@@ -1,6 +1,10 @@
 <?
 use Studip\Button;
 use Mooc\UI\Courseware\Courseware;
+
+if ($flash['success']) {
+    PageLayout::postMessage(MessageBox::success($flash['success']));
+}
 ?>
 
 <form method="post" action="<?= $controller->url_for('courseware/settings') ?>">
@@ -17,11 +21,9 @@ use Mooc\UI\Courseware\Courseware;
         </caption>
 
         <tbody>
-            <!--
             <tr>
                 <th colspan="2"><?= _('Allgemeines') ?></th>
             </tr>
-            -->
 
             <tr>
                 <td>
@@ -56,6 +58,11 @@ use Mooc\UI\Courseware\Courseware;
             </tr>
 
             <?= $this->render_partial('courseware/_settings_editing_permission') ?>
+            <tr>
+                <th colspan="2"><?= _('Blockeinstellungen') ?></th>
+            </tr>
+
+            <?= $this->render_partial('courseware/_settings_discussionblock') ?>
 
         </tbody>
 

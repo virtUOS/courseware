@@ -1,5 +1,5 @@
 <?php
-namespace Mooc;
+namespace Courseware;
 
 use Mooc\DB\CoursewareFactory;
 use Mooc\UI\BlockFactory;
@@ -34,6 +34,8 @@ class Container extends \Pimple\Container
             }
             return $user;
         };
+
+        $this['version'] = new Version();
 
         $this['cid'] = \Request::option('cid') ?: $GLOBALS['SessionSeminar'];
     }

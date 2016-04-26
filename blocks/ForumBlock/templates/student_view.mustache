@@ -1,5 +1,6 @@
 <h2>Diskussion{{#area_name}} - {{area_name}}{{/area_name}}</h2>
 
+{{^inactive}}
 <div>
     {{^connected}}
     Es wurde bisher kein Bereich verknüpft!
@@ -16,3 +17,10 @@
     <a href="{{area_url}}">Alles anzeigen / Eigenen Beitrag schreiben</a>
     {{/connected}}
 </div>
+{{/inactive}}
+
+{{#inactive}}
+<div class="messagebox messagebox_info">
+    {{#i18n}}Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet werden...{{/i18n}}
+</div>
+{{/inactive}}
