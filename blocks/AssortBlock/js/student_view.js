@@ -16,12 +16,15 @@ define(['assets/js/student_view'], function (StudentView) {
                 $div.append($ul);
             }
             var $assortblocks = JSON.parse(this.$(".assortblocks-selection-assort").val());
+            console.log($assortblocks.length);
+            var $maxheight = 0;
             $.each($assortblocks , function(){
                 var $id = this["id"];
                 var $name = this["name"];
                 var $thisblock = $("#block-"+$id);
                 if ($thisblock.length == 0) {console.log("block "+ $id +" nicht vorhanden"); return; }
-                $thisblock.hide();  
+                $thisblock.hide();
+                if ($maxheight < $thisblock.height()) $maxheight = $thisblock.height();
                 if ($name == "") {$name = "Block "+$id;}
                 switch($assorttype){
                     case "accordion":
@@ -33,10 +36,13 @@ define(['assets/js/student_view'], function (StudentView) {
                         $div.append("<div id ='tabs-"+$id+"'>"+$thisblock.html()+"</div>");
                         break;
                 }
+                console.log($maxheight+$assortblocks.length*20);
             });
             switch($assorttype){
                 case "accordion":
-                    $div.accordion();
+                    $div.accordion({
+                        heightStyle: "content" 
+                    }).css({"min-height": 34+$maxheight+$assortblocks.length*45});
                     break;
                 case "tabs":
                     $div.tabs({
