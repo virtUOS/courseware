@@ -51,9 +51,9 @@ class TestBlock extends Block
     {
         return array(
             // removed via https://github.com/virtUOS/courseware/issues/19
-            // 'exam' => _('Klausur'),
-            'selftest' => _('Selbsttest'),
-            'practice' => _('Übungsblatt'),
+            // 'exam' => _cw('Klausur'),
+            'selftest' => _cw('Selbsttest'),
+            'practice' => _cw('Übungsblatt'),
         );
     }
 
@@ -176,7 +176,7 @@ class TestBlock extends Block
 
         // not yet started or already ended
         if ($start > $now || $now > $end) {
-            throw new \Exception(_('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
+            throw new \Exception(_cw('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
         }
 
         $test->deleteSolution($user->id, $exercise_id);
@@ -205,7 +205,7 @@ class TestBlock extends Block
 
         // not yet started or already ended
         if ($start > $now || $now > $end) {
-            throw new \Exception(_('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
+            throw new \Exception(_cw('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
         }
 
         $solution = $exercise->getSolutionFromRequest($requestParams);

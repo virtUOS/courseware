@@ -56,7 +56,7 @@ class CoursewareController extends CoursewareStudipController {
             CSRFProtection::verifyUnsafeRequest();
             $this->storeSettings();
 
-            $this->flash['success'] = _("Die Einstellungen wurden gespeichert.");
+            $this->flash['success'] = _cw("Die Einstellungen wurden gespeichert.");
             return $this->redirect('courseware/settings');
         }
     }
@@ -165,7 +165,7 @@ class CoursewareController extends CoursewareStudipController {
         // this setting
         if ($perm === Courseware::EDITING_PERMISSION_DOZENT &&
             $this->container['current_user']->getPerm($this->container['cid']) === 'tutor') {
-            throw new Trails_Exception(401, _("Tutoren kÃ¶nnen diese Einstellung nicht speichern."));
+            throw new Trails_Exception(401, _cw("Tutoren können diese Einstellung nicht speichern."));
         }
 
         if (!$this->courseware_block->setEditingPermission($perm)) {

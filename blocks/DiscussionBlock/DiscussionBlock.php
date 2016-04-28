@@ -60,8 +60,8 @@ class DiscussionBlock extends Block
     public static function getSubTypes()
     {
         return array(
-            self::SUBTYPE_ALL    => _('gemeinsam'),
-            self::SUBTYPE_GROUPS => _('in Gruppen')
+            self::SUBTYPE_ALL    => _cw('gemeinsam'),
+            self::SUBTYPE_GROUPS => _cw('in Gruppen')
         );
     }
 

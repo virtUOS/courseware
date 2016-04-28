@@ -1,0 +1,303 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-26 11:08+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Courseware.php:76
+msgid "Einstellungen"
+msgstr "Settings"
+
+#: Courseware.php:82
+msgid "Fortschrittsübersicht"
+msgstr "Fortschrittsübersicht"
+
+#: Courseware.php:203
+msgid ""
+"Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
+"erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
+"Schalten Sie zwischen Teilnehmenden-Sicht und Editier-Modus um und fügen Sie "
+"Abschnitte und Blöcke (Text und Bild, Video, Diskussion, Quiz)  hinzu. "
+"Aufgaben erstellen und verwalten Sie mit dem Vips-Plugin und binden Sie dann "
+"in einen Courseware-Abschnitt ein."
+msgstr ""
+"Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
+"erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
+"Schalten Sie zwischen Teilnehmenden-Sicht und Editier-Modus um und fügen Sie "
+"Abschnitte und Blöcke (Text und Bild, Video, Diskussion, Quiz)  hinzu. "
+"Aufgaben erstellen und verwalten Sie mit dem Vips-Plugin und binden Sie dann "
+"in einen Courseware-Abschnitt ein."
+
+#: Courseware.php:204
+msgid "Information"
+msgstr "Information"
+
+#: Courseware.php:206
+msgid ""
+"Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
+"'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
+msgstr ""
+"Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
+"'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
+
+#: Courseware.php:207
+msgid "Tipp"
+msgstr "Tipp"
+
+#: Courseware.php:209
+msgid ""
+"Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
+"direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
+"Kommunikationselemente und kleine Quizzes beinhalten. Ihren "
+"Bearbeitungsfortschritt sehen Sie auf einen Blick im Reiter "
+"Fortschrittsübersicht."
+msgstr ""
+"Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
+"direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
+"Kommunikationselemente und kleine Quizzes beinhalten. Ihren "
+"Bearbeitungsfortschritt sehen Sie auf einen Blick im Reiter "
+"Fortschrittsübersicht."
+
+#: Courseware.php:210
+msgid "Hinweis"
+msgstr "Hinweis"
+
+#: Courseware.php:271
+msgid "Zurück zur Courseware"
+msgstr "Zurück zur Courseware"
+
+#: controllers/courseware.php:59
+msgid "Die Einstellungen wurden gespeichert."
+msgstr "Die Einstellungen wurden gespeichert."
+
+#: controllers/courseware.php:168
+msgid "Tutoren können diese Einstellung nicht speichern."
+msgstr "Tutoren können diese Einstellung nicht speichern."
+
+#: controllers/import.php:48
+msgid "Das Herunterladen des Moduls ist fehlgeschlagen."
+msgstr "Das Herunterladen des Moduls ist fehlgeschlagen."
+
+#: controllers/import.php:71
+msgid "Import-Archiv enthält keine Datendatei data.xml."
+msgstr "Import-Archiv enthält keine Datendatei data.xml."
+
+#: controllers/import.php:80
+msgid "Die Datendatei data.xml enthält kein valides XML."
+msgstr "Die Datendatei data.xml enthält kein valides XML."
+
+#: blocks/Courseware/Courseware.php:504
+#: models/mooc/db/CoursewareFactory.php:57
+msgid "Unterkapitel 1"
+msgstr "Unterkapitel 1"
+
+#: blocks/Courseware/Courseware.php:511
+#: models/mooc/db/CoursewareFactory.php:66
+msgid "Abschnitt 1"
+msgstr "Abschnitt 1"
+
+#: blocks/DiscussionBlock/DiscussionBlock.php:63
+msgid "gemeinsam"
+msgstr "gemeinsam"
+
+#: blocks/DiscussionBlock/DiscussionBlock.php:64
+msgid "in Gruppen"
+msgstr "in Gruppen"
+
+#: blocks/Section/Section.php:83
+msgid "Sie sind nicht berechtigt Blöcke anzulegen."
+msgstr "Sie sind nicht berechtigt Blöcke anzulegen."
+
+#: blocks/Section/Section.php:125
+msgid "Sie sind nicht berechtigt Blöcke zu löschen."
+msgstr "Sie sind nicht berechtigt Blöcke zu löschen."
+
+#: blocks/TestBlock/TestBlock.php:55
+msgid "Selbsttest"
+msgstr "Selbsttest"
+
+#: blocks/TestBlock/TestBlock.php:56
+msgid "Übungsblatt"
+msgstr "Übungsblatt"
+
+#: blocks/TestBlock/TestBlock.php:179 blocks/TestBlock/TestBlock.php:208
+msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
+msgstr "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
+
+#: views/courseware/_settings_discussionblock.php:4
+msgid "Diskussionsblock aktivieren"
+msgstr "Diskussionsblock aktivieren"
+
+#: views/courseware/_settings_discussionblock.php:6
+msgid ""
+"Der Diskussionsblock bietet eine gute Möglichkeit zur Kommunikation zwischen "
+"den Teilnehmern. Durch die Aktivierung muss aber der Blubber-Reiter entfernt "
+"werden."
+msgstr ""
+"Der Diskussionsblock bietet eine gute Möglichkeit zur Kommunikation zwischen "
+"den Teilnehmern. Durch die Aktivierung muss aber der Blubber-Reiter entfernt "
+"werden."
+
+#: views/courseware/_settings_editing_permission.php:4
+msgid "Editierberechtigung für Tutoren"
+msgstr "Editierberechtigung für Tutoren"
+
+#: views/courseware/_settings_editing_permission.php:6
+msgid ""
+"Wenn Sie diesen Schalter aktivieren, dürfen neben den Dozenten auch Tutoren "
+"Ihre Courseware editieren."
+msgstr ""
+"Wenn Sie diesen Schalter aktivieren, dürfen neben den Dozenten auch Tutoren "
+"Ihre Courseware editieren."
+
+#: views/courseware/settings.php:21
+msgid "Courseware-Einstellungen"
+msgstr "Courseware-Einstellungen"
+
+#: views/courseware/settings.php:27
+msgid "Allgemeines"
+msgstr "Allgemeines"
+
+#: views/courseware/settings.php:34
+msgid "Titel der Courseware"
+msgstr "Titel der Courseware"
+
+#: views/courseware/settings.php:36
+msgid ""
+"Der Titel der Courseware erscheint als Beschriftung des Courseware-Reiters. "
+"Sie können den Reiter also z.B. auch \"Online-Skript\", \"Lernmodul\" o.ä. "
+"nennen."
+msgstr ""
+"Der Titel der Courseware erscheint als Beschriftung des Courseware-Reiters. "
+"Sie können den Reiter also z.B. auch \"Online-Skript\", \"Lernmodul\" o.ä. "
+"nennen."
+
+#: views/courseware/settings.php:48
+msgid "Art der Kapitelabfolge"
+msgstr "Art der Kapitelabfolge"
+
+#: views/courseware/settings.php:50
+msgid ""
+"Bei freier Kapitelabfolge können alle sichtbaren Kapitel in beliebiger "
+"Reihenfolge ausgewählt werden. Bei sequentieller Abfolge müssen alle "
+"vorangehenden Unterkapitel erfolgreich abgeschlossen sein, damit ein "
+"Unterkapitel ausgewählt und angezeigt werden kann."
+msgstr ""
+"Bei freier Kapitelabfolge können alle sichtbaren Kapitel in beliebiger "
+"Reihenfolge ausgewählt werden. Bei sequentieller Abfolge müssen alle "
+"vorangehenden Unterkapitel erfolgreich abgeschlossen sein, damit ein "
+"Unterkapitel ausgewählt und angezeigt werden kann."
+
+#: views/courseware/settings.php:57
+msgid "frei"
+msgstr "frei"
+
+#: views/courseware/settings.php:58
+msgid "sequentiell"
+msgstr "sequentiell"
+
+#: views/courseware/settings.php:68
+msgid "Blockeinstellungen"
+msgstr "Blockeinstellungen"
+
+#: views/courseware/settings.php:78
+msgid "Übernehmen"
+msgstr "Übernehmen"
+
+#: views/courseware/settings.php:78
+msgid "Änderungen übernehmen"
+msgstr "Änderungen übernehmen"
+
+#: views/import/index.php:1
+msgid "Datei hochladen"
+msgstr "Datei hochladen"
+
+#: views/import/index.php:6
+msgid "Es sind Fehler aufgetreten:"
+msgstr "Es sind Fehler aufgetreten:"
+
+#: views/import/index.php:15
+msgid ""
+"Laden Sie eine Datei hoch, die Sie zuvor in einer MOOC.IP-Installation "
+"exportiert haben."
+msgstr ""
+"Laden Sie eine Datei hoch, die Sie zuvor in einer MOOC.IP-Installation "
+"exportiert haben."
+
+#: views/import/index.php:25
+msgid "Abbrechen"
+msgstr "Abbrechen"
+
+#: views/import/index.php:31
+msgid "Im Content-Marktplatz suchen"
+msgstr "Im Content-Marktplatz suchen"
+
+#: views/import/index.php:35
+msgid "Stichwortsuche: "
+msgstr "Stichwortsuche: "
+
+#: views/import/index.php:45
+msgid "Es wurden keine Plugins gefunden."
+msgstr "Es wurden keine Plugins gefunden."
+
+#: views/import/index.php:47
+msgid "Suchtreffer:"
+msgstr "Suchtreffer:"
+
+#: views/import/index.php:50
+msgid "Bild"
+msgstr "Bild"
+
+#: views/import/index.php:51
+msgid "Name und Beschreibung"
+msgstr "Name und Beschreibung"
+
+#: views/import/index.php:52
+msgid "Version"
+msgstr "Version"
+
+#: views/import/index.php:53
+msgid "Bewertung"
+msgstr "Bewertung"
+
+#: views/import/index.php:54
+msgid "Installieren"
+msgstr "Installieren"
+
+#: views/import/index.php:94
+msgid "Plugin installieren"
+msgstr "Plugin installieren"
+
+#: models/mooc/db/CoursewareFactory.php:45
+msgid "Courseware"
+msgstr "Courseware"
+
+#: models/mooc/db/CoursewareFactory.php:47
+#: models/mooc/db/CoursewareFactory.php:48
+msgid "Kapitel"
+msgstr "Kapitel"
+
+#: models/mooc/db/CoursewareFactory.php:67
+msgid "Abschnitt 2"
+msgstr "Abschnitt 2"
+
+#: models/mooc/db/CoursewareFactory.php:76
+msgid "Name des HTML-Blocks"
+msgstr "Name des HTML-Blocks"
+
+#: models/mooc/ui/Block.php:516
+msgid "Sie sind nicht berechtigt diesen Block zu editieren."
+msgstr "Sie sind nicht berechtigt diesen Block zu editieren."
