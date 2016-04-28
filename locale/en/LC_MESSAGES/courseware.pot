@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 11:45+0200\n"
+"POT-Creation-Date: 2016-04-28 22:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Courseware.php:76
+#: Courseware.php:83
 msgid "Einstellungen"
 msgstr ""
 
-#: Courseware.php:82
+#: Courseware.php:89
 msgid "Fortschrittsübersicht"
 msgstr ""
 
-#: Courseware.php:203
+#: Courseware.php:214
 msgid ""
 "Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
 "erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
@@ -35,21 +35,21 @@ msgid ""
 "in einen Courseware-Abschnitt ein."
 msgstr ""
 
-#: Courseware.php:204
+#: Courseware.php:215
 msgid "Information"
 msgstr ""
 
-#: Courseware.php:206
+#: Courseware.php:217
 msgid ""
 "Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
 "'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
 msgstr ""
 
-#: Courseware.php:207
+#: Courseware.php:218
 msgid "Tipp"
 msgstr ""
 
-#: Courseware.php:209
+#: Courseware.php:220
 msgid ""
 "Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
 "direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
@@ -58,11 +58,11 @@ msgid ""
 "Fortschrittsübersicht."
 msgstr ""
 
-#: Courseware.php:210
+#: Courseware.php:221
 msgid "Hinweis"
 msgstr ""
 
-#: Courseware.php:271
+#: Courseware.php:282
 msgid "Zurück zur Courseware"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 11:08+0200\n"
+"POT-Creation-Date: 2016-04-28 22:19+0200\n"
 "PO-Revision-Date: 2016-04-26 21:48+0200\n"
 "Last-Translator: Tobias Thelen <tobias.thelen@uni-osnabrueck.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Courseware.php:76
+#: Courseware.php:83
 msgid "Einstellungen"
 msgstr "Settings"
 
-#: Courseware.php:82
+#: Courseware.php:89
 msgid "Fortschrittsübersicht"
 msgstr "Progress"
 
-#: Courseware.php:203
+#: Courseware.php:214
 msgid ""
 "Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
 "erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
@@ -34,28 +34,28 @@ msgid ""
 "Aufgaben erstellen und verwalten Sie mit dem Vips-Plugin und binden Sie dann "
 "in einen Courseware-Abschnitt ein."
 msgstr ""
-"MOOC.IP Courseware lets you create interactive learning modules within Stud.IP. "
-"Structure your content in chapters and subchapters. Switch between participants' "
-"view and edit mode and simply add sections and blocks (text, images, videos, "
-"discussion, quizzes etc.). Create and administer self test questions and tests "
-"within the Vips plugin and insert them as blocks to a courseware section."
+"MOOC.IP Courseware lets you create interactive learning modules within Stud."
+"IP. Structure your content in chapters and subchapters. Switch between "
+"participants' view and edit mode and simply add sections and blocks (text, "
+"images, videos, discussion, quizzes etc.). Create and administer self test "
+"questions and tests within the Vips plugin and insert them as blocks to a "
+"courseware section."
 
-#: Courseware.php:204
+#: Courseware.php:215
 msgid "Information"
 msgstr "Information"
 
-#: Courseware.php:206
+#: Courseware.php:217
 msgid ""
 "Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
 "'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
-msgstr ""
-"You can rename the courseware tab. Select 'setting' when in edit mode."
+msgstr "You can rename the courseware tab. Select 'setting' when in edit mode."
 
-#: Courseware.php:207
+#: Courseware.php:218
 msgid "Tipp"
 msgstr "Tip"
 
-#: Courseware.php:209
+#: Courseware.php:220
 msgid ""
 "Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
 "direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
@@ -68,11 +68,11 @@ msgstr ""
 "communication elements and small quizzes. A progress overview lets learners "
 "track their progress."
 
-#: Courseware.php:210
+#: Courseware.php:221
 msgid "Hinweis"
 msgstr "Hint"
 
-#: Courseware.php:271
+#: Courseware.php:282
 msgid "Zurück zur Courseware"
 msgstr "Back to courseware"
 
@@ -144,8 +144,8 @@ msgid ""
 "den Teilnehmern. Durch die Aktivierung muss aber der Blubber-Reiter entfernt "
 "werden."
 msgstr ""
-"The discussion block provides a good way to foster communication among participants."
-"For activating, however, the blubber tab has to be removed."
+"The discussion block provides a good way to foster communication among "
+"participants.For activating, however, the blubber tab has to be removed."
 
 #: views/courseware/_settings_editing_permission.php:4
 msgid "Editierberechtigung für Tutoren"
@@ -155,8 +155,7 @@ msgstr "Edit rights for tutors"
 msgid ""
 "Wenn Sie diesen Schalter aktivieren, dürfen neben den Dozenten auch Tutoren "
 "Ihre Courseware editieren."
-msgstr ""
-"When activating this switch, tutors are allowed to edit content, too."
+msgstr "When activating this switch, tutors are allowed to edit content, too."
 
 #: views/courseware/settings.php:21
 msgid "Courseware-Einstellungen"
@@ -176,9 +175,8 @@ msgid ""
 "Sie können den Reiter also z.B. auch \"Online-Skript\", \"Lernmodul\" o.ä. "
 "nennen."
 msgstr ""
-"The courseware title is displayed in the courseware tab."
-"You might rename the tab to \"Online Script\", \"Learning Module\" etc."
-"nennen."
+"The courseware title is displayed in the courseware tab.You might rename the "
+"tab to \"Online Script\", \"Learning Module\" etc.nennen."
 
 #: views/courseware/settings.php:48
 msgid "Art der Kapitelabfolge"
