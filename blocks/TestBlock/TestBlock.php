@@ -181,6 +181,11 @@ class TestBlock extends Block
             throw new \Exception(_('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
         }
 
+        // resetting tries
+        if($_SESSION['try_counter'][$exercise_id]) {
+            $_SESSION['try_counter'][$exercise_id] = 0;
+        }
+
         $test->deleteSolution($user->id, $exercise_id);
 
         $this->calcGrades();
