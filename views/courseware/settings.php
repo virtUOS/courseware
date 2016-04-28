@@ -70,6 +70,40 @@ if ($flash['success']) {
 
             <?= $this->render_partial('courseware/_settings_discussionblock') ?>
 
+            <tr>
+                <th colspan="2"><?= _('Selbsttests') ?></th>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="max-tries">
+                        <?= _('Anzahl Versuche') ?><br>
+                        <dfn id="courseware-max-tries-description">
+                            <?= _('Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben eines Selbsttests hat, bevor die Lösung der Aufgabe angezeigt wird.'); ?>
+                        </dfn>
+                    </label>
+                </td>
+                <td>
+                    <input id="max-tries" type="number" min="0" name="courseware[max-tries]" value="<?= htmlReady($courseware_block->max_tries) ?>" aria-describedby="courseware-max-tries-description">
+                    <label style="margin-left: 20px;" for="num-counts-infinity">
+                        Unbegrenzt
+                        <input id="max-tries-infinity" type="checkbox" name="courseware[max-tries-infinity]" aria-describedby="courseware-max-tries-description">
+                    </label>
+                    <? if ($courseware_block->max_tries === -1): ?>
+                        <script>
+                            document.getElementById('max-tries-infinity').checked = true;
+                            document.getElementById('max-tries').value = 0;
+                            document.getElementById('max-tries').disabled = true;
+                        </script>
+                    <? endif ?>
+                    <script>
+                        document.getElementById('max-tries-infinity').onchange = function() {
+                            document.getElementById('max-tries').disabled = this.checked;
+                        }
+                    </script>
+                </td>
+            </tr>
+
         </tbody>
 
         <tfoot>

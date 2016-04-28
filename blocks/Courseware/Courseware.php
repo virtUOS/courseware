@@ -33,6 +33,9 @@ class Courseware extends Block {
 
         // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
         $this->defineField('editing_permission', \Mooc\SCOPE_BLOCK, self::EDITING_PERMISSION_TUTOR);
+
+        // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+        $this->defineField('max_tries', \Mooc\SCOPE_BLOCK, -1); // -1 = infinity
     }
 
     function student_view($context = array())
@@ -286,6 +289,18 @@ class Courseware extends Block {
     public function getEditingPermission()
     {
         return $this->editing_permission;
+    }
+
+    public function setMaxTries($tries) {
+        $this->max_tries = $tries;
+        // delete from Session, if exists
+        if($_SESSION['try_counter']) {
+            $_SESSION['try_counter'] = array();
+        }
+    }
+
+    public function getMaxTries() {
+        return $this->max_tries;
     }
 
     ///////////////////////

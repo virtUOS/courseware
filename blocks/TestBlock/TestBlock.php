@@ -607,7 +607,10 @@ class TestBlock extends Block
                 $tryagain = false;
 
                 $try_counter = 0;
-                $max_counter = 3;
+
+                $courseware_block = $this->container['current_courseware'];
+
+                $max_counter = $courseware_block->getMaxTries();
 
                 if ($this->_model->sub_type == 'selftest') {
                     // TT: determine if a correct solution has been handed in
@@ -625,7 +628,6 @@ class TestBlock extends Block
                             $_SESSION['try_counter'][$exercise->getId()] = 0;
                         }
                         $try_counter = $_SESSION['try_counter'][$exercise->getId()];
-                        $max_counter = 3;
                         $tryagain = $solution && !$correct;// && (try_counter <= max_counter);
 //                        $tryagain = $solution && !$correct;
                     }
@@ -635,7 +637,16 @@ class TestBlock extends Block
                      $solved_completely = false;
 
                 }
-                $show_corrected_solution = ($correct || (($try_counter >= $max_counter) && $this->test->isSelfTest()));
+                if(!$max_counter) {
+                    // no max counter, do as before
+                    $show_corrected_solution = $correct;
+                } else if ($max_counter === -1) {
+                    // unlimited tries to answer
+                    $show_corrected_solution = $correct;
+                } else {
+                    // limited tries
+                    $show_corrected_solution = ($correct || (($try_counter >= $max_counter) && $this->test->isSelfTest()));
+                }
                 $entry = array(
                     'exercise_type' => $exercise->getType(),
                     $exercise->getType() => 1,
