@@ -293,10 +293,6 @@ class Courseware extends Block {
 
     public function setMaxTries($tries) {
         $this->max_tries = $tries;
-        // delete from Session, if exists
-        if($_SESSION['try_counter']) {
-            $_SESSION['try_counter'] = array();
-        }
     }
 
     public function getMaxTries() {

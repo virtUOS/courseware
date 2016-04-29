@@ -39,6 +39,7 @@ class TestBlock extends Block
         global $vipsPlugin, $vipsTemplateFactory;
 
         $this->defineField('test_id', \Mooc\SCOPE_BLOCK, null);
+        $this->defineField('tries',   \Mooc\SCOPE_USER, array()); // Field to count the tries
 
         $vipsPlugin = VipsBridge::getVipsPlugin();
         $vipsTemplateFactory = new \Flexi_TemplateFactory(VipsBridge::getVipsPath().'/templates/');
@@ -182,8 +183,14 @@ class TestBlock extends Block
         }
 
         // resetting tries
-        if($_SESSION['try_counter'][$exercise_id]) {
-            $_SESSION['try_counter'][$exercise_id] = 0;
+        if(!$this->tries) {
+            $local_tries = array();
+        } else {
+            $local_tries = $this->tries;
+        }
+        if ($local_tries) {
+            $local_tries[$exercise_id] = 0;
+            $this->tries = $local_tries;
         }
 
         $test->deleteSolution($user->id, $exercise_id);
@@ -208,13 +215,16 @@ class TestBlock extends Block
 
         // if it is a self test, count the tries
         if($test->getType() == "selftest") {
-            if(!$_SESSION['try_counter'][$exercise_id]) {
-                if(!$_SESSION['try_counter']){
-                    $_SESSION['try_counter']= array();
-                }
-                $_SESSION['try_counter'][$exercise_id] = 0;
+            if(!$this->tries) {
+                $local_tries = array();
+            } else {
+                $local_tries = $this->tries;
             }
-            $_SESSION['try_counter'][$exercise_id] ++;
+            if(!$local_tries[$exercise_id]) {
+                $local_tries[$exercise_id] = 0;
+            }
+            $local_tries[$exercise_id] ++;
+            $this->tries = $local_tries;
         }
 
         $start = $test->getStart();
@@ -242,7 +252,13 @@ class TestBlock extends Block
 
         $exercise_id = $requestParams['exercise_id'];
 
-        $_SESSION['try_counter'][$exercise_id] = 0;
+        if(!$this->tries) {
+            $local_tries = array();
+        } else {
+            $local_tries = $this->tries;
+        }
+        $local_tries[$exercise_id] = 0;
+        $this->tries = $local_tries;
     }
 
      public function calcGrades()
@@ -618,18 +634,15 @@ class TestBlock extends Block
                     if ($solution) {
                         $evaluation = $exercise->getVipsExercise()->evaluate($solution->solution, $user->id);
                         $correct = $evaluation['percent'] == 100;
-                        // TODO @noesting: increment a counter
-                        // TODO get max_counter from dozent
-//                        var_dump($try_counter);
-                        if(!$_SESSION['try_counter'][$exercise->getId()]) {
-                            if(!$_SESSION['try_counter']){
-                                $_SESSION['try_counter']= array();
-                            }
-                            $_SESSION['try_counter'][$exercise->getId()] = 0;
+
+                        // get tries for this exercise
+                        if(!$this->tries) {
+                            $local_tries = array();
+                        } else {
+                            $local_tries = $this->tries;
                         }
-                        $try_counter = $_SESSION['try_counter'][$exercise->getId()];
-                        $tryagain = $solution && !$correct;// && (try_counter <= max_counter);
-//                        $tryagain = $solution && !$correct;
+                        $try_counter = $local_tries[$exercise->getId()];
+                        $tryagain = $solution && !$correct;
                     }
                 }
 
