@@ -41,8 +41,10 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         bindtextdomain('courseware', dirname(__FILE__) . '/locale');
 
         // define a short-hand function for translating text. This function is now registerd in the global scope. xD
-        function _cw($message) {
-            return dgettext('courseware', $message);
+        if (!function_exists('_cw')) {
+            function _cw($message) {
+                return dgettext('courseware', $message);
+            }
         }
 
     }
