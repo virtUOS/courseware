@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-03 13:19+0200\n"
-"PO-Revision-Date: 2016-05-02 10:05+0100\n"
+"PO-Revision-Date: 2016-05-03 14:42+0100\n"
 "Last-Translator: Tobias Thelen <tobias.thelen@uni-osnabrueck.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: en\n"
@@ -206,11 +206,6 @@ msgstr "sequential"
 msgid "Blockeinstellungen"
 msgstr "Block settings"
 
-#: views/courseware/settings.php:74
-#, fuzzy
-msgid "Selbsttests"
-msgstr "Self test"
-
 #: views/courseware/settings.php:80
 msgid "Anzahl Versuche"
 msgstr "Number of tries"
@@ -219,7 +214,9 @@ msgstr "Number of tries"
 msgid ""
 "Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben eines "
 "Selbsttests hat, bevor die Lösung der Aufgabe angezeigt wird."
-msgstr "The Number of tries to solve the question of a self test until the solution is shown to him."
+msgstr ""
+"The Number of tries to solve the question of a self test until the solution "
+"is shown to him."
 
 #: views/courseware/settings.php:89
 msgid "Unbegrenzt"
@@ -314,14 +311,17 @@ msgstr "Name of the HTML-Block"
 msgid "Sie sind nicht berechtigt diesen Block zu editieren."
 msgstr "Insufficient rights to edit this block."
 
+msgid "Abschicken"
+msgstr "Submit"
+
+msgid "Antwort zurücksetzen"
+msgstr "Reset answer"
+
 msgid "Abschnitt einfügen"
 msgstr "Add Section"
 
 msgid "Abschnitte sortieren"
 msgstr "Sort sections"
-
-msgid "Abschnitt löschen"
-msgstr "Delete section"
 
 msgid "Abschnittstitel bearbeiten"
 msgstr "Edit title of section"
@@ -361,8 +361,7 @@ msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
 msgstr "Thank you! You can now proceed with the next section."
 
 msgid ""
-"Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren "
-"Dozenten."
+"Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
 msgstr "The exercise type has changed. Please consider your dozent."
 
 msgid "Die Evaluationen müssen im System aktiviert sein."
@@ -406,8 +405,8 @@ msgstr ""
 "course."
 
 msgid ""
-"Für diesen Forumsblock muss das Forum in dieser Veranstaltung "
-"eingeschaltet werden..."
+"Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet "
+"werden..."
 msgstr "Forum has to be activated for this course for this forum block ..."
 
 msgid "Gesamtes Kapitel löschen"
@@ -427,8 +426,7 @@ msgid ""
 msgstr "Your solution was not correct. Please try again."
 
 msgid ""
-"Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen "
-"enthalten!"
+"Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
 msgstr "There are unsupported exercise types in your current test."
 
 msgid "Import"
@@ -511,3 +509,9 @@ msgstr "Evaluations"
 
 msgid "Freitext"
 msgstr "Free text"
+
+msgid "Studentenmodus"
+msgstr "Student mode"
+
+msgid "Autorenmodus"
+msgstr "Author mode"
