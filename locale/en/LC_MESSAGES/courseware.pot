@@ -274,3 +274,183 @@ msgstr ""
 #: models/mooc/ui/Block.php:516
 msgid "Sie sind nicht berechtigt diesen Block zu editieren."
 msgstr ""
+
+msgid "Abschnitt einfügen"
+msgstr ""
+
+msgid "Abschnitte sortieren"
+msgstr ""
+
+msgid "Abschnitt löschen"
+msgstr ""
+
+msgid "Abschnittstitel bearbeiten"
+msgstr ""
+
+msgid "Absenken"
+msgstr ""
+
+msgid "Ändern"
+msgstr ""
+
+msgid "Anheben"
+msgstr ""
+
+msgid "Anzeigen"
+msgstr ""
+
+msgid "anzuzeigendes Aufgabenblatt auswählen"
+msgstr ""
+
+msgid "Aufgabenblätter verwalten"
+msgstr ""
+
+msgid "Block hinzufügen"
+msgstr ""
+
+msgid "msgid \"Blubber\" muss in dieser Veranstaltung aktiviert sein."
+msgstr ""
+
+msgid "Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten Abschnitt fortfahren."
+msgstr ""
+
+msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
+msgstr ""
+
+msgid "Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
+msgstr ""
+
+msgid "Die Evaluationen müssen im System aktiviert sein."
+msgstr ""
+
+msgid "Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
+msgstr ""
+
+msgid "Entfernen"
+msgstr ""
+
+msgid "erstellt am"
+msgstr ""
+
+msgid "Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen."
+msgstr ""
+
+msgid "Es wurde bisher keine Evaluation erstellt!"
+msgstr ""
+
+msgid "Es wurde noch kein Video eingetragen."
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Frage"
+msgstr ""
+
+msgid "Für diese Frage haben Sie bereits eine Antwort abgegeben."
+msgstr ""
+
+msgid "Für diesen Diskussionsblock muss \"Blubber\" in dieser Veranstaltung eingeschaltet werden.."
+msgstr ""
+
+msgid "Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet werden..."
+msgstr ""
+
+msgid "Gesamtes Kapitel löschen"
+msgstr ""
+
+msgid "Gesamtes Unterkapitel löschen"
+msgstr ""
+
+msgid "Ihre Lösung ist korrekt!"
+msgstr ""
+
+msgid "Ihre Lösung wurde eingetragen."
+msgstr ""
+
+msgid "Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal."
+msgstr ""
+
+msgid "Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
+msgstr ""
+
+msgid "Import"
+msgstr ""
+
+msgid "Kapitel einfügen"
+msgstr ""
+
+msgid "Kapitel sortieren"
+msgstr ""
+
+msgid "Kapiteltitel bearbeiten"
+msgstr ""
+
+msgid "Keine Abschnitte"
+msgstr ""
+
+msgid "Keine Aufgaben."
+msgstr ""
+
+msgid "Keine Inhaltsblöcke"
+msgstr ""
+
+msgid "Keine Kapitel"
+msgstr ""
+
+msgid "Keine Unterkapitel"
+msgstr ""
+
+msgid "Kommentiere dies"
+msgstr ""
+
+msgid "Seitenblöcke aktivieren"
+msgstr ""
+
+msgid "Sichtbar ab"
+msgstr ""
+
+msgid "Sichtbar ab:"
+msgstr ""
+
+msgid "Sidebar für"
+msgstr ""
+
+msgid "Sortieren abschließen"
+msgstr ""
+
+msgid "Speichern"
+msgstr ""
+
+msgid "Titel des Unterkapitels bearbeiten"
+msgstr ""
+
+msgid "Unterkapitel einfügen"
+msgstr ""
+
+msgid "Unterkapitel sortieren"
+msgstr ""
+
+msgid "Vips muss in dieser Veranstaltung aktiviert sein."
+msgstr ""
+
+msgid "Was sollen die Lernenden bestätigen?"
+msgstr ""
+
+msgid "weiter"
+msgstr ""
+
+msgid "zurück"
+msgstr ""
+
+msgid "Bestätigung"
+msgstr ""
+
+msgid "Diskussion"
+msgstr ""
+
+msgid "Evaluationen"
+msgstr ""
+
+msgid "Freitext"
+msgstr ""

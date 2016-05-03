@@ -295,7 +295,7 @@ abstract class Block {
             $readableName .= ' ('.$subTypes[$this->_model->sub_type].')';
         }
 
-        return $readableName;
+        return _cw($readableName);
     }
 
     /**

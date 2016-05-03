@@ -193,7 +193,7 @@ class Section extends Block {
             $nameConstant = $className.'::NAME';
 
             if (defined($nameConstant)) {
-                $readableName = constant($nameConstant);
+                $readableName = _cw(constant($nameConstant));
             }
 
             if (!class_exists($className)) {
