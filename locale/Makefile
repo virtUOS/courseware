@@ -10,6 +10,7 @@ SOURCES = $(wildcard *.php */*.php */*/*.php */*/*/*.php)
 %.pot: $(SOURCES)
 	xgettext -k_cw -o $@ --from-code=ISO-8859-1 $(SOURCES)
 	msgconv -t ISO-8859-1 -o $@ $@
+	msgcat locale/js.pot $@ -o $@
 
 %.po: %.pot
 	msgmerge -qU $@ $<
