@@ -3,19 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-0503 10:53+0200\n"
-"PO-Revision-Date: 2016-04-26 21:48+0200\n"
+"POT-Creation-Date: 2016-04-28 22:19+0200\n"
+"PO-Revision-Date: 2016-05-02 10:05+0100\n"
 "Last-Translator: Tobias Thelen <tobias.thelen@uni-osnabrueck.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"Language: en\n"
+"X-Poedit-SourceCharset: windows-1252\n"
 
 #: views/import/index.php:25
 msgid "Abbrechen"
@@ -486,3 +487,199 @@ msgstr "Name of the HTML-Block"
 #: models/mooc/ui/Block.php:516
 msgid "Sie sind nicht berechtigt diesen Block zu editieren."
 msgstr "Insufficient rights to edit this block."
+
+msgid "Abschnitt einfügen"
+msgstr "Add Section"
+
+msgid "Abschnitte sortieren"
+msgstr "Sort sections"
+
+msgid "Abschnitt löschen"
+msgstr "Delete section"
+
+msgid "Abschnittstitel bearbeiten"
+msgstr "Edit title of section"
+
+msgid "Absenken"
+msgstr "Lower"
+
+msgid "Ändern"
+msgstr "Change"
+
+msgid "Anheben"
+msgstr "Raise"
+
+msgid "Anzeigen"
+msgstr "Show"
+
+msgid "anzuzeigendes Aufgabenblatt auswählen"
+msgstr "choose test to show"
+
+msgid "Aufgabenblätter verwalten"
+msgstr "administrate tests"
+
+msgid "Block hinzufügen"
+msgstr "Add block"
+
+msgid "\"Blubber\" muss in dieser Veranstaltung aktiviert sein."
+msgstr "\"Blubber\" must be activated in this course"
+
+msgid ""
+"Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten "
+"Abschnitt fortfahren."
+msgstr ""
+"Thank you! You have solved all exercises and can proceed with the next "
+"section."
+
+msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
+msgstr "Thank you! You can now proceed with the next section."
+
+msgid ""
+"Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
+msgstr "The exercise type has changed. Please consider your dozent."
+
+msgid "Die Evaluationen müssen im System aktiviert sein."
+msgstr "Evaluations must be activated on your system."
+
+msgid ""
+"Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die "
+"vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
+msgstr "This section is available after you succeeded the previous sections"
+
+msgid "Entfernen"
+msgstr "Delete"
+
+msgid "erstellt am"
+msgstr "created at"
+
+msgid ""
+"Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen."
+msgstr "There are currently no exercises available."
+
+msgid "Es wurde bisher keine Evaluation erstellt!"
+msgstr "No evaluations have been created!"
+
+msgid "Es wurde noch kein Video eingetragen."
+msgstr "No plugins found."
+
+msgid "Export"
+msgstr "Export"
+
+msgid "Frage"
+msgstr "Question"
+
+msgid "Für diese Frage haben Sie bereits eine Antwort abgegeben."
+msgstr "You have already submitted an answer for this exercise."
+
+msgid ""
+"Für diesen Diskussionsblock muss \"Blubber\" in dieser Veranstaltung "
+"eingeschaltet werden.."
+msgstr ""
+"For this block for discussions \"Blubber\" has to be activated for this "
+"course."
+
+msgid ""
+"Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet "
+"werden..."
+msgstr "Forum has to be activated for this course for this forum block ..."
+
+msgid "Gesamtes Kapitel löschen"
+msgstr "Delete whole chapter"
+
+msgid "Gesamtes Unterkapitel löschen"
+msgstr "Delete whole subchapter"
+
+msgid "Ihre Lösung ist korrekt!"
+msgstr "Your solution is correct!"
+
+msgid "Ihre Lösung wurde eingetragen."
+msgstr "Your solution has been submitted."
+
+msgid ""
+"Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal."
+msgstr "Your solution was not correct. Please try again."
+
+msgid ""
+"Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
+msgstr "There are unsupported exercise types in your current test."
+
+msgid "Import"
+msgstr "Import"
+
+msgid "Kapitel einfügen"
+msgstr "Add chapter"
+
+msgid "Kapitel sortieren"
+msgstr "Sort chapters"
+
+msgid "Kapiteltitel bearbeiten"
+msgstr "Edit title of chapter"
+
+msgid "Keine Abschnitte"
+msgstr "No sections"
+
+msgid "Keine Aufgaben."
+msgstr "No exercises"
+
+msgid "Keine Inhaltsblöcke"
+msgstr "No content blocks"
+
+msgid "Keine Kapitel"
+msgstr "No chapters"
+
+msgid "Keine Unterkapitel"
+msgstr "No subchapters"
+
+msgid "Kommentiere dies"
+msgstr "Comment this"
+
+msgid "Seitenblöcke aktivieren"
+msgstr "Activate side blocks"
+
+msgid "Sichtbar ab"
+msgstr "visible since"
+
+msgid "Sichtbar ab:"
+msgstr "visible since:"
+
+msgid "Sidebar für"
+msgstr "Sidebar for"
+
+msgid "Sortieren abschließen"
+msgstr "Complete sorting"
+
+msgid "Speichern"
+msgstr "Save"
+
+msgid "Titel des Unterkapitels bearbeiten"
+msgstr "Edit title of subchapter"
+
+msgid "Unterkapitel einfügen"
+msgstr "Add subchapter"
+
+msgid "Unterkapitel sortieren"
+msgstr "Sort subchapters"
+
+msgid "Vips muss in dieser Veranstaltung aktiviert sein."
+msgstr "Vips must be activated for this course."
+
+msgid "Was sollen die Lernenden bestätigen?"
+msgstr "What should the learner confirm?"
+
+msgid "weiter"
+msgstr "foward"
+
+msgid "zurück"
+msgstr "back"
+
+msgid "Bestätigung"
+msgstr "Confirmation"
+
+msgid "Diskussion"
+msgstr "Discussion"
+
+msgid "Evaluationen"
+msgstr "Evaluations"
+
+msgid "Freitext"
+msgstr "Free text"
