@@ -86,7 +86,7 @@ if ($flash['success']) {
                 <td>
                     <input id="max-tries" type="number" min="0" name="courseware[max-tries]" value="<?= htmlReady($courseware_block->max_tries) ?>" aria-describedby="courseware-max-tries-description">
                     <label style="margin-left: 20px;" for="num-counts-infinity">
-                        <?= cw('Unbegrenzt') ?>
+                        <?= _cw('Unbegrenzt') ?>
                         <input id="max-tries-infinity" type="checkbox" name="courseware[max-tries-infinity]" aria-describedby="courseware-max-tries-description">
                     </label>
                     <? if ($courseware_block->max_tries === -1): ?>
