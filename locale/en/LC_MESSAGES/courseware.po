@@ -7,26 +7,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-28 22:19+0200\n"
+"POT-Creation-Date: 2016-05-03 13:19+0200\n"
 "PO-Revision-Date: 2016-05-02 10:05+0100\n"
 "Last-Translator: Tobias Thelen <tobias.thelen@uni-osnabrueck.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
-"Language: en\n"
 "X-Poedit-SourceCharset: windows-1252\n"
 
-#: Courseware.php:83
+#: Courseware.php:85
 msgid "Einstellungen"
 msgstr "Settings"
 
-#: Courseware.php:89
+#: Courseware.php:91
 msgid "Fortschrittsübersicht"
 msgstr "Progress"
 
-#: Courseware.php:214
+#: Courseware.php:216
 msgid ""
 "Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
 "erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
@@ -42,21 +42,21 @@ msgstr ""
 "questions and tests within the Vips plugin and insert them as blocks to a "
 "courseware section."
 
-#: Courseware.php:215
+#: Courseware.php:217
 msgid "Information"
 msgstr "Information"
 
-#: Courseware.php:217
+#: Courseware.php:219
 msgid ""
 "Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
 "'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
 msgstr "You can rename the courseware tab. Select 'setting' when in edit mode."
 
-#: Courseware.php:218
+#: Courseware.php:220
 msgid "Tipp"
 msgstr "Tip"
 
-#: Courseware.php:220
+#: Courseware.php:222
 msgid ""
 "Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
 "direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
@@ -69,11 +69,11 @@ msgstr ""
 "communication elements and small quizzes. A progress overview lets learners "
 "track their progress."
 
-#: Courseware.php:221
+#: Courseware.php:223
 msgid "Hinweis"
 msgstr "Hint"
 
-#: Courseware.php:282
+#: Courseware.php:284
 msgid "Zurück zur Courseware"
 msgstr "Back to courseware"
 
@@ -81,7 +81,7 @@ msgstr "Back to courseware"
 msgid "Die Einstellungen wurden gespeichert."
 msgstr "Settings saved."
 
-#: controllers/courseware.php:168
+#: controllers/courseware.php:179
 msgid "Tutoren können diese Einstellung nicht speichern."
 msgstr "Tutors cannot change this setting."
 
@@ -97,12 +97,12 @@ msgstr "The import archive does not contain a data.xml file."
 msgid "Die Datendatei data.xml enthält kein valides XML."
 msgstr "The data file data.xml does not contain valid XML."
 
-#: blocks/Courseware/Courseware.php:504
+#: blocks/Courseware/Courseware.php:515
 #: models/mooc/db/CoursewareFactory.php:57
 msgid "Unterkapitel 1"
 msgstr "Subchapter 1"
 
-#: blocks/Courseware/Courseware.php:511
+#: blocks/Courseware/Courseware.php:522
 #: models/mooc/db/CoursewareFactory.php:66
 msgid "Abschnitt 1"
 msgstr "Section 1"
@@ -123,15 +123,15 @@ msgstr "Insufficient rights to create blocks."
 msgid "Sie sind nicht berechtigt Blöcke zu löschen."
 msgstr "Insufficient rights to delete blocks."
 
-#: blocks/TestBlock/TestBlock.php:55
+#: blocks/TestBlock/TestBlock.php:58
 msgid "Selbsttest"
 msgstr "Self test"
 
-#: blocks/TestBlock/TestBlock.php:56
+#: blocks/TestBlock/TestBlock.php:59
 msgid "Übungsblatt"
 msgstr "Exercise sheet"
 
-#: blocks/TestBlock/TestBlock.php:179 blocks/TestBlock/TestBlock.php:208
+#: blocks/TestBlock/TestBlock.php:182 blocks/TestBlock/TestBlock.php:236
 msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
 msgstr "The exercise sheet cannot be edited currently."
 
@@ -206,11 +206,30 @@ msgstr "sequential"
 msgid "Blockeinstellungen"
 msgstr "Block settings"
 
-#: views/courseware/settings.php:78
+#: views/courseware/settings.php:74
+#, fuzzy
+msgid "Selbsttests"
+msgstr "Self test"
+
+#: views/courseware/settings.php:80
+msgid "Anzahl Versuche"
+msgstr "Number of tries"
+
+#: views/courseware/settings.php:82
+msgid ""
+"Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben eines "
+"Selbsttests hat, bevor die Lösung der Aufgabe angezeigt wird."
+msgstr "The Number of tries to solve the question of a self test until the solution is shown to him."
+
+#: views/courseware/settings.php:89
+msgid "Unbegrenzt"
+msgstr "Infinte"
+
+#: views/courseware/settings.php:112
 msgid "Übernehmen"
 msgstr "Apply"
 
-#: views/courseware/settings.php:78
+#: views/courseware/settings.php:112
 msgid "Änderungen übernehmen"
 msgstr "Apply changes"
 
@@ -342,7 +361,8 @@ msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
 msgstr "Thank you! You can now proceed with the next section."
 
 msgid ""
-"Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
+"Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren "
+"Dozenten."
 msgstr "The exercise type has changed. Please consider your dozent."
 
 msgid "Die Evaluationen müssen im System aktiviert sein."
@@ -386,8 +406,8 @@ msgstr ""
 "course."
 
 msgid ""
-"Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet "
-"werden..."
+"Für diesen Forumsblock muss das Forum in dieser Veranstaltung "
+"eingeschaltet werden..."
 msgstr "Forum has to be activated for this course for this forum block ..."
 
 msgid "Gesamtes Kapitel löschen"
@@ -407,7 +427,8 @@ msgid ""
 msgstr "Your solution was not correct. Please try again."
 
 msgid ""
-"Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
+"Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen "
+"enthalten!"
 msgstr "There are unsupported exercise types in your current test."
 
 msgid "Import"
