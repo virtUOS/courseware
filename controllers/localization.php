@@ -22,8 +22,6 @@ class LocalizationController extends CoursewareStudipController
         // load translatable texts
         $cache = StudipCacheFactory::getCache();
 
-        $cache->expire('courseware/translatables');
-
         if (!$this->translatable_texts = unserialize($cache->read('courseware/translatables'))) {
             $this->translatable_texts = array();
 
