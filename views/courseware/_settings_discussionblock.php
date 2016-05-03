@@ -1,9 +1,9 @@
 <tr>
     <td>
         <label for="courseware-discussionblock">
-            <?= _('Diskussionsblock aktivieren') ?><br>
+            <?= _cw('Diskussionsblock aktivieren') ?><br>
             <dfn id="courseware-discussionblock-description">
-                <?= _('Der Diskussionsblock bietet eine gute Möglichkeit zur Kommunikation zwischen den Teilnehmern. Durch die Aktivierung muss aber der Blubber-Reiter entfernt werden.'); ?>
+                <?= _cw('Der Diskussionsblock bietet eine gute Möglichkeit zur Kommunikation zwischen den Teilnehmern. Durch die Aktivierung muss aber der Blubber-Reiter entfernt werden.'); ?>
             </dfn>
         </label>
     </td>

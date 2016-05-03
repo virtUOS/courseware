@@ -54,8 +54,8 @@ if ($flash['success']) {
                 <td>
                     <? $progression_type = $courseware_block->progression; ?>
                     <select name="courseware[progression]" id="courseware-progression" aria-describedby="courseware-progression-description">
-                        <option value="free"<?= $courseware_block->progression === Courseware::PROGRESSION_FREE ? ' selected' : '' ?>> <?= _("frei") ?> </option>
-                        <option value="seq"<?= $courseware_block->progression === Courseware::PROGRESSION_SEQ  ? ' selected' : '' ?>>  <?= _("sequentiell") ?> </option>
+                        <option value="free"<?= $courseware_block->progression === Courseware::PROGRESSION_FREE ? ' selected' : '' ?>> <?= _cw("frei") ?> </option>
+                        <option value="seq"<?= $courseware_block->progression === Courseware::PROGRESSION_SEQ  ? ' selected' : '' ?>>  <?= _cw("sequentiell") ?> </option>
                     </select>
                 </td>
             </tr>

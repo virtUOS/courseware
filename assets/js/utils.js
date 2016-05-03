@@ -18,7 +18,7 @@ define({
         var url = '', message = '';
         switch (videotype) {
             case 'youtube':
-                var id = view.$('#videosrc'), value = id.val();
+                var id = view.$el.find('.videosrc'), value = id.val();
 
                 if (this.getYouTubeId(value)) {
                     var youtubeid = this.getYouTubeId(value);
@@ -27,11 +27,11 @@ define({
                     break;
                 }
 
-                url = this.buildYouTubeLink(youtubeid, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoendmin').val(),view.$('#videoendsec').val(),view.$('#videoautostart').is(':checked'));
+                url = this.buildYouTubeLink(youtubeid, view.$el.find('.videostartmin').val(), view.$el.find('.videostartsec').val(), view.$el.find('.videoendmin').val(),view.$el.find('.videoendsec').val(),view.$el.find('.videoautostart').is(':checked'));
                 id.val(youtubeid);
                 break;
             case 'matterhorn':
-                var matterhornurl = view.$('#videosrc').val();
+                var matterhornurl = view.$el.find('.videosrc').val();
 
                 if (matterhornurl.indexOf('?id=') == -1 ) {
                     message = 'Keine Matterhorn ID übergeben. Wert wurde zurückgesetzt.';
@@ -44,11 +44,11 @@ define({
                 }
 
                 matterhornurl = matterhornurl.split('&')[0];
-                url = this.buildMatterhornLink(matterhornurl, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoautostart').is(':checked'), view.$('#videocontrols').is(':checked'));
-                view.$('#videosrc').val(matterhornurl);
+                url = this.buildMatterhornLink(matterhornurl, view.$el.find('.videostartmin').val(), view.$el.find('.videostartsec').val(), view.$el.find('.videoautostart').is(':checked'), view.$el.find('.videocontrols').is(':checked'));
+                view.$el.find('.videosrc').val(matterhornurl);
                 break;
             case 'url':
-                url = view.$('#videosrc').val();
+                url = view.$el.find('.videosrc').val();
 
                 if (url.match(/youtube\.(com|de)/)) {                           // do we have a youtube url?
                     var youtubeid = url.split('v=')[1];
@@ -58,9 +58,9 @@ define({
                     }
 
                     // generate usable youtube url and set the appropriate values in the view
-                    url = this.buildYouTubeLink(youtubeid, view.$('#videostartmin').val(), view.$('#videostartsec').val(), view.$('#videoendmin').val(),view.$('#videoendsec').val(),view.$('#videoautostart').is(':checked'));
-                    view.$('#videosrc').val(youtubeid);
-                    view.$('#videotype').val('youtube');
+                    url = this.buildYouTubeLink(youtubeid, view.$el.find('.videostartmin').val(), view.$el.find('.videostartsec').val(), view.$el.find('.videoendmin').val(),view.$el.find('.videoendsec').val(),view.$el.find('.videoautostart').is(':checked'));
+                    view.$el.find('.videosrc').val(youtubeid);
+                    view.$el.find('.videotype').val('youtube');
                 }
 
                 break;
@@ -89,48 +89,48 @@ define({
     },
 
     resetVideoData: function (view) {
-        view.$('#videosrc').val('');
-        view.$('#videosettings input:not([name="videoaspect"])').val('').removeAttr('checked').removeAttr('selected').prop('disabled', false);
+        view.$el.find('.videosrc').val('');
+        view.$el.find('.videosettings input:not([name="videoaspect"])').val('').removeAttr('checked').removeAttr('selected').prop('disabled', false);
     },
 
     setVideoData: function (view, url, videotype) {
-        view.$('#videosettings input').prop('disabled', false);
+        view.$el.find('.videosettings input').prop('disabled', false);
 
         if (videotype == 'youtube') {
-            view.$('#videocontrols').prop('disabled', true);
+            view.$el.find('.videocontrols').prop('disabled', true);
 
             if(view.$('.video-wrapper').hasClass('aspect-43')) {
-                view.$('#videoaspect43').prop('checked', true);
+                view.$el.find('.videoaspect43').prop('checked', true);
             } else {
-                view.$('#videoaspect169').prop('checked', true);
+                view.$el.find('.videoaspect169').prop('checked', true);
             }
 
             if (this.getVideoType(url) == 'youtube') {
                 var youtubeid = url.slice(24).split("?",1);
-                view.$('#videosrc').val(youtubeid);
+                view.$el.find('.videosrc').val(youtubeid);
                 var start = url.slice(url.indexOf("start=")+6, url.length);
                 start = start.split("&", 1);
-                view.$('#videostartmin').val(parseInt(start/60));
-                view.$('#videostartsec').val(start%60);
+                view.$el.find('.videostartmin').val(parseInt(start/60));
+                view.$el.find('.videostartsec').val(start%60);
                 var end = url.slice(url.indexOf("end=")+4, url.length);
-                view.$('#videoendmin').val(parseInt(end/60));
-                view.$('#videoendsec').val(end%60);
+                view.$el.find('.videoendmin').val(parseInt(end/60));
+                view.$el.find('.videoendsec').val(end%60);
                 var autoplay = url.slice(url.indexOf("autoplay=")+9, url.length);
 
                 if (parseInt(autoplay) == 1) {
-                    view.$('#videoautostart').attr("checked", '');
+                    view.$el.find('.videoautostart').attr("checked", '');
                 }
             }
         }
 
         if (videotype == 'matterhorn') {
-            view.$('#videoendmin').prop('disabled', true);
-            view.$('#videoendsec').prop('disabled', true);
+            view.$el.find('.videoendmin').prop('disabled', true);
+            view.$el.find('.videoendsec').prop('disabled', true);
 
             if (this.getVideoType(url) == 'matterhorn') {
                 var urlandid = url.split("&", 1);
                 var autoplay = '', start = '', hidecontrols = '';
-                view.$('#videosrc').val(urlandid);
+                view.$el.find('.videosrc').val(urlandid);
                 var urlArray = url.split("&");
                 $.each(urlArray, function ( index, value) {
                     if (value.indexOf('play') != -1) {
@@ -147,26 +147,26 @@ define({
                 });
 
                 if (autoplay == 'true') {
-                    view.$('#videoautostart').attr("checked", '');
+                    view.$el.find('.videoautostart').attr("checked", '');
                 }
 
                 if (hidecontrols == 'true') {
-                    view.$('#videocontrols').attr("checked", '');
+                    view.$el.find('.videocontrols').attr("checked", '');
                 }
 
                 if (start != '') {
                     var start = start.split("m");
-                    view.$('#videostartmin').val(start[0]);
-                    view.$('#videostartsec').val(start[1].split("s",1));
+                    view.$el.find('.videostartmin').val(start[0]);
+                    view.$el.find('.videostartsec').val(start[1].split("s",1));
                 }
             }
         }
 
         if (videotype == 'url') {
-            view.$('#videosettings input:not([name="videoaspect"])').prop('disabled', true);
+            view.$el.find('.videosettings input:not([name="videoaspect"])').prop('disabled', true);
 
             if (this.getVideoType(url) == 'url') {
-                view.$('#videosrc').val(url);
+                view.$el.find('.videosrc').val(url);
             }
         }
     },

@@ -1,10 +1,10 @@
 <div class="styled-select">
     <select class="block-types">
-      {{#content_block_types}}
-        <option data-blocktype="{{type}}" {{#sub_type}} data-blocksubtype="{{sub_type}}"{{/sub_type}}>
-            {{#i18n}}{{name}}{{/i18n}}
-        </option>
-      {{/content_block_types}}
+        {{#content_block_types}}
+            <option data-blocktype="{{type}}" {{#sub_type}} data-blocksubtype="{{sub_type}}"{{/sub_type}}>
+                {{#i18n}}{{name}}{{/i18n}}
+            </option>
+        {{/content_block_types}}
     </select>
 </div>
 <button class="button add-block">{{#i18n}}Block hinzufügen{{/i18n}}</button>

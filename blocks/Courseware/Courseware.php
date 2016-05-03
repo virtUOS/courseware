@@ -512,14 +512,14 @@ class Courseware extends Block {
     private function createChapter($parent, $data)
     {
         $chapter = $this->createAnyBlock($parent, 'Chapter', $data);
-        $this->createSubchapter($chapter, array('title' => _('Unterkapitel 1')));
+        $this->createSubchapter($chapter, array('title' => _cw('Unterkapitel 1')));
         return $chapter;
     }
 
     private function createSubchapter($parent, $data)
     {
         $subchapter = $this->createAnyBlock($parent, 'Subchapter', $data);
-        $this->createSection($subchapter, array('title' => _('Abschnitt 1')));
+        $this->createSection($subchapter, array('title' => _cw('Abschnitt 1')));
         return $subchapter;
     }
 

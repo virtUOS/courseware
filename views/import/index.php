@@ -1,9 +1,9 @@
-<h2><?=_("Datei hochladen")?></h2>
+<h2><?=_cw("Datei hochladen")?></h2>
 <?php
 /** @var string[] $errors */
 
 if (count($errors) > 0) {
-	echo"<p>"._("Es sind Fehler aufgetreten:")."</p>";
+    echo"<p>"._cw("Es sind Fehler aufgetreten:")."</p>";
     echo '<ul>';
     foreach ($errors as $error):
         echo '<li>'.htmlReady($error).'</li>';
@@ -12,7 +12,7 @@ if (count($errors) > 0) {
 }
 ?>
 <p>&nbsp;</p>
-<p><?= _("Laden Sie eine Datei hoch, die Sie zuvor in einer MOOC.IP-Installation exportiert haben.")?></p>
+<p><?= _cw("Laden Sie eine Datei hoch, die Sie zuvor in einer MOOC.IP-Installation exportiert haben.")?></p>
 
 <p>&nbsp;</p>
 <form method="post" enctype="multipart/form-data">
@@ -22,17 +22,17 @@ if (count($errors) > 0) {
     <div>
         <?php
         echo Studip\Button::createAccept();
-        echo Studip\LinkButton::createCancel(_('Abbrechen'), PluginEngine::getURL($this->plugin, array(), 'courseware'));
+        echo Studip\LinkButton::createCancel(_cw('Abbrechen'), PluginEngine::getURL($this->plugin, array(), 'courseware'));
         ?>
     </div>
 </form>
 
 <p>&nbsp;</p>
-<h2><?=_("Im Content-Marktplatz suchen")?></h2>
+<h2><?=_cw("Im Content-Marktplatz suchen")?></h2>
 <p>&nbsp;</p>
 <form method="POST">
     <input type="hidden" name="subcmd" value="search">
-    <p><?=_("Stichwortsuche: ")?><input type="text" size=40 name="q" value="<?=Request::option('q')?>">
+    <p><?=_cw("Stichwortsuche: ")?><input type="text" size=40 name="q" value="<?=Request::option('q')?>">
 
     <div>
         <?php
@@ -42,16 +42,16 @@ if (count($errors) > 0) {
 </form>
 
 <? if (empty($modules)): ?>
-    <?= MessageBox::info(_('Es wurden keine Plugins gefunden.')) ?>
+    <?= MessageBox::info(_cw('Es wurden keine Plugins gefunden.')) ?>
 <? else: ?>
-    <h2><?=_("Suchtreffer:")?></h2>
+    <h2><?=_cw("Suchtreffer:")?></h2>
     <table class="default">
         <tr>
-            <th class="plugin_image"><?= _('Bild')?></th>
-            <th><?= _('Name und Beschreibung')?></th>
-            <th><?= _('Version') ?></th>
-            <th><?= _('Bewertung') ?></th>
-            <th class="plugin_install"><?= _('Installieren') ?></th>
+            <th class="plugin_image"><?= _cw('Bild')?></th>
+            <th><?= _cw('Name und Beschreibung')?></th>
+            <th><?= _cw('Version') ?></th>
+            <th><?= _cw('Bewertung') ?></th>
+            <th class="plugin_install"><?= _cw('Installieren') ?></th>
         </tr>
 
         <? foreach ($modules as $name => $plugin): ?>
@@ -91,7 +91,7 @@ if (count($errors) > 0) {
                     <form method="post">
                         <input type="hidden" name="subcmd" value="install">
                         <input type="hidden" name="n" value="<?=htmlReady($name)?>">
-                        <?= Assets::input("icons/16/blue/install.png", array('type' => "image", 'class' => "middle", 'name' => "install", 'title' => _('Plugin installieren'))) ?>
+                        <?= Assets::input("icons/16/blue/install.png", array('type' => "image", 'class' => "middle", 'name' => "install", 'title' => _cw('Plugin installieren'))) ?>
                     </form>
                 </td>
             </tr>

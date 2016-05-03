@@ -45,7 +45,7 @@ class ImportController extends CoursewareStudipController
             $repo = new PluginRepository('http://content.moocip.de/?dispatch=xml');
             $module=$repo->getPlugin(Request::quoted('n'));
             if (!@copy($module['url'], $temp_name)) {
-                $this->msg = _('Das Herunterladen des Moduls ist fehlgeschlagen.');
+                $this->msg = _cw('Das Herunterladen des Moduls ist fehlgeschlagen.');
             }
             $this->installModule($temp_name);
         }
@@ -68,7 +68,7 @@ class ImportController extends CoursewareStudipController
         $dataFile = $tempDir.'/data.xml';
 
         if (!is_file($dataFile)) {
-            $errors[] = _('Import-Archiv enthält keine Datendatei data.xml.');
+            $errors[] = _cw('Import-Archiv enthält keine Datendatei data.xml.');
 
             return false;
         }
@@ -77,7 +77,7 @@ class ImportController extends CoursewareStudipController
         $validationErrors = $validator->validate(file_get_contents($dataFile));
 
         if (count($validationErrors) > 0) {
-            $errors[] = _('Die Datendatei data.xml enthält kein valides XML.');
+            $errors[] = _cw('Die Datendatei data.xml enthält kein valides XML.');
 
             foreach ($validationErrors as $validationError) {
                 $errors[] = $validationError;
