@@ -22,11 +22,13 @@ class LocalizationController extends CoursewareStudipController
         // load translatable texts
         $cache = StudipCacheFactory::getCache();
 
+        $cache->expire('courseware/translatables');
+
         if (!$this->translatable_texts = unserialize($cache->read('courseware/translatables'))) {
             $this->translatable_texts = array();
 
             // read the text strings that are (potentially) used in JS
-            $fd = fopen(__DIR__ .'/../locale/js.pot', 'r');
+            $fd = fopen(__DIR__ .'/../locale/en/LC_MESSAGES/courseware.po', 'r');
             while ($line = fgets($fd)) {
                 if (strpos($line, "msgid") !== false) {
                     $line = str_replace("\n", '', $line);
