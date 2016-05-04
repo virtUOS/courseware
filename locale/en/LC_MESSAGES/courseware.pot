@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  js.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-0503 10:58+0200\n"
+"POT-Creation-Date: 2016-05-0504 10:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "#-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-03 10:58+0200\n"
+"POT-Creation-Date: 2016-05-04 10:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,7 +90,7 @@ msgid ""
 "vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
 msgstr ""
 
-#: Courseware.php:85
+#: Courseware.php:84
 msgid "Einstellungen"
 msgstr ""
 
@@ -182,12 +182,6 @@ msgstr ""
 msgid "Seitenblöcke aktivieren"
 msgstr ""
 
-msgid "Sichtbar ab"
-msgstr ""
-
-msgid "Sichtbar ab:"
-msgstr ""
-
 msgid "Sidebar für"
 msgstr ""
 
@@ -218,11 +212,35 @@ msgstr ""
 msgid "zurück"
 msgstr ""
 
-#: Courseware.php:91
+#: views/localization/index.php:2
+msgid "Neuer Abschnitt"
+msgstr ""
+
+msgid "Neues Kapitel"
+msgstr ""
+
+msgid "Neues Unterkapitel"
+msgstr ""
+
+msgid "Sichtbar ab"
+msgstr ""
+
+msgid "Wollen Sie den Block wirklich löschen?"
+msgstr ""
+
+msgid "Wollen Sie den gesamten Abschnitt wirklich löschen?"
+msgstr ""
+
+msgid ""
+"Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke "
+"werden unwiderruflich entfernt!"
+msgstr ""
+
+#: Courseware.php:90
 msgid "Fortschrittsübersicht"
 msgstr ""
 
-#: Courseware.php:216
+#: Courseware.php:219
 msgid ""
 "Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
 "erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
@@ -232,21 +250,21 @@ msgid ""
 "in einen Courseware-Abschnitt ein."
 msgstr ""
 
-#: Courseware.php:217
+#: Courseware.php:220
 msgid "Information"
 msgstr ""
 
-#: Courseware.php:219
+#: Courseware.php:222
 msgid ""
 "Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
 "'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
 msgstr ""
 
-#: Courseware.php:220
+#: Courseware.php:223
 msgid "Tipp"
 msgstr ""
 
-#: Courseware.php:222
+#: Courseware.php:225
 msgid ""
 "Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
 "direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
@@ -255,11 +273,11 @@ msgid ""
 "Fortschrittsübersicht."
 msgstr ""
 
-#: Courseware.php:223
+#: Courseware.php:226
 msgid "Hinweis"
 msgstr ""
 
-#: Courseware.php:284
+#: Courseware.php:287
 msgid "Zurück zur Courseware"
 msgstr ""
 
@@ -466,184 +484,4 @@ msgstr ""
 
 #: models/mooc/ui/Block.php:516
 msgid "Sie sind nicht berechtigt diesen Block zu editieren."
-msgstr ""
-
-msgid "Abschnitt einfügen"
-msgstr ""
-
-msgid "Abschnitte sortieren"
-msgstr ""
-
-msgid "Abschnitt löschen"
-msgstr ""
-
-msgid "Abschnittstitel bearbeiten"
-msgstr ""
-
-msgid "Absenken"
-msgstr ""
-
-msgid "Ändern"
-msgstr ""
-
-msgid "Anheben"
-msgstr ""
-
-msgid "Anzeigen"
-msgstr ""
-
-msgid "anzuzeigendes Aufgabenblatt auswählen"
-msgstr ""
-
-msgid "Aufgabenblätter verwalten"
-msgstr ""
-
-msgid "Block hinzufügen"
-msgstr ""
-
-msgid "msgid \"Blubber\" muss in dieser Veranstaltung aktiviert sein."
-msgstr ""
-
-msgid "Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten Abschnitt fortfahren."
-msgstr ""
-
-msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
-msgstr ""
-
-msgid "Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
-msgstr ""
-
-msgid "Die Evaluationen müssen im System aktiviert sein."
-msgstr ""
-
-msgid "Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
-msgstr ""
-
-msgid "Entfernen"
-msgstr ""
-
-msgid "erstellt am"
-msgstr ""
-
-msgid "Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen."
-msgstr ""
-
-msgid "Es wurde bisher keine Evaluation erstellt!"
-msgstr ""
-
-msgid "Es wurde noch kein Video eingetragen."
-msgstr ""
-
-msgid "Export"
-msgstr ""
-
-msgid "Frage"
-msgstr ""
-
-msgid "Für diese Frage haben Sie bereits eine Antwort abgegeben."
-msgstr ""
-
-msgid "Für diesen Diskussionsblock muss \"Blubber\" in dieser Veranstaltung eingeschaltet werden.."
-msgstr ""
-
-msgid "Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet werden..."
-msgstr ""
-
-msgid "Gesamtes Kapitel löschen"
-msgstr ""
-
-msgid "Gesamtes Unterkapitel löschen"
-msgstr ""
-
-msgid "Ihre Lösung ist korrekt!"
-msgstr ""
-
-msgid "Ihre Lösung wurde eingetragen."
-msgstr ""
-
-msgid "Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal."
-msgstr ""
-
-msgid "Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
-msgstr ""
-
-msgid "Import"
-msgstr ""
-
-msgid "Kapitel einfügen"
-msgstr ""
-
-msgid "Kapitel sortieren"
-msgstr ""
-
-msgid "Kapiteltitel bearbeiten"
-msgstr ""
-
-msgid "Keine Abschnitte"
-msgstr ""
-
-msgid "Keine Aufgaben."
-msgstr ""
-
-msgid "Keine Inhaltsblöcke"
-msgstr ""
-
-msgid "Keine Kapitel"
-msgstr ""
-
-msgid "Keine Unterkapitel"
-msgstr ""
-
-msgid "Kommentiere dies"
-msgstr ""
-
-msgid "Seitenblöcke aktivieren"
-msgstr ""
-
-msgid "Sichtbar ab"
-msgstr ""
-
-msgid "Sichtbar ab:"
-msgstr ""
-
-msgid "Sidebar für"
-msgstr ""
-
-msgid "Sortieren abschließen"
-msgstr ""
-
-msgid "Speichern"
-msgstr ""
-
-msgid "Titel des Unterkapitels bearbeiten"
-msgstr ""
-
-msgid "Unterkapitel einfügen"
-msgstr ""
-
-msgid "Unterkapitel sortieren"
-msgstr ""
-
-msgid "Vips muss in dieser Veranstaltung aktiviert sein."
-msgstr ""
-
-msgid "Was sollen die Lernenden bestätigen?"
-msgstr ""
-
-msgid "weiter"
-msgstr ""
-
-msgid "zurück"
-msgstr ""
-
-msgid "Bestätigung"
-msgstr ""
-
-msgid "Diskussion"
-msgstr ""
-
-msgid "Evaluationen"
-msgstr ""
-
-msgid "Freitext"
 msgstr ""

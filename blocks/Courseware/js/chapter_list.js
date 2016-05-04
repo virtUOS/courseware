@@ -99,7 +99,10 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 chapter:    i18n("Neues Kapitel"),
                 subchapter: i18n("Neues Unterkapitel")
             };
-            return new BlockModel({ title: titles[type], type: type });
+
+            var visible_since_title = i18n("Sichtbar ab");
+
+            return new BlockModel({ title: titles[type], type: type, visible_since_title: visible_since_title });
         },
 
         _addStructure: function (parent_id, model) {
