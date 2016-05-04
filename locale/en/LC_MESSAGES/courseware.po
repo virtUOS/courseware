@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-0504 10:21+0200\n"
+"POT-Creation-Date: 2016-05-0504 10:39+0200\n"
 "PO-Revision-Date: 2016-05-02 10:05+0100\n"
 "Last-Translator: Tobias Thelen <tobias.thelen@uni-osnabrueck.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -205,7 +205,6 @@ msgstr "foward"
 msgid "zurück"
 msgstr "back"
 
-#: views/localization/index.php:2
 msgid "Neuer Abschnitt"
 msgstr "New section"
 
@@ -228,6 +227,18 @@ msgid ""
 "Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke "
 "werden unwiderruflich entfernt!"
 msgstr ""
+
+msgid "Bestätigung"
+msgstr "Confirmation"
+
+msgid "Diskussion"
+msgstr "Discussion"
+
+msgid "Evaluationen"
+msgstr "Evaluations"
+
+msgid "Freitext"
+msgstr "Free text"
 
 #: Courseware.php:90
 msgid "Fortschrittsübersicht"
@@ -497,18 +508,3 @@ msgstr "Name of the HTML-Block"
 #: models/mooc/ui/Block.php:516
 msgid "Sie sind nicht berechtigt diesen Block zu editieren."
 msgstr "Insufficient rights to edit this block."
-
-#~ msgid "Sichtbar ab:"
-#~ msgstr "visible since:"
-
-#~ msgid "Bestätigung"
-#~ msgstr "Confirmation"
-
-#~ msgid "Diskussion"
-#~ msgstr "Discussion"
-
-#~ msgid "Evaluationen"
-#~ msgstr "Evaluations"
-
-#~ msgid "Freitext"
-#~ msgstr "Free text"
