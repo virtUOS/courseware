@@ -61,6 +61,7 @@ function zip()
         'docs',
         'export',
         'import',
+        'locale',
         'migrations',
         'models',
         'vendor',
