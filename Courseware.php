@@ -7,6 +7,10 @@ use Mooc\DB\CoursewareFactory;
 use Mooc\UI\BlockFactory;
 use Courseware\User;
 
+function _cw($message) {
+    return dgettext('courseware', $message);
+}
+
 /**
  * MoocIP.class.php
  *
