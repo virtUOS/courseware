@@ -1,6 +1,8 @@
 define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helper) {
     'use strict';
 
+    var counter = 0;
+
     function updateSizes(tableElement, onResizeEvent) {
         var columns = tableElement.find('#rh_labels, #rh_list');
         var items = tableElement.find('.rh_label, .rh_item');
@@ -45,7 +47,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         )
                         .then(function () {
                             $block.find('.exercise').hide();
-                            $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
+                            $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show())
                         })
                         .done();
                 }
@@ -59,7 +61,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     $block = this.$el.parent();
 
                 var $this_block = this; // We need 'this' in the handler for postRender functions
-            
+
+
                 helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
                     .then(
                         function () {
@@ -84,6 +87,13 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     $num = parseInt(options.id),
                     $block = this.$el.parent();
 
+                //var $form = $block.find('#exercise'+$num).find('form');
+                //
+                //console.log("changing exercise");
+                //console.log($form);
+                //var data = $form;
+                //helper.callHandler(this.model.id, 'reset_try_counter', $form.serialize());
+
                 if (options.direction == 'next') {
                     $num++;
                 } else {
@@ -101,7 +111,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 $block.find('.exercise').hide();
                 this.postRenderExercise($block.find('#exercise'+$num).show());
             },
-            
+
             'click button[name=exercise-hint-button]': function (event) {
                     $("#exercise-hint-"+this.$(event.target).attr("exercise-data")).toggle("slow");
             }
@@ -117,7 +127,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         postRender: function () {
             var view = this;
             var $form = this.$('.exercise-content form');
-            
+
             $form.each(function () {
                     var $exercise_type = $(this).find('input[name="exercise_type"]').val();
                     var $user_answers = $(this).find('input[name="user_answers_string"]').val();
@@ -133,7 +143,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                                 var $radio = $('#'+$radioid);
                                 $radio.attr("checked","checked");
                                 break;
-                            
+
                             case "mc_exercise":
                                 var $mc_answers = $user_answers.split(",");
                                 $.each($mc_answers, function(index, value) {
@@ -146,17 +156,17 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                                 var $textbox = $thisform.find('textarea');
                                 $textbox.val($user_answers);
                                 break;
-                                
+
                             case "lt_exercise":
                                 var $textfield = $thisform.find('input[type="text"]');
                                 $textfield.val($user_answers);
                                 break;
-                            
+
                             default:
                                 return false;
                         }
                     }
-            }); 
+            });
 
             /*
             var fixAnswersHeight = function (labels, answers) {

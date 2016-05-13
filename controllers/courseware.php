@@ -127,6 +127,17 @@ class CoursewareController extends CoursewareStudipController {
         ////////////////////////
         $this->storeEditingPermission(isset($courseware_settings['editing_permission']) ? true : false);
 
+        /////////////////////////////
+        // MAX COUNT FOR SELFTESTS //
+        /////////////////////////////
+        $try1 = isset($courseware_settings['max-tries-infinity']);
+        $try2 = isset($courseware_settings['max-tries']);
+        if (isset($courseware_settings['max-tries-infinity'])) {
+            $this->storeMaxCount(-1);
+        } else if(isset($courseware_settings['max-tries'])) {
+            $this->storeMaxCount($courseware_settings['max-tries']);
+        }
+
         $this->courseware_block->save();
     }
 
@@ -169,6 +180,13 @@ class CoursewareController extends CoursewareStudipController {
         }
 
         if (!$this->courseware_block->setEditingPermission($perm)) {
+            // TODO: send a message back
+        }
+    }
+
+    private function storeMaxCount($count)
+    {
+        if(!$this->courseware_block->setMaxTries($count)) {
             // TODO: send a message back
         }
     }

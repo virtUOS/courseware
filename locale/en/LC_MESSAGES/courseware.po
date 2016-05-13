@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-0504 10:39+0200\n"
-"PO-Revision-Date: 2016-05-02 10:05+0100\n"
+"PO-Revision-Date: 2016-05-04 13:13+0100\n"
 "Last-Translator: Tobias Thelen <tobias.thelen@uni-osnabrueck.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: en\n"
@@ -55,7 +55,6 @@ msgstr "administrate tests"
 msgid "Block hinzufügen"
 msgstr "Add block"
 
-#, fuzzy
 msgid "Blubber muss in dieser Veranstaltung aktiviert sein."
 msgstr "\"Blubber\" must be activated in this course"
 
@@ -218,15 +217,17 @@ msgid "Sichtbar ab"
 msgstr "visible since"
 
 msgid "Wollen Sie den Block wirklich löschen?"
-msgstr ""
+msgstr "Do you really want to delete that block?"
 
 msgid "Wollen Sie den gesamten Abschnitt wirklich löschen?"
-msgstr ""
+msgstr "Do your really want to delete the whole chapter?"
 
 msgid ""
 "Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke "
 "werden unwiderruflich entfernt!"
 msgstr ""
+"Do you really want to delete? All sections and blocks contained will be "
+"deleted and cannot be restored!"
 
 msgid "Bestätigung"
 msgstr "Confirmation"
@@ -299,7 +300,7 @@ msgstr "Back to courseware"
 msgid "Die Einstellungen wurden gespeichert."
 msgstr "Settings saved."
 
-#: controllers/courseware.php:168
+#: controllers/courseware.php:179
 msgid "Tutoren können diese Einstellung nicht speichern."
 msgstr "Tutors cannot change this setting."
 
@@ -315,12 +316,12 @@ msgstr "The import archive does not contain a data.xml file."
 msgid "Die Datendatei data.xml enthält kein valides XML."
 msgstr "The data file data.xml does not contain valid XML."
 
-#: blocks/Courseware/Courseware.php:504
+#: blocks/Courseware/Courseware.php:515
 #: models/mooc/db/CoursewareFactory.php:57
 msgid "Unterkapitel 1"
 msgstr "Subchapter 1"
 
-#: blocks/Courseware/Courseware.php:511
+#: blocks/Courseware/Courseware.php:522
 #: models/mooc/db/CoursewareFactory.php:66
 msgid "Abschnitt 1"
 msgstr "Section 1"
@@ -341,15 +342,15 @@ msgstr "Insufficient rights to create blocks."
 msgid "Sie sind nicht berechtigt Blöcke zu löschen."
 msgstr "Insufficient rights to delete blocks."
 
-#: blocks/TestBlock/TestBlock.php:55
+#: blocks/TestBlock/TestBlock.php:58
 msgid "Selbsttest"
 msgstr "Self test"
 
-#: blocks/TestBlock/TestBlock.php:56
+#: blocks/TestBlock/TestBlock.php:59
 msgid "Übungsblatt"
 msgstr "Exercise sheet"
 
-#: blocks/TestBlock/TestBlock.php:179 blocks/TestBlock/TestBlock.php:208
+#: blocks/TestBlock/TestBlock.php:182 blocks/TestBlock/TestBlock.php:236
 msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
 msgstr "The exercise sheet cannot be edited currently."
 
@@ -424,11 +425,27 @@ msgstr "sequential"
 msgid "Blockeinstellungen"
 msgstr "Block settings"
 
-#: views/courseware/settings.php:78
+#: views/courseware/settings.php:80
+msgid "Anzahl Versuche"
+msgstr "Number of tries"
+
+#: views/courseware/settings.php:82
+msgid ""
+"Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben eines "
+"Selbsttests hat, bevor die Lösung der Aufgabe angezeigt wird."
+msgstr ""
+"The Number of tries to solve the question of a self test until the solution "
+"is shown to him."
+
+#: views/courseware/settings.php:89
+msgid "Unbegrenzt"
+msgstr "Infinte"
+
+#: views/courseware/settings.php:112
 msgid "Übernehmen"
 msgstr "Apply"
 
-#: views/courseware/settings.php:78
+#: views/courseware/settings.php:112
 msgid "Änderungen übernehmen"
 msgstr "Apply changes"
 

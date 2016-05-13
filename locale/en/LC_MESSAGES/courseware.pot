@@ -1,4 +1,3 @@
-# #-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
@@ -7,7 +6,6 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  js.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-0504 10:39+0200\n"
@@ -296,7 +294,7 @@ msgstr ""
 msgid "Die Einstellungen wurden gespeichert."
 msgstr ""
 
-#: controllers/courseware.php:168
+#: controllers/courseware.php:179
 msgid "Tutoren können diese Einstellung nicht speichern."
 msgstr ""
 
@@ -312,12 +310,12 @@ msgstr ""
 msgid "Die Datendatei data.xml enthält kein valides XML."
 msgstr ""
 
-#: blocks/Courseware/Courseware.php:504
+#: blocks/Courseware/Courseware.php:515
 #: models/mooc/db/CoursewareFactory.php:57
 msgid "Unterkapitel 1"
 msgstr ""
 
-#: blocks/Courseware/Courseware.php:511
+#: blocks/Courseware/Courseware.php:522
 #: models/mooc/db/CoursewareFactory.php:66
 msgid "Abschnitt 1"
 msgstr ""
@@ -338,15 +336,15 @@ msgstr ""
 msgid "Sie sind nicht berechtigt Blöcke zu löschen."
 msgstr ""
 
-#: blocks/TestBlock/TestBlock.php:55
+#: blocks/TestBlock/TestBlock.php:58
 msgid "Selbsttest"
 msgstr ""
 
-#: blocks/TestBlock/TestBlock.php:56
+#: blocks/TestBlock/TestBlock.php:59
 msgid "Übungsblatt"
 msgstr ""
 
-#: blocks/TestBlock/TestBlock.php:179 blocks/TestBlock/TestBlock.php:208
+#: blocks/TestBlock/TestBlock.php:182 blocks/TestBlock/TestBlock.php:236
 msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
 msgstr ""
 
@@ -414,11 +412,29 @@ msgstr ""
 msgid "Blockeinstellungen"
 msgstr ""
 
-#: views/courseware/settings.php:78
+#: views/courseware/settings.php:74
+msgid "Selbsttests"
+msgstr ""
+
+#: views/courseware/settings.php:80
+msgid "Anzahl Versuche"
+msgstr ""
+
+#: views/courseware/settings.php:82
+msgid ""
+"Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben eines "
+"Selbsttests hat, bevor die Lösung der Aufgabe angezeigt wird."
+msgstr ""
+
+#: views/courseware/settings.php:89
+msgid "Unbegrenzt"
+msgstr ""
+
+#: views/courseware/settings.php:112
 msgid "Übernehmen"
 msgstr ""
 
-#: views/courseware/settings.php:78
+#: views/courseware/settings.php:112
 msgid "Änderungen übernehmen"
 msgstr ""
 
@@ -434,6 +450,10 @@ msgstr ""
 msgid ""
 "Laden Sie eine Datei hoch, die Sie zuvor in einer MOOC.IP-Installation "
 "exportiert haben."
+msgstr ""
+
+#: views/import/index.php:25
+msgid "Abbrechen"
 msgstr ""
 
 #: views/import/index.php:31
