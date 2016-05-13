@@ -69,6 +69,7 @@ function zip()
     ), '/^(assets|blocks).*\.less$/');
     $archive->addFile('LICENSE');
     $archive->addFile('Courseware.php');
+    $archive->addFile('CoursewareObserver.php');
     $archive->addFile('plugin.manifest');
     $archive->addFile('README.md');
     $archive->close();
