@@ -1,3 +1,4 @@
+# #-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
@@ -6,9 +7,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  js.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-0504 10:39+0200\n"
+"POT-Creation-Date: 2016-05-0513 10:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +21,7 @@ msgstr ""
 "#-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 10:39+0200\n"
+"POT-Creation-Date: 2016-05-13 10:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,6 +32,9 @@ msgstr ""
 
 #: views/import/index.php:25
 msgid "Abbrechen"
+msgstr ""
+
+msgid "Abschicken"
 msgstr ""
 
 msgid "Abschnitt einfügen"
@@ -53,6 +58,9 @@ msgstr ""
 msgid "Anheben"
 msgstr ""
 
+msgid "Antwort zurücksetzen"
+msgstr ""
+
 msgid "Anzeigen"
 msgstr ""
 
@@ -60,6 +68,9 @@ msgid "anzuzeigendes Aufgabenblatt auswählen"
 msgstr ""
 
 msgid "Aufgabenblätter verwalten"
+msgstr ""
+
+msgid "Autorenmodus"
 msgstr ""
 
 msgid "Block hinzufügen"
@@ -88,7 +99,7 @@ msgid ""
 "vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
 msgstr ""
 
-#: Courseware.php:84
+#: Courseware.php:88
 msgid "Einstellungen"
 msgstr ""
 
@@ -189,6 +200,9 @@ msgstr ""
 msgid "Speichern"
 msgstr ""
 
+msgid "Studentenmodus"
+msgstr ""
+
 msgid "Titel des Unterkapitels bearbeiten"
 msgstr ""
 
@@ -245,11 +259,11 @@ msgstr ""
 msgid "Freitext"
 msgstr ""
 
-#: Courseware.php:90
+#: Courseware.php:94
 msgid "Fortschrittsübersicht"
 msgstr ""
 
-#: Courseware.php:219
+#: Courseware.php:223
 msgid ""
 "Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
 "erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
@@ -259,21 +273,21 @@ msgid ""
 "in einen Courseware-Abschnitt ein."
 msgstr ""
 
-#: Courseware.php:220
+#: Courseware.php:224
 msgid "Information"
 msgstr ""
 
-#: Courseware.php:222
+#: Courseware.php:226
 msgid ""
 "Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
 "'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
 msgstr ""
 
-#: Courseware.php:223
+#: Courseware.php:227
 msgid "Tipp"
 msgstr ""
 
-#: Courseware.php:225
+#: Courseware.php:229
 msgid ""
 "Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
 "direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
@@ -282,11 +296,11 @@ msgid ""
 "Fortschrittsübersicht."
 msgstr ""
 
-#: Courseware.php:226
+#: Courseware.php:230
 msgid "Hinweis"
 msgstr ""
 
-#: Courseware.php:287
+#: Courseware.php:291
 msgid "Zurück zur Courseware"
 msgstr ""
 
@@ -450,10 +464,6 @@ msgstr ""
 msgid ""
 "Laden Sie eine Datei hoch, die Sie zuvor in einer MOOC.IP-Installation "
 "exportiert haben."
-msgstr ""
-
-#: views/import/index.php:25
-msgid "Abbrechen"
 msgstr ""
 
 #: views/import/index.php:31

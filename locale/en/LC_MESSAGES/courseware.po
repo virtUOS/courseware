@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-0504 10:39+0200\n"
-"PO-Revision-Date: 2016-05-04 13:13+0100\n"
+"POT-Creation-Date: 2016-05-0513 07:44+0200\n"
+"PO-Revision-Date: 2016-05-13 10:09+0100\n"
 "Last-Translator: Tobias Thelen <tobias.thelen@uni-osnabrueck.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: en\n"
@@ -21,6 +21,9 @@ msgstr ""
 #: views/import/index.php:25
 msgid "Abbrechen"
 msgstr "Abort"
+
+msgid "Abschicken"
+msgstr "Submit"
 
 msgid "Abschnitt einfügen"
 msgstr "Add Section"
@@ -43,6 +46,9 @@ msgstr "Change"
 msgid "Anheben"
 msgstr "Raise"
 
+msgid "Antwort zurücksetzen"
+msgstr "Reset answer"
+
 msgid "Anzeigen"
 msgstr "Show"
 
@@ -51,6 +57,9 @@ msgstr "choose test to show"
 
 msgid "Aufgabenblätter verwalten"
 msgstr "administrate tests"
+
+msgid "Autorenmodus"
+msgstr "Author mode"
 
 msgid "Block hinzufügen"
 msgstr "Add block"
@@ -80,7 +89,7 @@ msgid ""
 "vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
 msgstr "This section is available after you succeeded the previous sections"
 
-#: Courseware.php:84
+#: Courseware.php:88
 msgid "Einstellungen"
 msgstr "Settings"
 
@@ -183,6 +192,9 @@ msgstr "Complete sorting"
 msgid "Speichern"
 msgstr "Save"
 
+msgid "Studentenmodus"
+msgstr "Student mode"
+
 msgid "Titel des Unterkapitels bearbeiten"
 msgstr "Edit title of subchapter"
 
@@ -241,11 +253,11 @@ msgstr "Evaluations"
 msgid "Freitext"
 msgstr "Free text"
 
-#: Courseware.php:90
+#: Courseware.php:94
 msgid "Fortschrittsübersicht"
 msgstr "Progress"
 
-#: Courseware.php:219
+#: Courseware.php:223
 msgid ""
 "Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
 "erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
@@ -261,21 +273,21 @@ msgstr ""
 "questions and tests within the Vips plugin and insert them as blocks to a "
 "courseware section."
 
-#: Courseware.php:220
+#: Courseware.php:224
 msgid "Information"
 msgstr "Information"
 
-#: Courseware.php:222
+#: Courseware.php:226
 msgid ""
 "Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
 "'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
 msgstr "You can rename the courseware tab. Select 'setting' when in edit mode."
 
-#: Courseware.php:223
+#: Courseware.php:227
 msgid "Tipp"
 msgstr "Tip"
 
-#: Courseware.php:225
+#: Courseware.php:229
 msgid ""
 "Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
 "direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
@@ -288,11 +300,11 @@ msgstr ""
 "communication elements and small quizzes. A progress overview lets learners "
 "track their progress."
 
-#: Courseware.php:226
+#: Courseware.php:230
 msgid "Hinweis"
 msgstr "Hint"
 
-#: Courseware.php:287
+#: Courseware.php:291
 msgid "Zurück zur Courseware"
 msgstr "Back to courseware"
 
@@ -425,6 +437,10 @@ msgstr "sequential"
 msgid "Blockeinstellungen"
 msgstr "Block settings"
 
+#: views/courseware/settings.php:74
+msgid "Selbsttests"
+msgstr "Self tests"
+
 #: views/courseware/settings.php:80
 msgid "Anzahl Versuche"
 msgstr "Number of tries"
@@ -439,7 +455,7 @@ msgstr ""
 
 #: views/courseware/settings.php:89
 msgid "Unbegrenzt"
-msgstr "Infinte"
+msgstr "Infinite"
 
 #: views/courseware/settings.php:112
 msgid "Übernehmen"
