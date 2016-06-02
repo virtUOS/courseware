@@ -1,8 +1,12 @@
 {{#pdf_id}}
+<input type="hidden" value="{{aspect}}" class="flipbook-aspect">
 <div class="flipbook-controls flipbook-left-control"><div class="flipbook-arr-left"></div></div>
 <div class="flipbook" pages="{{pdf_pages}}">
     {{#imagefiles}}
-    <div class="flipbookimage" style="background-image:url( ../../sendfile.php?type=0&file_id={{dokument_id}}&file_name={{filename}});" ></div>
+        <div class="flipbookimage" style="background-image:url( ../../sendfile.php?type=0&file_id={{dokument_id}}&file_name={{filename}});" ></div>
+    {{/imagefiles}}
+    {{^imagefiles}}
+        <div class="flipbookimage"></div>
     {{/imagefiles}}
 </div>
 <div class="flipbook-controls flipbook-right-control"><div class="flipbook-arr-right"></div></div>
@@ -31,7 +35,10 @@
     <button class="flipbookfulloff button">schlie&szlig;en</button>
     <div class="flipbookimgfull-container">
     {{#imagefiles}}
-    <img class="flipbookimgfull" src=" ../../sendfile.php?type=0&file_id={{dokument_id}}&file_name={{filename}}" image-data="{{filename}}"></img>
+        <img class="flipbookimgfull" src=" ../../sendfile.php?type=0&file_id={{dokument_id}}&file_name={{filename}}" image-data="{{filename}}"></img>
+    {{/imagefiles}}
+    {{#imagefiles}}
+        <img class="flipbookimgfull" width="0" height="0"></img>
     {{/imagefiles}}
     </div>
 </div>

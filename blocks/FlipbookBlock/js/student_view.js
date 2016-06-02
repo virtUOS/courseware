@@ -21,14 +21,9 @@ function (StudentView) {
         postRender: function () {
             var $flipbook = this.$el.find('.flipbook');
             if($flipbook.length) {
-                var $flipbookimg = this.$el.find('.flipbookoverlay').find('.flipbookimgfull').first()[0];
-                var $imgheight = $flipbookimg.naturalHeight;
-                var $imgwidth = $flipbookimg.naturalWidth;
-                var $portrait = true;
-                if($imgwidth != 0) {
-                    $portrait = $imgheight > $imgwidth;
-                }
-                if($portrait) {
+                var $aspect = this.$(".flipbook-aspect").val();
+                console.log($aspect);
+                if($aspect == 'portrait') {
                     $flipbook.turn({
                         display: 'double',
                         acceleration: true,

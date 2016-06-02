@@ -26,6 +26,7 @@ class FlipbookBlock extends Block
         $this->defineField('pdf_pages', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('flipbook_rootfolder_id', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('flipbook_imagefolder_id', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('aspect', \Mooc\SCOPE_BLOCK, 'portrait');
         $this->createFlipbookFolder();
     }
 
@@ -38,11 +39,12 @@ class FlipbookBlock extends Block
         $this->pdf_pages = count($imagefiles);
              
         return array(
-            'pdf'                    => $this->pdf,
-            'pdf_id'                 => $this->pdf_id,
-            'pdf_filename'           => $this->pdf_filename,
-            'pdf_pages'              => $this->pdf_pages,
-            'imagefiles'             => $imagefiles
+            'pdf'           => $this->pdf,
+            'pdf_id'        => $this->pdf_id,
+            'pdf_filename'  => $this->pdf_filename,
+            'pdf_pages'     => $this->pdf_pages,
+            'imagefiles'    => $imagefiles,
+            'aspect'        => $this->aspect
         );
         
     }
@@ -56,7 +58,8 @@ class FlipbookBlock extends Block
             'pdf'           => $this->pdf,
             'pdf_id'        => $this->pdf_id,
             'pdf_filename'  => $this->pdf_filename,
-            'pdffiles'      => $pdffiles       
+            'pdffiles'      => $pdffiles,
+            'aspect'        => $this->aspect 
         );
     }
     
@@ -68,6 +71,7 @@ class FlipbookBlock extends Block
         if (isset ($data['pdf'])) {
             $this->pdf_id = (string) $data['pdf_id'];
             $this->pdf = (string) $data['pdf'];
+            $this->aspect = (string) $data['aspect'];
             
             $this->pdf_filename = (new \StudipDocument($this->pdf_id))->getValue(filename);
         
@@ -80,6 +84,7 @@ class FlipbookBlock extends Block
         } else {
             $this->pdf = "";
             $this->pdf_id = "";
+            $this->aspect = "";
         }
         
         return;
@@ -223,8 +228,9 @@ class FlipbookBlock extends Block
     public function exportProperties()
     {
        return array(
-        'pdf'                       => $this->pdf, 
-        'pdf_filename'              => $this->pdf_filename
+        'pdf'             => $this->pdf, 
+        'pdf_filename'    => $this->pdf_filename,
+        'aspect'          => $this->aspect
         );
     }
     public function getFiles()
@@ -252,6 +258,10 @@ class FlipbookBlock extends Block
 
         if (isset($properties['pdf_filename'])) {
             $this->pdf_filename = $properties['pdf_filename'];
+        }
+        
+        if (isset($properties['aspect'])) {
+            $this->pdf_filename = $properties['aspect'];
         }
         
         $this->save();

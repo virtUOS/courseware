@@ -7,4 +7,5 @@
     <xsd:attribute name="pdf" type="xsd:string" />
     <xsd:attribute name="pdf_filename" type="xsd:string" />
     <xsd:attribute name="pdf_pages" type="xsd:string" />
+    <xsd:attribute name="aspect" type="xsd:string" />
 </xsd:schema>

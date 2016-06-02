@@ -50,10 +50,11 @@ define(['assets/js/author_view', 'assets/js/url'],
             var $pdf_name = $pdf.val();
             var $pdf_id = $pdf.find('option:selected').attr("pdf_id");
             var $pdf_filename = $pdf.find('option:selected').attr("filename");
+            var $aspect = this.$('input[name="flipbookaspect"]:checked').val();
                 
             //textarea.remove();
             helper
-                .callHandler(this.model.id, "save", {pdf: $pdf_name, pdf_id: $pdf_id, pdf_filename: $pdf_filename})
+                .callHandler(this.model.id, "save", {pdf: $pdf_name, pdf_id: $pdf_id, pdf_filename: $pdf_filename, aspect: $aspect})
                 .then(
                     // success
                     function () {
