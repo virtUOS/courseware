@@ -1,5 +1,6 @@
 define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helper) {
     'use strict';
+   
 
     return StudentView.extend({
         events: {
@@ -8,6 +9,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     view = this,
                     $exercise_index = $form.find("input[name='exercise_index']").val(),
                     $block = this.$el.parent();
+
+                var $this_block = this; // We need 'this' in the handler for postRender functions
 
                 if (confirm('Soll die Antwort zurückgesetzt werden?')) {
                     helper.callHandler(this.model.id, 'exercise_reset', $form.serialize())
@@ -21,11 +24,10 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         )
                         .then(function () {
                             $block.find('.exercise').hide();
-                            $block.find('#exercise' + $exercise_index).show();
+                            $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
                         })
                         .done();
                 }
-
                 return false;
             },
 
@@ -34,7 +36,9 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     view = this,
                     $exercise_index = $form.find("input[name='exercise_index']").val(),
                     $block = this.$el.parent();
-                    
+
+                var $this_block = this; // We need 'this' in the handler for postRender functions
+            
                 helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
                     .then(
                         function () {
@@ -46,11 +50,21 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     )
                     .then(function () {
                         $block.find('.exercise').hide();
-                        $block.find('#exercise' + $exercise_index).show();
+                        $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
                         $block.find(".submitinfo").slideDown(250).delay(1500).slideUp(250);
                     })
                     .done();
 
+                return false;
+            },
+            
+            'click button[name=print-exercise]': function (event) {
+                var $url = window.location.hostname;
+                var $cid = window.location.href.slice(window.location.href.indexOf('cid') + 4).split('&')[0];
+                var $form = this.$(event.target).parent().parent().find("form");
+                var $assignment_id = $("input[name='assignment_id']").val();
+                $url = $url+"/studip/plugins.php/vipsplugin/show?cid="+$cid+"&action=export&subaction=pdf_assignment&assignment="+$assignment_id;
+                window.open($url, '_blank');
                 return false;
             },
 
@@ -74,7 +88,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 }
 
                 $block.find('.exercise').hide();
-                $block.find('#exercise'+$num).show();
+                this.postRenderExercise($block.find('#exercise'+$num).show());
             },
             
             'click button[name=exercise-hint-button]': function (event) {
@@ -133,6 +147,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     }
             }); 
 
+            /*
             var fixAnswersHeight = function (labels, answers) {
                 for (var i = 0; i < labels.length && i < answers.length; i++) {
                     var answer = answers.eq(i);
@@ -169,15 +184,86 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     }
                 });
             });
+            */
+
+            // search for rh_lists
+            var $firstExercise = this.$('ul.exercise').eq(0);
+            this.postRenderExercise($firstExercise);
+
+            // re-format LaTeX stuff
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.el]);
         },
 
-        moveChoice: function ($sortableAnswers) {
-            var items = $sortableAnswers.sortable('toArray');
-            var $inputs = jQuery('input', $sortableAnswers);
 
-            for (var i = 0; i < items.length; i++) {
-                $inputs.eq(i).val(i);
+        postRenderExercise: function ($exerciseElement) {
+            
+            function randomiseDraggables() {
+                var $parent = $(".rh-catalog");
+                var $divs = $parent.children();
+                $divs.each(function() {
+                    var $postop = (Math.floor(Math.random() * $parent.height()*0.65));
+                    var $posleft = (Math.floor(Math.random() * 100));
+                    $(this).css({ 'position': 'relative', 'top': $postop+"px", 'left': $posleft+"px"});
+                    $(this).attr('postop' , $postop);
+                    $(this).attr('posleft' , $posleft);
+                    });
+                    
+                while ($divs.length) {
+                    $parent.append($divs.splice(Math.floor(Math.random() * $divs.length), 1)[0]);
+                }
             }
+            
+            randomiseDraggables();
+        
+            
+            $exerciseElement.find(".rh-catalog-item").draggable({
+                start: function( event, ui ) {
+                    $(this).css("z-index", 10);
+                },
+                stop: function( event, ui ) {
+                    $(this).css("z-index", 0);
+                },
+                revert: "invalid"
+            }).find("input").attr("value", -1);;
+           
+            $(".rh-cart-item").each( function(index) {
+        
+                $(this).droppable({
+                    drop: function(event, ui) {
+                        var pastDraggable = $(this).attr('pastdraggable');
+                        var currentDraggable = 	$(ui.draggable).attr('id');
+                        
+                        if (pastDraggable != "" && pastDraggable != currentDraggable) {
+                            $("#" + pastDraggable).animate({left: $("#" + pastDraggable).attr('posleft'), top: $("#" + pastDraggable).attr('postop')},"slow");
+                            $("#" + pastDraggable).find("input").attr("value", -1);
+                        }
+                        
+                        $(this).attr('pastdraggable', currentDraggable);
+                        $(ui.draggable).find("input").attr("value", $(this).index());
+                        
+                        
+                    },
+                    out: function(event, ui) { 
+                        if($(ui.draggable).attr("id") == $(this).attr('pastdraggable')) {
+                            $(this).attr('pastdraggable', '');
+                            $(ui.draggable).find("input").attr("value", -1);
+                        }
+                    }
+                });
+            });
+            $(".rh-catalog").droppable({
+                drop: function(event, ui) {
+                        if($(ui.draggable).attr("id") == $(this).attr('pastdraggable')) {
+                            $(this).attr('pastdraggable', '');
+                            $(ui.draggable).find("input").attr("value", -1);
+                        }
+                    }
+            });
+            
+            
+          
+             
         }
+        
     });
 });

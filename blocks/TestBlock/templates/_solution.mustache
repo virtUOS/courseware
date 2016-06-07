@@ -1,14 +1,6 @@
-<ul>
-  {{#answers}}
-    <li{{#show_correction}}{{#correct_answer}} class="correct_answer"{{/correct_answer}}{{/show_correction}}>
-      {{#checked}}
-        <img src="{{checked_image}}">
-      {{/checked}}
-      {{^checked}}
-        <img src="{{unchecked_image}}">
-      {{/checked}}
-
-      <span class="answer">{{{text}}}</span>
-    </li>
-  {{/answers}}
-</ul>
+<form class="studip_form">
+    <fieldset>
+        <legend>{{ title }}</legend>
+        {{{solution}}}
+    </fieldset>
+</form>

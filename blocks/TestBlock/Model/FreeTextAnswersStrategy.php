@@ -14,14 +14,6 @@ class FreeTextAnswersStrategy extends AnswersStrategy
     /**
      * {@inheritDoc}
      */
-    public function getQuestion()
-    {
-        return $this->vipsExercise->getSolveTemplate()->render();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getUserAnswers(array $solution = null)
     {
         if ($solution === null) {

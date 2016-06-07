@@ -1,1 +1,22 @@
-<p class="question">{{{question}}}</p>
+<form class="studip_form">
+    <input type="hidden" name="action" value="sheets">
+    <input type="hidden" name="subaction" value="submit_exercise">
+    <input type="hidden" name="submit_exercise" value="1">
+    <input type="hidden" name="exercise_type" value="{{exercise_type}}">
+    <input type="hidden" name="exercise_id" value="{{id}}">
+    <input type="hidden" name="assignment_id" value="{{test_id}}">
+    <input type="hidden" name="number_of_answers" value="{{number_of_answers}}">
+    <input type="hidden" name="solver_user_id" value="{{solver_user_id}}">
+    <input type="hidden" name="exercise_index" value="{{exercise_index}}">
+
+    <fieldset>
+        <legend>{{ title }}</legend>
+        {{{question}}}
+    </fieldset>
+
+    <button name="submit-exercise" class="button" style="display: inline-block">Abschicken</button>
+
+    {{#character_picker}}
+        <button class="button" onclick="openCharacterPicker($(this).parent()); return false;" style="display: inline-block">Zeichenwähler öffnen</button>
+    {{/character_picker}}
+</form>
