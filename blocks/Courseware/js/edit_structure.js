@@ -23,7 +23,8 @@ define(['q', 'backbone', 'assets/js/templates', 'dateFormat'],
 
         render: function () {
             var data = {
-                title: this.model.get("title")
+                title: this.model.get("title"),
+                visible_since_title: this.model.get('visible_since_title')
             };
 
             // hide publication_date for sections

@@ -14,12 +14,14 @@ class VideoBlock extends Block
     function initialize()
     {
         $this->defineField('url', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('videoTitle', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('aspect', \Mooc\SCOPE_BLOCK, 'aspect-169');
     }
 
     function array_rep() {
         return array(
-            'url'    => $this->url,
+            'url' => $this->url,
+            'videoTitle' => $this->videoTitle,
             'aspect' => $this->aspect
         );
     }
@@ -42,6 +44,7 @@ class VideoBlock extends Block
         $this->authorizeUpdate();
 
         $this->url = (string) $data['url'];
+        $this->videoTitle = (string) $data['videoTitle'];
         $this->aspect = (string) $data['aspect'];
 
         return $this->array_rep();
@@ -52,7 +55,7 @@ class VideoBlock extends Block
      */
     public function exportProperties()
     {
-       return array('url' => $this->url, 'aspect' => $this->aspect);
+       return array('url' => $this->url,'videoTitle' => $this->videoTitle, 'aspect' => $this->aspect);
     }
 
     /**
@@ -82,6 +85,10 @@ class VideoBlock extends Block
 
         if (isset($properties['aspect'])) {
             $this->aspect = $properties['aspect'];
+        }
+
+        if (isset($properties['videoTitle'])) {
+            $this->videoTitle = $properties['videoTitle'];
         }
 
         $this->save();

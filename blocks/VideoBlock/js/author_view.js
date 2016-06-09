@@ -6,8 +6,9 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
         events: {
             "click button[name=save]": "saveVideo",
             "click button[name=cancel]": "switchBack",
-            "change select#videotype": "selection",
-            "click button[name=preview]": "preview"
+            "change select.videotype": "selection",
+            "click button[name=preview]": "preview",
+            "click button[name=videotimereset]": "videotimereset"
         },
         initialize: function(options) {
         },
@@ -15,26 +16,26 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
             return this;
         },
         postRender: function() {
-            Utils.showPreview(this, this.$('#videourl').text());
-            var url = this.$('#videourl').text(), videotype = Utils.getVideoType(url);
+            Utils.showPreview(this, this.$el.find('.videourl').text());
+            var url = this.$el.find('.videourl').text(), videotype = Utils.getVideoType(url);
             if(url == '') this.$('iframe').hide();
-            this.$("#videotype option[value="+videotype+"]").attr('selected', true);
+            this.$el.find(".videotype option[value="+videotype+"]").attr('selected', true);
             this.selection();
         },
         selection: function() {
-            var videotype = this.$('#videotype').val();
+            var videotype = this.$el.find('.videotype').val();
             if (videotype == 'youtube') {
-                this.$('#videosrcname').html('YouTube ID');
+                this.$el.find('.videosrcname').html('YouTube ID');
             } else if (videotype == 'dfb') {
-                this.$('#videosrcname').html('DFB-TV-ID (z.B. 11019)');
+                this.$('.videosrcname').html('DFB-TV-ID (z.B. 11019)');
             } else {
-                this.$('#videosrcname').html('URL');
+                this.$el.find('.videosrcname').html('URL');
             }
             Utils.resetVideoData(this);
-            Utils.setVideoData(this, this.$('#videourl').text(), videotype);
+            Utils.setVideoData(this, this.$el.find('.videourl').text(), videotype);
         },
         preview: function() {
-            var videourl = this.$('#videourl'), videotype = this.$('#videotype').val(), url = Utils.getUrl(this, videotype);
+            var videourl = this.$el.find('.videourl'), videotype = this.$el.find('.videotype').val(), url = Utils.getUrl(this, videotype);
             var aspect = this.$('input[name="videoaspect"]:checked').val();
             if(url != '') {
                 this.$('iframe').show();
@@ -44,13 +45,20 @@ define(['assets/js/author_view', 'assets/js/url', 'utils'], function (
             }
             else this.selection();
         },
+        videotimereset: function() {
+            this.$el.find('.videostartmin').val("");
+            this.$el.find('.videostartsec').val("");
+            this.$el.find('.videoendmin').val("");
+            this.$el.find('.videoendsec').val("");
+        },
         saveVideo: function() {
             this.preview();
-            var url = this.$('#videourl').text(), status = this.$('.status');
+            var url = this.$el.find('.videourl').text(), status = this.$('.status');
             var aspect = this.$('input[name="videoaspect"]:checked').val();
+            var videoTitle = this.$el.find(".videotitle").val();
             status.text('Speichere Änderungen...');
             var view = this;
-            helper.callHandler(this.model.id, 'save', { url: url, aspect: aspect}).then(
+            helper.callHandler(this.model.id, 'save', { url: url, videoTitle: videoTitle, aspect: aspect}).then(
                 function() {
                     status.text('Änderungen wurden gespeichert.');
                     view.switchBack();

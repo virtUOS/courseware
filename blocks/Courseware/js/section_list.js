@@ -33,7 +33,8 @@ define(['backbone', 'assets/js/url', 'assets/js/templates',  'assets/js/i18n', '
                 nav_offset = nav.offset();
 
             jQuery(window).scroll(function () {
-                if (jQuery(this).scrollTop() > nav_offset.top - 27) {
+                // if we scrolled a bit and are not an author! the scrollbar should be stuck to the window
+                if (jQuery(this).scrollTop() > nav_offset.top - 27 && (window.location.href.indexOf("author") == -1)) {
                     var activeSection = jQuery("section.active-section");
                     nav.addClass("stuck");
                     nav.css({left: activeSection.offset().left});

@@ -56,7 +56,7 @@ class CoursewareController extends CoursewareStudipController {
             CSRFProtection::verifyUnsafeRequest();
             $this->storeSettings();
 
-            $this->flash['success'] = _("Die Einstellungen wurden gespeichert.");
+            $this->flash['success'] = _cw("Die Einstellungen wurden gespeichert.");
             return $this->redirect('courseware/settings');
         }
     }
@@ -141,6 +141,16 @@ class CoursewareController extends CoursewareStudipController {
         ////////////////////////
         $this->storeEditingPermission(isset($courseware_settings['editing_permission']) ? true : false);
 
+        /////////////////////////////
+        // MAX COUNT FOR SELFTESTS //
+        /////////////////////////////
+        $try1 = isset($courseware_settings['max-tries-infinity']);
+        $try2 = isset($courseware_settings['max-tries']);
+        if (isset($courseware_settings['max-tries-infinity'])) {
+            $this->storeMaxCount(-1);
+        } else if(isset($courseware_settings['max-tries'])) {
+            $this->storeMaxCount($courseware_settings['max-tries']);
+        }
         $this->courseware_block->save();
     }
 
@@ -179,10 +189,17 @@ class CoursewareController extends CoursewareStudipController {
         // this setting
         if ($perm === Courseware::EDITING_PERMISSION_DOZENT &&
             $this->container['current_user']->getPerm($this->container['cid']) === 'tutor') {
-            throw new Trails_Exception(401, _("Tutoren können diese Einstellung nicht speichern."));
+            throw new Trails_Exception(401, _cw("Tutoren können diese Einstellung nicht speichern."));
         }
 
         if (!$this->courseware_block->setEditingPermission($perm)) {
+            // TODO: send a message back
+        }
+    }
+
+    private function storeMaxCount($count)
+    {
+        if(!$this->courseware_block->setMaxTries($count)) {
             // TODO: send a message back
         }
     }

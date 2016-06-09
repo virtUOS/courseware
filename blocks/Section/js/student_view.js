@@ -84,7 +84,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                 $block_wrapper = block_view.$el.closest('section.block'),
                 self = this;
 
-            if (confirm("Wollen Sie den Block wirklich löschen?")) {
+            if (confirm(i18n("Wollen Sie den Block wirklich löschen?"))) {
 
                 $block_wrapper.addClass("loading");
 

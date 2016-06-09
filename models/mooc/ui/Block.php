@@ -295,7 +295,7 @@ abstract class Block {
             $readableName .= ' ('.$subTypes[$this->_model->sub_type].')';
         }
 
-        return $readableName;
+        return _cw($readableName);
     }
 
     /**
@@ -513,7 +513,7 @@ abstract class Block {
     protected function authorizeUpdate()
     {
         if (!$this->container['current_user']->canUpdate($this)) {
-            throw new Errors\AccessDenied(_("Sie sind nicht berechtigt diesen Block zu editieren."));
+            throw new Errors\AccessDenied(_cw("Sie sind nicht berechtigt diesen Block zu editieren."));
         }
     }
 

@@ -1,9 +1,9 @@
 <tr>
     <td>
         <label for="courseware-editing-permission">
-            <?= _('Editierberechtigung für Tutoren') ?><br>
+            <?= _cw('Editierberechtigung für Tutoren') ?><br>
             <dfn id="courseware-editing-permission-description">
-                <?= _('Wenn Sie diesen Schalter aktivieren, dürfen neben den Dozenten auch Tutoren Ihre Courseware editieren.'); ?>
+                <?= _cw('Wenn Sie diesen Schalter aktivieren, dürfen neben den Dozenten auch Tutoren Ihre Courseware editieren.'); ?>
             </dfn>
         </label>
     </td>

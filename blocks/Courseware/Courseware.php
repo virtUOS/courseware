@@ -4,7 +4,6 @@ namespace Mooc\UI\Courseware;
 use Mooc\DB\Field;
 use Mooc\DB\UserProgress;
 use Mooc\DB\Block as DbBlock;
-
 use Mooc\UI\Block;
 use Mooc\UI\Errors\BadRequest;
 
@@ -34,6 +33,9 @@ class Courseware extends Block {
 
         // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
         $this->defineField('editing_permission', \Mooc\SCOPE_BLOCK, self::EDITING_PERMISSION_TUTOR);
+
+        // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+        $this->defineField('max_tries', \Mooc\SCOPE_BLOCK, -1); // -1 = infinity
     }
 
     function student_view($context = array())
@@ -44,6 +46,7 @@ class Courseware extends Block {
         /** @var \Mooc\DB\Block $chapter */
         /** @var \Mooc\DB\Block $subchapter */
         $tree = $this->getPrunedChapterNodes(list($courseware, $chapter, $subchapter, $section) = $this->getSelectedPath($this->lastSelected));
+
         $active_section = array();
         if ($section && $this->getCurrentUser()->canRead($section)) {
             $active_section_block = $this->getBlockFactory()->makeBlock($section);
@@ -183,7 +186,6 @@ class Courseware extends Block {
 
         return array('status' => 'ok');
     }
-
     /**
      * {@inheritdoc}
      */
@@ -289,10 +291,17 @@ class Courseware extends Block {
         return $this->editing_permission;
     }
 
+    public function setMaxTries($tries) {
+        $this->max_tries = $tries;
+    }
+
+    public function getMaxTries() {
+        return $this->max_tries;
+    }
+
     ///////////////////////
     // PRIVATE FUNCTIONS //
     ///////////////////////
-
     // structural blocks may have a field calles 'aside_section'
     // containing the ID of a block of type 'Section' which is shown
     // in the sidebar whenever this structural block is active
@@ -311,6 +320,7 @@ class Courseware extends Block {
 
         return null;
     }
+
 
     private function getSelected($context)
     {
@@ -441,7 +451,6 @@ class Courseware extends Block {
     {
         // got it!
         if ($block->type === 'Section') {
-
             // normal section
             if ($block->parent_id) {
                 return $block;
@@ -450,7 +459,7 @@ class Courseware extends Block {
             // aside section
             else {
                 // find aside's "parent" sub/chapter
-                // TODO: gruseliger Hack, um das Unter/Kapitel zu finden, in dem die Section eingehÃ¤ngt ist.
+                // TODO: gruseliger Hack, um das Unter/Kapitel zu finden, in dem die Section eingehängt ist.
                 $field = current(\Mooc\DB\Field::findBySQL('user_id = "" AND name = "aside_section" AND json_data = ?', array(json_encode($block->id))));
                 return $field->block;
             }
@@ -503,14 +512,14 @@ class Courseware extends Block {
     private function createChapter($parent, $data)
     {
         $chapter = $this->createAnyBlock($parent, 'Chapter', $data);
-        $this->createSubchapter($chapter, array('title' => _('Unterkapitel 1')));
+        $this->createSubchapter($chapter, array('title' => _cw('Unterkapitel 1')));
         return $chapter;
     }
 
     private function createSubchapter($parent, $data)
     {
         $subchapter = $this->createAnyBlock($parent, 'Subchapter', $data);
-        $this->createSection($subchapter, array('title' => _('Abschnitt 1')));
+        $this->createSection($subchapter, array('title' => _cw('Abschnitt 1')));
         return $subchapter;
     }
 
