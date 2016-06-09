@@ -62,9 +62,11 @@ class TestBlock extends Block
 
     public function student_view()
     {
+        $subtype =  $this->_model->sub_type;
+
         $active = VipsBridge::vipsActivated($this);
         $typeOfThisTest = $this->test->type;
-        $typeOfThisTestBlock = $this->_model->sub_type;
+        $typeOfThisTestBlock = $subtype;
         $blockId = $this->_model->id;
 
         if ($typeOfThisTest == null) {
@@ -99,7 +101,9 @@ class TestBlock extends Block
             return compact('active');
         }
 
-        $storedTests = Test::findAllByType($this->_model->course->id, $this->_model->sub_type);
+        $subtype =  $this->_model->sub_type;
+
+        $storedTests = Test::findAllByType($this->_model->course->id, $subtype);
         $tests       = array();
 
         foreach ($storedTests as $test) {
@@ -240,9 +244,11 @@ class TestBlock extends Block
 
         $test->storeSolution($solution);
 
-        $this->calcGrades();
+        $progress = $this->calcGrades();
 
-        return array();
+        return array(
+            'grade' => $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0
+        );
     }
 
     public function reset_try_counter_handler($data) {
@@ -276,6 +282,7 @@ class TestBlock extends Block
              }
          }
 
+         return $progress;
      }
 
     /**

@@ -45,12 +45,12 @@ class XmlValidator implements ValidatorInterface
 
     private function buildXmlSchema(\DOMDocument $document)
     {
-        $courseware = $this->blockFactory->getBlockByName('Courseware');
+        $blockClassname = $this->blockFactory->getBlockByName('Courseware');
         $schema = $this->initialiseSchemaDocument();
         $this->addImportNode(
             $schema,
             $document->documentElement->namespaceURI,
-            $this->getSchemaLocationForBlock($courseware)
+            $this->getSchemaLocationForBlock($blockClassname)
         );
         $this->addImportNodesForBlocks($schema, $this->getDocumentNamespaces($document));
 
@@ -132,13 +132,12 @@ class XmlValidator implements ValidatorInterface
     private function addImportNodesForBlocks(\DOMDocument $document, array $namespaces)
     {
         foreach ($namespaces as $alias => $namespace) {
-            $block = $this->blockFactory->getBlockByName($alias);
-
-            if ($block === null) {
+            $blockClassname = $this->blockFactory->getBlockByName($alias);
+            if ($blockClassname === null) {
                 continue;
             }
 
-            $schemaLocation = $this->getSchemaLocationForBlock($block);
+            $schemaLocation = $this->getSchemaLocationForBlock($blockClassname);
             $this->addImportNode($document, $namespace, $schemaLocation);
         }
     }
@@ -146,14 +145,14 @@ class XmlValidator implements ValidatorInterface
     /**
      * Returns the path to an XML schema definition file on the local file system.
      *
-     * @param Block $block The block
+     * @param string $block The block's fully qualified classname
      *
      * @return string The path to the XML schema definition file
      */
-    private function getSchemaLocationForBlock(Block $block)
+    private function getSchemaLocationForBlock($blockClassname)
     {
-        $reflectionClass = new \ReflectionClass(get_class($block));
-        $localSchemaPath = str_replace($block->getXmlNamespace(), '', $block->getXmlSchemaLocation());
+        $reflectionClass = new \ReflectionClass($blockClassname);
+        $localSchemaPath = str_replace($blockClassname::getXmlNamespace(), '', $blockClassname::getXmlSchemaLocation());
 
         return dirname($reflectionClass->getFileName()).'/schema/'.$localSchemaPath;
     }

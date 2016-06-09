@@ -221,12 +221,20 @@ class XmlVisitor extends AbstractVisitor
             }
 
             $this->addNamespace($namespace, $schemaLocation, $alias);
+
+            if (method_exists($block, 'exportAdditionalNamespaces')) {
+                foreach ($block->exportAdditionalNamespaces() as $args) {
+                    list($addNamespace, $addSchemaLocation, $addAlias) = $args;
+                    $this->addNamespace($addNamespace, $addSchemaLocation, $addAlias);
+                }
+            }
         }
 
         $properties = $block->exportProperties();
         $attributes = array();
         $attributes[] = $this->createAttributeNode('type', $block->getModel()->type);
         $attributes[] = $this->createAttributeNode('sub-type', $block->getModel()->sub_type);
+        $attributes[] = $this->createAttributeNode('uuid', $block->getModel()->getUUID());
 
         foreach ($properties as $name => $value) {
             if ($alias !== null) {

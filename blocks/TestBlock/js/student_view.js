@@ -47,7 +47,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         )
                         .then(function () {
                             $block.find('.exercise').hide();
-                            $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show())
+                            $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
                         })
                         .done();
                 }
@@ -60,7 +60,6 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     $exercise_index = $form.find("input[name='exercise_index']").val(),
                     $block = this.$el.parent();
 
-                var $this_block = this; // We need 'this' in the handler for postRender functions
 
 
                 helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
@@ -74,7 +73,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     )
                     .then(function () {
                         $block.find('.exercise').hide();
-                        $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
+                        view.postRenderExercise($block.find('#exercise' + $exercise_index).show());
                         $block.find(".submitinfo").slideDown(250).delay(1500).slideUp(250);
                     })
                     .done();
@@ -86,13 +85,6 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 var options = $.parseJSON(this.$(event.target).attr('button-data')),
                     $num = parseInt(options.id),
                     $block = this.$el.parent();
-
-                //var $form = $block.find('#exercise'+$num).find('form');
-                //
-                //console.log("changing exercise");
-                //console.log($form);
-                //var data = $form;
-                //helper.callHandler(this.model.id, 'reset_try_counter', $form.serialize());
 
                 if (options.direction == 'next') {
                     $num++;
