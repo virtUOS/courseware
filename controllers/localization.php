@@ -1,7 +1,5 @@
 <?php
 
-use Mooc\UI\Courseware\Courseware;
-
 class LocalizationController extends CoursewareStudipController
 {
     function index_action()
