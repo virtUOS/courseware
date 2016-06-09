@@ -216,9 +216,11 @@ class TestBlock extends Block
         $solution = $exercise->getSolutionFromRequest($requestParams);
         $test->storeSolution($solution);
 
-        $this->calcGrades();
+        $progress = $this->calcGrades();
 
-        return array();
+        return array(
+            'grade' => $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0
+        );
      }
      
      public function pdf_handler($data)
@@ -244,6 +246,7 @@ class TestBlock extends Block
              }
          }
 
+         return $progress;
      }
 
     /**

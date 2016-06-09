@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/wallnewspaper/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:test="http://moocip.de/schema/block/test/"
+            targetNamespace="http://moocip.de/schema/block/wallnewspaper/"
+            elementFormDefault="qualified">
+
+  <xsd:import namespace="http://moocip.de/schema/block/test/" schemaLocation="../../TestBlock/schema/test-1.0.xsd"/>
+
+
+  <xsd:element name="agegroup">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element maxOccurs="unbounded" ref="content"/>
+        <xsd:element ref="topics"/>
+        <xsd:element minOccurs="0" ref="selftestnode"/>
+      </xsd:sequence>
+      <xsd:attribute name="title" use="required" form="qualified"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="selftestnode">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="test:description"/>
+        <xsd:element ref="test:exercises"/>
+      </xsd:sequence>
+      <xsd:attribute name="end" use="required" form="qualified" type="xsd:string"/>
+      <xsd:attribute name="evaluation-mode" use="required" form="qualified" type="xsd:integer"/>
+      <xsd:attribute name="halted" use="required" form="qualified" type="xsd:boolean"/>
+      <xsd:attribute name="printable" use="required" form="qualified" type="xsd:boolean"/>
+      <xsd:attribute name="released" use="required" form="qualified" type="xsd:boolean"/>
+      <xsd:attribute name="shuffle-answers" use="required" form="qualified" type="xsd:boolean"/>
+      <xsd:attribute name="start" use="required" form="qualified" type="xsd:string"/>
+      <xsd:attribute name="test-id" use="required" form="qualified" type="xsd:integer"/>
+      <xsd:attribute name="title" use="required" form="qualified" type="xsd:string"/>
+      <xsd:attribute name="type" use="required" form="qualified" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="content">
+    <xsd:complexType mixed="true">
+      <xsd:attribute name="key" use="required" form="qualified" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="topics">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element minOccurs="0" maxOccurs="unbounded" ref="topic"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="topic">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="content"/>
+        <xsd:element ref="topics"/>
+      </xsd:choice>
+      <xsd:attribute name="title" use="required" form="qualified"/>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

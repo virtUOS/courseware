@@ -1,0 +1,28 @@
+<form>
+    <fieldset>
+
+        <legend>Verknüpfung zur Wandzeitung</legend>
+
+        <ul>
+            {{#wnblocks}}
+                <li>
+                    <label>
+                        <input type="radio" {{#selected}}checked{{/selected}} name="wall_newspaper_block_id" value="{{id}}"> {{breadcrumbs}}
+                    </label>
+                </li>
+            {{/wnblocks}}
+        </ul>
+    </fieldset>
+
+    <fieldset>
+
+        <legend>Inhalte nach Absolvieren der Wandzeitung</legend>
+
+        <textarea class="add_toolbar wysiwyg" name=content placeholder="Geben Sie hier Ihren Text ein">{{{content}}}</textarea>
+    </fieldset>
+
+    <fieldset>
+        <button name=save class=button>Speichern</button>
+        <button name=cancel class=button>Abbrechen</button>
+    </fieldset>
+</form>

@@ -37,11 +37,12 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     $exercise_index = $form.find("input[name='exercise_index']").val(),
                     $block = this.$el.parent();
 
-                var $this_block = this; // We need 'this' in the handler for postRender functions
-            
                 helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
                     .then(
-                        function () {
+                        function (response) {
+                            if (response && response.grade && _.isFinite(response.grade)) {
+                                view.trigger('TestBlock:graded', response.grade);
+                            }
                             return view.renderServerSide();
                         },
                         function () {
@@ -50,14 +51,14 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     )
                     .then(function () {
                         $block.find('.exercise').hide();
-                        $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
+                        view.postRenderExercise($block.find('#exercise' + $exercise_index).show());
                         $block.find(".submitinfo").slideDown(250).delay(1500).slideUp(250);
                     })
                     .done();
 
                 return false;
             },
-            
+
             'click button[name=print-exercise]': function (event) {
                 var $url = window.location.hostname;
                 var $cid = window.location.href.slice(window.location.href.indexOf('cid') + 4).split('&')[0];
@@ -90,7 +91,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 $block.find('.exercise').hide();
                 this.postRenderExercise($block.find('#exercise'+$num).show());
             },
-            
+
             'click button[name=exercise-hint-button]': function (event) {
                     $("#exercise-hint-"+this.$(event.target).attr("exercise-data")).toggle("slow");
             }
@@ -106,7 +107,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         postRender: function () {
             var view = this;
             var $form = this.$('.exercise-content form');
-            
+
             $form.each(function () {
                     var $exercise_type = $(this).find('input[name="exercise_type"]').val();
                     var $user_answers = $(this).find('input[name="user_answers_string"]').val();
@@ -122,7 +123,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                                 var $radio = $('#'+$radioid);
                                 $radio.attr("checked","checked");
                                 break;
-                            
+
                             case "mc_exercise":
                                 var $mc_answers = $user_answers.split(",");
                                 $.each($mc_answers, function(index, value) {
@@ -135,17 +136,17 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                                 var $textbox = $thisform.find('textarea');
                                 $textbox.val($user_answers);
                                 break;
-                                
+
                             case "lt_exercise":
                                 var $textfield = $thisform.find('input[type="text"]');
                                 $textfield.val($user_answers);
                                 break;
-                            
+
                             default:
                                 return false;
                         }
                     }
-            }); 
+            });
 
             /*
             var fixAnswersHeight = function (labels, answers) {
@@ -196,7 +197,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
 
 
         postRenderExercise: function ($exerciseElement) {
-            
+
             function randomiseDraggables() {
                 var $parent = $(".rh-catalog");
                 var $divs = $parent.children();
@@ -207,15 +208,15 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     $(this).attr('postop' , $postop);
                     $(this).attr('posleft' , $posleft);
                     });
-                    
+
                 while ($divs.length) {
                     $parent.append($divs.splice(Math.floor(Math.random() * $divs.length), 1)[0]);
                 }
             }
-            
+
             randomiseDraggables();
-        
-            
+
+
             $exerciseElement.find(".rh-catalog-item").draggable({
                 start: function( event, ui ) {
                     $(this).css("z-index", 10);
@@ -225,25 +226,25 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 },
                 revert: "invalid"
             }).find("input").attr("value", -1);;
-           
+
             $(".rh-cart-item").each( function(index) {
-        
+
                 $(this).droppable({
                     drop: function(event, ui) {
                         var pastDraggable = $(this).attr('pastdraggable');
-                        var currentDraggable = 	$(ui.draggable).attr('id');
-                        
+                        var currentDraggable =  $(ui.draggable).attr('id');
+
                         if (pastDraggable != "" && pastDraggable != currentDraggable) {
                             $("#" + pastDraggable).animate({left: $("#" + pastDraggable).attr('posleft'), top: $("#" + pastDraggable).attr('postop')},"slow");
                             $("#" + pastDraggable).find("input").attr("value", -1);
                         }
-                        
+
                         $(this).attr('pastdraggable', currentDraggable);
                         $(ui.draggable).find("input").attr("value", $(this).index());
-                        
-                        
+
+
                     },
-                    out: function(event, ui) { 
+                    out: function(event, ui) {
                         if($(ui.draggable).attr("id") == $(this).attr('pastdraggable')) {
                             $(this).attr('pastdraggable', '');
                             $(ui.draggable).find("input").attr("value", -1);
@@ -259,11 +260,11 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         }
                     }
             });
-            
-            
-          
-             
+
+
+
+
         }
-        
+
     });
 });

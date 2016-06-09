@@ -1,0 +1,68 @@
+default namespace = "http://moocip.de/schema/courseware/"
+namespace test = "http://moocip.de/schema/block/test/"
+namespace wallnewspaper = "http://moocip.de/schema/block/wallnewspaper/"
+namespace xsi = "http://www.w3.org/2001/XMLSchema-instance"
+
+start =
+  element courseware {
+    attribute progression { xsd:NCName },
+    attribute title { xsd:NCName },
+    attribute xsi:schemaLocation { text },
+    element wallnewspaper:agegroup {
+      attribute wallnewspaper:title { text },
+      content+,
+      topics,
+      element wallnewspaper:selftestnode {
+        attribute wallnewspaper:end { xsd:NMTOKEN },
+        attribute wallnewspaper:evaluation-mode { xsd:integer },
+        attribute wallnewspaper:halted { xsd:boolean },
+        attribute wallnewspaper:printable { xsd:boolean },
+        attribute wallnewspaper:released { xsd:boolean },
+        attribute wallnewspaper:shuffle-answers { xsd:boolean },
+        attribute wallnewspaper:start { xsd:NMTOKEN },
+        attribute wallnewspaper:test-id { xsd:integer },
+        attribute wallnewspaper:title { xsd:NCName },
+        attribute wallnewspaper:type { xsd:NCName },
+        element test:description { empty },
+        element test:exercises {
+          element test:exercise {
+            attribute id { xsd:integer },
+            attribute name { xsd:NCName },
+            attribute type { xsd:NCName },
+            element test:TestItem {
+              attribute ID { xsd:NCName },
+              attribute Language { xsd:NCName },
+              attribute Type { text },
+              element test:Name { xsd:NCName },
+              element test:Hint { empty },
+              element test:CommentField {
+                attribute Visible { text }
+              },
+              element test:AnswerDistance { xsd:integer }?,
+              element test:Question {
+                element test:Paragraph { text }
+              },
+              (element test:Answer {
+                 attribute Correct { xsd:integer },
+                 attribute group { xsd:integer }?,
+                 xsd:NCName
+               }
+               | element test:MistakeComment { empty })+
+            }
+          }+
+        }
+      }?
+    }+
+  }
+content =
+  element wallnewspaper:content {
+    attribute wallnewspaper:key { xsd:NCName },
+    text
+  }
+topics =
+  element wallnewspaper:topics {
+    element wallnewspaper:topic {
+      attribute wallnewspaper:title { text },
+      (content | topics)*
+    }*
+  }
