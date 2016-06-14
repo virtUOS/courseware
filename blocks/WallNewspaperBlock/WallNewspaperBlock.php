@@ -126,7 +126,7 @@ class WallNewspaperBlock extends Block
     }
 
 
-    const AGE_GROUPS = 'Bambini F–Jugend E–Jugend D–Jugend C–Jugend B–/A–Jugend';
+    const AGE_GROUPS = 'Bambini F-Jugend E-Jugend D-Jugend C-Jugend B-/A-Jugend';
 
     const TOPICS = <<<JSONDATA
         {
@@ -147,7 +147,7 @@ JSONDATA;
 
     private function getDefaultTopics()
     {
-        return json_decode(self::TOPICS);
+        return json_decode(studip_utf8encode(self::TOPICS));
     }
 
     private $nextID = 0;
