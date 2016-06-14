@@ -29,6 +29,8 @@ define(['assets/js/author_view', 'assets/js/url', 'backbone'], function (AuthorV
                 wn_id = this.$('input[type=radio]:checked').val(),
                 view = this;
 
+            event.preventDefault();
+
             helper
                 .callHandler(this.model.id, 'save', {
                     content: content,
