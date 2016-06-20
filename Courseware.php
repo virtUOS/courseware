@@ -94,6 +94,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
             $discussions_url = PluginEngine::getURL($this, compact('cid'), 'courseware/discussions', true);
             $tabs['mooc_progress'] = new Navigation(_cw('Fortschrittsübersicht'), $progress_url);
             $tabs['mooc_discussions'] = new Navigation(_cw('Kommunikation'), $discussions_url);
+            $survey_url = PluginEngine::getURL($this, compact('cid'), 'survey', true);
+            $tabs['mooc_survey'] = new Navigation(_('Umfrage'), $survey_url);
         }
 
         return $tabs;
