@@ -60,11 +60,10 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
             },
 
             'click button[name=print-exercise]': function (event) {
-                var $url = window.location.hostname;
                 var $cid = window.location.href.slice(window.location.href.indexOf('cid') + 4).split('&')[0];
-                var $form = this.$(event.target).parent().parent().find("form");
                 var $assignment_id = $("input[name='assignment_id']").val();
-                $url = $url+"/studip/plugins.php/vipsplugin/show?cid="+$cid+"&action=export&subaction=pdf_assignment&assignment="+$assignment_id;
+                var $url = window.location.href.split('courseware')[0];
+                $url = $url+"vipsplugin/show?cid="+$cid+"&action=export&subaction=pdf_assignment&assignment="+$assignment_id;
                 window.open($url, '_blank');
                 return false;
             },
