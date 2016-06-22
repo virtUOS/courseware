@@ -1,0 +1,13 @@
+.chartcontainer {
+    width: 1000px;
+}
+
+.lt-exercise-list {
+    padding-right: 1em;
+    padding-left: 1em;
+    border-right: solid thin black;
+}
+
+.lt-exercise-list:last-child {
+    border-right: none;
+}
