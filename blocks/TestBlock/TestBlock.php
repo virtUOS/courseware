@@ -658,10 +658,17 @@ class TestBlock extends Block
                         $tryagain = $solution && !$correct;
                     }
                 }
-                
+               
                 if ($this->_model->sub_type == 'exercises') {
                     $solution = Solution::findOneBy($this->test, $exercise, $user);
-                    if (! $solution) $submitted_completely = false;
+                    
+                }
+                if ($this->_model->sub_type == 'survey') {
+                    $solution = Solution::findOneBy($this->test, $exercise, $user);
+                    if ($solution->solution == null) {
+						$submitted_completely = false;
+					}
+                    
                 }
 
                 if ($correct ==  false) {
@@ -706,8 +713,7 @@ class TestBlock extends Block
                     'correct' => $correct,
                     'tryagain' => $tryagain,
                     'character_picker' => $exercise->getVipsExercise()->characterPicker,
-                    'exercise_hint' => $exercise->getVipsExercise()->getHint(),
-                    'submitted_completely' => $submitted_completely
+                    'exercise_hint' => $exercise->getVipsExercise()->getHint()
                 );
                 $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
                 $available = !$entry['show_solution'] && !$entry['solving_allowed']; //or correction is available
@@ -731,6 +737,7 @@ class TestBlock extends Block
             'available'           => $available,
             'exercises_available' => $exercises_available,
             'solved_completely'   => $solved_completely,
+            'submitted_completely' => $submitted_completely, 
             'assignment'          => $this->test->getId()
         );
     }
