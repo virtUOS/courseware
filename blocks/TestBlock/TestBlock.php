@@ -666,9 +666,12 @@ class TestBlock extends Block
                 if ($this->_model->sub_type == 'survey') {
                     $solution = Solution::findOneBy($this->test, $exercise, $user);
                     if ($solution->solution == null) {
-						$submitted_completely = false;
-					}
+                        $submitted_completely = false;
+                    }
                     
+                }
+                else {
+                    $submitted_completely = false;
                 }
 
                 if ($correct ==  false) {
