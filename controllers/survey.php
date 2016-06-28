@@ -96,7 +96,7 @@ class SurveyController extends CoursewareStudipController {
                 $aggregation_task = array();
                 $aggregation_type = array();
                 foreach($test_data as $testkey => $test) {
-                    $aggregation_task[$test["exercise_id"]] = $test["Aufgabe"];
+                    $aggregation_task[$test["exercise_id"]] = preg_replace("/<([a-z][a-z0-9]*)[^>]*?(\/?)>/i",'<$1$2>', preg_replace('/<Paragraph>[^>]+<\/Paragraph>/i', " ", $test["Aufgabe"]));
                     $this->test_title[$test_id][$test["exercise_id"]] =  $test["Name"];
                     $this->test_type[$test_id][$test["exercise_id"]] =  $test["URI"];
                     if (!(array_key_exists($test["exercise_id"],$aggregation))) {
