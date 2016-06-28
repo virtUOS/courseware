@@ -240,7 +240,9 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
 
                         $(this).attr('pastdraggable', currentDraggable);
                         $(ui.draggable).find("input").attr("value", $(this).index());
-
+                        
+                        $(this).animate({backgroundColor: "#007f4b"}, 550);
+                        $(this).animate({backgroundColor: "#fff", borderColor: "#eee"}, 250);
 
                     },
                     out: function(event, ui) {
@@ -248,6 +250,10 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                             $(this).attr('pastdraggable', '');
                             $(ui.draggable).find("input").attr("value", -1);
                         }
+                        $(this).css("border-color", "#eee");
+                    },
+                    over : function(event, ui) {
+                        $(this).css("border-color", "#007f4b");
                     }
                 });
             });
@@ -257,6 +263,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                             $(this).attr('pastdraggable', '');
                             $(ui.draggable).find("input").attr("value", -1);
                         }
+                        
                     }
             });
 
