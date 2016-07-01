@@ -11,3 +11,18 @@
 .lt-exercise-list:last-child {
     border-right: none;
 }
+
+.survey-header{
+    clear: both;
+    
+}
+
+.survey-header span{
+    float: right;
+    padding: 0;
+ }
+.survey-header p{
+    float: left;
+    margin: 0;
+    
+}

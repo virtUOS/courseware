@@ -1,7 +1,12 @@
 <script>
 Chart.defaults.global.legend.display = false;
 </script>
-<h1><?= _("Umfrage") ?></h1>
+<h1 class="survey-header">
+    <p><?= _("Umfrage") ?></p>
+    <span>
+        <a target="_blank" href="<?= URLHelper::getLink('plugins.php/courseware/survey/print') ?>"><?= Assets::img('icons/16/white/print.png', tooltip2(_('Drucken'))) ?></a>
+    </span>
+</h1>
 <? foreach ($survey as $key => $item) :?>
     <h1>Test ID: <?= $key?></h1>
     <div class="survey-block">
