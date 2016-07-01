@@ -201,8 +201,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 var $parent = $(".rh-catalog");
                 var $divs = $parent.children();
                 $divs.each(function() {
-                    var $postop = (Math.floor(Math.random() * $parent.height()*0.65));
-                    var $posleft = (Math.floor(Math.random() * 100));
+                    var $postop = 0//(Math.floor(Math.random() * $parent.height()*0.65));
+                    var $posleft = 0//(Math.floor(Math.random() * 100));
                     $(this).css({ 'position': 'relative', 'top': $postop+"px", 'left': $posleft+"px"});
                     $(this).attr('postop' , $postop);
                     $(this).attr('posleft' , $posleft);
@@ -211,11 +211,11 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 while ($divs.length) {
                     $parent.append($divs.splice(Math.floor(Math.random() * $divs.length), 1)[0]);
                 }
+                
             }
 
             randomiseDraggables();
-
-
+            
             $exerciseElement.find(".rh-catalog-item").draggable({
                 start: function( event, ui ) {
                     $(this).css("z-index", 10);
@@ -266,6 +266,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         
                     }
             });
+            
+            console.log($(".rh-catalog").innerHeight());
 
 
 
