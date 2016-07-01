@@ -13,10 +13,14 @@ function (Backbone, _, templates) {
         initialize: function (options) {
             this.dispatcher = options.dispatcher;
             this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.dispatcher, 'SELECT_AGE_GROUP', this.render);
         },
 
         render: function () {
             var data = _.extend({}, this.model.attributes, { $thoroughlyComplete: this.model.isThoroughlyComplete() });
+            if (this.model.collection.selectedAgeGroup === this.model) {
+                data.$selected = true;
+            }
             this.$el.html(templates('WallNewspaperBlock', 'age_group_select_view', data));
             return this;
         },

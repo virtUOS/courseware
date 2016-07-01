@@ -45,7 +45,7 @@ define(['backbone', 'underscore', 'assets/js/templates', 'assets/js/block_model'
                 testBlock: {
                     id: this.topics.selectedSelfTest,
                     ageGroup: this.topics.get(this.topics.selectedSelfTest),
-                    test: this.tests.findWhere('id', this.topics.selectedSelfTest).attributes
+                    test: this.tests && this.tests.findWhere('id', this.topics.selectedSelfTest).attributes
                 },
                 selectedSelfTest: this.topics.selectSelfTest,
                 formMode: this.formMode
