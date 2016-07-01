@@ -8,7 +8,7 @@
   
     {{#available}}
         <div class="messagebox messagebox_info">
-            Dieser Test ist zurzeit nicht verfügbar.
+            {{#i18n}}Dieser Test ist zurzeit nicht verfügbar.{{/i18n}}
         </div>
     {{/available}}
 
@@ -32,36 +32,36 @@
                     {{#has_solution}}
                         {{#tryagain}}
                             <div class="messagebox messagebox_error">
-                                {{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.{{/i18n}}
+                                {{#i18n}}Dein Lösungsversuch war noch nicht korrekt. Versuche es bitte nochmal.{{/i18n}}
                             </div>
                         {{/tryagain}}
                         {{#correct}}
                             <div class="messagebox messagebox_success">
-                                {{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}
+                                {{#i18n}}Deine Lösung ist korrekt!{{/i18n}}
                             </div>
                         {{/correct}}
                         {{^tryagain}}
                             {{^correct}}
                                 <div class="messagebox messagebox_info answerinfo">
-                                {{#i18n}}Für diese Frage haben Sie bereits eine Antwort abgegeben.{{/i18n}}
+                                {{#i18n}}Für diese Frage hast Du bereits eine Antwort abgegeben.{{/i18n}}
                                 </div>
                             {{/correct}}
                         {{/tryagain}}
                     {{/has_solution}}
                     {{^self_test}}
                         <div class="messagebox messagebox_info submitinfo" style="display: none;">
-                            {{#i18n}}Ihre Lösung wurde eingetragen.{{/i18n}}
+                            {{#i18n}}Deine Lösung wurde eingetragen.{{/i18n}}
                         </div>
                     {{/self_test}}
                     {{#solved_completely}}
                         <div class="messagebox messagebox_success">
-                            {{#i18n}}Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
+                            {{#i18n}}Danke! Du hast alle Aufgaben gelöst und kannst nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
                         </div>
                     {{/solved_completely}}
                     
                     {{#submitted_completely}}
                         <div class="messagebox messagebox_success" style="font-size: 14px;">
-                            {{#i18n}}Sie haben alle Aufgaben bearbeitet und können Ihre Lösungen jetzt ausdrucken.{{/i18n}}
+                            {{#i18n}}Du hast alle Aufgaben bearbeitet und kannst deine Lösungen jetzt ausdrucken.{{/i18n}}
                             <button name="print-exercise" class="button" style="float: right; margin: -8px !important">{{#i18n}}drucken{{/i18n}}</button>
                         </div>
                     {{/submitted_completely}}
@@ -88,7 +88,7 @@
     {{^exercises}}
         {{#typemismatch}}
             <div class="messagebox messagebox_error">
-                {{#i18n}}Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten.{{/i18n}}
+                {{#i18n}}Der Aufgabentyp hat sich geändert. Bitte wende dich an deinen Referenten.{{/i18n}}
             </div>
         {{/typemismatch}}
         {{^typemismatch}}

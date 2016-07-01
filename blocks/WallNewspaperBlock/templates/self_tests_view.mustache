@@ -2,7 +2,7 @@
     {{#hasCompletedAgeGroups}}
         <header>
             <h2>
-                Bitte wählen Sie nun die Lernerfolgskontrolle für Ihre Altersklasse aus!
+                {{#i18n}}Bitte wähle nun die Lernerfolgskontrolle für deine Altersklasse aus!{{/i18n}}
             </h2>
         </header>
 
@@ -14,13 +14,13 @@
             </select>
 
             <fieldset>
-                <button name=select class=button>Auswählen</button>
+                <button name=select class=button>{{#i18n}}Auswählen{{/i18n}}</button>
             </fieldset>
         </form>
 
         {{#selectedSelfTest}}
             <p>
-                Beantworten Sie bitte die folgenden Fragen, um zur nächsten Lektion zu gelangen:
+                {{#i18n}}Beantworte bitte die folgenden Fragen, um zur nächsten Lektion zu gelangen:{{/i18n}}
             </p>
         {{/selectedSelfTest}}
     {{/hasCompletedAgeGroups}}
@@ -29,15 +29,15 @@
 <section class="mode-author">
     <header>
         <h2>
-            Ordnen Sie bitte jeder Altersklasse einen Selbsttest zu!
+            {{#i18n}}Ordne bitte jeder Altersklasse einen Selbsttest zu!{{/i18n}}
         </h2>
     </header>
 
     <form class="ageGroupsTests {{formMode}}">
         <table>
             <tr>
-                <th>Alterklasse</th>
-                <th>Selbsttest</th>
+                <th>{{#i18n}}Alterklasse{{/i18n}}</th>
+                <th>{{#i18n}}Selbsttest{{/i18n}}</th>
             </tr>
 
             {{#ageGroups}}
@@ -45,7 +45,7 @@
                     <td>{{title}}</td>
                     <td>
                         <select data-age-group-id="{{id}}">
-                            <option value="">Wählen Sie einen Selbsttest:</option>
+                            <option value="">{{#i18n}}Wähle einen Selbsttest:{{/i18n}}</option>
                             {{#tests}}
                                 <option value="{{id}}" {{testSelected}}>
                                     {{title}} ({{#created}}{{#i18n}}erstellt am{{/i18n}} {{created}}, {{/created}}{{exercises_count}} {{#i18n}}Fragen{{/i18n}})
@@ -58,7 +58,7 @@
         </table>
 
         <fieldset>
-            <button name=save class=button>Speichern</button>
+            <button name=save class=button>{{#i18n}}Speichern{{/i18n}}</button>
         </fieldset>
     </form>
 </section>

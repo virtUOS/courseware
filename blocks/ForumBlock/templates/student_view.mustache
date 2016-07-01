@@ -3,7 +3,7 @@
 {{^inactive}}
 <div>
     {{^connected}}
-    Es wurde bisher kein Bereich verknüpft!
+        {{#i18n}}Es wurde bisher kein Bereich verknüpft!{{/i18n}}
     {{/connected}}
 
     {{#connected}}
@@ -14,7 +14,7 @@
     {{/topics}}
 
     <br>
-    <a href="{{area_url}}">Alles anzeigen / Eigenen Beitrag schreiben</a>
+    <a href="{{area_url}}">{{#i18n}}Alles anzeigen / Eigenen Beitrag schreiben{{/i18n}}</a>
     {{/connected}}
 </div>
 {{/inactive}}

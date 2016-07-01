@@ -32,7 +32,7 @@
 </div>
 
 <div class="flipbookoverlay">
-    <button class="flipbookfulloff button">schlie&szlig;en</button>
+    <button class="flipbookfulloff button">{{#i18n}}schlie&szlig;en{{/i18n}}</button>
     <div class="flipbookimgfull-container">
     {{#imagefiles}}
         <img class="flipbookimgfull" src=" ../../sendfile.php?type=0&file_id={{dokument_id}}&file_name={{filename}}" image-data="{{filename}}"></img>
@@ -44,5 +44,5 @@
 </div>
 {{/pdf_id}}
 {{^pdf_id}}
-<p>Es wurde noch kein Flipbook angelegt!</p>
+<p>{{#i18n}}Es wurde noch kein Flipbook angelegt!{{/i18n}}</p>
 {{/pdf_id}}

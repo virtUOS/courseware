@@ -3,26 +3,26 @@
 </div>
 <p class="videourl">{{url}}</p>
 <div class="videodata">
-Video-Typ: <select class="videotype">
+{{#i18n}}Video-Typ:{{/i18n}} <select class="videotype">
     <option value="youtube">youtube</option>
     <option value="matterhorn">matterhorn</option>
     <option value="url">url</option>
     <option value="dfb">dfb.tv</option>
 </select><br>
-<span class="videosrcname">URL</span><input type="text" class="videosrc"><br>
-<span class="videotitlename">Titel</span><input type="text" class="videotitle" value="{{videoTitle}}">
+<span class="videosrcname">{{#i18n}}URL{{/i18n}}</span><input type="text" class="videosrc"><br>
+<span class="videotitlename">{{#i18n}}Titel{{/i18n}}</span><input type="text" class="videotitle" value="{{videoTitle}}">
 </div>
 <div class="videosettings">
-    <span>Video automatisch starten<input type="checkbox" class="videoautostart" ></span>
-    <span>Kontrollelemente verstecken<input type="checkbox" class="videocontrols" ></span> <br/>
-    <span>Seitenverh&auml;ltnis<input type="radio" class="videoaspect169" name="videoaspect" value="aspect-169" checked>16:9 <input type="radio" class="videoaspect43" name="videoaspect" value="aspect-43">4:3</span> <br/>
-    <span>Start<input class="videostartmin" type="number" min="0" placeholder="min" ><input class="videostartsec" type="number" step="1" max="59" min="0" placeholder="sek"></span> 
-    <span>Ende<input class="videoendmin" type="number" min="0" placeholder="min"><input class="videoendsec" type="number" step="1" max="59" min="0" placeholder="sek"></span> <button name="videotimereset" class="button">zur&uuml;cksetzen</button><br/>
+    <span>{{#i18n}}Video automatisch starten{{/i18n}}<input type="checkbox" class="videoautostart" ></span>
+    <span>{{#i18n}}Kontrollelemente verstecken{{/i18n}}<input type="checkbox" class="videocontrols" ></span> <br/>
+    <span>{{#i18n}}Seitenverh&auml;ltnis{{/i18n}}<input type="radio" class="videoaspect169" name="videoaspect" value="aspect-169" checked>16:9 <input type="radio" class="videoaspect43" name="videoaspect" value="aspect-43">4:3</span> <br/>
+    <span>{{#i18n}}Start{{/i18n}}<input class="videostartmin" type="number" min="0" placeholder="min" ><input class="videostartsec" type="number" step="1" max="59" min="0" placeholder="sek"></span> 
+    <span>{{#i18n}}Ende{{/i18n}}<input class="videoendmin" type="number" min="0" placeholder="min"><input class="videoendsec" type="number" step="1" max="59" min="0" placeholder="sek"></span> <button name="videotimereset" class="button">{{#i18n}}zur&uuml;cksetzen{{/i18n}}</button><br/>
 </div>
 <div class="videostatus"><span class="status">&nbsp;</span></div>
 <div class="videobuttons">
-<button name="preview" class="button">Vorschau</button>
-<button name="save" class="button">Speichern</button>
-<button name="cancel" class="button">Abbrechen</button>
+<button name="preview" class="button">{{#i18n}}Vorschau{{/i18n}}</button>
+<button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
+<button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
 </div>
 
