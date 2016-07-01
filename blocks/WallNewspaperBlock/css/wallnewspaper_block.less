@@ -70,11 +70,20 @@ section.WallNewspaperBlock {
       text-transform: uppercase;
       font-size: 14px;
       font-weight: 600;
+
+      &.selected {
+        background-color: white;
+        color: #005d3b;
+      }
     }
 
     &:nth-child(n+2) {
       border-top: 2px solid white;
     }
+  }
+
+  .age-group-select .title {
+    padding-left: 0.25em;
   }
 
   .age-group-topics {
