@@ -44,16 +44,17 @@ section.WallNewspaperBlock {
   }
 
 
-  .title {
+  .age-group-select > .title,
+  .subtopics .title {
     cursor: pointer;
 
     &:hover {
       text-decoration: underline;
     }
+  }
 
-    &.selected::before {
-      content: '> ';
-    }
+  .subtopics .title.selected {
+    color: #005d3b;
   }
 
 

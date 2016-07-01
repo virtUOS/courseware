@@ -229,7 +229,7 @@ JSONDATA;
 
     private function createAgeGroup($id, $title, $associatedSelfTest = null)
     {
-        $age_group = new AgeGroup($id, $title, $this->retrieveContent($id), $this->isTopicComplete($id), $associatedSelfTest);
+        $age_group = new AgeGroup($id, studip_utf8decode($title), $this->retrieveContent($id), $this->isTopicComplete($id), $associatedSelfTest);
 
         foreach($this->getDefaultTopics() as $topic_title => $subtopics) {
             $topic_id = sprintf('%d-%d', $id, $this->nextID());
@@ -241,7 +241,8 @@ JSONDATA;
 
     private function createTopic($id, $title, $subtopics = array())
     {
-        $subtopic = new Topic($id, $title, $this->retrieveContent($id), $this->isTopicComplete($id));
+        $complete = count($subtopics) ? true : $this->isTopicComplete($id);
+        $subtopic = new Topic($id, studip_utf8decode($title), $this->retrieveContent($id), $complete);
 
         foreach ($subtopics as $subtitle) {
             $topic_id = sprintf('%s-%d', $subtopic->id, $this->nextID());

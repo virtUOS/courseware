@@ -6,10 +6,6 @@ function (TopicView, Backbone, _) {
 
         className: 'age-group-topics',
 
-        events: {
-            'click > .title': 'onSelect'
-        },
-
         initialize: function (options) {
             this.dispatcher = options.dispatcher;
             this.listenTo(this.model, 'change', this.render);
@@ -28,10 +24,6 @@ function (TopicView, Backbone, _) {
         remove: function() {
             _.invoke(this._topicViews, 'remove');
             return Backbone.View.prototype.remove.call(this);
-        },
-
-        onSelect: function () {
-            this.dispatcher.selectTopic(this.model);
         }
     });
 

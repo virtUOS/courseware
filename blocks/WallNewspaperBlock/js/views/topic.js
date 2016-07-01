@@ -41,8 +41,10 @@ function (Backbone, _, templates) {
             return Backbone.View.prototype.remove.call(this);
         },
 
-        onSelect: function () {
-            this.dispatcher.selectTopic(this.model);
+        onSelect: function (event) {
+            if (!Backbone.$(event.target).hasClass('has-subtopics')) {
+                this.dispatcher.selectTopic(this.model);
+            }
         }
     });
 
