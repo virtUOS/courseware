@@ -40,7 +40,7 @@ define(['backbone', 'underscore', 'assets/js/templates', 'assets/js/block_model'
 
             var data = {
                 ageGroups: _.map( this.topics.ageGroups, decorateAgeGroup),
-                hasCompletedAgeGroups: _.any(this.topics.ageGroups, function (group) { return group.get('$thoroughlyComplete'); }),
+                hasCompletedAgeGroups: _.all(this.topics.ageGroups, function (group) { return group.get('$thoroughlyComplete'); }),
                 tests: _.pluck(this.tests.models, 'attributes'),
                 testBlock: {
                     id: this.topics.selectedSelfTest,
