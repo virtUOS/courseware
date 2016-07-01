@@ -1,4 +1,5 @@
 @import '../../../assets/mixins';
+@import 'dataurls.less';
 
 section.WallNewspaperBlock {
 
@@ -31,6 +32,10 @@ section.WallNewspaperBlock {
 
     > article.content {
       .mixin-flex(2 1);
+
+      &:empty {
+        background: url('@{content-default}') center 25% / cover  no-repeat;
+      }
     }
 
     > article.self-tests {

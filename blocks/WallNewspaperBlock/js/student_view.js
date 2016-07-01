@@ -40,7 +40,7 @@ Topic, TopicCollection, createDispatcher, Backbone, _, StudentView) {
 
             // topic collection
             this.collection = json.collection;
-            this.dispatcher.selectAgeGroup(_.head(this.collection.ageGroups));
+            // this.dispatcher.selectAgeGroup(_.head(this.collection.ageGroups));
 
             // test collection
             this.tests = json.tests;
@@ -76,30 +76,36 @@ Topic, TopicCollection, createDispatcher, Backbone, _, StudentView) {
         _contentView: null,
 
         renderSelectedTopic: function () {
-            var old_view = this._contentView;
-            this._contentView = new ContentView({ dispatcher: this.dispatcher, model: this.collection.selectedTopic });
-            var new_content = this._contentView.render().$el;
+            var old_view = this._contentView, new_content;
 
-            if (old_view) {
-                old_view.$el.replaceWith(new_content);
-                old_view.remove();
-            } else {
-                this.$('> article.content').replaceWith(new_content);
+            if (this.collection.selectedTopic) {
+                this._contentView = new ContentView({ dispatcher: this.dispatcher, model: this.collection.selectedTopic });
+                new_content = this._contentView.render().$el;
+
+                if (old_view) {
+                    old_view.$el.replaceWith(new_content);
+                    old_view.remove();
+                } else {
+                    this.$('> article.content').replaceWith(new_content);
+                }
             }
         },
 
         _ageGroupTopicView: null,
 
         renderSelectedAgeGroup: function () {
-            var old_view = this._ageGroupTopicView;
-            this._ageGroupTopicView = new AgeGroupTopicsView({ dispatcher: this.dispatcher, model: this.collection.selectedAgeGroup });
-            var new_content = this._ageGroupTopicView.render().$el;
+            var old_view = this._ageGroupTopicView, new_content = null;
 
-            if (old_view) {
-                old_view.$el.replaceWith(new_content);
-                old_view.remove();
-            } else {
-                this.$('nav.age-group-topics').replaceWith(new_content);
+            if (this.collection.selectedAgeGroup) {
+                this._ageGroupTopicView = new AgeGroupTopicsView({ dispatcher: this.dispatcher, model: this.collection.selectedAgeGroup });
+                new_content = this._ageGroupTopicView.render().$el;
+
+                if (old_view) {
+                    old_view.$el.replaceWith(new_content);
+                    old_view.remove();
+                } else {
+                    this.$('nav.age-group-topics').replaceWith(new_content);
+                }
             }
         },
 
