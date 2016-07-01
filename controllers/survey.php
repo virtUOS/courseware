@@ -21,6 +21,16 @@ class SurveyController extends CoursewareStudipController {
         $this->test_type = array();
         $this->survey = $this->getSurveys();
     }
+    
+    public function print_action()
+    {   
+        PageLayout::addStylesheet('print.css');
+        $this->mode = $GLOBALS['perm']->have_studip_perm("tutor", $this->plugin->getCourseId()) ? 'total' : 'single';
+        $this->members = CourseMember::findByCourseAndStatus($this->plugin->getCourseId(), 'autor');
+        $this->test_title = array();
+        $this->test_type = array();
+        $this->survey = $this->getSurveys();
+    }
 
     public function getTestTitle($test_id, $exercise_id)
     {
