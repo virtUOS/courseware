@@ -22,7 +22,23 @@ Chart.defaults.global.legend.display = false;
                         <script>
                             var $ctx = $("#chart-<?= $itemkey?>");
                             var $chart = new Chart($ctx, {
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                min: 0,
+                                                stepSize: 1
+                                            }
+                                        }],
+                                        xAxes: [{
+                                            ticks: {
+                                                autoSkip: false
+                                            }
+                                        }]
+                                    }
+                                },
                                 type: 'bar',
+                                
                                 data: {
                                     labels: <?= $label?>,
                                     datasets: [{
@@ -33,6 +49,7 @@ Chart.defaults.global.legend.display = false;
                                     }]
                                 }
                             });
+                            
                         </script>
                     </div>
                 <? else: ?>
