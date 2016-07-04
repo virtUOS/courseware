@@ -55,6 +55,7 @@ class SurveyController extends CoursewareStudipController {
                 return _cw("Multiple-Choice-Aufgabe");
                 break;
             case "lt_exercise":
+            case "tb_exercise":
                 return _cw("Freitextaufgabe");
                 break;
         }
@@ -119,6 +120,7 @@ class SurveyController extends CoursewareStudipController {
                 foreach ($aggregation as $key => $value) {
                     switch ($aggregation_type[$key]) {
                         case "lt_exercise":
+                        case "tb_exercise":
                             $aggregation[$key] = $this->aggregateLT($value);
                             break;
                         case "sc_exercise":

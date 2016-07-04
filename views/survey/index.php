@@ -16,7 +16,7 @@ Chart.defaults.global.legend.display = false;
                 <h2><?= SurveyController::getFullTestTypeName($type) ?></h2>
                 <h3><?= SurveyController::getTestTitle($key, $itemkey); ?></h3>
                 <? $label = '['; $data = '['?>
-                <? if ($type != 'lt_exercise'): ?>
+                <? if (($type != 'lt_exercise') & ($type != 'tb_exercise')): ?>
                     <? foreach($testaggregation as  $testkey => $testvalue): ?>
                         <? $label .= '"'.$testkey.'",' ?>
                         <? $data .= '"'.$testvalue.'",' ?>
