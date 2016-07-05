@@ -108,7 +108,7 @@ function (StudentView) {
                       left: 0
                     }, 600);
                     $('.flipbookimgfull').height($height*0.95);
-                    if($portrait) {
+                    if($aspect == 'portrait') {
                        $('.flipbookimgfull-container').height($height*0.95).width((($('.flipbookimgfull').width()*2)+5));
                     } else {
                         $('.flipbookimgfull-container').height($height*0.95).width($('.flipbookimgfull').width());
