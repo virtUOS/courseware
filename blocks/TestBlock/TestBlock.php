@@ -12,6 +12,7 @@ use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
 
 /**
  * @author Christian Flothmann <christian.flothmann@uos.de>
+ * @author Ron Lucke <rlucke@uos.de>
  */
 class TestBlock extends Block
 {
@@ -56,6 +57,7 @@ class TestBlock extends Block
             // 'exam' => _cw('Klausur'),
             'selftest' => _cw('Selbsttest'),
             'practice' => _cw('Übungsblatt'),
+            // DFB only!
             'survey' => _cw('Umfrage'),
         );
     }
@@ -63,6 +65,7 @@ class TestBlock extends Block
     public function student_view()
     {
         $subtype =  $this->_model->sub_type;
+        //Umfrage verhält sich wie Übung  - DFB only!
         if ($subtype == 'survey') $subtype = 'practice';
         
         $active = VipsBridge::vipsActivated($this);
@@ -102,6 +105,7 @@ class TestBlock extends Block
             return compact('active');
         }
         $subtype =  $this->_model->sub_type;
+        //Umfrage verhält sich wie Übung  - DFB only!
         if ($subtype == 'survey') $subtype = 'practice';
         $storedTests = Test::findAllByType($this->_model->course->id, $subtype);
         $tests       = array();
@@ -610,7 +614,7 @@ class TestBlock extends Block
         $exercises = array();
         $available = false;
         $solved_completely = true;
-        $submitted_completely = true;
+        $submitted_completely = true; // - DFB only!
 
         if ($this->test) {
             $numberofex = 0;
@@ -663,6 +667,7 @@ class TestBlock extends Block
                     $solution = Solution::findOneBy($this->test, $exercise, $user);
                     
                 }
+                // Wenn alle Aufgaben übermittelt wurden wird ein Hinweis zum Drucken angezeigt - DFB only!
                 if ($this->_model->sub_type == 'survey') {
                     $solution = Solution::findOneBy($this->test, $exercise, $user);
                     if ($solution->solution == null) {
@@ -740,7 +745,7 @@ class TestBlock extends Block
             'available'           => $available,
             'exercises_available' => $exercises_available,
             'solved_completely'   => $solved_completely,
-            'submitted_completely' => $submitted_completely, 
+            'submitted_completely' => $submitted_completely,  // - DFB only!
             'assignment'          => $this->test->getId()
         );
     }

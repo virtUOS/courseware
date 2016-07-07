@@ -40,9 +40,6 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
                     .then(
                         function (response) {
-                            if (response && response.grade && _.isFinite(response.grade)) {
-                                view.trigger('TestBlock:graded', response.grade);
-                            }
                             return view.renderServerSide();
                         },
                         function () {
@@ -146,45 +143,6 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         }
                     }
             });
-
-            /*
-            var fixAnswersHeight = function (labels, answers) {
-                for (var i = 0; i < labels.length && i < answers.length; i++) {
-                    var answer = answers.eq(i);
-                    answer.css({height: 'auto'});
-                    var label = labels.eq(i);
-                    label.css({height: 'auto'});
-                    var labelHeight = label.height();
-                    var answerHeight = answer.height();
-
-                    if (labelHeight > answerHeight) {
-                        answer.css({height: labelHeight});
-                    } else if (labelHeight < answerHeight) {
-                        label.css({height: answerHeight});
-                    }
-                }
-            };
-
-            this.$('ul.exercise_answers').each(function () {
-                var $sortableAnswers = $(this),
-                    $sortableLabels = $sortableAnswers.parent().find('ul.matching_exercise.labels');
-
-                fixAnswersHeight($sortableAnswers.find('li'), $sortableLabels.find('li'));
-
-                $sortableAnswers.sortable({
-                    axis: 'y',
-                    cursor: 'move',
-                    forcePlaceholderSize: true,
-                    change: function () {
-                        fixAnswersHeight($sortableAnswers.find('li'), $sortableLabels.find('li'));
-                    },
-                    update: function () {
-                        view.moveChoice($sortableAnswers);
-                        fixAnswersHeight($sortableAnswers.find('li'), $sortableLabels.find('li'));
-                    }
-                });
-            });
-            */
 
             // search for rh_lists
             var $firstExercise = this.$('ul.exercise').eq(0);
