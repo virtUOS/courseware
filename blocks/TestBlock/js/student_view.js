@@ -221,6 +221,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                             $(this).attr('pastdraggable', '');
                             $(ui.draggable).find("input").attr("value", -1);
                         }
+                        $(ui.draggable).animate({left: $(ui.draggable).attr('posleft'), top: $(ui.draggable).attr('postop')},"slow");
                         $(this).animate({backgroundColor: "#007f4b"}, 550);
                         $(this).animate({backgroundColor: "#fff", borderColor: "#eee"}, 250);
                         
