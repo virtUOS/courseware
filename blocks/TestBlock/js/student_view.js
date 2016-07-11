@@ -225,7 +225,6 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     }
             });
             
-            $(".rh-catalog").height($(".rh-cart").innerHeight()-22);
 
         }
 
