@@ -198,6 +198,9 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         $(ui.draggable).find("input").attr("value", $(this).index());
                         
                         $(this).find(".rh-cart-item-answer").hide();
+                        $(".rh-cart-item").each( function(index) { 
+                            if ($(this).attr('pastdraggable') === "") $(this).find(".rh-cart-item-answer").show();
+                        });
                         $(this).animate({backgroundColor: "#007f4b"}, 550);
                         $(this).animate({backgroundColor: "#fff", borderColor: "#eee"}, 250);
 
