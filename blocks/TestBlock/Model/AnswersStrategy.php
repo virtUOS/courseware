@@ -30,9 +30,9 @@ abstract class AnswersStrategy implements AnswersStrategyInterface
     /**
      * {@inheritDoc}
      */
-    public function getQuestion()
+    public function getQuestion($solution_xml = null)
     {
-        return $this->vipsExercise->getSolveTemplate()->render();
+        return $this->vipsExercise->getSolveTemplate($solution_xml)->render();
     }
 
     /**
