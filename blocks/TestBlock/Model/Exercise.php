@@ -104,9 +104,9 @@ class Exercise extends \SimpleORMap
      *
      * @return string The question
      */
-    public function getQuestion()
+    public function getQuestion($solution_xml = null)
     {
-        return $this->answersStrategy->getQuestion();
+        return $this->answersStrategy->getQuestion($solution_xml);
     }
 
     /**

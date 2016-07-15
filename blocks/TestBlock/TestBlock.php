@@ -677,7 +677,7 @@ class TestBlock extends Block
                     'show_correction' => $this->test->showCorrection(),
                     'show_solution' => $exercise->showSolutionFor($this->test, $user) && $show_corrected_solution,
                     'title' => $exercise->getTitle(),
-                    'question' => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $exercise->getQuestion() ),
+                    'question' => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $exercise->getQuestion($solution->solution) ),
                     'answers' => $answers,
                     'single-choice' => $exercise->isSingleChoice(),
                     'multiple-choice' => $exercise->isMultipleChoice(),
