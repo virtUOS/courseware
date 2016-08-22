@@ -147,7 +147,7 @@ class SurveyController extends CoursewareStudipController {
     {
         $agr_array = array();
         foreach ($array as &$item) {
-            array_push( $agr_array , (string) simplexml_load_string($item)->answer->body);
+            array_push( $agr_array , (string) @simplexml_load_string($item)->answer->body);
         }
         return $agr_array;
     }
@@ -157,7 +157,7 @@ class SurveyController extends CoursewareStudipController {
         $agr_array = array();
         foreach ($array as $value) {
            
-            $value = (int) simplexml_load_string($value)->answer->body;
+            $value = (int) @simplexml_load_string($value)->answer->body;
             
             if ((array_key_exists($value,$agr_array))) {
                 $agr_array[$value] = $agr_array[$value] +1;
@@ -166,7 +166,7 @@ class SurveyController extends CoursewareStudipController {
                 $agr_array[$value] = 1;
             }
         }
-        foreach ((array)simplexml_load_string($task)->Answer as $key =>$answer) {
+        foreach ((array) @simplexml_load_string($task)->Answer as $key =>$answer) {
             if(is_int($key)) {
                 $agr_array[$answer] = $agr_array[$key];
                 unset($agr_array[$key]);
@@ -184,7 +184,7 @@ class SurveyController extends CoursewareStudipController {
         $agr_array = array();
        
         foreach ($array as $value) {
-           foreach(simplexml_load_string($value)->answer as $answer) { 
+           foreach(@simplexml_load_string($value)->answer as $answer) { 
                 $answer_id = (int)$answer->attributes()->id;
                 $answer_value = (int) $answer->body;
                 if ($answer_value == 1) {
@@ -198,7 +198,7 @@ class SurveyController extends CoursewareStudipController {
             }
         }
 
-        foreach ((array)simplexml_load_string($task)->Answer as $key =>$answer) {
+        foreach ((array) @simplexml_load_string($task)->Answer as $key =>$answer) {
             if(is_int($key)) {
                 $agr_array[$answer] = $agr_array[$key];
                 unset($agr_array[$key]);
@@ -216,13 +216,13 @@ class SurveyController extends CoursewareStudipController {
         $task = $this->encodeSpecialCharacters($task);
         $agr_array = array();
         $i = 0;
-        foreach (simplexml_load_string($array[0])->answer as $item) {
+        foreach ( @simplexml_load_string($array[0])->answer as $item) {
             $agr_array[$i] = 0;
             $i++;
         }
         
         foreach ($array as $value) {
-            foreach(simplexml_load_string($value)->answer as $answer) { 
+            foreach( @simplexml_load_string($value)->answer as $answer) { 
                 $answer_id = (int)$answer->attributes()->id;
                 $user_value = (int) $answer->body;
                 $agr_array[$answer_id] = $this->valuateRH ($user_value,  $agr_array[$answer_id], $answer_id);
@@ -231,7 +231,7 @@ class SurveyController extends CoursewareStudipController {
 
         $answers = 0;
 
-        foreach ((array)simplexml_load_string($task)->Answer as $key => $answer) {
+        foreach ((array) @simplexml_load_string($task)->Answer as $key => $answer) {
             if(is_int($key)) {
                 $answer = ($this->decodeSpecialCharacters($answer));
                 $agr_array[$answer] = $agr_array[$key];
@@ -244,7 +244,7 @@ class SurveyController extends CoursewareStudipController {
             }
         }
 
-        foreach ((array)simplexml_load_string($task)->FalseAnswer as $key => $false_answer) {
+        foreach ((array) @simplexml_load_string($task)->FalseAnswer as $key => $false_answer) {
             $key = $key + $answers;
             $false_answer = ($this->decodeSpecialCharacters($false_answer));
             $agr_array[$false_answer] = $agr_array[$key];
