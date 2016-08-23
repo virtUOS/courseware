@@ -3,6 +3,10 @@ namespace Mooc\UI\DownloadBlock;
 
 use Mooc\UI\Block;
 
+/**
+ * @author Ron Lucke <rlucke@uos.de>
+ */
+
 class DownloadBlock extends Block 
 {
     const NAME = 'Download';
