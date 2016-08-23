@@ -1,0 +1,30 @@
+{{#confirmed}}
+<div class="messagebox messagebox_success">
+    {{#i18n}}Du hast diese Datei runtergeladen und kannst nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
+</div>
+{{/confirmed}}
+
+{{^confirmed}}
+<div class="messagebox messagebox_info">
+    {{#i18n}}Wenn du die Datei heruntergeladen hast kannst du mit dem nächsten Abschnitt fortfahren.{{/i18n}}
+</div>
+{{/confirmed}}
+
+<table class=download-file>
+    <tbody>
+        <tr>
+            <td width="100%">{{file}} &nbsp; <span style="color: lightgrey">{{file_name}}</span></td>
+            <td width="112px">
+                <a href="../../sendfile.php?type=0&file_id={{file_id}}&file_name={{file_name}}" target="_blank"> 
+                    <button name="download" class="button" style="right: 0">download</button>
+                </a> 
+            </td>
+        </tr>
+    </tbody>
+    
+    
+</table>
+
+<input type="hidden" name="file" value="{{file}}" />
+<input type="hidden" name="file_name" value="{{file_name}}" />
+<input type="hidden" name="file_id" value="{{file_id}}" />
