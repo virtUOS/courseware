@@ -39,6 +39,7 @@ class TestBlock extends Block
         global $vipsPlugin, $vipsTemplateFactory;
 
         $this->defineField('test_id', \Mooc\SCOPE_BLOCK, null);
+        $this->defineField('test_questions', \Mooc\SCOPE_BLOCK, null);
         $this->defineField('tries',   \Mooc\SCOPE_USER, array()); // Field to count the tries
 
         $vipsPlugin = VipsBridge::getVipsPlugin();
@@ -92,7 +93,8 @@ class TestBlock extends Block
         return $active
             ? array_merge(array(
                     'active'  => $active,
-                    'blockid' => $blockId
+                    'blockid' => $blockId,
+                    'test_questions' => $this->test_questions
                 ), $this->buildExercises())
             : compact('active');
     }
@@ -135,7 +137,8 @@ class TestBlock extends Block
             'active'                => $active,
             'manage_tests_url'      => \PluginEngine::getURL(VipsBridge::getVipsPlugin(), array('action' => 'sheets'), 'show'),
             'tests'                 => $tests,
-            'unsupported_question'  => $unsupported_question
+            'unsupported_question'  => $unsupported_question,
+            'selftest'              => $this->_model->sub_type == 'selftest'
         );
     }
 
@@ -155,15 +158,17 @@ class TestBlock extends Block
 
 
 
-    public function modify_test_handler($testId)
+    public function modify_test_handler($data)
     {
         $this->authorizeUpdate();
 
         // change the test id
-        $this->test_id = $testId;
+        $this->test_id = $data["test_id"];
 
         // and reload the test data
         $this->test = new Test($this->test_id);
+        
+        $this->test_questions = $data["test_questions"];
 
         return $this->buildExercises();
     }
@@ -675,6 +680,7 @@ class TestBlock extends Block
                     }
                     
                 }
+                
                 else {
                     $submitted_completely = false;
                 }
@@ -693,6 +699,7 @@ class TestBlock extends Block
                     // limited tries
                     $show_corrected_solution = ($correct || (($try_counter >= $max_counter) && $this->test->isSelfTest()));
                 }
+
                 $entry = array(
                     'exercise_type' => $exercise->getType(),
                     $exercise->getType() => 1,
@@ -728,16 +735,33 @@ class TestBlock extends Block
                 $exercises[] = $entry;
             }
         }
-
+        // - DFB only - werden nicht alle Fragen ausgewählt werden per Zufall die 
+        // gewählte Anzahl an Fragen ausgesucht. Dies gilt nur für Selbsttests.
+        if (($this->test_questions != null)&&((int)$this->test_questions != $numberofex)&&($this->_model->sub_type == 'selftest')) {
+            $random_keys=array_rand($exercises, $this->test_questions);
+            $rnd_exercises = array();
+            foreach($random_keys as $key) {
+                array_push($rnd_exercises, $exercises[$key]);
+            }
+            foreach($rnd_exercises as $key => $value) {
+                $rnd_exercises[$key]['exercise_index'] = $key+1;
+                $rnd_exercises[$key]['number_of_exercises'] = $this->test_questions;
+             }
+            $exercises = $rnd_exercises;
+        }
+        
         // check, if there ist at least one visible exercise
         $exercises_available = false;
         foreach ($exercises as $ex) {
+            
             if (!$ex['skip_entry']) {
                 $exercises_available = true;
                 break;
             }
+            
         }
-
+        
+        
         return array(
             'title'               => $this->test->title,
             'description'         => formatReady($this->test->description),

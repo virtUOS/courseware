@@ -1,5 +1,6 @@
 define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helper) {
     'use strict';
+   
 
     return StudentView.extend({
         events: {
@@ -96,6 +97,11 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         },
 
         render: function() {
+            
+            this.$(".exercise").each( function() {
+                //id's der aufgaben ändern und nur bestimmte anzahl anzeigen ... random verwenden!
+            });
+            
             return this;
         },
 
@@ -153,7 +159,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
 
 
         postRenderExercise: function ($exerciseElement) {
-
+        
             function randomiseDraggables() {
                 var $parent = $(".rh-catalog");
                 var $divs = $parent.children();
@@ -184,6 +190,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
             }).find("input").attr("value", -1);;
 
             $(".rh-cart-item").each( function(index) {
+
                 $(this).droppable({
                     drop: function(event, ui) {
                         var pastDraggable = $(this).attr('pastdraggable');
@@ -197,12 +204,13 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         $(this).attr('pastdraggable', currentDraggable);
                         $(ui.draggable).find("input").attr("value", $(this).index());
                         
+                        $(this).animate({backgroundColor: "#007f4b"}, 550);
+                        $(this).animate({backgroundColor: "#fff", borderColor: "#eee"}, 250);
+                        
                         $(this).find(".rh-cart-item-answer").hide();
                         $(".rh-cart-item").each( function(index) { 
                             if ($(this).attr('pastdraggable') === "") $(this).find(".rh-cart-item-answer").show();
                         });
-                        $(this).animate({backgroundColor: "#007f4b"}, 550);
-                        $(this).animate({backgroundColor: "#fff", borderColor: "#eee"}, 250);
 
                     },
                     out: function(event, ui) {
@@ -217,8 +225,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     }
                 });
             });
-            
-            $(".rh-catalog").droppable({
+             $(".rh-catalog").droppable({
                 drop: function(event, ui) {
                         if($(ui.draggable).attr("id") == $(this).attr('pastdraggable')) {
                             $(this).attr('pastdraggable', '');
@@ -227,6 +234,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         $(ui.draggable).animate({left: $(ui.draggable).attr('posleft'), top: $(ui.draggable).attr('postop')},"slow");
                         $(this).animate({backgroundColor: "#007f4b"}, 550);
                         $(this).animate({backgroundColor: "#fff", borderColor: "#eee"}, 250);
+                        
                         $(".rh-cart-item").each( function(index) { 
                             if ($(this).attr('pastdraggable') === "") $(this).find(".rh-cart-item-answer").show();
                         });
@@ -239,7 +247,6 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         $(this).css("border-color", "#007f4b");
                 }
             });
-
         }
 
     });

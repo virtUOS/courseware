@@ -1,24 +1,33 @@
 {{#active}}
-{{#unsupported_question}}
- <div class="messagebox messagebox_error">
-        {{#i18n}}Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!{{/i18n}}
-</div>
-{{/unsupported_question}}
-  <a href="{{manage_tests_url}}" class="edit-tests">{{#i18n}}Aufgabenblätter verwalten{{/i18n}}</a>
+    {{#unsupported_question}}
+        <div class="messagebox messagebox_error">
+            {{#i18n}}Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!{{/i18n}}
+        </div>
+    {{/unsupported_question}}
 
+    <a href="{{manage_tests_url}}" class="edit-tests">{{#i18n}}Aufgabenblätter verwalten{{/i18n}}</a>
+    <br>
     <select name="test_id">
-      <option>-- {{#i18n}}anzuzeigendes Aufgabenblatt auswählen{{/i18n}} --</option>
+        <option>-- {{#i18n}}anzuzeigendes Aufgabenblatt auswählen{{/i18n}} --</option>
         {{#tests}}
-          <option value="{{id}}"{{#current_test}} selected="selected"{{/current_test}}>
-            {{name}} ({{#created}}{{#i18n}}erstellt am{{/i18n}} {{created}}, {{/created}}{{exercises_count}} {{#i18n}}Fragen{{/i18n}})
-          </option>
+            <option value="{{id}}" select-data='{"count":"{{exercises_count}}"}' {{#current_test}} selected="selected"{{/current_test}}>
+                {{name}} ({{#created}}{{#i18n}}erstellt am{{/i18n}} {{created}}, {{/created}}{{exercises_count}} {{#i18n}}Fragen{{/i18n}})
+            </option>
         {{/tests}}
     </select>
-
+    
+    {{#selftest}}
+        <div class="selftest-settings">
+            <input type="number" name="test_questions" min="1" max="" value="">
+            <span>{{#i18n}}Fragen vom Aufgabenblatt anzeigen{{/i18n}}</span>
+        </div>
+    {{/selftest}}
+    
     <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
     <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+    
 {{/active}}
 
 {{^active}}
-  {{> _vips_deactivated}}
+    {{> _vips_deactivated}}
 {{/active}}
