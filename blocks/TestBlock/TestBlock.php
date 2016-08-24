@@ -138,7 +138,8 @@ class TestBlock extends Block
             'manage_tests_url'      => \PluginEngine::getURL(VipsBridge::getVipsPlugin(), array('action' => 'sheets'), 'show'),
             'tests'                 => $tests,
             'unsupported_question'  => $unsupported_question,
-            'selftest'              => $this->_model->sub_type == 'selftest'
+            'selftest'              => $this->_model->sub_type == 'selftest',
+            'test_questions'        => $this->test_questions
         );
     }
 
