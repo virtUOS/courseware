@@ -1,19 +1,22 @@
+<h2>{{download_title}}</h2>
 {{#confirmed}}
+
 <div class="messagebox messagebox_success">
-    {{#i18n}}Du hast diese Datei runtergeladen und kannst nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
+    {{download_success}}
 </div>
+
 {{/confirmed}}
 
 {{^confirmed}}
 <div class="messagebox messagebox_info">
-    {{#i18n}}Wenn du die Datei heruntergeladen hast kannst du mit dem nächsten Abschnitt fortfahren.{{/i18n}}
+    {{download_info}}
 </div>
 {{/confirmed}}
 
 <table class=download-file>
     <tbody>
         <tr>
-            <td width="100%">{{file}} &nbsp; <span style="color: lightgrey">{{file_name}}</span></td>
+            <td width="100%"><img style="margin-bottom: -3px;" src="../../plugins_packages/virtUOS/Courseware/assets/images/download.png" height="18" width="18"> &nbsp; {{file}} &nbsp; <span style="color: lightgrey">{{file_name}}</span></td>
             <td width="112px">
                 <a href="../../sendfile.php?type=0&file_id={{file_id}}&file_name={{file_name}}" target="_blank"> 
                     <button name="download" class="button" style="right: 0">download</button>
@@ -28,3 +31,6 @@
 <input type="hidden" name="file" value="{{file}}" />
 <input type="hidden" name="file_name" value="{{file_name}}" />
 <input type="hidden" name="file_id" value="{{file_id}}" />
+<input type="hidden" name="download_title" value="{{download_title}}" />
+<input type="hidden" name="download_info" value="{{download_info}}" />
+<input type="hidden" name="download_success" value="{{download_success}}" />

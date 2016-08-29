@@ -3,10 +3,6 @@ namespace Mooc\UI\DownloadBlock;
 
 use Mooc\UI\Block;
 
-/**
- * @author Ron Lucke <rlucke@uos.de>
- */
-
 class DownloadBlock extends Block 
 {
     const NAME = 'Download';
@@ -17,7 +13,9 @@ class DownloadBlock extends Block
         $this->defineField('file_id', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('file_name', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('folder_id', \Mooc\SCOPE_BLOCK, '');
-        $this->defineField('folder_tmp', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('download_title', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('download_info', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('download_success', \Mooc\SCOPE_BLOCK, '');
     }
 
     function student_view()
@@ -42,6 +40,10 @@ class DownloadBlock extends Block
             $this->file = (string) $data['file'];
             $this->file_id = (string) $data['file_id'];
             $this->file_name = (string) $data['file_name'];
+            
+            $this->download_title = (string) $data['download_title'];
+            $this->download_info = (string) $data['download_info'];
+            $this->download_success = (string) $data['download_success'];
              
         } else {
             $this->file_id = "";
@@ -91,7 +93,10 @@ class DownloadBlock extends Block
             'file' => $this->file, 
             'file_id' => $this->file_id, 
             'file_name' => $this->file_name, 
-            'folder_id' => $this->folder_id
+            'folder_id' => $this->folder_id,
+            'download_title' => $this->download_title,
+            'download_info' => $this->download_info,
+            'download_success' => $this->download_success
             
         );
     }
@@ -102,6 +107,9 @@ class DownloadBlock extends Block
             'file' => $this->file,
             'file_id' => $this->file_id,
             'file_name' => $this->file_name,
+            'download_title' => $this->download_title,
+            'download_info' => $this->download_info,
+            'download_success' => $this->download_success
        );
     }
     

@@ -28,10 +28,14 @@ define(['assets/js/author_view', 'assets/js/url'],
             var $file_val = $file.val();
             var $file_id = $file.find('option:selected').attr("file_id");
             var $file_name = $file.find('option:selected').attr("file_name");
-                
+
+            var $download_title = this.$("input[name='download-title']").val();
+            var $download_info = this.$("input[name='download-info']").val();
+            var $download_success = this.$("input[name='download-success']").val();
+
             //textarea.remove();
             helper
-                .callHandler(this.model.id, "save", {file: $file_val, file_id: $file_id, file_name: $file_name})
+                .callHandler(this.model.id, "save", {file: $file_val, file_id: $file_id, file_name: $file_name, download_title: $download_title, download_info: $download_info, download_success: $download_success})
                 .then(
                     // success
                     function () {
