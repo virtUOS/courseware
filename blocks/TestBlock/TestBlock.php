@@ -739,17 +739,29 @@ class TestBlock extends Block
         // - DFB only - werden nicht alle Fragen ausgewählt werden per Zufall die 
         // gewählte Anzahl an Fragen ausgesucht. Dies gilt nur für Selbsttests.
         if (($this->test_questions != null)&&((int)$this->test_questions != $numberofex)&&($this->_model->sub_type == 'selftest')) {
-            $random_keys=array_rand($exercises, $this->test_questions);
             $rnd_exercises = array();
-            foreach($random_keys as $key) {
-                array_push($rnd_exercises, $exercises[$key]);
+            if ($this->test_questions == 1) { 
+                $random_key = rand(0, (sizeOf($exercises)-1));
+                array_push($rnd_exercises, $exercises[$random_key]);
+                $rnd_exercises[0]['exercise_index'] = 1;
+                $rnd_exercises[0]['number_of_exercises'] = 1;
+                $exercises = $rnd_exercises;
             }
-            foreach($rnd_exercises as $key => $value) {
-                $rnd_exercises[$key]['exercise_index'] = $key+1;
-                $rnd_exercises[$key]['number_of_exercises'] = $this->test_questions;
-             }
-            $exercises = $rnd_exercises;
+            else {
+                $random_keys=array_rand($exercises, $this->test_questions);
+                foreach($random_keys as $key) {
+                    array_push($rnd_exercises, $exercises[$key]);
+                }
+                foreach($rnd_exercises as $key => $value) {
+                    $rnd_exercises[$key]['exercise_index'] = $key+1;
+                    $rnd_exercises[$key]['number_of_exercises'] = $this->test_questions;
+                 }
+                $exercises = $rnd_exercises;
+            }
+            
         }
+        
+        
         
         // check, if there ist at least one visible exercise
         $exercises_available = false;

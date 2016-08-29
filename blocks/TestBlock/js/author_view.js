@@ -41,7 +41,11 @@ define(['assets/js/author_view', 'assets/js/url'], function (AuthorView, helper)
             var view = this;
             var $test_id = this.$('select[name="test_id"]').val();
             var $test_questions = this.$('input[name="test_questions"]').val();
-
+            var $test_questions_min = this.$('input[name="test_questions"]').attr('min');
+            var $test_questions_max = this.$('input[name="test_questions"]').attr('max');
+            
+            if ((!$test_questions)|| ($test_questions > $test_questions_max) || ($test_questions < $test_questions_min)){ $test_questions = 1;}
+            
             helper
                 .callHandler(this.model.id, 'modify_test', {test_id: $test_id, test_questions: $test_questions} )
                 .then(
