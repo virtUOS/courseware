@@ -1,22 +1,41 @@
 section.HtmlBlock {
-  .controls button.no-sorting {
-    visibility: hidden;
-  }
-
-  textarea {
-    width: 100%;
-  }
-
-  div.content {
-    img {
-      max-width: 100%;
+    .controls button.no-sorting {
+        visibility: hidden;
     }
 
-    &:after {
-      content: ".";
-      display: block;
-      visibility: hidden;
-      clear: both;
+    textarea {
+        width: 100%;
     }
-  }
+
+    div.content {
+        img {
+        max-width: 100%;
+        }
+
+        &:after {
+          content: ".";
+          display: block;
+          visibility: hidden;
+          clear: both;
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid #ccc;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            font-weight: 4;
+            line-height: 1.8em;
+            border: none;
+            padding: none;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+      }
 }
