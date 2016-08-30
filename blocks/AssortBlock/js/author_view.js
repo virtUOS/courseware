@@ -43,7 +43,11 @@ define(['assets/js/author_view', 'assets/js/url'],
             
             this.$('input[name="assortblocks"]:checked').each(function(){
                 var $id = $(this).val();
-                var $name = $("#blockname-"+$id).val();
+                var $name = $("#blockname-"+$id)
+                            .val()
+                            .replace(/[\u00A0-\u9999<>\&]/gim, function(i){
+                                return '&#'+i.charCodeAt(0)+';';
+                            });
                 $assortblocksarray.push({id : $id , name : $name, hash: ''});
             });
             helper
