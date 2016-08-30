@@ -1,16 +1,18 @@
-<h2>{{download_title}}</h2>
+{{#download_title}}<h2>{{download_title}}</h2>{{/download_title}}
 {{#confirmed}}
-
+{{#download_success}}
 <div class="messagebox messagebox_success">
     {{download_success}}
 </div>
-
+{{/download_success}}
 {{/confirmed}}
 
 {{^confirmed}}
+{{#download_info}}
 <div class="messagebox messagebox_info">
     {{download_info}}
 </div>
+{{/download_info}}
 {{/confirmed}}
 
 <table class=download-file>
