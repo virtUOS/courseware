@@ -28,7 +28,8 @@ define(['assets/js/student_view'], function (StudentView) {
             $.each($assortblocks , function(){
                 var $id = this["id"];
                 var $name = this["name"];
-                if((!$id)||(!$name)) {return;}
+                if(!$id) {return;}
+                if(!$name) {$name = $id; }
                 var $thisblock = $("#block-"+$id);
                 if ($thisblock.length == 0) {console.log("block "+ $id +" nicht vorhanden"); return; }
                 $thisblock.hide();
