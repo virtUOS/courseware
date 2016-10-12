@@ -47,6 +47,7 @@
             <xsd:element name="Question" type="question" />
             <xsd:element name="EvalMode" type="xsd:string" />
             <xsd:element name="Default" type="default" />
+            <xsd:element name="FalseAnswer" type="answer" minOccurs="0" maxOccurs="unbounded" />
             <xsd:element name="Answer" type="answer" minOccurs="0" maxOccurs="unbounded" />
             <xsd:element name="ChooseItem" type="xsd:integer" />
             <xsd:element name="AnswerDefault" type="xsd:string" />
