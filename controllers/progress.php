@@ -9,7 +9,7 @@ class ProgressController extends CoursewareStudipController {
 
     public function index_action()
     {
-        PageLayout::addStylesheet($GLOBALS['ABSOLUTE_URI_STUDIP'].$this->plugin->getPluginPath().'/assets/courseware.min.css');
+        PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/courseware.min.css');
 
         if (Navigation::hasItem('/course/mooc_progress')) {
             Navigation::activateItem("/course/mooc_progress");
