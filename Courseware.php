@@ -200,6 +200,20 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         return $this->container;
     }
 
+    static function onEnable($id)
+    {
+        $db = DBManager::get();
+
+        // find plugin activations of old Mooc.IP plugin and duplicate them for the new courseware plugin
+        $plugin_id     = (int)$db->query("SELECT pluginid FROM plugins
+            WHERE pluginclassname = 'Mooc'")->fetchColumn();
+
+        if ($plugin_id) {
+            $db->exec("INSERT INTO plugins_activated
+                SELECT $id as pluginid, poiid, state FROM plugins_activated WHERE pluginid = $plugin_id");
+        }
+    }
+
     /**********************************************************************/
     /* PRIVATE METHODS                                                    */
     /**********************************************************************/

@@ -16,7 +16,7 @@ class SetupCourseware extends DBMigration {
     }
 
     public function up () {
-      
+
         $db = DBManager::get();
 
         // check if Mooc.IP is already installed and the schema-version of Mooc.IP
@@ -24,12 +24,13 @@ class SetupCourseware extends DBMigration {
         // if the schema-version is to old, do an exit rescue with an error message
         $version = $db->fetchColumn("SELECT version FROM schema_version WHERE domain = 'Mooc.IP'");
 
-        if ($version && $version < 20) {
-            throw new Exception('Please upgrade your Mooc.IP-Plugin to at least Version 1.0.4 or deinstall it completely if you do not need it!');
+        // check if Mooc.IP has been upgraded to OpenCourses
+        if ($version && $version < 22) {
+            throw new Exception('Please upgrade your (M)OOC.IP-Plugin to Mooc.IP - OpenCourses (min. version 2.0.1) or deinstall it completely if you do not need it!');
         }
 
         // if no Mooc.IP-installion is found, create the courseware tables
-        
+
         $db->exec("CREATE TABLE IF NOT EXISTS `mooc_blocks` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
           `type` varchar(64) NOT NULL,
@@ -84,9 +85,9 @@ class SetupCourseware extends DBMigration {
         DBManager::get()->exec("DROP TABLE mooc_blocks");
         DBManager::get()->exec("DROP TABLE mooc_userprogress");
         DBManager::get()->exec("DROP TABLE mooc_fields");
-        
+
         Config::get()->delete(\Mooc\PLUGIN_DISPLAY_NAME_ID);
-        
+
         SimpleORMap::expireTableScheme();
     }
 }
