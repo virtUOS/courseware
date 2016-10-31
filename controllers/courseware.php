@@ -122,8 +122,10 @@ class CoursewareController extends CoursewareStudipController {
         ////////////////////////
         // EDITING PERMISSION //
         ////////////////////////
-        $this->storeEditingPermission(isset($courseware_settings['editing_permission']) ? true : false);
-
+        if (!$this->is_tutor) {
+            $this->storeEditingPermission(isset($courseware_settings['editing_permission']) ? true : false);
+        }
+        
         /////////////////////////////
         // MAX COUNT FOR SELFTESTS //
         /////////////////////////////
