@@ -12,6 +12,7 @@ use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
 
 /**
  * @author Christian Flothmann <christian.flothmann@uos.de>
+ * @author Ron Lucke <rlucke@uos.de>
  */
 class TestBlock extends Block
 {
@@ -84,6 +85,8 @@ class TestBlock extends Block
                 'typemismatch' => true
             );
         }
+
+        $this->calcGrades();
 
         return $active
             ? array_merge(array(
@@ -245,7 +248,7 @@ class TestBlock extends Block
         $test->storeSolution($solution);
 
         $progress = $this->calcGrades();
-
+        
         return array(
             'grade' => $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0
         );
@@ -269,20 +272,24 @@ class TestBlock extends Block
 
      public function calcGrades()
      {
-         global $user;
-         $progress = $this->getProgress();
-         $progress->max_grade = count($this->test->exercises);
-         $progress->grade = 0;
+        global $user;
+        $progress = $this->getProgress();
+        $progress->max_grade = count($this->test->exercises);
+        $progress->grade = 0;
 
-         foreach ($this->test->exercises as $exc) {
-             $solution = $exc->getSolutionFor($this->test, $user);
-             $correct = $solution ? ($exc->getPoints() == $solution->points) : false;
-             if ($correct) {
-                 $progress->grade++;
-             }
-         }
-
-         return $progress;
+        foreach ($this->test->exercises as $exc) {
+            $solution = $exc->getSolutionFor($this->test, $user);
+            $correct = $solution ? ($exc->getPoints() == $solution->points) : false;
+            if ($correct) {
+                $progress->grade++;
+            }
+        }
+        
+        if($this->test->exercises->getPoints() == null) {
+            $progress->grade = 1;
+        }
+        
+        return $progress;
      }
 
     /**
