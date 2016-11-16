@@ -66,9 +66,9 @@ if ($flash['success']) {
             <tr>
                 <td>
                     <label for="courseware-vipstab-visible">
-                        <?= _cw('Vips-Reiter für Studenten') ?><br>
+                        <?= _cw('Vips-Reiter für Studenten entfernen') ?><br>
                         <dfn id="courseware-vipstab-visible-description">
-                            <?= _cw('Wenn Sie diesen Schalter aktivieren, können Studenten den Vips-Reiter sehen.'); ?>
+                            <?= _cw('Wenn Sie diesen Schalter aktivieren, wird der Vips-Reiter für Studenten entfernt.'); ?>
                         </dfn>
                     </label>
                 </td>
