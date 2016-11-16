@@ -30,6 +30,9 @@ class Courseware extends Block {
 
         // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
         $this->defineField('discussionblock_activation', \Mooc\SCOPE_BLOCK, false);
+        
+        // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+        $this->defineField('vipstab_visible', \Mooc\SCOPE_BLOCK, false);
 
         // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
         $this->defineField('editing_permission', \Mooc\SCOPE_BLOCK, self::EDITING_PERMISSION_TUTOR);
@@ -296,6 +299,14 @@ class Courseware extends Block {
 
     public function getMaxTries() {
         return $this->max_tries;
+    }
+    
+    public function setVipsTabVisible($active) {
+        $this->vipstab_visible = $active;
+    }
+
+    public function getVipsTabVisible() {
+        return $this->vipstab_visible;
     }
 
     ///////////////////////

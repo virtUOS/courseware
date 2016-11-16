@@ -118,6 +118,11 @@ class CoursewareController extends CoursewareStudipController {
         // DISCUSSION BLOCK ACTIVATION //
         /////////////////////////////////
         $this->storeDiscussionBlockActivation(isset($courseware_settings['discussionblock_activation']) ? true : false);
+        
+        //////////////////////
+        // VIPS TAB VISIBLE //
+        //////////////////////
+        $this->storeVipsTabVisible(isset($courseware_settings['vipstab_visible']) ? true : false);
 
         ////////////////////////
         // EDITING PERMISSION //
@@ -161,6 +166,13 @@ class CoursewareController extends CoursewareStudipController {
     private function storeDiscussionBlockActivation($active)
     {
         if (!$this->courseware_block->setDiscussionBlockActivation($active)) {
+            // TODO: send a message back
+        }
+    }
+    
+    private function storeVipsTabVisible($active)
+    {
+        if (!$this->courseware_block->setVipsTabVisible($active)) {
             // TODO: send a message back
         }
     }
