@@ -7,14 +7,27 @@ define(['assets/js/author_view', 'assets/js/url'],
 
         events: {
             "click button[name=save]":   "onSave",
-            "click button[name=cancel]": "switchBack"
+            "click button[name=cancel]": "switchBack",
+            "click .submit-user-id-switch": "toggleSubmitUserId"
         },
 
         initialize: function(options) {
         },
 
         render: function() {
+            
             return this;
+        },
+        
+        postRender: function() {
+            this.toggleSubmitUserId();
+        },
+        
+        toggleSubmitUserId: function() {
+            var state = this.$(".submit-user-id-switch").is( ":checked");
+            console.log(state);
+            if (state) this.$(".iframe-submit-user").show();
+            else this.$(".iframe-submit-user").hide();
         },
 
         onSave: function (event) {
@@ -23,9 +36,12 @@ define(['assets/js/author_view', 'assets/js/url'],
             var height_input = this.$("input.heightinput");
             var new_height   = height_input.val();
             var view         = this;
+            var salt         = this.$(".salt").val();
+            var submit_param = this.$(".submit-param").val();
+            var submit_user_id = this.$(".submit-user-id-switch").is( ":checked");
 
             helper
-                .callHandler(this.model.id, "save", {url: new_url, height: new_height})
+                .callHandler(this.model.id, "save", {url: new_url, height: new_height , salt: salt, submit_param: submit_param,  submit_user_id: submit_user_id}) 
                 .then(
                     // success
                     function () {

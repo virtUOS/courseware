@@ -5,18 +5,25 @@ use Mooc\UI\Block;
 
 class IFrameBlock extends Block
 {
-    const NAME = 'IFrame';
+    const NAME = 'externer Inhalt (iframe)';
 
     function initialize()
     {
         $this->defineField('url',    \Mooc\SCOPE_BLOCK, "http://studip.de");
         $this->defineField('height', \Mooc\SCOPE_BLOCK, 600);
+        $this->defineField('submit_user_id', \Mooc\SCOPE_BLOCK, false);
+        $this->defineField('submit_param', \Mooc\SCOPE_BLOCK, "uid");
+        $this->defineField('salt', \Mooc\SCOPE_BLOCK, md5(uniqid('', true)));
     }
 
-    function array_rep() {
+    function array_rep($url) {
+        if ($url == "") $url = $this->url;
         return array(
-            'url'    => $this->url,
-            'height' => $this->height
+            'url'    => $url,
+            'height' => $this->height,
+            'submit_user_id' => $this->submit_user_id,
+            'submit_param' => $this->submit_param,
+            'salt' => $this->salt
         );
     }
 
@@ -24,14 +31,17 @@ class IFrameBlock extends Block
     {
         // on view: grade with 100%
         $this->setGrade(1.0);
+        if ($this->submit_user_id){ 
+            $url = $this->buildUID(); 
+            return $this->array_rep($url);
+        }
         return $this->array_rep();
     }
 
     function author_view()
     {
         $this->authorizeUpdate();
-
-        return $this->toJSON();
+        return $this->array_rep();
     }
 
     /**
@@ -47,6 +57,9 @@ class IFrameBlock extends Block
 
         $this->url = (string) $data['url'];
         $this->height = (int) $data['height'];
+        $this->submit_user_id = $data['submit_user_id'];
+        $this->submit_param = $data['submit_param'];
+        $this->salt = $data['salt'];
 
         return $this->array_rep();
     }
@@ -56,7 +69,7 @@ class IFrameBlock extends Block
      */
     public function exportProperties()
     {
-        return array('url' => $this->url, 'height' => $this->height);
+        return array('url' => $this->url, 'height' => $this->height, 'submit_user_id' => $this->submit_user_id, 'submit_param' => $this->submit_param, 'salt' => $this->salt);
     }
 
     /**
@@ -87,7 +100,28 @@ class IFrameBlock extends Block
         if (isset($properties['height'])) {
             $this->height = $properties['height'];
         }
+        
+        if (isset($properties['submit_user_id'])) {
+            $this->submit_user_id = $properties['submit_user_id'];
+        }
+        
+        if (isset($properties['submit_param'])) {
+            $this->submit_param = $properties['submit_param'];
+        }
+        
+        if (isset($properties['salt'])) {
+            $this->salt = $properties['salt'];
+        }
 
         $this->save();
+    }
+    
+    private function buildUID()
+    {
+        $url = $this->url;
+        $url .= "?".$this->submit_param."=";
+        $userid = $GLOBALS['user']->id;
+        $url .= md5($userid . $this->salt);
+        return $url;
     }
 }
