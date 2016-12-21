@@ -200,6 +200,20 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         return $this->container;
     }
 
+    static function onEnable($id)
+    {
+        $db = DBManager::get();
+
+        // find plugin activations of old Mooc.IP plugin and duplicate them for the new courseware plugin
+        $plugin_id     = (int)$db->query("SELECT pluginid FROM plugins
+            WHERE pluginclassname = 'Mooc'")->fetchColumn();
+
+        if ($plugin_id) {
+            $db->exec("INSERT INTO plugins_activated
+                SELECT $id as pluginid, poiid, state FROM plugins_activated WHERE pluginid = $plugin_id");
+        }
+    }
+
     /**********************************************************************/
     /* PRIVATE METHODS                                                    */
     /**********************************************************************/
@@ -249,13 +263,6 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
     private function setupNavigation()
     {
-        // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
-        if (!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
-            if (Navigation::hasItem('/course/vipsplugin')){
-                Navigation::removeItem('/course/vipsplugin');
-            }
-        }
-
         // FIXME: hier den Courseware-Block in die Hand zu bekommen,
         //        ist definitiv falsch.
         $courseware = $this->container['current_courseware'];
@@ -264,6 +271,14 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         if ($courseware->getDiscussionBlockActivation()) {
             Navigation::removeItem('/course/blubberforum');
         }
+
+        // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
+        if ( (!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) && $courseware->getVipsTabVisible() ) {
+            if (Navigation::hasItem('/course/vipsplugin')){
+                Navigation::removeItem('/course/vipsplugin');
+            }
+        }
+
     }
 
     private function getSemClass()

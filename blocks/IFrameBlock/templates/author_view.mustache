@@ -1,23 +1,47 @@
-<p>Tragen Sie in das Feld URL(Uniform Resource Locator) die Adresse der Seite ein die im iFrame erscheinen soll.<br/>
-Bitte beachten Sie, dass manche Seiten die Darstellung in einem iFrame blockieren.</p>
-URL oder Embedcode: <input class=urlinput type=text size=20 value={{fields.url}}> <br>
-Höhe: <input class=heightinput type=text size=4 value={{fields.height}}> Pixel <br><br>
-
-Für Quellangaben oder Namensnennung nach CC können Sie <b>optional</b> weitere Angaben machen: <br>
-<table>
-<tr>
-<td><b>Werk</b></td>  
-<td>Link: <input class=href1input type=text size=20 value={{fields.href1}}> </td>
-<td>Titel: &nbsp;&nbsp; <input class=linktitle1input type=text size=20 value={{fields.linktitle1}}> </td></tr>
-<tr>
-<td><b>Autor</b></td>
-<td>Link: <input class=href2input type=text size=20 value={{fields.href2}}> </td>
-<td>Name: <input class=linktitle2input type=text size=20 value={{fields.linktitle2}}> </td></tr>
-<tr>
-<td><b>Plattform oder Lizenz</b></td>
-<td>Link: <input class=href3input type=text size=20 value={{fields.href3}}></td>
-<td>Titel: &nbsp;&nbsp; <input class=linktitle3input type=text size=20 value={{fields.linktitle3}}> </td></tr> 
-</table>
-
-<button name=save class=button>Speichern</button>
-<button name=cancel class=button>Abbrechen</button>
+<div class="iframe-author-view">
+    <div class="iframe-description">
+        <p>
+            {{#i18n}}Tragen Sie in das Feld URL(Uniform Resource Locator) die Adresse der Seite ein die im iFrame erscheinen soll.<br>
+            Bitte beachten Sie, dass manche Seiten die Darstellung in einem iFrame blockieren.{{/i18n}}
+        </p>
+    </div>
+    <div class="iframe-data">
+        <ul>
+            <li><label>URL oder Embedcode:</label><input class="urlinput" type=text size=32 value={{url}}></li>
+            <li><label>{{#i18n}}Höhe{{/i18n}}:</label><input class="heightinput" type=text size=4 max=4 value={{height}}> {{#i18n}}Pixel{{/i18n}}</li>
+            <li><label>{{#i18n}}Nutzerspezifische ID übergeben{{/i18n}}</label><input class="submit-user-id-switch" name="submit-user-id-switch" type="checkbox"
+                {{#submit_user_id}} checked{{/submit_user_id}}
+                
+                > </li>
+            <li class="iframe-submit-user"><label>{{#i18n}}Name des Übergabeparameters{{/i18n}}:</label><input  class="submit-param" type=text size=32 value={{submit_param}}></li>
+            <li class="iframe-submit-user"><label>{{#i18n}}Zufallszeichen für Verschlüsselung{{/i18n}}:</label><input class="salt" type=text size=32 min=8 value={{salt}}></li>
+            
+        </ul>
+    </div>
+    <div class="iframe-description iframe-submit-user">
+        <p>
+            {{#i18n}}Für jede NutzerIn wird ein individueller Wert übergeben mit dem die Anwendung die NutzerIn wiedererkennen kann.
+            Um Rückschlüssen auf die Identität zu verhindern, wird die StudIp-Nutzer-Id mit der Zufallszeichenfolge verschlüsselt.
+            Wählen Sie identische Zufallszeichenfolgen, wenn an verschiedenen Stellen gleiche Nutzer-Ids erzeugt werden sollen.{{/i18n}}
+        </p>
+    </div>
+	<div>
+    Für Quellangaben oder Namensnennung nach CC können Sie <b>optional</b> weitere Angaben machen: <br>
+	<table>
+	<tr>
+	<td><b>Werk</b></td>  
+	<td>Link: <input class=href1input type=text size=20 value={{fields.href1}}> </td>
+	<td>Titel: &nbsp;&nbsp; <input class=linktitle1input type=text size=20 value={{fields.linktitle1}}> </td></tr>
+	<tr>
+	<td><b>Autor</b></td>
+	<td>Link: <input class=href2input type=text size=20 value={{fields.href2}}> </td>
+	<td>Name: <input class=linktitle2input type=text size=20 value={{fields.linktitle2}}> </td></tr>
+	<tr>
+	<td><b>Plattform oder Lizenz</b></td>
+	<td>Link: <input class=href3input type=text size=20 value={{fields.href3}}></td>
+	<td>Titel: &nbsp;&nbsp; <input class=linktitle3input type=text size=20 value={{fields.linktitle3}}> </td></tr> 
+	</table>
+	</div>
+    <button name=save class=button>{{#i18n}}Speichern{{/i18n}}</button>
+    <button name=cancel class=button>{{#i18n}}Abbrechen{{/i18n}}</button>
+</div>

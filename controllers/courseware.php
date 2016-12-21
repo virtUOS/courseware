@@ -92,10 +92,7 @@ class CoursewareController extends CoursewareStudipController {
     // include the stylesheets of all default block types
     private function addBlockStyles()
     {
-        return PageLayout::addStylesheet(
-            $GLOBALS['ABSOLUTE_URI_STUDIP'] .
-            $this->plugin->getPluginPath() .
-            '/assets/courseware.min.css');
+        return PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/courseware.min.css');
     }
 
     // validate and store sent settings
@@ -121,12 +118,19 @@ class CoursewareController extends CoursewareStudipController {
         // DISCUSSION BLOCK ACTIVATION //
         /////////////////////////////////
         $this->storeDiscussionBlockActivation(isset($courseware_settings['discussionblock_activation']) ? true : false);
+        
+        //////////////////////
+        // VIPS TAB VISIBLE //
+        //////////////////////
+        $this->storeVipsTabVisible(isset($courseware_settings['vipstab_visible']) ? true : false);
 
         ////////////////////////
         // EDITING PERMISSION //
         ////////////////////////
-        $this->storeEditingPermission(isset($courseware_settings['editing_permission']) ? true : false);
-
+        if (!$this->is_tutor) {
+            $this->storeEditingPermission(isset($courseware_settings['editing_permission']) ? true : false);
+        }
+        
         /////////////////////////////
         // MAX COUNT FOR SELFTESTS //
         /////////////////////////////
@@ -162,6 +166,13 @@ class CoursewareController extends CoursewareStudipController {
     private function storeDiscussionBlockActivation($active)
     {
         if (!$this->courseware_block->setDiscussionBlockActivation($active)) {
+            // TODO: send a message back
+        }
+    }
+    
+    private function storeVipsTabVisible($active)
+    {
+        if (!$this->courseware_block->setVipsTabVisible($active)) {
             // TODO: send a message back
         }
     }

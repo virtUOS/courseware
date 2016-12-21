@@ -5,6 +5,9 @@
     elementFormDefault="qualified"
 >
     <xsd:attribute name="url" type="xsd:string" />
+    <xsd:attribute name="webvideo" type="xsd:string" />
+    <xsd:attribute name="webvideosettings" type="xsd:string" />
     <xsd:attribute name="videoTitle" type="xsd:string" />
+    <xsd:attribute name="videoType" type="xsd:string" />
     <xsd:attribute name="aspect" type="xsd:string" />
 </xsd:schema>

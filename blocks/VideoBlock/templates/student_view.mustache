@@ -1,9 +1,16 @@
+<h1 class="video-header">{{videoTitle}}</h1>
+<div class="video-wrapper {{aspect}}">
 {{#url}}
-  <h1 class="video-header">{{videoTitle}}</h1>
-  <div class="video-wrapper {{aspect}}">
     <iframe src="{{.}}" scrolling="no" allowfullscreen></iframe>
-  </div>
 {{/url}}
 {{^url}}
-    {{#i18n}}Es wurde noch kein Video eingetragen.{{/i18n}}
+    <video width="100%" {{webvideosettings}}>
+        {{#webvideo}}
+            <source src="{{src}}" type="video/{{type}}" media="{{media}}" >
+        {{/webvideo}}
+    </video>
+    {{^webvideo}}
+        {{#i18n}}Es wurde noch kein Video eingetragen.{{/i18n}}
+    {{/webvideo}}
 {{/url}}
+</div>

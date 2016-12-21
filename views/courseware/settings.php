@@ -62,6 +62,22 @@ if ($flash['success']) {
 
 
             <?= $this->render_partial('courseware/_settings_editing_permission') ?>
+            
+            <tr>
+                <td>
+                    <label for="courseware-vipstab-visible">
+                        <?= _cw('Vips-Reiter für AutorInnen entfernen') ?><br>
+                        <dfn id="courseware-vipstab-visible-description">
+                            <?= _cw('Wenn Sie diesen Schalter aktivieren, wird der Vips-Reiter für normale Teilnehmende entfernt.'); ?>
+                        </dfn>
+                    </label>
+                </td>
+                <td>
+                    <input id="courseware-vipstab-visible"
+                           name="courseware[vipstab_visible]"
+                           type="checkbox" <?= $courseware_block->getVipsTabVisible() ? "checked" : "" ?>>
+                </td>
+            </tr>
 
 
             <tr>

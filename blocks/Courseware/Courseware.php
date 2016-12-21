@@ -30,6 +30,9 @@ class Courseware extends Block {
 
         // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
         $this->defineField('discussionblock_activation', \Mooc\SCOPE_BLOCK, false);
+        
+        // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
+        $this->defineField('vipstab_visible', \Mooc\SCOPE_BLOCK, false);
 
         // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
         $this->defineField('editing_permission', \Mooc\SCOPE_BLOCK, self::EDITING_PERMISSION_TUTOR);
@@ -99,18 +102,17 @@ class Courseware extends Block {
 
     function subchapterComplete($subchapterblock)
     {
-        $complete = true;
         $uid= $this->getCurrentUser()->id;
-        foreach($subchapterblock->children as $section) {
-            foreach($section->children as $block) {
+        foreach ($subchapterblock->children as $section) {
+            foreach ($section->children as $block) {
                 $bid = $block->id;
                 $progress = UserProgress::findOneBySQL('block_id = ? AND user_id = ?', array($bid, $uid));
-                if ($progress && ($progress->grade / $progress->max_grade != 1)) {
-                    $complete = false;
+                if (!$progress || ($progress->grade / $progress->max_grade != 1)) {
+                    return false;
                 }
             }
         }
-        return $complete;
+        return true;
     }
 
     function add_structure_handler($data)
@@ -297,6 +299,14 @@ class Courseware extends Block {
 
     public function getMaxTries() {
         return $this->max_tries;
+    }
+    
+    public function setVipsTabVisible($active) {
+        $this->vipstab_visible = $active;
+    }
+
+    public function getVipsTabVisible() {
+        return $this->vipstab_visible;
     }
 
     ///////////////////////

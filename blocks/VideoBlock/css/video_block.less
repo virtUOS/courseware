@@ -1,6 +1,24 @@
+@import '../../../assets/mixins';
+
 section.VideoBlock {
+
+    .videodata {
+        margin: 0 1em;
+    }
+
+
+    .addmediatype{
+        .courseware-btn;
+        margin: 0;
+        width: initial;
+        text-align: left;
+        background-image: url("@{blocks-icons-dir}/16/blue/add.png");
+        background-position: 6px center;
+        padding-left: 28px;
+    }
+    
     input {
-        width: 75%;
+        width: 32em;
         margin: 1em;
         &[type="number"]{
             margin-left: 0.5em;
@@ -11,6 +29,22 @@ section.VideoBlock {
             vertical-align: middle;
         }
     }
+    
+    .webvideo-description {
+        background: #eee;
+        margin: 1em 0;
+        background-image: url("@{blocks-icons-dir}/32/blue/info-circle.png");
+        background-repeat: no-repeat;
+        background-position: 26px center;
+        padding-left: 64px;
+        
+        p {
+            padding: 20px;
+            line-height: 1.3em;
+        }
+        
+    }
+    
     .block-content {
         .video-wrapper {
             margin-bottom: 2em;
@@ -33,9 +67,6 @@ section.VideoBlock {
                 height: 100%;
             }
         }
-        .videostartsec, .videoautostart {
-            margin-right: 45px;
-        }
         .videourl {
             display: none;
         }
@@ -43,6 +74,16 @@ section.VideoBlock {
             height: 2em;
             .status {
                 display: none;
+            }
+        }
+        .videosettings-header {
+            font-size: 14px;
+            font-weight: 400;
+        }
+        
+        .videosettings {
+            >span:not(:first-child) {
+                padding-left: 1em;
             }
         }
     }

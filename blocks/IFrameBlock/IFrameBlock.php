@@ -5,18 +5,22 @@ use Mooc\UI\Block;
 
 class IFrameBlock extends Block
 {
-    const NAME = 'IFrame';
+    const NAME = 'externer Inhalt (iframe)';
 
     function initialize()
     {
         $this->defineField('url',    \Mooc\SCOPE_BLOCK, "http://studip.de");
         $this->defineField('height', \Mooc\SCOPE_BLOCK, 600);
+        $this->defineField('submit_user_id', \Mooc\SCOPE_BLOCK, false);
+        $this->defineField('submit_param', \Mooc\SCOPE_BLOCK, "uid");
+        $this->defineField('salt', \Mooc\SCOPE_BLOCK, md5(uniqid('', true)));
+
         $this->defineField('href1', \Mooc\SCOPE_BLOCK, "");
-	$this->defineField('linktitle1', \Mooc\SCOPE_BLOCK, "");
-	$this->defineField('href2', \Mooc\SCOPE_BLOCK, "");
-	$this->defineField('linktitle2', \Mooc\SCOPE_BLOCK, "");
-	$this->defineField('href3', \Mooc\SCOPE_BLOCK, "");
-	$this->defineField('linktitle3', \Mooc\SCOPE_BLOCK, "");
+		$this->defineField('linktitle1', \Mooc\SCOPE_BLOCK, "");
+		$this->defineField('href2', \Mooc\SCOPE_BLOCK, "");
+		$this->defineField('linktitle2', \Mooc\SCOPE_BLOCK, "");
+		$this->defineField('href3', \Mooc\SCOPE_BLOCK, "");
+		$this->defineField('linktitle3', \Mooc\SCOPE_BLOCK, "");
     }
 
     function array_rep() {
@@ -34,6 +38,9 @@ class IFrameBlock extends Block
         return array(
             'url'    => $this->url,
             'height' => $this->height,
+            'submit_user_id' => $this->submit_user_id,
+            'submit_param' => $this->submit_param,
+            'salt' => $this->salt,
             'linktitle1' => $this->linktitle1,
             'linktitle2' => $this->linktitle2,
             'linktitle3' => $this->linktitle3,
@@ -42,6 +49,7 @@ class IFrameBlock extends Block
             'href3' => $this->href3,
             'sep1' => $sep1,
             'sep2' => $sep2
+
         );
     }
 
@@ -49,14 +57,17 @@ class IFrameBlock extends Block
     {
         // on view: grade with 100%
         $this->setGrade(1.0);
+        if ($this->submit_user_id){ 
+            $url = $this->buildUID(); 
+            return $this->array_rep($url);
+        }
         return $this->array_rep();
     }
 
     function author_view()
     {
         $this->authorizeUpdate();
-
-        return $this->toJSON();
+        return $this->array_rep();
     }
 
     /**
@@ -72,12 +83,17 @@ class IFrameBlock extends Block
 
         $this->url = (string) $data['url'];
         $this->height = (int) $data['height'];
+
 		$this->linktitle1 = (string) $data['linktitle1'];
 		$this->href1 = (string) $data['href1'];
 		$this->linktitle2 = (string) $data['linktitle2'];
 		$this->href2 = (string) $data['href2'];
 		$this->linktitle3 = (string) $data['linktitle3'];
 		$this->href3 = (string) $data['href3'];
+
+        $this->submit_user_id = $data['submit_user_id'];
+        $this->submit_param = $data['submit_param'];
+        $this->salt = $data['salt'];
 
         return $this->array_rep();
     }
@@ -87,7 +103,7 @@ class IFrameBlock extends Block
      */
     public function exportProperties()
     {
-        return array('url' => $this->url, 'height' => $this->height);
+        return array('url' => $this->url, 'height' => $this->height, 'submit_user_id' => $this->submit_user_id, 'submit_param' => $this->submit_param, 'salt' => $this->salt, 'href1' => $this->href1, 'linktitle1' => $this->linktitle1, 'href1' => $this->href1, 'linktitle1' => $this->linktitle1, 'href2' => $this->href2, 'linktitle3' => $this->linktitle3);
     }
 
     /**
@@ -118,7 +134,46 @@ class IFrameBlock extends Block
         if (isset($properties['height'])) {
             $this->height = $properties['height'];
         }
+        
+        if (isset($properties['submit_user_id'])) {
+            $this->submit_user_id = $properties['submit_user_id'];
+        }
+        
+        if (isset($properties['submit_param'])) {
+            $this->submit_param = $properties['submit_param'];
+        }
+        
+        if (isset($properties['salt'])) {
+            $this->salt = $properties['salt'];
+        }
+         if (isset($properties['href1'])) {
+            $this->salt = $properties['href1'];
+        }
+         if (isset($properties['linktitle1'])) {
+            $this->salt = $properties['linktitle1'];
+        }
+        if (isset($properties['href2'])) {
+            $this->salt = $properties['href2'];
+        }
+         if (isset($properties['linktitle2'])) {
+            $this->salt = $properties['linktitle2'];
+        }
+        if (isset($properties['href3'])) {
+            $this->salt = $properties['href3'];
+        }
+         if (isset($properties['linktitle3'])) {
+            $this->salt = $properties['linktitle3'];
+        }
 
         $this->save();
+    }
+    
+    private function buildUID()
+    {
+        $url = $this->url;
+        $url .= "?".$this->submit_param."=";
+        $userid = $GLOBALS['user']->id;
+        $url .= md5($userid . $this->salt);
+        return $url;
     }
 }

@@ -7,14 +7,27 @@ define(['assets/js/author_view', 'assets/js/url'],
 
         events: {
             "click button[name=save]":   "onSave",
-            "click button[name=cancel]": "switchBack"
+            "click button[name=cancel]": "switchBack",
+            "click .submit-user-id-switch": "toggleSubmitUserId"
         },
 
         initialize: function(options) {
         },
 
         render: function() {
+            
             return this;
+        },
+        
+        postRender: function() {
+            this.toggleSubmitUserId();
+        },
+        
+        toggleSubmitUserId: function() {
+            var state = this.$(".submit-user-id-switch").is( ":checked");
+            console.log(state);
+            if (state) this.$(".iframe-submit-user").show();
+            else this.$(".iframe-submit-user").hide();
         },
 
         onSave: function (event) {
@@ -39,6 +52,10 @@ define(['assets/js/author_view', 'assets/js/url'],
             var new_linktitle3      = linktitle3_input.val();
             
             var view         = this;
+            var salt         = this.$(".salt").val();
+            var submit_param = this.$(".submit-param").val();
+            var submit_user_id = this.$(".submit-user-id-switch").is( ":checked");
+
             var links        = [];
 
 	     //falls url=embedcode (plus optional Quellenangaben): aufschlüsseln
@@ -113,6 +130,17 @@ define(['assets/js/author_view', 'assets/js/url'],
                                                           href1: new_href1, linktitle1: new_linktitle1,
 							  href2: new_href2, linktitle2: new_linktitle2,
 							  href3: new_href3, linktitle3: new_linktitle3})
+
+            var salt         = this.$(".salt").val();
+            var submit_param = this.$(".submit-param").val();
+            var submit_user_id = this.$(".submit-user-id-switch").is( ":checked");
+
+            helper
+                .callHandler(this.model.id, "save", {url: new_url, height: new_height , salt: salt, submit_param: submit_param,  submit_user_id: submit_user_id,
+                                                          href1: new_href1, linktitle1: new_linktitle1,
+							  href2: new_href2, linktitle2: new_linktitle2,
+							  href3: new_href3, linktitle3: new_linktitle3}) 
+
                 .then(
                     // success
                     function () {
