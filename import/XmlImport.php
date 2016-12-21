@@ -53,6 +53,13 @@ class XmlImport implements ImportInterface
                 }
             }
         }
+
+        foreach ($this->uuid_block_cache as $block) {
+            $uiBlock = $this->blockFactory->makeBlock($block);
+            if (is_callable(array($uiBlock, 'importUUIDBlocks'))) {
+                $uiBlock->importUUIDBlocks($this->uuid_block_cache);
+            }
+        }
     }
 
     /**
@@ -111,12 +118,14 @@ class XmlImport implements ImportInterface
      */
     private function processChapterNode(\DOMElement $node, Courseware $courseware, array $files)
     {
-        $chapter = new Block();
-        $chapter->type = 'Chapter';
-        $chapter->parent = $courseware->getModel();
-        $chapter->title = utf8_decode($node->getAttribute('title'));
-        $chapter->seminar_id = $courseware->getModel()->seminar_id;
-        $chapter->store();
+        $chapter = $this->createBlock(
+            array(
+                'type'       => 'Chapter',
+                'parent'     => $courseware->getModel(),
+                'title'      => utf8_decode($node->getAttribute('title')),
+                'seminar_id' => $courseware->getModel()->seminar_id,
+                'uuid'       => utf8_decode($node->getAttribute('uuid'))
+            ));
 
         foreach ($node->childNodes as $childNode) {
             if ($childNode instanceof \DOMElement) {
@@ -144,12 +153,14 @@ class XmlImport implements ImportInterface
      */
     private function processSubChapterNode(\DOMElement $node, Block $chapter, $files)
     {
-        $subChapter = new Block();
-        $subChapter->type = 'Subchapter';
-        $subChapter->parent = $chapter;
-        $subChapter->title = utf8_decode($node->getAttribute('title'));
-        $subChapter->seminar_id = $chapter->seminar_id;
-        $subChapter->store();
+        $subChapter= $this->createBlock(
+            array(
+                'type'       => 'Subchapter',
+                'parent'     => $chapter,
+                'title'      => utf8_decode($node->getAttribute('title')),
+                'seminar_id' => $chapter->seminar_id,
+                'uuid'       => utf8_decode($node->getAttribute('uuid'))
+            ));
 
         foreach ($node->childNodes as $childNode) {
             if ($childNode instanceof \DOMElement) {
@@ -177,12 +188,14 @@ class XmlImport implements ImportInterface
      */
     private function processSectionNode(\DOMElement $node, Block $subChapter, $files)
     {
-        $section = new Block();
-        $section->type = 'Section';
-        $section->parent = $subChapter;
-        $section->title = utf8_decode($node->getAttribute('title'));
-        $section->seminar_id = $subChapter->seminar_id;
-        $section->store();
+        $section = $this->createBlock(
+            array(
+                'type'       => 'Section',
+                'parent'     => $subChapter,
+                'title'      => utf8_decode($node->getAttribute('title')),
+                'seminar_id' => $subChapter->seminar_id,
+                'uuid'       => utf8_decode($node->getAttribute('uuid'))
+            ));
 
         /** @var \Mooc\UI\Section\Section $uiSection */
         $uiSection = $this->blockFactory->makeBlock($section);
@@ -206,12 +219,13 @@ class XmlImport implements ImportInterface
      */
     private function processAsideSectionNode(\DOMElement $node, Block $sub_chapter, $files)
     {
-        $section = new Block();
-        $section->type = 'Section';
-        $section->parent_id = null;
-        $section->title = utf8_decode($node->getAttribute('title'));
-        $section->seminar_id = $subChapter->seminar_id;
-        $section->store();
+        $section = $this->createBlock(
+            array(
+                'type'       => 'Section',
+                'title'      => utf8_decode($node->getAttribute('title')),
+                'seminar_id' => $subChapter->seminar_id,
+                'uuid'       => utf8_decode($node->getAttribute('uuid'))
+            ));
 
         // store aside section's ID in sub/chapter's field
         $aside_field = new \Mooc\DB\Field(array($sub_chapter->id, '', 'aside_section'));
@@ -241,15 +255,18 @@ class XmlImport implements ImportInterface
      */
     private function processBlockNode(\DOMElement $node, Section $section, $files)
     {
-        $block = new Block();
-        $block->type = utf8_decode($node->getAttribute('type'));
-        if ($node->hasAttribute('sub-type')) {
-            $block->sub_type = utf8_decode($node->getAttribute('sub-type'));
-        }
-        $block->parent = $section->getModel();
-        $block->title = utf8_decode($node->getAttribute('title'));
-        $block->seminar_id = $section->getModel()->seminar_id;
-        $block->store();
+
+        $block = $this->createBlock(
+            array(
+                'type'       => utf8_decode($node->getAttribute('type')),
+                'sub_type'   => $node->hasAttribute('sub-type')
+                                ? utf8_decode($node->getAttribute('sub-type'))
+                                : null,
+                'parent'     => $section->getModel(),
+                'title'      => utf8_decode($node->getAttribute('title')),
+                'seminar_id' => $section->getModel()->seminar_id,
+                'uuid'       => utf8_decode($node->getAttribute('uuid'))
+            ));
 
         $section->updateIconWithBlock($block);
 
@@ -280,5 +297,31 @@ class XmlImport implements ImportInterface
         } else {
             $uiBlock->importContents(trim($node->textContent), $files);
         }
+    }
+
+    private function createBlock($data)
+    {
+        extract($data);
+
+        $block = new Block();
+        $block->type = $type;
+        $block->title = $title;
+        $block->seminar_id = $seminar_id;
+
+        if ($sub_type) {
+            $block->sub_type = $sub_type;
+        }
+
+        if ($parent) {
+            $block->parent = $parent;
+        }
+
+        if ($uuid) {
+            $this->uuid_block_cache[$uuid] = $block;
+        }
+
+        $block->store();
+
+        return $block;
     }
 }

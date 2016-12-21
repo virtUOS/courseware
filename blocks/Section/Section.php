@@ -80,7 +80,7 @@ class Section extends Block {
     function add_content_block_handler($data) {
 
         if (!$this->container['current_user']->canCreate($this)) {
-            throw new Errors\AccessDenied(_("Sie sind nicht berechtigt BlÃ¶cke anzulegen."));
+            throw new Errors\AccessDenied(_cw("Sie sind nicht berechtigt Blöcke anzulegen."));
         }
 
         if (!isset($data['type'])) {
@@ -122,7 +122,7 @@ class Section extends Block {
     function remove_content_block_handler($data) {
 
         if (!$this->container['current_user']->canUpdate($this)) {
-            throw new Errors\AccessDenied(_("Sie sind nicht berechtigt BlÃ¶cke zu lÃ¶schen."));
+            throw new Errors\AccessDenied(_cw("Sie sind nicht berechtigt Blöcke zu löschen."));
         }
 
         if (!isset($data['child_id'])) {
@@ -193,7 +193,7 @@ class Section extends Block {
             $nameConstant = $className.'::NAME';
 
             if (defined($nameConstant)) {
-                $readableName = constant($nameConstant);
+                $readableName = _cw(constant($nameConstant));
             }
 
             if (!class_exists($className)) {

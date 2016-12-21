@@ -41,7 +41,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                 var block = this.initializeBlock(element, undefined, "student");
                 block.initializeFromDOM();
             }, this);
-            
+
             this.listenTo(Backbone, "modeswitch", this.switchMode, this);
         },
 
@@ -64,13 +64,13 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
         },
 
         switchMode: function (view) {
-            
+
             if (view === "student") {
                 _.each(this.children, function (child, child_id) {
                     this.switchView(child_id, view);
                 }, this);
             }
-            
+
         },
 
         switchToAuthorView: function (event) {
@@ -84,7 +84,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
                 $block_wrapper = block_view.$el.closest('section.block'),
                 self = this;
 
-            if (confirm("Wollen Sie den Block wirklich löschen?")) {
+            if (confirm(i18n("Wollen Sie den Block wirklich löschen?"))) {
 
                 $block_wrapper.addClass("loading");
 
@@ -112,7 +112,7 @@ define(['backbone', 'q', 'assets/js/student_view', 'assets/js/block_model', 'ass
 
 
         switchView: function (block_id, view_name) {
-            
+
             var block_view = this.children[block_id],
                 model = block_view.model,
                 $block_wrapper = block_view.$el.closest('section.block');

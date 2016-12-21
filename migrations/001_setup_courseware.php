@@ -24,10 +24,7 @@ class SetupCourseware extends DBMigration {
         // if the schema-version is to old, do an exit rescue with an error message
         $version = $db->fetchColumn("SELECT version FROM schema_version WHERE domain = 'Mooc.IP'");
 
-        if ($version && $version >= 20) {
-            // tables are there, no further action needed
-            return;
-        } else if ($version && $version < 20) {
+        if ($version && $version < 20) {
             throw new Exception('Please upgrade your Mooc.IP-Plugin to at least Version 1.0.4 or deinstall it completely if you do not need it!');
         }
 

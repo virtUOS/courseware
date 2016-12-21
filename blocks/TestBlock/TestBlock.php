@@ -39,6 +39,7 @@ class TestBlock extends Block
         global $vipsPlugin, $vipsTemplateFactory;
 
         $this->defineField('test_id', \Mooc\SCOPE_BLOCK, null);
+        $this->defineField('tries',   \Mooc\SCOPE_USER, array()); // Field to count the tries
 
         $vipsPlugin = VipsBridge::getVipsPlugin();
         $vipsTemplateFactory = new \Flexi_TemplateFactory(VipsBridge::getVipsPath().'/templates/');
@@ -53,17 +54,19 @@ class TestBlock extends Block
     {
         return array(
             // removed via https://github.com/virtUOS/courseware/issues/19
-            // 'exam' => _('Klausur'),
-            'selftest' => _('Selbsttest'),
-            'practice' => _('Übungsblatt'),
+            // 'exam' => _cw('Klausur'),
+            'selftest' => _cw('Selbsttest'),
+            'practice' => _cw('Übungsblatt'),
         );
     }
 
     public function student_view()
     {
+        $subtype =  $this->_model->sub_type;
+
         $active = VipsBridge::vipsActivated($this);
         $typeOfThisTest = $this->test->type;
-        $typeOfThisTestBlock = $this->_model->sub_type;
+        $typeOfThisTestBlock = $subtype;
         $blockId = $this->_model->id;
 
         if ($typeOfThisTest == null) {
@@ -98,7 +101,9 @@ class TestBlock extends Block
             return compact('active');
         }
 
-        $storedTests = Test::findAllByType($this->_model->course->id, $this->_model->sub_type);
+        $subtype =  $this->_model->sub_type;
+
+        $storedTests = Test::findAllByType($this->_model->course->id, $subtype);
         $tests       = array();
 
         foreach ($storedTests as $test) {
@@ -178,7 +183,18 @@ class TestBlock extends Block
 
         // not yet started or already ended
         if ($start > $now || $now > $end) {
-            throw new \Exception(_('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
+            throw new \Exception(_cw('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
+        }
+
+        // resetting tries
+        if(!$this->tries) {
+            $local_tries = array();
+        } else {
+            $local_tries = $this->tries;
+        }
+        if ($local_tries) {
+            $local_tries[$exercise_id] = 0;
+            $this->tries = $local_tries;
         }
 
         $test->deleteSolution($user->id, $exercise_id);
@@ -203,13 +219,16 @@ class TestBlock extends Block
 
         // if it is a self test, count the tries
         if($test->getType() == "selftest") {
-            if(!$_SESSION['try_counter'][$exercise_id]) {
-                if(!$_SESSION['try_counter']){
-                    $_SESSION['try_counter']= array();
-                }
-                $_SESSION['try_counter'][$exercise_id] = 0;
+            if(!$this->tries) {
+                $local_tries = array();
+            } else {
+                $local_tries = $this->tries;
             }
-            $_SESSION['try_counter'][$exercise_id] ++;
+            if(!$local_tries[$exercise_id]) {
+                $local_tries[$exercise_id] = 0;
+            }
+            $local_tries[$exercise_id] ++;
+            $this->tries = $local_tries;
         }
 
         $start = $test->getStart();
@@ -218,16 +237,18 @@ class TestBlock extends Block
 
         // not yet started or already ended
         if ($start > $now || $now > $end) {
-            throw new \Exception(_('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
+            throw new \Exception(_cw('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
         }
 
         $solution = $exercise->getSolutionFromRequest($requestParams);
 
         $test->storeSolution($solution);
 
-        $this->calcGrades();
+        $progress = $this->calcGrades();
 
-        return array();
+        return array(
+            'grade' => $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0
+        );
     }
 
     public function reset_try_counter_handler($data) {
@@ -237,7 +258,13 @@ class TestBlock extends Block
 
         $exercise_id = $requestParams['exercise_id'];
 
-        $_SESSION['try_counter'][$exercise_id] = 0;
+        if(!$this->tries) {
+            $local_tries = array();
+        } else {
+            $local_tries = $this->tries;
+        }
+        $local_tries[$exercise_id] = 0;
+        $this->tries = $local_tries;
     }
 
      public function calcGrades()
@@ -255,6 +282,7 @@ class TestBlock extends Block
              }
          }
 
+         return $progress;
      }
 
     /**
@@ -602,7 +630,10 @@ class TestBlock extends Block
                 $tryagain = false;
 
                 $try_counter = 0;
-                $max_counter = 3;
+
+                $courseware_block = $this->container['current_courseware'];
+
+                $max_counter = $courseware_block->getMaxTries();
 
                 if ($this->_model->sub_type == 'selftest') {
                     // TT: determine if a correct solution has been handed in
@@ -610,19 +641,15 @@ class TestBlock extends Block
                     if ($solution) {
                         $evaluation = $exercise->getVipsExercise()->evaluate($solution->solution, $user->id);
                         $correct = $evaluation['percent'] == 100;
-                        // TODO @noesting: increment a counter
-                        // TODO get max_counter from dozent
-//                        var_dump($try_counter);
-                        if(!$_SESSION['try_counter'][$exercise->getId()]) {
-                            if(!$_SESSION['try_counter']){
-                                $_SESSION['try_counter']= array();
-                            }
-                            $_SESSION['try_counter'][$exercise->getId()] = 0;
+
+                        // get tries for this exercise
+                        if(!$this->tries) {
+                            $local_tries = array();
+                        } else {
+                            $local_tries = $this->tries;
                         }
-                        $try_counter = $_SESSION['try_counter'][$exercise->getId()];
-                        $max_counter = 3;
-                        $tryagain = $solution && !$correct;// && (try_counter <= max_counter);
-//                        $tryagain = $solution && !$correct;
+                        $try_counter = $local_tries[$exercise->getId()];
+                        $tryagain = $solution && !$correct;
                     }
                 }
 
@@ -630,7 +657,16 @@ class TestBlock extends Block
                      $solved_completely = false;
 
                 }
-                $show_corrected_solution = ($correct || (($try_counter >= $max_counter) && $this->test->isSelfTest()));
+                if(!$max_counter) {
+                    // no max counter, do as before
+                    $show_corrected_solution = $correct;
+                } else if ($max_counter === -1) {
+                    // unlimited tries to answer
+                    $show_corrected_solution = $correct;
+                } else {
+                    // limited tries
+                    $show_corrected_solution = ($correct || (($try_counter >= $max_counter) && $this->test->isSelfTest()));
+                }
                 $entry = array(
                     'exercise_type' => $exercise->getType(),
                     $exercise->getType() => 1,
@@ -641,7 +677,7 @@ class TestBlock extends Block
                     'show_correction' => $this->test->showCorrection(),
                     'show_solution' => $exercise->showSolutionFor($this->test, $user) && $show_corrected_solution,
                     'title' => $exercise->getTitle(),
-                    'question' => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $exercise->getQuestion() ),
+                    'question' => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $exercise->getQuestion($solution->solution) ),
                     'answers' => $answers,
                     'single-choice' => $exercise->isSingleChoice(),
                     'multiple-choice' => $exercise->isMultipleChoice(),

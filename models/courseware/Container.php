@@ -72,7 +72,7 @@ class Container extends \Pimple\Container
         $c = $this;
         return array(
 
-            'i18n' => function ($text) { return _($text); },
+            'i18n' => function ($text) { return _cw($text); },
 
             'plugin_url' => function ($text, $helper) use ($c) {
                 return \PluginEngine::getURL($c['plugin'], array(), $helper->render($text));

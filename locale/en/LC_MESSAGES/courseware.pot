@@ -1,0 +1,528 @@
+# #-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"#-#-#-#-#  js.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-0513 10:09+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-13 10:09+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: views/import/index.php:25
+msgid "Abbrechen"
+msgstr ""
+
+msgid "Abschicken"
+msgstr ""
+
+msgid "Abschnitt einfügen"
+msgstr ""
+
+msgid "Abschnitte sortieren"
+msgstr ""
+
+msgid "Abschnitt löschen"
+msgstr ""
+
+msgid "Abschnittstitel bearbeiten"
+msgstr ""
+
+msgid "Absenken"
+msgstr ""
+
+msgid "Ändern"
+msgstr ""
+
+msgid "Anheben"
+msgstr ""
+
+msgid "Antwort zurücksetzen"
+msgstr ""
+
+msgid "Anzeigen"
+msgstr ""
+
+msgid "anzuzeigendes Aufgabenblatt auswählen"
+msgstr ""
+
+msgid "Aufgabenblätter verwalten"
+msgstr ""
+
+msgid "Autorenmodus"
+msgstr ""
+
+msgid "Block hinzufügen"
+msgstr ""
+
+msgid "Blubber muss in dieser Veranstaltung aktiviert sein."
+msgstr ""
+
+msgid ""
+"Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten "
+"Abschnitt fortfahren."
+msgstr ""
+
+msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
+msgstr ""
+
+msgid ""
+"Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
+msgstr ""
+
+msgid "Die Evaluationen müssen im System aktiviert sein."
+msgstr ""
+
+msgid ""
+"Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die "
+"vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
+msgstr ""
+
+#: Courseware.php:88
+msgid "Einstellungen"
+msgstr ""
+
+msgid "Entfernen"
+msgstr ""
+
+msgid "erstellt am"
+msgstr ""
+
+msgid ""
+"Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen."
+msgstr ""
+
+msgid "Es wurde bisher keine Evaluation erstellt!"
+msgstr ""
+
+msgid "Es wurde noch kein Video eingetragen."
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Frage"
+msgstr ""
+
+msgid "Für diese Frage haben Sie bereits eine Antwort abgegeben."
+msgstr ""
+
+msgid ""
+"Für diesen Diskussionsblock muss \"Blubber\" in dieser Veranstaltung "
+"eingeschaltet werden.."
+msgstr ""
+
+msgid ""
+"Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet "
+"werden..."
+msgstr ""
+
+msgid "Gesamtes Kapitel löschen"
+msgstr ""
+
+msgid "Gesamtes Unterkapitel löschen"
+msgstr ""
+
+msgid "Ihre Lösung ist korrekt!"
+msgstr ""
+
+msgid "Ihre Lösung wurde eingetragen."
+msgstr ""
+
+msgid ""
+"Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal."
+msgstr ""
+
+msgid ""
+"Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
+msgstr ""
+
+msgid "Import"
+msgstr ""
+
+msgid "Kapitel einfügen"
+msgstr ""
+
+msgid "Kapitel sortieren"
+msgstr ""
+
+msgid "Kapiteltitel bearbeiten"
+msgstr ""
+
+msgid "Keine Abschnitte"
+msgstr ""
+
+msgid "Keine Aufgaben."
+msgstr ""
+
+msgid "Keine Inhaltsblöcke"
+msgstr ""
+
+msgid "Keine Kapitel"
+msgstr ""
+
+msgid "Keine Unterkapitel"
+msgstr ""
+
+msgid "Kommentiere dies"
+msgstr ""
+
+msgid "Seitenblöcke aktivieren"
+msgstr ""
+
+msgid "Sidebar für"
+msgstr ""
+
+msgid "Sortieren abschließen"
+msgstr ""
+
+msgid "Speichern"
+msgstr ""
+
+msgid "Studentenmodus"
+msgstr ""
+
+msgid "Titel des Unterkapitels bearbeiten"
+msgstr ""
+
+msgid "Unterkapitel einfügen"
+msgstr ""
+
+msgid "Unterkapitel sortieren"
+msgstr ""
+
+msgid "Vips muss in dieser Veranstaltung aktiviert sein."
+msgstr ""
+
+msgid "Was sollen die Lernenden bestätigen?"
+msgstr ""
+
+msgid "weiter"
+msgstr ""
+
+msgid "zurück"
+msgstr ""
+
+msgid "Neuer Abschnitt"
+msgstr ""
+
+msgid "Neues Kapitel"
+msgstr ""
+
+msgid "Neues Unterkapitel"
+msgstr ""
+
+msgid "Sichtbar ab"
+msgstr ""
+
+msgid "Wollen Sie den Block wirklich löschen?"
+msgstr ""
+
+msgid "Wollen Sie den gesamten Abschnitt wirklich löschen?"
+msgstr ""
+
+msgid ""
+"Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke "
+"werden unwiderruflich entfernt!"
+msgstr ""
+
+msgid "Bestätigung"
+msgstr ""
+
+msgid "Diskussion"
+msgstr ""
+
+msgid "Evaluationen"
+msgstr ""
+
+msgid "Freitext"
+msgstr ""
+
+#: Courseware.php:94
+msgid "Fortschrittsübersicht"
+msgstr ""
+
+#: Courseware.php:223
+msgid ""
+"Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
+"erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
+"Schalten Sie zwischen Teilnehmenden-Sicht und Editier-Modus um und fügen Sie "
+"Abschnitte und Blöcke (Text und Bild, Video, Diskussion, Quiz)  hinzu. "
+"Aufgaben erstellen und verwalten Sie mit dem Vips-Plugin und binden Sie dann "
+"in einen Courseware-Abschnitt ein."
+msgstr ""
+
+#: Courseware.php:224
+msgid "Information"
+msgstr ""
+
+#: Courseware.php:226
+msgid ""
+"Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
+"'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
+msgstr ""
+
+#: Courseware.php:227
+msgid "Tipp"
+msgstr ""
+
+#: Courseware.php:229
+msgid ""
+"Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
+"direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
+"Kommunikationselemente und kleine Quizzes beinhalten. Ihren "
+"Bearbeitungsfortschritt sehen Sie auf einen Blick im Reiter "
+"Fortschrittsübersicht."
+msgstr ""
+
+#: Courseware.php:230
+msgid "Hinweis"
+msgstr ""
+
+#: Courseware.php:291
+msgid "Zurück zur Courseware"
+msgstr ""
+
+#: controllers/courseware.php:59
+msgid "Die Einstellungen wurden gespeichert."
+msgstr ""
+
+#: controllers/courseware.php:179
+msgid "Tutoren können diese Einstellung nicht speichern."
+msgstr ""
+
+#: controllers/import.php:48
+msgid "Das Herunterladen des Moduls ist fehlgeschlagen."
+msgstr ""
+
+#: controllers/import.php:71
+msgid "Import-Archiv enthält keine Datendatei data.xml."
+msgstr ""
+
+#: controllers/import.php:80
+msgid "Die Datendatei data.xml enthält kein valides XML."
+msgstr ""
+
+#: blocks/Courseware/Courseware.php:515
+#: models/mooc/db/CoursewareFactory.php:57
+msgid "Unterkapitel 1"
+msgstr ""
+
+#: blocks/Courseware/Courseware.php:522
+#: models/mooc/db/CoursewareFactory.php:66
+msgid "Abschnitt 1"
+msgstr ""
+
+#: blocks/DiscussionBlock/DiscussionBlock.php:63
+msgid "gemeinsam"
+msgstr ""
+
+#: blocks/DiscussionBlock/DiscussionBlock.php:64
+msgid "in Gruppen"
+msgstr ""
+
+#: blocks/Section/Section.php:83
+msgid "Sie sind nicht berechtigt Blöcke anzulegen."
+msgstr ""
+
+#: blocks/Section/Section.php:125
+msgid "Sie sind nicht berechtigt Blöcke zu löschen."
+msgstr ""
+
+#: blocks/TestBlock/TestBlock.php:58
+msgid "Selbsttest"
+msgstr ""
+
+#: blocks/TestBlock/TestBlock.php:59
+msgid "Übungsblatt"
+msgstr ""
+
+#: blocks/TestBlock/TestBlock.php:182 blocks/TestBlock/TestBlock.php:236
+msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
+msgstr ""
+
+#: views/courseware/_settings_discussionblock.php:4
+msgid "Diskussionsblock aktivieren"
+msgstr ""
+
+#: views/courseware/_settings_discussionblock.php:6
+msgid ""
+"Der Diskussionsblock bietet eine gute Möglichkeit zur Kommunikation zwischen "
+"den Teilnehmern. Durch die Aktivierung muss aber der Blubber-Reiter entfernt "
+"werden."
+msgstr ""
+
+#: views/courseware/_settings_editing_permission.php:4
+msgid "Editierberechtigung für Tutoren"
+msgstr ""
+
+#: views/courseware/_settings_editing_permission.php:6
+msgid ""
+"Wenn Sie diesen Schalter aktivieren, dürfen neben den Dozenten auch Tutoren "
+"Ihre Courseware editieren."
+msgstr ""
+
+#: views/courseware/settings.php:21
+msgid "Courseware-Einstellungen"
+msgstr ""
+
+#: views/courseware/settings.php:27
+msgid "Allgemeines"
+msgstr ""
+
+#: views/courseware/settings.php:34
+msgid "Titel der Courseware"
+msgstr ""
+
+#: views/courseware/settings.php:36
+msgid ""
+"Der Titel der Courseware erscheint als Beschriftung des Courseware-Reiters. "
+"Sie können den Reiter also z.B. auch \"Online-Skript\", \"Lernmodul\" o.ä. "
+"nennen."
+msgstr ""
+
+#: views/courseware/settings.php:48
+msgid "Art der Kapitelabfolge"
+msgstr ""
+
+#: views/courseware/settings.php:50
+msgid ""
+"Bei freier Kapitelabfolge können alle sichtbaren Kapitel in beliebiger "
+"Reihenfolge ausgewählt werden. Bei sequentieller Abfolge müssen alle "
+"vorangehenden Unterkapitel erfolgreich abgeschlossen sein, damit ein "
+"Unterkapitel ausgewählt und angezeigt werden kann."
+msgstr ""
+
+#: views/courseware/settings.php:57
+msgid "frei"
+msgstr ""
+
+#: views/courseware/settings.php:58
+msgid "sequentiell"
+msgstr ""
+
+#: views/courseware/settings.php:68
+msgid "Blockeinstellungen"
+msgstr ""
+
+#: views/courseware/settings.php:74
+msgid "Selbsttests"
+msgstr ""
+
+#: views/courseware/settings.php:80
+msgid "Anzahl Versuche"
+msgstr ""
+
+#: views/courseware/settings.php:82
+msgid ""
+"Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben eines "
+"Selbsttests hat, bevor die Lösung der Aufgabe angezeigt wird."
+msgstr ""
+
+#: views/courseware/settings.php:89
+msgid "Unbegrenzt"
+msgstr ""
+
+#: views/courseware/settings.php:112
+msgid "Übernehmen"
+msgstr ""
+
+#: views/courseware/settings.php:112
+msgid "Änderungen übernehmen"
+msgstr ""
+
+#: views/import/index.php:1
+msgid "Datei hochladen"
+msgstr ""
+
+#: views/import/index.php:6
+msgid "Es sind Fehler aufgetreten:"
+msgstr ""
+
+#: views/import/index.php:15
+msgid ""
+"Laden Sie eine Datei hoch, die Sie zuvor in einer MOOC.IP-Installation "
+"exportiert haben."
+msgstr ""
+
+#: views/import/index.php:31
+msgid "Im Content-Marktplatz suchen"
+msgstr ""
+
+#: views/import/index.php:35
+msgid "Stichwortsuche: "
+msgstr ""
+
+#: views/import/index.php:45
+msgid "Es wurden keine Plugins gefunden."
+msgstr ""
+
+#: views/import/index.php:47
+msgid "Suchtreffer:"
+msgstr ""
+
+#: views/import/index.php:50
+msgid "Bild"
+msgstr ""
+
+#: views/import/index.php:51
+msgid "Name und Beschreibung"
+msgstr ""
+
+#: views/import/index.php:52
+msgid "Version"
+msgstr ""
+
+#: views/import/index.php:53
+msgid "Bewertung"
+msgstr ""
+
+#: views/import/index.php:54
+msgid "Installieren"
+msgstr ""
+
+#: views/import/index.php:94
+msgid "Plugin installieren"
+msgstr ""
+
+#: models/mooc/db/CoursewareFactory.php:45
+msgid "Courseware"
+msgstr ""
+
+#: models/mooc/db/CoursewareFactory.php:47
+#: models/mooc/db/CoursewareFactory.php:48
+msgid "Kapitel"
+msgstr ""
+
+#: models/mooc/db/CoursewareFactory.php:67
+msgid "Abschnitt 2"
+msgstr ""
+
+#: models/mooc/db/CoursewareFactory.php:76
+msgid "Name des HTML-Blocks"
+msgstr ""
+
+#: models/mooc/ui/Block.php:516
+msgid "Sie sind nicht berechtigt diesen Block zu editieren."
+msgstr ""

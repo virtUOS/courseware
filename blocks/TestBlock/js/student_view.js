@@ -36,28 +36,20 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 var $this_block = this; // We need 'this' in the handler for postRender functions
 
                 if (confirm('Soll die Antwort zurückgesetzt werden?')) {
-                    var modelid = this.model.id;
-                    // first, we want to reset the try-counter
-                    helper.callHandler(modelid, 'reset_try_counter', $form.serialize()).then(
-                        // after this we reset the exercise itself and rerender it
-                        function () {
-                            helper.callHandler(modelid, 'exercise_reset', $form.serialize())
-                                .then(
-                                    function () {
-                                        return view.renderServerSide();
-                                    },
-                                    function () {
-                                        console.log('failed to reset the exercise');
-                                    }
-                                )
-                                .then(function () {
-                                    $block.find('.exercise').hide();
-                                    $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show())
-                                })
-                                .done();
-                        }
-                    ).then(
-                    ).done();
+                    helper.callHandler(this.model.id, 'exercise_reset', $form.serialize())
+                        .then(
+                            function () {
+                                return view.renderServerSide();
+                            },
+                            function () {
+                                console.log('failed to reset the exercise');
+                            }
+                        )
+                        .then(function () {
+                            $block.find('.exercise').hide();
+                            $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
+                        })
+                        .done();
                 }
                 return false;
             },
@@ -68,7 +60,6 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     $exercise_index = $form.find("input[name='exercise_index']").val(),
                     $block = this.$el.parent();
 
-                var $this_block = this; // We need 'this' in the handler for postRender functions
 
 
                 helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
@@ -82,7 +73,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     )
                     .then(function () {
                         $block.find('.exercise').hide();
-                        $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
+                        view.postRenderExercise($block.find('#exercise' + $exercise_index).show());
                         $block.find(".submitinfo").slideDown(250).delay(1500).slideUp(250);
                     })
                     .done();
@@ -94,13 +85,6 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 var options = $.parseJSON(this.$(event.target).attr('button-data')),
                     $num = parseInt(options.id),
                     $block = this.$el.parent();
-
-                //var $form = $block.find('#exercise'+$num).find('form');
-                //
-                //console.log("changing exercise");
-                //console.log($form);
-                //var data = $form;
-                //helper.callHandler(this.model.id, 'reset_try_counter', $form.serialize());
 
                 if (options.direction == 'next') {
                     $num++;

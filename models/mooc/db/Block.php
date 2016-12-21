@@ -339,4 +339,19 @@ class Block extends \SimpleORMap implements \Serializable
             return in_array($child->type, Block::getStructuralBlockClasses());
         });
     }
+
+    public function getUUID()
+    {
+        global $STUDIP_INSTALLATION_ID;
+
+        $hash = sha1($STUDIP_INSTALLATION_ID . $this->seminar_id . $this->id);
+
+        return sprintf('%08s-%04s-%04x-%04x-%12s',
+                       substr($hash, 0, 8),
+                       substr($hash, 8, 4),
+                       (hexdec(substr($hash, 12, 4)) & 0x0fff) | 0x5000,
+                       (hexdec(substr($hash, 16, 4)) & 0x3fff) | 0x8000,
+                       substr($hash, 20, 12)
+        );
+    }
 }
