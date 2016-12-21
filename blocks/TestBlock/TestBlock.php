@@ -32,6 +32,8 @@ class TestBlock extends Block
      */
     private static $importedExercises = array();
 
+    public $trys = array();
+
     public function initialize()
     {
         global $vipsPlugin, $vipsTemplateFactory;
@@ -199,6 +201,17 @@ class TestBlock extends Block
         $test     = \VipsTest::find($test_id);
         $exercise = \Exercise::find($exercise_id);
 
+        // if it is a self test, count the tries
+        if($test->getType() == "selftest") {
+            if(!$_SESSION['try_counter'][$exercise_id]) {
+                if(!$_SESSION['try_counter']){
+                    $_SESSION['try_counter']= array();
+                }
+                $_SESSION['try_counter'][$exercise_id] = 0;
+            }
+            $_SESSION['try_counter'][$exercise_id] ++;
+        }
+
         $start = $test->getStart();
         $end = $test->getEnd();
         $now = date('Y-m-d H:i:s');
@@ -209,12 +222,23 @@ class TestBlock extends Block
         }
 
         $solution = $exercise->getSolutionFromRequest($requestParams);
+
         $test->storeSolution($solution);
 
         $this->calcGrades();
 
         return array();
-     }
+    }
+
+    public function reset_try_counter_handler($data) {
+
+        parse_str($data, $requestParams);
+        $requestParams = studip_utf8decode($requestParams);
+
+        $exercise_id = $requestParams['exercise_id'];
+
+        $_SESSION['try_counter'][$exercise_id] = 0;
+    }
 
      public function calcGrades()
      {
@@ -577,13 +601,28 @@ class TestBlock extends Block
                 $correct =  false;
                 $tryagain = false;
 
+                $try_counter = 0;
+                $max_counter = 3;
+
                 if ($this->_model->sub_type == 'selftest') {
                     // TT: determine if a correct solution has been handed in
                     $solution = Solution::findOneBy($this->test, $exercise, $user);
                     if ($solution) {
                         $evaluation = $exercise->getVipsExercise()->evaluate($solution->solution, $user->id);
                         $correct = $evaluation['percent'] == 100;
-                        $tryagain = $solution && !$correct;
+                        // TODO @noesting: increment a counter
+                        // TODO get max_counter from dozent
+//                        var_dump($try_counter);
+                        if(!$_SESSION['try_counter'][$exercise->getId()]) {
+                            if(!$_SESSION['try_counter']){
+                                $_SESSION['try_counter']= array();
+                            }
+                            $_SESSION['try_counter'][$exercise->getId()] = 0;
+                        }
+                        $try_counter = $_SESSION['try_counter'][$exercise->getId()];
+                        $max_counter = 3;
+                        $tryagain = $solution && !$correct;// && (try_counter <= max_counter);
+//                        $tryagain = $solution && !$correct;
                     }
                 }
 
@@ -591,6 +630,7 @@ class TestBlock extends Block
                      $solved_completely = false;
 
                 }
+                $show_corrected_solution = ($correct || (($try_counter >= $max_counter) && $this->test->isSelfTest()));
                 $entry = array(
                     'exercise_type' => $exercise->getType(),
                     $exercise->getType() => 1,
@@ -599,7 +639,7 @@ class TestBlock extends Block
                     'self_test' => $this->test->isSelfTest(),
                     'exercise_sheet' => $this->test->isExerciseSheet(),
                     'show_correction' => $this->test->showCorrection(),
-                    'show_solution' => $exercise->showSolutionFor($this->test, $user) && $correct,
+                    'show_solution' => $exercise->showSolutionFor($this->test, $user) && $show_corrected_solution,
                     'title' => $exercise->getTitle(),
                     'question' => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $exercise->getQuestion() ),
                     'answers' => $answers,

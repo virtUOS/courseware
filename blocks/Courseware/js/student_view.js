@@ -110,6 +110,7 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
             }
 
             tooltip(this.$el, 'button');
+            this.resizeColumnHeights();
         },
 
         navigateTo: function (event) {
@@ -165,12 +166,22 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
                 clearHash(this.el);
                 Backbone.trigger("modeswitch", "student");
             }
+
+            this.resizeColumnHeights();
         },
 
         switchToAuthorMode: function () {
             this.$el.removeClass("view-student").addClass("view-author");
             setHash(this.el, "author");
             Backbone.trigger("modeswitch", "author");
+
+            this.resizeColumnHeights();
+        },
+
+        // TODO: fix CSS layout to remove this ugly workaround
+        // see https://github.com/virtUOS/courseware/issues/71
+        resizeColumnHeights: function () {
+            this.$el.css('min-height', this.$('> aside').height() + 'px');
         }
     });
 });
