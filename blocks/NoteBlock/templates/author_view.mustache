@@ -1,0 +1,24 @@
+<input type="hidden" class="cw-noteblock-type-stored" value="{{note_type}}">
+<input type="hidden" class="cw-noteblock-color-stored" value="{{note_color}}">
+<input type="hidden" class="cw-noteblock-quantity-stored" value="{{note_quantity}}">
+
+<label for="cw-noteblock-type">{{#i18n}}Art{{/i18n}}: </label>
+<select class="cw-noteblock-type" name="cw-noteblock-type">
+    <option value="classic">{{#i18n}}classic{{/i18n}}</option>
+    <option value="post-it">{{#i18n}}post-it{{/i18n}}</option>
+</select>
+<br>
+<label for="cw-noteblock-color">{{#i18n}}Farbe{{/i18n}}: </label>
+<select class="cw-noteblock-color" name="cw-noteblock-color">
+    <option value="white">{{#i18n}}weiß{{/i18n}}</option>
+    <option value="yellow">{{#i18n}}gelb{{/i18n}}</option>
+    <option value="blue">{{#i18n}}blau{{/i18n}}</option>
+    <option value="green">{{#i18n}}grün{{/i18n}}</option>
+    <option value="red">{{#i18n}}rot{{/i18n}}</option>
+    <option value="orange">{{#i18n}}orange{{/i18n}}</option>
+</select>
+<br>
+<label for="cw-noteblock-quantity">{{#i18n}}Anzahl{{/i18n}}: </label><input class="cw-noteblock-quantity" type="number" name="cw-noteblock-quantity" min="1" max="12">
+<br><br>
+<button name=save class=button>{{#i18n}}Speichern{{/i18n}}</button>
+<button name=cancel class=button>{{#i18n}}Abbrechen{{/i18n}}</button>
