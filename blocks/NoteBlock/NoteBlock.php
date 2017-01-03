@@ -99,13 +99,13 @@ class NoteBlock extends Block
     public function importProperties(array $properties)
     {
         if (isset($properties['note_type'])) {
-            $this->note = $properties['note_type'];
+            $this->note_type = $properties['note_type'];
         }
         if (isset($properties['note_color'])) {
-            $this->note = $properties['note_color'];
+            $this->note_color = $properties['note_color'];
         }
         if (isset($properties['note_quantity'])) {
-            $this->note = $properties['note_quantity'];
+            $this->note_quantity = $properties['note_quantity'];
         }
 
         $this->save();
