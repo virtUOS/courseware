@@ -20,16 +20,18 @@ define(['assets/js/author_view', 'assets/js/url'],
 
         postRender: function() {
             var $view = this;
-
-            var $values = $.parseJSON(this.$(".cw-selfevaluation-value-stored").val())[0];
-            this.$("input[name=cw-selfevaluation-content-value-good]").val($values.good);
-            this.$("input[name=cw-selfevaluation-content-value-bad]").val($values.bad);
-
-            var $values = $.parseJSON(this.$(".cw-selfevaluation-content-stored").val());
-            $.each($values, function(){
-                $view.addElement(($(this)[0]).element);
-            });
-            this.$(".cw-selfevaluation-content-item").first().remove();
+            if (this.$(".cw-selfevaluation-value-stored").val() != "") {
+                var $values = $.parseJSON(this.$(".cw-selfevaluation-value-stored").val())[0];
+                this.$("input[name=cw-selfevaluation-content-value-good]").val($values.good);
+                this.$("input[name=cw-selfevaluation-content-value-bad]").val($values.bad);
+            }
+            if (this.$(".cw-selfevaluation-content-stored").val() != "") {
+                var $values = $.parseJSON(this.$(".cw-selfevaluation-content-stored").val());
+                $.each($values, function(){
+                    $view.addElement(($(this)[0]).element);
+                });
+                this.$(".cw-selfevaluation-content-item").first().remove();
+            }
 
         },
 

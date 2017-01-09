@@ -43,33 +43,39 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/vendor/jspdf/jspdf
         },
         
         buildElements: function() {
-            var $values = $.parseJSON(this.$(".cw-selfevaluation-value-stored").val())[0];
-            var $container = this.$(".cw-selfevaluation-container");
-            var $contents = $.parseJSON(this.$(".cw-selfevaluation-content-stored").val());
-            var $html = "";
-            
-            $.each($contents, function($index){
-                var $element = ($(this)[0]).element;
-                $html += 
-                '<div class="cw-selfevaluation-item">'+
-                    '<p class="cw-selfevaluation-item-element">'+$element+'</p>'+
-                    '<span class="cw-selfevaluation-item-value-good">'+$values.good+'</span>'+
-                    '<button class="cw-selfevaluation-radio-left-button">&larr;</button> '+
-                    '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="++">'+
-                    '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="+">'+
-                    '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="-">'+
-                    '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="--">'+
-                    '<button  class="cw-selfevaluation-radio-right-button">&rarr;</button> '+
-                    '<span class="cw-selfevaluation-item-value-bad">'+$values.bad+'</span>'+
-                '</div>';
-                if ($contents.length > $index+1) {
-                    $html += "<hr>";
+            if (this.$(".cw-selfevaluation-content-stored").val() != "") {
+                if (this.$(".cw-selfevaluation-value-stored").val() != "") {
+                    var $values = $.parseJSON(this.$(".cw-selfevaluation-value-stored").val())[0];
                 } else {
-                  $html += "<br>";  
+                    var $values = $.parseJSON('[{"good":"", "bad":""}]')[0];
                 }
-            });
-            
-            $container.html($html);
+                var $container = this.$(".cw-selfevaluation-container");
+                var $contents = $.parseJSON(this.$(".cw-selfevaluation-content-stored").val());
+                var $html = "";
+
+                $.each($contents, function($index){
+                    var $element = ($(this)[0]).element;
+                    $html += 
+                    '<div class="cw-selfevaluation-item">'+
+                        '<p class="cw-selfevaluation-item-element">'+$element+'</p>'+
+                        '<span class="cw-selfevaluation-item-value-good">'+$values.good+'</span>'+
+                        '<button class="cw-selfevaluation-radio-left-button">&larr;</button> '+
+                        '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="++">'+
+                        '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="+">'+
+                        '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="-">'+
+                        '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="--">'+
+                        '<button  class="cw-selfevaluation-radio-right-button">&rarr;</button> '+
+                        '<span class="cw-selfevaluation-item-value-bad">'+$values.bad+'</span>'+
+                    '</div>';
+                    if ($contents.length > $index+1) {
+                        $html += "<hr>";
+                    } else {
+                      $html += "<br>";  
+                    }
+                });
+                
+                $container.html($html);
+            }
         },
 
         generateDocument: function() {
