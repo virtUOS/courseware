@@ -5,8 +5,8 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/vendor/jspdf/jspdf
     return StudentView.extend({
         events: {
             "click button[name=download]":                  "generateDocument",
-            "click .cw-selfevaluation-radio-left-button":   "switchLeft",
-            "click .cw-selfevaluation-radio-right-button":  "switchRight"
+            "click .cw-selfevaluation-button-left":   "switchLeft",
+            "click .cw-selfevaluation-button-right":  "switchRight"
         },
         
         initialize: function(options) {
@@ -59,12 +59,12 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/vendor/jspdf/jspdf
                     '<div class="cw-selfevaluation-item">'+
                         '<p class="cw-selfevaluation-item-element">'+$element+'</p>'+
                         '<span class="cw-selfevaluation-item-value-good">'+$values.good+'</span>'+
-                        '<button class="cw-selfevaluation-radio-left-button">&larr;</button> '+
+                        '<button class="cw-selfevaluation-button cw-selfevaluation-button-left"></button> '+
                         '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="++">'+
                         '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="+">'+
                         '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="-">'+
                         '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="--">'+
-                        '<button  class="cw-selfevaluation-radio-right-button">&rarr;</button> '+
+                        '<button  class="cw-selfevaluation-button cw-selfevaluation-button-right"></button> '+
                         '<span class="cw-selfevaluation-item-value-bad">'+$values.bad+'</span>'+
                     '</div>';
                     if ($contents.length > $index+1) {
