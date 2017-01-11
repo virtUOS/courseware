@@ -1,0 +1,59 @@
+@import '../../../assets/mixins';
+
+.AudioBlock {
+    label{
+        width: 6em;
+        padding: 1em;
+        display: inline-block;
+    }
+    
+    .cw-audioblock-description,
+    .cw-audioblock-source,
+    .cw-audioblock-file {
+        background-color: #fff;
+        border: solid thin #ccc;
+
+    }
+    
+    input {
+        padding: 6px 0 6px 5px;
+        width: 30em;
+    }
+    
+    select {
+        width: 30.5em;
+    }
+    
+    p {
+        width: 100%;
+        min-height: 55px;
+        border: solid thin #ccc;
+        
+        span {
+            margin: 5px;
+        }
+    }
+    
+    .cw-audio-playbutton {
+        .courseware-btn;
+        margin: 5px;
+        height: 46px;
+        width: 46px;
+        background-image: url("@{blocks-icons-dir}/32/white/play.png");
+        background-position: 6px center;
+        background-color: #007f4b;
+        float:right;
+
+    }
+    .cw-audio-playbutton:hover{
+        background-color: #fff;
+        background-image: url("@{blocks-icons-dir}/32/black/play.png");
+    }
+    
+    .cw-audio-playbutton-playing {
+        background-image: url("@{blocks-icons-dir}/32/white/stop.png");
+    }
+    .cw-audio-playbutton-playing:hover{
+        background-image: url("@{blocks-icons-dir}/32/black/stop.png");
+    }
+}
