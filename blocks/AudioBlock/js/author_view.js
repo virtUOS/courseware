@@ -23,7 +23,11 @@ define(['assets/js/author_view', 'assets/js/url'],
             $view.$(".cw-audioblock-description").val($view.$(".cw-audioblock-description-stored").val());
             $view.$("select.cw-audioblock-source option[value='"+$view.$('.cw-audioblock-source-stored').val()+"']").prop("selected", true);
 
-            if ($view.$('.cw-audioblock-source-stored').val() == "cw") {
+            if ($view.$('.cw-audioblock-source-stored').val() == "") {
+                $view.$("input.cw-audioblock-file").hide();
+                $view.$("select.cw-audioblock-file").show();
+                $view.$(".cw-audioblock-source option[value='cw']").prop("selected", true);
+            } else if ($view.$('.cw-audioblock-source-stored').val() == "cw") {
                 $view.$("input.cw-audioblock-file").hide();
                 $view.$(".cw-audioblock-file option[value='"+$view.$('.cw-audioblock-file-stored').val()+"']").prop("selected", true);
             } else {

@@ -18,17 +18,24 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         postRender: function() {
             var $view =  this;
             var $player = $view.$(".cw-audio-player");
+            if ($view.$(".cw-audio-playbutton").attr("played") == "1") {
+                    $player.remove();
+                    $view.$(".cw-audio-playbutton").remove();
+                    $view.$(".cw-audio-played-message").show();
+            } else {
+                $view.$(".cw-audio-playbutton").show();
+                $player.find("source").each(function(){
+                    var $source = $(this).prop("src");
+                    if ($source.indexOf("ogg") > -1) {
+                        $(this).prop("type", "audio/ogg")
+                    }
+                    if ($source.indexOf("wav") > -1) {
+                        $(this).prop("type", "audio/wav")
+                    }
+                    // default: type="audio/mpeg"
+                });
+            }
             
-            $player.find("source").each(function(){
-                var $source = $(this).prop("src");
-                if ($source.indexOf("ogg") > -1) {
-                    $(this).prop("type", "audio/ogg")
-                }
-                if ($source.indexOf("wav") > -1) {
-                    $(this).prop("type", "audio/wav")
-                }
-                // default: type="audio/mpeg"
-            });
             
         },
                 
@@ -43,8 +50,9 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                
                  return;
                } else {
-                 $playbutton.removeClass('cw-audio-playbutton-playing');
+                 $playbutton.remove();
                  $player.pause();
+                 $view.$(".cw-audio-played-message").show();
                }
              helper
                 .callHandler(this.model.id, "play", {})
