@@ -9,6 +9,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         },
         
         initialize: function(options) {
+            
         },
 
         render: function() {
@@ -35,7 +36,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     // default: type="audio/mpeg"
                 });
             }
-            
+            var music = $player[0];
+            music.addEventListener("ended", this.playAudioFileEnd, false);
             
         },
                 
@@ -47,8 +49,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                  $playbutton.addClass('cw-audio-playbutton-playing');
                  $player.load();
                  $player.play();
-               
                  return;
+                 
                } else {
                  $playbutton.remove();
                  $player.pause();
@@ -59,8 +61,6 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 .then(
                     // success
                     function () {
-                        jQuery(event.target).addClass("accept");
-                        $view.switchBack();
                     },
 
                     // error
@@ -74,9 +74,25 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         },
         
         playAudioFileEnd: function(){
-            var $view =  this;
-            var $playbutton = $view.$(".cw-audio-playbutton");
-            $playbutton.removeClass('cw-audio-playbutton-playing');
+            var $blockid = $(this).parent().parent().attr("data-blockid");
+            var $playbutton = $(this).parent().find(".cw-audio-playbutton");
+            $playbutton.remove();
+            $(this).parent().find(".cw-audio-played-message").show();
+            helper
+                .callHandler($blockid, "play", {})
+                .then(
+                    // success
+                    function () {
+                    },
+
+                    // error
+                    function (error) {
+                        var errorMessage = 'Could not update the block: '+jQuery.parseJSON(error.responseText).reason;
+                        alert(errorMessage);
+                        console.log(errorMessage, arguments);
+                    })
+            .done();
+            
         }
     });
 });
