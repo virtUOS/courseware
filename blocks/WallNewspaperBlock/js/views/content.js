@@ -1,22 +1,22 @@
-define(['backbone', 'underscore', 'assets/js/templates', 'assets/js/i18n', 'utils'],
-function (Backbone, _, templates, i18n, Utils) {
+define(['backbone', 'underscore', 'assets/js/templates', 'utils'],
+function (Backbone, _, templates, Utils) {
 
     var VIDEO_TYPES = [
         {
             type: 'url',
-            placeholder: i18n('URL')
+            placeholder: 'URL'
         },
         {
             type: 'matterhorn',
-            placeholder: i18n('URL')
+            placeholder: 'URL'
         },
         {
             type: 'youtube',
-            placeholder: i18n('YouTube ID')
+            placeholder: 'YouTube ID'
         },
         {
             type: 'dfb',
-            placeholder: i18n('DFB-TV-ID (z.B. 11019)')
+            placeholder: 'DFB-TV-ID (z.B. 11019)'
         }
     ];
 
