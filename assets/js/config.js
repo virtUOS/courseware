@@ -14,7 +14,8 @@
             autosize:   "assets/js/vendor/jquery.autosize/autosize.min",
             utils:      "assets/js/utils",
             dateFormat: "assets/js/vendor/date.format/date.format",
-            turn:       "assets/js/vendor/turn/turn"
+            turn:       "assets/js/vendor/turn/turn",
+            jspdf:      "assets/js/vendor/jspdf/jspdf.min"
         },
 
         shim: {
