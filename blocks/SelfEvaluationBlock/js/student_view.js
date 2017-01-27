@@ -4,7 +4,7 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/vendor/jspdf/jspdf
     
     return StudentView.extend({
         events: {
-            "click button[name=download]":                  "generateDocument",
+            "click button[name=download]":            "generateDocument",
             "click .cw-selfevaluation-button-left":   "switchLeft",
             "click .cw-selfevaluation-button-right":  "switchRight"
         },
@@ -55,9 +55,12 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/vendor/jspdf/jspdf
 
                 $.each($contents, function($index){
                     var $element = ($(this)[0]).element;
+                    
                     $html += 
-                    '<div class="cw-selfevaluation-item">'+
-                        '<p class="cw-selfevaluation-item-element">'+$element+'</p>'+
+                        '<div class="cw-selfevaluation-item">'+
+                        '<p class="cw-selfevaluation-item-element">'+$element+'</p>';
+                    $element = $element.replace(/ /g, '');
+                    $html += 
                         '<span class="cw-selfevaluation-item-value-good">'+$values.good+'</span>'+
                         '<button class="cw-selfevaluation-button cw-selfevaluation-button-left"></button> '+
                         '<input class="cw-selfevaluation-radio" type="radio" name="selected-'+$element+'" value="++">'+
@@ -86,6 +89,7 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/vendor/jspdf/jspdf
             var $selection = new Array();
             $.each($contents, function(){
                 var $element = ($(this)[0]).element;
+                $element = $element.replace(/ /g, '');
                 var $value = $view.$("input[name=selected-"+$element+"]:checked").val();
                 if (typeof $value !== "undefined") {
                     $selection.push({"element":$element, "value": $value});
