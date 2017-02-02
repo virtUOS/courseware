@@ -109,6 +109,7 @@ function watch($timeout)
 }
 function locales()
 {
+    date_default_timezone_set('UTC');
     $output = array();
 
     $fd = fopen('locale/js.pot', 'w');
