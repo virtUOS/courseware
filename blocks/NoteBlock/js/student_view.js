@@ -1,10 +1,10 @@
-define(['assets/js/student_view', 'assets/js/url', 'assets/js/vendor/jspdf/jspdf.min'], function (StudentView, helper, jsPDF) {
+define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helper) {
     
     'use strict';
     
     return StudentView.extend({
         events: {
-            "click button[name=download]":   "generateDocument"
+           // "click button[name=download]":   "generateDocument"
         },
         
         initialize: function(options) {
@@ -47,7 +47,7 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/vendor/jspdf/jspdf
                     })
                 .done();
         },
-        
+        /*
         generateDocument: function() {
             var doc = new jsPDF('a4');
             //dfb-Logo header
@@ -97,6 +97,7 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/vendor/jspdf/jspdf
             }
             doc.save('Test.pdf');
         }
+        */
     });
 });
 

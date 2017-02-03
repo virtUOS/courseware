@@ -1,10 +1,10 @@
-define(['assets/js/student_view', 'assets/js/url', 'assets/js/vendor/jspdf/jspdf.min'], function (StudentView, helper, jsPDF) {
+define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helper) {
     
     'use strict';
     
     return StudentView.extend({
         events: {
-            "click button[name=download]":            "generateDocument",
+            //"click button[name=download]":            "generateDocument",
             "click .cw-selfevaluation-button-left":   "switchLeft",
             "click .cw-selfevaluation-button-right":  "switchRight"
         },
@@ -80,7 +80,7 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/vendor/jspdf/jspdf
                 $container.html($html);
             }
         },
-
+        /*
         generateDocument: function() {
             var $view = this;
             var $title = $view.$(".cw-selfevaluation-title").html();
@@ -182,6 +182,7 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/vendor/jspdf/jspdf
             //end for each
             
             doc.save($title+'.pdf');
+            */
         }
     });
 });
