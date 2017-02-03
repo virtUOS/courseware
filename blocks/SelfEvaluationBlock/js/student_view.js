@@ -182,8 +182,9 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
             //end for each
             
             doc.save($title+'.pdf');
-            */
+            
         }
+        */
     });
 });
 
