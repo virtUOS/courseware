@@ -1,4 +1,11 @@
 <input type="hidden" class="cw-noteblock-quantity-stored" value="{{note_quantity}}">
 <textarea class="{{note_type}}" style="background-color: {{note_color_student_view}};"></textarea>
 <br><br>
-<button name="download" class="button">{{#i18n}}Download{{/i18n}}</button>
+<form action="print/note" method="post" target="_blank">
+    <input type="submit" value="download" name="download">
+    <input type="hidden" name="note-data">
+    <input type="hidden" name="note-type" value="{{note_type}}">
+    <input type="hidden" name="note-color" value="{{note_color}}">
+    
+</form>
+
