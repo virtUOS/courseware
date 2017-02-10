@@ -5,4 +5,9 @@
 <div class="cw-selfevaluation-container">
 </div>
 <br><br>
-<button name="download" class="button">{{#i18n}}Download{{/i18n}}</button>
+<form action="print/selfevaluation">
+    <input type="submit" value="download" name="download" target="_blank">
+    <input type="hidden" name="selfevaluation-data">
+    <input type="hidden" name="selfevaluation-title" value="{{selfevaluation_title}}">
+    <input type="hidden" name="selfevaluation-description" value="{{selfevaluation_description}}">
+</form>
