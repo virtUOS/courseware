@@ -739,6 +739,7 @@ class TestBlock extends Block
         // - DFB only - werden nicht alle Fragen ausgewählt werden per Zufall die 
         // gewählte Anzahl an Fragen ausgesucht. Dies gilt nur für Selbsttests.
         if (($this->test_questions != null)&&((int)$this->test_questions != $numberofex)&&($this->_model->sub_type == 'selftest')) {
+            $has_test_questions = true;
             $rnd_exercises = array();
             if ($this->test_questions == 1) { 
                 $random_key = rand(0, (sizeOf($exercises)-1));
@@ -759,6 +760,8 @@ class TestBlock extends Block
                 $exercises = $rnd_exercises;
             }
             
+        } else {
+            $has_test_questions = false;
         }
         
         
@@ -783,7 +786,9 @@ class TestBlock extends Block
             'exercises_available' => $exercises_available,
             'solved_completely'   => $solved_completely,
             'submitted_completely' => $submitted_completely,  // - DFB only!
-            'assignment'          => $this->test->getId()
+            'assignment'          => $this->test->getId(),
+            'has_test_questions'  => $has_test_questions,
+            'numberofex'           => $numberofex
         );
     }
 

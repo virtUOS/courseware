@@ -1,5 +1,5 @@
 {{#active}}
-  
+
     <h2 class="testblock-header">{{title}}</h2>
   
     {{#description}}
@@ -11,6 +11,12 @@
             {{#i18n}}Dieser Test ist zurzeit nicht verfügbar.{{/i18n}}
         </div>
     {{/available}}
+    
+    {{#has_test_questions}} 
+        <div class="messagebox messagebox_info">
+            {{#i18n}}Dieser Test enthält {{numberofex}} Fragen von denen Du nur {{test_questions}} beantworten musst.{{/i18n}}
+        </div>
+    {{/has_test_questions}}
 
     {{#exercises}}
         {{^skip_entry}}
