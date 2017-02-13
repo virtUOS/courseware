@@ -1,5 +1,5 @@
 {{#url}}
-  <h1 class="video-header">{{videoTitle}}</h1>
+  {{#videoTitle}}<h1 class="video-header">{{videoTitle}}</h1>{{/videoTitle}}
   <div class="video-wrapper {{aspect}}">
     <iframe src="{{.}}" scrolling="no" allowfullscreen></iframe>
   </div>
