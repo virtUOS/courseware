@@ -238,6 +238,12 @@ class TestBlock extends Block
             }
             $local_tries[$exercise_id] ++;
             $this->tries = $local_tries;
+
+            $progress = $this->calcGrades();
+            $grade = $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0;
+            
+        } else {
+            $grade = 1;
         }
 
         $start = $test->getStart();
@@ -252,10 +258,8 @@ class TestBlock extends Block
         $solution = $exercise->getSolutionFromRequest($requestParams);
         $test->storeSolution($solution);
 
-        $progress = $this->calcGrades();
-
         return array(
-            'grade' => $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0
+            'grade' => $grade
         );
      }
 
