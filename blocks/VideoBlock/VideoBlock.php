@@ -88,19 +88,23 @@ class VideoBlock extends Block
 
     function getOpencastURL_handler($data)
     {
-        require_once $this->openCastPlugin->getPluginPath()."/classes/OCRestClient/SearchClient.php";
+        if($this->openCastActive) {
+            require_once $this->openCastPlugin->getPluginPath() . "/classes/OCRestClient/SearchClient.php";
 
-        $searchClient = new  \SearchClient();
+            $searchClient = new  \SearchClient();
 
-        $url = $searchClient->getBaseURL()."/engage/theodul/ui/core.html?id=".$data['opencastVideo']."&mode=embed";
+            $url = $searchClient->getBaseURL() . "/engage/theodul/ui/core.html?id=" . $data['opencastVideo'] . "&mode=embed";
 
-        if(get_config("OPENCAST_STREAM_SECURITY")) {
-            require_once $this->openCastPlugin->getPluginPath()."/classes/OCRestClient/SecurityClient.php";
-            $securityClient = new \SecurityClient();
-            $url = $securityClient->signURL();
+            if (get_config("OPENCAST_STREAM_SECURITY")) {
+                require_once $this->openCastPlugin->getPluginPath() . "/classes/OCRestClient/SecurityClient.php";
+                $securityClient = new \SecurityClient();
+                $url = $securityClient->signURL();
+            }
+
+            return array("url" => $url);
+        } else {
+            return null;
         }
-
-        return array("url" => $url);
     }
 
     /**
