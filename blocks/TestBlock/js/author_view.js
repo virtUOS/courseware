@@ -19,10 +19,11 @@ define(['assets/js/author_view', 'assets/js/url'], function (AuthorView, helper)
         postRender: function() {
             var $input = this.$("input[name='test_questions']");
             var $selection = this.$('select[name="test_id"] option:selected');
-            
-            var options = $.parseJSON($selection.attr('select-data')),
+            if(typeof $selection.attr('select-data') != "undefined") {
+                var options = $.parseJSON($selection.attr('select-data')),
                 $count = parseInt(options.count);
-            $input.attr('max', $count);
+                $input.attr('max', $count);
+            }
         }, 
         
         setMaxNum: function() {
