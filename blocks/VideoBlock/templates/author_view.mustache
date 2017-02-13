@@ -13,7 +13,16 @@
         <option value="youtube">{{#i18n}}Youtube{{/i18n}}</option>
         <option value="matterhorn">{{#i18n}}Matterhorn{{/i18n}}</option>
         <option value="url">{{#i18n}}eingebettetes Video (iframe){{/i18n}}</option>
+        <option value="opencast">{{#i18n}}OpenCast{{/i18n}}</option>
     </select>
+    </div>
+
+    <div class="videosource videosource-opencast">
+        <br>
+        <input type="hidden" value="{{opencastVideo}}" id="opencast-video-id">
+        <select id="opencast-videos">
+            <option value="null">--{{#i18n}}Bitte auswählen{{/i18n}}--</option>
+        </select>
     </div>
 
     <div class="videosource videosource-url">

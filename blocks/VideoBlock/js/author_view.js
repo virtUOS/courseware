@@ -41,7 +41,17 @@ define(['assets/js/author_view', 'assets/js/url'], function (
         },
         postRender: function() {
             var url = this.$el.find('.videourl').val();
-            var videotype = this.getVideoType(url);
+            var opencastVideoId = this.$el.find('#opencast-video-id').val();
+            var videotype = this.getVideoType(url, opencastVideoId);
+            var that = this;
+            if(videotype == 'opencast') {
+                helper.callHandler(this.model.id, 'getOpencastURL', {opencastVideo: opencastVideoId}).then(
+                    function (data) {
+                        var url = 'http://'+data['url'];
+                        that.showPreview(that, url);
+                    }
+                )
+            }
             this.showPreview(this, url);
             this.$el.find(".videotype option[value="+videotype+"]").attr('selected', true);
             this.selection();
@@ -58,6 +68,7 @@ define(['assets/js/author_view', 'assets/js/url'], function (
                 var url = "";
                 var webvideosettings = "controls ";
                 var webvideo = new Array();
+                var opencastVideo = "";
                 this.$(".videosource-webvideo > .webvideo").each(function(){
                     var src = $(this).find('.webvideosrc').val();
                     var type = $(this).find('.webvideosrc-mediatype').val();
@@ -81,15 +92,26 @@ define(['assets/js/author_view', 'assets/js/url'], function (
                 });
                 if (view.$el.find('.videoautostart').is(':checked')) {webvideosettings += "autoplay ";}
                 webvideo = JSON.stringify(webvideo);
+            } if (videotype == 'opencast') {
+                var videoId = $('#opencast-videos').val();
+                if(videoId == 'null') {
+                    alert('Bitte wählen sie ein Video aus');
+                    return;
+                }
+                var url = "";
+                var webvideo = "";
+                var webvideosettings = "";
+                var opencastVideo = videoId;
             } else {
                 var url = this.$el.find('.videourl').val()
                 var webvideo = "";
                 var webvideosettings = "";
+                var opencastVideo = "";
             }
 
             status.text('Speichere Änderungen...');
             var view = this;
-            helper.callHandler(this.model.id, 'save', { url: url, webvideo: webvideo, webvideosettings: webvideosettings,videoTitle: videoTitle, aspect: aspect}).then(
+            helper.callHandler(this.model.id, 'save', { url: url, webvideo: webvideo, webvideosettings: webvideosettings,videoTitle: videoTitle, aspect: aspect, opencastVideo: opencastVideo}).then(
                 function() {
                     status.text('Änderungen wurden gespeichert.');
                     view.switchBack();
@@ -104,10 +126,20 @@ define(['assets/js/author_view', 'assets/js/url'], function (
         preview: function() {
             var videourl = this.$el.find('.videourl');
             var videotype = this.$el.find('.videotype').val();
+            var opencastVideo = this.$el.find('#opencast-video-id').val();
+            var that = this;
+            if(videotype == 'opencast') {
+                helper.callHandler(this.model.id, 'getOpencastURL', {opencastVideo: opencastVideo}).then(
+                    function (data) {
+                        var url = 'http://'+data['url'];
+                        that.showPreview(that, url);
+                    }
+                )
+            }
             var url = this.getUrl(this, videotype);
             var aspect = this.$('input[name="videoaspect"]:checked').val();
-            if (videotype != "webvideo") { 
-                videourl.val(url); 
+            if (videotype != "webvideo") {
+                videourl.val(url);
             }
             this.showPreview(this, url);
             this.$('.video-wrapper').attr('class', 'video-wrapper '+aspect);
@@ -143,6 +175,26 @@ define(['assets/js/author_view', 'assets/js/url'], function (
                     this.$el.find("iframe").show();
                     this.$el.find('.videosrcname').html('URL');
                     this.$el.find(".videoautostart-wrapper").hide();
+                    break;
+                case "opencast":
+                    this.$el.find(".videosource-opencast").show();
+                    this.$el.find("iframe").show();
+                    var that = this;
+                    helper.callHandler(this.model.id, 'getOpenCastVideos', {}).then(
+                        function (data) {
+                            console.log(data);
+                            var opencastVideoId = that.$el.find('#opencast-video-id').val();
+                            for(var i in data) {
+                                if(data.hasOwnProperty(i)) {
+                                    $('#opencast-videos').append($('<option value="' + data[i].id + '">' + data[i].title + '</option>'));
+                                }
+                            }
+                            $("#opencast-videos option[value='"+opencastVideoId+"']").attr('selected', true);
+                        },
+                        function (error) {
+
+                        }
+                    );
                     break;
             }
             this.resetVideoData(this);
@@ -227,9 +279,12 @@ define(['assets/js/author_view', 'assets/js/url'], function (
             }
             return url;
         },
-        getVideoType: function (url) {
-            if (url == '') {
+        getVideoType: function (url, opencastVideoId) {
+            if (url == '' && opencastVideoId == '') {
                 return "webvideo";
+            }
+            if (url == '') {
+                return "opencast";
             }
             var videotype = '';
             if (url.indexOf("youtube") != -1) {

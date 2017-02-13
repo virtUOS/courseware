@@ -3,14 +3,20 @@
 {{#url}}
     <iframe src="{{.}}" scrolling="no" allowfullscreen></iframe>
 {{/url}}
+{{#opencastVideo}}
+    <input type="hidden" id="opencast-video-id" value="{{opencastVideo}}">
+    <iframe src="" scrolling="no" allowfullscreen></iframe>
+{{/opencastVideo}}
 {{^url}}
-    <video width="100%" {{webvideosettings}}>
-        {{#webvideo}}
-            <source src="{{src}}" type="video/{{type}}" media="{{media}}" >
+    {{^opencastVideo}}
+        <video width="100%" {{webvideosettings}}>
+            {{#webvideo}}
+                <source src="{{src}}" type="video/{{type}}" media="{{media}}" >
+            {{/webvideo}}
+        </video>
+        {{^webvideo}}
+            {{#i18n}}Es wurde noch kein Video eingetragen.{{/i18n}}
         {{/webvideo}}
-    </video>
-    {{^webvideo}}
-        {{#i18n}}Es wurde noch kein Video eingetragen.{{/i18n}}
-    {{/webvideo}}
+    {{/opencastVideo}}
 {{/url}}
 </div>

@@ -11,6 +11,11 @@ class VideoBlock extends Block
 {
     const NAME = 'Video';
 
+    private $openCastActive;
+    private $openCastEpisodes;
+    /** @var  \OpenCast */
+    private $openCastPlugin;
+
     function initialize()
     {
         $this->defineField('url', \Mooc\SCOPE_BLOCK, '');
@@ -18,6 +23,18 @@ class VideoBlock extends Block
         $this->defineField('webvideosettings', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('videoTitle', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('aspect', \Mooc\SCOPE_BLOCK, 'aspect-169');
+        $this->defineField('opencastVideo', \Mooc\SCOPE_BLOCK, '');
+
+        /** @var \OpenCast $ocPlugin */
+        $this->openCastPlugin = \PluginManager::getInstance()->getPlugin('OpenCast');
+        $this->openCastActive = \PluginManager::getInstance()->isPluginActivated($this->openCastPlugin->getPluginId(), $GLOBALS['SessionSeminar']);
+
+        if($this->openCastActive) {
+            require_once $this->openCastPlugin->getPluginPath()."/models/OCCourseModel.class.php";
+            $ocCourse = new \OCCourseModel($GLOBALS['SessionSeminar']);
+            $this->openCastEpisodes = $ocCourse->getEpisodes();
+        }
+
     }
 
     function array_rep() {
@@ -26,7 +43,8 @@ class VideoBlock extends Block
             'webvideo'    => $this->webvideo, 
             'webvideosettings'    => $this->webvideosettings, 
             'videoTitle'    => $this->videoTitle,
-            'aspect' => $this->aspect
+            'aspect' => $this->aspect,
+            'opencastVideo' => $this->opencastVideo,
         );
     }
 
@@ -54,8 +72,32 @@ class VideoBlock extends Block
         $this->webvideosettings = (string) $data['webvideosettings'];
         $this->videoTitle = (string) $data['videoTitle'];
         $this->aspect = (string) $data['aspect'];
+        $this->opencastVideo = (string) $data['opencastVideo'];
 
         return $this->array_rep();
+    }
+
+    function getOpenCastVideos_handler()
+    {
+        if($this->openCastActive) {
+            return $this->openCastEpisodes;
+        } else {
+            return null;
+        }
+    }
+
+    function getOpencastURL_handler($data)
+    {
+        require_once $this->openCastPlugin->getPluginPath()."/classes/OCRestClient/SecurityClient.php";
+        require_once $this->openCastPlugin->getPluginPath()."/classes/OCRestClient/SearchClient.php";
+
+        $searchClient = new  \SearchClient();
+
+        $securityClient = new \SecurityClient();
+
+        $url = $securityClient->signURL($searchClient->getBaseURL()."/engage/theodul/ui/core.html?id=".$data['opencastVideo']."&mode=embed");
+
+        return array("url" => $url);
     }
 
     /**
