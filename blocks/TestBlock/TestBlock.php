@@ -243,7 +243,8 @@ class TestBlock extends Block
             $grade = $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0;
             
         } else {
-            $grade = 1;
+            $progress = $this->getProgress();
+            $grade = $progress->max_grade;
         }
 
         $start = $test->getStart();
