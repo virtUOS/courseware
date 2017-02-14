@@ -280,6 +280,7 @@ class TestBlock extends Block
         foreach ($this->test->exercises as $exc) {
             $solution = $exc->getSolutionFor($this->test, $user);
             $correct = $solution ? ($exc->getPoints() == $solution->points) : false;
+            if (($this->test->type != "selftest")&&($solution != "")) {$correct = true;} 
             if ($correct) {
                 $progress->grade++;
             }
