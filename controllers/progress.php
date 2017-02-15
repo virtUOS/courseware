@@ -1,5 +1,7 @@
 <?php
 
+use Mooc\UI\DiscussionBlock\LecturerDiscussion;
+
 class ProgressController extends CoursewareStudipController {
 
     public function before_filter(&$action, &$args)
@@ -15,10 +17,33 @@ class ProgressController extends CoursewareStudipController {
             Navigation::activateItem("/course/mooc_progress");
         }
 
+        $this->mode = $GLOBALS['perm']->have_studip_perm("tutor", $this->plugin->getCourseId()) ? 'total' : 'single';
+        $this->members = CourseMember::findByCourseAndStatus($this->plugin->getCourseId(), 'autor');
+
+        $uid = NULL;
+        $this->current_user = NULL; // expose current user to template
+        if ($this->mode == 'total') { // list all participants
+            if (Request::option('uid')) { // one participant selected
+                foreach ($this->members as $m) {
+                    if ($m->user_id == Request::option('uid')) {
+                        $uid = $m->user_id;
+                        $this->current_user = $m->user;
+                    }
+                }
+            } else if ($this->members) {  // no one selected: take first, if there are participants at all
+                $m = $this->members[0];
+                $uid = $m->user_id;
+                $this->current_user = $m->user;
+            }
+        } else { // single mode: only show my results
+            $uid = $this->plugin->getCurrentUserId();
+            $this->current_user = $this->container['current_user'];
+        }
+
         $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position', array($this->plugin->getCourseId()));
         $bids   = array_map(function ($block) { return (int) $block->id; }, $blocks);
         $progress = array_reduce(
-            \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id = ?', array($bids, $this->plugin->getCurrentUserId())),
+            \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id = ?', array($bids, $uid)),
             function ($memo, $item) {
                 $memo[$item->block_id] = array(
                     'grade' => $item->grade,
@@ -39,6 +64,10 @@ class ProgressController extends CoursewareStudipController {
 
         $this->courseware = current($grouped['']);
         $this->buildTree($grouped, $progress, $this->courseware);
+
+
+        // show discussions
+        $this->discussion = isset($this->current_user) ? new LecturerDiscussion($this->container['cid'], $this->current_user) : null;
     }
 
     private function buildTree($grouped, $progress, &$root)
@@ -104,4 +133,14 @@ class ProgressController extends CoursewareStudipController {
                     $block['children'])
             ) / sizeof($block['children']);
     }
+
+    // include the stylesheets of all default block types
+    private function addBlockStyles()
+    {
+        return PageLayout::addStylesheet(
+            $GLOBALS['ABSOLUTE_URI_STUDIP'] .
+            $this->plugin->getPluginPath() .
+            '/assets/courseware.min.css');
+    }
+
 }
