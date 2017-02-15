@@ -39,11 +39,6 @@ $titleize = function ($content) {
                       <a class="navigate" href="#progress">Fortschritt</a>
                     </div>
                   </li>
-                  <li class="subchapter">
-                    <div class="title">
-                      <a class="navigate" href="#comm">Kommunikation</a>
-                    </div>
-                  </li>
                     <li class="subchapter">
                         <div class="title">
                             <a href="<?=URLHelper::getLink('dispatch.php/profile?username=' . $m->username)?>" class="navigate">Profil</a>
@@ -59,7 +54,7 @@ $titleize = function ($content) {
 <a name="progress"></a>
   <div class=" <?=$mode=='total' ? 'active-section':''?>">
 
-    <h1>FortschrittsÃ¼bersicht <? if ($mode=='total' && $current_user) echo "fÃ¼r ".$current_user->getFullname(); ?></h1>
+    <h1>Fortschrittsübersicht <? if ($mode=='total' && $current_user) echo "für ".$current_user->getFullname(); ?></h1>
 
     <table class=chapters>
       <? foreach ($courseware['children'] as $chapter) : ?>
@@ -100,31 +95,7 @@ $titleize = function ($content) {
     </table>
 
 
-    <? $thread = $discussion->thread; ?>
-
-    <div id="comm" class="block-content">
-
-    <article class="thread loading" id="<?= htmlReady($thread->id) ?>" data-courseid="<?= htmlReady($discussion->cid) ?>">
-        <header>
-            <h1>
-                PersÃ¶nliche Kommunikation mit
-                <? if ($mode=='total' && $current_user) : ?>
-                    <?= $current_user->getFullname() ?>
-                <? else: ?>
-                    <?= _("dem Referenten") ?>
-                <? endif ?>
-            </h1>
-        </header>
-        <ul class="comments"></ul>
-
-        <div class="comment-writer">
-            <textarea placeholder="<?= _("Kommentiere dies") ?>"
-                      aria-label="<?= _("Kommentiere dies") ?>"></textarea>
-        </div>
-
-    </article>
-
-    </div>
+    
 
 </section>
 

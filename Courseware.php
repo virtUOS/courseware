@@ -81,6 +81,9 @@ class Courseware extends StudIPPlugin implements StandardPlugin
                                       new Navigation(_cw("Einstellungen"),
                                                      PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true)));
 
+
+        $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
+
         // tabs for students
         if (!$this->container['current_user']->hasPerm($course_id, 'tutor')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
@@ -90,6 +93,11 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         }
         // tabs for tutors and up
         else {
+            //$discussions_url = PluginEngine::getURL($this, compact('cid'), 'courseware/discussions', true);
+            $tabs['mooc_progress'] = new Navigation(_cw('Fortschrittsübersicht'), $progress_url);
+            //$tabs['mooc_discussions'] = new Navigation(_cw('Kommunikation'), $discussions_url);
+            //$survey_url = PluginEngine::getURL($this, compact('cid'), 'survey', true);
+            //$tabs['mooc_survey'] = new Navigation(_('Umfrage'), $survey_url);
         }
 
         return $tabs;
