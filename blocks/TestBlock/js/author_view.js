@@ -21,7 +21,7 @@ define(['assets/js/author_view', 'assets/js/url'], function (AuthorView, helper)
             var $selection = this.$('select[name="test_id"] option:selected');
             if(typeof $selection.attr('select-data') != "undefined") {
                 var options = $.parseJSON($selection.attr('select-data')),
-                $count = parseInt(options.count);
+                var $count = parseInt(options.count);
                 $input.attr('max', $count);
             }
         }, 
@@ -31,7 +31,7 @@ define(['assets/js/author_view', 'assets/js/url'], function (AuthorView, helper)
             var $selection = this.$('select[name="test_id"] option:selected');
             
             var options = $.parseJSON($selection.attr('select-data')),
-                $count = parseInt(options.count);
+            var $count = parseInt(options.count);
             $input.val($count);
             $input.attr('max', $count);
         
