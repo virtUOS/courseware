@@ -179,6 +179,23 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
 
             randomiseDraggables();
             
+            var $height = 0; 
+        
+            $(".rh-catalog").children().each(function(){
+
+                if ($(this).outerHeight() > $height) {
+                    $height = $(this).outerHeight();
+                }
+            });
+            
+            $height += 10; 
+            
+            $(".rh-list-item").each( function(index) {
+                $(this).height($height)
+            });
+            
+            $(".rh-catalog").height($(".rh-cart").height()-22);
+            
             $exerciseElement.find(".rh-catalog-item").draggable({
                 start: function( event, ui ) {
                     $(this).css("z-index", 10);
@@ -187,10 +204,10 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     $(this).css("z-index", 0);
                 },
                 revert: "invalid"
-            }).find("input").attr("value", -1);;
+            }).find("input").attr("value", -1);
 
             $(".rh-cart-item").each( function(index) {
-
+                $(this).height($height)
                 $(this).droppable({
                     drop: function(event, ui) {
                         var pastDraggable = $(this).attr('pastdraggable');
