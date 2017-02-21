@@ -150,15 +150,24 @@ class DownloadBlock extends Block
     public function importProperties(array $properties)
     {
         if (isset($properties['file'])) {
-            $this->download = $properties['file'];
+            $this->file = $properties['file'];
         }
         if (isset($properties['file_id'])) {
-            $this->download = $properties['file_id'];
+            $this->file_id = $properties['file_id'];
         }
         if (isset($properties['file_name'])) {
-            $this->download = $properties['file_name'];
+            $this->file_name = $properties['file_name'];
         }
-        
+        if (isset($properties['download_title'])) {
+            $this->download_title = $properties['download_title'];
+        }
+        if (isset($properties['download_info'])) {
+            $this->download_info = $properties['download_info'];
+        }
+        if (isset($properties['download_success'])) {
+            $this->download_success = $properties['download_success'];
+        }
+
         $this->setFolderId();
 
         $this->save();

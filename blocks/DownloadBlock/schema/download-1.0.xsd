@@ -8,4 +8,7 @@
     <xsd:attribute name="file_id" type="xsd:string" />
     <xsd:attribute name="file_name" type="xsd:string" />
     <xsd:attribute name="folder_id" type="xsd:string" />
+    <xsd:attribute name="download_title" type="xsd:string" />
+    <xsd:attribute name="download_info" type="xsd:string" />
+    <xsd:attribute name="download_success" type="xsd:string" />
 </xsd:schema>
