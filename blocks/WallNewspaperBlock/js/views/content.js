@@ -37,7 +37,7 @@ function (Backbone, _, templates, Utils) {
             this.dispatcher = options.dispatcher;
 
             this.editing = false;
-            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'change', this.onChange);
             this.listenTo(this.dispatcher, 'START_EDITING', this.toggleEditing.bind(this, true));
             this.listenTo(this.dispatcher, 'STOP_EDITING',  this.toggleEditing.bind(this, false));
         },
@@ -55,6 +55,14 @@ function (Backbone, _, templates, Utils) {
             this.$el.html(templates('WallNewspaperBlock', 'content_view', data));
 
             return this;
+        },
+
+        onChange: function (model) {
+            var sortedChanged = _.keys(model.changed).sort();
+            if (!_.isEqual(sortedChanged, [ '$thoroughlyComplete', 'complete' ])
+                && !_.isEqual(sortedChanged, [ 'complete' ])) {
+                return this.render();
+            }
         },
 
         toggleEditing: function (editing) {
