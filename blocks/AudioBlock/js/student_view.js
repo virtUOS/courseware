@@ -66,6 +66,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 $player = $view.$(".cw-audio-player"),
                 $playbutton = $view.$(".cw-audio-playbutton");
 
+            if (isNaN(parseInt($player.prop("duration")))) {return;}
+
             if (!$playbutton.hasClass("cw-audio-playbutton-playing")) {
                  $playbutton.addClass('cw-audio-playbutton-playing');
                  $player.trigger("play");
@@ -102,7 +104,11 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         },
        
         displayTimer: function($current, $duration) {
-            return this.seconds2time($current)+"/"+this.seconds2time($duration);
+            if (isNaN($duration)|| ($duration == 0)) { 
+                return "";
+            } else {
+                return this.seconds2time($current)+"/"+this.seconds2time($duration);
+            }
         },
 
         seconds2time: function (seconds) {
