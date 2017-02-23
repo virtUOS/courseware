@@ -126,7 +126,7 @@ define(['assets/js/author_view', 'assets/js/url'], function (
         preview: function() {
             var videourl = this.$el.find('.videourl');
             var videotype = this.$el.find('.videotype').val();
-            var opencastVideo = this.$el.find('#opencast-video-id').val();
+            var opencastVideo = this.$el.find('#opencast-videos').val();
             var that = this;
             if(videotype == 'opencast') {
                 helper.callHandler(this.model.id, 'getOpencastURL', {opencastVideo: opencastVideo}).then(
