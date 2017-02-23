@@ -97,8 +97,9 @@ class VideoBlock extends Block
 
             if (get_config("OPENCAST_STREAM_SECURITY")) {
                 require_once $this->openCastPlugin->getPluginPath() . "/classes/OCRestClient/SecurityClient.php";
+                /** @var \SecurityClient $securityClient */
                 $securityClient = new \SecurityClient();
-                $url = $securityClient->signURL();
+                $url = $securityClient->signURL($url);
             }
 
             return array("url" => $url);
