@@ -1,0 +1,21 @@
+v 2.1.0
+- add new block: AudioBlock
+- add new block: DownloadBlock
+- imporved iFrameBlock with user specific token
+- prevent navigation on change for VideoBlock
+- TestBlock: practise has to be submitted but not corrected to continue
+
+
+17.11.2015 v 2.0.2
+-remove obsolete i18n filename, fix LocalizationController
+-enhance import API
+-fix TestBlock issue
+-fix subchapters' check mark icon
+-fix color of subchapters' check mark
+-fix CSS of progress page
+-use getPluginURL instead
+-fix tutor rights in settings
+-transfer course activations from old Mooc.IP
+-disable vips tab in courseware settings
+-fix empty worksheet problem
+-imporved VideoBlock with tag
