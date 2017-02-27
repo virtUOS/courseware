@@ -100,6 +100,13 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         },
         
         onDownload: function(event) {
+            var $data = this.$("input[name=selfevaluation-data]");
+            this.$(".cw-selfevaluation-form").on('submit', function(e){
+                if ($data.val() == "") {
+                    alert("Bitte wählen Sie etwas aus!");
+                    e.preventDefault();
+                }
+              });
             
             helper
                 .callHandler(this.model.id, "download", {})

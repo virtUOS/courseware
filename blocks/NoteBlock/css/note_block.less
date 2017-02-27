@@ -1,3 +1,5 @@
+@import '../../../assets/mixins';
+
 .NoteBlock {
     label[for='cw-noteblock-type'],
     label[for='cw-noteblock-color'],
@@ -46,6 +48,19 @@
         
         
     }
+    
+    .cw-noteblock-button {
+        .courseware-btn;
+        padding: 10px 20px;
+        line-height: 0.5em;
+        height: 2.5em;
+        background-color: #007f4b;
+        border: 0px; 
+        border-radius: 0;
+        color: #fff;
+        
+    }
+    
     /*remove wysiwyg toolbar items*/
     .cke_toolbar_break, .cke_toolbox_collapser,
     .cke_button[aria-labelledby="cke_15_label"],
@@ -60,4 +75,6 @@
     .cke_toolbar[aria-labelledby="cke_43_label"] {
         display: none;
     }
+    
+    
 }

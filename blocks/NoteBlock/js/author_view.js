@@ -35,6 +35,8 @@ define(['assets/js/author_view', 'assets/js/url'],
             }
             if($notequantity != "") {
                 $view.$(".cw-noteblock-quantity").val($notequantity);
+            } else {
+                $view.$(".cw-noteblock-quantity").val(1);
             }
         },
 
