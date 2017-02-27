@@ -168,8 +168,8 @@ define({
         if (videotype == 'dfb') {
             view.$('.videosettings input').prop('disabled', true);
             view.$('.videoaspect169').prop('checked', true);
-            if (this.getVideoType(url) == 'url') {
-                view.$('.videosrc').val(url);
+            if (this.getVideoType(url) == 'dfb') {
+                view.$('.videosrc').val(url.split("=",2)[1]);
             }
         }
 
