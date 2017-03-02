@@ -72,7 +72,7 @@ class PrintController extends CoursewareStudipController {
         $selfevaluation_content = Request::get("selfevaluation-data");
         $selfevaluation_title = Request::get("selfevaluation-title");
         $selfevaluation_description = Request::get("selfevaluation-description");
-        $selfevaluation_content = json_decode($selfevaluation_content);
+        $selfevaluation_content  = json_decode(htmlentities($selfevaluation_content, ENT_HTML401, false));
         // create new PDF document
         $pdf = new DFBPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'ISO-8859', false);
         $pdf->SetTopMargin(40);
@@ -114,7 +114,7 @@ class PrintController extends CoursewareStudipController {
             $pdf->SetLineStyle($style1);
             $pdf->SetFillColor(0, 127, 75);
             $pdf->SetTextColor(255, 255, 255);
-            $pdf->writeHTMLCell($w, $h,  15, $y, $this->htmlentitiesOutsideHTMLTags($txt, ENT_HTML401), 0, 1, 1, true, 'L', true);
+            $pdf->writeHTMLCell($w, $h,  15, $y, $txt, 0, 1, 1, true, 'L', true);
             $pdf->SetFillColor(255, 255, 255);
             $pdf->SetLineStyle(array('width' => 0.2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(200, 200, 200)));
             $pdf->MultiCell($w, $h, '', 1, 'J', 1, 0, $w+15, $y, true, 0, false, true, $h, 'T');
@@ -170,9 +170,9 @@ class PrintController extends CoursewareStudipController {
     
     /*
  *    Wandelt Sonderzeichen in HTML-Entities um, 
- *    l√§sst aber die HTML-Tags bestehen.
- *    @param string $htmlText Zeichenkette die HTML-Tags und Sonderzeichen enth√§lt
- *    @param obj $ent flag f√ºr htmlentities
+ *    l‰sst aber die HTML-Tags bestehen.
+ *    @param string $htmlText Zeichenkette die HTML-Tags und Sonderzeichen enth‰lt
+ *    @param obj $ent flag f¸r htmlentities
  * 
  *    @return string gibt Zeichenkette mit darstellbarem HTML wieder 
  */
