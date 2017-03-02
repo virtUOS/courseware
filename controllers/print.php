@@ -170,9 +170,9 @@ class PrintController extends CoursewareStudipController {
     
     /*
  *    Wandelt Sonderzeichen in HTML-Entities um, 
- *    l√§sst aber die HTML-Tags bestehen.
- *    @param string $htmlText Zeichenkette die HTML-Tags und Sonderzeichen enth√§lt
- *    @param obj $ent flag f√ºr htmlentities
+ *    l‰sst aber die HTML-Tags bestehen.
+ *    @param string $htmlText Zeichenkette die HTML-Tags und Sonderzeichen enth‰lt
+ *    @param obj $ent flag f¸r htmlentities
  * 
  *    @return string gibt Zeichenkette mit darstellbarem HTML wieder 
  */
