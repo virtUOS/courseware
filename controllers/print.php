@@ -147,6 +147,30 @@ class PrintController extends CoursewareStudipController {
             }
             $pdf->Ln(4);
             $y = $y+$h;
+            if ($y > 250) {
+                    $pdf->Circle($cx, $cy, 2, 0, 360, 'DF');
+                    $pdf->AddPage();
+                    $y = 50;
+                    $h = 12;
+                    $pdf->SetLineStyle($style1);
+                    $pdf->SetFillColor(255, 255, 255);
+                    $pdf->MultiCell($w, $h, '', 1, 'J', 1, 0, 15, $y, true, 0, false, true, $h, 'T');
+                    $pdf->SetFillColor(0, 127, 75);
+                    $pdf->SetTextColor(255, 255, 255);
+                    $pdf->SetLineStyle($style1);
+                    $pdf->MultiCell($w, $h, "++", 1, 'C', 1, 0, $w+15, $y, true, 0, false, true, $h, 'M');
+                    $pdf->MultiCell($w, $h, "+", 1, 'C', 1, 1, $w*2+15, $y, true, 0, false, true, $h, 'M');
+                    $pdf->MultiCell($w, $h, "-", 1, 'C', 1, 1, $w*3+15, $y, true, 0, false, true, $h, 'M');
+                    $pdf->MultiCell($w, $h, "--", 1, 'C', 1, 1, $w*4+15, $y, true, 0, false, true, $h, 'M');
+                    $pdf->Ln(4);
+                    $y = $y+$h;
+                    $x = 0;
+                    $h = 24;
+                    $cx = 0;
+                    $cy = 0;
+                    $lastcx = 0;
+                    $lastcy = 0;
+            }
             
         }
         $pdf->Circle($cx, $cy, 2, 0, 360, 'DF');
