@@ -90,8 +90,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
             var $selection = new Array();
             $.each($contents, function(){
                 var $element = ($(this)[0]).element;
-                $element = $element.replace(/\W/g, '');
-                var $value = $view.$("input[name=selected-"+$element+"]:checked").val();
+                var $element_clean = $element.replace(/\W/g, '');
+                var $value = $view.$("input[name=selected-"+$element_clean+"]:checked").val();
                 if (typeof $value !== "undefined") {
                     $selection.push({"element":$element, "value": $value});
                 }

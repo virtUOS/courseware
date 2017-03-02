@@ -114,7 +114,7 @@ class PrintController extends CoursewareStudipController {
             $pdf->SetLineStyle($style1);
             $pdf->SetFillColor(0, 127, 75);
             $pdf->SetTextColor(255, 255, 255);
-            $pdf->MultiCell($w, $h, $txt, 1, 'L', 1, 0, 15, $y, true, 0, false, true, $h, 'T');
+            $pdf->MultiCell($w, $h, utf8_encode($txt), 1, 'L', 1, 0, 15, $y, true, 0, false, true, $h, 'T');
             $pdf->SetFillColor(255, 255, 255);
             $pdf->SetLineStyle(array('width' => 0.2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(200, 200, 200)));
             $pdf->MultiCell($w, $h, '', 1, 'J', 1, 0, $w+15, $y, true, 0, false, true, $h, 'T');
