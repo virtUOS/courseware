@@ -60,7 +60,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     $html += 
                         '<div class="cw-selfevaluation-item">'+
                         '<p class="cw-selfevaluation-item-element">'+$element+'</p>';
-                    $element = $element.replace(/ /g, '');
+                    $element = $element.replace(/\W/g, '');
                     $html += 
                         '<span class="cw-selfevaluation-item-value-good">'+$values.good+'</span>'+
                         '<button class="cw-selfevaluation-button cw-selfevaluation-button-left"></button> '+
@@ -90,7 +90,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
             var $selection = new Array();
             $.each($contents, function(){
                 var $element = ($(this)[0]).element;
-                $element = $element.replace(/ /g, '');
+                $element = $element.replace(/\W/g, '');
                 var $value = $view.$("input[name=selected-"+$element+"]:checked").val();
                 if (typeof $value !== "undefined") {
                     $selection.push({"element":$element, "value": $value});
