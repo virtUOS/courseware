@@ -18,6 +18,7 @@ function _cw($message) {
  *
  * @author  <tgloeggl@uos.de>
  * @author  <mlunzena@uos.de>
+ * @author  <rlucke@uos.de>
  */
 class Courseware extends StudIPPlugin implements StandardPlugin
 {
@@ -71,9 +72,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         $navigation = new Navigation($courseware->title,
                                      PluginEngine::getURL($this, compact('cid'), 'courseware', true));
-        $navigation->setImage('icons/16/white/group3.png');
-        $navigation->setActiveImage('icons/16/black/group3.png');
-
+        $navigation->setImage(Icon::create('group3', 'info_alt'));
+        $navigation->setActiveImage(Icon::create('group3', 'info'));
         $tabs['mooc_courseware'] = $navigation;
 
         $navigation->addSubnavigation('index',    clone $navigation);
@@ -85,8 +85,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         if (!$this->container['current_user']->hasPerm($course_id, 'tutor')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
             $tabs['mooc_progress'] = new Navigation(_cw('Fortschrittsübersicht'), $progress_url);
-            $tabs['mooc_progress']->setImage('icons/16/white/group3.png');
-            $tabs['mooc_progress']->setActiveImage('icons/16/black/group3.png');
+            $tabs['mooc_progress']->setImage(Icon::create('assessment', 'info_alt'));
+            $tabs['mooc_progress']->setActiveImage(Icon::create('assessment', 'info'));
         }
         // tabs for tutors and up
         else {
@@ -298,5 +298,9 @@ class Courseware extends StudIPPlugin implements StandardPlugin
             . '<a href="'. PluginEngine::getLink('courseware' , array('selected' => $matches[2]), 'courseware') .'">'
             . _cw('Zurück zur Courseware')
             . '</a></span>';
+    }
+    
+    public function getDisplayTitle() {
+        return _("Courseware");
     }
 }

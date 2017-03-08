@@ -4,19 +4,20 @@
         {{#i18n}}Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!{{/i18n}}
 </div>
 {{/unsupported_question}}
-  <a href="{{manage_tests_url}}" class="edit-tests">{{#i18n}}Aufgabenblätter verwalten{{/i18n}}</a>
-
+ 
+    <label for="test_id">{{#i18n}}Aufgabenblatt{{/i18n}}:</label>
     <select name="test_id">
-      <option>-- {{#i18n}}anzuzeigendes Aufgabenblatt auswählen{{/i18n}} --</option>
         {{#tests}}
           <option value="{{id}}"{{#current_test}} selected="selected"{{/current_test}}>
             {{name}} ({{#created}}{{#i18n}}erstellt am{{/i18n}} {{created}}, {{/created}}{{exercises_count}} {{#i18n}}Fragen{{/i18n}})
           </option>
         {{/tests}}
     </select>
-
-    <button name="save" class="button">Speichern</button>
-    <button name="cancel" class="button">Abbrechen</button>
+    <div class="cw-button-box">
+        <a href="{{manage_tests_url}}" class="button">{{#i18n}}Aufgabenblätter verwalten{{/i18n}}</a>
+        <button name="save" class="button">Speichern</button>
+        <button name="cancel" class="button">Abbrechen</button>
+    </div>
 {{/active}}
 
 {{^active}}

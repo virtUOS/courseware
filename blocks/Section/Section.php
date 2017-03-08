@@ -14,19 +14,21 @@ class Section extends Block {
 
     const ICON_CHAT    = 'chat';
     const ICON_VIDEO   = 'video';
+    const ICON_AUDIO   = 'audio';
     const ICON_TASK    = 'task';
     const ICON_DEFAULT = 'document';
 
     // definition of precedence of icons
     // larger array index -> higher precedence
     // thus ICON_VIDEO has the highest precedence
-    private static $icon_precedences = array(self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO);
+    private static $icon_precedences = array(self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO, self::ICON_AUDIO);
 
     // mapping of block types to icons
     private static $map_blocks_to_icons = array(
         'BlubberBlock' => self::ICON_CHAT,
         'ForumBlock'   => self::ICON_CHAT,
         'VideoBlock'   => self::ICON_VIDEO,
+        'AudioBlock'   => self::ICON_AUDIO,
         'TestBlock'    => self::ICON_TASK
     );
 

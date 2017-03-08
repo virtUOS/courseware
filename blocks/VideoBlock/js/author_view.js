@@ -114,6 +114,7 @@ define(['assets/js/author_view', 'assets/js/url'], function (
             
         },
         selection: function() {
+            
             var videotype = this.$el.find('.videotype').val();
             this.$el.find(".videosource").hide();
             this.$el.find(".videotimer").hide();
@@ -251,11 +252,15 @@ define(['assets/js/author_view', 'assets/js/url'], function (
         },
         setVideoData: function (view, url, videotype) {
             view.$el.find('.videosettings input').prop('disabled', false);
+            if ( (url == "")||(videotype == "") ) {
+                return;
+            }
             switch (videotype) {
                     case "webvideo":
                         var webvideodata = view.$el.find('.webvideodata').val();
                         var webvideosettingsdata = view.$el.find('.webvideosettingsdata').val();
-                        if (webvideodata != "") {
+                        
+                        if (webvideodata != "[]") {
                             webvideodata = $.parseJSON(webvideodata);
                             view.$el.find("video").attr("src", webvideodata[0].src);
                             $.each(webvideodata, function(key, value){
@@ -281,11 +286,12 @@ define(['assets/js/author_view', 'assets/js/url'], function (
                             view.$el.find('.videostartmin').val(parseInt(start/60));
                             view.$el.find('.videostartsec').val(start%60);
                             var end = url.slice(url.indexOf("end=")+4, url.length);
+                            end = end.split("&", 1);
                             view.$el.find('.videoendmin').val(parseInt(end/60));
                             view.$el.find('.videoendsec').val(end%60);
                             var autoplay = url.slice(url.indexOf("autoplay=")+9, url.length);
                             if (parseInt(autoplay) == 1) {
-                                view.$el.find('.videoautostart').attr("checked", '');
+                                view.$el.find('.videoautostart').prop("checked", true);
                             }
                         }
                         break;

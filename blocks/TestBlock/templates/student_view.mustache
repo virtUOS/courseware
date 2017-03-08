@@ -1,7 +1,4 @@
 {{#active}}
-  
-  <h2 class="testblock-header">{{title}}</h2>
-  
   {{#description}}
     <div class="description">{{{description}}}</div>
   {{/description}}
@@ -21,7 +18,7 @@
               {{#i18n}}Frage{{/i18n}} {{exercise_index}} / {{number_of_exercises}}
               <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}" , "direction": "next"}'></button>
           </div>
-            
+          <div class="cw-test-content">
             {{#has_solution}}
               {{#tryagain}}
                 <div class="messagebox messagebox_error">

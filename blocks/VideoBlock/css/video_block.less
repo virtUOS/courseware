@@ -6,6 +6,9 @@ section.VideoBlock {
         margin: 0 1em;
     }
 
+    .webvideo {
+        border: solid thin #ccc;
+    }
 
     .addmediatype{
         .courseware-btn;
@@ -15,20 +18,9 @@ section.VideoBlock {
         background-image: url("@{blocks-icons-dir}/16/blue/add.png");
         background-position: 6px center;
         padding-left: 28px;
+        margin-top: 1em;
     }
     
-    input {
-        width: 32em;
-        margin: 1em;
-        &[type="number"]{
-            margin-left: 0.5em;
-            width: 4em;
-        }
-        &[type="checkbox"], &[type="radio"]{
-            width: inherit;
-            vertical-align: middle;
-        }
-    }
     
     .webvideo-description {
         background: #eee;
@@ -84,6 +76,9 @@ section.VideoBlock {
         .videosettings {
             >span:not(:first-child) {
                 padding-left: 1em;
+            }
+            .videostartmin, .videostartsec, .videoendmin, .videoendsec {
+                width: 3em !important;
             }
         }
     }

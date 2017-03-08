@@ -2,7 +2,7 @@
 <input type="hidden" class="cw-audioblock-source-stored" value="{{audio_source}}">
 <input type="hidden" class="cw-audioblock-file-stored" value="{{audio_file}}">
 
-<label for="cw-audioblock-description">{{#i18n}}Beschreibung{{/i18n}}</label>
+<label for="cw-audioblock-description">{{#i18n}}Beschreibung{{/i18n}}:</label>
 <input type="text" name="cw-audioblock-description" class="cw-audioblock-description">
 <br>
 <label for="cw-audioblock-source">{{#i18n}}Quelle{{/i18n}}:</label>
@@ -18,6 +18,7 @@
     {{/audio_files}}
 </select>
 <input class="cw-audioblock-file" name="cw-audioblock-file">
-<br><br>
-<button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
-<button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+<div class="cw-button-box">
+    <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
+    <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+</div>

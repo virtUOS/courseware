@@ -10,6 +10,14 @@ section.TestBlock {
     margin: 0;
     padding: 0;
     list-style-type: none;
+    
+    li {
+        border: solid thin #ccc;
+    }
+    
+    .cw-test-content {
+        padding: 10px;
+    }
 
     &.exercise {
       &:not(#exercise1) {
@@ -139,11 +147,6 @@ section.TestBlock {
         font-weight: bold;
         margin: 1em 0 0.5em 0;
     }
-  }
-
-  select[name="test_id"] {
-    display: block;
-    width: 400px;
   }
 
   a.edit-tests {

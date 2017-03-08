@@ -16,7 +16,7 @@ class IFrameBlock extends Block
         $this->defineField('salt', \Mooc\SCOPE_BLOCK, md5(uniqid('', true)));
     }
 
-    function array_rep($url) {
+    function array_rep($url = "") {
         if ($url == "") $url = $this->url;
         return array(
             'url'    => $url,
