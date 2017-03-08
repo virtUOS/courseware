@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/download/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/download/"
+    elementFormDefault="qualified"
+>
+    <xsd:attribute name="file" type="xsd:string" />
+    <xsd:attribute name="file_id" type="xsd:string" />
+    <xsd:attribute name="file_name" type="xsd:string" />
+    <xsd:attribute name="folder_id" type="xsd:string" />
+    <xsd:attribute name="download_title" type="xsd:string" />
+    <xsd:attribute name="download_info" type="xsd:string" />
+    <xsd:attribute name="download_success" type="xsd:string" />
+</xsd:schema>

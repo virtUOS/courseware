@@ -1,0 +1,38 @@
+<input type="hidden" value="{{folder_id}}" folder-name="{{folder_name}}" class="download-stored-folder">
+<input type="hidden" value="{{file_id}}" file-name="{{file_name}}" class="download-stored-file">
+
+
+            <label for="download-folder">{{#i18n}}Einen Ordner ausw&auml;hlen{{/i18n}}:</label>
+
+            <select type="text" class="download-folder" name="folder">
+                {{#foldernames}}
+                    <option value="{{name}}" folder_id="{{folder_id}}">{{name}}</option>
+                {{/foldernames}}
+            </select>
+
+    <br>
+
+            <label for="download-file">{{#i18n}}Eine Datei ausw&auml;hlen{{/i18n}}:</label>
+
+            <select type="text" class="download-file" name="file">
+                {{#allfiles}}
+                    <option value="{{name}}" file_id="{{dokument_id}}" file_name="{{filename}}">{{name}}</option>
+                {{/allfiles}}
+            </select>
+    <br>
+            <label for="download-title">{{#i18n}}Titel des Blocks{{/i18n}}:</label>
+
+            <input type="textbox" value="{{download_title}}" name="download-title" class="download-textbox">
+    <br>
+            <label for="download-info">{{#i18n}}Infobox vor Download{{/i18n}}:</label>
+
+            <input type="textbox" value="{{download_info}}" name="download-info" class="download-textbox">
+    <br>
+            <label for="download-success">{{#i18n}}Infobox nach Download{{/i18n}}:</label>
+
+            <input type="textbox" value="{{download_success}}" name="download-success" class="download-textbox">
+
+<div class="cw-button-box">
+    <button name=save class=button>{{#i18n}}Speichern{{/i18n}}</button>
+    <button name=cancel class=button>{{#i18n}}Abbrechen{{/i18n}}</button>
+</div>
