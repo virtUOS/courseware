@@ -4,6 +4,7 @@ v 2.1.0
 - imporved iFrameBlock with user specific token
 - prevent navigation on change for VideoBlock
 - TestBlock: practise has to be submitted but not corrected to continue
+- cleaning author views
 
 
 17.11.2015 v 2.0.2
