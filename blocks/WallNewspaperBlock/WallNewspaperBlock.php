@@ -67,8 +67,6 @@ class WallNewspaperBlock extends Block
      */
     public function complete_handler($data)
     {
-        $this->authorizeUpdate();
-
         if (!isset($data['topic_id'])) {
             throw new \Mooc\UI\Errors\BadRequest('Parameter "topic_id" is required.');
         }
@@ -131,7 +129,7 @@ class WallNewspaperBlock extends Block
     const TOPICS = <<<JSONDATA
         {
           "Entwicklung": [
-            "Entwicklungsstand/Persönlichkeit",
+            "Entwicklungsstand/PersÃ¶nlichkeit",
             "Lernziele/Kompetenz",
             "Trainingsprinzipien"
           ],
