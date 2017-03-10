@@ -129,7 +129,7 @@ class WallNewspaperBlock extends Block
     const TOPICS = <<<JSONDATA
         {
           "Entwicklung": [
-            "Entwicklungsstand/PersÃ¶nlichkeit",
+            "Entwicklungsstand/Persönlichkeit",
             "Lernziele/Kompetenz",
             "Trainingsprinzipien"
           ],
