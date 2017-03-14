@@ -95,7 +95,9 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         playAudioFileEnd: function(){
             var $blockid = $(this).parent().parent().attr("data-blockid");
             var $playbutton = $(this).parent().find(".cw-audio-playbutton");
+            var $pausebutton =  $(this).parent().find(".cw-audio-pausebutton");
             $playbutton.remove();
+            $pausebutton.remove();
             $(this).parent().find(".cw-audio-played-message").show();
             helper
                 .callHandler($blockid, "play", {})
