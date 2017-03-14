@@ -33,7 +33,7 @@
             margin: 5px;
         }
     }
-    
+    /* play */
     .cw-audio-playbutton {
         .courseware-btn;
         margin: 5px;
@@ -55,5 +55,29 @@
     }
     .cw-audio-playbutton-playing:hover{
         background-image: url("@{blocks-icons-dir}/32/black/stop.png");
+    }
+    
+    /* pause */
+    .cw-audio-pausebutton {
+        .courseware-btn;
+        margin: 5px;
+        height: 46px;
+        width: 46px;
+        background-image: url("@{blocks-icons-dir}/32/white/pause.png");
+        background-position: 6px center;
+        background-color: #007f4b;
+        float:right;
+
+    }
+    .cw-audio-pausebutton:hover{
+        background-color: #fff;
+        background-image: url("@{blocks-icons-dir}/32/black/pause.png");
+    }
+    
+    .cw-audio-pausebutton-pausing {
+        background-image: url("@{blocks-icons-dir}/32/white/play.png");
+    }
+    .cw-audio-pausebutton-pausing:hover{
+        background-image: url("@{blocks-icons-dir}/32/black/play.png");
     }
 }

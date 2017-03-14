@@ -4,8 +4,9 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
     
     return StudentView.extend({
         events: {
-            "click button[name=play]":   "playAudioFile",
-            "ended .cw-audio-player":    "playAudioFileEnd"
+            "click button[name=play]":       "playAudioFile",
+            "click button[name=pause]":      "pauseAudioFile",
+            "ended .cw-audio-player":        "playAudioFileEnd"
         },
         
         initialize: function(options) {
@@ -45,14 +46,17 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
              var $view =  this;
              var $player = $view.$(".cw-audio-player")[0];
              var $playbutton = $view.$(".cw-audio-playbutton");
+             var $pausebutton = $view.$(".cw-audio-pausebutton");
              if (!$playbutton.hasClass("cw-audio-playbutton-playing")) {
                  $playbutton.addClass('cw-audio-playbutton-playing');
                  $player.load();
                  $player.play();
+                 $pausebutton.show();
                  return;
                  
                } else {
                  $playbutton.remove();
+                 $pausebutton.remove();
                  $player.pause();
                  $view.$(".cw-audio-played-message").show();
                }
@@ -71,6 +75,21 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     })
                 .done();
 
+        },
+        
+        pauseAudioFile: function() {
+            console.log("pause");
+             var $view =  this;
+             var $player = $view.$(".cw-audio-player")[0];
+             var $pausebutton = $view.$(".cw-audio-pausebutton");
+             if (!$pausebutton.hasClass("cw-audio-pausebutton-pausing")) {
+                $pausebutton.addClass("cw-audio-pausebutton-pausing");
+                $player.pause();
+            }
+            else {
+                $player.play();
+                $pausebutton.removeClass("cw-audio-pausebutton-pausing");
+            }
         },
         
         playAudioFileEnd: function(){
