@@ -213,6 +213,11 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         var pastDraggable = $(this).attr('pastdraggable');
                         var currentDraggable =  $(ui.draggable).attr('id');
 
+                        var offset = $(this).offset();
+                        var spacetop = ($(this).height() - $(ui.draggable).outerHeight()) / 2;
+                        var spaceleft = ($(this).width() - $(ui.draggable).outerWidth()) / 2;
+                        $(ui.draggable).offset({top: offset.top+spacetop, left: offset.left+spaceleft});
+
                         if (pastDraggable != "" && pastDraggable != currentDraggable) {
                             $("#" + pastDraggable).animate({left: $("#" + pastDraggable).attr('posleft'), top: $("#" + pastDraggable).attr('postop')},"slow");
                             $("#" + pastDraggable).find("input").attr("value", -1);
