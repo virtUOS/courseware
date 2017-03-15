@@ -16,7 +16,7 @@
         </div>
     {{/download_info}}
 {{/confirmed}}
-
+{{#file}}
 <div class="download-file">
     <div class="cw-download-info" > &nbsp; {{file}} &nbsp; <span>{{file_name}}</span></div>
      <div class="cw-download-button-wrapper">
@@ -25,7 +25,8 @@
         </a> 
     </div>
 </div>
-
+{{/file}}
+{{^file}}{{#i18n}}Es wurde keine Datei ausw&auml;hlt{{/i18n}}{{/file}}
 <input type="hidden" name="file" value="{{file}}" />
 <input type="hidden" name="file_name" value="{{file_name}}" />
 <input type="hidden" name="file_id" value="{{file_id}}" />
