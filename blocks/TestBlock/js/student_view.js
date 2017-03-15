@@ -180,22 +180,26 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
             randomiseDraggables();
             
             var $height = 0; 
+            var $catalogheight = 0;
         
             $(".rh-catalog").children().each(function(){
 
                 if ($(this).outerHeight() > $height) {
                     $height = $(this).outerHeight();
                 }
+                $catalogheight += $(this).outerHeight()+10;
             });
+            $(".rh-catalog").height($catalogheight);
             
             $height += 10; 
             
             $(".rh-list-item").each( function(index) {
                 $(this).height($height)
             });
-            
-            $(".rh-catalog").height($(".rh-cart").height()-22);
-            
+    
+            if ($(".rh-catalog").height() < $(".rh-cart").height()) {
+                $(".rh-catalog").height($(".rh-cart").height()-12);
+            }
             $exerciseElement.find(".rh-catalog-item").draggable({
                 start: function( event, ui ) {
                     $(this).css("z-index", 10);
