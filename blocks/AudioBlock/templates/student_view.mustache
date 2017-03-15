@@ -1,6 +1,7 @@
 <audio class="cw-audio-player">
     <source src="{{audio_file}}" type="audio/mpeg" />
 </audio>
+{{#audio_file}}
 <div class="cw-audio-container">
     <p class="cw-audio-description">{{audio_description}}</p>
     <div class="cw-audio-controls">
@@ -10,3 +11,8 @@
         <button name="play" class="cw-audio-playbutton" played="{{audio_played}}"></button>
     </div>
 </div>
+{{/audio_file}}
+
+{{^audio_file}}
+    {{#i18n}}Es wurde keine Audiodatei ausgewählt{{/i18n}}
+{{/audio_file}}
