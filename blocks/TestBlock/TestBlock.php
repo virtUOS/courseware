@@ -752,9 +752,28 @@ class TestBlock extends Block
                 $exercises = $rnd_exercises;
             }
             else {
-                $random_keys=array_rand($exercises, $this->test_questions);
-                foreach($random_keys as $key) {
-                    array_push($rnd_exercises, $exercises[$key]);
+                $keys = array();
+                foreach ($exercises as $key => $value) {
+                    if( $value['has_solution']) {
+                        array_push($keys, $key);
+                        array_push($rnd_exercises, $exercises[$key]);
+                    }
+                }
+                $numberofkeys = $this->test_questions - count($keys);
+                
+                if ($numberofkeys > 1 ) {
+                    $random_keys=array_rand($exercises, $numberofkeys);
+
+                    foreach($random_keys as $key) {
+                        array_push($rnd_exercises, $exercises[$key]);
+                    }
+                } 
+                if ($numberofkeys == 1 ) {
+                    do {
+                        $rand = rand(0, $numberofex-1);
+                    } while(in_array($rand, $keys));
+                    
+                    array_push($rnd_exercises, $exercises[$rand]);
                 }
                 foreach($rnd_exercises as $key => $value) {
                     $rnd_exercises[$key]['exercise_index'] = $key+1;
