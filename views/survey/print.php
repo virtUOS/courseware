@@ -3,7 +3,7 @@ Chart.defaults.global.legend.display = false;
 </script>
 <h1><?= _("Umfrage") ?></h1>
 <? foreach ($survey as $key => $item) :?>
-    <h1>Test ID: <?= $key?></h1>
+    <h1><?= VipsTest::find($key)->getTitle();?></h1>
     <div class="survey-block">
         <? foreach ($item as $itemkey => $testaggregation) :?>
             <div class="survey-item">
