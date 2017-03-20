@@ -306,7 +306,7 @@ class Block extends \SimpleORMap implements \Serializable
 
             // empty structural blocks are not completed
             if (sizeof($this->children) === 0) {
-                return false;
+                return true;
             }
 
             $completings = array();
