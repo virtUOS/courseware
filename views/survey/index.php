@@ -7,8 +7,10 @@ Chart.defaults.global.legend.display = false;
         <a target="_blank" href="<?= URLHelper::getLink('plugins.php/courseware/survey/print') ?>"><?= Assets::img('icons/16/white/print.png', tooltip2(_('Drucken'))) ?></a>
     </span>
 </h1>
+    
 <? foreach ($survey as $key => $item) :?>
-    <h1>Test ID: <?= $key?></h1>
+
+    <h1><?= VipsTest::find($key)->getTitle();?></h1>
     <div class="survey-block">
         <? foreach ($item as $itemkey => $testaggregation) :?>
             <div class="survey-item">
@@ -18,8 +20,8 @@ Chart.defaults.global.legend.display = false;
                 <? $label = '['; $data = '['?>
                 <? if (($type != 'lt_exercise') & ($type != 'tb_exercise')): ?>
                     <? foreach($testaggregation as  $testkey => $testvalue): ?>
-                        <? $label .= '"'.$testkey.'",' ?>
-                        <? $data .= '"'.$testvalue.'",' ?>
+                        <? $label .= "'".substr($testkey, 0 , 42)."'," ?>
+                        <? $data .= "'".$testvalue."'," ?>
                     <? endforeach ?>
                     <? $label .= ']'; $data .= ']';?>
                     <div class="chartcontainer">

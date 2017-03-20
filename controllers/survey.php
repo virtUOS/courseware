@@ -95,11 +95,24 @@ class SurveyController extends CoursewareStudipController {
             $this->test_type[$test_id] = array();
             if ($test_id != null) {
                 $test_id = (int) json_decode($test_id);
-                $stmt = $db->prepare('SELECT Aufgabe, Name, URI, solution, exercise_id 
-                                      FROM vips_aufgabe 
-                                      INNER JOIN vips_solution 
-                                      ON vips_aufgabe.ID =  vips_solution.exercise_id 
-                                      WHERE test_id = :test_id');
+                $stmt = $db->prepare('
+                    SELECT 
+                        Aufgabe, Name, URI, solution, vips_solution.exercise_id 
+                    FROM 
+                        vips_aufgabe 
+                    INNER JOIN 
+                        vips_exercise_ref 
+                    ON 
+                        vips_aufgabe.ID = vips_exercise_ref.exercise_id
+                    INNER JOIN 
+                        vips_solution 
+                    ON 
+                        vips_aufgabe.ID =  vips_solution.exercise_id 
+                    WHERE 
+                        vips_solution.test_id = :test_id
+                    ORDER BY 
+                        vips_exercise_ref.position ASC
+                ');
                 $stmt->bindParam(':test_id', $test_id);
                 $stmt->execute();
                 $test_data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -220,12 +233,15 @@ class SurveyController extends CoursewareStudipController {
             $agr_array[$i] = 0;
             $i++;
         }
-        
+        $min_x = 0;
+        $max_x = 0;
         foreach ($array as $value) {
             foreach( @simplexml_load_string($value)->answer as $answer) { 
                 $answer_id = (int)$answer->attributes()->id;
                 $user_value = (int) $answer->body;
                 $agr_array[$answer_id] = $this->valuateRH ($user_value,  $agr_array[$answer_id], $answer_id);
+                if ($min_x > $agr_array[$answer_id])  $min_x = $agr_array[$answer_id];
+                if ($max_x < $agr_array[$answer_id])  $max_x = $agr_array[$answer_id];
             }
         }
 
@@ -253,14 +269,18 @@ class SurveyController extends CoursewareStudipController {
                 $agr_array[$false_answer] = 0;
             }
         }
-
+        
+        foreach ($agr_array as $key => &$value) {
+            $value = ($value - $min_x) / ($max_x - $min_x);
+        }
+        
         return ($agr_array);
     }
     
     private function valuateRH ($user_value, $array_value, $answer_id)
     {
         if ($user_value != -1) {
-            $array_value = pow(0.5, $user_value); 
+            $array_value += pow(0.5, $user_value); 
         }
 
         return $array_value;
