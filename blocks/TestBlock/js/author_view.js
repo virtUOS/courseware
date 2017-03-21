@@ -9,11 +9,44 @@ define(['assets/js/author_view', 'assets/js/url'], function (AuthorView, helper)
         },
 
         initialize: function(options) {
+            Backbone.on('beforemodeswitch', this.onModeSwitch, this);
+            Backbone.on('beforenavigate', this.onNavigate, this);
         },
 
         render: function() {
             return this;
         },
+
+        postRender: function() {
+            
+        },
+        
+        onNavigate: function(event){
+            if(!$("section .block-content button[name=save]").length) {
+                return;
+            }
+            if(event.isUserInputHandled) {
+                return;
+            }
+            event.isUserInputHandled = true;
+            Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie die Seite trotzdem verlassen?'));
+        },
+
+        onModeSwitch: function (toView, event) {
+            if (toView != 'student') {
+                return;
+            }
+            // the user already switched back (i.e. the is not visible)
+            if (!this.$el.is(':visible')) {
+                return;
+            }
+            // another listener already handled the user's feedback
+            if (event.isUserInputHandled) {
+                return;
+            }
+            event.isUserInputHandled = true;
+            Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
+        }, 
 
         onSave: function () {
             var view = this;

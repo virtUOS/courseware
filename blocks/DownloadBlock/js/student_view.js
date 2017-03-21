@@ -14,6 +14,9 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/templates'], funct
             return this; 
         },
         
+        postRender: function() {
+        },
+        
         onDownload: function() {
             this.model.set('confirmed', true);
             this.model.set('file', this.$("input[name='file']").val());

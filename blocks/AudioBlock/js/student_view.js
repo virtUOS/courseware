@@ -16,6 +16,10 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         },
         
         postRender: function() {
+            if (this.$(".cw-audio-controls").length == 0) {
+                return;
+            }
+
             var $view =  this,
                 $player = $view.$(".cw-audio-player"),
                 $duration = parseInt($player.prop("duration")),
@@ -24,19 +28,22 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 $time = $view.$(".cw-audio-time"),
                 $music = $player[0];
             
-            $time.html($view.displayTimer(0, $duration));
+            if (isNaN($duration)) {
+                $duration = 0;
+            } 
 
+            $time.html($view.displayTimer(0, $duration));
+            
             $range.slider({
                 range: "max",
                 min: 0,
-                max: parseInt($player.prop("duration")),
+                max: $duration,
                 value: 0,
                 slide: function( event, ui ) {
                     $player.prop("currentTime",ui.value);
                     $time.html($view.displayTimer(ui.value, $duration));
                 }
             });
-            
             $player.find("source").each(function(){
                 var $source = $(this).prop("src");
                 if ($source.indexOf("ogg") > -1) {
@@ -58,15 +65,17 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 $playbutton.removeClass('cw-audio-playbutton-playing');
                 $player.prop("currentTime",0);
             }, false);
-
+            
         },
 
         playAudioFile: function() {
             var $view =  this,
                 $player = $view.$(".cw-audio-player"),
+                $range = $view.$(".cw-audio-range"),
                 $playbutton = $view.$(".cw-audio-playbutton");
 
             if (isNaN(parseInt($player.prop("duration")))) {return;}
+            if($range.slider("option", "max") == 0){ console.log("max is null");this.postRender();}
 
             if (!$playbutton.hasClass("cw-audio-playbutton-playing")) {
                  $playbutton.addClass('cw-audio-playbutton-playing');
@@ -92,6 +101,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         })
                     .done();
             }
+            
         },
 
         stopAudioFile: function() {

@@ -48,7 +48,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
     public function getPluginname()
     {
-        return 'MOOC.IP - Courseware';
+        return 'Courseware';
     }
 
     // bei Aufruf des Plugins über plugin.php/mooc/...
@@ -108,7 +108,81 @@ class Courseware extends StudIPPlugin implements StandardPlugin
      */
     public function getIconNavigation($course_id, $last_visit, $user_id)
     {
-        return null;
+        if (!$user_id) {
+            $user_id = $GLOBALS['user']->id;
+        }
+        $icon = new AutoNavigation($this->getDisplayTitle(), PluginEngine::getURL($this, compact('cid'), 'courseware', true));
+        $img_path = $this->getPluginURL(). '/assets/images/';
+        
+        $db = DBManager::get();
+        $stmt = $db->prepare("
+            SELECT
+                COUNT(*)
+            FROM
+                mooc_blocks
+            WHERE
+                seminar_id = :cid
+            AND
+                chdate >= :last_visit
+        ");
+        $stmt->bindParam(":cid", $course_id);
+        $stmt->bindParam(":last_visit", $last_visit);
+        $stmt->execute();
+        $new_ones =  (int) $stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"];
+
+        
+        // getting all tests
+        $db = DBManager::get();
+        $stmt = $db->prepare("
+            SELECT 
+                json_data 
+            FROM 
+                mooc_blocks
+            JOIN 
+                mooc_fields 
+            ON 
+                mooc_blocks.id = mooc_fields.block_id 
+            WHERE 
+                mooc_blocks.type = 'TestBlock'
+            AND
+                mooc_blocks.seminar_id = :cid
+            AND 
+                mooc_fields.name = 'test_id' 
+        ");
+        $stmt->bindParam(":cid", $course_id);
+        $stmt->execute();
+        
+        $tests =  $stmt->fetch(PDO::FETCH_ASSOC);
+        $test_ids = array();
+        foreach ($tests as $key=>$value){
+                array_push($test_ids, (int) str_replace('"', '', $value));
+        }
+        //looking for new tests
+        $stmt = $db->prepare("
+            SELECT
+                COUNT(*)
+            FROM
+                vips_exercise_ref
+            JOIN
+                vips_aufgabe
+            ON
+                vips_exercise_ref.exercise_id = vips_aufgabe.ID
+            WHERE
+                vips_exercise_ref.test_id IN (".implode(', ', $test_ids).")
+            AND
+                unix_timestamp(created) >=  :last_visit
+        ");
+        $stmt->bindParam(":last_visit", $last_visit);
+        $stmt->execute();
+        $new_ones +=  (int) $stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"];
+        if ($new_ones) {
+            $title = $new_ones > 1 ? sprintf(_("%s neue Courseware-Inhalte"), $new_ones) : _("1 neuer Courseware-Inhalt");
+            $icon->setImage(Icon::create('group3', 'attention', ["title" => $title]));
+            $icon->setBadgeNumber($new_ones);
+        } else {
+            $icon->setImage(Icon::create('group3', 'inactive', ["title" => "Courseware"]));
+        }
+        return $icon;
     }
 
     /**
