@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-0513 07:44+0200\n"
-"PO-Revision-Date: 2016-05-13 10:09+0100\n"
-"Last-Translator: Tobias Thelen <tobias.thelen@uni-osnabrueck.de>\n"
+"POT-Creation-Date: 2017-03-0321 12:39+0200\n"
+"PO-Revision-Date: 2017-03-21 13:15+0100\n"
+"Last-Translator: \n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -20,13 +20,13 @@ msgstr ""
 
 #: views/import/index.php:25
 msgid "Abbrechen"
-msgstr "Abort"
+msgstr "Quit"
 
 msgid "Abschicken"
 msgstr "Submit"
 
 msgid "Abschnitt einfügen"
-msgstr "Add Section"
+msgstr "Add section"
 
 msgid "Abschnitte sortieren"
 msgstr "Sort sections"
@@ -38,13 +38,13 @@ msgid "Abschnittstitel bearbeiten"
 msgstr "Edit title of section"
 
 msgid "Absenken"
-msgstr "Lower"
+msgstr "Downwards"
 
 msgid "Ändern"
 msgstr "Change"
 
 msgid "Anheben"
-msgstr "Raise"
+msgstr "Upwards"
 
 msgid "Antwort zurücksetzen"
 msgstr "Reset answer"
@@ -52,14 +52,23 @@ msgstr "Reset answer"
 msgid "Anzeigen"
 msgstr "Show"
 
-msgid "anzuzeigendes Aufgabenblatt auswählen"
-msgstr "choose test to show"
+msgid "Audiodatei"
+msgstr "Audio file"
+
+msgid "Aufgabenblatt"
+msgstr "Manage worksheets"
 
 msgid "Aufgabenblätter verwalten"
-msgstr "administrate tests"
+msgstr "Manage worksheets"
 
 msgid "Autorenmodus"
 msgstr "Author mode"
+
+msgid "Beschreibung"
+msgstr "Name and description"
+
+msgid "Bildschirm"
+msgstr "Screen"
 
 msgid "Block hinzufügen"
 msgstr "Add block"
@@ -71,15 +80,21 @@ msgid ""
 "Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten "
 "Abschnitt fortfahren."
 msgstr ""
-"Thank you! You have solved all exercises and can proceed with the next "
+"Thank you! You have finished all exercises and can proceed to the next "
 "section."
 
 msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
-msgstr "Thank you! You can now proceed with the next section."
+msgstr "Thank you! You can now proceed to the next section."
+
+msgid "Dateibereich"
+msgstr "File area"
+
+msgid "Dateityp"
+msgstr "file type"
 
 msgid ""
 "Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
-msgstr "The exercise type has changed. Please consider your dozent."
+msgstr "The exercise type has changed. Please contact your course teacher."
 
 msgid "Die Evaluationen müssen im System aktiviert sein."
 msgstr "Evaluations must be activated on your system."
@@ -87,17 +102,31 @@ msgstr "Evaluations must be activated on your system."
 msgid ""
 "Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die "
 "vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
-msgstr "This section is available after you succeeded the previous sections"
+msgstr ""
+"This section will only be available after you have successfully finished the "
+"previous sections."
 
-#: Courseware.php:88
+msgid "Eine Datei ausw&auml;hlen"
+msgstr "Select a file"
+
+msgid "Einen Ordner ausw&auml;hlen"
+msgstr "Select a folder"
+
+msgid "eingebettetes Video (iframe)"
+msgstr "embedded video (iframe)"
+
+#: Courseware.php:81
 msgid "Einstellungen"
 msgstr "Settings"
+
+msgid "Ende"
+msgstr "End"
 
 msgid "Entfernen"
 msgstr "Delete"
 
 msgid "erstellt am"
-msgstr "created at"
+msgstr "created on"
 
 msgid ""
 "Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen."
@@ -106,8 +135,14 @@ msgstr "There are currently no exercises available."
 msgid "Es wurde bisher keine Evaluation erstellt!"
 msgstr "No evaluations have been created!"
 
+msgid "Es wurde keine Audiodatei ausgewählt"
+msgstr "No evaluations have been created!"
+
+msgid "Es wurde keine Datei ausw&auml;hlt"
+msgstr "No evaluations have been created!"
+
 msgid "Es wurde noch kein Video eingetragen."
-msgstr "No plugins found."
+msgstr "No video has been uploaded yet!"
 
 msgid "Export"
 msgstr "Export"
@@ -115,26 +150,37 @@ msgstr "Export"
 msgid "Frage"
 msgstr "Question"
 
+msgid "für alle Displaygrößen"
+msgstr "for all display sizes"
+
 msgid "Für diese Frage haben Sie bereits eine Antwort abgegeben."
-msgstr "You have already submitted an answer for this exercise."
+msgstr "You have already submitted an answer to this question."
 
 msgid ""
 "Für diesen Diskussionsblock muss \"Blubber\" in dieser Veranstaltung "
 "eingeschaltet werden.."
 msgstr ""
-"For this block for discussions \"Blubber\" has to be activated for this "
-"course."
+"\"Blubber\" must be activated for this course to view this discussion block."
 
 msgid ""
 "Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet "
 "werden..."
-msgstr "Forum has to be activated for this course for this forum block ..."
+msgstr "Forum must be activated for this course to view this forum block..."
+
+msgid "für große Displays"
+msgstr "for large displays"
+
+msgid "für kleine Displays"
+msgstr "for small displays"
 
 msgid "Gesamtes Kapitel löschen"
 msgstr "Delete whole chapter"
 
 msgid "Gesamtes Unterkapitel löschen"
-msgstr "Delete whole subchapter"
+msgstr "Delete whole sub-chapter"
+
+msgid "Höhe"
+msgstr "Height"
 
 msgid "Ihre Lösung ist korrekt!"
 msgstr "Your solution is correct!"
@@ -148,10 +194,17 @@ msgstr "Your solution was not correct. Please try again."
 
 msgid ""
 "Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
-msgstr "There are unsupported exercise types in your current test."
+msgstr ""
+"The current worksheet contains types of exercises that are not supported."
 
 msgid "Import"
 msgstr "Import"
+
+msgid "Infobox nach Download"
+msgstr "infobox after download"
+
+msgid "Infobox vor Download"
+msgstr "infobox before download"
 
 msgid "Kapitel einfügen"
 msgstr "Add chapter"
@@ -175,13 +228,34 @@ msgid "Keine Kapitel"
 msgstr "No chapters"
 
 msgid "Keine Unterkapitel"
-msgstr "No subchapters"
+msgstr "No sub-chapters"
 
 msgid "Kommentiere dies"
-msgstr "Comment this"
+msgstr "Comment on this"
+
+msgid "Kontrollelemente verstecken"
+msgstr "Hide control elements"
+
+msgid "Matterhorn"
+msgstr "Matterhorn"
+
+msgid "Name des Übergabeparameters"
+msgstr "Title of transfer parameter"
+
+msgid "Nutzerspezifische ID übergeben"
+msgstr "Transfer user ID"
+
+msgid "Quelle"
+msgstr "Source"
+
+msgid "Quelle hinzufügen"
+msgstr "Add source"
 
 msgid "Seitenblöcke aktivieren"
 msgstr "Activate side blocks"
+
+msgid "Seitenverhältnis"
+msgstr "Aspect ratio"
 
 msgid "Sidebar für"
 msgstr "Sidebar for"
@@ -192,26 +266,62 @@ msgstr "Complete sorting"
 msgid "Speichern"
 msgstr "Save"
 
+msgid "Start"
+msgstr "Start"
+
 msgid "Studentenmodus"
 msgstr "Student mode"
 
+msgid "Titel"
+msgstr "Title"
+
+msgid "Titel des Blocks"
+msgstr "Name of HTML-Block"
+
 msgid "Titel des Unterkapitels bearbeiten"
-msgstr "Edit title of subchapter"
+msgstr "Edit title of sub-chapter"
 
 msgid "Unterkapitel einfügen"
-msgstr "Add subchapter"
+msgstr "Add sub-chapter"
 
 msgid "Unterkapitel sortieren"
-msgstr "Sort subchapters"
+msgstr "Sort sub-chapters"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Video automatisch starten"
+msgstr "Start video automatically"
+
+msgid "Video-Typ:"
+msgstr "Video-type:"
 
 msgid "Vips muss in dieser Veranstaltung aktiviert sein."
 msgstr "Vips must be activated for this course."
 
+msgid "Vorschau"
+msgstr "Preview"
+
 msgid "Was sollen die Lernenden bestätigen?"
-msgstr "What should the learner confirm?"
+msgstr "What should the learners confirm?"
+
+msgid "webAudio"
+msgstr "web audio"
+
+msgid "Webvideo (URL)"
+msgstr "Webvideo (URL)"
 
 msgid "weiter"
-msgstr "foward"
+msgstr "continue"
+
+msgid "Youtube"
+msgstr "Youtube"
+
+msgid "Zeit zurücksetzen"
+msgstr "reset"
+
+msgid "Zufallszeichen für Verschlüsselung"
+msgstr "random symbols for encryption"
 
 msgid "zurück"
 msgstr "back"
@@ -226,10 +336,10 @@ msgid "Neues Unterkapitel"
 msgstr "New subchapter"
 
 msgid "Sichtbar ab"
-msgstr "visible since"
+msgstr "visible from"
 
 msgid "Wollen Sie den Block wirklich löschen?"
-msgstr "Do you really want to delete that block?"
+msgstr "Do you really want to delete this block?"
 
 msgid "Wollen Sie den gesamten Abschnitt wirklich löschen?"
 msgstr "Do your really want to delete the whole chapter?"
@@ -238,8 +348,8 @@ msgid ""
 "Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke "
 "werden unwiderruflich entfernt!"
 msgstr ""
-"Do you really want to delete? All sections and blocks contained will be "
-"deleted and cannot be restored!"
+"Do you really want to delete? All sections and blocks will be deleted "
+"permanently!"
 
 msgid "Bestätigung"
 msgstr "Confirmation"
@@ -253,11 +363,20 @@ msgstr "Evaluations"
 msgid "Freitext"
 msgstr "Free text"
 
-#: Courseware.php:94
+#: Courseware.php:87
 msgid "Fortschrittsübersicht"
 msgstr "Progress"
 
-#: Courseware.php:223
+#: Courseware.php:179
+#, php-format
+msgid "%s neue Courseware-Inhalte"
+msgstr "%s new courseware contents"
+
+#: Courseware.php:179
+msgid "1 neuer Courseware-Inhalt"
+msgstr "1 new courseware content"
+
+#: Courseware.php:304
 msgid ""
 "Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
 "erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
@@ -267,27 +386,26 @@ msgid ""
 "in einen Courseware-Abschnitt ein."
 msgstr ""
 "MOOC.IP Courseware lets you create interactive learning modules within Stud."
-"IP. Structure your content in chapters and subchapters. Switch between "
-"participants' view and edit mode and simply add sections and blocks (text, "
-"images, videos, discussion, quizzes etc.). Create and administer self test "
-"questions and tests within the Vips plugin and insert them as blocks to a "
-"courseware section."
+"IP. Structure your content in chapters and sub-chapters. Switch between "
+"participants' view and edit mode. Add sections and blocks (texts, images, "
+"videos, discussions, quizzes etc.). Tests can be created and managed by "
+"using the Vips plugin and then inserted as blocks into a courseware section."
 
-#: Courseware.php:224
+#: Courseware.php:305
 msgid "Information"
 msgstr "Information"
 
-#: Courseware.php:226
+#: Courseware.php:307
 msgid ""
 "Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
 "'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
-msgstr "You can rename the courseware tab. Select 'setting' when in edit mode."
+msgstr "To rename the courseware tab select 'setting' when in edit mode."
 
-#: Courseware.php:227
+#: Courseware.php:308
 msgid "Tipp"
 msgstr "Tip"
 
-#: Courseware.php:229
+#: Courseware.php:310
 msgid ""
 "Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
 "direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
@@ -295,26 +413,30 @@ msgid ""
 "Bearbeitungsfortschritt sehen Sie auf einen Blick im Reiter "
 "Fortschrittsübersicht."
 msgstr ""
-"This module lets teachers provide interactive learning content directly "
-"within Stud.IP. The learning modules may contain text, images, video, "
-"communication elements and small quizzes. A progress overview lets learners "
-"track their progress."
+"This module lets course teachers provide interactive learning content "
+"directly within Stud.IP. The learning modules may contain texts, images, "
+"videos, communication elements and small quizzes. A survey option enables "
+"learners to track their progress."
 
-#: Courseware.php:230
+#: Courseware.php:311
 msgid "Hinweis"
 msgstr "Hint"
 
-#: Courseware.php:291
+#: Courseware.php:373
 msgid "Zurück zur Courseware"
 msgstr "Back to courseware"
+
+#: Courseware.php:378 models/mooc/db/CoursewareFactory.php:45
+msgid "Courseware"
+msgstr "Courseware"
 
 #: controllers/courseware.php:59
 msgid "Die Einstellungen wurden gespeichert."
 msgstr "Settings saved."
 
-#: controllers/courseware.php:179
+#: controllers/courseware.php:190
 msgid "Tutoren können diese Einstellung nicht speichern."
-msgstr "Tutors cannot change this setting."
+msgstr "Tutors cannot save this setting."
 
 #: controllers/import.php:48
 msgid "Das Herunterladen des Moduls ist fehlgeschlagen."
@@ -328,43 +450,43 @@ msgstr "The import archive does not contain a data.xml file."
 msgid "Die Datendatei data.xml enthält kein valides XML."
 msgstr "The data file data.xml does not contain valid XML."
 
-#: blocks/Courseware/Courseware.php:515
+#: blocks/Courseware/Courseware.php:525
 #: models/mooc/db/CoursewareFactory.php:57
 msgid "Unterkapitel 1"
-msgstr "Subchapter 1"
+msgstr "Sub-chapter 1"
 
-#: blocks/Courseware/Courseware.php:522
+#: blocks/Courseware/Courseware.php:532
 #: models/mooc/db/CoursewareFactory.php:66
 msgid "Abschnitt 1"
 msgstr "Section 1"
 
 #: blocks/DiscussionBlock/DiscussionBlock.php:63
 msgid "gemeinsam"
-msgstr "combined"
+msgstr "in class"
 
 #: blocks/DiscussionBlock/DiscussionBlock.php:64
 msgid "in Gruppen"
 msgstr "in groups"
 
-#: blocks/Section/Section.php:83
+#: blocks/Section/Section.php:85
 msgid "Sie sind nicht berechtigt Blöcke anzulegen."
-msgstr "Insufficient rights to create blocks."
+msgstr "You are not authorized to create blocks."
 
-#: blocks/Section/Section.php:125
+#: blocks/Section/Section.php:127
 msgid "Sie sind nicht berechtigt Blöcke zu löschen."
-msgstr "Insufficient rights to delete blocks."
+msgstr " You are not authorized to delete blocks."
 
-#: blocks/TestBlock/TestBlock.php:58
+#: blocks/TestBlock/TestBlock.php:59
 msgid "Selbsttest"
 msgstr "Self test"
 
-#: blocks/TestBlock/TestBlock.php:59
+#: blocks/TestBlock/TestBlock.php:60
 msgid "Übungsblatt"
-msgstr "Exercise sheet"
+msgstr "Worksheet"
 
-#: blocks/TestBlock/TestBlock.php:182 blocks/TestBlock/TestBlock.php:236
+#: blocks/TestBlock/TestBlock.php:189 blocks/TestBlock/TestBlock.php:243
 msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
-msgstr "The exercise sheet cannot be edited currently."
+msgstr "The worksheet cannot be edited right now."
 
 #: views/courseware/_settings_discussionblock.php:4
 msgid "Diskussionsblock aktivieren"
@@ -376,18 +498,20 @@ msgid ""
 "den Teilnehmern. Durch die Aktivierung muss aber der Blubber-Reiter entfernt "
 "werden."
 msgstr ""
-"The discussion block provides a good way to foster communication among "
-"participants.For activating, however, the blubber tab has to be removed."
+"The discussion block is a good means of communication for the participants. "
+"To activate it, however, the blubber tab has to be removed."
 
 #: views/courseware/_settings_editing_permission.php:4
-msgid "Editierberechtigung für Tutoren"
-msgstr "Edit rights for tutors"
+msgid "Editierberechtigung für TutorInnen"
+msgstr "Editing rights for tutors"
 
 #: views/courseware/_settings_editing_permission.php:6
 msgid ""
-"Wenn Sie diesen Schalter aktivieren, dürfen neben den Dozenten auch Tutoren "
-"Ihre Courseware editieren."
-msgstr "When activating this switch, tutors are allowed to edit content, too."
+"Wenn Sie diesen Schalter aktivieren, dürfen neben den DozentInnen auch "
+"TutorInnen Ihre Courseware editieren."
+msgstr ""
+"By activating this switch, tutors as well as teachers will be allowed to "
+"edit content."
 
 #: views/courseware/settings.php:21
 msgid "Courseware-Einstellungen"
@@ -407,12 +531,12 @@ msgid ""
 "Sie können den Reiter also z.B. auch \"Online-Skript\", \"Lernmodul\" o.ä. "
 "nennen."
 msgstr ""
-"The courseware title is displayed in the courseware tab.You might rename the "
-"tab to \"Online Script\", \"Learning Module\" etc.nennen."
+"The courseware title is displayed on the courseware tab. You may rename the "
+"tab \"Online Script\", \"Learning Module\" etc."
 
 #: views/courseware/settings.php:48
 msgid "Art der Kapitelabfolge"
-msgstr "Kind of chapter sequence"
+msgstr "Chapter sequence options"
 
 #: views/courseware/settings.php:50
 msgid ""
@@ -422,8 +546,8 @@ msgid ""
 "Unterkapitel ausgewählt und angezeigt werden kann."
 msgstr ""
 "Free chapter sequence lets the user select any chapter in any order. "
-"Sequential chapter order forces completion of chapters before granting "
-"access to later chapters."
+"Sequential chapter order requires the successful completion of all previous "
+"sub-chapters to grant access to the following sub-chapters."
 
 #: views/courseware/settings.php:57
 msgid "frei"
@@ -433,35 +557,47 @@ msgstr "free"
 msgid "sequentiell"
 msgstr "sequential"
 
-#: views/courseware/settings.php:68
+#: views/courseware/settings.php:69
+msgid "Vips-Reiter für AutorInnen entfernen"
+msgstr "Remove Vips tab for authors"
+
+#: views/courseware/settings.php:71
+msgid ""
+"Wenn Sie diesen Schalter aktivieren, wird der Vips-Reiter für normale "
+"Teilnehmende entfernt."
+msgstr ""
+"By activating this switch, the Vips tab will be removed for general "
+"participants."
+
+#: views/courseware/settings.php:84
 msgid "Blockeinstellungen"
 msgstr "Block settings"
 
-#: views/courseware/settings.php:74
+#: views/courseware/settings.php:90
 msgid "Selbsttests"
-msgstr "Self tests"
+msgstr "Self-tests"
 
-#: views/courseware/settings.php:80
+#: views/courseware/settings.php:96
 msgid "Anzahl Versuche"
-msgstr "Number of tries"
+msgstr "Number of attempts"
 
-#: views/courseware/settings.php:82
+#: views/courseware/settings.php:98
 msgid ""
 "Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben eines "
 "Selbsttests hat, bevor die Lösung der Aufgabe angezeigt wird."
 msgstr ""
-"The Number of tries to solve the question of a self test until the solution "
-"is shown to him."
+"The Number of attempts to solve the exercises of a self-test before the "
+"solution of the exercise is displayed."
 
-#: views/courseware/settings.php:89
+#: views/courseware/settings.php:105
 msgid "Unbegrenzt"
 msgstr "Infinite"
 
-#: views/courseware/settings.php:112
+#: views/courseware/settings.php:128
 msgid "Übernehmen"
 msgstr "Apply"
 
-#: views/courseware/settings.php:112
+#: views/courseware/settings.php:128
 msgid "Änderungen übernehmen"
 msgstr "Apply changes"
 
@@ -471,7 +607,7 @@ msgstr "Upload file"
 
 #: views/import/index.php:6
 msgid "Es sind Fehler aufgetreten:"
-msgstr "There have been errors:"
+msgstr "Errors occurred:"
 
 #: views/import/index.php:15
 msgid ""
@@ -521,10 +657,6 @@ msgstr "Install"
 msgid "Plugin installieren"
 msgstr "Install plugin"
 
-#: models/mooc/db/CoursewareFactory.php:45
-msgid "Courseware"
-msgstr "Courseware"
-
 #: models/mooc/db/CoursewareFactory.php:47
 #: models/mooc/db/CoursewareFactory.php:48
 msgid "Kapitel"
@@ -536,8 +668,50 @@ msgstr "Section 2"
 
 #: models/mooc/db/CoursewareFactory.php:76
 msgid "Name des HTML-Blocks"
-msgstr "Name of the HTML-Block"
+msgstr "Name of HTML-Block"
 
 #: models/mooc/ui/Block.php:516
 msgid "Sie sind nicht berechtigt diesen Block zu editieren."
-msgstr "Insufficient rights to edit this block."
+msgstr "You are not authorized to edit this block."
+
+#~ msgid "Alles anzeigen / Eigenen Beitrag schreiben"
+#~ msgstr "Show all / Contribute own text"
+
+#~ msgid "Automatisch neuen Forenbereich erstellen"
+#~ msgstr "Automatically create new forum section"
+
+#~ msgid "Momentan verknüpft mit"
+#~ msgstr "Currently linked to"
+
+#~ msgid ""
+#~ "Sie können mehrere Quellen pro Video angeben. Neben unterschiedlichen "
+#~ "Formaten sind auch Videos für kleine Displays (&le;800px) und große "
+#~ "Displays (>800px) möglich."
+#~ msgstr ""
+#~ "You can list several sources for a video. In addition to different "
+#~ "formats, you may also use videos for small (&le;800px) and large (>800px) "
+#~ "displays."
+
+#~ msgid ""
+#~ "Sie wurden noch keiner Gruppe zugeordnet. Bitte wenden Sie sich an Ihren "
+#~ "Referenten."
+#~ msgstr ""
+#~ "You have not been added to a group yet. Please contact your course "
+#~ "teacher."
+
+#~ msgid ""
+#~ "Tragen Sie in das Feld URL(Uniform Resource Locator) die Adresse der "
+#~ "Seite ein die im iFrame erscheinen soll.<br> Bitte beachten Sie, dass "
+#~ "manche Seiten die Darstellung in einem iFrame blockieren."
+#~ msgstr ""
+#~ "Enter the address of the website which is to appear in the iFrame into "
+#~ "the URL(Uniform Resource Locator) field. Please consider that some sites "
+#~ "do not allow an integration into an iFrame"
+
+#~ msgid ""
+#~ "Wählen Sie hier einen vorhandenen Forenbereich aus oder lassen Sie "
+#~ "automatisch einen neuen erstellen"
+#~ msgstr "Choose a forum section or have a new one created automatically."
+
+#~ msgid "Zeichenwähler öffnen"
+#~ msgstr "open character map"
