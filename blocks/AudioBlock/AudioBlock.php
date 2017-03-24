@@ -151,8 +151,8 @@ class AudioBlock extends Block
 
     public function importContents($contents, array $files)
     {
-        if ($this->audio_source == "cw") {
-            $file = reset($files);
+        $file = reset($files);
+        if (($this->audio_source == "cw") && ($file->id == $this->audio_id)) {
             $document =  current(\StudipDocument::findBySQL('filename = ?', array($file->name)));
             $this->audio_id = $document->dokument_id;
             $this->audio_file = "../../sendfile.php?type=0&file_id=".$document->dokument_id."&file_name=".$document->name;
