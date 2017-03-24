@@ -1,5 +1,13 @@
 CHANGELOG
 =========
+2.1.0
+-----
+* add new block: AudioBlock
+* add new block: DownloadBlock
+* imporved iFrameBlock with user specific token
+* prevent navigation on change for VideoBlock
+* TestBlock: practise has to be submitted but not corrected to continue
+* cleaning author views
 
 2.0.2
 -----
@@ -23,5 +31,4 @@ CHANGELOG
 
 2.0
 ---
-
 * Splitted the plugin Mooc.IP into "Mooc - OpenCourses" and "Mooc - Courseware". This is the "Mooc - Courseware"-part
