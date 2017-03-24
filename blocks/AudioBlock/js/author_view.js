@@ -71,12 +71,14 @@ define(['assets/js/author_view', 'assets/js/url'],
             var $audiosource = $view.$(".cw-audioblock-source").val();
             if ($audiosource == "cw") {
                 var $audiofile = $view.$("select.cw-audioblock-file").val();
+                var $audioid = $view.$("select.cw-audioblock-file option:selected").attr("document-id");
             } else {
                 var $audiofile = $view.$("input.cw-audioblock-file").val();
+                var audioid = "";
             }
 
             helper
-                .callHandler(this.model.id, "save", {audio_file: $audiofile, audio_description: $audiodescription, audio_source: $audiosource})
+                .callHandler(this.model.id, "save", {audio_file: $audiofile, audio_id: $audioid, audio_description: $audiodescription, audio_source: $audiosource})
                 .then(
                     // success
                     function () {
