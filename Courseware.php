@@ -6,6 +6,7 @@ use Courseware\Container;
 use Mooc\DB\CoursewareFactory;
 use Mooc\UI\BlockFactory;
 use Courseware\User;
+use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
 
 function _cw($message) {
     return dgettext('courseware', $message);
@@ -130,52 +131,53 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $stmt->execute();
         $new_ones =  (int) $stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"];
 
-        
-        // getting all tests
-        $db = DBManager::get();
-        $stmt = $db->prepare("
-            SELECT 
-                json_data 
-            FROM 
-                mooc_blocks
-            JOIN 
-                mooc_fields 
-            ON 
-                mooc_blocks.id = mooc_fields.block_id 
-            WHERE 
-                mooc_blocks.type = 'TestBlock'
-            AND
-                mooc_blocks.seminar_id = :cid
-            AND 
-                mooc_fields.name = 'test_id' 
-        ");
-        $stmt->bindParam(":cid", $course_id);
-        $stmt->execute();
-        
-        $tests =  $stmt->fetch(PDO::FETCH_ASSOC);
-        if($tests) {
-            $test_ids = array();
-            foreach ($tests as $key=>$value){
-                    array_push($test_ids, (int) str_replace('"', '', $value));
-            }
-            //looking for new tests
+        if(VipsBridge::vipsExists()) {
+            // getting all tests
+            $db = DBManager::get();
             $stmt = $db->prepare("
-                SELECT
-                    COUNT(*)
-                FROM
-                    vips_exercise_ref
-                JOIN
-                    vips_aufgabe
-                ON
-                    vips_exercise_ref.exercise_id = vips_aufgabe.ID
-                WHERE
-                    vips_exercise_ref.test_id IN (".implode(', ', $test_ids).")
+                SELECT 
+                    json_data 
+                FROM 
+                    mooc_blocks
+                JOIN 
+                    mooc_fields 
+                ON 
+                    mooc_blocks.id = mooc_fields.block_id 
+                WHERE 
+                    mooc_blocks.type = 'TestBlock'
                 AND
-                    unix_timestamp(created) >=  :last_visit
+                    mooc_blocks.seminar_id = :cid
+                AND 
+                    mooc_fields.name = 'test_id' 
             ");
-            $stmt->bindParam(":last_visit", $last_visit);
+            $stmt->bindParam(":cid", $course_id);
             $stmt->execute();
-            $new_ones +=  (int) $stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"];
+            
+            $tests =  $stmt->fetch(PDO::FETCH_ASSOC);
+            if($tests) {
+                $test_ids = array();
+                foreach ($tests as $key=>$value){
+                        array_push($test_ids, (int) str_replace('"', '', $value));
+                }
+                //looking for new tests
+                $stmt = $db->prepare("
+                    SELECT
+                        COUNT(*)
+                    FROM
+                        vips_exercise_ref
+                    JOIN
+                        vips_aufgabe
+                    ON
+                        vips_exercise_ref.exercise_id = vips_aufgabe.ID
+                    WHERE
+                        vips_exercise_ref.test_id IN (".implode(', ', $test_ids).")
+                    AND
+                        unix_timestamp(created) >=  :last_visit
+                ");
+                $stmt->bindParam(":last_visit", $last_visit);
+                $stmt->execute();
+                $new_ones +=  (int) $stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"];
+            }
         }
         if ($new_ones) {
             $title = $new_ones > 1 ? sprintf(_("%s neue Courseware-Inhalte"), $new_ones) : _("1 neuer Courseware-Inhalt");
