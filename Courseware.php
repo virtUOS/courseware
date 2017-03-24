@@ -153,28 +153,30 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $stmt->execute();
         
         $tests =  $stmt->fetch(PDO::FETCH_ASSOC);
-        $test_ids = array();
-        foreach ($tests as $key=>$value){
-                array_push($test_ids, (int) str_replace('"', '', $value));
+        if($tests) {
+            $test_ids = array();
+            foreach ($tests as $key=>$value){
+                    array_push($test_ids, (int) str_replace('"', '', $value));
+            }
+            //looking for new tests
+            $stmt = $db->prepare("
+                SELECT
+                    COUNT(*)
+                FROM
+                    vips_exercise_ref
+                JOIN
+                    vips_aufgabe
+                ON
+                    vips_exercise_ref.exercise_id = vips_aufgabe.ID
+                WHERE
+                    vips_exercise_ref.test_id IN (".implode(', ', $test_ids).")
+                AND
+                    unix_timestamp(created) >=  :last_visit
+            ");
+            $stmt->bindParam(":last_visit", $last_visit);
+            $stmt->execute();
+            $new_ones +=  (int) $stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"];
         }
-        //looking for new tests
-        $stmt = $db->prepare("
-            SELECT
-                COUNT(*)
-            FROM
-                vips_exercise_ref
-            JOIN
-                vips_aufgabe
-            ON
-                vips_exercise_ref.exercise_id = vips_aufgabe.ID
-            WHERE
-                vips_exercise_ref.test_id IN (".implode(', ', $test_ids).")
-            AND
-                unix_timestamp(created) >=  :last_visit
-        ");
-        $stmt->bindParam(":last_visit", $last_visit);
-        $stmt->execute();
-        $new_ones +=  (int) $stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"];
         if ($new_ones) {
             $title = $new_ones > 1 ? sprintf(_("%s neue Courseware-Inhalte"), $new_ones) : _("1 neuer Courseware-Inhalt");
             $icon->setImage(Icon::create('group3', 'attention', ["title" => $title]));
