@@ -21,6 +21,8 @@
         "blocks/IFrameBlock/js/IFrameBlock",
         "blocks/Section/js/Section",
         "blocks/TestBlock/js/TestBlock",
+        "blocks/AudioBlock/js/AudioBlock",
+        "blocks/DownloadBlock/js/DownloadBlock",
         "blocks/VideoBlock/js/VideoBlock"
     ],
 
@@ -34,6 +36,8 @@
         "blocks/Section/js/Section",
         "blocks/TestBlock/js/TestBlock",
         "blocks/VideoBlock/js/VideoBlock",
+        "blocks/AudioBlock/js/AudioBlock",
+        "blocks/DownloadBlock/js/DownloadBlock",
 
         "assets/js/main-courseware"
     ]
