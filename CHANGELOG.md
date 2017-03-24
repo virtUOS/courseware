@@ -5,7 +5,7 @@ CHANGELOG
 * add new block: AudioBlock
 * add new block: DownloadBlock
 * imporved iFrameBlock with user specific token
-* prevent navigation on change for VideoBlock
+* prevent navigation on change for all blocks
 * TestBlock: practise has to be submitted but not corrected to continue
 * cleaning author views
 
