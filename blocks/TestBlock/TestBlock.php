@@ -289,7 +289,6 @@ class TestBlock extends Block
      {
          global $user;
          $progress = $this->getProgress();
-         var_dump($this->test_questions);
          if ($this->test_questions != "") {
              $progress->max_grade = $this->test_questions;
          } else {
@@ -843,13 +842,21 @@ class TestBlock extends Block
                 // initialize the user progress (if necessary)
                 if ($progress->isNew()) {
                     $progress->grade = 0;
-                    $progress->max_grade = count($this->test->exercises);
+                    if ($this->test_questions != "") {
+                        $progress->max_grade = $this->test_questions;
+                    } else {
+                        $progress->max_grade = count($this->test->exercises);
+                    }
                     $progress->store();
                 }
 
                 // fix the max grade value if the number of exercises had changed
                 if ($progress->max_grade != count($this->test->exercises)) {
-                    $progress->max_grade = count($this->test->exercises);
+                    if ($this->test_questions != "") {
+                        $progress->max_grade = $this->test_questions;
+                    } else {
+                        $progress->max_grade = count($this->test->exercises);
+                    }
 
                     if ($progress->grade > $progress->max_grade) {
                         $progress->grade = $progress->max_grade;
