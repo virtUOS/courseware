@@ -289,7 +289,12 @@ class TestBlock extends Block
      {
          global $user;
          $progress = $this->getProgress();
-         $progress->max_grade = count($this->test->exercises);
+         var_dump($this->test_questions);
+         if ($this->test_questions != "") {
+             $progress->max_grade = $this->test_questions;
+         } else {
+             $progress->max_grade = count($this->test->exercises);
+         }
          $progress->grade = 0;
 
          foreach ($this->test->exercises as $exc) {
