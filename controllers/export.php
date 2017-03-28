@@ -50,10 +50,15 @@ class ExportController extends CoursewareStudipController
         header('Content-Type: application/zip');
         header('Content-Disposition: attachment; filename=courseware.zip');
 
+        while (ob_get_level()) {
+            ob_end_flush();
+        }
         readfile($zipFile);
 
         $this->deleteRecursively($tempDir);
         $this->deleteRecursively($zipFile);
+
+        exit;
     }
 
     private function deleteRecursively($path)
