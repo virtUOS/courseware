@@ -99,6 +99,8 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         },
 
         postRender: function() {
+            
+            this.hideIndented();
 
             if (this.asideSectionViews.length) {
                 _.invoke(this.asideSectionViews, 'postRender');
@@ -187,6 +189,38 @@ define(['backbone', 'assets/js/url', 'assets/js/block_model', 'assets/js/student
         // see https://github.com/virtUOS/courseware/issues/71
         resizeColumnHeights: function () {
             this.$el.css('min-height', this.$('> aside').height() + 'px');
+        },
+
+        hideIndented: function() {
+            var $view = this;
+            var $indented = $view.$(".indented");
+            $indented.parents(".subchapter").hide();
+
+            $.each($indented, function(){
+                $(this).parents(".subchapter").addClass("indented");
+                var $prev = $(this).parents(".subchapter").prev();
+                var $active = $prev.hasClass("selected");
+                if($active) {
+                    $(this).parents(".subchapter").addClass("indentedsibling");
+                }
+                var $brother = $prev.hasClass("indentedsibling");
+                if ($active || $brother) {
+                    $(this).parents(".subchapter").show();
+                    $(this).parents(".subchapter").addClass("indentedsibling");
+                }
+            });
+
+            $view.$(".subchapter").each(function(){
+                if ($(this).hasClass("selected")&& $(this).hasClass("indented")) {
+                    $(this).show();
+                    var $prev = $(this).prevUntil(".subchapter:not('.indented')");
+                    $prev.each(function(){
+                            $(this).show();
+                    });
+                }
+                
+            });
+
         }
     });
 });
