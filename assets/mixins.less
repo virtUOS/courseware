@@ -21,15 +21,16 @@
 
 .btn(@img) {
   .btn-base();
-  background: url("@{blocks-icons-dir}/16/grey/@{img}.png") center center no-repeat;
+  background: url("@{blocks-icons-dir}/grey/@{img}.svg") center center no-repeat;
 
   &:hover {
-    background-image: url("@{blocks-icons-dir}/16/black/@{img}.png");
+    background-image: url("@{blocks-icons-dir}/black/@{img}.svg");
   }
 }
 
 .bgImg(@icon, @color, @size: 16) {
-  background-image: url("@{blocks-icons-dir}/@{size}/@{color}/@{icon}.png");
+  background-image: url("@{blocks-icons-dir}/@{color}/@{icon}.svg");
+  background-size: @size*1px;
   background-position: center center;
   background-repeat: no-repeat;
 }
