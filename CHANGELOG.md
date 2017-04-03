@@ -7,6 +7,7 @@ CHANGELOG
 * imporved iFrameBlock with user specific token
 * prevent navigation on change for all blocks
 * TestBlock: practise has to be submitted but not corrected to continue
+* VideoBlock: fixing openCast URLs
 * cleaning author views
 
 2.0.2
