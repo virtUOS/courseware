@@ -122,6 +122,7 @@ define(['assets/js/author_view', 'assets/js/url'], function (
             this.$el.find("video").hide();
             this.$el.find(".videocontrols-wrapper").hide();
             this.$el.find(".videoautostart-wrapper").show();
+            this.$el.find(".videosettings-header").show();
             switch (videotype) {
                 case "webvideo":
                     this.$el.find(".videosource-webvideo").show();
@@ -136,7 +137,8 @@ define(['assets/js/author_view', 'assets/js/url'], function (
                 case "matterhorn":
                     this.$el.find(".videosource-url").show();
                     this.$el.find("iframe").show();
-                    this.$el.find(".videocontrols-wrapper").show();
+                    //this.$el.find(".videocontrols-wrapper").show();
+                    this.$el.find(".videoaspect").hide();
                     this.$el.find('.videosrcname').html('URL');
                     break;
                 case "url":
@@ -144,6 +146,8 @@ define(['assets/js/author_view', 'assets/js/url'], function (
                     this.$el.find("iframe").show();
                     this.$el.find('.videosrcname').html('URL');
                     this.$el.find(".videoautostart-wrapper").hide();
+                    this.$el.find(".videosettings-header").hide();
+                    
                     break;
             }
             this.resetVideoData(this);
@@ -197,10 +201,12 @@ define(['assets/js/author_view', 'assets/js/url'], function (
                         message = 'Keine Matterhorn ID übergeben. Wert wurde zurückgesetzt.';
                         break;
                     }
+                    /*
                     if (matterhornurl.indexOf('/engage/ui/watch.html?') != -1) {
                         matterhornurl = matterhornurl.replace('/engage/ui/watch.html?', '/engage/ui/embed.html?');
                         message = 'Matterhorn URL wurde berichtigt.';
                     }
+                    */
                     matterhornurl = matterhornurl.split('&')[0];
                     url = this.buildMatterhornLink(matterhornurl, view.$el.find('.videostartmin').val(), view.$el.find('.videostartsec').val(), view.$el.find('.videoautostart').is(':checked'), view.$el.find('.videocontrols').is(':checked'));
                     view.$el.find('.videosrc').val(matterhornurl);
@@ -317,9 +323,11 @@ define(['assets/js/author_view', 'assets/js/url'], function (
                             if (autoplay == 'true') {
                                 view.$el.find('.videoautostart').attr("checked", '');
                             }
+                            /*
                             if (hidecontrols == 'true') {
                                 view.$el.find('.videocontrols').attr("checked", '');
                             }
+                            */
                             if (start != '') {
                                 var start = start.split("m");
                                 view.$el.find('.videostartmin').val(start[0]);
@@ -378,14 +386,16 @@ define(['assets/js/author_view', 'assets/js/url'], function (
                 url += '&t='+start;
             }
             if (autoplay) {
-                url += '&play=true';
+                url += '&autoplay=true';
             }
+            /*
             if (controls) {
                 url += '&hideControls=true';
             } else {
                 url += '&hideControls=false';
             }
-            return url;
+            */
+            return url+= '&mode=embed';
         },
         showPreview: function (view, url) {
             view.$('iframe').attr('src', url);
