@@ -92,7 +92,7 @@ class CoursewareController extends CoursewareStudipController {
     // include the stylesheets of all default block types
     private function addBlockStyles()
     {
-        return PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/courseware.min.css');
+        return PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
     }
 
     // validate and store sent settings

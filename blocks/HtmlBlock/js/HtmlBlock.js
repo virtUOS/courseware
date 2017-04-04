@@ -1,15 +1,16 @@
-define(['assets/js/block_types', './student_view', './author_view'], function (block_types, StudentView, AuthorView) {
+import block_types from 'js/block_types'
+import StudentView from './student_view'
+import AuthorView from './author_view'
 
-    'use strict';
+import '../css/html_block.less'
 
-    return block_types.add({
-        name: 'HtmlBlock',
+export default block_types.add({
+  name: 'HtmlBlock',
 
-        content_block: true,
+  content_block: true,
 
-        views: {
-            student: StudentView,
-            author: AuthorView
-        }
-    });
+  views: {
+    student: StudentView,
+    author: AuthorView
+  }
 });

@@ -1,23 +1,20 @@
-define(['backbone'], function (Backbone) {
+import Backbone from 'backbone'
 
-    return Backbone.Model.extend({
+export default Backbone.Model.extend({
+  idAttribute: 'name',
 
-        idAttribute: 'name',
+  initialize(options) { },
 
-        initialize: function (options) {
-        },
+  createView(view_name, options) {
+    var klass = this.get('views')[view_name];
 
-        createView: function (view_name, options) {
-            var self = this,
-                klass = this.get('views')[view_name];
+    if (!klass) {
+      throw [ 'View class not found: "', this.get('name'), '/', view_name , '"' ].join('');
+    }
 
-            if (!klass) {
-                throw ['View class not found: "', this.get('name'), '/', view_name , '"'].join('');
-            }
+    const view = new klass(options);
+    view.block_type = this
 
-            return _.tap(new klass(options), function (obj) {
-                obj.block_type = self;
-            });
-        }
-    });
+    return view
+  }
 });

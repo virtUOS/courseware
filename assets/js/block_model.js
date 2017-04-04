@@ -1,25 +1,15 @@
-define(['q', 'backbone', './url'], function (Q, Backbone, url) {
+import Backbone from 'backbone'
+import url from './url'
 
-    'use strict';
+export default Backbone.Model.extend({
+  urlRoot() {
+    return url.block_url('');
+  },
 
-    return Backbone.Model.extend({
-        urlRoot: function () {
-            return url.block_url("");
-        },
-
-        revert: function () {
-            if (this.hasChanged()) {
-                this.set(this.previousAttributes(), {silent : true});
-            }
-            return this;
-        },
-
-        sync: function() {
-            var result = Backbone.sync.apply(this, arguments);
-            if (Q.isPromiseAlike(result)) {
-                return Q(result);
-            }
-            return result;
-        }
-    });
+  revert() {
+    if (this.hasChanged()) {
+      this.set(this.previousAttributes(), { silent : true });
+    }
+    return this;
+  }
 });

@@ -36,7 +36,8 @@ section#courseware {
     }
 
     &.loading h1 {
-      background: url("@{blocks-images-dir}/ajax_indicator_small.gif") center left no-repeat;
+      .ajax-indicator-bg-icon();
+      background: center left no-repeat;
       padding-left: 20px;
     }
   }
@@ -61,7 +62,8 @@ section#courseware {
     }
 
     &.loading {
-      background: url("@{blocks-images-dir}/ajax_indicator_small.gif") center center no-repeat;
+      .ajax-indicator-bg-icon();
+      background: center center no-repeat;
 
       .block-content, .controls {
         visibility: hidden;
@@ -108,15 +110,16 @@ section#courseware {
     .styled-select {
         float:left;
         margin-right: 5px;
-        background: #eee url("../../../../assets/images/icons/blue/arr_1down.svg") no-repeat scroll right 10px center;
+        .assets-bg-icon("blue/arr_1down.svg");
+        background:  #eee no-repeat scroll right 10px center;
         border: 1px solid #d0d0d0;
         border-radius: 2px;
         height: 34px;
         overflow: hidden;
-        width: (@sidebar-width -50);
+        width: (@sidebar-width - 50);
         > select {
             background: transparent;
-            width: (@sidebar-width -50);
+            width: (@sidebar-width - 50);
             padding: 5px;
             font-size: 16px;
             line-height: 1;
@@ -138,12 +141,12 @@ section#courseware {
       width: initial;
       text-align: left;
 
-      background-image: url("@{blocks-icons-dir}/blue/add.svg");
+      .assets-bg-icon("blue/add.svg");
       background-position: 6px center;
       padding-left: 28px;
 
       &.loading {
-        background-image: url("@{blocks-images-dir}/ajax_indicator_small.gif");
+        .ajax-indicator-bg-icon();
         background-position: 10px center;
       }
     }
@@ -157,14 +160,16 @@ section#courseware {
 
     button {
       .btn-base();
+      background-position: center center;
+      background-repeat: no-repeat;
 
       &.cancel {
-        background: url("@{blocks-icons-dir}/grey/decline.svg") center center no-repeat;
+        .assets-bg-icon("grey/decline.svg");
         right: 20px;
       }
 
       &.ok {
-        background: url("@{blocks-icons-dir}/grey/accept.svg") center center no-repeat;
+        .assets-bg-icon("grey/accept.svg");
         right: 0;
       }
     }
@@ -192,12 +197,12 @@ section#courseware {
 
 
 button.init-sort-block {
-  background-image: url("@{blocks-icons-dir}/blue/ranking.svg");
+  .assets-bg-icon("blue/ranking.svg");
   background-position: 6px 2px;
 }
 
 button.stop-sort-block {
-  background-image: url("@{blocks-icons-dir}/blue/accept.svg");
+  .assets-bg-icon("blue/accept.svg");
   background-position: 6px center;
   display: none;
 }

@@ -50,11 +50,13 @@ section.TestBlock {
             cursor: pointer;
             &.exercisenavback {
                 left: 0;
-                background: url("../../../../assets/images/icons/16/blue/arr_1left.png") no-repeat scroll 0 0 ;
+                background: no-repeat scroll 0 0 ;
+                .assets-bg-icon("16/blue/arr_1left.png");
             }
             &.exercisenavnext {
                 right: 0;
-                background: url("../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat scroll 0 0;
+                background: no-repeat scroll 0 0;
+                .assets-bg-icon("16/blue/arr_1right.png");
             }
         }
       }
@@ -115,7 +117,7 @@ section.TestBlock {
       
       .exercise-hint-button {
         border: none;
-        background-image: url("@{blocks-icons-dir}/blue/info-circle.svg");
+        .assets-bg-icon("blue/info-circle.svg");
         background-position: center 0px;
         background-color: #fff;
         background-repeat: no-repeat;

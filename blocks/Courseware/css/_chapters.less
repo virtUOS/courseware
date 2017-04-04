@@ -17,12 +17,17 @@ ol.chapters {
   }
 
   .chapter > .title {
-    background: url("@{blocks-icons-dir}/blue/arr_1right.svg") no-repeat 3px center;
+    .assets-bg-icon("blue/arr_1right.svg");
+    background-repeat: no-repeat;
+    background-position: 3px center;
   }
 
   .chapter.selected > .title {
     font-weight: 700;
-    background: url("@{blocks-icons-dir}/blue/arr_1down.svg") no-repeat 3px center #eeeeee;
+    .assets-bg-icon("blue/arr_1down.svg");
+    background-repeat: no-repeat;
+    background-position: 3px center;
+    background-color: #eeeeee;
   }
 
   .controls {
@@ -65,7 +70,7 @@ ol.chapters {
   }
 
   .chapter.loading > .title {
-    background-image: url("@{blocks-images-dir}/ajax_indicator_small.gif");
+    .ajax-indicator-bg-icon();
   }
 
 
@@ -135,7 +140,7 @@ ol.subchapters {
     font-weight: 700;
     background: #f8f8f8;
     .complete {
-        background-image: url("../../../../assets/images/icons/16/grey/accept.png");
+        .assets-bg-icon("16/grey/accept.png");
     }
   }
 
@@ -150,7 +155,7 @@ ol.subchapters {
     }
 
     .complete {
-        background-image: url("../../../../assets/images/icons/16/grey/accept.png");
+        .assets-bg-icon("16/grey/accept.png");
         display: inline-block;
         width: 16px;
         height: 16px;
@@ -185,7 +190,8 @@ ol.subchapters {
 
 
   .subchapter.loading > .title {
-    background: url(@{blocks-images-dir}/ajax_indicator_small.gif) no-repeat 3px center;
+    .ajax-indicator-bg-icon();
+    background: no-repeat 3px center;
   }
 }
 
@@ -230,7 +236,7 @@ ol.subchapters {
   li[data-type="Chapter"]:not([data-publication='']),
   li[data-type="Subchapter"]:not([data-publication='']) {
     & > div.title > a.navigate {
-      .bgImg(calendar, grey, 16);
+      .bgImg(date, grey, 16);
       background-position: center right;
       opacity: 0.5;
     }

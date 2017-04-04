@@ -34,30 +34,33 @@ button {
   &.add-chapter,
   &.add-subchapter,
   &.add-section {
-    background-image: url("@{blocks-icons-dir}/blue/add.svg");
+    .assets-bg-icon("blue/add.svg");
     background-position: 6px center;
   }
 
   &.init-sort-chapter,
   &.init-sort-subchapter,
   &.init-sort-section {
-    background-image: url("@{blocks-icons-dir}/blue/ranking.svg");
+    .assets-bg-icon("blue/ranking.svg");
     background-position: 6px 6px;
   }
 
   &.stop-sort-chapter,
   &.stop-sort-subchapter,
   &.stop-sort-section {
-    background: url("@{blocks-icons-dir}/blue/accept.svg") 6px center no-repeat #E9E9E9;
+    .assets-bg-icon("blue/accept.svg");
+    background-position: 6px center;
+    background-repeat: no-repeat;
+    background-color: #E9E9E9;
     display: none;
   }
   &.activate-aside-section {
-    background-image: url("@{blocks-icons-dir}/blue/billboard.svg");
+    .assets-bg-icon("blue/billboard.svg");
     background-position: 6px center;
   }
 
   &.activate-aside-section.loading {
-    background-image: url("@{blocks-images-dir}/ajax_indicator_small.gif");
+    .ajax-indicator-bg-icon();
   }
 }
 

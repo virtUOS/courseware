@@ -1,18 +1,14 @@
-define(["backbone", "./block_type"], function (Backbone, BlockType) {
+import Backbone from 'backbone'
+import BlockType from './block_type'
 
-    'use strict';
+const BlockTypesCollection = Backbone.Collection.extend({
+  model: BlockType,
 
-    var BlockTypesCollection = Backbone.Collection.extend({
-        model: BlockType,
+  comparator: 'name',
 
-        comparator: 'name',
-
-        findByName: function (name) {
-            return this.findWhere({
-                name: name
-            });
-        }
-    });
-
-    return new BlockTypesCollection([]);
+  findByName(name) {
+    return this.findWhere({ name });
+  }
 });
+
+export default new BlockTypesCollection([]);

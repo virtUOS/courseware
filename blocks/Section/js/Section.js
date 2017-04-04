@@ -1,11 +1,13 @@
-define(['assets/js/block_types', './block_types_view', './student_view'], function (block_types, BlockTypesView, StudentView) {
-    'use strict';
+import BlockTypes from 'js/block_types'
+import BlockTypesView from './block_types_view'
+import StudentView from './student_view'
 
-    return block_types.add({
-        name: 'Section',
-        views: {
-            block_types: BlockTypesView,
-            student: StudentView
-        }
-    });
+import '../css/section.less'
+
+export default BlockTypes.add({
+  name: 'Section',
+  views: {
+    block_types: BlockTypesView,
+    student: StudentView
+  }
 });

@@ -1,0 +1,35 @@
+{
+    "extends": "eslint:recommended",
+    "ecmaFeatures": {
+        "modules": true,
+        "experimentalObjectRestSpread": true
+    },
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "parser": "babel-eslint",
+    "rules": {
+        "array-bracket-spacing": [2, "always"],
+        "comma-dangle": [2, "never"],
+        "eol-last": 2,
+        "indent": [
+            "error",
+            2,
+            {
+                "VariableDeclarator": { "var": 2, "let": 2, "const": 2 },
+                "SwitchCase": 0
+            }
+        ],
+        "no-multiple-empty-lines": 2,
+        "object-curly-spacing": [2, "always"],
+        "quotes": [2, "single", "avoid-escape"],
+        "strict": 0,
+        "space-before-blocks": [2, "always"],
+        "space-before-function-paren": [2, {"anonymous":"always","named":"never"}],
+        "space-infix-ops": 2
+    },
+    "plugins": [
+
+    ]
+}

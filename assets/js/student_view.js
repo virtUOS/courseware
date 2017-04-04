@@ -1,5 +1,5 @@
-define(['./block_view'], function (BlockView) {
-    return BlockView.extend({
-        view_name: "student"
-    });
+import BlockView from './block_view'
+
+export default BlockView.extend({
+  view_name: 'student'
 });

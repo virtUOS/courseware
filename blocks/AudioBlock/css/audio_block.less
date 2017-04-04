@@ -1,17 +1,17 @@
-@import '../../../assets/mixins';
+@import '../../../assets/mixins.less';
 
 .AudioBlock {
     border: solid thin #ccc;
     padding: 10px;
-    
+
     .cw-audio-description {
         padding-bottom: 1em;
     }
-    
+
     .cw-audio-controls {
         text-align: right;
     }
-    
+
     .cw-audio-range {
         margin: 0 5px 10px 0;
     }
@@ -26,15 +26,15 @@
         display: inline-block;
     }
 
-    .cw-audio-playbutton { 
-        background-image: url("@{blocks-icons-dir}/blue/play.svg");
+    .cw-audio-playbutton {
+        .assets-bg-icon("blue/play.svg");
         background-position: center center;
         background-repeat: no-repeat;
         background-size: 28px;
     }
 
-    .cw-audio-stopbutton { 
-        background-image: url("@{blocks-icons-dir}/blue/stop.svg");
+    .cw-audio-stopbutton {
+        .assets-bg-icon("blue/stop.svg");
         background-position: center center;
         background-repeat: no-repeat;
         background-size: 24px;
@@ -46,12 +46,12 @@
     }
 
     .cw-audio-playbutton-playing {
-        background-image: url("@{blocks-icons-dir}/blue/pause.svg");
+        .assets-bg-icon("blue/pause.svg");
         background-position: center center;
         background-repeat: no-repeat;
         background-size: 24px;
     }
-    
+
     .cw-audio-time {
         position: relative;
         top: 0.5em;
@@ -61,7 +61,7 @@
     .ui-widget-content {
         background-color: #24437C;
     }
-    
+
     .ui-widget-header {
         background-color: #fdfdfd;
     }

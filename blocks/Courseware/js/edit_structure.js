@@ -1,77 +1,76 @@
-// dateFormat is require to be able to use a format() method on Date objects
-define(['q', 'backbone', 'assets/js/templates', 'dateFormat'],
-       function (Q, Backbone, templates) {
+import Backbone from 'backbone'
+import dateformat from 'dateformat'
+import templates from 'js/templates'
 
-    'use strict';
+export default Backbone.View.extend({
 
-    return Backbone.View.extend({
+  className: 'edit-structure',
 
-        className: "edit-structure",
+  events: {
+    'submit form': 'submit',
+    'click button.cancel': 'cancel'
+  },
 
-        events: {
-            'submit form':         'submit',
-            'click button.cancel': 'cancel'
-        },
+  deferred: null,
 
-        deferred: null,
+  initialize() {
+    this.deferred = new Promise((resolve, reject) => {
+      this.resolve = resolve
+      this.reject = reject
+    })
+    this.listenTo(Backbone, 'modeswitch', this.cancel, this);
+    this.render();
+  },
 
-        initialize: function() {
-            this.deferred = Q.defer();
-            this.listenTo(Backbone, "modeswitch", this.cancel, this);
-            this.render();
-        },
+  render() {
+    var data = {
+      title: this.model.get('title'),
+      visible_since_title: this.model.get('visible_since_title')
+    };
 
-        render: function () {
-            var data = {
-                title: this.model.get("title"),
-                visible_since_title: this.model.get('visible_since_title')
-            };
+    // hide publication_date for sections
+    if (this.model.get('type') !== 'Section') {
+      if (this.model.get('publication_date')) {
+        var date = new Date(this.model.get('publication_date') * 1000);
+        data.publication_date = dateformat(date, 'yyyy-mm-dd');
+      }
+      data.chapter = true;
+    }
 
-            // hide publication_date for sections
-            if (this.model.get("type") !== 'Section') {
-                if (this.model.get("publication_date")) {
-                    var date = new Date(this.model.get("publication_date") * 1000);
-                    data.publication_date = date.format("Y-m-d");
-                }
-                data.chapter = true;
-            }
+    var template = templates('Courseware', 'edit_structure', data);
+    this.$el.html(template);
+    return this;
+  },
 
-            var template = templates("Courseware", "edit_structure", data);
-            this.$el.html(template);
-            return this;
-        },
+  postRender() {
+    if (typeof window.Modernizr === 'undefined' || !window.Modernizr.inputtypes.date) {
+      this.$('input[type=date]').datepicker({
+        dateFormat: this.$.datepicker.W3C
+      });
+    }
+    this.$('input').eq(0).select().focus();
+  },
 
-        postRender: function () {
-            if (typeof Modernizr === 'undefined' || !Modernizr.inputtypes.date) {
-                $('input[type=date]').datepicker({
-                    dateFormat: $.datepicker.W3C
-                });
-            }
-            this.$("input").eq(0).select().focus();
-        },
+  promise() {
+    return this.deferred;
+  },
 
-        promise: function () {
-            return this.deferred.promise;
-        },
+  submit(event) {
+    event.preventDefault();
+    var new_title = this.$('input').val().trim();
+    var new_publication_date = Math.floor(Date.parse(this.$('input[type=date]').val()) / 1000);
 
-        submit: function (event) {
-            event.preventDefault();
-            var new_title = this.$("input").val().trim();
-            var new_publication_date = Math.floor(Date.parse(this.$("input[type=date]").val()) / 1000);
+    if (new_title === '') {
+      return;
+    }
 
-            if (new_title === '') {
-                return;
-            }
-
-            this.model.set({
-                title: new_title,
-                publication_date: new_publication_date
-            });
-            this.deferred.resolve(this.model);
-        },
-
-        cancel: function () {
-            this.deferred.reject();
-        }
+    this.model.set({
+      title: new_title,
+      publication_date: new_publication_date
     });
+    this.resolve(this.model);
+  },
+  cancel() {
+    this.reject && this.reject();
+  }
 });

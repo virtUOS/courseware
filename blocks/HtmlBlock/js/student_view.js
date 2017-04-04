@@ -1,25 +1,21 @@
-define(['assets/js/student_view'],
-       function (StudentView) {
+import jQuery from 'jquery'
+import StudentView from 'js/student_view'
 
-    'use strict';
+export default StudentView.extend({
+  events: {},
 
-    return StudentView.extend({
-        events: {
-        },
+  initialize() {
+    var $section = this.$el.closest('section.HtmlBlock');
+    var $sortingButtons = jQuery('button.lower', $section);
+    $sortingButtons = $sortingButtons.add(jQuery('button.raise', $section));
+    $sortingButtons.removeClass('no-sorting');
+  },
 
-        initialize: function() {
-            var $section = this.$el.closest('section.HtmlBlock');
-            var $sortingButtons = jQuery('button.lower', $section);
-            $sortingButtons = $sortingButtons.add(jQuery('button.raise', $section));
-            $sortingButtons.removeClass('no-sorting');
-        },
+  render() {
+    return this;
+  },
 
-        render: function() {
-            return this;
-        },
-
-        postRender: function () {
-            MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.el]);
-        }
-    });
+  postRender() {
+    window.MathJax.Hub.Queue([ 'Typeset', window.MathJax.Hub, this.el ]);
+  }
 });

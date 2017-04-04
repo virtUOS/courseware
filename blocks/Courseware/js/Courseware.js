@@ -1,11 +1,11 @@
-define(['assets/js/block_types', './student_view'], function (block_types, StudentView) {
+import BlockTypes from 'js/block_types'
+import StudentView from './student_view'
 
-    'use strict';
+import '../css/courseware.less'
 
-    return block_types.add({
-        name: 'Courseware',
-        views: {
-            student: StudentView
-        }
-    });
+export default BlockTypes.add({
+  name: 'Courseware',
+  views: {
+    student: StudentView
+  }
 });

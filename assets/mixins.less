@@ -1,11 +1,11 @@
 @import 'variables';
-@import 'mixins-flex';
 
-.border-radius(@radius) {
-  -webkit-border-radius: @radius;
-     -moz-border-radius: @radius;
-      -ms-border-radius: @radius;
-          border-radius: @radius;
+.assets-bg-icon(@img) {
+  background-image: url("@{blocks-icons-dir}/@{img}");
+}
+
+.ajax-indicator-bg-icon() {
+  background-image: url("@{blocks-images-dir}/ajax_indicator_small.gif");
 }
 
 .btn-base {
