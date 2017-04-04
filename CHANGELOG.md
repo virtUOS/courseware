@@ -10,6 +10,8 @@ CHANGELOG
 * VideoBlock: fixing openCast URLs
 * cleaning author views
 * switch from png icons to svg icons
+* adding icon to studip course overview (counting new blocks, sections and chapters)
+* adding plugin preview image
 
 2.0.2
 -----
