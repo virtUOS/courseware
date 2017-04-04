@@ -9,6 +9,7 @@ CHANGELOG
 * TestBlock: practise has to be submitted but not corrected to continue
 * VideoBlock: fixing openCast URLs
 * cleaning author views
+* switch from png icons to svg icons
 
 2.0.2
 -----
@@ -23,7 +24,7 @@ CHANGELOG
 * transfer course activations from old Mooc.IP
 * disable vips tab in courseware settings
 * fix empty worksheet problem
-* imporved VideoBlock with 
+* imporved VideoBlock 
 
 2.0.1
 -----
