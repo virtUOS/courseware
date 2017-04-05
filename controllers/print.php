@@ -22,16 +22,28 @@ class PrintController extends CoursewareStudipController {
         $note_content = Request::get("note-data");
         $note_type = Request::get("note-type");
         $note_color = Request::get("note-color");
+        $note_header1 = Request::get("note-header1");
+        $note_header2 = Request::get("note-header2");
         $note_content = json_decode($note_content);
+        $note_header2 = json_decode($note_header2);
+        
         
         // create new PDF document
         $pdf = new DFBPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'ISO-8859', false);
+        $pdf->SetTextColor(0, 0, 0);
+
         $pdf->SetTopMargin(40);
         $pdf->SetLeftMargin(20);
         $pdf->SetRightMargin(20);
         $pdf->AddPage();
+        $pdf->Cell(0, 0, $note_header1, 0, false, 'L', 0, '', 0, false, 'M', 'B');
+        $pdf->Ln(12);
+        if ($note_type == "post-it") {
+            $pdf->Cell(0, 0, $note_header2[0], 0, false, 'L', 0, '', 0, false, 'M', 'B');
+            $pdf->Ln(12);
+        }
         $x = 35;
-        $y = 50;
+        $y = $pdf->getY();
         $w = 60;
         $h = 60;
         if ($note_type == "post-it") {
@@ -49,9 +61,24 @@ class PrintController extends CoursewareStudipController {
                     $x -= $w+10;
                     $y += $h+10; 
                 }
-                if ($y > 250) {
+                if ($y > 260) {
                     $pdf->AddPage();
                     $x = 35;
+                    $y = 50;
+                }
+            }
+        } else if ($note_type == "classic") {
+            $x = 20;
+            $y = $pdf->getY();
+            foreach ($note_content as $key => $text) {
+                //$pdf->Cell(0, 0, , 0, false, 'L', 0, '', 0, false, 'M', 'B');
+                $pdf->writeHTMLCell(160, "", $x, $y ,$note_header2[$key]);
+                $y += 12;
+                //$pdf->Cell(0, 0, $this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401), 0, false, 'L', 0, '', 0, false, 'M', 'B');
+                $pdf->writeHTMLCell(160, "", $x, $y ,$this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401));
+                $y +=  $pdf->getY()+24;
+                if ($y > 260) {
+                    $pdf->AddPage();
                     $y = 50;
                 }
             }
