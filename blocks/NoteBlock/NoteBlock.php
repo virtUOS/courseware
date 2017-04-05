@@ -12,12 +12,17 @@ class NoteBlock extends Block
         $this->defineField('note_type', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('note_color', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('note_quantity', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('note_header1', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('note_header2', \Mooc\SCOPE_BLOCK, '');
 
     }
 
     function student_view()
     {
-        return array_merge($this->getAttrArray(), array('note_color_student_view' => $this->getColor($this->note_color)) );
+        if ($this->note_type == "classic") {
+            $classic = true;
+        }
+        return array_merge($this->getAttrArray(), array('note_color_student_view' => $this->getColor($this->note_color)));
     }
 
     function author_view()
@@ -38,6 +43,12 @@ class NoteBlock extends Block
         } 
         if (isset ($data['note_quantity'])) {
             $this->note_quantity = (string) $data['note_quantity'];
+        } 
+        if (isset ($data['note_header1'])) {
+            $this->note_header1 = (string) $data['note_header1'];
+        } 
+        if (isset ($data['note_header2'])) {
+            $this->note_header2 = (string) $data['note_header2'];
         } 
 
         return;
@@ -68,7 +79,9 @@ class NoteBlock extends Block
         return array(
             'note_type' => $this->note_type,
             'note_color' => $this->note_color, 
-            'note_quantity' => $this->note_quantity
+            'note_quantity' => $this->note_quantity,
+            'note_header1' => $this->note_header1,
+            'note_header2' => $this->note_header2
         );
     }
 
@@ -106,6 +119,12 @@ class NoteBlock extends Block
         }
         if (isset($properties['note_quantity'])) {
             $this->note_quantity = $properties['note_quantity'];
+        }
+        if (isset($properties['note_header1'])) {
+            $this->note_header1 = $properties['note_header1'];
+        }
+        if (isset($properties['note_header2'])) {
+            $this->note_header2 = $properties['note_header2'];
         }
 
         $this->save();

@@ -25,6 +25,19 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 ($original.clone()).insertAfter($original);
             }
             this.onWriting();
+            
+            var $header2 = $.parseJSON($view.$(".cw-noteblock-header2-stored").val());
+            
+            if ($notetype == "classic") { 
+                $view.$("textarea").each(function(){
+                   var string = $header2.shift();
+                    $("<p>"+string+"</p>").insertBefore($(this));
+                    $("<br><br>").insertAfter($(this));
+                });
+            } else {
+                var string = $header2.shift();
+                $("<p>"+string+"</p>").insertBefore($view.$("textarea").first());
+            }
         },
         
         onWriting: function() {

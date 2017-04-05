@@ -1,7 +1,15 @@
 <input type="hidden" class="cw-noteblock-type-stored" value="{{note_type}}">
 <input type="hidden" class="cw-noteblock-color-stored" value="{{note_color}}">
 <input type="hidden" class="cw-noteblock-quantity-stored" value="{{note_quantity}}">
+<input type="hidden" class="cw-noteblock-header1-stored" value="{{note_header1}}">
+<input type="hidden" class="cw-noteblock-header2-stored" value="{{note_header2}}">
 
+<label for="cw-noteblock-header1">{{#i18n}}PDF Titel{{/i18n}}: </label>
+<input type="text" class="cw-noteblock-header1" name="cw-noteblock-header1">
+<br>
+<label for="cw-noteblock-header2">{{#i18n}}Fragestellung{{/i18n}}: </label>
+<input type="text" class="cw-noteblock-header2" name="cw-noteblock-header2">
+<br>
 <label for="cw-noteblock-type">{{#i18n}}Art{{/i18n}}: </label>
 <select class="cw-noteblock-type" name="cw-noteblock-type">
     <option value="post-it">{{#i18n}}post-it{{/i18n}}</option>

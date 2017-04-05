@@ -1,11 +1,14 @@
 <input type="hidden" class="cw-noteblock-quantity-stored" value="{{note_quantity}}">
+<input type="hidden" class="cw-noteblock-header2-stored" value="{{note_header2}}">
 <textarea class="{{note_type}}" style="background-color: {{note_color_student_view}};"></textarea>
 <br><br>
 <form action="print/note" method="post" target="_blank">
-    <input class="cw-noteblock-button" type="submit" value="Druckversion öffnen" name="download">
+    <input class="cw-noteblock-button" type="submit" value="Druckversion Ã¶ffnen" name="download">
     <input type="hidden" name="note-data">
     <input type="hidden" name="note-type" value="{{note_type}}">
     <input type="hidden" name="note-color" value="{{note_color}}">
+    <input type="hidden" name="note-header1" value="{{note_header1}}">
+    <input type="hidden" name="note-header2" value="{{note_header2}}">
     
 </form>
 
