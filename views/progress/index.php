@@ -65,7 +65,9 @@ $titleize = function ($content) {
       <? foreach ($courseware['children'] as $chapter) : ?>
         <tr class=chapter>
           <th colspan=2>
-            <?= $titleize(htmlReady($chapter['title'])) ?>
+              <a href="<?= $controller->url_for('courseware', array('selected' => $chapter['id'])) ?>">
+                <?= $titleize(htmlReady($chapter['title'])) ?>
+              </a>
             <? if (sizeof($chapter['children'])) : ?>
               <span class=progress><?= $progress($chapter, "%") ?></span>
             <? endif ?>
@@ -75,7 +77,9 @@ $titleize = function ($content) {
         <? foreach ($chapter['children'] as $subchapter) : ?>
           <tr class=subchapter>
             <th>
-              <?= $titleize(htmlReady($subchapter['title'])) ?>
+              <a href="<?= $controller->url_for('courseware', array('selected' => $subchapter['id'])) ?>">
+                <?= $titleize(htmlReady($subchapter['title'])) ?>
+              </a>
               <? if (sizeof($subchapter['children'])) : ?>
                 <span class=progress><?= $progress($subchapter, "%") ?></span>
               <? endif ?>
