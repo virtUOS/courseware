@@ -68,14 +68,12 @@ class PrintController extends CoursewareStudipController {
                 }
             }
         } else if ($note_type == "classic") {
-            $x = 20;
+            $x = 15;
             $y = $pdf->getY();
             foreach ($note_content as $key => $text) {
-                //$pdf->Cell(0, 0, , 0, false, 'L', 0, '', 0, false, 'M', 'B');
                 $pdf->writeHTMLCell(160, "", $x, $y ,$note_header2[$key]);
                 $y += 12;
-                //$pdf->Cell(0, 0, $this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401), 0, false, 'L', 0, '', 0, false, 'M', 'B');
-                $pdf->writeHTMLCell(160, "", $x, $y ,$this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401));
+                $pdf->writeHTMLCell(160, "", $x, $y ,$this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401), 0, 1, 1, true, 'J', true);
                 $y +=  $pdf->getY()+24;
                 if ($y > 260) {
                     $pdf->AddPage();
@@ -114,7 +112,8 @@ class PrintController extends CoursewareStudipController {
         $pdf->writeHTMLCell(180, '', 15, 55, $this->htmlentitiesOutsideHTMLTags($selfevaluation_description, ENT_HTML401), 0, 1, 1, true, 'J', true);
         
         $y = $pdf->getY()+10;
-        $w = 36;
+        $w = 24;
+        $w_textcell = 84;
         $h = 12;
         
         $style1 = array('width' => 0.2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(255, 255, 255));
@@ -122,14 +121,14 @@ class PrintController extends CoursewareStudipController {
         
         $pdf->SetLineStyle($style1);
         $pdf->SetFillColor(255, 255, 255);
-        $pdf->MultiCell($w, $h, '', 1, 'J', 1, 0, 15, $y, true, 0, false, true, $h, 'T');
+        $pdf->MultiCell($w_textcell, $h, '', 1, 'J', 1, 0, 15, $y, true, 0, false, true, $h, 'T');
         $pdf->SetFillColor(0, 127, 75);
         $pdf->SetTextColor(255, 255, 255);
         $pdf->SetLineStyle($style1);
-        $pdf->MultiCell($w, $h, "++", 1, 'C', 1, 0, $w+15, $y, true, 0, false, true, $h, 'M');
-        $pdf->MultiCell($w, $h, "+", 1, 'C', 1, 1, $w*2+15, $y, true, 0, false, true, $h, 'M');
-        $pdf->MultiCell($w, $h, "-", 1, 'C', 1, 1, $w*3+15, $y, true, 0, false, true, $h, 'M');
-        $pdf->MultiCell($w, $h, "--", 1, 'C', 1, 1, $w*4+15, $y, true, 0, false, true, $h, 'M');
+        $pdf->MultiCell($w, $h, "++", 1, 'C', 1, 0, $w_textcell+15, $y, true, 0, false, true, $h, 'M');
+        $pdf->MultiCell($w, $h, "+", 1, 'C', 1, 1, $w_textcell+$w+15, $y, true, 0, false, true, $h, 'M');
+        $pdf->MultiCell($w, $h, "-", 1, 'C', 1, 1, $w_textcell+$w*2+15, $y, true, 0, false, true, $h, 'M');
+        $pdf->MultiCell($w, $h, "--", 1, 'C', 1, 1, $w_textcell+$w*3+15, $y, true, 0, false, true, $h, 'M');
         $pdf->Ln(4);
         
         $y = $y+$h;
@@ -141,27 +140,27 @@ class PrintController extends CoursewareStudipController {
             $pdf->SetLineStyle($style1);
             $pdf->SetFillColor(0, 127, 75);
             $pdf->SetTextColor(255, 255, 255);
-            $pdf->writeHTMLCell($w, $h,  15, $y, $txt, 0, 1, 1, true, 'L', true);
+            $pdf->writeHTMLCell($w_textcell, $h,  15, $y, $txt, 0, 1, 1, true, 'L', true);
             $pdf->SetFillColor(255, 255, 255);
             $pdf->SetLineStyle(array('width' => 0.2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(200, 200, 200)));
-            $pdf->MultiCell($w, $h, '', 1, 'J', 1, 0, $w+15, $y, true, 0, false, true, $h, 'T');
-            $pdf->MultiCell($w, $h, '', 1, 'J', 1, 1, $w*2+15, $y, true, 0, false, true, $h, 'T');
-            $pdf->MultiCell($w, $h, '', 1, 'J', 1, 1, $w*3+15, $y, true, 0, false, true, $h, 'T');
-            $pdf->MultiCell($w, $h, '', 1, 'J', 1, 1, $w*4+15, $y, true, 0, false, true, $h, 'T');
+            $pdf->MultiCell($w, $h, '', 1, 'J', 1, 0, $w_textcell+15, $y, true, 0, false, true, $h, 'T');
+            $pdf->MultiCell($w, $h, '', 1, 'J', 1, 1, $w_textcell+$w+15, $y, true, 0, false, true, $h, 'T');
+            $pdf->MultiCell($w, $h, '', 1, 'J', 1, 1, $w_textcell+$w*2+15, $y, true, 0, false, true, $h, 'T');
+            $pdf->MultiCell($w, $h, '', 1, 'J', 1, 1, $w_textcell+$w*3+15, $y, true, 0, false, true, $h, 'T');
             if (($cx != 0) && ($cy != 0)) {$lastcy = $cy; $lastcx = $cx;}
             $cy = $y+$h/2;
             switch($content->value) {
                 case "++":
-                    $cx = $x+$w+$w/2+15;
+                    $cx = $x+$w_textcell+$w/2+15;
                     break;
                 case "+":
-                    $cx = $x+$w*2+$w/2+15;
+                    $cx = $x+$w_textcell+$w+$w/2+15;
                     break;
                 case "-":
-                    $cx = $x+$w*3+$w/2+15;
+                    $cx = $x+$w_textcell+$w*2+$w/2+15;
                     break;
                 case "--":
-                    $cx = $x+$w*4+$w/2+15;
+                    $cx = $x+$w_textcell+$w*3+$w/2+15;
                     break;
                 
             }
@@ -181,14 +180,14 @@ class PrintController extends CoursewareStudipController {
                     $h = 12;
                     $pdf->SetLineStyle($style1);
                     $pdf->SetFillColor(255, 255, 255);
-                    $pdf->MultiCell($w, $h, '', 1, 'J', 1, 0, 15, $y, true, 0, false, true, $h, 'T');
+                    $pdf->MultiCell($w_textcell, $h, '', 1, 'J', 1, 0, 15, $y, true, 0, false, true, $h, 'T');
                     $pdf->SetFillColor(0, 127, 75);
                     $pdf->SetTextColor(255, 255, 255);
                     $pdf->SetLineStyle($style1);
-                    $pdf->MultiCell($w, $h, "++", 1, 'C', 1, 0, $w+15, $y, true, 0, false, true, $h, 'M');
-                    $pdf->MultiCell($w, $h, "+", 1, 'C', 1, 1, $w*2+15, $y, true, 0, false, true, $h, 'M');
-                    $pdf->MultiCell($w, $h, "-", 1, 'C', 1, 1, $w*3+15, $y, true, 0, false, true, $h, 'M');
-                    $pdf->MultiCell($w, $h, "--", 1, 'C', 1, 1, $w*4+15, $y, true, 0, false, true, $h, 'M');
+                    $pdf->MultiCell($w, $h, "++", 1, 'C', 1, 0, $w_textcell+15, $y, true, 0, false, true, $h, 'M');
+                    $pdf->MultiCell($w, $h, "+", 1, 'C', 1, 1, $w_textcell+$w+15, $y, true, 0, false, true, $h, 'M');
+                    $pdf->MultiCell($w, $h, "-", 1, 'C', 1, 1, $w_textcell+$w*2+15, $y, true, 0, false, true, $h, 'M');
+                    $pdf->MultiCell($w, $h, "--", 1, 'C', 1, 1, $w_textcell+$w*3+15, $y, true, 0, false, true, $h, 'M');
                     $pdf->Ln(4);
                     $y = $y+$h;
                     $x = 0;
