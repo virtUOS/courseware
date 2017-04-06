@@ -64,36 +64,41 @@ $titleize = function ($content) {
     <table class=chapters>
       <? foreach ($courseware['children'] as $chapter) : ?>
         <tr class=chapter>
-            <a href="<?= $controller->url_for('courseware', array('selected' => $chapter['id'])) ?>">
+            
                 <th colspan=2>
+                    <a href="<?= $controller->url_for('courseware', array('selected' => $chapter['id'])) ?>">
                     <?= $titleize(htmlReady($chapter['title'])) ?>
                     <? if (sizeof($chapter['children'])) : ?>
                         <!---<span class=progress><?//= $progress($chapter, "%") ?></span> -->
                     <? endif ?>
+                    </a>
                 </th>
-            </a>
+           
         </tr>
 
         <? foreach ($chapter['children'] as $subchapter) : ?>
           <tr class=subchapter>
-            <a href="<?= $controller->url_for('courseware', array('selected' => $subchapter['id'])) ?>">
+            
                 <th>
+                    <a href="<?= $controller->url_for('courseware', array('selected' => $subchapter['id'])) ?>">
                     <?= $titleize(htmlReady($subchapter['title'])) ?>
                     <? if (sizeof($subchapter['children'])) : ?>
                         <!-- <span class=progress><?//= $progress($subchapter, "%") ?></span> -->
                     <? endif ?>
+                    </a>
                 </th>
-            </a>
+            
             <td>
               <ol class=sections>
                 <? foreach ($subchapter['children'] as $section) : ?>
-                    <a href="<?= $controller->url_for('courseware', array('selected' => $section['id'])) ?>"
-                       title="<?= htmlReady($section['title']) ?>"
-                       data-progress="<?= $progress($section) ?>">
-                        <li>
+                    <li>
+                        <a href="<?= $controller->url_for('courseware', array('selected' => $section['id'])) ?>"
+                        title="<?= htmlReady($section['title']) ?>"
+                        data-progress="<?= $progress($section) ?>">
                             <progress value=<?= $progress($section) ?> max=100><span><?= $progress($section) ?></span>%</progress>
-                        </li>
-                    </a>
+                        </a>
+                    </li>
+                    
                 <? endforeach ?>
               </ol>
             </td>
