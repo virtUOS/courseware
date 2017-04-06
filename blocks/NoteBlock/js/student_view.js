@@ -46,12 +46,15 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
             var $data = $view.$("input[name=note-data]");
             var $content = [];
             var $notes = this.$(".post-it");
+            var $classic = this.$(".classic");
             if ($notes.length != 0) {
                 $.each($notes, function($i){ 
                     $content.push($(this).val());
                 });
-            } else {
-                $content.push(this.$(".classic").val());
+            } else if ($classic.length != 0){
+                $.each($classic, function($i){ 
+                    $content.push($(this).val());
+                });
             }
             $data.val(JSON.stringify($content));
           
