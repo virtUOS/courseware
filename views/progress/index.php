@@ -64,36 +64,36 @@ $titleize = function ($content) {
     <table class=chapters>
       <? foreach ($courseware['children'] as $chapter) : ?>
         <tr class=chapter>
-          <th colspan=2>
-              <a href="<?= $controller->url_for('courseware', array('selected' => $chapter['id'])) ?>">
-                <?= $titleize(htmlReady($chapter['title'])) ?>
-              </a>
-            <? if (sizeof($chapter['children'])) : ?>
-              <span class=progress><?= $progress($chapter, "%") ?></span>
-            <? endif ?>
-          </th>
+            <a href="<?= $controller->url_for('courseware', array('selected' => $chapter['id'])) ?>">
+                <th colspan=2>
+                    <?= $titleize(htmlReady($chapter['title'])) ?>
+                    <? if (sizeof($chapter['children'])) : ?>
+                        <!---<span class=progress><?//= $progress($chapter, "%") ?></span> -->
+                    <? endif ?>
+                </th>
+            </a>
         </tr>
 
         <? foreach ($chapter['children'] as $subchapter) : ?>
           <tr class=subchapter>
-            <th>
-              <a href="<?= $controller->url_for('courseware', array('selected' => $subchapter['id'])) ?>">
-                <?= $titleize(htmlReady($subchapter['title'])) ?>
-              </a>
-              <? if (sizeof($subchapter['children'])) : ?>
-                <span class=progress><?= $progress($subchapter, "%") ?></span>
-              <? endif ?>
-            </th>
+            <a href="<?= $controller->url_for('courseware', array('selected' => $subchapter['id'])) ?>">
+                <th>
+                    <?= $titleize(htmlReady($subchapter['title'])) ?>
+                    <? if (sizeof($subchapter['children'])) : ?>
+                        <!-- <span class=progress><?//= $progress($subchapter, "%") ?></span> -->
+                    <? endif ?>
+                </th>
+            </a>
             <td>
               <ol class=sections>
                 <? foreach ($subchapter['children'] as $section) : ?>
-                  <li>
                     <a href="<?= $controller->url_for('courseware', array('selected' => $section['id'])) ?>"
                        title="<?= htmlReady($section['title']) ?>"
                        data-progress="<?= $progress($section) ?>">
-                      <progress value=<?= $progress($section) ?> max=100><span><?= $progress($section) ?></span>%</progress>
+                        <li>
+                            <progress value=<?= $progress($section) ?> max=100><span><?= $progress($section) ?></span>%</progress>
+                        </li>
                     </a>
-                  </li>
                 <? endforeach ?>
               </ol>
             </td>
