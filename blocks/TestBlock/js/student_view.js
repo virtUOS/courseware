@@ -108,7 +108,10 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         postRender: function () {
             var view = this;
             var $form = this.$('.exercise-content form');
-
+            if (view.$(".number-of-exercises").val() == 1 ) {
+                view.$(".exercisenavbutton").hide();
+            }
+            
             $form.each(function () {
                     var $exercise_type = $(this).find('input[name="exercise_type"]').val();
                     var $user_answers = $(this).find('input[name="user_answers_string"]').val();
