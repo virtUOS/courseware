@@ -736,7 +736,8 @@ class TestBlock extends Block
                     'correct' => $correct,
                     'tryagain' => $tryagain,
                     'character_picker' => $exercise->getVipsExercise()->characterPicker,
-                    'exercise_hint' => $exercise->getVipsExercise()->getHint()
+                    'exercise_hint' => $exercise->getVipsExercise()->getHint(),
+                    'corrector_comment' => html_entity_decode($solution['corrector_comment'])
                 );
                 $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
                 $available = !$entry['show_solution'] && !$entry['solving_allowed']; //or correction is available
