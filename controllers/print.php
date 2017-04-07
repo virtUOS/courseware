@@ -31,8 +31,8 @@ class PrintController extends CoursewareStudipController {
         
         // create new PDF document
         $pdf = new DFBPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'ISO-8859', false);
-        $pdf->dfbtitle1 = $note_header1;
-        $pdf->dfbtitle2 = $note_header2;
+        $pdf->dfbtitle1 = $this->htmlentitiesOutsideHTMLTags($note_header1, ENT_HTML401);
+        $pdf->dfbtitle2 = $this->htmlentitiesOutsideHTMLTags($note_header2, ENT_HTML401);
         $pdf->SetTextColor(0, 0, 0);
 
         $pdf->SetTopMargin(40);
@@ -104,8 +104,8 @@ class PrintController extends CoursewareStudipController {
         $selfevaluation_content  = json_decode(htmlentities($selfevaluation_content, ENT_HTML401, false));
         // create new PDF document
         $pdf = new DFBPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'ISO-8859', false);
-        $pdf->dfbtitle1 = $selfevaluation_title;
-        $pdf->dfbtitle2 = $selfevaluation_subtitle;
+        $pdf->dfbtitle1 = $this->htmlentitiesOutsideHTMLTags($selfevaluation_title, ENT_HTML401);
+        $pdf->dfbtitle2 = $this->htmlentitiesOutsideHTMLTags($selfevaluation_subtitle, ENT_HTML401);
         $pdf->SetTopMargin(40);
         $pdf->SetLeftMargin(20);
         $pdf->SetRightMargin(20);

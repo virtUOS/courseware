@@ -16,9 +16,9 @@ class DFBPDF extends TCPDF {
             // Title
             $this->SetLeftMargin(40);
             $this->Ln(16);
-            $this->Cell(0, 0, $this->dfbtitle1, 0, false, 'L', 0, '', 0, false, 'M', 'B');
+            $this->writeHTMLCell(140, '', 40, 12, $this->dfbtitle1, 0, 1, 1, true, 'J', true);
             $this->Ln(8);
-            $this->Cell(0, 0, $this->dfbtitle2, 0, false, 'L', 0, '', 0, false, 'M', 'B');
+            $this->writeHTMLCell(140, '', 40, 20, $this->dfbtitle2, 0, 1, 1, true, 'J', true);
     }
 
     // Page footer
