@@ -137,14 +137,16 @@ class PrintController extends CoursewareStudipController {
         $pdf->Ln(4);
         
         $y = $y+$h;
-        $h = 24;
+        $h = 12;
         $cx = 0;
         $cy = 0;
         foreach($selfevaluation_content as $key => $content) {
             $txt = $content->element;
+            
             $pdf->SetLineStyle($style1);
             $pdf->SetFillColor(0, 127, 75);
             $pdf->SetTextColor(255, 255, 255);
+            $pdf->SetFontSize(10);
             $pdf->writeHTMLCell($w_textcell, $h,  15, $y, $txt, 0, 1, 1, true, 'L', true);
             $pdf->SetFillColor(255, 255, 255);
             $pdf->SetLineStyle(array('width' => 0.2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(200, 200, 200)));
@@ -178,7 +180,7 @@ class PrintController extends CoursewareStudipController {
             }
             $pdf->Ln(4);
             $y = $y+$h;
-            if ($y > 250) {
+            if ($y > 260) {
                     $pdf->Circle($cx, $cy, 2, 0, 360, 'DF');
                     $pdf->AddPage();
                     $y = 50;
