@@ -1,5 +1,5 @@
 <input type="hidden" class="cw-noteblock-quantity-stored" value="{{note_quantity}}">
-<input type="hidden" class="cw-noteblock-header2-stored" value="{{note_header2}}">
+<input type="hidden" class="cw-noteblock-questions-stored" value="{{note_questions}}">
 <textarea class="{{note_type}}" style="background-color: {{note_color_student_view}};"></textarea>
 <br><br>
 <form action="print/note" method="post" target="_blank">
@@ -9,6 +9,7 @@
     <input type="hidden" name="note-color" value="{{note_color}}">
     <input type="hidden" name="note-header1" value="{{note_header1}}">
     <input type="hidden" name="note-header2" value="{{note_header2}}">
+    <input type="hidden" name="note-questions" value="{{note_questions}}">
     
 </form>
 

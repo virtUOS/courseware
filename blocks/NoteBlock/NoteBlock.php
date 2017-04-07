@@ -14,6 +14,7 @@ class NoteBlock extends Block
         $this->defineField('note_quantity', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('note_header1', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('note_header2', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('note_questions', \Mooc\SCOPE_BLOCK, '');
 
     }
 
@@ -50,6 +51,9 @@ class NoteBlock extends Block
         if (isset ($data['note_header2'])) {
             $this->note_header2 = (string) $data['note_header2'];
         } 
+        if (isset ($data['note_questions'])) {
+            $this->note_questions = (string) $data['note_questions'];
+        } 
 
         return;
     }
@@ -81,7 +85,8 @@ class NoteBlock extends Block
             'note_color' => $this->note_color, 
             'note_quantity' => $this->note_quantity,
             'note_header1' => $this->note_header1,
-            'note_header2' => $this->note_header2
+            'note_header2' => $this->note_header2,
+            'note_questions' => $this->note_questions
         );
     }
 
@@ -125,6 +130,9 @@ class NoteBlock extends Block
         }
         if (isset($properties['note_header2'])) {
             $this->note_header2 = $properties['note_header2'];
+        }
+        if (isset($properties['note_questions'])) {
+            $this->note_questions = $properties['note_questions'];
         }
 
         $this->save();

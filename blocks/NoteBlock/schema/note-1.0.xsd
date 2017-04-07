@@ -9,4 +9,5 @@
     <xsd:attribute name="note_quantity" type="xsd:string" />
     <xsd:attribute name="note_header1" type="xsd:string" />
     <xsd:attribute name="note_header2" type="xsd:string" />
+    <xsd:attribute name="note_questions" type="xsd:string" />
 </xsd:schema>

@@ -16,7 +16,9 @@ class DFBPDF extends TCPDF {
             // Title
             $this->SetLeftMargin(40);
             $this->Ln(16);
-            $this->Cell(0, 0, 'DFB Online Lernen ', 0, false, 'L', 0, '', 0, false, 'M', 'B');
+            $this->Cell(0, 0, $this->dfbtitle1, 0, false, 'L', 0, '', 0, false, 'M', 'B');
+            $this->Ln(8);
+            $this->Cell(0, 0, $this->dfbtitle2, 0, false, 'L', 0, '', 0, false, 'M', 'B');
     }
 
     // Page footer

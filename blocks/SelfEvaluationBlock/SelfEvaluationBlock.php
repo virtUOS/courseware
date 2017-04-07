@@ -10,6 +10,7 @@ class SelfEvaluationBlock extends Block
     function initialize()
     {
         $this->defineField('selfevaluation_title', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('selfevaluation_subtitle', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('selfevaluation_description', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('selfevaluation_value', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('selfevaluation_content', \Mooc\SCOPE_BLOCK, '');
@@ -34,6 +35,9 @@ class SelfEvaluationBlock extends Block
         if (isset ($data['selfevaluation_title'])) {
             $this->selfevaluation_title = \STUDIP\Markup::purify( (string) $data['selfevaluation_title']);
         } 
+        if (isset ($data['selfevaluation_subtitle'])) {
+            $this->selfevaluation_subtitle = \STUDIP\Markup::purify( (string) $data['selfevaluation_subtitle']);
+        } 
         if (isset ($data['selfevaluation_description'])) {
             $this->selfevaluation_description = \STUDIP\Markup::purify((string) $data['selfevaluation_description']);
         } 
@@ -57,6 +61,7 @@ class SelfEvaluationBlock extends Block
     {
         return array(
             'selfevaluation_title'          => $this->selfevaluation_title,
+            'selfevaluation_subtitle'       => $this->selfevaluation_subtitle,
             'selfevaluation_description'    => $this->selfevaluation_description, 
             'selfevaluation_value'          => $this->selfevaluation_value, 
             'selfevaluation_content'        => $this->selfevaluation_content
@@ -91,6 +96,9 @@ class SelfEvaluationBlock extends Block
     {
         if (isset($properties['selfevaluation_title'])) {
             $this->selfevaluation_title = $properties['selfevaluation_title'];
+        }
+        if (isset($properties['selfevaluation_subtitle'])) {
+            $this->selfevaluation_subtitle = $properties['selfevaluation_subtitle'];
         }
         if (isset($properties['selfevaluation_description'])) {
             $this->selfevaluation_description = $properties['selfevaluation_description'];

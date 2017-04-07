@@ -26,6 +26,7 @@ define(['assets/js/author_view', 'assets/js/url'],
             var $notequantity = $view.$(".cw-noteblock-quantity-stored").val();
             var $noteheader1 = $view.$(".cw-noteblock-header1-stored").val();
             var $noteheader2 = $view.$(".cw-noteblock-header2-stored").val();
+            var $notequestions = $view.$(".cw-noteblock-questions-stored").val();
             if($notetype != "") {
                 $view.$(".cw-noteblock-type option[value='"+$notetype+"']").prop("selected", true);
                 if ($notetype == "classic") {
@@ -45,11 +46,14 @@ define(['assets/js/author_view', 'assets/js/url'],
                 $view.$(".cw-noteblock-header1").val($noteheader1);
             }
             if($noteheader2 != "") {
-                $.each(JSON.parse($noteheader2), function($key, $value){
-                    $('<input type="text" class="cw-noteblock-header2" name="cw-noteblock-header2" value="'+$value+'">').insertAfter($view.$(".cw-noteblock-header2").last());
+                $view.$(".cw-noteblock-header2").val($noteheader2);
+            }
+            if($notequestions != "") {
+                $.each(JSON.parse($notequestions), function($key, $value){
+                    $('<input type="text" class="cw-noteblock-questions" name="cw-noteblock-questions" value="'+$value+'">').insertAfter($view.$(".cw-noteblock-questions").last());
 
                 });
-                $view.$(".cw-noteblock-header2").first().remove();
+                $view.$(".cw-noteblock-questions").first().remove();
                 
             }
         },
@@ -60,15 +64,23 @@ define(['assets/js/author_view', 'assets/js/url'],
             var $notecolor = $view.$(".cw-noteblock-color").val();
             var $notequantity = $view.$(".cw-noteblock-quantity").val();
             var $noteheader1 = $view.$(".cw-noteblock-header1").val();
-            var $noteheader2 = $view.$(".cw-noteblock-header2");
-            var $noteheader2val = new Array();
-            $noteheader2.each(function(){
-                    $noteheader2val.push($(this).val());
+            var $noteheader2 = $view.$(".cw-noteblock-header2").val();
+            var $notequestions = $view.$(".cw-noteblock-questions");
+            var $notequestionsval = new Array();
+            $notequestions.each(function(){
+                    $notequestionsval.push($(this).val());
             });
-            $noteheader2val = JSON.stringify($noteheader2val);
-            console.log($noteheader2val);
+            $notequestionsval = JSON.stringify($notequestionsval);
+            console.log($notequestionsval);
             helper
-                .callHandler(this.model.id, "save", {note_type: $notetype, note_color: $notecolor, note_quantity: $notequantity, note_header1: $noteheader1, note_header2: $noteheader2val})
+                .callHandler(this.model.id, "save", {
+                    note_type: $notetype,
+                    note_color: $notecolor,
+                    note_quantity: $notequantity,
+                    note_header1: $noteheader1,
+                    note_header2: $noteheader2,
+                    note_questions: $notequestionsval
+                })
                 .then(
                     // success
                     function () {
@@ -100,7 +112,7 @@ define(['assets/js/author_view', 'assets/js/url'],
             else {
                 $notequantity.prop("disabled", false);
                 $notecolor.prop("disabled", false);
-                $view.$(".cw-noteblock-header2").not(':first').remove();
+                $view.$(".cw-noteblock-questions").not(':first').remove();
             }
         },
         
@@ -108,19 +120,19 @@ define(['assets/js/author_view', 'assets/js/url'],
             var $view = this;
             var $notetype = $view.$(".cw-noteblock-type").val();
             var $notequantity = $view.$(".cw-noteblock-quantity").val();
-            var $noteheader2 = $view.$(".cw-noteblock-header2");
+            var $notequestions = $view.$(".cw-noteblock-questions");
             
             if ($notetype == "classic") {
                 do {
-                    if($notequantity > $view.$(".cw-noteblock-header2").length){
+                    if($notequantity > $view.$(".cw-noteblock-questions").length){
                         //clone
-                        $('</label><input type="text" class="cw-noteblock-header2" name="cw-noteblock-header2">').insertAfter($view.$(".cw-noteblock-header2").last());
+                        $('</label><input type="text" class="cw-noteblock-questions" name="cw-noteblock-questions">').insertAfter($view.$(".cw-noteblock-questions").last());
                     }
-                    if($notequantity < $view.$(".cw-noteblock-header2").length){
+                    if($notequantity < $view.$(".cw-noteblock-questions").length){
                         //clone
-                        $view.$(".cw-noteblock-header2").last().remove();
+                        $view.$(".cw-noteblock-questions").last().remove();
                     }
-                } while ($notequantity != $view.$(".cw-noteblock-header2").length) 
+                } while ($notequantity != $view.$(".cw-noteblock-questions").length) 
             }
             else {
 

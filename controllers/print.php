@@ -24,22 +24,23 @@ class PrintController extends CoursewareStudipController {
         $note_color = Request::get("note-color");
         $note_header1 = Request::get("note-header1");
         $note_header2 = Request::get("note-header2");
+        $note_questions = Request::get("note-questions");
         $note_content = json_decode($note_content);
-        $note_header2 = json_decode($note_header2);
+        $note_questions = json_decode($note_questions);
         
         
         // create new PDF document
         $pdf = new DFBPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'ISO-8859', false);
+        $pdf->dfbtitle1 = $note_header1;
+        $pdf->dfbtitle2 = $note_header2;
         $pdf->SetTextColor(0, 0, 0);
 
         $pdf->SetTopMargin(40);
-        $pdf->SetLeftMargin(20);
+        $pdf->SetLeftMargin(15);
         $pdf->SetRightMargin(20);
         $pdf->AddPage();
-        $pdf->Cell(0, 0, $note_header1, 0, false, 'L', 0, '', 0, false, 'M', 'B');
-        $pdf->Ln(12);
         if ($note_type == "post-it") {
-            $pdf->Cell(0, 0, $note_header2[0], 0, false, 'L', 0, '', 0, false, 'M', 'B');
+            $pdf->Cell(0, 0, $note_questions[0], 0, false, 'L', 0, '', 0, false, 'M', 'B');
             $pdf->Ln(12);
         }
         $x = 35;
@@ -71,9 +72,10 @@ class PrintController extends CoursewareStudipController {
             $x = 15;
             $y = $pdf->getY();
             foreach ($note_content as $key => $text) {
-                $pdf->writeHTMLCell(160, "", $x, $y ,$note_header2[$key]);
+                $pdf->SetFillColor(255,255,255);
+                $pdf->writeHTMLCell(160, "", $x, $y ,$note_questions[$key]);
                 $y += 12;
-                $pdf->writeHTMLCell(160, "", $x, $y ,$this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401), 0, 1, 1, true, 'J', true);
+                $pdf->writeHTMLCell(180, "", $x, $y ,$this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401), 0, 1, 1, true, 'J', true);
                 $y +=  $pdf->getY()+24;
                 if ($y > 260) {
                     $pdf->AddPage();
@@ -96,10 +98,13 @@ class PrintController extends CoursewareStudipController {
         
         $selfevaluation_content = Request::get("selfevaluation-data");
         $selfevaluation_title = Request::get("selfevaluation-title");
+        $selfevaluation_subtitle = Request::get("selfevaluation-subtitle");
         $selfevaluation_description = Request::get("selfevaluation-description");
         $selfevaluation_content  = json_decode(htmlentities($selfevaluation_content, ENT_HTML401, false));
         // create new PDF document
         $pdf = new DFBPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'ISO-8859', false);
+        $pdf->dfbtitle1 = $selfevaluation_title;
+        $pdf->dfbtitle2 = $selfevaluation_subtitle;
         $pdf->SetTopMargin(40);
         $pdf->SetLeftMargin(20);
         $pdf->SetRightMargin(20);
