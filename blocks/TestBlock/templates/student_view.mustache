@@ -46,6 +46,7 @@
                         {{#correct}}
                             <div class="messagebox messagebox_success">
                                 {{#i18n}}Deine Lösung ist korrekt!{{/i18n}}
+                                <button name="exercisenav" class="exercisenavnext messagebox_next_button" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}" , "direction": "next"}'>weiter zur nächsten Frage &rarr;</button>
                             </div>
                         {{/correct}}
                         {{^tryagain}}
