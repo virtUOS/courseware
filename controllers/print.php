@@ -86,7 +86,7 @@ class PrintController extends CoursewareStudipController {
             $html = $this->htmlentitiesOutsideHTMLTags($note_content[0], ENT_HTML401);
             $pdf->writeHTML($html, true, 0, true, 0);
         }
-        $filename = $pdf->dfbtitle1."-".$pdf->dfbtitle2.".pdf";
+        $filename = $note_header1."-".$note_header2.".pdf";
         $pdf->Output($filename);
         exit("delivering pdf file");
     }
@@ -208,7 +208,7 @@ class PrintController extends CoursewareStudipController {
             
         }
         $pdf->Circle($cx, $cy, 2, 0, 360, 'DF');
-        $filename = $pdf->dfbtitle1."-".$pdf->dfbtitle2.".pdf";
+        $filename = $selfevaluation_title."-".$selfevaluation_subtitle.".pdf";
         $pdf->Output($filename);
         exit("delivering pdf file");
     }
