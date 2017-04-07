@@ -61,12 +61,13 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         },
         
         onDownload: function(event) {
-            
+            var $view = this;
             helper
                 .callHandler(this.model.id, "download", {})
                 .then(
                     // success
                     function () {
+                        $view.$(".message_after_download").delay(2000).show(0);
                     },
 
                     // error

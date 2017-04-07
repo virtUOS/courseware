@@ -19,7 +19,11 @@ class SelfEvaluationBlock extends Block
 
     function student_view()
     {
-        return array_merge($this->getAttrArray());
+        $courseware = $this->container['current_courseware'];
+        $next_chapter_id = $courseware->getNeighborSections($this->_model)["next"]["id"];
+        $next_chapter_link = \PluginEngine::getURL(Courseware, array('selected' => $next_chapter_id), "courseware");
+        
+        return array_merge($this->getAttrArray(), array('next_chapter_link' => $next_chapter_link ));
     }
 
     function author_view()

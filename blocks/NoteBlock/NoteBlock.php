@@ -23,7 +23,10 @@ class NoteBlock extends Block
         if ($this->note_type == "classic") {
             $classic = true;
         }
-        return array_merge($this->getAttrArray(), array('note_color_student_view' => $this->getColor($this->note_color)));
+        $courseware = $this->container['current_courseware'];
+        $next_chapter_id = $courseware->getNeighborSections($this->_model)["next"]["id"];
+        $next_chapter_link = \PluginEngine::getURL(Courseware, array('selected' => $next_chapter_id), "courseware");
+        return array_merge($this->getAttrArray(), array('note_color_student_view' => $this->getColor($this->note_color), 'next_chapter_link' => $next_chapter_link ));
     }
 
     function author_view()

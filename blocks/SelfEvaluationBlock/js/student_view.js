@@ -101,9 +101,11 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         
         onDownload: function(event) {
             var $data = this.$("input[name=selfevaluation-data]");
+            var $view = this;
             this.$(".cw-selfevaluation-form").on('submit', function(e){
                 if ($data.val() == "") {
                     alert("Bitte wählen Sie etwas aus!");
+                    $view.$(".message_after_download").hide(0);
                     e.preventDefault();
                 }
               });
@@ -113,6 +115,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 .then(
                     // success
                     function () {
+                        $view.$(".message_after_download").delay(2000).show(0);
                     },
 
                     // error
