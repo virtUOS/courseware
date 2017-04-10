@@ -1,3 +1,2 @@
-/assets/*.css
-/blocks/*/css/*.css
 /vendor
+node_modules
