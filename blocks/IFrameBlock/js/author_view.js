@@ -32,7 +32,7 @@ define(['assets/js/author_view', 'assets/js/url'],
 
         onSave: function (event) {
             var url_input    = this.$("input.urlinput");
-            var new_url      = url_input.val().replace("https", "http");
+            var new_url      = url_input.val();
             var height_input = this.$("input.heightinput");
             var new_height   = height_input.val();
             
