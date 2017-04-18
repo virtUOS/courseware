@@ -112,8 +112,8 @@ class PrintController extends CoursewareStudipController {
         $pdf->AddPage();
         $pdf->SetFillColor(255, 255, 255);
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->SetFontSize(16);
-        $pdf->writeHTMLCell(180, '', 15, 40, $this->htmlentitiesOutsideHTMLTags($selfevaluation_title, ENT_HTML401), 0, 1, 1, true, 'J', true);
+        //$pdf->SetFontSize(16);
+        //$pdf->writeHTMLCell(180, '', 15, 40, $this->htmlentitiesOutsideHTMLTags($selfevaluation_title, ENT_HTML401), 0, 1, 1, true, 'J', true);
         $pdf->SetFontSize(12);
         $pdf->writeHTMLCell(180, '', 15, 55, $this->htmlentitiesOutsideHTMLTags($selfevaluation_description, ENT_HTML401), 0, 1, 1, true, 'J', true);
         
@@ -229,9 +229,9 @@ class PrintController extends CoursewareStudipController {
     
     /*
  *    Wandelt Sonderzeichen in HTML-Entities um, 
- *    l‰sst aber die HTML-Tags bestehen.
- *    @param string $htmlText Zeichenkette die HTML-Tags und Sonderzeichen enth‰lt
- *    @param obj $ent flag f¸r htmlentities
+ *    l√§sst aber die HTML-Tags bestehen.
+ *    @param string $htmlText Zeichenkette die HTML-Tags und Sonderzeichen enth√§lt
+ *    @param obj $ent flag f√ºr htmlentities
  * 
  *    @return string gibt Zeichenkette mit darstellbarem HTML wieder 
  */
