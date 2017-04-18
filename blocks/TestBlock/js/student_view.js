@@ -108,9 +108,19 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
         postRender: function () {
             var view = this;
             var $form = this.$('.exercise-content form');
+            
+            // hide nav buttons for one question test
             if (view.$(".number-of-exercises").val() == 1 ) {
                 view.$(".exercisenavbutton").hide();
             }
+            // hide last button
+            var $messagebox_buttons = view.$(".messagebox_next_button");
+            $messagebox_buttons.each(function(){
+                var options = $.parseJSON($(this).attr('button-data'));
+                if (options.id == options.numexes) {
+                    $(this).hide();
+                }
+            });
             
             $form.each(function () {
                     var $exercise_type = $(this).find('input[name="exercise_type"]').val();
