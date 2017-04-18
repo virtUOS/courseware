@@ -22,5 +22,6 @@
 </script>
 
 <script src="<?= $plugin->getPluginURL() ?>/assets/static/courseware.js" charset="utf-8"></script>
+    <? PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css') ?>
 
 <?= $courseware_block->render($view, $context) ?>

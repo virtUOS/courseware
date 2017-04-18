@@ -26,9 +26,6 @@ class CoursewareController extends CoursewareStudipController {
 
         // add Templates
         $this->templates = $this->getMustacheTemplates();
-
-        // add CSS
-        $this->addBlockStyles();
     }
 
 
@@ -87,12 +84,6 @@ class CoursewareController extends CoursewareStudipController {
         }
 
         return $templates;
-    }
-
-    // include the stylesheets of all default block types
-    private function addBlockStyles()
-    {
-        return PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
     }
 
     // validate and store sent settings
