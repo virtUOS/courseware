@@ -24,7 +24,7 @@ fputs($fd, 'msgid ""' ."\n"
 
 // collect translatable texts
 exec("for i in blocks/*/templates/*mustache; do iconv -c -f cp1252 \$i | awk '{if (match($0, /i18n}}([^{]*){{/)) {print substr($0, RSTART+6, RLENGTH-8)}}'; done | sort -u", $output);
-exec("for i in blocks/*/*/*js; do iconv -c -f utf-8 \$i | awk '{if (match($0, /i18n([^{]*)\")/)) {print substr($0, RSTART+6, RLENGTH-8)}}'; done | sort -u", $output);
+exec("for i in blocks/*/*/*js; do iconv -c -f utf-8 \$i | awk '{if (match($0, /i18n.*'\'')/)) {print substr($0, RSTART+6, RLENGTH-8)}}'; done | sort -u", $output);
 
 $output[] = 'Bestätigung';
 $output[] = 'Diskussion';
