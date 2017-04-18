@@ -17,6 +17,7 @@
     "css-loader": "0.28.0",
     "dateformat": "2.0.0",
     "extract-text-webpack-plugin": "2.1.0",
+    "jquery.scrollto": "2.1.2",
     "less": "2.7.2",
     "less-loader": "4.0.3",
     "mustache": "2.3.0",
