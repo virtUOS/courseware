@@ -1,3 +1,5 @@
+import 'jquery.scrollto'
+
 import Backbone from 'backbone'
 import $ from 'jquery'
 import _ from 'underscore'
