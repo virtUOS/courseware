@@ -32,7 +32,11 @@
     "safari >= 7"
   ],
   "scripts": {
-    "build": "./node_modules/.bin/webpack",
-    "build:prod": "NODE_ENV=production ./node_modules/.bin/webpack"
+    "build:dev": "webpack",
+    "build:prod": "NODE_ENV=production webpack",
+    "wds": "webpack-dev-server",
+    "locales": "php buildLocales.php",
+    "prezip": "npm run build:prod && npm run locales",
+    "zip": "echo zip "
   }
 }
