@@ -8,7 +8,7 @@ use Mooc\UI\Block;
  */
 class ConfirmBlock extends Block
 {
-    const NAME = 'BestÃ¤tigung';
+    const NAME = 'Bestätigung';
 
     function initialize()
     {
@@ -19,13 +19,13 @@ class ConfirmBlock extends Block
 
     function student_view()
     {
-        $next_chapter_id = $this->_model->nextSibling()->id;
+        $courseware = $this->container['current_courseware'];
+        $next_chapter_id = $courseware->getNeighborSections($this->_model)["next"]["id"];
         $next_chapter_link = \PluginEngine::getURL(Courseware, array('selected' => $next_chapter_id), "courseware");
-
         return array(
             'confirmed' => !! $this->getProgress()->grade,
             'title'     => $this->title,
-            'next'      => $next_chapter_link
+            'next_chapter_link' => $next_chapter_link 
         );
     }
 

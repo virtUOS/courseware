@@ -15,7 +15,8 @@ define(['assets/js/student_view', 'assets/js/url', 'assets/js/templates'], funct
             // DOM instead of making a roundtrip to the server
             this.model.set({
                 'confirmed': this.$('input[name="confirmed"]').prop('checked'),
-                'title':     this.$('.title').html()
+                'title':     this.$('.title').html(),
+                'next_chapter_link': this.$(".next_chapter_link_value").val()
             });
         },
 

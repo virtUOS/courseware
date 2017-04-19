@@ -1,3 +1,5 @@
+<input type="hidden" value="{{next_chapter_link}}" class="next_chapter_link_value">
+
 <label class="confirmation">
   <input name=confirmed type=checkbox {{#confirmed}}checked disabled{{/confirmed}}>
   <span class="title">{{title}}</span>
@@ -5,6 +7,6 @@
 
 {{#confirmed}}
 <div class="messagebox messagebox_success">
-    {{#i18n}}<a href="{{next}}">Danke! Du kannst nun mit dem nächsten Abschnitt fortfahren.</a>{{/i18n}}
+    <a href="{{next_chapter_link}}" target="_self">{{#i18n}}Danke! Du kannst nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}</a>
 </div>
 {{/confirmed}}
