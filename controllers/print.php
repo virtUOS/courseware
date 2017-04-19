@@ -77,7 +77,7 @@ class PrintController extends CoursewareStudipController {
                 $y += 12;
                 $pdf->writeHTMLCell(180, "", $x, $y ,$this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401), 0, 1, 1, true, 'J', true);
                 $y +=  $pdf->getY()+24;
-                if (($y > 260) && ($key !== count($note_content)-1))){
+                if (($y > 260) && ($key !== count($note_content)-1)){
                     $pdf->AddPage();
                     $y = 50;
                 }
