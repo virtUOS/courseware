@@ -20,7 +20,7 @@ class DownloadBlock extends Block
 
     function student_view()
     {
-        
+        $this->setGrade(1.0);
         return array_merge($this->getAttrArray(), ['confirmed' => !! $this->getProgress()->grade]);
     }
 
