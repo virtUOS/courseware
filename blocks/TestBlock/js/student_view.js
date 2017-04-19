@@ -95,6 +95,14 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
 
         initialize: function(options) {
         },
+        
+        initializeFromDOM: function () {
+            // complete model by retrieving the attributes from the
+            // DOM instead of making a roundtrip to the server
+            this.model.set({
+                'next_chapter_link': this.$(".next_chapter_link_value").val()
+            });
+        },
 
         render: function() {
             

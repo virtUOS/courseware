@@ -1,6 +1,7 @@
 {{#active}}
 
     <h2 class="testblock-header">{{title}}</h2>
+    <input type="hidden" value="{{next_chapter_link}}" class="next_chapter_link_value">
   
     {{#description}}
         <div class="description">{{{description}}}</div>
@@ -64,7 +65,7 @@
                     {{/self_test}}
                     {{#solved_completely}}
                         <div class="messagebox messagebox_success">
-                            {{#i18n}}Danke! Du hast alle Aufgaben gelöst und kannst nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
+                            <a href="{{next_chapter_link}}" target="_self">{{#i18n}}Danke! Du hast alle Aufgaben gelöst und kannst nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}</a>
                         </div>
                     {{/solved_completely}}
                     

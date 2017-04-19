@@ -73,12 +73,17 @@ class TestBlock extends Block
         $typeOfThisTest = $this->test->type;
         $typeOfThisTestBlock = $subtype;
         $blockId = $this->_model->id;
+        
+        $courseware = $this->container['current_courseware'];
+        $next_chapter_id = $courseware->getNeighborSections($this->_model)["next"]["id"];
+        $next_chapter_link = \PluginEngine::getURL(Courseware, array('selected' => $next_chapter_id), "courseware");
 
         if ($typeOfThisTest == null) {
             return array(
                 'active'       => $active,
                 'exercises'    => false,
-                'typemismatch' => false
+                'typemismatch' => false,
+                'next_chapter_link' => $next_chapter_link
             );
         }
 
@@ -86,7 +91,8 @@ class TestBlock extends Block
             return array(
                 'active'       => $active,
                 'exercises'    => false,
-                'typemismatch' => true
+                'typemismatch' => true,
+                'next_chapter_link' => $next_chapter_link
             );
         }
 
@@ -94,7 +100,8 @@ class TestBlock extends Block
             ? array_merge(array(
                     'active'  => $active,
                     'blockid' => $blockId,
-                    'test_questions' => $this->test_questions
+                    'test_questions' => $this->test_questions,
+                    'next_chapter_link' => $next_chapter_link
                 ), $this->buildExercises())
             : compact('active');
     }
