@@ -21,7 +21,8 @@
 
     {{#exercises}}
         {{^skip_entry}}
-            <ul class="exercise" id="exercise{{exercise_index}}">
+           
+            <ul class="exercise{{#self_test}} selftest{{/self_test}}" id="exercise{{exercise_index}}">
                 <li>
                     <div class="exercisetitle">
                         <input type="hidden" class="number-of-exercises" value="{{number_of_exercises}}">
