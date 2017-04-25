@@ -74,8 +74,10 @@ class PrintController extends CoursewareStudipController {
             $y = $pdf->getY();
             foreach ($note_content as $key => $text) {
                 $pdf->SetFillColor(255,255,255);
+                $pdf->SetFont('', 'B', 20,'', false);
                 $pdf->writeHTMLCell(160, "", $x, $y ,$note_questions[$key]);
                 $y += 12;
+                $pdf->SetFont('', '', 25,'', false);
                 $pdf->writeHTMLCell(180, "", $x, $y ,$this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401), 0, 1, 1, true, 'J', true);
                 $y +=  $pdf->getY()+24;
                 if (($y > 260) && ($key !== count($note_content)-1)){

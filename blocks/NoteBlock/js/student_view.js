@@ -31,7 +31,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 if ($notetype == "classic") { 
                     $view.$("textarea").each(function(){
                        var string = $questions.shift();
-                        $("<p>"+string+"</p>").insertBefore($(this));
+                        $("<p class='note-question'>"+string+"</p>").insertBefore($(this));
                         $("<br><br>").insertAfter($(this));
                     });
                 } else {
@@ -57,7 +57,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                 });
             }
             $data.val(JSON.stringify($content));
-          
+
         },
         
         onDownload: function(event) {
