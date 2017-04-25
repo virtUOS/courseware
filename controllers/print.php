@@ -104,6 +104,8 @@ class PrintController extends CoursewareStudipController {
         $selfevaluation_title = Request::get("selfevaluation-title");
         $selfevaluation_subtitle = Request::get("selfevaluation-subtitle");
         $selfevaluation_description = Request::get("selfevaluation-description");
+        $selfevaluation_headerleft = Request::get("selfevaluation-headerleft");
+        $selfevaluation_headerright = Request::get("selfevaluation-headerright");
         $selfevaluation_content  = json_decode(htmlentities($selfevaluation_content, ENT_HTML401, false));
         // create new PDF document
         $pdf = new DFBPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'ISO-8859', false);
@@ -119,6 +121,9 @@ class PrintController extends CoursewareStudipController {
         //$pdf->writeHTMLCell(180, '', 15, 40, $this->htmlentitiesOutsideHTMLTags($selfevaluation_title, ENT_HTML401), 0, 1, 1, true, 'J', true);
         $pdf->SetFontSize(12);
         $pdf->writeHTMLCell(180, '', 15, 55, $this->htmlentitiesOutsideHTMLTags($selfevaluation_description, ENT_HTML401), 0, 1, 1, true, 'J', true);
+        $y = $pdf->getY()+10;
+        $pdf->writeHTMLCell(90, '', 15, $y, $this->htmlentitiesOutsideHTMLTags($selfevaluation_headerleft, ENT_HTML401), 0, 1, 1, true, 'J', true);
+        $pdf->writeHTMLCell(90, '', 98, $y, $this->htmlentitiesOutsideHTMLTags($selfevaluation_headerright, ENT_HTML401), 0, 1, 1, true, 'J', true);
         
         $y = $pdf->getY()+10;
         $w = 24;
