@@ -25,7 +25,7 @@ class PrintController extends CoursewareStudipController {
         $note_header1 = Request::get("note-header1");
         $note_header2 = Request::get("note-header2");
         $note_questions = Request::get("note-questions");
-        $note_content = json_decode($note_content);
+        $note_content = json_decode(htmlentities($note_content, ENT_HTML401, false));
         $note_questions = json_decode($note_questions);
         array_walk($note_content, function(&$val){$val = html_entity_decode(nl2br($val));});
         
@@ -54,7 +54,7 @@ class PrintController extends CoursewareStudipController {
                 $pdf->addShadow($x,$y, $w,$h);
                 $pdf->SetFont('', '', 25,'', false);    
                 $pdf->Rect($x, $y, $w, $h, 'DF', array(0,0,0,0), $this->getColor($note_color));
-                $pdf->writeHTMLCell($w-10, $h-10, $x+5, $y+5 ,$this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401));
+                $pdf->writeHTMLCell($w-10, $h-10, $x+5, $y+5 ,$text);
                 // Stop Transformation
                 $pdf->StopTransform();
                 //if ($key%2 == 0) {
@@ -78,7 +78,7 @@ class PrintController extends CoursewareStudipController {
                 $pdf->writeHTMLCell(160, "", $x, $y ,$note_questions[$key]);
                 $y += 12;
                 $pdf->SetFont('', '', 25,'', false);
-                $pdf->writeHTMLCell(180, "", $x, $y ,$this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401), 0, 1, 1, true, 'J', true);
+                $pdf->writeHTMLCell(180, "", $x, $y ,$text, 0, 1, 1, true, 'J', true);
                 $y +=  $pdf->getY()+24;
                 if (($y > 260) && ($key !== count($note_content)-1)){
                     $pdf->AddPage();
@@ -86,7 +86,7 @@ class PrintController extends CoursewareStudipController {
                 }
             }
         } else {
-            $html = $this->htmlentitiesOutsideHTMLTags($note_content[0], ENT_HTML401);
+            $html = $note_content[0];
             $pdf->writeHTML($html, true, 0, true, 0);
         }
         $filename = $note_header1."-".$note_header2.".pdf";
