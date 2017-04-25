@@ -43,25 +43,25 @@ class PrintController extends CoursewareStudipController {
             $pdf->Cell(0, 0, $note_questions[0], 0, false, 'L', 0, '', 0, false, 'M', 'B');
             $pdf->Ln(12);
         }
-        $x = 35;
+        $x = 45;
         $y = $pdf->getY();
-        $w = 60;
+        $w = 120;
         $h = 60;
         if ($note_type == "post-it") {
             foreach ($note_content as $key => $text) {
                 $pdf->StartTransform();
-                $pdf->Rotate(2, $x, $y+$h);
+                $pdf->Rotate(1, $x, $y+$h);
                 $pdf->addShadow($x,$y, $w,$h);    
                 $pdf->Rect($x, $y, $w, $h, 'DF', array(0,0,0,0), $this->getColor($note_color));
                 $pdf->writeHTMLCell($w-10, $h-10, $x+5, $y+5 ,$this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401));
                 // Stop Transformation
                 $pdf->StopTransform();
-                if ($key%2 == 0) {
-                     $x += $w+10;
-                } else {
-                    $x -= $w+10;
+                //if ($key%2 == 0) {
+                //     $x += $w+10;
+                //} else {
+                //  $x -= $w+10;
                     $y += $h+10; 
-                }
+                //}
                 if( ($y > 260) && ($key !== count($note_content)-1)) {
                     $pdf->AddPage();
                     $x = 35;
