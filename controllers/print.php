@@ -27,7 +27,7 @@ class PrintController extends CoursewareStudipController {
         $note_questions = Request::get("note-questions");
         $note_content = json_decode($note_content);
         $note_questions = json_decode($note_questions);
-        
+        array_walk($note_content, function(&$val){$val = html_entity_decode(nl2br($val));});
         
         // create new PDF document
         $pdf = new DFBPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'ISO-8859', false);
@@ -51,7 +51,8 @@ class PrintController extends CoursewareStudipController {
             foreach ($note_content as $key => $text) {
                 $pdf->StartTransform();
                 $pdf->Rotate(1, $x, $y+$h);
-                $pdf->addShadow($x,$y, $w,$h);    
+                $pdf->addShadow($x,$y, $w,$h);
+                $pdf->SetFont('', '', 25,'', false);    
                 $pdf->Rect($x, $y, $w, $h, 'DF', array(0,0,0,0), $this->getColor($note_color));
                 $pdf->writeHTMLCell($w-10, $h-10, $x+5, $y+5 ,$this->htmlentitiesOutsideHTMLTags($text, ENT_HTML401));
                 // Stop Transformation
