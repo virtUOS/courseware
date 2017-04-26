@@ -139,10 +139,15 @@ class PrintController extends CoursewareStudipController {
         $pdf->SetFillColor(0, 127, 75);
         $pdf->SetTextColor(255, 255, 255);
         $pdf->SetLineStyle($style1);
-        $pdf->MultiCell($w, $h, "++", 1, 'C', 1, 0, $w_textcell+15, $y, true, 0, false, true, $h, 'M');
-        $pdf->MultiCell($w, $h, "+", 1, 'C', 1, 1, $w_textcell+$w+15, $y, true, 0, false, true, $h, 'M');
-        $pdf->MultiCell($w, $h, "-", 1, 'C', 1, 1, $w_textcell+$w*2+15, $y, true, 0, false, true, $h, 'M');
-        $pdf->MultiCell($w, $h, "--", 1, 'C', 1, 1, $w_textcell+$w*3+15, $y, true, 0, false, true, $h, 'M');
+        //$pdf->ImageSVG($file='plugins_packages/virtUOS/Courseware/assets/images/SmileyI.svg', $x=30, $y=100, $w='', $h=100, $link='', $align='', $palign='', $border=0, $fitonpage=false);
+        $pdf->Image('plugins_packages/virtUOS/Courseware/assets/images/SmileyI.png', $w_textcell+23, $y+2, 8, '', '', '', '', false, 100);
+        $pdf->MultiCell($w, $h, "", 1, 'C', 1, 0, $w_textcell+15, $y, true, 0, false, true, $h, 'M');
+        $pdf->Image('plugins_packages/virtUOS/Courseware/assets/images/SmileyII.png', $w_textcell+$w+23, $y+2, 8, '', '', '', '', false, 100);
+        $pdf->MultiCell($w, $h, "", 1, 'C', 1, 1, $w_textcell+$w+15, $y, true, 0, false, true, $h, 'M');
+        $pdf->Image('plugins_packages/virtUOS/Courseware/assets/images/SmileyIII.png', $w_textcell+$w*2+23, $y+2, 8, '', '', '', '', false, 100);
+        $pdf->MultiCell($w, $h, "", 1, 'C', 1, 1, $w_textcell+$w*2+15, $y, true, 0, false, true, $h, 'M');
+        $pdf->Image('plugins_packages/virtUOS/Courseware/assets/images/SmileyIV.png', $w_textcell+$w*3+23, $y+2, 8, '', '', '', '', false, 100);
+        $pdf->MultiCell($w, $h, "", 1, 'C', 1, 1, $w_textcell+$w*3+15, $y, true, 0, false, true, $h, 'M');
         $pdf->Ln(4);
         
         $y = $y+$h;
