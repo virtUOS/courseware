@@ -1,5 +1,6 @@
 import jQuery from 'jquery'
 import queryString from 'query-string'
+import _ from 'underscore'
 import URL from 'url-parse'
 import Config from './courseware-config'
 
@@ -72,7 +73,7 @@ export default {
   callHandler(block_id, handler, data) {
 
     var payload = {
-      data: { ...data },
+      data: _.clone(data),
       handler
     };
 
