@@ -119,8 +119,7 @@ class PrintController extends CoursewareStudipController {
         $pdf->SetTextColor(0, 0, 0);
         //$pdf->SetFontSize(16);
         //$pdf->writeHTMLCell(180, '', 15, 40, $this->htmlentitiesOutsideHTMLTags($selfevaluation_title, ENT_HTML401), 0, 1, 1, true, 'J', true);
-        $pdf->SetFontSize(12);
-        $pdf->writeHTMLCell(180, '', 15, 55, $this->htmlentitiesOutsideHTMLTags($selfevaluation_description, ENT_HTML401), 0, 1, 1, true, 'J', true);
+        
         $y = $pdf->getY()+10;
         $pdf->writeHTMLCell(90, '', 15, $y, $this->htmlentitiesOutsideHTMLTags($selfevaluation_headerleft, ENT_HTML401), 0, 1, 1, true, 'J', true);
         $pdf->writeHTMLCell(90, '', 98, $y, $this->htmlentitiesOutsideHTMLTags($selfevaluation_headerright, ENT_HTML401), 0, 1, 1, true, 'J', true);
@@ -222,6 +221,14 @@ class PrintController extends CoursewareStudipController {
         }
         $pdf->Circle($cx, $cy, 2, 0, 360, 'DF');
         $filename = $selfevaluation_title."-".$selfevaluation_subtitle.".pdf";
+        $y = $pdf->getY()+4;
+        $pdf->SetFontSize(12);
+        $pdf->SetTextColor(0, 0, 0);
+        $border_width = 2;
+        $border_settings = array('LTRB' => array('width' => $border_width, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 127, 75)));
+        $pdf->setCellPaddings( $left = '2', $top = '2', $right = '2', $bottom = '2');
+        $pdf->writeHTMLCell(180, '', 15, $y, $this->htmlentitiesOutsideHTMLTags($selfevaluation_description, ENT_HTML401), $border_settings, 1, 1, true, 'J', true);
+        
         $pdf->Output($filename);
         exit("delivering pdf file");
     }
