@@ -6,6 +6,7 @@
 >
     <xsd:attribute name="url" type="xsd:string" />
     <xsd:attribute name="height" type="xsd:string" />
+    <xsd:attribute name="width" type="xsd:string" />
     <xsd:attribute name="submit_user_id" type="xsd:string" />
     <xsd:attribute name="submit_param" type="xsd:string" />
     <xsd:attribute name="salt" type="xsd:string" />

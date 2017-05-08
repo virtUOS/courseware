@@ -11,6 +11,7 @@ class IFrameBlock extends Block
     {
         $this->defineField('url',    \Mooc\SCOPE_BLOCK, "http://studip.de");
         $this->defineField('height', \Mooc\SCOPE_BLOCK, 600);
+        $this->defineField('width', \Mooc\SCOPE_BLOCK, 100);
         $this->defineField('submit_user_id', \Mooc\SCOPE_BLOCK, false);
         $this->defineField('submit_param', \Mooc\SCOPE_BLOCK, "uid");
         $this->defineField('salt', \Mooc\SCOPE_BLOCK, md5(uniqid('', true)));
@@ -21,6 +22,7 @@ class IFrameBlock extends Block
         return array(
             'url'    => $url,
             'height' => $this->height,
+            'width' => $this->width,
             'submit_user_id' => $this->submit_user_id,
             'submit_param' => $this->submit_param,
             'salt' => $this->salt
@@ -57,6 +59,7 @@ class IFrameBlock extends Block
 
         $this->url = (string) $data['url'];
         $this->height = (int) $data['height'];
+        $this->width = (int) $data['width'];
         $this->submit_user_id = $data['submit_user_id'];
         $this->submit_param = $data['submit_param'];
         $this->salt = $data['salt'];
@@ -69,7 +72,7 @@ class IFrameBlock extends Block
      */
     public function exportProperties()
     {
-        return array('url' => $this->url, 'height' => $this->height, 'submit_user_id' => $this->submit_user_id, 'submit_param' => $this->submit_param, 'salt' => $this->salt);
+        return array('url' => $this->url, 'height' => $this->height, 'width' => $this->width, 'submit_user_id' => $this->submit_user_id, 'submit_param' => $this->submit_param, 'salt' => $this->salt);
     }
 
     /**
@@ -99,6 +102,10 @@ class IFrameBlock extends Block
 
         if (isset($properties['height'])) {
             $this->height = $properties['height'];
+        }
+        
+        if (isset($properties['width'])) {
+            $this->width = $properties['width'];
         }
         
         if (isset($properties['submit_user_id'])) {

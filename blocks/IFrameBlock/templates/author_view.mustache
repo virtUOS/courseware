@@ -7,7 +7,8 @@
     </div>
     <div class="iframe-data">
         <label>URL:</label><input class="urlinput" type=text size=32 value={{url}}>
-        <label>{{#i18n}}Höhe{{/i18n}}:</label><input class="heightinput" type=text size=4 max=4 value={{height}}> {{#i18n}}Pixel{{/i18n}}
+        <label>{{#i18n}}Höhe{{/i18n}}:</label><input class="heightinput" type="number" min="0" value={{height}}> {{#i18n}}Pixel{{/i18n}}
+        <label>{{#i18n}}Breite{{/i18n}}:</label><input class="widthinput" type="number" min="0" max="100" value={{width}}> %
         <label>{{#i18n}}Nutzerspezifische ID übergeben{{/i18n}}</label>
         <input class="submit-user-id-switch" name="submit-user-id-switch" type="checkbox" {{#submit_user_id}} checked{{/submit_user_id}}>
         <div class="iframe-submit-user">

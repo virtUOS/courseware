@@ -54,26 +54,27 @@ export default AuthorView.extend({
 
   toggleSubmitUserId() {
     var state = this.$('.submit-user-id-switch').is( ':checked');
-    console.log(state);
     if (state) this.$('.iframe-submit-user').show();
     else this.$('.iframe-submit-user').hide();
   },
 
   onSave(event) {
-    var url_input    = this.$('input.urlinput');
-    var new_url      = url_input.val();
-    var height_input = this.$('input.heightinput');
-    var new_height   = height_input.val();
-    var view         = this;
-    var salt         = this.$('.salt').val();
-    var submit_param = this.$('.submit-param').val();
-    var submit_user_id = this.$('.submit-user-id-switch').is( ':checked');
+    var view            = this;
+    var $url            = view.$('input.urlinput').val();
+    var $height         = view.$('input.heightinput').val();
+    var $width          = view.$('input.widthinput').val();
+    var $salt           = view.$('.salt').val();
+    var $submit_param   = view.$('.submit-param').val();
+    var $submit_user_id = view.$('.submit-user-id-switch').is( ':checked');
 
     helper
       .callHandler(this.model.id, 'save', {
-        url: new_url,
-        height: new_height,
-        salt, submit_param, submit_user_id })
+        url: $url,
+        height: $height,
+        width: $width,
+        salt: $salt, 
+        submit_param: $submit_param, 
+        submit_user_id: $submit_user_id })
       .then(function () {
         $(event.target).addClass('accept');
         view.switchBack();
