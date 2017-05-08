@@ -23,6 +23,29 @@ class Block extends \SimpleORMap implements \Serializable
 
     public $errors = array();
 
+    protected static function configure($config = array())
+    {
+        $config['db_table'] = 'mooc_blocks';
+
+        $config['belongs_to']['parent'] = array(
+            'class_name'  => 'Mooc\\DB\\Block',
+            'foreign_key' => 'parent_id');
+
+        $config['belongs_to']['course'] = array(
+            'class_name'  => '\\Course',
+            'foreign_key' => 'seminar_id');
+
+        $config['has_many']['children'] = array(
+            'class_name'        => 'Mooc\\DB\\Block',
+            'assoc_foreign_key' => 'parent_id',
+            'assoc_func'        => 'findByParent_id',
+            'on_delete'         => 'delete',
+            'on_store'          => 'store'
+        );
+
+        parent::configure($config);
+    }
+
     /**
      * Give primary key of record as param to fetch
      * corresponding record from db if available, if not preset primary key
@@ -31,30 +54,6 @@ class Block extends \SimpleORMap implements \Serializable
      * @param mixed $id primary key of table
      */
     public function __construct($id = null) {
-
-        $this->db_table = 'mooc_blocks';
-
-        $this->belongs_to['parent'] = array(
-            'class_name'  => 'Mooc\\DB\\Block',
-            'foreign_key' => 'parent_id');
-
-        $this->belongs_to['course'] = array(
-            'class_name'  => '\\Course',
-            'foreign_key' => 'seminar_id');
-
-
-        // workaround for Stud.IP ticket:5312
-        $options = $this->getRelationOptions('course');
-        $options = $this->getRelationOptions('parent');
-
-
-        $this->has_many['children'] = array(
-            'class_name'        => 'Mooc\\DB\\Block',
-            'assoc_foreign_key' => 'parent_id',
-            'assoc_func'        => 'findByParent_id',
-            'on_delete'         => 'delete',
-            'on_store'          => 'store'
-        );
 
         $this->registerCallback('before_create', 'ensureSeminarId');
         $this->registerCallback('before_create', 'ensurePositionId');

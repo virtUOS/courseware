@@ -18,27 +18,22 @@ class Field extends \SimpleORMap
 
     private $default = null;
 
-    /**
-     * Give primary key of record as param to fetch
-     * corresponding record from db if available, if not preset primary key
-     * with given value. Give null to create new record
-     *
-     * @param mixed $id primary key of table
-     */
-    public function __construct($id = null) {
-        $this->db_table = 'mooc_fields';
+    protected static function configure($config = array())
+    {
 
-        $this->belongs_to['block'] = array(
+        $config['db_table'] = 'mooc_fields';
+
+        $config['belongs_to']['block'] = array(
             'class_name'  => 'Mooc\\DB\\Block',
             'foreign_key' => 'block_id');
 
-        $this->belongs_to['user'] = array(
+        $config['belongs_to']['user'] = array(
             'class_name'  => '\\User',
             'foreign_key' => 'user_id');
 
 
         // TODO: this may not be named content
-        $this->additional_fields['content'] = array(
+        $config['additional_fields']['content'] = array(
             'get' => function (Field $self) {
                 if (isset($self->json_data)) {
                     return studip_utf8decode(json_decode($self->json_data, true));
@@ -50,6 +45,17 @@ class Field extends \SimpleORMap
             }
         );
 
+        parent::configure($config);
+    }
+
+    /**
+     * Give primary key of record as param to fetch
+     * corresponding record from db if available, if not preset primary key
+     * with given value. Give null to create new record
+     *
+     * @param mixed $id primary key of table
+     */
+    public function __construct($id = null) {
         parent::__construct($id);
     }
 
