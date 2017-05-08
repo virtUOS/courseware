@@ -1,70 +1,74 @@
-import $ from 'jquery'
-import Backbone from 'backbone'
-import AuthorView from 'js/author_view'
-import helper from 'js/url'
+define(['assets/js/author_view', 'assets/js/url'],
+       function (AuthorView, helper) {
 
-export default AuthorView.extend({
+    'use strict';
 
-  events: {
-    'click button[name=save]':   'onSave',
-    'click button[name=cancel]': 'switchBack'
-  },
+    return AuthorView.extend({
 
-  initialize() {
-    Backbone.on('beforemodeswitch', this.onModeSwitch, this);
-    Backbone.on('beforenavigate', this.onNavigate, this);
-  },
+        events: {
+            "click button[name=save]":   "onSave",
+            "click button[name=cancel]": "switchBack"
 
-  initializeFromDOM() {
-    var $section = this.$el.closest('section.ForumBlock');
-    var $sortingButtons = $('button.lower', $section);
-    $sortingButtons = $sortingButtons.add($('button.raise', $section));
-    $sortingButtons.addClass('no-sorting');
-  },
+        },
 
-  onNavigate(event){
-    if (!$('section .block-content button[name=save]').length) {
-      return;
-    }
-    if (event.isUserInputHandled) {
-      return;
-    }
-    event.isUserInputHandled = true;
-    Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie die Seite trotzdem verlassen?'));
-  },
+        initialize: function() {
+            Backbone.on('beforemodeswitch', this.onModeSwitch, this);
+            Backbone.on('beforenavigate', this.onNavigate, this);
+        },
 
-  onSave(event) {
-    var area = this.$('select[name=area]').val(),
-        view = this;
+        initializeFromDOM: function() {
+            var $section = this.$el.closest('section.ForumBlock');
+            var $sortingButtons = jQuery('button.lower', $section);
+            $sortingButtons = $sortingButtons.add(jQuery('button.raise', $section));
+            $sortingButtons.addClass('no-sorting');
+        },
 
-    helper
-      .callHandler(this.model.id, 'save', { area_id: area })
-      .then(function () {
-        $(event.target).addClass('accept');
-        view.switchBack();
-      }).catch(function (error) {
-        var errorMessage = 'Could not update the block: ' + $.parseJSON(error.responseText).reason;
-        alert(errorMessage);
-        console.log(errorMessage, arguments);
-      });
-  },
+        onNavigate: function(event){
+            if(!$("section .block-content button[name=save]").length) return;
+            if(event.isUserInputHandled) return;
+            event.isUserInputHandled = true;
+            Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie die Seite trotzdem verlassen?'));
+        },
 
-  onModeSwitch(toView, event) {
-    if (toView != 'student') {
-      return;
-    }
+        onSave: function (event) {
+            var area = this.$("select[name=area]").val(),
+                view = this;
 
-    // the user already switched back (i.e. the is not visible)
-    if (!this.$el.is(':visible')) {
-      return;
-    }
+            helper
+                .callHandler(this.model.id, "save", {area_id: area})
+                .then(
+                    // success
+                    function () {
+                        jQuery(event.target).addClass("accept");
+                        view.switchBack();
+                    },
 
-    // another listener already handled the user's feedback
-    if (event.isUserInputHandled) {
-      return;
-    }
+                    // error
+                    function (error) {
+                        var errorMessage = 'Could not update the block: '+jQuery.parseJSON(error.responseText).reason;
+                        alert(errorMessage);
+                        console.log(errorMessage, arguments);
+                    });
+        },
 
-    event.isUserInputHandled = true;
-    Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
-  }
+        onModeSwitch: function (toView, event) {
+            if (toView != 'student') {
+                return;
+            }
+
+            // the user already switched back (i.e. the is not visible)
+            if (!this.$el.is(':visible')) {
+                return;
+            }
+
+            // another listener already handled the user's feedback
+            if (event.isUserInputHandled) {
+                return;
+            }
+
+            event.isUserInputHandled = true;
+            Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
+        },
+
+    });
 });

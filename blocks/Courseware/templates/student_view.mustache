@@ -93,15 +93,10 @@
     {{/active_subchapter}}
   </aside>
 
-  
-  {{#show_section_nav}}
-    {{^sections_as_chapters}}
-      {{> active_subchapter}}
-    {{/sections_as_chapters}}
-  {{/show_section_nav}}
-  
+  {{> active_subchapter}}
+
   {{#active_section}}
-        {{> active_section}}
-      {{/active_section}}
+    {{> active_section}}
+  {{/active_section}}
   <div class="clear"></div>
 </section>

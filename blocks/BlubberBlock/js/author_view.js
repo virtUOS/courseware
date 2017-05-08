@@ -1,10 +1,12 @@
-import AuthorView from 'js/author_view'
+define(['assets/js/author_view'], function (AuthorView) {
+    'use strict';
 
-export default AuthorView.extend({
-  initialize(options) {
-  },
+    return AuthorView.extend({
+        initialize: function (options) {
+        },
 
-  render() {
-    return this;
-  }
+        render: function () {
+            return this;
+        }
+    });
 });

@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  js.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-0321 12:39+0200\n"
+"POT-Creation-Date: 2016-11-1117 09:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "#-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-21 12:39+0100\n"
+"POT-Creation-Date: 2016-11-17 09:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,22 +64,13 @@ msgstr ""
 msgid "Anzeigen"
 msgstr ""
 
-msgid "Audiodatei"
-msgstr ""
-
-msgid "Aufgabenblatt"
+msgid "anzuzeigendes Aufgabenblatt auswählen"
 msgstr ""
 
 msgid "Aufgabenblätter verwalten"
 msgstr ""
 
 msgid "Autorenmodus"
-msgstr ""
-
-msgid "Beschreibung"
-msgstr ""
-
-msgid "Bildschirm"
 msgstr ""
 
 msgid "Block hinzufügen"
@@ -96,12 +87,6 @@ msgstr ""
 msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
 msgstr ""
 
-msgid "Dateibereich"
-msgstr ""
-
-msgid "Dateityp"
-msgstr ""
-
 msgid ""
 "Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
 msgstr ""
@@ -112,12 +97,6 @@ msgstr ""
 msgid ""
 "Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die "
 "vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
-msgstr ""
-
-msgid "Eine Datei ausw&auml;hlen"
-msgstr ""
-
-msgid "Einen Ordner ausw&auml;hlen"
 msgstr ""
 
 msgid "eingebettetes Video (iframe)"
@@ -141,12 +120,6 @@ msgid ""
 msgstr ""
 
 msgid "Es wurde bisher keine Evaluation erstellt!"
-msgstr ""
-
-msgid "Es wurde keine Audiodatei ausgewählt"
-msgstr ""
-
-msgid "Es wurde keine Datei ausw&auml;hlt"
 msgstr ""
 
 msgid "Es wurde noch kein Video eingetragen."
@@ -186,9 +159,6 @@ msgstr ""
 msgid "Gesamtes Unterkapitel löschen"
 msgstr ""
 
-msgid "Höhe"
-msgstr ""
-
 msgid "Ihre Lösung ist korrekt!"
 msgstr ""
 
@@ -204,12 +174,6 @@ msgid ""
 msgstr ""
 
 msgid "Import"
-msgstr ""
-
-msgid "Infobox nach Download"
-msgstr ""
-
-msgid "Infobox vor Download"
 msgstr ""
 
 msgid "Kapitel einfügen"
@@ -245,12 +209,6 @@ msgstr ""
 msgid "Matterhorn"
 msgstr ""
 
-msgid "Name des Übergabeparameters"
-msgstr ""
-
-msgid "Nutzerspezifische ID übergeben"
-msgstr ""
-
 msgid "Quelle"
 msgstr ""
 
@@ -281,9 +239,6 @@ msgstr ""
 msgid "Titel"
 msgstr ""
 
-msgid "Titel des Blocks"
-msgstr ""
-
 msgid "Titel des Unterkapitels bearbeiten"
 msgstr ""
 
@@ -311,9 +266,6 @@ msgstr ""
 msgid "Was sollen die Lernenden bestätigen?"
 msgstr ""
 
-msgid "webAudio"
-msgstr ""
-
 msgid "Webvideo (URL)"
 msgstr ""
 
@@ -321,12 +273,6 @@ msgid "weiter"
 msgstr ""
 
 msgid "Youtube"
-msgstr ""
-
-msgid "Zeit zurücksetzen"
-msgstr ""
-
-msgid "Zufallszeichen für Verschlüsselung"
 msgstr ""
 
 msgid "zurück"
@@ -371,16 +317,7 @@ msgstr ""
 msgid "Fortschrittsübersicht"
 msgstr ""
 
-#: Courseware.php:179
-#, php-format
-msgid "%s neue Courseware-Inhalte"
-msgstr ""
-
-#: Courseware.php:179
-msgid "1 neuer Courseware-Inhalt"
-msgstr ""
-
-#: Courseware.php:304
+#: Courseware.php:230
 msgid ""
 "Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
 "erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
@@ -390,21 +327,21 @@ msgid ""
 "in einen Courseware-Abschnitt ein."
 msgstr ""
 
-#: Courseware.php:305
+#: Courseware.php:231
 msgid "Information"
 msgstr ""
 
-#: Courseware.php:307
+#: Courseware.php:233
 msgid ""
 "Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
 "'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
 msgstr ""
 
-#: Courseware.php:308
+#: Courseware.php:234
 msgid "Tipp"
 msgstr ""
 
-#: Courseware.php:310
+#: Courseware.php:236
 msgid ""
 "Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
 "direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
@@ -413,16 +350,12 @@ msgid ""
 "Fortschrittsübersicht."
 msgstr ""
 
-#: Courseware.php:311
+#: Courseware.php:237
 msgid "Hinweis"
 msgstr ""
 
-#: Courseware.php:373
+#: Courseware.php:299
 msgid "Zurück zur Courseware"
-msgstr ""
-
-#: Courseware.php:378 models/mooc/db/CoursewareFactory.php:45
-msgid "Courseware"
 msgstr ""
 
 #: controllers/courseware.php:59
@@ -463,11 +396,11 @@ msgstr ""
 msgid "in Gruppen"
 msgstr ""
 
-#: blocks/Section/Section.php:85
+#: blocks/Section/Section.php:83
 msgid "Sie sind nicht berechtigt Blöcke anzulegen."
 msgstr ""
 
-#: blocks/Section/Section.php:127
+#: blocks/Section/Section.php:125
 msgid "Sie sind nicht berechtigt Blöcke zu löschen."
 msgstr ""
 
@@ -635,6 +568,10 @@ msgstr ""
 
 #: views/import/index.php:94
 msgid "Plugin installieren"
+msgstr ""
+
+#: models/mooc/db/CoursewareFactory.php:45
+msgid "Courseware"
 msgstr ""
 
 #: models/mooc/db/CoursewareFactory.php:47

@@ -1,0 +1,15 @@
+section.HtmlBlock .controls button.no-sorting {
+  visibility: hidden;
+}
+section.HtmlBlock textarea {
+  width: 100%;
+}
+section.HtmlBlock div.content img {
+  max-width: 100%;
+}
+section.HtmlBlock div.content:after {
+  content: ".";
+  display: block;
+  visibility: hidden;
+  clear: both;
+}

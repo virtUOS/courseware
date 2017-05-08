@@ -1,0 +1,97 @@
+section.FlipbookBlock {
+  min-width: 700px;
+}
+section.FlipbookBlock .flipbook-controls,
+section.FlipbookBlock .flipbook {
+  box-sizing: border-box;
+  vertical-align: top;
+  display: inline-block;
+}
+section.FlipbookBlock .flipbook-controls {
+  height: 480px;
+  width: 24px;
+  background-color: rgba(223,223,223,0.4);
+}
+section.FlipbookBlock .flipbook-controlshover {
+  background-color: #dfdfdf;
+}
+section.FlipbookBlock .flipbook-arr-right {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 24px 0 24px 15px;
+  border-color: transparent transparent transparent #ffffff;
+  margin: 216px auto;
+}
+section.FlipbookBlock .flipbook-arr-left {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 24px 15px 24px 0;
+  border-color: transparent #ffffff transparent transparent;
+  margin: 216px auto;
+}
+section.FlipbookBlock .flipbook {
+  width: 645px;
+  height: 480px;
+}
+section.FlipbookBlock .flipbook .turn-page {
+  background-color: #ccc;
+  background-size: 100% 100%;
+}
+section.FlipbookBlock progress {
+  border: 0;
+  height: 12px;
+  width: 700px;
+  margin: 0;
+  background-color: rgba(223,223,223,0.4);
+}
+section.FlipbookBlock progress::-webkit-progress-bar {
+  background-color: rgba(223,223,223,0.4);
+}
+section.FlipbookBlock progress::-webkit-progress-value {
+  background-color: #007f4b;
+}
+section.FlipbookBlock progress::-moz-progress-bar {
+  background-color: #007f4b;
+}
+section.FlipbookBlock .flipbook-info {
+  margin: 10px auto;
+  text-align: center;
+  width: 100%;
+}
+section.FlipbookBlock .flipbookoverlay {
+  opacity: 1.0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  width: 100%;
+  z-index: 5000;
+  display: none;
+}
+section.FlipbookBlock .flipbookimgfull-container {
+  margin: 0 auto;
+  border: solid thin #ccc;
+}
+section.FlipbookBlock .flipbookimgfull {
+  display: none;
+}
+section.FlipbookBlock .flipbook-pdficon {
+  border: none;
+  background-image: url("../../../../assets/images/icons/16/blue/file-pdf.png");
+  background-position: center 0px;
+  height: 24px;
+  width: 24px;
+  background-repeat: no-repeat;
+  background-color: #fff;
+}
+section.FlipbookBlock .flipbookfullon {
+  float: right;
+  cursor: pointer;
+}
+section.FlipbookBlock .flipbookfulloff {
+  float: right;
+  width: 10em;
+  z-index: 2;
+}

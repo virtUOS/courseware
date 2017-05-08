@@ -1,0 +1,15 @@
+.DownloadBlock table td {
+  padding-bottom: 1em;
+}
+.DownloadBlock table td:first-child {
+  padding-right: 2em;
+}
+.DownloadBlock table td:nth-child(2) {
+  width: 69%;
+}
+.DownloadBlock table td:nth-child(2) input {
+  width: 100%;
+}
+.DownloadBlock table td:nth-child(2) select {
+  width: 102%;
+}

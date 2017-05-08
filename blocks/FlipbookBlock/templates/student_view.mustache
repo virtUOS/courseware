@@ -1,0 +1,41 @@
+{{#pdf_id}}
+<input type="hidden" value="{{aspect}}" class="flipbook-aspect">
+<div class="flipbook-controls flipbook-left-control"><div class="flipbook-arr-left"></div></div>
+<div class="flipbook" pages="{{pdf_pages}}">
+    {{#imagefiles}}
+        <div class="flipbookimage" style="background-image:url( ../../sendfile.php?type=0&file_id={{dokument_id}}&file_name={{filename}});" ></div>
+    {{/imagefiles}}
+    {{^imagefiles}}
+        <div class="flipbookimage"></div>
+    {{/imagefiles}}
+</div>
+<div class="flipbook-controls flipbook-right-control"><div class="flipbook-arr-right"></div></div>
+<progress max="100" value="20"></progress>
+<div class="flipbook-info">
+    <span class="flipbook-current"></span> von <span class="flipbook-allpages"></span>
+    <!-- Fullscreen Button-->
+    <img class="flipbookfullon" src="../../plugins_packages/virtUOS/Courseware/assets/images/zoom.png" width="32px" height="32px">
+</div>
+<!-- PDF DOWNLOAD  -->
+<div class=pdf>
+	<a href="../../sendfile.php?type=0&file_id={{pdf_id}}&file_name={{pdf_filename}}" target="_blank">
+		<button class="flipbook-pdficon"> </button>
+		{{pdf}}
+	</a>
+</div>
+
+<div class="flipbookoverlay">
+    <button class="flipbookfulloff button">{{#i18n}}schlie&szlig;en{{/i18n}}</button>
+    <div class="flipbookimgfull-container">
+    {{#imagefiles}}
+        <img class="flipbookimgfull" src=" ../../sendfile.php?type=0&file_id={{dokument_id}}&file_name={{filename}}" image-data="{{filename}}"></img>
+    {{/imagefiles}}
+    {{#imagefiles}}
+        <img class="flipbookimgfull" width="0" height="0"></img>
+    {{/imagefiles}}
+    </div>
+</div>
+{{/pdf_id}}
+{{^pdf_id}}
+<p>{{#i18n}}Es wurde noch kein Flipbook angelegt!{{/i18n}}</p>
+{{/pdf_id}}

@@ -20,12 +20,11 @@ ol.active-subchapter {
       border-radius: 2px;
       overflow: hidden;
 
-      &[data-icon=""]         { .bgImg(info-small,   "blue", 24); }
-      &[data-icon="chat"]     { .bgImg(chat,       "blue", 24); }
-      &[data-icon="document"] { .bgImg(info-small,   "blue", 24); }
-      &[data-icon="task"]     { .bgImg(question,   "blue", 24); }
-      &[data-icon="video"]    { .bgImg(video,      "blue", 24); }
-      &[data-icon="audio"]    { .bgImg(play,      "blue", 24); }
+      &[data-icon=""]         { .bgImg(infopage,   "blue", 32); }
+      &[data-icon="chat"]     { .bgImg(chat,       "blue", 32); }
+      &[data-icon="document"] { .bgImg(infopage,   "blue", 32); }
+      &[data-icon="task"]     { .bgImg(question,   "blue", 32); }
+      &[data-icon="video"]    { .bgImg(video,      "blue", 32); }
     }
 
     &:hover > a {
@@ -58,12 +57,11 @@ ol.active-subchapter {
       }
 
       & > a {
-        &[data-icon=""]         { .bgImg(info-small,   "white", 24); }
-        &[data-icon="chat"]     { .bgImg(chat,       "white", 24); }
-        &[data-icon="document"] { .bgImg(info-small,   "white", 24); }
-        &[data-icon="task"]     { .bgImg(question,   "white", 24); }
-        &[data-icon="video"]    { .bgImg(video,      "white", 24); }
-        &[data-icon="audio"]    { .bgImg(play,      "white", 24); }
+        &[data-icon=""]         { .bgImg(infopage,   "white", 32); }
+        &[data-icon="chat"]     { .bgImg(chat,       "white", 32); }
+        &[data-icon="document"] { .bgImg(infopage,   "white", 32); }
+        &[data-icon="task"]     { .bgImg(question,   "white", 32); }
+        &[data-icon="video"]    { .bgImg(video,      "white", 32); }
       }
     }
 
@@ -78,8 +76,7 @@ ol.active-subchapter {
     }
 
     &.loading > a {
-      .ajax-indicator-bg-icon();
-      background: center center no-repeat;
+      background: url("@{blocks-images-dir}/ajax_indicator_small.gif") center center no-repeat;
     }
   }
 
@@ -104,11 +101,11 @@ ol.active-subchapter {
   }
 
   .prev {
-    .bgImg('arr_1left', 'white', 24);
+    .bgImg('arr_1left', 'white', 32);
   }
 
   .next {
-    .bgImg('arr_1right', 'white', 24);
+    .bgImg('arr_1right', 'white', 32);
   }
 
 

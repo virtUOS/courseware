@@ -1,7 +1,8 @@
-import StudentView from 'js/student_view'
-
-export default StudentView.extend({
-  events: {},
-  initialize(options) { },
-  render() { return this; }
+define(['assets/js/student_view'], function (StudentView) {
+    'use strict';
+    return StudentView.extend({
+        events: {},
+        initialize: function(options) { },
+        render: function() { return this; }
+    });
 });

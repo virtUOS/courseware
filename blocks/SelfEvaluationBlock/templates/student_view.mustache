@@ -1,0 +1,20 @@
+<input type="hidden" class="cw-selfevaluation-content-stored" value="{{selfevaluation_content}}">
+<input type="hidden" class="cw-selfevaluation-value-stored" value="{{selfevaluation_value}}">
+<p class="cw-selfevaluation-description">{{selfevaluation_description}}</p>
+<div class="cw-selfevaluation-container">
+</div>
+<br><br>
+<form action="print/selfevaluation" class="cw-selfevaluation-form" target="_blank">
+    <input class="cw-selfevaluation-input-button" type="submit" value="Druckversion öffnen" name="download">
+    <input type="hidden" name="selfevaluation-data">
+    <input type="hidden" name="selfevaluation-title" value="{{selfevaluation_title}}">
+    <input type="hidden" name="selfevaluation-subtitle" value="{{selfevaluation_subtitle}}">
+    <input type="hidden" name="selfevaluation-description" value="{{selfevaluation_description}}">
+</form>
+<br>
+
+    <div class="messagebox messagebox_success message_after_download">
+        <a href="{{next_chapter_link}}" target="_self">
+            {{#i18n}}Danke! Du kannst nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
+        </a>
+    </div>

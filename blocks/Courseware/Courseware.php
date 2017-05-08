@@ -39,10 +39,6 @@ class Courseware extends Block {
 
         // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
         $this->defineField('max_tries', \Mooc\SCOPE_BLOCK, -1); // -1 = infinity
-
-        $this->defineField('show_section_nav', \Mooc\SCOPE_BLOCK, true);
-
-        $this->defineField('sections_as_chapters', \Mooc\SCOPE_BLOCK, false);
     }
 
     function student_view($context = array())
@@ -92,8 +88,6 @@ class Courseware extends Block {
             'courseware'        => $courseware,
             'active_chapter'    => $active_chapter,
             'active_subchapter' => $active_subchapter,
-            'show_section_nav'  => $this->show_section_nav,
-            'sections_as_chapters' => $this->sections_as_chapters,
             'active_section'    => $active_section));
     }
 
@@ -299,44 +293,20 @@ class Courseware extends Block {
         return $this->editing_permission;
     }
 
-    public function setMaxTries($tries)
-    {
+    public function setMaxTries($tries) {
         $this->max_tries = $tries;
     }
 
-    public function getMaxTries()
-    {
+    public function getMaxTries() {
         return $this->max_tries;
     }
-
-    public function setVipsTabVisible($active)
-    {
+    
+    public function setVipsTabVisible($active) {
         $this->vipstab_visible = $active;
     }
 
-    public function getVipsTabVisible()
-    {
+    public function getVipsTabVisible() {
         return $this->vipstab_visible;
-    }
-
-    public function setShowSectionNav($state)
-    {
-        $this->show_section_nav = $state;
-    }
-
-    public function getShowSectionNav()
-    {
-        return $this->show_section_nav;
-    }
-
-    public function setSectionsAsChapters($state)
-    {
-        $this->sections_as_chapters = $state;
-    }
-
-    public function getSectionsAsChapters()
-    {
-        return $this->sections_as_chapters;
     }
 
     ///////////////////////

@@ -1,8 +1,14 @@
 {
     "require": {
-        "mustache/mustache": "2.11.1",
-        "pimple/pimple": "3.0.2",
-        "willdurand/negotiation": "1.5.0"
+        "mustache/mustache": "~2.5",
+        "pimple/pimple": "~3.0",
+        "symfony/dom-crawler": "~2.4",
+        "willdurand/negotiation": "~1.3"
+    },
+    "require-dev": {
+        "kriswallsmith/assetic": "~1.1",
+        "leafo/lessphp": "~0.4",
+        "natxet/CssMin": "~3.0"
     },
     "autoload": {
         "psr-4": {

@@ -1,5 +1,7 @@
-import BlockView from 'js/block_view'
+define(['assets/js/block_view'], function (BlockView) {
+    'use strict';
 
-export default BlockView.extend({
-  view_name: 'block_types'
+    return BlockView.extend({
+        view_name: 'block_types'
+    });
 });

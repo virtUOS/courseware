@@ -1,50 +1,49 @@
-import $ from 'jquery'
-import Backbone from 'backbone'
-import templates from 'js/templates'
+define(['q', 'backbone', 'assets/js/templates'],
+       function (Q, Backbone, templates) {
 
-export default Backbone.View.extend({
+    'use strict';
 
-  className: 'edit-section',
+    return Backbone.View.extend({
 
-  events: {
-    'submit form': 'submit',
-    'click button.cancel': 'cancel'
-  },
+        className: "edit-section",
 
-  deferred: null,
+        events: {
+            'submit form':         'submit',
+            'click button.cancel': 'cancel'
+        },
 
-  initialize() {
-    this.deferred = new Promise((resolve, reject) => {
-      this.resolve = resolve
-      this.reject = reject
+        deferred: null,
+
+        initialize: function() {
+            this.deferred = Q.defer();
+            $('.ui-tooltip').remove();
+            this.listenTo(Backbone, "modeswitch", this.cancel, this);
+            this.render();
+        },
+
+        render: function () {
+            var template = templates("Section", "edit_view", this.model.toJSON());
+            this.$el.html(template);
+            return this;
+        },
+
+        focus: function () {
+            this.$("input").get(0).focus();
+        },
+
+        promise: function () {
+            return this.deferred.promise;
+        },
+
+        submit: function (event) {
+            event.preventDefault();
+            var new_title = this.$("input").val().trim();
+            this.model.set("title", new_title);
+            this.deferred.resolve(this.model);
+        },
+
+        cancel: function () {
+            this.deferred.reject();
+        }
     });
-    $('.ui-tooltip').remove();
-    this.listenTo(Backbone, 'modeswitch', this.cancel, this);
-    this.render();
-  },
-
-  render() {
-    var template = templates('Section', 'edit_view', this.model.toJSON());
-    this.$el.html(template);
-    return this;
-  },
-
-  focus() {
-    this.$('input').get(0).focus();
-  },
-
-  promise() {
-    return this.deferred;
-  },
-
-  submit(event) {
-    event.preventDefault();
-    var new_title = this.$('input').val().trim();
-    this.model.set('title', new_title);
-    this.resolve(this.model);
-  },
-
-  cancel() {
-    this.reject && this.reject();
-  }
 });

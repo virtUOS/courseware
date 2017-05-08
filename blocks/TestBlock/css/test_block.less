@@ -1,30 +1,21 @@
-@import '../../../assets/less/variables';
-@import '../../../assets/less/mixins';
+@import '../../../assets/variables';
+@import '../../../assets/mixins';
 
 section.TestBlock {
-    div.description {
-        margin-bottom: 20px;
-    }
-}
+  div.description {
+    margin-bottom: 20px;
+  }
 
-ul.exercise {
+  ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
 
-    li {
-        border: solid thin #ccc;
-    }
-
-    .cw-test-content {
-        padding: 10px;
-    }
-
-    &:not(#exercise1) {
+    &.exercise {
+      &:not(#exercise1) {
         display: none;
-    }
-
-    .exercisetitle {
+      }
+      .exercisetitle {
         min-width: 10%;
         white-space: nowrap;
         overflow: hidden;
@@ -42,7 +33,6 @@ ul.exercise {
         margin: 0 0 20px 0;
         text-transform: uppercase;
         text-align: center;
-
         .exercisenavbutton{
             position: absolute;
             border: none;
@@ -50,35 +40,27 @@ ul.exercise {
             width: 20px;
             margin: 2px 12px;
             cursor: pointer;
-
             &.exercisenavback {
                 left: 0;
-                background: no-repeat scroll 0 0 ;
-                .assets-bg-icon("16/blue/arr_1left.png");
+                background: url("../../../../assets/images/icons/16/blue/arr_1left.png") no-repeat scroll 0 0 ;
             }
-
             &.exercisenavnext {
                 right: 0;
-                background: no-repeat scroll 0 0;
-                .assets-bg-icon("16/blue/arr_1right.png");
+                background: url("../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat scroll 0 0;
             }
         }
-    }
-
-    .exercise-content {
+      }
+      .exercise-content {
         padding: 0 10px;
-
         .exercise-title {
             text-align: center;
             color: #000;
         }
-
         form {
           text-transform: none;
           font-size: 100%;
           font-weight: 400;
         }
-
         .answer, label {
             font-size: 16px;
             font-weight: normal;
@@ -86,9 +68,8 @@ ul.exercise {
             padding-left: 5px;
             text-transform: none;
         }
-
         select {
-            margin: 0 5px;
+        margin: 0 5px;
         }
 
         .cloze.solution {
@@ -99,121 +80,113 @@ ul.exercise {
           margin-top: 12px;
           margin-bttom: 12px;
         }
-
+        
         textarea {
             border: thin solid #ccc;
             height: 10em;
             width: 100% !important;
         }
-
+        
         input {
             border: thin solid #ccc;
         }
-    }
-
-    & > li:after {
+      }
+      & > li:after {
         content: '';
         display: block;
         clear: both;
         padding-bottom: 10px;
         border-bottom: 1px solid #EEEEEE;
-    }
+      }
 
-    button.button {
+      button.button {
         display: block;
         clear: both;
         margin: 0.8em 0.6em 0.8em 0 !important;
-    }
-
-    .exercise-hint-button {
+      }
+      
+      .exercise-hint-button {
         border: none;
-        .assets-bg-icon("blue/info-circle.svg");
+        background-image: url("@{blocks-icons-dir}/24/blue/info-circle.png");
         background-position: center 0px;
         background-color: #fff;
         background-repeat: no-repeat;
-        background-size: 24px;
         height: 24px;
         width: 24px;
         float: right;
         cursor: pointer;
         margin-top: -12px; 
-    }
-
-    .exercise-hint {
+      }
+      
+      .exercise-hint {
         padding: 20px 25px;
         background-color: #f8f8f8;
+      }
+      
+      
     }
 
     p {
-        &.exercise-tryagain {
-            color: red;
-        }
-
-        &.exercise-correct {
-            color: green;
-        }
-
-        &.solution {
-            .correct_answer {
-                color: green;
-            }
-
-            .incorrect_answer {
-                color: red;
-            }
-        }
-
-        &.question input[type=text] {
-            width: 240px;
-        }
-    }
+       &.exercise-tryagain {
+         color: red;
+       }
+       &.exercise-correct {
+         color: green;
+       }
+     }
 
     .caption {
         font-weight: bold;
         margin: 1em 0 0.5em 0;
     }
-    
-    a.edit-tests {
-        display: block;
-        float: right;
+  }
+
+  select[name="test_id"] {
+    display: block;
+    width: 400px;
+  }
+
+  a.edit-tests {
+    display: block;
+    float: right;
+  }
+
+
+  p.solution {
+    .correct_answer {
+      color: green;
     }
-
-    fieldset {
-        border: none;
-        padding-left: 0px;
-        padding-top: 0px;
-          
-        legend {
-            background-color: transparent;
-            font-weight: bold;
-            color: #444444;
-            line-height: normal;
-            text-indent: 0px;
-            position: relative;
-            display: block;
-            margin-top: 10px;
-        }
-
-        > div {
-            padding-left: 0px;
-            text-indent: 0px;
-            > span {
-                white-space: normal !important;
-            }
-        }
+    .incorrect_answer {
+      color: red;
     }
+  }
 
-    .exercise-sample-solution {
-        border: solid thin #ccc;
-        padding: 10px;
-        span {
-            font-weight: 600;
-        }
-        
-        p {
-        
-        }
-    }
-
+  fieldset {
+      border: none;
+      padding-left: 0px;
+      padding-top: 0px;
+      
+      legend {
+          background-color: transparent;
+          font-weight: bold;
+          color: #444444;
+          line-height: normal;
+          text-indent: 0px;
+          position: relative;
+          display: block;
+          margin-top: 10px;
+      }
+      
+      > div {
+          padding-left: 0px;
+          text-indent: 0px;
+          > span {
+              white-space: normal !important;
+          }
+      }
+  }
 }
 
+p.question input[type=text] {
+    width: 240px;
+}

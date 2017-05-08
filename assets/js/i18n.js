@@ -1,3 +1,8 @@
-export default function (string) {
-  return string.toLocaleString();
-}
+define([], function () {
+
+    'use strict';
+
+    return function (string) {
+        return string.toLocaleString();
+    };
+});

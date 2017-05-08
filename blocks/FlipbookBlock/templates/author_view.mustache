@@ -1,0 +1,16 @@
+<label for="flipbook-pdf">{{#i18n}}Eine PDF Datei ausw&auml;hlen{{/i18n}}</label>
+<select type="text" class="flipbook-pdf" name="flipbook-pdf">
+    <option value="{{pdf}}" pdf_id="{{pdf_id}}" filename="{{pdf_filename}}" selected>{{pdf}}</option>
+    {{#pdffiles}}
+    <option value="{{name}}" pdf_id="{{dokument_id}}" filename="{{filename}}">{{name}}</option>
+    {{/pdffiles}}
+</select>
+<br>
+<br>
+<input type="radio" name="flipbookaspect" value="portrait" checked>{{#i18n}}Hochformat{{/i18n}}
+<input type="radio" name="flipbookaspect" value="landscape">{{#i18n}}Querformat{{/i18n}}
+<br>
+<br>
+<button name=save class=button>{{#i18n}}Speichern{{/i18n}}</button>
+<button name=cancel class=button>{{#i18n}}Abbrechen{{/i18n}}</button>
+

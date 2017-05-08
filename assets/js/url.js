@@ -1,88 +1,78 @@
-import jQuery from 'jquery'
-import queryString from 'query-string'
-import _ from 'underscore'
-import URL from 'url-parse'
-import Config from './courseware-config'
+define(['module', 'argjs'], function (module, Arg) {
 
-function ajax(options) {
-  return new Promise(function (resolve, reject) {
-    jQuery.ajax(options).done(resolve).fail(reject);
-  });
-}
+    'use strict';
 
-export default {
+    return {
 
-  // URL generation
+        // URL generation
 
-  block_url(block_id, params) {
-    const query = queryString.stringify(params);
-    return [ Config.blocks_url, '/', block_id, query.length ? `?${query}` : '' ].join('');
-  },
+        block_url: function (block_id, params) {
+            var path = [module.config().blocks_url, "/", block_id].join("");
+            return Arg.url(path, params || {});
+        },
 
-  plugin_url(path) {
-    const url = new URL(path || '', Config.plugin_url, true);
-    const query = { ...url.query, cid: Config.cid };
-    return `${Config.plugin_url}${url.pathname}?${queryString.stringify(query)}`;
-  },
+        courseware_url: module.config().courseware_url,
 
-  reload() {
-    window.location.reload(true);
-  },
+        plugin_url: function (path) {
+            path = path || "";
+            var params = _.extend({ cid: Arg("cid") }, Arg.parse(path));
+            return Arg.url(module.config().plugin_url + path, params || {});
+        },
 
-  navigateTo(id, hash) {
-    const params = queryString.parse(queryString.extract(location.href))
-    params.selected = id;
+        reload: function () {
+            window.location.reload(true);
+        },
 
-    if (typeof hash === 'undefined' || hash === null) {
-      hash = window.location.hash;
-    }
-    if (hash[0] === '#') {
-      hash = hash.substr(1);
-    }
-    var oldLocation = (new URL(document.location.pathname +
-                               document.location.search +
-                               document.location.hash, true)).toString();
+        navigateTo: function (id, hash) {
 
-    const newLocationURL = new URL(location.href, true)
-    newLocationURL.set('query', params)
-    newLocationURL.set('hash', `#${hash}`)
+            var params = Arg.all();
+            params.selected = id;
 
-    let newLocation = newLocationURL.toString()
+            if (typeof hash === "undefined" || hash === null) {
+                hash = window.location.hash;
+            }
+            if (hash[0] === "#") {
+                hash = hash.substr(1);
+            }
+            var oldLocation = document.location.pathname + document.location.search + document.location.hash;
+            var newLocation = Arg.url(Arg.url(), params, hash);
 
-    if (newLocation.substr(-1) === '#') {
-      newLocation = newLocation.substr(0, newLocation.length - 1);
-    }
+            if (newLocation.substr(-1) === "#") {
+                newLocation = newLocation.substr(0, newLocation.length - 1);
+            }
 
-    if (oldLocation !== newLocation) {
-      document.location = newLocation;
-    } else {
-      this.reload();
-    }
-  },
+            if (oldLocation !== newLocation) {
+                document.location = newLocation;
+            } else {
+                this.reload();
+            }
+        },
 
-  ajax,
 
-  getView(block_id, view) {
-    return ajax({
-      url: this.block_url(block_id, { view }),
-      dataType: 'html',
-      type: 'GET'
-    });
-  },
+        getView: function (block_id, view_name) {
 
-  callHandler(block_id, handler, data) {
+            return jQuery.ajax({
+                url: this.block_url(block_id, { view: view_name }),
+                dataType: "html",
+                type: "GET"
+            });
+        },
 
-    var payload = {
-      data: _.clone(data),
-      handler
+        callHandler: function (block_id, handler, data) {
+
+            var payload = {
+                data: _.clone(data),
+                handler: handler
+            };
+
+            return jQuery.ajax({
+                url: this.block_url(block_id),
+                type: "POST",
+                data: JSON.stringify(payload),
+                contentType: "application/json",
+                dataType: "json"
+            });
+        }
     };
 
-    return ajax({
-      url: this.block_url(block_id),
-      type: 'POST',
-      data: JSON.stringify(payload),
-      contentType: 'application/json',
-      dataType: 'json'
-    });
-  }
-};
+});

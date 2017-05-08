@@ -79,37 +79,6 @@ if ($flash['success']) {
                 </td>
             </tr>
 
-            <tr>
-                <td>
-                    <label for="courseware-sectionsnav-visible">
-                        <?= _cw('Dritte Navigationsebene anzeigen') ?><br>
-                        <dfn id="courseware-sectionsnav-description">
-                            <?= _cw('Wenn Sie diesen Schalter deaktivieren, wird die dritte Navigationsebene ausgeblendet.'); ?>
-                        </dfn>
-                    </label>
-                </td>
-                <td>
-                    <input id="courseware-sectionsnav"
-                           name="courseware[show_section_nav]"
-                           type="checkbox" <?= $courseware_block->getShowSectionNav() ? "checked" : "" ?>>
-                </td>
-            </tr>
-            
-            <tr>
-                <td>
-                    <label for="courseware-sections-as-chapters">
-                        <?= _cw('Dritte Navigationsebene in der Kapitelnavigation anzeigen') ?><br>
-                        <dfn id="courseware-sections-as-chapters-description">
-                            <?= _cw('Wenn Sie diesen Schalter aktivieren, wird die dritte Navigationsebene nicht mehr als horizontale Navigation, sondern in der Kapitelnavigation angezeigt.'); ?>
-                        </dfn>
-                    </label>
-                </td>
-                <td>
-                    <input id="courseware-sections-as-chapters"
-                           name="courseware[sections_as_chapters]"
-                           type="checkbox" <?= $courseware_block->getSectionsAsChapters() ? "checked" : "" ?>>
-                </td>
-            </tr>
 
             <tr>
                 <th colspan="2"><?= _cw('Blockeinstellungen') ?></th>

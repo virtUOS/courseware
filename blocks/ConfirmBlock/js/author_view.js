@@ -1,43 +1,51 @@
-import $ from 'jquery'
-import AuthorView from 'js/author_view'
+define(['assets/js/author_view', 'assets/js/url'], function (
+    AuthorView, helper
+) {
+    'use strict';
+    return AuthorView.extend({
+        events: {
+            'click button[name="save"]':   'onSave',
+            'click button[name="cancel"]': 'switchBack'
+        },
+        initialize: function(options) {
+        },
+        render: function() {
+            return this;
+        },
+        postRender: function() {
+        },
 
-export default AuthorView.extend({
-  events: {
-    'click button[name="save"]':   'onSave',
-    'click button[name="cancel"]': 'switchBack'
-  },
+        onSave: function (event) {
+            var input = this.$('input[name="title"]'),
+                button = $(event.target),
+                new_title = input.val().trim(),
+                view = this;
 
-  render() {
-    return this;
-  },
+            if (new_title === '') {
+                return;
+            }
 
-  postRender() {
-  },
+            // disable button for now
+            button.prop('disabled', true);
 
-  onSave(event) {
-    var input = this.$('input[name="title"]'),
-        button = $(event.target),
-        new_title = input.val().trim(),
-        view = this;
+            this.model.set('title', new_title);
 
-    if (new_title === '') {
-      return;
-    }
+            this.model.save()
+                .then(
+                    // success
+                    function () {
+                        view.switchBack();
+                    },
 
-    // disable button for now
-    button.prop('disabled', true);
+                    // error
+                    function (error) {
+                        button.prop('disabled', false);
 
-    this.model.set('title', new_title);
-
-    this.model.save()
-        .then(function () {
-          view.switchBack();
-        }).catch(function (error) {
-          button.prop('disabled', false);
-
-          var errorMessage = 'Could not update the title: ' + $.parseJSON(error.responseText).reason;
-          alert(errorMessage);
-          console.log(errorMessage, arguments);
-        });
-  }
+                        var errorMessage = 'Could not update the title: '+jQuery.parseJSON(error.responseText).reason;
+                        alert(errorMessage);
+                        console.log(errorMessage, arguments);
+                    })
+                .done();
+        }
+    });
 });

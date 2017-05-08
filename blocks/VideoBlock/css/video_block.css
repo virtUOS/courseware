@@ -1,0 +1,96 @@
+.btn-base {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+}
+.btn-base:hover {
+  cursor: pointer;
+}
+section.VideoBlock .videodata {
+  margin: 0 1em;
+}
+section.VideoBlock .addmediatype {
+  color: #000;
+  border: 1px solid #d0d0d0;
+  background-color: #e9e9e9;
+  background-repeat: no-repeat;
+  min-height: 27px;
+  padding: 9px 6px 9px 28px;
+  margin: 0px;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 2px;
+  margin: 0;
+  width: initial;
+  text-align: left;
+  background-image: url("../../../../assets/images/icons/16/blue/add.png");
+  background-position: 6px center;
+  padding-left: 28px;
+}
+section.VideoBlock .addmediatype:hover {
+  background-color: #F8F8F8;
+  border-color: #cccccc;
+}
+section.VideoBlock input {
+  width: 32em;
+  margin: 1em;
+}
+section.VideoBlock input[type="number"] {
+  margin-left: 0.5em;
+  width: 4em;
+}
+section.VideoBlock input[type="checkbox"],
+section.VideoBlock input[type="radio"] {
+  width: inherit;
+  vertical-align: middle;
+}
+section.VideoBlock .webvideo-description {
+  background: #eee;
+  margin: 1em 0;
+  background-image: url("../../../../assets/images/icons/32/blue/info-circle.png");
+  background-repeat: no-repeat;
+  background-position: 26px center;
+  padding-left: 64px;
+}
+section.VideoBlock .webvideo-description p {
+  padding: 20px;
+  line-height: 1.3em;
+}
+section.VideoBlock .block-content .video-wrapper {
+  margin-bottom: 2em;
+  position: relative;
+  padding-top: 0px;
+  height: 0;
+  overflow: hidden;
+}
+section.VideoBlock .block-content .video-wrapper.aspect-169 {
+  padding-bottom: 56.25%;
+}
+section.VideoBlock .block-content .video-wrapper.aspect-43 {
+  padding-bottom: 75%;
+}
+section.VideoBlock .block-content .video-wrapper iframe {
+  border: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+section.VideoBlock .block-content .videourl {
+  display: none;
+}
+section.VideoBlock .block-content .videostatus {
+  height: 2em;
+}
+section.VideoBlock .block-content .videostatus .status {
+  display: none;
+}
+section.VideoBlock .block-content .videosettings-header {
+  font-size: 14px;
+  font-weight: 400;
+}
+section.VideoBlock .block-content .videosettings >span:not(:first-child) {
+  padding-left: 1em;
+}

@@ -1,13 +1,16 @@
-import AuthorView from 'js/author_view'
-
-export default AuthorView.extend({
-  events: { },
-
-  initialize() { },
-
-  render() {
-    return this;
-  },
-
-  postRender() { }
+define(['assets/js/author_view', 'assets/js/url'], function (
+    AuthorView, helper
+) {
+    'use strict';
+    return AuthorView.extend({
+        events: {
+        },
+        initialize: function(options) {
+        },
+        render: function() {
+            return this;
+        },
+        postRender: function() {
+        }
+    });
 });

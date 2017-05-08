@@ -1,8 +1,10 @@
-import Backbone from 'backbone'
-import Thread from './thread_model'
+define(["backbone", "./thread_model"], function (Backbone, Thread) {
 
-var ThreadsCollection = Backbone.Collection.extend({
-  model: Thread
+    'use strict';
+
+    var ThreadsCollection = Backbone.Collection.extend({
+        model: Thread
+    });
+
+    return ThreadsCollection;
 });
-
-export default ThreadsCollection;

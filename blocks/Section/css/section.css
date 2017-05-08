@@ -1,0 +1,296 @@
+.btn-base {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+}
+.btn-base:hover {
+  cursor: pointer;
+}
+section#courseware .active-section,
+section#courseware .aside-section {
+  clear: both;
+  padding-top: 1em;
+  width: 100%;
+  max-width: 870px;
+}
+section#courseware .active-section > .title h1,
+section#courseware .aside-section > .title h1 {
+  font-weight: 700;
+  color: #444444;
+  line-height: 1.1;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  font-size: 32px;
+  padding: 0px;
+  border-bottom: none;
+}
+section#courseware .active-section > .title h1 .controls button.edit,
+section#courseware .aside-section > .title h1 .controls button.edit {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+  background: url("../../../../assets/images/icons/16/grey/edit.png") center center no-repeat;
+}
+section#courseware .active-section > .title h1 .controls button.edit:hover,
+section#courseware .aside-section > .title h1 .controls button.edit:hover {
+  cursor: pointer;
+}
+section#courseware .active-section > .title h1 .controls button.edit:hover,
+section#courseware .aside-section > .title h1 .controls button.edit:hover {
+  background-image: url("../../../../assets/images/icons/16/black/edit.png");
+}
+section#courseware .active-section > .title h1 .controls button.trash,
+section#courseware .aside-section > .title h1 .controls button.trash {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+  background: url("../../../../assets/images/icons/16/grey/trash.png") center center no-repeat;
+}
+section#courseware .active-section > .title h1 .controls button.trash:hover,
+section#courseware .aside-section > .title h1 .controls button.trash:hover {
+  cursor: pointer;
+}
+section#courseware .active-section > .title h1 .controls button.trash:hover,
+section#courseware .aside-section > .title h1 .controls button.trash:hover {
+  background-image: url("../../../../assets/images/icons/16/black/trash.png");
+}
+section#courseware .active-section > .title.loading h1,
+section#courseware .aside-section > .title.loading h1 {
+  background: url("../../../../assets/images/ajax_indicator_small.gif") center left no-repeat;
+  padding-left: 20px;
+}
+section#courseware .active-section section.block,
+section#courseware .aside-section section.block {
+  position: relative;
+  min-height: 1em;
+  line-height: 20px;
+  display: block;
+  margin-bottom: 3em;
+}
+section#courseware .active-section section.block::before,
+section#courseware .aside-section section.block::before {
+  color: #ccc;
+  border: 1px dotted #eee;
+  line-height: 20px;
+}
+section#courseware .active-section section.block h2,
+section#courseware .aside-section section.block h2 {
+  padding-bottom: 6px;
+}
+section#courseware .active-section section.block.loading,
+section#courseware .aside-section section.block.loading {
+  background: url("../../../../assets/images/ajax_indicator_small.gif") center center no-repeat;
+}
+section#courseware .active-section section.block.loading .block-content,
+section#courseware .active-section section.block.loading .controls,
+section#courseware .aside-section section.block.loading .block-content,
+section#courseware .aside-section section.block.loading .controls {
+  visibility: hidden;
+}
+section#courseware .active-section section.block div.controls,
+section#courseware .aside-section section.block div.controls {
+  background-color: #eee;
+  text-align: right;
+  overflow: hidden;
+}
+section#courseware .active-section section.block div.controls span.type,
+section#courseware .aside-section section.block div.controls span.type {
+  margin-left: 5px;
+  float: left;
+}
+section#courseware .active-section section.block div.controls button,
+section#courseware .aside-section section.block div.controls button {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+  background-color: transparent;
+}
+section#courseware .active-section section.block div.controls button:hover,
+section#courseware .aside-section section.block div.controls button:hover {
+  cursor: pointer;
+}
+section#courseware .active-section section.block div.controls button.raise,
+section#courseware .aside-section section.block div.controls button.raise {
+  background-image: url("../../../../assets/images/icons/16/grey/arr_2up.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware .active-section section.block div.controls button.lower,
+section#courseware .aside-section section.block div.controls button.lower {
+  background-image: url("../../../../assets/images/icons/16/grey/arr_2down.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware .active-section section.block div.controls button.author,
+section#courseware .aside-section section.block div.controls button.author {
+  background-image: url("../../../../assets/images/icons/16/grey/edit.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware .active-section section.block div.controls button.trash,
+section#courseware .aside-section section.block div.controls button.trash {
+  background-image: url("../../../../assets/images/icons/16/grey/trash.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware .active-section section.block + .no-content,
+section#courseware .aside-section section.block + .no-content {
+  display: none;
+}
+section#courseware .active-section .not-editable               button.author,
+section#courseware .active-section section.block:first-of-type button.raise,
+section#courseware .active-section section.block:last-of-type  button.lower,
+section#courseware .aside-section .not-editable               button.author,
+section#courseware .aside-section section.block:first-of-type button.raise,
+section#courseware .aside-section section.block:last-of-type  button.lower {
+  visibility: hidden;
+}
+section#courseware .active-section .block-adder,
+section#courseware .aside-section .block-adder {
+  padding-top: 1em;
+  margin-bottom: 4em;
+}
+section#courseware .active-section .block-adder .styled-select,
+section#courseware .aside-section .block-adder .styled-select {
+  float: left;
+  margin-right: 5px;
+  background: #eee url("../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat scroll right 10px center;
+  border: 1px solid #d0d0d0;
+  border-radius: 2px;
+  height: 34px;
+  overflow: hidden;
+  width: 220px;
+}
+section#courseware .active-section .block-adder .styled-select > select,
+section#courseware .aside-section .block-adder .styled-select > select {
+  background: transparent;
+  width: 260px;
+  padding: 5px;
+  font-size: 16px;
+  line-height: 1;
+  border: 0;
+  border-radius: 0;
+  height: 34px;
+  -webkit-appearance: none;
+}
+section#courseware .active-section .block-adder select,
+section#courseware .active-section .block-adder button.add-block,
+section#courseware .aside-section .block-adder select,
+section#courseware .aside-section .block-adder button.add-block {
+  height: 35px;
+  vertical-align: middle;
+}
+section#courseware .active-section .block-adder button.add-block,
+section#courseware .aside-section .block-adder button.add-block {
+  color: #000;
+  border: 1px solid #d0d0d0;
+  background-color: #e9e9e9;
+  background-repeat: no-repeat;
+  min-height: 27px;
+  padding: 9px 6px 9px 28px;
+  margin: 0px;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 2px;
+  float: left;
+  margin: 0;
+  width: initial;
+  text-align: left;
+  background-image: url("../../../../assets/images/icons/16/blue/add.png");
+  background-position: 6px center;
+  padding-left: 28px;
+}
+section#courseware .active-section .block-adder button.add-block:hover,
+section#courseware .aside-section .block-adder button.add-block:hover {
+  background-color: #F8F8F8;
+  border-color: #cccccc;
+}
+section#courseware .active-section .block-adder button.add-block.loading,
+section#courseware .aside-section .block-adder button.add-block.loading {
+  background-image: url("../../../../assets/images/ajax_indicator_small.gif");
+  background-position: 10px center;
+}
+section#courseware .active-section .edit-section input,
+section#courseware .aside-section .edit-section input {
+  font-weight: 700;
+  color: #444444;
+  line-height: 1.1;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  font-size: 32px;
+  padding: 0px;
+}
+section#courseware .active-section .edit-section button,
+section#courseware .aside-section .edit-section button {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+}
+section#courseware .active-section .edit-section button:hover,
+section#courseware .aside-section .edit-section button:hover {
+  cursor: pointer;
+}
+section#courseware .active-section .edit-section button.cancel,
+section#courseware .aside-section .edit-section button.cancel {
+  background: url("../../../../assets/images/icons/16/grey/decline.png") center center no-repeat;
+  right: 20px;
+}
+section#courseware .active-section .edit-section button.ok,
+section#courseware .aside-section .edit-section button.ok {
+  background: url("../../../../assets/images/icons/16/grey/accept.png") center center no-repeat;
+  right: 0;
+}
+section#courseware.view-author .aside-section section.block,
+section#courseware.view-author .active-section section.block {
+  box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.1);
+  padding: 0px;
+}
+section#courseware.view-author .aside-section section.block .block-content,
+section#courseware.view-author .active-section section.block .block-content {
+  padding: 10px 4px;
+}
+section#courseware.view-author .aside-section section.block h1,
+section#courseware.view-author .active-section section.block h1 {
+  padding-bottom: 6px;
+}
+section#courseware.view-author .aside-section section.block:hover,
+section#courseware.view-author .active-section section.block:hover {
+  box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.3);
+}
+section#courseware button.init-sort-block {
+  background-image: url("../../../../assets/images/icons/16/blue/ranking.png");
+  background-position: 6px 2px;
+}
+section#courseware button.stop-sort-block {
+  background-image: url("../../../../assets/images/icons/16/blue/accept.png");
+  background-position: 6px center;
+  display: none;
+}
+section#courseware.view-student .active-section div.controls,
+section#courseware.view-student .active-section .block-adder,
+section#courseware.view-student .active-section button.init-sort-block,
+section#courseware.view-student .aside-section div.controls,
+section#courseware.view-student .aside-section .block-adder,
+section#courseware.view-student .aside-section button.init-sort-block {
+  display: none;
+}
+section#courseware .aside-section > .title {
+  display: none;
+}
+section#courseware .aside-section .block-adder button.add-block {
+  min-width: auto;
+  color: transparent;
+  width: 35px;
+  background-position: center center;
+}
+section#courseware.view-student .aside-section > header {
+  display: none;
+}
+section#courseware.view-student .aside-section .no-content {
+  display: none;
+}

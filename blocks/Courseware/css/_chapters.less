@@ -17,17 +17,12 @@ ol.chapters {
   }
 
   .chapter > .title {
-    .assets-bg-icon("blue/arr_1right.svg");
-    background-repeat: no-repeat;
-    background-position: 3px center;
+    background: url("@{blocks-icons-dir}/16/blue/arr_1right.png") no-repeat 3px center;
   }
 
   .chapter.selected > .title {
     font-weight: 700;
-    .assets-bg-icon("blue/arr_1down.svg");
-    background-repeat: no-repeat;
-    background-position: 3px center;
-    background-color: #eeeeee;
+    background: url("@{blocks-icons-dir}/16/blue/arr_1down.png") no-repeat 3px center #eeeeee;
   }
 
   .controls {
@@ -41,7 +36,7 @@ ol.chapters {
     border-bottom: 1px solid #E9E9E9;
 
     a {
-      display: block;
+      display: table-cell;
       padding: 5px 44px 5px 22px;
     }
 
@@ -70,7 +65,7 @@ ol.chapters {
   }
 
   .chapter.loading > .title {
-    .ajax-indicator-bg-icon();
+    background-image: url("@{blocks-images-dir}/ajax_indicator_small.gif");
   }
 
 
@@ -140,7 +135,7 @@ ol.subchapters {
     font-weight: 700;
     background: #f8f8f8;
     .complete {
-        .assets-bg-icon("16/grey/accept.png");
+        background-image: url("../../../../assets/images/icons/16/grey/accept.png");
     }
   }
 
@@ -150,11 +145,12 @@ ol.subchapters {
     border-bottom: 1px solid #E9E9E9;
 
     a {
+      display: table-cell;
       padding: 5px 44px 5px 12px;
     }
 
     .complete {
-        .assets-bg-icon("16/grey/accept.png");
+        background-image: url("../../../../assets/images/icons/16/grey/accept.png");
         display: inline-block;
         width: 16px;
         height: 16px;
@@ -189,28 +185,7 @@ ol.subchapters {
 
 
   .subchapter.loading > .title {
-     .ajax-indicator-bg-icon();
-    background: no-repeat 3px center;
-  }
-  ol.sections {
-    list-style: none;
-    .selected {
-        font-weight: 700;
-        background: #f8f8f8;
-    }
-    li {
-        line-height: 30px;
-        border-bottom: 1px solid #e9e9e9;
-        padding-left: 1em;
-
-        a {
-            display: block;
-        }
-
-        &:hover {
-            background-color: #eee;
-        }
-    }
+    background: url(@{blocks-images-dir}/ajax_indicator_small.gif) no-repeat 3px center;
   }
 }
 
@@ -255,7 +230,7 @@ ol.subchapters {
   li[data-type="Chapter"]:not([data-publication='']),
   li[data-type="Subchapter"]:not([data-publication='']) {
     & > div.title > a.navigate {
-      .bgImg(date, grey, 16);
+      .bgImg(calendar, grey, 16);
       background-position: center right;
       opacity: 0.5;
     }

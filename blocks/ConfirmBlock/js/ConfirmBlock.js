@@ -1,16 +1,15 @@
-import block_types from 'js/block_types'
-import StudentView from './student_view'
-import AuthorView from './author_view'
+define(['assets/js/block_types', './student_view', './author_view'], function (block_types, StudentView, AuthorView) {
 
-import '../css/confirm_block.less'
+    'use strict';
 
-export default block_types.add({
-  name: 'ConfirmBlock',
+    return block_types.add({
+        name: 'ConfirmBlock',
 
-  content_block: true,
+        content_block: true,
 
-  views: {
-    student: StudentView,
-    author: AuthorView
-  }
+        views: {
+            student: StudentView,
+            author: AuthorView
+        }
+    });
 });

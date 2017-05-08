@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/note/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/note/"
+    elementFormDefault="qualified"
+>
+    <xsd:attribute name="note_type" type="xsd:string" />
+    <xsd:attribute name="note_color" type="xsd:string" />
+    <xsd:attribute name="note_quantity" type="xsd:string" />
+    <xsd:attribute name="note_header1" type="xsd:string" />
+    <xsd:attribute name="note_header2" type="xsd:string" />
+    <xsd:attribute name="note_questions" type="xsd:string" />
+</xsd:schema>

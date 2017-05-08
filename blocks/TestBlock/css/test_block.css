@@ -1,0 +1,170 @@
+.btn-base {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+}
+.btn-base:hover {
+  cursor: pointer;
+}
+section.TestBlock div.description {
+  margin-bottom: 20px;
+}
+section.TestBlock ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+section.TestBlock ul.exercise:not(#exercise1) {
+  display: none;
+}
+section.TestBlock ul.exercise .exercisetitle {
+  min-width: 10%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  background-color: #eee;
+  color: #28497c;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 10px 20px;
+  position: relative;
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  text-align: center;
+}
+section.TestBlock ul.exercise .exercisetitle .exercisenavbutton {
+  position: absolute;
+  border: none;
+  height: 20px;
+  width: 20px;
+  margin: 2px 12px;
+  cursor: pointer;
+}
+section.TestBlock ul.exercise .exercisetitle .exercisenavbutton.exercisenavback {
+  left: 0;
+  background: url("../../../../assets/images/icons/16/blue/arr_1left.png") no-repeat scroll 0 0;
+}
+section.TestBlock ul.exercise .exercisetitle .exercisenavbutton.exercisenavnext {
+  right: 0;
+  background: url("../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat scroll 0 0;
+}
+section.TestBlock ul.exercise .exercise-content {
+  padding: 0 10px;
+}
+section.TestBlock ul.exercise .exercise-content .exercise-title {
+  text-align: center;
+  color: #000;
+}
+section.TestBlock ul.exercise .exercise-content form {
+  text-transform: none;
+  font-size: 100%;
+  font-weight: 400;
+}
+section.TestBlock ul.exercise .exercise-content .answer,
+section.TestBlock ul.exercise .exercise-content label {
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 32px;
+  padding-left: 5px;
+  text-transform: none;
+}
+section.TestBlock ul.exercise .exercise-content select {
+  margin: 0 5px;
+}
+section.TestBlock ul.exercise .exercise-content .cloze.solution {
+  margin-bottom: 8px;
+}
+section.TestBlock ul.exercise .exercise-content p img {
+  margin-top: 12px;
+  margin-bttom: 12px;
+}
+section.TestBlock ul.exercise .exercise-content textarea {
+  border: thin solid #ccc;
+  height: 10em;
+  width: 100% !important;
+}
+section.TestBlock ul.exercise .exercise-content input {
+  border: thin solid #ccc;
+}
+section.TestBlock ul.exercise > li:after {
+  content: '';
+  display: block;
+  clear: both;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #EEEEEE;
+}
+section.TestBlock ul.exercise button.button {
+  display: block;
+  clear: both;
+  margin: 0.8em 0.6em 0.8em 0 !important;
+}
+section.TestBlock ul.exercise .exercise-hint-button {
+  border: none;
+  background-image: url("../../../../assets/images/icons/24/blue/info-circle.png");
+  background-position: center 0px;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  height: 24px;
+  width: 24px;
+  float: right;
+  cursor: pointer;
+  margin-top: -12px;
+}
+section.TestBlock ul.exercise .exercise-hint {
+  padding: 20px 25px;
+  background-color: #f8f8f8;
+}
+section.TestBlock ul p.exercise-tryagain {
+  color: red;
+}
+section.TestBlock ul p.exercise-correct {
+  color: green;
+}
+section.TestBlock ul .caption {
+  font-weight: bold;
+  margin: 1em 0 0.5em 0;
+}
+section.TestBlock select[name="test_id"] {
+  display: block;
+  width: 400px;
+}
+section.TestBlock a.edit-tests {
+  display: block;
+  float: right;
+}
+section.TestBlock p.solution .correct_answer {
+  color: green;
+}
+section.TestBlock p.solution .incorrect_answer {
+  color: red;
+}
+section.TestBlock fieldset {
+  border: none;
+  padding-left: 0px;
+  padding-top: 0px;
+}
+section.TestBlock fieldset legend {
+  background-color: transparent;
+  font-weight: bold;
+  color: #444444;
+  line-height: normal;
+  text-indent: 0px;
+  position: relative;
+  display: block;
+  margin-top: 10px;
+}
+section.TestBlock fieldset > div {
+  padding-left: 0px;
+  text-indent: 0px;
+}
+section.TestBlock fieldset > div > span {
+  white-space: normal !important;
+}
+p.question input[type=text] {
+  width: 240px;
+}

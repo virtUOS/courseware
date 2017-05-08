@@ -1,8 +1,9 @@
-import BlockView from './block_view'
-export default BlockView.extend({
-  view_name: 'author',
+define(['./block_view'], function (BlockView) {
+    return BlockView.extend({
+        view_name: "author",
 
-  switchBack() {
-    this.trigger('switch', 'student');
-  }
+        switchBack: function () {
+            this.trigger("switch", "student");
+        }
+    });
 });

@@ -1,5 +1,5 @@
-@import '../../../assets/less/variables';
-@import '../../../assets/less/mixins';
+@import '../../../assets/variables';
+@import '../../../assets/mixins';
 
 section#courseware {
 
@@ -36,8 +36,7 @@ section#courseware {
     }
 
     &.loading h1 {
-      .ajax-indicator-bg-icon();
-      background: center left no-repeat;
+      background: url("@{blocks-images-dir}/ajax_indicator_small.gif") center left no-repeat;
       padding-left: 20px;
     }
   }
@@ -62,8 +61,7 @@ section#courseware {
     }
 
     &.loading {
-      .ajax-indicator-bg-icon();
-      background: center center no-repeat;
+      background: url("@{blocks-images-dir}/ajax_indicator_small.gif") center center no-repeat;
 
       .block-content, .controls {
         visibility: hidden;
@@ -110,16 +108,15 @@ section#courseware {
     .styled-select {
         float:left;
         margin-right: 5px;
-        .assets-bg-icon("blue/arr_1down.svg");
-        background:  #eee no-repeat scroll right 10px center;
+        background: #eee url("../../../../assets/images/icons/16/blue/arr_1down.png") no-repeat scroll right 10px center;
         border: 1px solid #d0d0d0;
         border-radius: 2px;
         height: 34px;
         overflow: hidden;
-        width: (@sidebar-width - 50);
+        width: (@sidebar-width -50);
         > select {
             background: transparent;
-            width: (@sidebar-width - 50);
+            width: (@sidebar-width -10);
             padding: 5px;
             font-size: 16px;
             line-height: 1;
@@ -127,10 +124,6 @@ section#courseware {
             border-radius: 0;
             height: 34px;
             -webkit-appearance: none;
-            -moz-appearance: none;
-        }
-        > select::-ms-expand {
-            display: none;
         }
     }
     select, button.add-block {
@@ -145,12 +138,12 @@ section#courseware {
       width: initial;
       text-align: left;
 
-      .assets-bg-icon("blue/add.svg");
+      background-image: url("@{blocks-icons-dir}/16/blue/add.png");
       background-position: 6px center;
       padding-left: 28px;
 
       &.loading {
-        .ajax-indicator-bg-icon();
+        background-image: url("@{blocks-images-dir}/ajax_indicator_small.gif");
         background-position: 10px center;
       }
     }
@@ -164,16 +157,14 @@ section#courseware {
 
     button {
       .btn-base();
-      background-position: center center;
-      background-repeat: no-repeat;
 
       &.cancel {
-        .assets-bg-icon("grey/decline.svg");
+        background: url("@{blocks-icons-dir}/16/grey/decline.png") center center no-repeat;
         right: 20px;
       }
 
       &.ok {
-        .assets-bg-icon("grey/accept.svg");
+        background: url("@{blocks-icons-dir}/16/grey/accept.png") center center no-repeat;
         right: 0;
       }
     }
@@ -201,12 +192,12 @@ section#courseware {
 
 
 button.init-sort-block {
-  .assets-bg-icon("blue/ranking.svg");
+  background-image: url("@{blocks-icons-dir}/16/blue/ranking.png");
   background-position: 6px 2px;
 }
 
 button.stop-sort-block {
-  .assets-bg-icon("blue/accept.svg");
+  background-image: url("@{blocks-icons-dir}/16/blue/accept.png");
   background-position: 6px center;
   display: none;
 }

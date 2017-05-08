@@ -1,0 +1,118 @@
+@height: 480px;
+@width: 700px;
+@dfb-green: rgba(0,127,75,1);
+
+section.FlipbookBlock {
+    
+    min-width: @width;
+
+    .flipbook-controls,  .flipbook { 
+         box-sizing: border-box;
+         vertical-align: top; 
+         display: inline-block;
+    }
+
+    .flipbook-controls {
+        height: @height;
+        width: 24px;
+        background-color: rgba(223, 223, 223, 0.4);
+        
+        &hover {
+        background-color: rgba(223, 223, 223, 1);
+        }
+    }
+
+
+    .flipbook-arr-right {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 24px 0 24px 15px;
+        border-color: transparent transparent transparent #ffffff;
+        margin: (@height / 2)-24 auto;
+    }
+
+    .flipbook-arr-left {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 24px 15px 24px 0;
+        border-color: transparent #ffffff transparent transparent;
+        margin: (@height / 2)-24 auto;
+    }
+
+    .flipbook{
+        width:645px;
+        height:@height;
+        
+        .turn-page {
+        background-color:#ccc;
+        background-size:100% 100%;
+        }
+    }
+
+    progress {
+        border: 0;
+        height: 12px;
+        width: @width;
+        margin: 0;
+        background-color: rgba(223, 223, 223, 0.4);
+    }
+    progress::-webkit-progress-bar{
+         background-color: rgba(223, 223, 223, 0.4);
+    }
+    /* value */
+    progress::-webkit-progress-value{
+        background-color: @dfb-green; 
+    }
+    progress::-moz-progress-bar {
+        background-color: @dfb-green; 
+    }
+
+    .flipbook-info {
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .flipbookoverlay {
+        opacity : 1.0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #fff;
+        width: 100%;
+        z-index: 5000;
+        display: none;
+    }
+    .flipbookimgfull-container {
+        margin: 0 auto;
+        border: solid thin #ccc;
+        
+    }
+    .flipbookimgfull {
+        display: none;
+    }
+    
+    .flipbook-pdficon {
+        border: none;
+        background-image: url("../../../../assets/images/icons/16/blue/file-pdf.png");
+        background-position: center 0px;
+        height: 24px;
+        width: 24px;
+        background-repeat: no-repeat;
+        background-color: #fff;
+    }
+    
+    .flipbookfullon {
+        float: right;
+        cursor: pointer;
+    }
+    
+    .flipbookfulloff {
+        float: right;
+        width: 10em;
+        z-index: 2;
+    }
+
+}

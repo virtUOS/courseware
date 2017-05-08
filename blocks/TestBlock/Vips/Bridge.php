@@ -39,8 +39,7 @@ namespace Mooc\UI\TestBlock\Vips {
                 static::$vipsPlugin = \PluginEngine::getPlugin('VipsPlugin');
                 if (static::$vipsPlugin) {
                     \PageLayout::addStylesheet(static::$vipsPlugin->getPluginURL() .'/css/vips_style.css');
-                           \PageLayout::addHeadElement('script', array(), "VIPS_CHARACTER_PICKER = '".
-                                                       \PluginEngine::getLink(static::$vipsPlugin, array('action' => 'sheets', 'subaction' => 'get_character_picker_ajax'), 'show') . "';");
+                    \PageLayout::addHeadElement('script', array(), "VIPS_CHARACTER_PICKER = '". \PluginEngine::getLink(static::$vipsPlugin, array(), 'sheets/get_character_picker_ajax') . "';");
                     \PageLayout::addScript(static::$vipsPlugin->getPluginURL() .'/js/character_picker.js');
                 }
             }

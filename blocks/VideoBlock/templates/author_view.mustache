@@ -4,21 +4,21 @@
 </div>
 <div class="videodata">
     <div class="videoblocktitle">
-        <label class="videotitlename">{{#i18n}}Titel{{/i18n}}:</label><input type="text" class="videotitle" value="{{videoTitle}}">
+        <span class="videotitlename">{{#i18n}}Titel{{/i18n}}:</span><input type="text" class="videotitle" value="{{videoTitle}}">
     </div>
     <div class="videotype-selection">
-    <label>{{#i18n}}Video-Typ:{{/i18n}}</label>
+    {{#i18n}}Video-Typ:{{/i18n}} 
     <select class="videotype">
         <option value="webvideo">{{#i18n}}Webvideo (URL){{/i18n}}</option>
         <option value="youtube">{{#i18n}}Youtube{{/i18n}}</option>
-        <option value="matterhorn">{{#i18n}}openCast{{/i18n}}</option>
+        <option value="matterhorn">{{#i18n}}Matterhorn{{/i18n}}</option>
         <option value="url">{{#i18n}}eingebettetes Video (iframe){{/i18n}}</option>
     </select>
     </div>
 
     <div class="videosource videosource-url">
         <input type="hidden" class="videourl" value= "{{url}}">
-        <label class="videosrcname">{{#i18n}}URL{{/i18n}}:</label>
+        <span class="videosrcname">{{#i18n}}URL{{/i18n}}:</span>
         <input type="text" class="videosrc">
     </div>
     <div class="videosource videosource-webvideo">
@@ -32,15 +32,13 @@
             </p>
         </div>
         <div class="webvideo">
-            <label class="webvideosrcname">{{#i18n}}Quelle{{/i18n}}:</label>
+            <span class="webvideosrcname">{{#i18n}}Quelle{{/i18n}}:</span>
             <input type="text" class="webvideosrc">
-            <label>{{#i18n}}Dateityp{{/i18n}}:</label>
             <select class="webvideosrc-mediatype">
                 <option value="mp4">mp4</option>
                 <option value="webm">webm</option>
                 <option value="ogg">ogg</option>
             </select>
-            <label>{{#i18n}}Bildschirm{{/i18n}}:</label>
             <select class="webvideosrc-mediaquery">
                 <option value="normal">{{#i18n}}für alle Displaygrößen{{/i18n}}</option>
                 <option value="large">{{#i18n}}für große Displays{{/i18n}}</option>
@@ -53,21 +51,20 @@
     <h2 class="videosettings-header">{{#i18n}}Einstellungen{{/i18n}}</h2>
     <div class="videosettings">
         
-        <div class="videoautostart-wrapper"><label>{{#i18n}}Video automatisch starten{{/i18n}}</label><input type="checkbox" class="videoautostart" ></div>
-        <div class="videocontrols-wrapper"><label>{{#i18n}}Kontrollelemente verstecken{{/i18n}}</label><input type="checkbox" class="videocontrols" ></div>
-        <div class="videoaspect"><label>{{#i18n}}Seitenverhältnis{{/i18n}}</label><input type="radio" class="videoaspect169" name="videoaspect" value="aspect-169" checked>16:9 <input type="radio" class="videoaspect43" name="videoaspect" value="aspect-43">4:3</div>
+        <span class="videoautostart-wrapper">{{#i18n}}Video automatisch starten{{/i18n}}<input type="checkbox" class="videoautostart" ></span>
+        <span class="videocontrols-wrapper">{{#i18n}}Kontrollelemente verstecken{{/i18n}}<input type="checkbox" class="videocontrols" ></span>
+        <span class="videoaspect">{{#i18n}}Seitenverhältnis{{/i18n}}<input type="radio" class="videoaspect169" name="videoaspect" value="aspect-169" checked>16:9 <input type="radio" class="videoaspect43" name="videoaspect" value="aspect-43">4:3</span> <br/>
         <div class="videotimer">
-            <label style="min-width: 0;">{{#i18n}}Start{{/i18n}}</label><input class="videostartmin" type="number" min="0" placeholder="min" ><input class="videostartsec" type="number" step="1" max="59" min="0" placeholder="sek">
-            <label style="min-width: 0; padding-left: 4em;">{{#i18n}}Ende{{/i18n}}</label><input class="videoendmin" type="number" min="0" placeholder="min"><input class="videoendsec" type="number" step="1" max="59" min="0" placeholder="sek">
-            <button name="videotimereset" class="button" style="margin-left: 4em;">{{#i18n}}Zeit zurücksetzen{{/i18n}}</button>
+            <span>{{#i18n}}Start{{/i18n}}<input class="videostartmin" type="number" min="0" placeholder="min" ><input class="videostartsec" type="number" step="1" max="59" min="0" placeholder="sek"></span> 
+            <span>{{#i18n}}Ende{{/i18n}}<input class="videoendmin" type="number" min="0" placeholder="min"><input class="videoendsec" type="number" step="1" max="59" min="0" placeholder="sek"></span> <button name="videotimereset" class="button">{{#i18n}}zurücksetzen{{/i18n}}</button><br/>
         </div>
     </div>
     <div class="videostatus">
         <span class="status">&nbsp;</span>
     </div>
-    <div class="cw-button-box">
-        <button name="preview" class="button">{{#i18n}}Vorschau{{/i18n}}</button>
-        <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
-        <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+    <div class="videobuttons">
+    <button name="preview" class="button">{{#i18n}}Vorschau{{/i18n}}</button>
+    <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
+    <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
     </div>
 </div>

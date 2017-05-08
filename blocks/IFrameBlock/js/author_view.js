@@ -1,87 +1,45 @@
-import $ from 'jquery'
-import Backbone from 'backbone'
-import AuthorView from 'js/author_view'
-import helper from 'js/url'
+define(['assets/js/author_view', 'assets/js/url'],
+       function (AuthorView, helper) {
 
-export default AuthorView.extend({
+    'use strict';
 
-  events: {
-    'click button[name=save]':   'onSave',
-    'click button[name=cancel]': 'switchBack',
-    'click .submit-user-id-switch': 'toggleSubmitUserId'
-  },
+    return AuthorView.extend({
 
-  initialize() {
-    Backbone.on('beforemodeswitch', this.onModeSwitch, this);
-    Backbone.on('beforenavigate', this.onNavigate, this);
-  },
+        events: {
+            "click button[name=save]":   "onSave",
+            "click button[name=cancel]": "switchBack"
+        },
 
-  render() {
-    return this;
-  },
+        initialize: function(options) {
+        },
 
-  postRender() {
-    this.toggleSubmitUserId();
-  },
+        render: function() {
+            return this;
+        },
 
-  onNavigate(event) {
-    if (!$('section .block-content button[name=save]').length) {
-      return;
-    }
+        onSave: function (event) {
+            var url_input    = this.$("input.urlinput");
+            var new_url      = url_input.val();
+            var height_input = this.$("input.heightinput");
+            var new_height   = height_input.val();
+            var view         = this;
 
-    if (event.isUserInputHandled) {
-      return;
-    }
-    event.isUserInputHandled = true;
-    Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie die Seite trotzdem verlassen?'));
-  },
+            helper
+                .callHandler(this.model.id, "save", {url: new_url, height: new_height})
+                .then(
+                    // success
+                    function () {
+                        jQuery(event.target).addClass("accept");
+                        view.switchBack();
+                    },
 
-  onModeSwitch(toView, event) {
-    if (toView != 'student') {
-      return;
-    }
-    // the user already switched back (i.e. the is not visible)
-    if (!this.$el.is(':visible')) {
-      return;
-    }
-    // another listener already handled the user's feedback
-    if (event.isUserInputHandled) {
-      return;
-    }
-    event.isUserInputHandled = true;
-    Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
-  },
-
-  toggleSubmitUserId() {
-    var state = this.$('.submit-user-id-switch').is( ':checked');
-    if (state) this.$('.iframe-submit-user').show();
-    else this.$('.iframe-submit-user').hide();
-  },
-
-  onSave(event) {
-    var view            = this;
-    var $url            = view.$('input.urlinput').val();
-    var $height         = view.$('input.heightinput').val();
-    var $width          = view.$('input.widthinput').val();
-    var $salt           = view.$('.salt').val();
-    var $submit_param   = view.$('.submit-param').val();
-    var $submit_user_id = view.$('.submit-user-id-switch').is( ':checked');
-
-    helper
-      .callHandler(this.model.id, 'save', {
-        url: $url,
-        height: $height,
-        width: $width,
-        salt: $salt, 
-        submit_param: $submit_param, 
-        submit_user_id: $submit_user_id })
-      .then(function () {
-        $(event.target).addClass('accept');
-        view.switchBack();
-      }).catch(function (error) {
-        var errorMessage = 'Could not update the block: ' + $.parseJSON(error.responseText).reason;
-        alert(errorMessage);
-        console.log(errorMessage, arguments);
-      });
-  }
+                    // error
+                    function (error) {
+                        var errorMessage = 'Could not update the block: '+jQuery.parseJSON(error.responseText).reason;
+                        alert(errorMessage);
+                        console.log(errorMessage, arguments);
+                    })
+                .done();
+        }
+    });
 });

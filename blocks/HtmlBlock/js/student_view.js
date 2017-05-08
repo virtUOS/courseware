@@ -1,21 +1,25 @@
-import jQuery from 'jquery'
-import StudentView from 'js/student_view'
+define(['assets/js/student_view'],
+       function (StudentView) {
 
-export default StudentView.extend({
-  events: {},
+    'use strict';
 
-  initialize() {
-    var $section = this.$el.closest('section.HtmlBlock');
-    var $sortingButtons = jQuery('button.lower', $section);
-    $sortingButtons = $sortingButtons.add(jQuery('button.raise', $section));
-    $sortingButtons.removeClass('no-sorting');
-  },
+    return StudentView.extend({
+        events: {
+        },
 
-  render() {
-    return this;
-  },
+        initialize: function() {
+            var $section = this.$el.closest('section.HtmlBlock');
+            var $sortingButtons = jQuery('button.lower', $section);
+            $sortingButtons = $sortingButtons.add(jQuery('button.raise', $section));
+            $sortingButtons.removeClass('no-sorting');
+        },
 
-  postRender() {
-    window.MathJax.Hub.Queue([ 'Typeset', window.MathJax.Hub, this.el ]);
-  }
+        render: function() {
+            return this;
+        },
+
+        postRender: function () {
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.el]);
+        }
+    });
 });

@@ -1,28 +1,29 @@
-import Backbone from 'backbone'
-import helper from './url'
+define(['backbone', 'assets/js/url'], function (Backbone, helper) {
+    return Backbone.View.extend({
 
-export default Backbone.View.extend({
+        // filled by block type's createView method
+        block_type: null,
 
-  // filled by block type's createView method
-  block_type: null,
+        initializeFromDOM: function () {
+        },
 
-  initializeFromDOM() { },
+        renderServerSide: function () {
+            var self = this;
 
-  renderServerSide() {
-    return helper
-      .getView(this.model.id, this.view_name)
-      .then(
-        (data) => {
-          this.$el.html(data);
+            return helper.getView(this.model.id, this.view_name)
+                .then(
+                    function (data) {
+                        self.$el.html(data);
 
-          // let the block initialize from the just
-          // inserted DOM
-          this.initializeFromDOM();
+                        // let the block initialize from the just
+                        // inserted DOM
+                        self.initializeFromDOM();
 
-          if (typeof this.postRender === 'function') {
-            this.postRender();
-          }
+                        if (typeof self.postRender === "function") {
+                            self.postRender();
+                        }
+                    }
+                );
         }
-      );
-  }
+    });
 });

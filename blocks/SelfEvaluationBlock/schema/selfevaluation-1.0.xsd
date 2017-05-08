@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/selfevaluation/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/selfevaluation/"
+    elementFormDefault="qualified"
+>
+    <xsd:attribute name="selfevaluation_title" type="xsd:string" />
+    <xsd:attribute name="selfevaluation_subtitle" type="xsd:string" />
+    <xsd:attribute name="selfevaluation_description" type="xsd:string" />
+    <xsd:attribute name="selfevaluation_value" type="xsd:string" />
+    <xsd:attribute name="selfevaluation_content" type="xsd:string" />
+</xsd:schema>

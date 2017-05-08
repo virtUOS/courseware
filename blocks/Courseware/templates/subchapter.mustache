@@ -6,18 +6,5 @@
   {{#dom_title}}title="{{visible_since_title}} {{dom_title}}"{{/dom_title}}>
 
   {{> subchapter_title}}
-  
-    {{#sections_as_chapters}}
-        {{#selected}}
-            <ol class="sections">
-            
-              {{#sections}}
-                {{> section}}
-              {{/sections}}
-            
-              <div class="clear"></div>
-            </ol>
-        {{/selected}}
-    {{/sections_as_chapters}}
 
 </li>
