@@ -45,7 +45,7 @@ export default Backbone.View.extend({
   postRender() {
     if (typeof window.Modernizr === 'undefined' || !window.Modernizr.inputtypes.date) {
       this.$('input[type=date]').datepicker({
-        dateFormat: this.$.datepicker.W3C
+        dateFormat: Backbone.$.datepicker.W3C
       });
     }
     this.$('input').eq(0).select().focus();
