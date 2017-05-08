@@ -9,7 +9,7 @@ require __DIR__.'/../vendor/autoload.php';
  */
 
 
-class SetupCourseware extends DBMigration {
+class SetupCourseware extends Migration {
 
     public function description () {
         return 'Setup tables for the mooc.ip courseware-plugin and adds editable display name of the plugin.';
