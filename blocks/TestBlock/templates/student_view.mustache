@@ -4,10 +4,14 @@
   {{/description}}
   
   {{#available}}
-    <div class="messagebox messagebox_info">
-        Dieser Test ist zurzeit nicht verfügbar.
-    </div>
+    {{^correction_available}}
+        <div class="messagebox messagebox_info">
+            Dieser Test ist zurzeit nicht verfügbar.
+        </div>
+    {{/correction_available}}
   {{/available}}
+  
+
 
   {{#exercises}}
     {{^skip_entry}}
@@ -24,6 +28,11 @@
                 <div class="messagebox messagebox_error">
                     {{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.{{/i18n}}
                 </div>
+                {{#corrector_comment}}
+                    <div class="messagebox messagebox_info answerinfo exercise-corrector-comment">
+                        {{corrector_comment}}
+                    </div>
+                {{/corrector_comment}}
               {{/tryagain}}
               {{#correct}}
                 <div class="messagebox messagebox_success">
@@ -31,11 +40,11 @@
                 </div>
               {{/correct}}
               
-              {{^tryagain}}{{^correct}}
+              {{^tryagain}}{{^correct}}{{^is_corrected}}
                 <div class="messagebox messagebox_info answerinfo">
                     {{#i18n}}Für diese Frage haben Sie bereits eine Antwort abgegeben.{{/i18n}}
                 </div>
-              {{/correct}}{{/tryagain}}
+              {{/is_corrected}}{{/correct}}{{/tryagain}}
             {{/has_solution}}
             {{^self_test}}
               <div class="messagebox messagebox_info submitinfo" style="display: none;">
@@ -49,7 +58,16 @@
           {{/solved_completely}}
 
           {{^show_solution}}
-            {{> _question}}
+              {{^is_corrected}}
+                {{> _question}}
+              {{/is_corrected}}
+              {{#is_corrected}}
+                <div class="messagebox messagebox_info">
+                    {{#i18n}}Diese Aufgabe wurde bereits korrigiert.{{/i18n}}
+                </div>
+      
+              {{> _solution}}
+            {{/is_corrected}}
           {{/show_solution}}
 
           {{#show_solution}}
@@ -67,9 +85,42 @@
                {{exercise_hint}}
              </div>
           {{/exercise_hint}}
+          {{#tryagain}}
+            {{#sample_solution}}
+                    <div class="exercise-sample-solution">
+                        <span>{{#i18n}}Musterlösung:{{/i18n}}</span>
+                        <p>{{sample_solution}}</p>
+                    </div>
+                {{/sample_solution}}
+          {{/tryagain}}
+          
           </div>  
         </li>
       </ul>
+      {{/skip_entry}}
+      
+      {{#skip_entry}}
+      {{#correction_available}}
+         <ul class="exercise" id="exercise{{exercise_index}}">
+        <li>
+          <div class="exercisetitle">
+              <button name="exercisenav" class="exercisenavbutton exercisenavback" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}", "direction": "back" }'></button>
+              {{#i18n}}Frage{{/i18n}} {{exercise_index}} / {{number_of_exercises}}
+              <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}" , "direction": "next"}'></button>
+          </div>
+          <div class="cw-test-content">
+            {{#is_corrected}}
+              {{> _solution}}
+            {{/is_corrected}}
+            {{^is_corrected}}
+                <div class="messagebox messagebox_info">
+                    {{#i18n}}Diese Aufgabe wurde noch nicht korrigiert.{{/i18n}}
+                </div>
+            {{/is_corrected}}
+          </div>  
+        </li>
+      </ul>
+      {{/correction_available}}
       {{/skip_entry}}
   {{/exercises}}
 
@@ -86,11 +137,14 @@
     {{/typemismatch}}
   {{/exercises}}
 
-  {{^exercises_available}}
+  {{^exercises_available}}{{^correction_available}}
         <div class="messagebox messagebox_info">
             {{#i18n}}Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen.{{/i18n}}
         </div>
-  {{/exercises_available}}
+  {{/correction_available}}{{/exercises_available}}
+  
+ 
+  
 {{/active}}
 
 {{^active}}

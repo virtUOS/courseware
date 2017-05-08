@@ -636,7 +636,6 @@ class TestBlock extends Block
                 $userAnswers = $exercise->getUserAnswers($this->test, $user);
                 $correct =  false;
                 $tryagain = false;
-
                 $try_counter = 0;
 
                 $courseware_block = $this->container['current_courseware'];
@@ -660,7 +659,7 @@ class TestBlock extends Block
                         $tryagain = $solution && !$correct;
                     }
                 }
-
+               
                 if ($correct ==  false) {
                      $solved_completely = false;
 
@@ -675,34 +674,54 @@ class TestBlock extends Block
                     // limited tries
                     $show_corrected_solution = ($correct || (($try_counter >= $max_counter) && $this->test->isSelfTest()));
                 }
+                
+                if ( $solution['corrector_comment'] !== "") {
+                    $corrector_comment = $solution['corrector_comment'];
+                } else {
+                    $corrector_comment = false;
+                }
+                
+                if ( $exercise->getVipsExercise()->answerArray[0] !== "") {
+                    $sample_solution = $exercise->getVipsExercise()->answerArray[0];
+                } else {
+                    $sample_solution = false;
+                }
+                
+                $is_corrected = false;
+                if (Solution::findOneBy($this->test, $exercise, $user)["corrected"] == 1) {
+                    $is_corrected = true;
+                }
                 $entry = array(
-                    'exercise_type' => $exercise->getType(),
-                    $exercise->getType() => 1,
-                    'id' => $exercise->getId(),
-                    'test_id' => $this->test->getId(),
-                    'self_test' => $this->test->isSelfTest(),
-                    'exercise_sheet' => $this->test->isExerciseSheet(),
-                    'show_correction' => $this->test->showCorrection(),
-                    'show_solution' => $exercise->showSolutionFor($this->test, $user) && $show_corrected_solution,
-                    'title' => $exercise->getTitle(),
-                    'question' => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $exercise->getQuestion($solution->solution) ),
-                    'answers' => $answers,
-                    'single-choice' => $exercise->isSingleChoice(),
-                    'multiple-choice' => $exercise->isMultipleChoice(),
-                    'solver_user_id' => $user->cfg->getUserId(),
-                    'has_solution' => $exercise->hasSolutionFor($this->test, $user),
-                    'solution' => $exercise->getAnswersStrategy()->getSolution($exercise->getVipsSolutionFor($this->test, $user)),
-                    'solving_allowed' => $exercise->solvingAllowed($this->test, $user),
-                    'number_of_answers' => count($answers),
-                    'number_of_exercises' => $numberofex,
-                    'exercise_index' => $exindex++,
+                    $exercise->getType()    => 1,
                     $exercise->getAnswersStrategy()->getTemplate() => true,
-                    'user_answers' => $userAnswers,
-                    'user_answers_string' => join(',' , $exercise->getAnswersStrategy()->getUserAnswers($exercise->getVipsSolutionFor($this->test, $user))),
-                    'correct' => $correct,
-                    'tryagain' => $tryagain,
-                    'character_picker' => $exercise->getVipsExercise()->characterPicker,
-                    'exercise_hint' => $exercise->getVipsExercise()->getHint()
+                    'exercise_type'         => $exercise->getType(),
+                    'id'                    => $exercise->getId(),
+                    'test_id'               => $this->test->getId(),
+                    'self_test'             => $this->test->isSelfTest(),
+                    'exercise_sheet'        => $this->test->isExerciseSheet(),
+                    'show_correction'       => $this->test->showCorrection(),
+                    'show_solution'         => $exercise->showSolutionFor($this->test, $user) && $show_corrected_solution,
+                    'title'                 => $exercise->getTitle(),
+                    'question'              => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $exercise->getQuestion($solution->solution) ),
+                    'answers'               => $answers,
+                    'single-choice'         => $exercise->isSingleChoice(),
+                    'multiple-choice'       => $exercise->isMultipleChoice(),
+                    'solver_user_id'        => $user->cfg->getUserId(),
+                    'has_solution'          => $exercise->hasSolutionFor($this->test, $user),
+                    'solution'              => $exercise->getAnswersStrategy()->getSolution($exercise->getVipsSolutionFor($this->test, $user)),
+                    'solving_allowed'       => $exercise->solvingAllowed($this->test, $user),
+                    'number_of_answers'     => count($answers),
+                    'number_of_exercises'   => $numberofex,
+                    'exercise_index'        => $exindex++,
+                    'user_answers'          => $userAnswers,
+                    'user_answers_string'   => join(',' , $exercise->getAnswersStrategy()->getUserAnswers($exercise->getVipsSolutionFor($this->test, $user))),
+                    'correct'               => $correct,
+                    'tryagain'              => $tryagain,
+                    'character_picker'      => $exercise->getVipsExercise()->characterPicker,
+                    'exercise_hint'         => $exercise->getVipsExercise()->getHint(),
+                    'corrector_comment'     => $corrector_comment, 
+                    'sample_solution'       => $sample_solution,
+                    'is_corrected'          => $is_corrected
                 );
                 $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
                 $available = !$entry['show_solution'] && !$entry['solving_allowed']; //or correction is available
@@ -718,14 +737,23 @@ class TestBlock extends Block
                 break;
             }
         }
+        
+        $correction_available = false;
+        foreach ($exercises as $ex) {
+            if ($ex['is_corrected']) {
+                $correction_available = true;
+                break;
+            }
+        }
 
         return array(
-            'title'              => $this->test->title,
-            'description'        => formatReady($this->test->description),
-            'exercises'          => $exercises,
-            'available'          => $available,
-            'exercises_available' => $exercises_available,
-            'solved_completely'  => $solved_completely
+            'title'                 => $this->test->title,
+            'description'           => formatReady($this->test->description),
+            'exercises'             => $exercises,
+            'available'             => $available,
+            'exercises_available'   => $exercises_available,
+            'solved_completely'     => $solved_completely, 
+            'correction_available'  => $correction_available
         );
     }
 

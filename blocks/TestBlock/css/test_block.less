@@ -2,28 +2,29 @@
 @import '../../../assets/less/mixins';
 
 section.TestBlock {
-  div.description {
-    margin-bottom: 20px;
-  }
+    div.description {
+        margin-bottom: 20px;
+    }
+}
 
-  ul {
+ul.exercise {
     margin: 0;
     padding: 0;
     list-style-type: none;
-    
+
     li {
         border: solid thin #ccc;
     }
-    
+
     .cw-test-content {
         padding: 10px;
     }
 
-    &.exercise {
-      &:not(#exercise1) {
+    &:not(#exercise1) {
         display: none;
-      }
-      .exercisetitle {
+    }
+
+    .exercisetitle {
         min-width: 10%;
         white-space: nowrap;
         overflow: hidden;
@@ -41,6 +42,7 @@ section.TestBlock {
         margin: 0 0 20px 0;
         text-transform: uppercase;
         text-align: center;
+
         .exercisenavbutton{
             position: absolute;
             border: none;
@@ -48,29 +50,35 @@ section.TestBlock {
             width: 20px;
             margin: 2px 12px;
             cursor: pointer;
+
             &.exercisenavback {
                 left: 0;
                 background: no-repeat scroll 0 0 ;
                 .assets-bg-icon("16/blue/arr_1left.png");
             }
+
             &.exercisenavnext {
                 right: 0;
                 background: no-repeat scroll 0 0;
                 .assets-bg-icon("16/blue/arr_1right.png");
             }
         }
-      }
-      .exercise-content {
+    }
+
+    .exercise-content {
         padding: 0 10px;
+
         .exercise-title {
             text-align: center;
             color: #000;
         }
+
         form {
           text-transform: none;
           font-size: 100%;
           font-weight: 400;
         }
+
         .answer, label {
             font-size: 16px;
             font-weight: normal;
@@ -78,8 +86,9 @@ section.TestBlock {
             padding-left: 5px;
             text-transform: none;
         }
+
         select {
-        margin: 0 5px;
+            margin: 0 5px;
         }
 
         .cloze.solution {
@@ -90,32 +99,33 @@ section.TestBlock {
           margin-top: 12px;
           margin-bttom: 12px;
         }
-        
+
         textarea {
             border: thin solid #ccc;
             height: 10em;
             width: 100% !important;
         }
-        
+
         input {
             border: thin solid #ccc;
         }
-      }
-      & > li:after {
+    }
+
+    & > li:after {
         content: '';
         display: block;
         clear: both;
         padding-bottom: 10px;
         border-bottom: 1px solid #EEEEEE;
-      }
+    }
 
-      button.button {
+    button.button {
         display: block;
         clear: both;
         margin: 0.8em 0.6em 0.8em 0 !important;
-      }
-      
-      .exercise-hint-button {
+    }
+
+    .exercise-hint-button {
         border: none;
         .assets-bg-icon("blue/info-circle.svg");
         background-position: center 0px;
@@ -127,72 +137,83 @@ section.TestBlock {
         float: right;
         cursor: pointer;
         margin-top: -12px; 
-      }
-      
-      .exercise-hint {
+    }
+
+    .exercise-hint {
         padding: 20px 25px;
         background-color: #f8f8f8;
-      }
-      
-      
     }
 
     p {
-       &.exercise-tryagain {
-         color: red;
-       }
-       &.exercise-correct {
-         color: green;
-       }
-     }
+        &.exercise-tryagain {
+            color: red;
+        }
+
+        &.exercise-correct {
+            color: green;
+        }
+
+        &.solution {
+            .correct_answer {
+                color: green;
+            }
+
+            .incorrect_answer {
+                color: red;
+            }
+        }
+
+        &.question input[type=text] {
+            width: 240px;
+        }
+    }
 
     .caption {
         font-weight: bold;
         margin: 1em 0 0.5em 0;
     }
-  }
-
-  a.edit-tests {
-    display: block;
-    float: right;
-  }
-
-
-  p.solution {
-    .correct_answer {
-      color: green;
+    
+    a.edit-tests {
+        display: block;
+        float: right;
     }
-    .incorrect_answer {
-      color: red;
-    }
-  }
 
-  fieldset {
-      border: none;
-      padding-left: 0px;
-      padding-top: 0px;
-      
-      legend {
-          background-color: transparent;
-          font-weight: bold;
-          color: #444444;
-          line-height: normal;
-          text-indent: 0px;
-          position: relative;
-          display: block;
-          margin-top: 10px;
-      }
-      
-      > div {
-          padding-left: 0px;
-          text-indent: 0px;
-          > span {
-              white-space: normal !important;
-          }
-      }
-  }
+    fieldset {
+        border: none;
+        padding-left: 0px;
+        padding-top: 0px;
+          
+        legend {
+            background-color: transparent;
+            font-weight: bold;
+            color: #444444;
+            line-height: normal;
+            text-indent: 0px;
+            position: relative;
+            display: block;
+            margin-top: 10px;
+        }
+
+        > div {
+            padding-left: 0px;
+            text-indent: 0px;
+            > span {
+                white-space: normal !important;
+            }
+        }
+    }
+
+    .exercise-sample-solution {
+        border: solid thin #ccc;
+        padding: 10px;
+        span {
+            font-weight: 600;
+        }
+        
+        p {
+        
+        }
+    }
+
 }
 
-p.question input[type=text] {
-    width: 240px;
-}

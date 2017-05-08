@@ -57,6 +57,89 @@ class CoursewareController extends CoursewareStudipController {
             return $this->redirect('courseware/settings');
         }
     }
+    
+    public function news_action()
+    {
+        //get all new blocks and push them into an array
+        $db = DBManager::get();
+        $stmt = $db->prepare("
+            SELECT
+                *
+            FROM
+                mooc_blocks
+            WHERE
+                seminar_id = :cid
+            AND
+                chdate >= :last_visit
+        ");
+        $stmt->bindParam(":cid", $this->container['cid']);
+        //$stmt->bindParam(":last_visit", object_get_visit($_SESSION['SessionSeminar'], "courseware"));
+        $time = "1492684354";
+        $stmt->bindParam(":last_visit", $time);
+        $stmt->execute();
+        $new_ones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->new_ones = $new_ones;
+        
+        if(VipsBridge::vipsExists()) {
+            // getting all tests
+            $db = DBManager::get();
+            $stmt = $db->prepare("
+                SELECT 
+                    json_data 
+                FROM 
+                    mooc_blocks
+                JOIN 
+                    mooc_fields 
+                ON 
+                    mooc_blocks.id = mooc_fields.block_id 
+                WHERE 
+                    mooc_blocks.type = 'TestBlock'
+                AND
+                    mooc_blocks.seminar_id = :cid
+                AND 
+                    mooc_fields.name = 'test_id' 
+            ");
+            $stmt->bindParam(":cid", $this->container['cid']);
+            $stmt->execute();
+            
+            $tests =  $stmt->fetch(PDO::FETCH_ASSOC);
+            if($tests) {
+                $test_ids = array();
+                foreach ($tests as $key=>$value){
+                        array_push($test_ids, (int) str_replace('"', '', $value));
+                }
+                //looking for new tests
+                $stmt = $db->prepare("
+                    SELECT
+                        *
+                    FROM
+                        vips_exercise_ref
+                    JOIN
+                        vips_aufgabe
+                    ON
+                        vips_exercise_ref.exercise_id = vips_aufgabe.ID
+                    WHERE
+                        vips_exercise_ref.test_id IN (".implode(', ', $test_ids).")
+                    AND
+                        unix_timestamp(created) >=  :last_visit
+                ");
+                //$stmt->bindParam(":last_visit", object_get_visit($_SESSION['SessionSeminar'], "courseware"));
+                $time = "1492684354";
+                $stmt->bindParam(":last_visit", $time);
+                $stmt->execute();
+                $new_tests =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $this->new_ones = array_merge($this->new_ones, $new_tests);
+            }
+        }
+        
+        
+        
+        
+        if (Navigation::hasItem('/course/mooc_courseware/news')) {
+            Navigation::activateItem('/course/mooc_courseware/news');
+        }
+        return true;
+    }
 
 
     /////////////////////
@@ -114,6 +197,16 @@ class CoursewareController extends CoursewareStudipController {
         // VIPS TAB VISIBLE //
         //////////////////////
         $this->storeVipsTabVisible(isset($courseware_settings['vipstab_visible']) ? true : false);
+        
+        /////////////////////////
+        // Sections Navigation //
+        ////////////////////////
+        $this->storeShowSectionNav(isset($courseware_settings['show_section_nav']) ? true : false);
+
+        //////////////////////////
+        // Sections as Chapters //
+        /////////////////////////
+        $this->storeSectionsAsChatpers(isset($courseware_settings['sections_as_chapters']) ? true : false);
 
         ////////////////////////
         // EDITING PERMISSION //
@@ -164,6 +257,20 @@ class CoursewareController extends CoursewareStudipController {
     private function storeVipsTabVisible($active)
     {
         if (!$this->courseware_block->setVipsTabVisible($active)) {
+            // TODO: send a message back
+        }
+    }
+
+    private function storeShowSectionNav($active)
+    {
+        if (!$this->courseware_block->setShowSectionNav($active)) {
+            // TODO: send a message back
+        }
+    }
+
+    private function storeSectionsAsChatpers($active)
+    {
+        if (!$this->courseware_block->setSectionsAsChapters($active)) {
             // TODO: send a message back
         }
     }

@@ -45,11 +45,11 @@ class HtmlBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        // second param in if-block is special case for uos. old studip with new wysiwyg
-        if ($this->container['version']->newerThan(3.1) || $this->container['wysiwyg_refined']) {
+
+        if ($this->container['wysiwyg_refined']) {
             $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
         } else {
-          $this->content = (string) $data['content'];
+            $this->content = \STUDIP\Markup::purify((string) $data['content']);
         }
 
         return array('content' => $this->content);

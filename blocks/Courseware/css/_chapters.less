@@ -41,7 +41,7 @@ ol.chapters {
     border-bottom: 1px solid #E9E9E9;
 
     a {
-      display: table-cell;
+      display: block;
       padding: 5px 44px 5px 22px;
     }
 
@@ -150,7 +150,6 @@ ol.subchapters {
     border-bottom: 1px solid #E9E9E9;
 
     a {
-      display: table-cell;
       padding: 5px 44px 5px 12px;
     }
 
@@ -190,8 +189,28 @@ ol.subchapters {
 
 
   .subchapter.loading > .title {
-    .ajax-indicator-bg-icon();
+     .ajax-indicator-bg-icon();
     background: no-repeat 3px center;
+  }
+  ol.sections {
+    list-style: none;
+    .selected {
+        font-weight: 700;
+        background: #f8f8f8;
+    }
+    li {
+        line-height: 30px;
+        border-bottom: 1px solid #e9e9e9;
+        padding-left: 1em;
+
+        a {
+            display: block;
+        }
+
+        &:hover {
+            background-color: #eee;
+        }
+    }
   }
 }
 

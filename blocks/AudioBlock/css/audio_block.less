@@ -3,17 +3,35 @@
 .AudioBlock {
     border: solid thin #ccc;
     padding: 10px;
-
+}
     .cw-audio-description {
         padding-bottom: 1em;
     }
-
+    
     .cw-audio-controls {
         text-align: right;
     }
-
+    
     .cw-audio-range {
         margin: 0 5px 10px 0;
+        &.ui-widget-content {
+            background-color: #24437C;
+        }
+        
+        .ui-widget-header {
+            background-color: #fdfdfd;
+        }
+
+        .ui-slider-handle {
+            border-radius: 20px;
+            width: 1.8em;
+            height: 1.8em;
+            top: -0.5em;
+            background-color: #ddd;
+            border-color: #ccc;
+            cursor: pointer;
+            margin-left: -3px;
+        }
     }
 
     .cw-audio-playbutton, .cw-audio-stopbutton {
@@ -58,22 +76,5 @@
         color: #333;
     }
 
-    .ui-widget-content {
-        background-color: #24437C;
-    }
 
-    .ui-widget-header {
-        background-color: #fdfdfd;
-    }
 
-    .ui-slider-handle {
-        border-radius: 20px;
-        width: 1.8em;
-        height: 1.8em;
-        top: -0.5em;
-        background-color: #ddd;
-        border-color: #ccc;
-        cursor: pointer;
-        margin-left: -3px;
-    }
-}
