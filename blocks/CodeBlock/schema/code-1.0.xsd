@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/code/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/code/"
+    elementFormDefault="qualified"
+>
+        <xsd:attribute name="code_content" type="xsd:string" />
+        <xsd:attribute name="code_lang" type="xsd:string" />
+</xsd:schema>

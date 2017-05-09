@@ -1,0 +1,15 @@
+<label>Preview:</label>
+<div class="code-content-preview" style="border: solid thin #ccc;">
+    <pre><code class="{{code_lang}}">{{code_content}}</code></pre>
+</div>
+<br>
+<label for="code_content">Quellcode: </label>
+<textarea class="code-content-editor" name="code_content">{{{code_content}}}</textarea>
+<br>
+<label for="code_lang">Sprache: </label>
+<input type="text" name="code_lang" class="code_lang" value="{{code_lang}}"> 
+<a target="_blank" href="http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases" > verf&uuml;gbare Sprachen...</a>
+<div class="cw-button-box">
+    <button name=save class=button>Speichern</button>
+    <button name=cancel class=button>Abbrechen</button>
+</div>
