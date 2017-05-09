@@ -180,6 +180,10 @@ export default StudentView.extend({
         });
         $button.prop('disabled', false).removeClass('loading');
         view.refreshBlockTypes(view.model.id, view.$('.block-types'));
+        $('html, body').animate({
+            scrollTop: $el.offset().top
+        }, 2000);
+        
       })
       .catch(function (error) {
         var errorMessage = 'Could not add the block: ' + $.parseJSON(error.responseText).reason;
