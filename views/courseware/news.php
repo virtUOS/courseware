@@ -2,8 +2,8 @@
     <h1>Neue Inhalte</h1>
     <ul class="cw-news-list">
         <? foreach ($new_ones as  $item):?>
-            <? if ( (strpos($item["title"], "AsideSection") >-1) || (in_array($block->type , array("Chapter", "Subchapter"))) ): continue; endif; ?>
             <? $block = new Mooc\DB\Block($item["id"]); ?>
+            <? if ( (strpos($item["title"], "AsideSection") >-1) || (in_array($block->type , array("Chapter", "Subchapter"))) ): continue; endif; ?>
             <? if ($block->parent->parent->id):?>
             <li class="cw-news-item">
                 <?= (new Mooc\DB\Block($block->parent->parent->parent->id))->title ?> &rarr; 

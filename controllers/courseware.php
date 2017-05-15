@@ -1,6 +1,9 @@
 <?php
 
 use Mooc\UI\Courseware\Courseware;
+use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
+
+
 
 class CoursewareController extends CoursewareStudipController {
 
@@ -73,9 +76,7 @@ class CoursewareController extends CoursewareStudipController {
                 chdate >= :last_visit
         ");
         $stmt->bindParam(":cid", $this->container['cid']);
-        //$stmt->bindParam(":last_visit", object_get_visit($_SESSION['SessionSeminar'], "courseware"));
-        $time = "1492684354";
-        $stmt->bindParam(":last_visit", $time);
+        $stmt->bindParam(":last_visit", object_get_visit($_SESSION['SessionSeminar'], "courseware"));
         $stmt->execute();
         $new_ones = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $this->new_ones = $new_ones;

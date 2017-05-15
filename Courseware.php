@@ -116,8 +116,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         if (!$user_id) {
             $user_id = $GLOBALS['user']->id;
         }
-        $icon = new AutoNavigation($this->getDisplayTitle(), PluginEngine::getURL($this, compact('cid'), 'courseware', true));
-
+        $icon = new AutoNavigation($this->getDisplayTitle(), PluginEngine::getURL($this, compact('cid'), 'courseware/news', true));
+        
         $db = DBManager::get();
         $stmt = $db->prepare("
             SELECT
