@@ -92,7 +92,7 @@ class SearchBlock extends Block
             $block = new DBBlock($item["block_id"]);
             if ($item["name"] == "content") {
                 $content = str_replace( '<!-- HTML: Insert text after this line only. -->', '', $item["json_data"]);
-                if(stripos($content, $request) < 0) continue;
+                if(!stripos($content, $request)) continue;
             }
             array_push($answer, array(
                 "link" =>  \PluginEngine::getURL("courseware/courseware")."&selected=".$block->parent_id,
