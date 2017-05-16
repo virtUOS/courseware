@@ -95,6 +95,11 @@ class Courseware extends StudIPPlugin implements StandardPlugin
             $navigation->addSubnavigation('settings',
                 new Navigation(_cw("Einstellungen"),
                 PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true)));
+            //Comprehensive progress overview
+            $cpo_url = PluginEngine::getURL($this, compact('cid'), 'cpo', true);
+            $tabs['mooc_cpo'] = new Navigation(_cw('Fortschrittsübersicht'), $cpo_url);
+            $tabs['mooc_cpo']->setImage(Icon::create('assessment', 'info_alt'));
+            $tabs['mooc_cpo']->setActiveImage(Icon::create('assessment', 'info'));
         }
 
         return $tabs;
