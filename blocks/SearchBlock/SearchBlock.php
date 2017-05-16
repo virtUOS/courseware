@@ -82,7 +82,7 @@ class SearchBlock extends Block
             WHERE
                 json_data LIKE "%'.$request.'%"
             AND
-                name IN ("webvideo", "url", "videoTitle", "content", "title", "audio_description", "download_title", "file", "file_name")
+                name IN ("webvideo", "url", "videoTitle", "content", "title", "audio_description", "download_title", "file", "file_name", "code_lang", "code_content")
         ');
         $stmt->execute();
         $sqlfields = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -93,6 +93,11 @@ class SearchBlock extends Block
             if ($item["name"] == "content") {
                 $content = str_replace( '<!-- HTML: Insert text after this line only. -->', '', $item["json_data"]);
                 if(!stripos($content, $request)) continue;
+            }
+            if ($item["name"] == "url") {
+                // remove opencast part from url 
+                $url = str_replace( '\/engage\/theodul\/ui\/core.html', '', $item["json_data"]);
+                if(!stripos($url, $request)) continue;
             }
             array_push($answer, array(
                 "link" =>  \PluginEngine::getURL("courseware/courseware")."&selected=".$block->parent_id,
