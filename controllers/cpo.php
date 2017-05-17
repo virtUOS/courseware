@@ -1,5 +1,5 @@
 <?php
-
+// CPO -> course progress overview
 class CpoController extends CoursewareStudipController {
 
     public function before_filter(&$action, &$args)
@@ -9,7 +9,18 @@ class CpoController extends CoursewareStudipController {
 
     public function index_action()
     {
+        if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->plugin->getCourseId())) {
+            throw new Trails_Exception(401);
+        }
+
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
+       
+        $courseware = $this->container['current_courseware'];
+        $title = Request::option('cid', false)
+               ? $_SESSION['SessSemName']['header_line'] . ' - '
+               : '';
+        $title .= $courseware->title." - Fortschrittsübersicht für Dozenten";
+        PageLayout::setTitle($title);
         
 
         if (Navigation::hasItem('/course/mooc_cpo')) {
