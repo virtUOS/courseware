@@ -22,18 +22,13 @@ export default StudentView.extend({
         
         helper
             .callHandler(this.model.id, "search", {request: input_request}) 
-            .then(
-                // success
-                function (success) {
+            .then(function (success) {
                     view.showResults(success);
-                },
-
-                // error
-                function (error) {
-                    console.log("error");
-                    console.log(error, arguments);
-                })
-            .done();
+            })
+            .catch(function (error) {
+                console.log("error");
+                console.log(error, arguments);
+            });
     }, 
     
     keyListener(){
