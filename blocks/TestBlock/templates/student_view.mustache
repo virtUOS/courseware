@@ -58,16 +58,21 @@
           {{/solved_completely}}
 
           {{^show_solution}}
-              {{^is_corrected}}
+              
+              {{#self_test}}
                 {{> _question}}
-              {{/is_corrected}}
-              {{#is_corrected}}
+              {{/self_test}}
+              {{^self_test}}{{^is_corrected}}
+                {{> _question}}
+              {{/is_corrected}}{{/self_test}}
+              
+              {{#is_corrected}}{{^self_test}}
                 <div class="messagebox messagebox_info">
                     {{#i18n}}Diese Aufgabe wurde bereits korrigiert.{{/i18n}}
                 </div>
       
               {{> _solution}}
-            {{/is_corrected}}
+            {{/self_test}}{{/is_corrected}}
           {{/show_solution}}
 
           {{#show_solution}}
@@ -86,12 +91,12 @@
              </div>
           {{/exercise_hint}}
           {{#tryagain}}
-            {{#sample_solution}}
+            {{#sample_solution}}{{^self_test}}
                     <div class="exercise-sample-solution">
                         <span>{{#i18n}}Musterlösung:{{/i18n}}</span>
                         <p>{{sample_solution}}</p>
                     </div>
-                {{/sample_solution}}
+            {{/self_test}}{{/sample_solution}}
           {{/tryagain}}
           
           </div>  
