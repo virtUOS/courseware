@@ -41,8 +41,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     .then(
                         function (response) {
                             if (response && response.grade && _.isFinite(response.grade)) {
--                                view.trigger('TestBlock:graded', response.grade);
--                            }
+                                view.trigger('TestBlock:graded', response.grade);
+                            }
                             return view.renderServerSide();
                         },
                         function () {
