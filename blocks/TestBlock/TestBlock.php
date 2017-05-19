@@ -682,6 +682,11 @@ class TestBlock extends Block
                         $tryagain = $solution && !$correct;
                     }
                 }
+                
+                if ($correct ==  false) {
+                     $solved_completely = false;
+
+                }
                
                 if ($this->_model->sub_type == 'exercises') {
                     $solution = Solution::findOneBy($this->test, $exercise, $user);
@@ -692,18 +697,17 @@ class TestBlock extends Block
                     $solution = Solution::findOneBy($this->test, $exercise, $user);
                     if ($solution->solution == null) {
                         $submitted_completely = false;
+                    } else {
+                        // $submitted_completely = true;  
+                        $solved_completely = true;
                     }
-                    
                 }
-                
+
                 else {
                     $submitted_completely = false;
                 }
 
-                if ($correct ==  false) {
-                     $solved_completely = false;
 
-                }
                 if(!$max_counter) {
                     // no max counter, do as before
                     $show_corrected_solution = $correct;
