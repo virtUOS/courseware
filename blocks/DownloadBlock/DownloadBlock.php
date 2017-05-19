@@ -175,11 +175,9 @@ class DownloadBlock extends Block
     
     public function importContents($contents, array $files)
     {
-        $file = reset($files);
-        $this->file = $file->name;
-        $document =  current(\StudipDocument::findBySQL('filename = ?', array($this->file)));
+        $this->file_name = $files[$this->file_id]["filename"];
+        $document =  current(\StudipDocument::findBySQL('filename = ?', array($this->file_name)));
         $this->file_id = $document->dokument_id;
-
         $this->save();
     }
     
