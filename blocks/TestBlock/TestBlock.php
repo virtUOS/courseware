@@ -296,10 +296,10 @@ class TestBlock extends Block
      {
          global $user;
          $progress = $this->getProgress();
-         if ($this->test->type == "selftest") {
-             $progress->max_grade = $this->test_questions;
+         if( ($this->test->type == "selftest") && ($this->test_questions != "")){
+            $progress->max_grade = $this->test_questions;
          } else {
-             $progress->max_grade = count($this->test->exercises);
+            $progress->max_grade = count($this->test->exercises);
          }
          $progress->grade = 0;
 
