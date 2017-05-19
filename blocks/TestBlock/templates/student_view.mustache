@@ -24,19 +24,24 @@
           </div>
           <div class="cw-test-content">
             {{#has_solution}}
-              {{#tryagain}}
+              {{#tryagain}}{{#tries_left}}
                 <div class="messagebox messagebox_error">
-                    {{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.{{/i18n}}
+                    {{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal. {{#tries_left}}Sie haben noch {{tries_left}} Versuch{{#tries_pl}}e{{/tries_pl}}.{{/tries_left}}{{/i18n}}
                 </div>
                 {{#corrector_comment}}
                     <div class="messagebox messagebox_info answerinfo exercise-corrector-comment">
                         {{corrector_comment}}
                     </div>
                 {{/corrector_comment}}
-              {{/tryagain}}
+              {{/tries_left}}{{/tryagain}}
               {{#correct}}
                 <div class="messagebox messagebox_success">
                     {{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}
+                </div>
+              {{/correct}}
+              {{^correct}}
+                <div class="messagebox messagebox_error">
+                    {{#i18n}}Ihre Lösung ist nicht korrekt!{{/i18n}}
                 </div>
               {{/correct}}
               

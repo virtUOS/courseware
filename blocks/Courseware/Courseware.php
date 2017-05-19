@@ -38,7 +38,7 @@ class Courseware extends Block {
         $this->defineField('editing_permission', \Mooc\SCOPE_BLOCK, self::EDITING_PERMISSION_TUTOR);
 
         // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
-        $this->defineField('max_tries', \Mooc\SCOPE_BLOCK, -1); // -1 = infinity
+        $this->defineField('max_tries', \Mooc\SCOPE_BLOCK, 3); // -1 = infinity
 
         $this->defineField('show_section_nav', \Mooc\SCOPE_BLOCK, true);
 

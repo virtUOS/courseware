@@ -664,6 +664,7 @@ class TestBlock extends Block
                      $solved_completely = false;
 
                 }
+                $tries_left = -1;
                 if(!$max_counter) {
                     // no max counter, do as before
                     $show_corrected_solution = $correct;
@@ -672,7 +673,12 @@ class TestBlock extends Block
                     $show_corrected_solution = $correct;
                 } else {
                     // limited tries
-                    $show_corrected_solution = ($correct || (($try_counter >= $max_counter) && $this->test->isSelfTest()));
+                    $tries_left = $max_counter - $try_counter;
+                    $show_corrected_solution = ($correct || (($tries_left < 1) && $this->test->isSelfTest()));
+                }
+                $tries_pl = false;
+                if ($tries_left > 1) {
+                    $tries_pl = true;
                 }
                 
                 if ( $solution['corrector_comment'] !== "") {
@@ -721,7 +727,9 @@ class TestBlock extends Block
                     'exercise_hint'         => $exercise->getVipsExercise()->getHint(),
                     'corrector_comment'     => $corrector_comment, 
                     'sample_solution'       => $sample_solution,
-                    'is_corrected'          => $is_corrected
+                    'is_corrected'          => $is_corrected,
+                    'tries_left'            => $tries_left, 
+                    'tries_pl'              => $tries_pl
                 );
                 $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
                 $available = !$entry['show_solution'] && !$entry['solving_allowed']; //or correction is available
