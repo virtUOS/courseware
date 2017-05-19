@@ -850,7 +850,7 @@ class TestBlock extends Block
                 // initialize the user progress (if necessary)
                 if ($progress->isNew()) {
                     $progress->grade = 0;
-                    if ($this->test_questions != "") {
+                    if( ($this->test->type == "selftest") && ($this->test_questions != "")){
                         $progress->max_grade = $this->test_questions;
                     } else {
                         $progress->max_grade = count($this->test->exercises);
@@ -860,7 +860,7 @@ class TestBlock extends Block
 
                 // fix the max grade value if the number of exercises had changed
                 if ($progress->max_grade != count($this->test->exercises)) {
-                    if ($this->test_questions != "") {
+                    if( ($this->test->type == "selftest") && ($this->test_questions != "")){
                         $progress->max_grade = $this->test_questions;
                     } else {
                         $progress->max_grade = count($this->test->exercises);
