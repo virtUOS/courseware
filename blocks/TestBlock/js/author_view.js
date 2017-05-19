@@ -10,6 +10,8 @@ define(['assets/js/author_view', 'assets/js/url'], function (AuthorView, helper)
         },
 
         initialize: function(options) {
+            Backbone.on('beforemodeswitch', this.onModeSwitch, this);
+            Backbone.on('beforenavigate', this.onNavigate, this);
         },
 
         render: function() {
@@ -37,6 +39,32 @@ define(['assets/js/author_view', 'assets/js/url'], function (AuthorView, helper)
         
             
         },
+        onNavigate: function(event){
+            if(!$("section .block-content button[name=save]").length) {
+                return;
+            }
+            if(event.isUserInputHandled) {
+                return;
+            }
+            event.isUserInputHandled = true;
+            Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie die Seite trotzdem verlassen?'));
+        },
+
+        onModeSwitch: function (toView, event) {
+            if (toView != 'student') {
+                return;
+            }
+            // the user already switched back (i.e. the is not visible)
+            if (!this.$el.is(':visible')) {
+                return;
+            }
+            // another listener already handled the user's feedback
+            if (event.isUserInputHandled) {
+                return;
+            }
+            event.isUserInputHandled = true;
+            Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
+        }, 
 
         onSave: function () {
             var view = this;
@@ -45,7 +73,7 @@ define(['assets/js/author_view', 'assets/js/url'], function (AuthorView, helper)
             var $test_questions_min = parseInt(this.$('input[name="test_questions"]').attr('min'));
             var $test_questions_max = parseInt(this.$('input[name="test_questions"]').attr('max'));
 
-            if ((!$test_questions) || ($test_questions > $test_questions_max) || ($test_questions < $test_questions_min)){ $test_questions = 1;}
+            if ((!$test_questions) || ($test_questions > $test_questions_max) || ($test_questions < $test_questions_min)){ $test_questions = -1;}
 
             helper
                 .callHandler(this.model.id, 'modify_test', {test_id: $test_id, test_questions: $test_questions} )
