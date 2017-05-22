@@ -20,7 +20,7 @@ class ConfirmBlock extends Block
     function student_view()
     {
         $courseware = $this->container['current_courseware'];
-        $next_chapter_id = $courseware->getNeighborSections($this->_model)["next"]["id"];
+        $next_chapter_id = $courseware->getNeighborSections($this->_model->parent)["next"]["id"];
         $next_chapter_link = \PluginEngine::getURL(Courseware, array('selected' => $next_chapter_id), "courseware");
         return array(
             'confirmed' => !! $this->getProgress()->grade,
