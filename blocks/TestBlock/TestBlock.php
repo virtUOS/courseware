@@ -75,7 +75,11 @@ class TestBlock extends Block
         $blockId = $this->_model->id;
         
         $courseware = $this->container['current_courseware'];
-        $next_chapter_id = $courseware->getNeighborSections($this->_model->parent)["next"]["id"];
+        $parent = $this->_model->parent;
+        while($parent->type != "Section") {   
+            $parent = $parent->parent;
+        }
+        $next_chapter_id = $courseware->getNeighborSections($parent)["next"]["id"];
         $next_chapter_link = \PluginEngine::getURL(Courseware, array('selected' => $next_chapter_id), "courseware");
 
         if ($typeOfThisTest == null) {
