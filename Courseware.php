@@ -84,15 +84,16 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
 
         // tabs for students
         if (!$this->container['current_user']->hasPerm($course_id, 'tutor')) {
-            $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
             $tabs['mooc_progress'] = new Navigation(_cw('Fortschrittsübersicht'), $progress_url);
             $tabs['mooc_progress']->setImage('icons/16/white/group3.png');
             $tabs['mooc_progress']->setActiveImage('icons/16/black/group3.png');
         }
         // tabs for tutors and up
         else {
+            $tabs['mooc_progress_doz'] = new Navigation(_cw('Fortschrittsübersicht'), $progress_url);
+            $tabs['mooc_progress_doz']->setImage('icons/16/white/group3.png');
+            $tabs['mooc_progress_doz']->setActiveImage('icons/16/black/group3.png');
             $discussions_url = PluginEngine::getURL($this, compact('cid'), 'courseware/discussions', true);
-            $tabs['mooc_progress'] = new Navigation(_cw('Fortschrittsübersicht'), $progress_url);
             $tabs['mooc_discussions'] = new Navigation(_cw('Kommunikation'), $discussions_url);
             $survey_url = PluginEngine::getURL($this, compact('cid'), 'survey', true);
             $tabs['mooc_survey'] = new Navigation(_('Umfrage'), $survey_url);
