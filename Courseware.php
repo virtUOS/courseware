@@ -93,8 +93,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
             $tabs['mooc_progress_doz'] = new Navigation(_cw('Fortschrittsübersicht'), $progress_url);
             $tabs['mooc_progress_doz']->setImage('icons/16/white/group3.png');
             $tabs['mooc_progress_doz']->setActiveImage('icons/16/black/group3.png');
-            $discussions_url = PluginEngine::getURL($this, compact('cid'), 'courseware/discussions', true);
-            $tabs['mooc_discussions'] = new Navigation(_cw('Kommunikation'), $discussions_url);
+            //$discussions_url = PluginEngine::getURL($this, compact('cid'), 'courseware/discussions', true);
+            //$tabs['mooc_discussions'] = new Navigation(_cw('Kommunikation'), $discussions_url);
             $survey_url = PluginEngine::getURL($this, compact('cid'), 'survey', true);
             $tabs['mooc_survey'] = new Navigation(_('Umfrage'), $survey_url);
         }

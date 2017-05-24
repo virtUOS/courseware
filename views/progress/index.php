@@ -109,8 +109,8 @@ $titleize = function ($content) {
     </table>
 
 
-    <? $thread = $discussion->thread; ?>
-
+    <?// $thread = $discussion->thread; ?>
+<!--
     <div id="comm" class="block-content">
 
     <article class="thread loading" id="<?= htmlReady($thread->id) ?>" data-courseid="<?= htmlReady($discussion->cid) ?>">
@@ -134,7 +134,7 @@ $titleize = function ($content) {
     </article>
 
     </div>
-
+-->
 </section>
 
 </div>

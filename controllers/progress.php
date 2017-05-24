@@ -16,6 +16,9 @@ class ProgressController extends CoursewareStudipController {
         if (Navigation::hasItem('/course/mooc_progress')) {
             Navigation::activateItem("/course/mooc_progress");
         }
+        if (Navigation::hasItem('/course/mooc_progress_doz')) {
+            Navigation::activateItem("/course/mooc_progress_doz");
+        }
 
         $this->mode = $GLOBALS['perm']->have_studip_perm("tutor", $this->plugin->getCourseId()) ? 'total' : 'single';
         $this->members = CourseMember::findByCourseAndStatus($this->plugin->getCourseId(), 'autor');
