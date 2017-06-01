@@ -26,10 +26,10 @@
         margin-left: -3em;
         padding: 0.5em;
         padding-left: 1.5em;
-        background: #eee url("../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
+        background: #eee url("../../../../assets/images/icons/blue/arr_1right.svg") no-repeat 3px center;
     }
 
     .cw-news-item:nth-child(2n+1) {
-        background: #f8f8f8 url("../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat 3px center;
+        background: #f8f8f8 url("../../../../assets/images/icons/blue/arr_1right.svg") no-repeat 3px center;
     }
 </style>

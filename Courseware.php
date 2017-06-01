@@ -315,13 +315,13 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         if ($can_edit) {
             $description = _cw("Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. Schalten Sie zwischen Teilnehmenden-Sicht und Editier-Modus um und fügen Sie Abschnitte und Blöcke (Text und Bild, Video, Diskussion, Quiz)  hinzu. Aufgaben erstellen und verwalten Sie mit dem Vips-Plugin und binden Sie dann in einen Courseware-Abschnitt ein.");
-            Helpbar::get()->addPlainText(_cw('Information'), $description, 'icons/16/white/info-circle.png');
+            Helpbar::get()->addPlainText(_cw('Information'), $description, 'icons/white/info-circle.svg');
 
             $tip = _cw("Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt 'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden.");
-            Helpbar::get()->addPlainText(_cw('Tipp'), $tip, 'icons/16/white/info-circle.png');
+            Helpbar::get()->addPlainText(_cw('Tipp'), $tip, 'icons/white/info-circle.svg');
         } else {
             $description = _cw("Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, Kommunikationselemente und kleine Quizzes beinhalten. Ihren Bearbeitungsfortschritt sehen Sie auf einen Blick im Reiter Fortschrittsübersicht.");
-            Helpbar::get()->addPlainText(_cw('Hinweis'), $description, 'icons/16/white/info-circle.png');
+            Helpbar::get()->addPlainText(_cw('Hinweis'), $description, 'icons/white/info-circle.svg');
         }
     }
 

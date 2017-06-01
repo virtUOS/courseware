@@ -84,14 +84,14 @@ if (count($errors) > 0) {
                 </td>
                 <td class="plugin_score">
                     <? for ($i = 0; $i < $plugin['score']; ++$i): ?>
-                        <?= Assets::img('icons/16/grey/star.png') ?>
+                        <?= Assets::img('icons/grey/star.svg') ?>
                     <? endfor ?>
                 </td>
                 <td class="plugin_install">
                     <form method="post">
                         <input type="hidden" name="subcmd" value="install">
                         <input type="hidden" name="n" value="<?=htmlReady($name)?>">
-                        <?= Assets::input("icons/16/blue/install.png", array('type' => "image", 'class' => "middle", 'name' => "install", 'title' => _cw('Plugin installieren'))) ?>
+                        <?= Assets::input("icons/blue/install.svg", array('type' => "image", 'class' => "middle", 'name' => "install", 'title' => _cw('Plugin installieren'))) ?>
                     </form>
                 </td>
             </tr>
