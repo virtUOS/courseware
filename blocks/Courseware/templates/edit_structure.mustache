@@ -1,7 +1,7 @@
 <form>
   <input name=title value="{{title}}" required>
   {{#chapter}}
-  <input type="date" name="publication_date" value="{{publication_date}}" placeholder="{{visible_since_title}}" title="{{visible_since_title}}">
+  <input type="date" name="publication_date" value="{{publication_date}}" placeholder="{{#i18n}}sichtbar ab:{{/i18n}}" title="{{visible_since_title}}">
   {{/chapter}}
   <button type="submit" class="ok">ok</button>
   <button type="button" class="cancel">cancel</button>
