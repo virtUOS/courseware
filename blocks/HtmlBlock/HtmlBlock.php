@@ -192,7 +192,12 @@ class HtmlBlock extends Block
                 $element->setAttribute('src', $block->buildUrl($GLOBALS['ABSOLUTE_URI_STUDIP'], '/sendfile.php', $components));
             });
         }
-        $this->content = $document->saveHTML();
+
+        if ($this->container['version']->newerThan(3.1) || $this->container['wysiwyg_refined']) {
+            $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
+        } else {
+            $this->content = $document->saveHTML();
+        }
         $this->save();
     }
 
