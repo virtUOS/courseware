@@ -20,14 +20,14 @@
         <tr>
             <td width="100%"><img style="margin-bottom: -3px;" src="../../plugins_packages/virtUOS/Courseware/assets/images/download.png" height="18" width="18"> &nbsp; {{file}} &nbsp; <span style="color: lightgrey">{{file_name}}</span></td>
             <td width="112px">
-                <a href="../../sendfile.php?type=0&file_id={{file_id}}&file_name={{file_name}}" target="_blank" class="button"> 
+                <a href="../../sendfile.php?force_download=1&type=0&file_id={{file_id}}&file_name={{file_name}}" target="_blank" class="button"> 
                     download
-                </a> 
+                </a>
             </td>
         </tr>
     </tbody>
-    
-    
+
+
 </table>
 
 <input type="hidden" name="file" value="{{file}}" />

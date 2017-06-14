@@ -3,7 +3,7 @@ namespace Mooc\UI\DownloadBlock;
 
 use Mooc\UI\Block;
 
-class DownloadBlock extends Block 
+class DownloadBlock extends Block
 {
     const NAME = 'Download';
 
@@ -35,30 +35,30 @@ class DownloadBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        
+
         if (isset ($data['file'])) {
             $this->file = (string) $data['file'];
             $this->file_id = (string) $data['file_id'];
             $this->file_name = (string) $data['file_name'];
-            
+
             $this->download_title = (string) $data['download_title'];
             $this->download_info = (string) $data['download_info'];
             $this->download_success = (string) $data['download_success'];
-             
+
         } else {
             $this->file_id = "";
             $this->file_name = "";
         }
-        
+
         return;
     }
-    
+
     function download_handler($data)
     {
         $this->setGrade(1.0);
         return ;
     }
-    
+
     private function setFolderId($foldername = "Allgemeiner Dateiordner"){
         $cid = $this->container['cid'];
         $db = \DBManager::get();
@@ -69,7 +69,7 @@ class DownloadBlock extends Block
         $this->folder_id = $stmt->fetch()['folder_id'];
         return ;
     }
-    
+
     private function showFiles($folderId, $filetype = "")
     {
         $db = \DBManager::get();
@@ -87,17 +87,17 @@ class DownloadBlock extends Block
         return $filesarray;
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
-            'file' => $this->file, 
-            'file_id' => $this->file_id, 
-            'file_name' => $this->file_name, 
+            'file' => $this->file,
+            'file_id' => $this->file_id,
+            'file_name' => $this->file_name,
             'folder_id' => $this->folder_id,
             'download_title' => $this->download_title,
             'download_info' => $this->download_info,
             'download_success' => $this->download_success
-            
+
         );
     }
 
@@ -112,13 +112,13 @@ class DownloadBlock extends Block
             'download_success' => $this->download_success
        );
     }
-    
+
     public function getFiles()
     {
         $document = new \StudipDocument($this->file_id);
         $files[] = array (
             'id' => $this->file_id,
-            'name' => $this->file_name,
+            'name' => $this->file,
             'description' => $document->description,
             'filename' => $document->filename,
             'filesize' => $document->filesize,
@@ -149,41 +149,47 @@ class DownloadBlock extends Block
      */
     public function importProperties(array $properties)
     {
+        $this->setFolderId();
+
         if (isset($properties['file'])) {
             $this->file = $properties['file'];
         }
-        if (isset($properties['file_id'])) {
-            $this->file_id = $properties['file_id'];
-        }
+
         if (isset($properties['file_name'])) {
             $this->file_name = $properties['file_name'];
         }
+
+        $this->setFileId($this->file, $this->file_name);
+
         if (isset($properties['download_title'])) {
             $this->download_title = $properties['download_title'];
         }
+
         if (isset($properties['download_info'])) {
             $this->download_info = $properties['download_info'];
         }
+
         if (isset($properties['download_success'])) {
             $this->download_success = $properties['download_success'];
         }
 
-        $this->setFolderId();
-
         $this->save();
     }
-    
+
+    private function setFileId($file, $file_name)
+    {
+        $cid = $this->container['cid'];
+        $document =  current(\StudipDocument::findBySQL('filename = ? AND name = ? AND seminar_id = ?', array($file_name, $file, $cid)));
+        $this->file_id = $document->dokument_id;
+        return;
+    }
+
     public function importContents($contents, array $files)
     {
         $file = reset($files);
         if ($file->id == $this->file_id) {
-            $this->file = $file->name;
-            $document =  current(\StudipDocument::findBySQL('filename = ?', array($this->file)));
-            $this->file_id = $document->dokument_id;
-            $this->file_name = $document->name;
-            $this->folder_id = $document->range_id;
             $this->save();
         }
     }
-    
+
 }
