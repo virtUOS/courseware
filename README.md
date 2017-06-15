@@ -13,5 +13,5 @@ the plugin after you modified parts of its source code.
 Requirements
 ------------
 
-StudIP Version >= 3.1
-PHP Version >= 5.4
+- StudIP Version >= 3.1
+- PHP Version >= 5.4
