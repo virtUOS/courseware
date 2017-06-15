@@ -8,3 +8,10 @@ Development
 
 Read the [developer documentation](docs/development.md) to learn how to build
 the plugin after you modified parts of its source code.
+
+
+Requirements
+------------
+
+StudIP Version >= 3.1
+PHP Version >= 5.4
