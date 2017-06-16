@@ -164,8 +164,6 @@ class DownloadBlock extends Block
      */
     public function importProperties(array $properties)
     {
-        $this->setFolderId();
-
         if (isset($properties['file'])) {
             $this->file = $properties['file'];
         }
@@ -196,6 +194,7 @@ class DownloadBlock extends Block
         $cid = $this->container['cid'];
         $document =  current(\StudipDocument::findBySQL('filename = ? AND name = ? AND seminar_id = ?', array($file_name, $file, $cid)));
         $this->file_id = $document->dokument_id;
+        $this->folder_id = $document->range_id;
         return;
     }
 
