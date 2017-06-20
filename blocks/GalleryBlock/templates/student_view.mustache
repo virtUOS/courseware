@@ -1,0 +1,14 @@
+<div class="cw-gallery">
+{{#showFiles}}
+    <div>
+        <img src="{{url}}">
+    </div>
+{{/showFiles}}
+
+</div>
+
+{{^showFiles}}
+    <div class="messagebox messagebox_info answerinfo">
+        {{#i18n}}In dem ausgew&auml;hlten Ordner befinden sich keine Bilder.{{/i18n}} 
+    </div>
+{{/showFiles}}

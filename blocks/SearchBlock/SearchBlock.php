@@ -105,7 +105,8 @@ class SearchBlock extends Block
                 "title" => (new DBBlock($block->parent_id))->title, // section title
                 "subchapter" => (new DBBlock($block->parent->parent->id))->title, //subchapter title
                 "chapter" => (new DBBlock($block->parent->parent->parent->id))->title, //chapter title
-                "chap" => false
+                "chap" => false,
+                "name" => str_replace( '\/engage\/theodul\/ui\/core.html', '', $item["json_data"])
             ));
         }
 

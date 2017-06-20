@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/gallery/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/gallery/"
+    elementFormDefault="qualified"
+>
+        <xsd:attribute name="gallery_content" type="xsd:string" /> 
+        <xsd:attribute name="gallery_folder_id" type="xsd:string" /> 
+</xsd:schema>
