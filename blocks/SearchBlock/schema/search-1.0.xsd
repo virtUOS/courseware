@@ -4,5 +4,5 @@
     targetNamespace="http://moocip.de/schema/block/search/"
     elementFormDefault="qualified"
 >
-    <xsd:attribute name="title" type="xsd:string" />
+    <xsd:attribute name="searchtitle" type="xsd:string" />
 </xsd:schema>
