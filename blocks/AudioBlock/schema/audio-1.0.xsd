@@ -7,5 +7,6 @@
     <xsd:attribute name="audio_description" type="xsd:string" />
     <xsd:attribute name="audio_source" type="xsd:string" />
     <xsd:attribute name="audio_file" type="xsd:string" />
+    <xsd:attribute name="audio_file_name" type="xsd:string" />
     <xsd:attribute name="audio_id" type="xsd:string" />
 </xsd:schema>

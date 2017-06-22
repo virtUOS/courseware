@@ -69,10 +69,11 @@ export default AuthorView.extend({
     var $view = this;
     var $audiodescription = $view.$('.cw-audioblock-description').val();
     var $audiosource = $view.$('.cw-audioblock-source').val();
-    var $audiofile, $audioid;
+    var $audiofile, $audioid, $audio_file_name;
     if ($audiosource == 'cw') {
       $audiofile = $view.$('select.cw-audioblock-file').val();
       $audioid = $view.$('select.cw-audioblock-file option:selected').attr('document-id');
+      $audio_file_name = $view.$('select.cw-audioblock-file option:selected').attr('filename');
     } else {
       $audiofile = $view.$('input.cw-audioblock-file').val();
       $audioid = '';
@@ -81,6 +82,7 @@ export default AuthorView.extend({
     helper
       .callHandler(this.model.id, 'save', {
         audio_file: $audiofile,
+        audio_file_name: $audio_file_name,
         audio_id: $audioid,
         audio_description: $audiodescription,
         audio_source: $audiosource

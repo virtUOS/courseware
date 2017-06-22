@@ -12,6 +12,7 @@ class AudioBlock extends Block
         $this->defineField('audio_description', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('audio_source', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('audio_file', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('audio_file_name', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('audio_id', \Mooc\SCOPE_BLOCK, '');
     }
 
@@ -38,6 +39,9 @@ class AudioBlock extends Block
         } 
         if (isset ($data['audio_file'])) {
             $this->audio_file = (string) $data['audio_file'];
+        } 
+        if (isset ($data['audio_file_name'])) {
+            $this->audio_file_name = (string) $data['audio_file_name'];
         } 
         if (isset ($data['audio_id'])) {
             $this->audio_id = (string) $data['audio_id'];
@@ -86,6 +90,7 @@ class AudioBlock extends Block
             'audio_description' => $this->audio_description,
             'audio_source' => $this->audio_source,
             'audio_file' => $this->audio_file,
+            'audio_file_name' => $this->audio_file_name,
             'audio_id' => $this->audio_id
         );
     }
@@ -138,25 +143,29 @@ class AudioBlock extends Block
         if (isset($properties['audio_source'])) {
             $this->audio_source = $properties['audio_source'];
         }
-        if (isset($properties['audio_file'])) {
-            $this->audio_file = $properties['audio_file'];
-        }
-        if (isset($properties['audio_id'])) {
-            $this->audio_id = $properties['audio_id'];
+        if (isset($properties['audio_file_name'])) {
+            $this->audio_file_name = $properties['audio_file_name'];
         }
         
+        $this->setFileId($this->audio_file_name);
+        
+        $this->audio_file = "../../sendfile.php?type=0&file_id=".$this->audio_id."&file_name=".$this->audio_file_name;
 
         $this->save();
+    }
+    
+    private function setFileId($file_name)
+    {
+        $cid = $this->container['cid'];
+        $document =  current(\StudipDocument::findBySQL('filename = ? AND seminar_id = ?', array($file_name, $cid)));
+        $this->audio_id = $document->dokument_id;
+        return;
     }
 
     public function importContents($contents, array $files)
     {
         $file = reset($files);
         if (($this->audio_source == "cw") && ($file->id == $this->audio_id)) {
-            $document =  current(\StudipDocument::findBySQL('filename = ?', array($file->name)));
-            $this->audio_id = $document->dokument_id;
-            $this->audio_file = "../../sendfile.php?type=0&file_id=".$document->dokument_id."&file_name=".$document->name;
-            $this->audio_source = "cw";
             $this->save();
         }
     }
