@@ -10,7 +10,8 @@ class GalleryBlock extends Block
 
     function initialize()
     {
-        $this->defineField('gallery_content', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('gallery_file_ids', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('gallery_file_names', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('gallery_folder_id', \Mooc\SCOPE_BLOCK, '');
     }
 
@@ -23,14 +24,14 @@ class GalleryBlock extends Block
     function author_view()
     {
         $this->authorizeUpdate();
-
         return array_merge($this->getAttrArray(), ["foldernames" => $this->getFolderNames()]);
     }
 
     private function getAttrArray() 
     {
         return array(
-            'gallery_content' => $this->gallery_content,
+            'gallery_file_ids' => $this->gallery_file_ids,
+            'gallery_file_names' => $this->gallery_file_names,
             'gallery_folder_id' => $this->gallery_folder_id
         );
     }
@@ -38,12 +39,20 @@ class GalleryBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        if (isset ($data['gallery_content'])) {
-            $this->gallery_content = (string) $data['gallery_content'];
-        } 
+
         if (isset ($data['gallery_folder_id'])) {
             $this->gallery_folder_id = (string) $data['gallery_folder_id'];
         } 
+        $files = $this->showFiles($this->gallery_folder_id );
+        $file_ids = array();
+        $file_names = array();
+        foreach ($files as $file) {
+            array_push($file_ids , array($file["dokument_id"]));
+            array_push($file_names , array($file["filename"]));
+        }
+        $this->gallery_file_ids = json_encode($file_ids);
+        $this->gallery_file_names = json_encode($file_names);
+        
         return;
     }
     
@@ -56,7 +65,7 @@ class GalleryBlock extends Block
         return $stmt->fetchAll();
     }
 
-    private function showFiles($folderId, $filetype = "")
+    private function showFiles($folderId)
     {
         $db = \DBManager::get();
         $stmt = $db->prepare("SELECT * FROM `dokumente` WHERE `range_id` = :range_id
@@ -81,17 +90,119 @@ class GalleryBlock extends Block
     {
        return $this->getAttrArray();
     }
+    
+    public function getFiles()
+    {
+        $db = \DBManager::get();
+        $stmt = $db->prepare("SELECT * FROM dokumente WHERE range_id = :range_id");
+        $stmt->bindParam(":range_id", $this->gallery_folder_id);
+        $stmt->execute();
+        $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $mimetypes = ["jpg", "png"];
+        $files = array();
+        foreach ($response as $item) {
+            if(in_array(substr($item["name"], -3), $mimetypes)) {
+                array_push( $files, array (
+                    'id' => $item['dokument_id'],
+                    'name' => $item['name'],
+                    'description' => $item['description'],
+                    'filename' => $item['filename'],
+                    'filesize' => $item['filesize'],
+                    'url' => $item['url'],
+                    'path' => get_upload_file_path($item['dokument_id']),
+                ));
+            }
+        }
+        return $files;
+    }
 
     public function importProperties(array $properties)
     {
-        if (isset($properties['gallery_content'])) {
-            $this->gallery_content = $properties['gallery_content'];
+        if (isset($properties['gallery_file_names'])) {
+            $this->gallery_file_names = $properties['gallery_file_names'];
         }
-        if (isset($properties['gallery_folder_id'])) {
-            $this->gallery_folder_id = $properties['gallery_folder_id'];
+        $this->gallery_folder_id = $this->createGalleryFolder();
+        $this->moveFiles();
+        $files = $this->showFiles($this->gallery_folder_id );
+        $file_ids = array();
+        foreach ($files as $file) {
+            array_push($content , $file["dokument_id"]);
         }
+        $this->gallery_file_ids = json_encode($file_ids);
 
         $this->save();
+    }
+    private function createGalleryFolder()
+    {
+        $seminar_id = $this->container['cid'];
+        $parent_id = md5( $seminar_id. 'top_folder');
+        $description = "created by courseware";
+        $name = "Galerie";
+        $permission = 7;
+        global $user;
+
+        $id = md5(uniqid('elvis',1));
+        $folder_tree = \TreeAbstract::GetInstance('StudipDocumentTree', array('range_id' => $seminar_id));
+
+        $query = "INSERT INTO folder (name, folder_id, description, range_id, seminar_id, user_id, permission, mkdate, chdate)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())";
+        $statement = \DBManager::get()->prepare($query);
+        $statement->execute(array(
+            $name,
+            $id,
+            $description,
+            $parent_id,
+            $seminar_id,
+            $user->id,
+            $permission
+        ));
+        if ($statement->rowCount()) {
+            $folder_tree->init();
+        }
+        return $id;
+    }
+    
+    private function moveFiles()
+    {
+        $seminar_id = $this->container['cid'];
+        $db = \DBManager::get();
+        $filenames = json_decode($this->gallery_file_names);
+        foreach ($filenames as $filename) {
+            $stmt = $db->prepare("
+                UPDATE 
+                    dokumente t1 
+                INNER JOIN 
+                (
+                    SELECT Max(mkdate) mkdate, filename
+                    FROM   dokumente 
+                    GROUP BY filename 
+                ) 
+                AS t2 
+                ON 
+                    t1.filename = t2.filename
+                AND 
+                    t1.mkdate = t2.mkdate
+                SET 
+                    range_id = :gallery_folder
+                WHERE 
+                    t1.filename = :filename
+                AND 
+                    t1.seminar_id = :cid
+            
+            ");
+            $stmt->bindParam(":gallery_folder", $this->gallery_folder_id);
+            $stmt->bindParam(":cid", $seminar_id);
+            $stmt->bindParam(":filename", $filename);
+            $stmt->execute();
+        }
+    }
+    
+    public function importContents($contents, array $files)
+    {
+        $file = reset($files);
+        
+            $this->save();
+        
     }
 
     public function getXmlNamespace()

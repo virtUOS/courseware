@@ -4,6 +4,7 @@
     targetNamespace="http://moocip.de/schema/block/gallery/"
     elementFormDefault="qualified"
 >
-        <xsd:attribute name="gallery_content" type="xsd:string" /> 
+        <xsd:attribute name="gallery_file_ids" type="xsd:string" /> 
+        <xsd:attribute name="gallery_file_names" type="xsd:string" /> 
         <xsd:attribute name="gallery_folder_id" type="xsd:string" /> 
 </xsd:schema>
