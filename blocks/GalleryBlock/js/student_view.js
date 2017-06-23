@@ -14,6 +14,18 @@ export default StudentView.extend({
   },
 
   postRender() {
-      $('.cw-gallery').slick();
+      var $autoplay = this.$el.find('input[name="gallery-autoplay"]').val() == 1;
+      var $autoplaytimer = this.$el.find('input[name="gallery-autoplay-timer"]').val() ;
+      var $hidenav = this.$el.find('input[name="gallery-hidenav"]').val() == 0;
+      if (!$hidenav) {
+            this.$el.find(".cw-gallery").addClass("cw-gallery-hidenav");
+      }
+      $autoplaytimer == "" ? $autoplaytimer = 2000 : $autoplaytimer = $autoplaytimer;
+      
+      $('.cw-gallery').slick({
+        arrows: $hidenav,
+        autoplay: $autoplay,
+        autoplaySpeed: $autoplaytimer
+    });
   }
 });

@@ -31,17 +31,35 @@ export default AuthorView.extend({
     },
 
     postRender() {
-
+        var $view = this;
+        var $folders = $view.$el.find('.gallery-folder option');
+        var $stored_folder = $view.$el.find('.gallery-stored-folder').val();
+        $folders.each(function () {
+          if($(this).attr('folder_id') == $stored_folder) {
+            $(this).prop('selected', true);
+          }
+        });
+        var $stored_autoplay = $view.$el.find('.gallery-stored-autoplay').val();
+        var $stored_hidenav = $view.$el.find('.gallery-stored-hidenav').val();
+        
+        if ($stored_autoplay == 1) {
+            $view.$el.find('input[name="gallery-autoplay"]').prop( "checked", true)
+        }
+        if ($stored_hidenav == 1) {
+            $view.$el.find('input[name="gallery-hidenav"]').prop( "checked", true)
+        }
+        
     },
     
     onSave(event) {
         var view = this;
-        var $gallery_content = "";
         var $folder = this.$el.find('.gallery-folder');
+        var $autoplay = this.$el.find('input[name="gallery-autoplay"]').prop( "checked") ? 1 : 0;
+        var $autoplaytimer = this.$el.find('input[name="gallery-autoplay-timer"]').val();
+        var $hidenav = this.$el.find('input[name="gallery-hidenav"]').prop( "checked") ? 1 : 0;
         var $gallery_folder_id = $folder.find('option:selected').attr('folder_id');
-        
         helper
-          .callHandler(this.model.id, 'save', { gallery_content: $gallery_content, gallery_folder_id: $gallery_folder_id})
+          .callHandler(this.model.id, 'save', {gallery_folder_id: $gallery_folder_id, gallery_autoplay: $autoplay, gallery_autoplay_timer: $autoplaytimer, gallery_hidenav: $hidenav})
           .then(function () {
             jQuery(event.target).addClass('accept');
             view.switchBack();

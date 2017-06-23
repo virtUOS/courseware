@@ -13,6 +13,9 @@ class GalleryBlock extends Block
         $this->defineField('gallery_file_ids', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('gallery_file_names', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('gallery_folder_id', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('gallery_autoplay', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('gallery_autoplay_timer', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('gallery_hidenav', \Mooc\SCOPE_BLOCK, '');
     }
 
     function student_view()
@@ -30,9 +33,12 @@ class GalleryBlock extends Block
     private function getAttrArray() 
     {
         return array(
-            'gallery_file_ids' => $this->gallery_file_ids,
-            'gallery_file_names' => $this->gallery_file_names,
-            'gallery_folder_id' => $this->gallery_folder_id
+            'gallery_file_ids'          => $this->gallery_file_ids,
+            'gallery_file_names'        => $this->gallery_file_names,
+            'gallery_folder_id'         => $this->gallery_folder_id,
+            'gallery_autoplay'          => $this->gallery_autoplay,
+            'gallery_autoplay_timer'    => $this->gallery_autoplay_timer,
+            'gallery_hidenav'           => $this->gallery_hidenav
         );
     }
 
@@ -42,6 +48,15 @@ class GalleryBlock extends Block
 
         if (isset ($data['gallery_folder_id'])) {
             $this->gallery_folder_id = (string) $data['gallery_folder_id'];
+        } 
+        if (isset ($data['gallery_autoplay'])) {
+            $this->gallery_autoplay = (string) $data['gallery_autoplay'];
+        } 
+        if (isset ($data['gallery_autoplay_timer'])) {
+            $this->gallery_autoplay_timer = (string) $data['gallery_autoplay_timer'];
+        } 
+        if (isset ($data['gallery_hidenav'])) {
+            $this->gallery_hidenav = (string) $data['gallery_hidenav'];
         } 
         $files = $this->showFiles($this->gallery_folder_id );
         $file_ids = array();
@@ -121,6 +136,15 @@ class GalleryBlock extends Block
         if (isset($properties['gallery_file_names'])) {
             $this->gallery_file_names = $properties['gallery_file_names'];
         }
+        if (isset ($properties['gallery_autoplay'])) {
+            $this->gallery_autoplay = $properties['gallery_autoplay'];
+        } 
+        if (isset ($properties['gallery_autoplay_timer'])) {
+            $this->gallery_autoplay_timer = $properties['gallery_autoplay_timer'];
+        } 
+        if (isset ($properties['gallery_hidenav'])) {
+            $this->gallery_hidenav = $properties['gallery_hidenav'];
+        } 
         $this->gallery_folder_id = $this->createGalleryFolder();
         $this->moveFiles();
         $files = $this->showFiles($this->gallery_folder_id );

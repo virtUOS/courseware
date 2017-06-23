@@ -1,10 +1,22 @@
-<input type="hidden" value="{{folder_id}}" folder-name="{{folder_name}}" class="download-stored-folder">
-<label for="download-folder">{{#i18n}}Einen Ordner ausw&auml;hlen{{/i18n}}:</label>
+<input type="hidden" value="{{gallery_folder_id}}" class="gallery-stored-folder">
+<input type="hidden" value="{{gallery_autoplay}}" class="gallery-stored-autoplay">
+<input type="hidden" value="{{gallery_hidenav}}" class="gallery-stored-hidenav">
+
+<label for="gallery-folder">{{#i18n}}Einen Ordner ausw&auml;hlen{{/i18n}}:</label>
 <select type="text" class="gallery-folder" name="folder">
     {{#foldernames}}
         <option value="{{name}}" folder_id="{{folder_id}}">{{name}}</option>
     {{/foldernames}}
 </select>
+<br>
+<label for="gallery-autoplay">{{#i18n}}Autoplay{{/i18n}}:</label>
+<input name="gallery-autoplay" type="checkbox">
+<br>
+<label for="gallery--autoplay-timer">{{#i18n}}Autoplay-Timer{{/i18n}}:</label>
+<input name="gallery-autoplay-timer" type="number" min=1000 max=20000 step=1000 value={{gallery_autoplay_timer}}>
+<br>
+<label for="gallery-hidenav">{{#i18n}}Navigation verbergen{{/i18n}}:</label>
+<input name="gallery-hidenav" type="checkbox">
 <div class="cw-button-box">
     <button name=save class=button>Speichern</button>
     <button name=cancel class=button>Abbrechen</button>
