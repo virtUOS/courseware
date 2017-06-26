@@ -1,0 +1,39 @@
+@import '../../../assets/less/variables';
+@media screen and (max-width: @mobile-max-width) {
+    section#courseware {
+        padding-left: 0;
+        max-width: 760px;
+        
+        .breadcrumb {
+            display: none;
+        }
+        .mobile-show-nav-button {
+            display: block;
+            width: 100%;
+            .assets-bg-icon("blue/arr_1down.svg");
+            background-repeat: no-repeat;
+            background-position: 50%;
+            border: none;
+            height: 32px;
+            cursor: pointer;
+            margin-top: 1em;
+            
+            &.nav-on {
+                .assets-bg-icon("blue/arr_1up.svg");
+            }
+        }
+        aside {
+            display:none;
+            position: relative;
+            width: unset;
+            padding: 0;
+            
+            ol.chapters  {
+            
+                .controls {
+                    width: 360px;
+                }
+            }
+        }
+    }
+}

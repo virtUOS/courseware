@@ -16,6 +16,7 @@ class Section extends Block {
     const ICON_CODE    = 'code';
     const ICON_VIDEO   = 'video';
     const ICON_AUDIO   = 'audio';
+    const ICON_GALLERY = 'gallery';
     const ICON_TASK    = 'task';
     const ICON_SEARCH  = 'search';
     const ICON_DEFAULT = 'document';
@@ -23,7 +24,7 @@ class Section extends Block {
     // definition of precedence of icons
     // larger array index -> higher precedence
     // thus ICON_VIDEO has the highest precedence
-    private static $icon_precedences = array(self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO, self::ICON_AUDIO, self::ICON_CODE, self::ICON_SEARCH);
+    private static $icon_precedences = array(self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO, self::ICON_AUDIO, self::ICON_CODE, self::ICON_SEARCH, self::ICON_GALLERY);
 
     // mapping of block types to icons
     private static $map_blocks_to_icons = array(
@@ -33,7 +34,8 @@ class Section extends Block {
         'AudioBlock'   => self::ICON_AUDIO,
         'TestBlock'    => self::ICON_TASK,
         'SearchBlock'  => self::ICON_SEARCH,
-        'CodeBlock'    => self::ICON_CODE
+        'CodeBlock'    => self::ICON_CODE,
+        'GalleryBlock' => self::ICON_GALLERY
     );
 
     function initialize()

@@ -15,11 +15,6 @@
     </ul>
   </nav>
 
-  <div class=mode-switch>
-      <button class="student" data-title="{{#i18n}}Studentenmodus{{/i18n}}"></button>
-      <button class="author" data-title="{{#i18n}}Autorenmodus{{/i18n}}"></button>
-  </div>
-
   <aside>
     <ol class=chapters>
 
@@ -92,16 +87,21 @@
       {{/aside_section}}
     {{/active_subchapter}}
   </aside>
-
-  
+<button class="mobile-show-nav-button"></button>  
   {{#show_section_nav}}
     {{^sections_as_chapters}}
       {{> active_subchapter}}
     {{/sections_as_chapters}}
   {{/show_section_nav}}
   
+  <div class=mode-switch>
+      <button class="student" data-title="{{#i18n}}Studentenmodus{{/i18n}}"></button>
+      <button class="author" data-title="{{#i18n}}Autorenmodus{{/i18n}}"></button>
+  </div>
+  
   {{#active_section}}
         {{> active_section}}
       {{/active_section}}
+
   <div class="clear"></div>
 </section>

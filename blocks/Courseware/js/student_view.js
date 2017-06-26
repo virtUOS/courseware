@@ -33,6 +33,7 @@ export default StudentView.extend({
   events: {
     'click .mode-switch .student': 'switchToStudentMode',
     'click .mode-switch .author':  'switchToAuthorMode',
+    'click .mobile-show-nav-button' : 'showMobileNavigation',
 
     'click a.navigate':            'navigateTo'
   },
@@ -115,6 +116,7 @@ export default StudentView.extend({
 
     tooltip(this.$el, 'button');
     this.resizeColumnHeights();
+    
   },
 
   navigateTo(event) {
@@ -187,5 +189,16 @@ export default StudentView.extend({
   // see https://github.com/virtUOS/courseware/issues/71
   resizeColumnHeights() {
     this.$el.css('min-height', this.$('> aside').height() + 'px');
+  },
+  
+  showMobileNavigation(event) {
+
+    if (jQuery(event.target).hasClass("nav-on")) {
+        this.$el.find("aside").hide("slow");
+        jQuery(event.target).removeClass("nav-on");
+    } else {
+        this.$el.find("aside").show("slow");
+        jQuery(event.target).addClass("nav-on");
+    }
   }
 });
