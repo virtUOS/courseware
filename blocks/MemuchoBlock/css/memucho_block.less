@@ -1,0 +1,46 @@
+@import '../../../assets/mixins';
+
+.content memucho {
+  border: none;
+}
+
+.memucho-author-view {
+    margin: 0 1em;
+}
+
+.memucho-description {
+        background: #eee;
+        margin: 1em 0;
+        background-image: url("@{blocks-icons-dir}/32/blue/info-circle.png");
+        background-repeat: no-repeat;
+        background-position: 26px center;
+        padding-left: 64px;
+        
+        p {
+            padding: 20px;
+            line-height: 1.3em;
+        }
+}
+.memucho-data {
+    li {
+        list-style: none;
+        margin-left: -2.5em;
+        padding-bottom: 0.8em;
+    }
+    label {
+        display: inline-block;
+        width: 18em;
+        text-align: left;
+        
+    }
+    label.memucho-special-label {
+        
+    }
+    input[type="checkbox"] {
+        vertical-align: middle;
+    }
+    
+}
+.memucho-submit-user {
+    display: none;
+}
