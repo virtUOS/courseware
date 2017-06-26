@@ -196,8 +196,10 @@ export default StudentView.extend({
     if (jQuery(event.target).hasClass("nav-on")) {
         this.$el.find("aside").hide("slow");
         jQuery(event.target).removeClass("nav-on");
+        this.$el.find(".breadcrumb").show();
     } else {
         this.$el.find("aside").show("slow");
+        this.$el.find(".breadcrumb").hide();
         jQuery(event.target).addClass("nav-on");
     }
   }
