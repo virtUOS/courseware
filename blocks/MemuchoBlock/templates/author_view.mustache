@@ -1,0 +1,24 @@
+<div class="memucho-author-view">
+    <div class="memucho-description">
+        <p>
+            {{#i18n}}Tragen Sie in das Feld Memucho-Quizz-ID die ID des Memucho-Quizzes ein. Diese finden Sie in der URL (memucho.de/Fragesaetze/Quizzname/Quizz-ID oder über das 'Einbetten'-Tag: data-id="xx").{{/i18n}}
+        </p>
+    </div>
+    <div class="memucho-data">
+        <ul>
+            <li><label>Memucho-Quizz-ID:</label><input class="scriptinput" type=text size=32 value={{data_id}}></li>
+ 
+
+        </ul>
+    </div>
+    <div class="memucho-description memucho-submit-user">
+        <p>
+            {{#i18n}}Für jede NutzerIn wird ein individueller Wert übergeben mit dem die Anwendung die NutzerIn wiedererkennen kann.
+            Um Rückschlüssen auf die Identität zu verhindern, wird die StudIp-Nutzer-Id mit der Zufallszeichenfolge verschlüsselt.
+            Wählen Sie identische Zufallszeichenfolgen, wenn an verschiedenen Stellen gleiche Nutzer-Ids erzeugt werden sollen.{{/i18n}}
+        </p>
+    </div>
+	
+    <button name=save class=button>{{#i18n}}Speichern{{/i18n}}</button>
+    <button name=cancel class=button>{{#i18n}}Abbrechen{{/i18n}}</button>
+</div>
