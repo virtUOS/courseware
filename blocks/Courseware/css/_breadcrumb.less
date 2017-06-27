@@ -8,11 +8,17 @@ nav.breadcrumb {
     display: inline;
     padding-right: 0.5em;
 
-    a {
+    span {
       color: #888;
+      
+      &.breadcrumb-subchapter {
+        .bgImg(arr_1right, grey, 14);
+        background-repeat: no-repeat;
+        background-position-x: 0;
+        background-position-y: 2px;
+        padding-left: 1.15em;
+        margin-left: -0.5em;
 
-      &:hover {
-        color: #f33;
       }
     }
   }

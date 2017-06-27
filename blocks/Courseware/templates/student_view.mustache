@@ -4,13 +4,13 @@
   data-blockid="{{courseware.id}}"
   data-type=Courseware>
 
-  <nav class=breadcrumb>
+  <nav class="breadcrumb">
     <ul>
       {{#active_chapter}}
-        <li><a href="#">{{#titleize}}{{title}}{{/titleize}}</a></li>
+        <li><span>{{#titleize}}{{title}}{{/titleize}}</span></li>
       {{/active_chapter}}
       {{#active_subchapter}}
-        <li>» <a href="#">{{#titleize}}{{title}}{{/titleize}}</a></li>
+        <li> <span class="breadcrumb-subchapter">{{#titleize}}{{title}}{{/titleize}}</span></li>
       {{/active_subchapter}}
     </ul>
   </nav>
