@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/keypoint/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/keypoint/"
+    elementFormDefault="qualified"
+>
+    <xsd:attribute name="keypoint_content" type="xsd:string" />
+    <xsd:attribute name="keypoint_color" type="xsd:string" />
+    <xsd:attribute name="keypoint_icon" type="xsd:string" />
+</xsd:schema>
