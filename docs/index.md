@@ -1,5 +1,5 @@
-﻿(M)OOC.IP
-=========
+﻿Courseware
+==========
 
-Dies ist die (wachsende) Anleitung für (M)OOC.IP und Courseware.
+Dies ist die (wachsende) Anleitung für Courseware.
 
