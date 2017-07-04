@@ -55,6 +55,9 @@ Der Courseware-Audio-Player ermöglicht die Funktionen Play, Pause und Stop. Vor
 
 Es werden die Dateitypen **mp3**, **ogg** und **wav** unterstützt. _Bitte beachten Sie das der Microsoft Internet Explorer das Dateiformat wav nicht unterstützt._
 
+![Autorenansicht des Audio-Blocks](img/audioBlock_edit.png)
+_Autorenansicht des Audio-Blocks_
+
 ![Studentenansicht des Audio-Blocks](img/audioBlock.png)
 _Studentenansicht des Audio-Blocks_
 
@@ -136,6 +139,9 @@ Galerie-Block (ab 2.2)
 -----------------------
 In den Galerie-Block werden alle Bilder aus einem Ordner des Dateibereichs in einer Karussellansicht angezeigt. 
 Die Bilder können automatisch wechseln (autoplay) und die Navigationspfeile können ausgeblendet werden.
+
+![Autorenansicht des Galerie-Blocks](img/galleryBlock_edit.png)
+_Autorenansicht des Galerie-Blocks_
 
 ![Studentenansicht des Galerie-Blocks](img/galleryBlock.png)
 _Studentenansicht des Galerie-Blocks mit Navigationspfeilen_
