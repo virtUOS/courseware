@@ -590,7 +590,7 @@ class Courseware extends Block {
      *
      * @return array
      */
-    private function getNeighborSections($active_section)
+    public function getNeighborSections($active_section)
     {
         // next
         for ($node = $active_section; !$next&& $node; $node = $node->parent) {

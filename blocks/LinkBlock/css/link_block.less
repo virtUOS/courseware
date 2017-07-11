@@ -1,0 +1,19 @@
+@import '../../../assets/less/mixins';
+
+.cw-link {
+    padding: 2em 2em 2em 6em;
+    border: solid thin #ccc;
+    
+    &.internal {
+        .assets-bg-icon("blue/link-intern.svg");
+        background-position: 2em 50%;
+        background-repeat: no-repeat;
+        background-size: 32px;
+    }
+    &.external {
+        .assets-bg-icon("blue/link-extern.svg");
+        background-position: 2em 50%;
+        background-repeat: no-repeat;
+        background-size: 32px;
+    }
+}

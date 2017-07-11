@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/link/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/link/"
+    elementFormDefault="qualified"
+>
+    <xsd:attribute name="link_type" type="xsd:string" />
+    <xsd:attribute name="link_target" type="xsd:string" />
+    <xsd:attribute name="link_title" type="xsd:string" />
+</xsd:schema>
