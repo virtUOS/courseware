@@ -2,6 +2,7 @@
     "require": {
         "mustache/mustache": "2.11.1",
         "pimple/pimple": "3.0.2",
+        "symfony/dom-crawler": "~2.8",
         "willdurand/negotiation": "1.5.0"
     },
     "autoload": {
