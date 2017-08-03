@@ -5,6 +5,12 @@
     elementFormDefault="qualified"
 >
     <xsd:attribute name="url" type="xsd:string" />
+     <xsd:attribute name="href1" type="xsd:string" />
+     <xsd:attribute name="href2" type="xsd:string" />
+    <xsd:attribute name="href3" type="xsd:string" />
+    <xsd:attribute name="linktitle1" type="xsd:string" />
+    <xsd:attribute name="linktitle2" type="xsd:string" />
+    <xsd:attribute name="linktitle3" type="xsd:string" />
     <xsd:attribute name="height" type="xsd:string" />
     <xsd:attribute name="submit_user_id" type="xsd:string" />
     <xsd:attribute name="submit_param" type="xsd:string" />

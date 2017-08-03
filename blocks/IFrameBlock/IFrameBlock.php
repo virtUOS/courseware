@@ -147,22 +147,22 @@ class IFrameBlock extends Block
             $this->salt = $properties['salt'];
         }
          if (isset($properties['href1'])) {
-            $this->salt = $properties['href1'];
+            $this->href1 = $properties['href1'];
         }
          if (isset($properties['linktitle1'])) {
-            $this->salt = $properties['linktitle1'];
+            $this->linktitle1 = $properties['linktitle1'];
         }
         if (isset($properties['href2'])) {
-            $this->salt = $properties['href2'];
+            $this->href2 = $properties['href2'];
         }
          if (isset($properties['linktitle2'])) {
-            $this->salt = $properties['linktitle2'];
+            $this->linktitle2 = $properties['linktitle2'];
         }
         if (isset($properties['href3'])) {
-            $this->salt = $properties['href3'];
+            $this->href3 = $properties['href3'];
         }
          if (isset($properties['linktitle3'])) {
-            $this->salt = $properties['linktitle3'];
+            $this->linktitle3 = $properties['linktitle3'];
         }
 
         $this->save();
