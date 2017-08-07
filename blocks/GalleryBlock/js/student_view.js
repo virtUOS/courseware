@@ -21,11 +21,10 @@ export default StudentView.extend({
             this.$el.find(".cw-gallery").addClass("cw-gallery-hidenav");
       }
       $autoplaytimer == "" ? $autoplaytimer = 2000 : $autoplaytimer = $autoplaytimer;
-      
-      $('.cw-gallery').slick({
-        arrows: $hidenav,
-        autoplay: $autoplay,
-        autoplaySpeed: $autoplaytimer
-    });
+      this.$('.cw-gallery').slick({
+            arrows: $hidenav,
+            autoplay: $autoplay,
+            autoplaySpeed: $autoplaytimer
+      });
   }
 });
