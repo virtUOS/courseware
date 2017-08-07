@@ -1,3 +1,16 @@
 <div class=content>
-<iframe width=100% height={{height}} src={{url}}></iframe>
+    <iframe width=100% height={{height}} src={{url}}></iframe>
+    {{#cc_infos}}
+        <div class="iframe-cc-data">
+            <span class="iframe-cc-icon {{cc_type}}"></span>
+            <div class="iframe-cc-infos-student">
+                {{#cc_work_name}}<span>Werk: <a href="http://{{cc_work_url}}" target="_blank">{{cc_work_name}}</a></span>{{/cc_work_name}}
+                <br>
+                {{#cc_author_name}}<span>Autor: <a href="http://{{cc_author_url}}" target="_blank">{{cc_author_name}}</a></span>{{/cc_author_name}}
+                <br>
+                {{#cc_license_name}}<span>Lizenz:<a href="http://{{cc_license_url}}" target="_blank">{{cc_license_name}}</a></span>{{/cc_license_name}}
+                <br>
+            </div>
+        </div>
+    {{/cc_infos}}
 </div>

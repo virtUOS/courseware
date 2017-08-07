@@ -4,10 +4,11 @@
   border: none;
 }
 
-.iframe-author-view {
+.iframe-author-view,
+.iframe-data {
     margin: 0 1em;
     label {
-        width: 16em;
+        width: 15em;
     }
     .submit-user-id-switch {
         width: 1em !important;
@@ -34,3 +35,65 @@
 }
 
 
+.iframe-cc-wrapper{
+    padding: 0;
+    input[type="checkbox"] {
+        margin-right: 2em !important;
+        vertical-align: sub;
+    }
+}
+
+.iframe-cc-info {
+    input {
+        width: 18em !important;
+        
+    }
+}
+
+.iframe-cc-selector {
+     select {
+        width: 26em !important;
+    }
+}
+
+.iframe-cc-icon {
+    width: 120px;
+    height: 50px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    margin-left: 2em;
+    &.default {
+        background-image: url("../assets/images/icons/cc.srr.primary.svg");
+    }
+    &.by {
+        background-image: url("../assets/images/icons/by.svg");
+    }
+    &.by-nc {
+        background-image: url("../assets/images/icons/by-nc.eu.svg");
+    }
+    &.by-nc-nd {
+        background-image: url("../assets/images/icons/by-nc-nd.eu.svg");
+    }
+    &.by-nc-sa {
+        background-image: url("../assets/images/icons/by-nc-sa.svg");
+    }
+    &.by-nd {
+        background-image: url("../assets/images/icons/by-nd.svg");
+    }
+    &.by-sa {
+        background-image: url("../assets/images/icons/by-sa.svg");
+    }
+    
+}
+
+.iframe-cc-data {
+    border: solid thin #ccc;
+    margin-top: -5px;
+    padding-top: 10px;
+    height: 75px;
+}
+
+.iframe-cc-infos-student {
+    display: inline-block;
+    padding-left: 2em;
+}

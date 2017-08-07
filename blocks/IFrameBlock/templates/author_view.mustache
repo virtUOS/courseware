@@ -1,3 +1,4 @@
+<input type="hidden" class="iframe-cc-infos-stored" value="{{cc_infos}}">
 <div class="iframe-author-view">
     <div class="iframe-description">
         <p>
@@ -7,12 +8,14 @@
     </div>
     <div class="iframe-data">
         <label>URL:</label><input class="urlinput" type=text size=32 value={{url}}>
+        <br>
         <label>{{#i18n}}Höhe{{/i18n}}:</label><input class="heightinput" type=text size=4 max=4 value={{height}}> {{#i18n}}Pixel{{/i18n}}
+        <br>
         <label>{{#i18n}}Nutzerspezifische ID übergeben{{/i18n}}</label>
         <input class="submit-user-id-switch" name="submit-user-id-switch" type="checkbox" {{#submit_user_id}} checked{{/submit_user_id}}>
         <div class="iframe-submit-user">
             <label>{{#i18n}}Name des Übergabeparameters{{/i18n}}:</label><input  class="submit-param" type=text size=32 value={{submit_param}}>
-            <label>{{#i18n}}Zufallszeichen für Verschlüsselung{{/i18n}}:</label><input class="salt" type=text size=32 min=8 value={{salt}}><div>
+            <label>{{#i18n}}Zufallszeichen für Verschlüsselung{{/i18n}}:</label><input class="salt" type=text size=32 min=8 value={{salt}}>
         
         </div>
         <div class="iframe-description iframe-submit-user">
@@ -21,6 +24,34 @@
                 Um Rückschlüssen auf die Identität zu verhindern, wird die StudIp-Nutzer-Id mit der Zufallszeichenfolge verschlüsselt.
                 Wählen Sie identische Zufallszeichenfolgen, wenn an verschiedenen Stellen gleiche Nutzer-Ids erzeugt werden sollen.{{/i18n}}
             </p>
+        </div>
+        <br>
+        <label for="iframe-cc-switch">{{#i18n}}CC Lizenztyp angeben:{{/i18n}}</label>
+        <input class="iframe-cc-switch" name="iframe-cc-switch" type="checkbox" {{#cc_infos}} checked {{/cc_infos}}>
+        <div class="iframe-cc-wrapper">
+            <div class="iframe-cc-selector">
+                <label class="iframe-cc-label" for="iframe-cc-license">CC Lizenz</label>
+                <select name="iframe-cc-license" class="iframe-cc-license">
+                    <option value="by">by</option>
+                    <option value="by-sa">by-sa</option>
+                    <option value="by-nc">by-nc</option>
+                    <option value="by-nd">by-nd</option>
+                    <option value="by-nc-nd">by-nc-nd</option>
+                    <option value="by-nc-sa">by-nc-sa</option>
+                </select>
+                <span class="iframe-cc-icon" style="vertical-align: middle;"></span>
+            </div>
+            <div class="iframe-cc-info">
+                <label>Werk:</label> <input type="text" size="32" value="" class="iframe-cc-work-name" name="iframe-cc-work-name" placeholder="Name">
+                                <input type="text" size="32" value="" class="iframe-cc-work-url" name="iframe-cc-work-url" placeholder="URL">
+                <br>
+                <label>Autor:</label> <input type="text" size="32" value="" class="iframe-cc-author-name" name="iframe-cc-author-name" placeholder="Name">
+                                <input type="text" size="32" value="" class="iframe-cc-author-url" name="iframe-cc-author-url" placeholder="URL">
+                <br>
+                <label>Lizenz der Plattform:</label> <input type="text" size="32" value="" class="iframe-cc-license-name" name="iframe-cc-license-name" placeholder="Name">
+                                <input type="text" size="32" value="" class="iframe-cc-license-url" name="iframe-cc-license-url" placeholder="URL">
+
+            </div>
         </div>
     </div>
     <div class="cw-button-box">
