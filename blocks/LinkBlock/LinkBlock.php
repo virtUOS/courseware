@@ -27,6 +27,7 @@ class LinkBlock extends Block
 
     function author_view()
     {
+        $this->authorizeUpdate();
         $inthischapter = $this->getThisChapterSiblings();
         $inotherchapters= $this->getOtherSubchapters();
         return array_merge($this->getAttrArray(), array(
@@ -47,7 +48,6 @@ class LinkBlock extends Block
     private function getTargetId($target)
     {
         $id = "";
-        $this->authorizeUpdate();
         $section = $this->getModel()->parent;
         $subchapter = $section->parent;
         $chapter = $subchapter->parent;
