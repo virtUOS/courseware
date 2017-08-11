@@ -80,10 +80,11 @@ class SearchBlock extends Block
             FROM
                 mooc_fields
             WHERE
-                json_data LIKE "%'.$request.'%"
+                json_data LIKE CONCAT ("%",:request,"%") 
             AND
                 name IN ("webvideo", "url", "videoTitle", "content", "title", "audio_description", "download_title", "file", "file_name", "code_lang", "code_content")
         ');
+        $stmt->bindParam(":request", $request);
         $stmt->execute();
         $sqlfields = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
