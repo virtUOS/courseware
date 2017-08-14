@@ -220,22 +220,23 @@ export default Backbone.View.extend({
     if (confirm(i18n('Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke werden unwiderruflich entfernt!'))) {
 
       $parent.addClass('loading');
-
-      model.destroy()
-        .done(
-          function () {
-            if ($parent.hasClass('selected')) {
-              helper.reload();
-            } else {
-              $parent.remove();
+      model.destroy({ 
+            dataType: "text", 
+            success: function(model, response) {
+                        console.log("success");
+                        if ($parent.hasClass('selected')) {
+                          helper.reload();
+                        } else {
+                          $parent.remove();
+                        }
+            },
+            error: function(model, response) {
+                var errorMessage = 'Could not delete the chapter: ' + jQuery.parseJSON(response);
+                alert(errorMessage);
+                console.log(response);
+                $parent.removeClass('loading');
             }
-          },
-          function (error) {
-            var errorMessage = 'Could not delete the chapter: ' + jQuery.parseJSON(error.responseText).reason;
-            alert(errorMessage);
-            console.log(errorMessage, arguments);
-            $parent.removeClass('loading');
-          });
+      });
     }
   },
 
