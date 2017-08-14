@@ -74,6 +74,9 @@ class SearchBlock extends Block
     {
         $request = htmlspecialchars($this->Ansi_utf8($data['request']));
         $db = \DBManager::get();
+        $cid = $this->container['cid'];
+        $answer = array();
+
         $stmt = $db->prepare('
             SELECT 
                 *
@@ -88,27 +91,29 @@ class SearchBlock extends Block
         $stmt->execute();
         $sqlfields = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        $answer = array();
+        
         foreach ($sqlfields as $item) {
             $block = new DBBlock($item["block_id"]);
-            if ($item["name"] == "content") {
-                $content = str_replace( '<!-- HTML: Insert text after this line only. -->', '', $item["json_data"]);
-                if(!stripos($content, $request)) continue;
+            if ($block->isPublished()) {
+                if ($item["name"] == "content") {
+                    $content = str_replace( '<!-- HTML: Insert text after this line only. -->', '', $item["json_data"]);
+                    if(!stripos($content, $request)) continue;
+                }
+                if ($item["name"] == "url") {
+                    // remove opencast part from url 
+                    $url = str_replace( '\/engage\/theodul\/ui\/core.html', '', $item["json_data"]);
+                    if(!stripos($url, $request)) continue;
+                }
+                array_push($answer, array(
+                    "link"          =>  \PluginEngine::getURL("courseware/courseware")."&selected=".$block->parent_id,
+                    "type"          => $block->type,
+                    "title"         => (new DBBlock($block->parent_id))->title, // section title
+                    "subchapter"    => (new DBBlock($block->parent->parent->id))->title, //subchapter title
+                    "chapter"       => (new DBBlock($block->parent->parent->parent->id))->title, //chapter title
+                    "chap"          => false,
+                    "name"          => str_replace( '\/engage\/theodul\/ui\/core.html', '', $item["json_data"])
+                ));
             }
-            if ($item["name"] == "url") {
-                // remove opencast part from url 
-                $url = str_replace( '\/engage\/theodul\/ui\/core.html', '', $item["json_data"]);
-                if(!stripos($url, $request)) continue;
-            }
-            array_push($answer, array(
-                "link" =>  \PluginEngine::getURL("courseware/courseware")."&selected=".$block->parent_id,
-                "type"  => $block->type,
-                "title" => (new DBBlock($block->parent_id))->title, // section title
-                "subchapter" => (new DBBlock($block->parent->parent->id))->title, //subchapter title
-                "chapter" => (new DBBlock($block->parent->parent->parent->id))->title, //chapter title
-                "chap" => false,
-                "name" => str_replace( '\/engage\/theodul\/ui\/core.html', '', $item["json_data"])
-            ));
         }
 
         $stmt = $db->prepare('
@@ -117,24 +122,30 @@ class SearchBlock extends Block
             FROM
                 mooc_blocks
             WHERE
-                title LIKE "%'.$request.'%"
+                title LIKE CONCAT ("%",:request,"%") 
             AND
-                (type = "Chapter" OR type = "Subchapter" OR type = "Section")
+                type IN ("Chapter" , "Subchapter" , "Section")
+            AND 
+                seminar_id = :cid
         ');
+        $stmt->bindParam(":request", $request);
+        $stmt->bindParam(":cid", $cid);
         $stmt->execute();
         $sqlblocks = $stmt->fetchAll(\PDO::FETCH_ASSOC);
     
         foreach ($sqlblocks as $item) {
-
+            $block = new DBBlock($item["id"]);
             if (strpos($item["title"], "AsideSection") >-1) { 
                 continue;
             }
-
-            array_push($answer, array(
-                "link" => \PluginEngine::getURL("courseware/courseware")."&selected=".$item["id"],
-                "title" => $item["title"],
-                "chap" => true
-            ));
+            if ($block->isPublished()) {
+                array_push($answer, array(
+                    "link"  => \PluginEngine::getURL("courseware/courseware")."&selected=".$item["id"],
+                    "title" => $item["title"],
+                    "type"  => $item["type"],
+                    "chap"  => true
+                ));
+            }
         }
 
         return json_encode($answer);
