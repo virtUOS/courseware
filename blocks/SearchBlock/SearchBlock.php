@@ -85,7 +85,21 @@ class SearchBlock extends Block
             WHERE
                 json_data LIKE CONCAT ("%",:request,"%") 
             AND
-                name IN ("webvideo", "url", "videoTitle", "content", "title", "audio_description", "download_title", "file", "file_name", "code_lang", "code_content")
+                name IN ("webvideo", 
+                         "url", 
+                         "videoTitle", 
+                         "content", 
+                         "title", 
+                         "audio_description", 
+                         "audio_file_name",
+                         "download_title", 
+                         "file", 
+                         "file_name", 
+                         "code_lang", 
+                         "code_content",
+                         "keypoint_content",
+                         "gallery_file_names"
+                         )
         ');
         $stmt->bindParam(":request", $request);
         $stmt->execute();
