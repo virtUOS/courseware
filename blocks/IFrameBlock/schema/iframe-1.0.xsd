@@ -10,4 +10,5 @@
     <xsd:attribute name="submit_user_id" type="xsd:string" />
     <xsd:attribute name="submit_param" type="xsd:string" />
     <xsd:attribute name="salt" type="xsd:string" />
+    <xsd:attribute name="cc_infos" type="xsd:string" />
 </xsd:schema>

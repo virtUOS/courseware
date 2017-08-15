@@ -15,17 +15,20 @@ class IFrameBlock extends Block
         $this->defineField('submit_user_id', \Mooc\SCOPE_BLOCK, false);
         $this->defineField('submit_param', \Mooc\SCOPE_BLOCK, "uid");
         $this->defineField('salt', \Mooc\SCOPE_BLOCK, md5(uniqid('', true)));
+        $this->defineField('cc_infos',    \Mooc\SCOPE_BLOCK, "");
+        
     }
 
     function array_rep($url = "") {
         if ($url == "") $url = $this->url;
         return array(
-            'url'    => $url,
-            'height' => $this->height,
-            'width' => $this->width,
-            'submit_user_id' => $this->submit_user_id,
-            'submit_param' => $this->submit_param,
-            'salt' => $this->salt
+            'url'               => $url,
+            'height'            => $this->height,
+            'width'             => $this->width,
+            'submit_user_id'    => $this->submit_user_id,
+            'submit_param'      => $this->submit_param,
+            'salt'              => $this->salt,
+            'cc_infos'          => $this->cc_infos
         );
     }
 
@@ -33,11 +36,15 @@ class IFrameBlock extends Block
     {
         // on view: grade with 100%
         $this->setGrade(1.0);
+        
         if ($this->submit_user_id){ 
             $url = $this->buildUID(); 
-            return $this->array_rep($url);
+            $array = $this->array_rep($url);
+        }else {
+            $array = $this->array_rep();
         }
-        return $this->array_rep();
+        $array['cc_infos'] = json_decode($array['cc_infos']);
+        return $array;
     }
 
     function author_view()
@@ -56,13 +63,21 @@ class IFrameBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-
-        $this->url = (string) $data['url'];
-        $this->height = (int) $data['height'];
-        $this->width = (int) $data['width'];
-        $this->submit_user_id = $data['submit_user_id'];
-        $this->submit_param = $data['submit_param'];
-        $this->salt = $data['salt'];
+        $height  = (int) $data['height'];
+        $width   = (int) $data['width'];
+        if(($height > 3000) || ($height < 20)){
+            $height = 600;
+        }
+        if(($width > 100) || ($width < 5)){
+            $width = 100;
+        }
+        $this->url              = (string) $data['url'];
+        $this->height           = $height;
+        $this->width            = $width;
+        $this->submit_user_id   = $data['submit_user_id'];
+        $this->submit_param     = $data['submit_param'];
+        $this->salt             = $data['salt'];
+        $this->cc_infos         = $data['cc_infos'];
 
         return $this->array_rep();
     }
@@ -72,7 +87,15 @@ class IFrameBlock extends Block
      */
     public function exportProperties()
     {
-        return array('url' => $this->url, 'height' => $this->height, 'width' => $this->width, 'submit_user_id' => $this->submit_user_id, 'submit_param' => $this->submit_param, 'salt' => $this->salt);
+        return array(
+            'url'               => $this->url, 
+            'height'            => $this->height,
+            'width'             => $this->width, 
+            'submit_user_id'    => $this->submit_user_id, 
+            'submit_param'      => $this->submit_param, 
+            'salt'              => $this->salt,
+            'cc_infos'          => $this->cc_infos
+        );
     }
 
     /**
@@ -103,21 +126,25 @@ class IFrameBlock extends Block
         if (isset($properties['height'])) {
             $this->height = $properties['height'];
         }
-        
+
         if (isset($properties['width'])) {
             $this->width = $properties['width'];
         }
-        
+
         if (isset($properties['submit_user_id'])) {
             $this->submit_user_id = $properties['submit_user_id'];
         }
-        
+
         if (isset($properties['submit_param'])) {
             $this->submit_param = $properties['submit_param'];
         }
-        
+
         if (isset($properties['salt'])) {
             $this->salt = $properties['salt'];
+        }
+
+        if (isset($properties['cc_infos'])) {
+            $this->cc_infos = $properties['cc_infos'];
         }
 
         $this->save();
