@@ -87,14 +87,15 @@ class Courseware extends Block {
         $this->branchComplete($tree);
 
         return array_merge($tree, array(
-            'user_may_author'   => $this->getCurrentUser()->canUpdate($this->_model),
-            'section_nav'       => $section_nav,
-            'courseware'        => $courseware,
-            'active_chapter'    => $active_chapter,
-            'active_subchapter' => $active_subchapter,
-            'show_section_nav'  => $this->show_section_nav,
-            'sections_as_chapters' => $this->sections_as_chapters,
-            'active_section'    => $active_section));
+            'user_may_author'       => $this->getCurrentUser()->canUpdate($this->_model),
+            'section_nav'           => $section_nav,
+            'courseware'            => $courseware,
+            'active_chapter'        => $active_chapter,
+            'active_subchapter'     => $active_subchapter,
+            'show_section_nav'      => $this->show_section_nav,
+            'sections_as_chapters'  => $this->sections_as_chapters,
+            'isSequential'          => $this->progression == 'seq',
+            'active_section'        => $active_section));
     }
 
     function branchComplete(&$tree)

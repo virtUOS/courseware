@@ -2,7 +2,7 @@
   <span class=handle>#</span>
   <a class="navigate"
     href="{{#plugin_url}}courseware?selected={{id}}{{/plugin_url}}">
-      {{#titleize}}{{title}}{{/titleize}} {{#complete}} <span class="complete" ></span> {{/complete}}
+      {{#titleize}}{{title}}{{/titleize}} {{#isSequential}}{{#complete}} <span class="complete" ></span> {{/complete}}{{/isSequential}}
   </a>
 
   <span class=controls>
