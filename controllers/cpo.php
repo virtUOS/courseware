@@ -26,11 +26,12 @@ class CpoController extends CoursewareStudipController {
         if (Navigation::hasItem('/course/mooc_cpo')) {
             Navigation::activateItem("/course/mooc_cpo");
         }
-
+        $teachers = (new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), "dozent");
+        $dids = array_map(function($teacher){return $teacher->user_id;} , $teachers); // dozent ids
         $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position', array($this->plugin->getCourseId()));
-        $bids   = array_map(function ($block) { return (int) $block->id; }, $blocks);
+        $bids   = array_map(function ($block) { return (int) $block->id; }, $blocks); // block ids
         $progress = array_reduce(
-            \Mooc\DB\UserProgress::findBySQL('block_id IN (?) ', array($bids)),
+            \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id NOT IN (?)', array($bids, $dids)),
             function ($memo, $item) {
                 if (array_key_exists($item->block_id,$memo)) {
                     $stored_grade = $memo[$item->block_id]['grade'];
