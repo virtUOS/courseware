@@ -1,162 +1,133 @@
-{{#active}}
-  {{#description}}
-    <div class="description">{{{description}}}</div>
-  {{/description}}
-  
-  {{#available}}
-    {{^correction_available}}
-        <div class="messagebox messagebox_info">
-            Dieser Test ist zurzeit nicht verfügbar.
-        </div>
-    {{/correction_available}}
-  {{/available}}
-  
-
-
-  {{#exercises}}
-    {{^skip_entry}}
-      <ul class="exercise" id="exercise{{exercise_index}}">
-        <li>
-          <div class="exercisetitle">
-              <button name="exercisenav" class="exercisenavbutton exercisenavback" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}", "direction": "back" }'></button>
-              {{#i18n}}Frage{{/i18n}} {{exercise_index}} / {{number_of_exercises}}
-              <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}" , "direction": "next"}'></button>
-          </div>
-          <div class="cw-test-content">
-            {{#has_solution}}
-              {{#tryagain}}{{#tries_left}}
-                <div class="messagebox messagebox_error">
-                    {{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal. {{#tries_left}}Sie haben noch {{tries_left}} Versuch{{#tries_pl}}e{{/tries_pl}}.{{/tries_left}}{{/i18n}}
-                </div>
-                {{#corrector_comment}}
-                    <div class="messagebox messagebox_info answerinfo exercise-corrector-comment">
-                        {{corrector_comment}}
+{{#active}}{{#version}}
+    {{#description}}
+        <div class="description">{{{description}}}</div>
+    {{/description}}
+    {{#available}}
+        {{^correction_available}}
+            <div class="messagebox messagebox_info">{{#i18n}}Dieser Test ist zurzeit nicht verfügbar.{{/i18n}}</div>
+        {{/correction_available}}
+    {{/available}}
+    {{#exercises}}
+        {{^skip_entry}}
+            <ul class="exercise" id="exercise{{exercise_index}}">
+                <li>
+                    <div class="exercisetitle">
+                        <button name="exercisenav" class="exercisenavbutton exercisenavback" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}", "direction": "back" }'></button>
+                        {{#i18n}}Frage{{/i18n}} {{exercise_index}} / {{number_of_exercises}}
+                        <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}" , "direction": "next"}'></button>
                     </div>
-                {{/corrector_comment}}
-              {{/tries_left}}{{/tryagain}}
-              {{#correct}}
-                <div class="messagebox messagebox_success">
-                    {{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}
-                </div>
-              {{/correct}}
-              {{^correct}}
-                <div class="messagebox messagebox_error">
-                    {{#i18n}}Ihre Lösung ist nicht korrekt!{{/i18n}}
-                </div>
-              {{/correct}}
-              
-              {{^tryagain}}{{^correct}}{{^is_corrected}}
-                <div class="messagebox messagebox_info answerinfo">
-                    {{#i18n}}Für diese Frage haben Sie bereits eine Antwort abgegeben.{{/i18n}}
-                </div>
-              {{/is_corrected}}{{/correct}}{{/tryagain}}
-            {{/has_solution}}
-            {{^self_test}}
-              <div class="messagebox messagebox_info submitinfo" style="display: none;">
-                {{#i18n}}Ihre Lösung wurde eingetragen.{{/i18n}}
-              </div>
-            {{/self_test}}
-            {{#solved_completely}}
-              <div class="messagebox messagebox_success">
-                  {{#i18n}}Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
-              </div>
-          {{/solved_completely}}
-
-          {{^show_solution}}
-              
-              {{#self_test}}
-                {{> _question}}
-              {{/self_test}}
-              {{^self_test}}{{^is_corrected}}
-                {{> _question}}
-              {{/is_corrected}}{{/self_test}}
-              
-              {{#is_corrected}}{{^self_test}}
-                <div class="messagebox messagebox_info">
-                    {{#i18n}}Diese Aufgabe wurde bereits korrigiert.{{/i18n}}
-                </div>
-      
-              {{> _solution}}
-            {{/self_test}}{{/is_corrected}}
-          {{/show_solution}}
-
-          {{#show_solution}}
-            {{> _solution}}
-
-            {{#self_test}}
-              {{#solving_allowed}}
-                {{> _reset_exercise}}
-              {{/solving_allowed}}
-            {{/self_test}}
-          {{/show_solution}}
-
-          {{#exercise_hint}}
-             <div class="exercise-hint" style="display: none;" id="exercise-hint-{{exercise_index}}">
-               {{exercise_hint}}
-             </div>
-          {{/exercise_hint}}
-          {{#tryagain}}
-            {{#sample_solution}}{{^self_test}}
-                    <div class="exercise-sample-solution">
-                        <span>{{#i18n}}Musterlösung:{{/i18n}}</span>
-                        <p>{{sample_solution}}</p>
-                    </div>
-            {{/self_test}}{{/sample_solution}}
-          {{/tryagain}}
-          
-          </div>  
-        </li>
-      </ul>
-      {{/skip_entry}}
-      
-      {{#skip_entry}}
-      {{#correction_available}}
-         <ul class="exercise" id="exercise{{exercise_index}}">
-        <li>
-          <div class="exercisetitle">
-              <button name="exercisenav" class="exercisenavbutton exercisenavback" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}", "direction": "back" }'></button>
-              {{#i18n}}Frage{{/i18n}} {{exercise_index}} / {{number_of_exercises}}
-              <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}" , "direction": "next"}'></button>
-          </div>
-          <div class="cw-test-content">
-            {{#is_corrected}}
-              {{> _solution}}
-            {{/is_corrected}}
-            {{^is_corrected}}
-                <div class="messagebox messagebox_info">
-                    {{#i18n}}Diese Aufgabe wurde noch nicht korrigiert.{{/i18n}}
-                </div>
-            {{/is_corrected}}
-          </div>  
-        </li>
-      </ul>
-      {{/correction_available}}
-      {{/skip_entry}}
-  {{/exercises}}
-
-  {{^exercises}}
-    {{#typemismatch}}
-        <div class="messagebox messagebox_error">
-            {{#i18n}}Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten.{{/i18n}}
-        </div>
-    {{/typemismatch}}
-    {{^typemismatch}}
-        <div class="messagebox messagebox_info">
-            {{#i18n}}Keine Aufgaben.{{/i18n}}
-        </div>
-    {{/typemismatch}}
-  {{/exercises}}
-
-  {{^exercises_available}}{{^correction_available}}
-        <div class="messagebox messagebox_info">
-            {{#i18n}}Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen.{{/i18n}}
-        </div>
-  {{/correction_available}}{{/exercises_available}}
-  
- 
-  
+                    <div class="cw-test-content">
+                        {{#self_test}}
+                            {{#has_solution}}
+                                {{#tryagain}}{{#tries_left}}
+                                    <div class="messagebox messagebox_error">{{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal. {{#tries_left}}Sie haben noch {{tries_left}} Versuch{{#tries_pl}}e{{/tries_pl}}.{{/tries_left}}{{/i18n}}</div>
+                                    {{#corrector_comment}}
+                                        <div class="messagebox messagebox_info answerinfo exercise-corrector-comment">{{corrector_comment}}</div>
+                                    {{/corrector_comment}}
+                                {{/tries_left}}{{/tryagain}}
+                                {{#correct}}
+                                    <div class="messagebox messagebox_success">{{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}</div>
+                                {{/correct}}
+                                {{^correct}}
+                                    {{^tries_left}}
+                                        <div class="messagebox messagebox_error">{{#i18n}}Ihre Lösung ist nicht korrekt!{{/i18n}}</div>
+                                    {{/tries_left}}
+                                {{/correct}}
+                            {{/has_solution}}
+                        {{/self_test}}
+                        {{^self_test}}
+                            {{#has_solution}}
+                                <div class="messagebox messagebox_info answerinfo">{{#i18n}}Für diese Frage haben Sie bereits eine Antwort abgegeben.{{/i18n}}</div>
+                            {{/has_solution}}
+                                <div class="messagebox messagebox_info submitinfo" style="display: none;">{{#i18n}}Ihre Lösung wurde eingetragen.{{/i18n}}</div>
+                        {{/self_test}}
+                        {{#solved_completely}}
+                            <div class="messagebox messagebox_success">
+                                {{#isSequential}}
+                                    {{#i18n}}Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
+                                {{/isSequential}}
+                                {{^isSequential}}
+                                    {{#i18n}}Danke! Sie haben alle Aufgaben gelöst.{{/i18n}}
+                                {{/isSequential}}
+                            </div>
+                        {{/solved_completely}}
+                        {{^show_solution}}
+                            {{#self_test}}
+                                {{> _question}}
+                            {{/self_test}}
+                            {{^self_test}}
+                                {{^is_corrected}}
+                                    {{> _question}}
+                                {{/is_corrected}}
+                                {{#is_corrected}}
+                                    <div class="messagebox messagebox_info">{{#i18n}}Diese Aufgabe wurde bereits korrigiert.{{/i18n}}</div>
+                                    {{> _solution}}
+                                {{/is_corrected}}
+                            {{/self_test}}
+                        {{/show_solution}}
+                        {{#show_solution}}
+                            {{> _solution}}
+                            {{#self_test}}
+                                {{#solving_allowed}}
+                                    {{> _reset_exercise}}
+                                {{/solving_allowed}}
+                            {{/self_test}}
+                        {{/show_solution}}
+                        {{#exercise_hint}}
+                            <button class="button" name="exercise-hint-button" exercise-data="{{exercise_index}}">Hinweis anzeigen</button>
+                            <div class="exercise-hint" style="display: none;" id="exercise-hint-{{exercise_index}}">{{exercise_hint}}</div>
+                        {{/exercise_hint}}
+                        {{#tryagain}}
+                            {{#sample_solution}}{{^self_test}}
+                                <div class="exercise-sample-solution">
+                                    <span>{{#i18n}}Musterlösung:{{/i18n}}</span>
+                                    <p>{{sample_solution}}</p>
+                                </div>
+                            {{/self_test}}{{/sample_solution}}
+                        {{/tryagain}}
+                    </div>  
+                </li>
+            </ul>
+        {{/skip_entry}}
+        {{#skip_entry}}
+            {{#correction_available}}
+                <ul class="exercise" id="exercise{{exercise_index}}">
+                    <li>
+                        <div class="exercisetitle">
+                            <button name="exercisenav" class="exercisenavbutton exercisenavback" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}", "direction": "back" }'></button>
+                            {{#i18n}}Frage{{/i18n}} {{exercise_index}} / {{number_of_exercises}}
+                            <button name="exercisenav" class="exercisenavbutton exercisenavnext" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}" , "direction": "next"}'></button>
+                        </div>
+                        <div class="cw-test-content">
+                            {{#is_corrected}}
+                                {{> _solution}}
+                            {{/is_corrected}}
+                            {{^is_corrected}}
+                                <div class="messagebox messagebox_info">{{#i18n}}Diese Aufgabe wurde noch nicht korrigiert.{{/i18n}}</div>
+                            {{/is_corrected}}
+                        </div>  
+                    </li>
+                </ul>
+            {{/correction_available}}
+        {{/skip_entry}}
+    {{/exercises}}
+    {{^exercises}}
+        {{#typemismatch}}
+            <div class="messagebox messagebox_error"> {{#i18n}}Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten.{{/i18n}}</div>
+        {{/typemismatch}}
+        {{^typemismatch}}
+            <div class="messagebox messagebox_info">{{#i18n}}Keine Aufgaben.{{/i18n}}</div>
+        {{/typemismatch}}
+    {{/exercises}}
+    {{^exercises_available}}{{^correction_available}}
+        <div class="messagebox messagebox_info">{{#i18n}}Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen.{{/i18n}}</div>
+    {{/correction_available}}{{/exercises_available}}
+{{/version}}
+{{^version}}
+    <div class="messagebox messagebox_error">{{#i18n}}Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an Ihren Dozenten.{{/i18n}}</div>
+{{/version}}
 {{/active}}
-
 {{^active}}
-  {{> _vips_deactivated}}
+    {{> _vips_deactivated}}
 {{/active}}
+

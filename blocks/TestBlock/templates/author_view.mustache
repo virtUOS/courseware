@@ -1,25 +1,43 @@
-{{#active}}
-{{#unsupported_question}}
- <div class="messagebox messagebox_error">
-        {{#i18n}}Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!{{/i18n}}
-</div>
-{{/unsupported_question}}
- 
-    <label for="test_id">{{#i18n}}Aufgabenblatt{{/i18n}}:</label>
-    <select name="test_id">
-        {{#tests}}
-          <option value="{{id}}"{{#current_test}} selected="selected"{{/current_test}}>
-            {{name}} ({{#created}}{{#i18n}}erstellt am{{/i18n}} {{created}}, {{/created}}{{exercises_count}} {{#i18n}}Fragen{{/i18n}})
-          </option>
-        {{/tests}}
-    </select>
+{{#active}}{{#version}}
+    {{#unsupported_question}}
+        <div class="messagebox messagebox_error">
+            {{#i18n}}Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!{{/i18n}}
+        </div>
+    {{/unsupported_question}}
+    {{#has_tests}}
+        <label for="test_id">{{#i18n}}Aufgabenblatt{{/i18n}}:</label>
+        <select name="test_id">
+            {{#tests}}
+                  <option value="{{id}}"{{#current_test}} selected="selected"{{/current_test}}>
+                    {{name}} ({{#created}}{{#i18n}}erstellt am{{/i18n}} {{created}}, {{/created}}{{exercises_count}} {{#i18n}}Fragen{{/i18n}})
+                  </option>
+            {{/tests}}
+        </select>
+        <div class="cw-button-box">
+            <a href="{{manage_tests_url}}" class="button">{{#i18n}}Aufgabenblätter verwalten{{/i18n}}</a>
+            <button name="save" class="button">Speichern</button>
+            <button name="cancel" class="button">Abbrechen</button>
+        </div>
+    {{/has_tests}}
+    {{^has_tests}}
+        <div class="messagebox messagebox_error">
+            {{#i18n}}Es sind keine Aufgabenblätter des Types "{{type}}" vorhanden.{{/i18n}}
+        </div>
+    {{/has_tests}}
+{{/version}}
+{{^version}}
+    <div class="messagebox messagebox_error">{{#i18n}}Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an Ihren Administrator.{{/i18n}}</div>
     <div class="cw-button-box">
-        <a href="{{manage_tests_url}}" class="button">{{#i18n}}Aufgabenblätter verwalten{{/i18n}}</a>
-        <button name="save" class="button">Speichern</button>
+        <button name="cancel" class="button">Abbrechen</button>
+    </div>
+{{/version}}
+{{/active}}
+
+{{^active}}
+    {{> _vips_deactivated}}
+    <div class="cw-button-box">
         <button name="cancel" class="button">Abbrechen</button>
     </div>
 {{/active}}
 
-{{^active}}
-  {{> _vips_deactivated}}
-{{/active}}
+

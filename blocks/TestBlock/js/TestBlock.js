@@ -5,12 +5,10 @@ import AuthorView from './author_view'
 import '../css/test_block.less'
 
 export default block_types.add({
-  name: 'TestBlock',
-
-  content_block: true,
-
-  views: {
-    student: StudentView,
-    author: AuthorView
-  }
+    name: 'TestBlock',
+    content_block: true,
+    views: {
+        student: StudentView,
+        author: AuthorView
+    }
 });
