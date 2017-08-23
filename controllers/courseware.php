@@ -80,8 +80,10 @@ class CoursewareController extends CoursewareStudipController {
         $stmt->execute();
         $new_ones = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $this->new_ones = $new_ones;
-        
-        if(VipsBridge::vipsExists()) {
+
+        $plugin_manager = \PluginManager::getInstance();
+        $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
+        if($plugin_info) {
             // getting all tests
             $db = DBManager::get();
             $stmt = $db->prepare("
@@ -116,9 +118,9 @@ class CoursewareController extends CoursewareStudipController {
                     FROM
                         vips_exercise_ref
                     JOIN
-                        vips_aufgabe
+                        vips_exercise
                     ON
-                        vips_exercise_ref.exercise_id = vips_aufgabe.ID
+                        vips_exercise_ref.exercise_id = vips_exercise.ID
                     WHERE
                         vips_exercise_ref.test_id IN (".implode(', ', $test_ids).")
                     AND

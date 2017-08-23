@@ -140,7 +140,9 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $stmt->execute();
         $new_ones =  (int) $stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"];
 
-        if(VipsBridge::vipsExists()) {
+        $plugin_manager = \PluginManager::getInstance();
+        $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
+        if($plugin_info) {
             // getting all tests
             $db = DBManager::get();
             $stmt = $db->prepare("
@@ -175,9 +177,9 @@ class Courseware extends StudIPPlugin implements StandardPlugin
                     FROM
                         vips_exercise_ref
                     JOIN
-                        vips_aufgabe
+                        vips_exercise
                     ON
-                        vips_exercise_ref.exercise_id = vips_aufgabe.ID
+                        vips_exercise_ref.exercise_id = vips_exercise.ID
                     WHERE
                         vips_exercise_ref.test_id IN (".implode(', ', $test_ids).")
                     AND
