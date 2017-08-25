@@ -103,7 +103,9 @@ class GalleryBlock extends Block
 
     public function exportProperties()
     {
-       return $this->getAttrArray();
+       $folder_name = \DocumentFolder::find($this->gallery_folder_id)->name;
+
+       return array_merge($this->getAttrArray() , array( 'gallery_folder_name' =>$folder_name) );
     }
     
     public function getFiles()
@@ -145,7 +147,12 @@ class GalleryBlock extends Block
         if (isset ($properties['gallery_hidenav'])) {
             $this->gallery_hidenav = $properties['gallery_hidenav'];
         } 
-        $this->gallery_folder_id = $this->createGalleryFolder();
+        if (isset ($properties['gallery_folder_name'])) {
+            $gallery_folder_name = $properties['gallery_folder_name'];
+        } else {
+            $gallery_folder_name = "Galerie-".$this->id;
+        }
+        $this->gallery_folder_id = $this->createGalleryFolder($gallery_folder_name);
         $this->moveFiles();
         $files = $this->showFiles($this->gallery_folder_id );
         $file_ids = array();
@@ -156,12 +163,11 @@ class GalleryBlock extends Block
 
         $this->save();
     }
-    private function createGalleryFolder()
+    private function createGalleryFolder($gallery_folder_name)
     {
         $seminar_id = $this->container['cid'];
         $parent_id = md5( $seminar_id. 'top_folder');
         $description = "created by courseware";
-        $name = "Galerie";
         $permission = 7;
         global $user;
 
@@ -172,7 +178,7 @@ class GalleryBlock extends Block
                   VALUES (?, ?, ?, ?, ?, ?, ?, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())";
         $statement = \DBManager::get()->prepare($query);
         $statement->execute(array(
-            $name,
+            $gallery_folder_name,
             $id,
             $description,
             $parent_id,
