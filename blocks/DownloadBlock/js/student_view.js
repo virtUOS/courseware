@@ -26,6 +26,7 @@ export default StudentView.extend({
     this.model.set('download_title', this.$('input[name="download_title"]').val());
     this.model.set('download_info', this.$('input[name="download_info"]').val());
     this.model.set('download_success', this.$('input[name="download_success"]').val());
+    this.model.set('download_access', this.$('input[name="download_access"]').val());
 
     this.$el.html(templates('DownloadBlock', 'student_view', { ...this.model.attributes }));
     helper
