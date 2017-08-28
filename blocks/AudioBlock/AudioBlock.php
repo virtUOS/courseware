@@ -17,8 +17,8 @@ class AudioBlock extends Block
     }
 
     function student_view()
-    {   
-        return array_merge($this->getAttrArray(), array("audio_played"=> $this->getProgress()['grade']));
+    {   $access = \StudipDocument::find($this->audio_id)->checkAccess($this->container['current_user_id']);
+        return array_merge($this->getAttrArray(), array("audio_played"=> $this->getProgress()['grade'], "audio_access" => $access));
     }
 
     function author_view()

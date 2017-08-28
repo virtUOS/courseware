@@ -93,8 +93,10 @@ class GalleryBlock extends Block
         foreach ($response as $item) {
             if(in_array(substr($item["name"], -3), $mimetypes))
             {
-                $item["url"] = GetDownloadLink($item['dokument_id'], $item['filename']);
-                $filesarray[] = $item;
+                if (\StudipDocument::find($item['dokument_id'])->checkAccess($this->container['current_user_id'])) {
+                    $item["url"] = GetDownloadLink($item['dokument_id'], $item['filename']);
+                    $filesarray[] = $item;
+                }
             }
         }
         

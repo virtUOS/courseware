@@ -19,14 +19,21 @@
     {{/download_info}}
 {{/confirmed}}
 {{#file}}
-<div class="download-file">
-    <div class="cw-download-info" > &nbsp; {{file}} &nbsp; <span>{{file_name}}</span></div>
-     <div class="cw-download-button-wrapper">
-        <a href="../../sendfile.php?force_download=1&type=0&file_id={{file_id}}&file_name={{file_name}}" target="_blank"> 
-            <button name="download" class="cw-download-button" style="display: inline-block;">download</button>
-        </a> 
-    </div>
-</div>
+    {{#download_access}}
+        <div class="download-file">
+            <div class="cw-download-info" > &nbsp; {{file}} &nbsp; <span>{{file_name}}</span></div>
+             <div class="cw-download-button-wrapper">
+                <a href="../../sendfile.php?force_download=1&type=0&file_id={{file_id}}&file_name={{file_name}}" target="_blank"> 
+                    <button name="download" class="cw-download-button" style="display: inline-block;">download</button>
+                </a> 
+            </div>
+        </div>
+    {{/download_access}}
+    {{^download_access}}
+        <div class="messagebox messagebox_info">
+            {{#i18n}}Wegen des gewählten Lizenzstatus können Sie diese Datei nicht herunterladen.{{/i18n}}
+        </div>
+    {{/download_access}}
 {{/file}}
 {{^file}}{{#i18n}}Es wurde keine Datei ausw&auml;hlt{{/i18n}}{{/file}}
 <input type="hidden" name="file" value="{{file}}" />

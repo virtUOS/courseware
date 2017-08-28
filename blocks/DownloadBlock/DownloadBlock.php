@@ -20,7 +20,8 @@ class DownloadBlock extends Block
 
     function student_view()
     {
-        return array_merge($this->getAttrArray(), ['confirmed' => !! $this->getProgress()->grade]);
+        $access = \StudipDocument::find($this->file_id)->checkAccess($this->container['current_user_id']);
+        return array_merge($this->getAttrArray(), array('confirmed' => !! $this->getProgress()->grade, "download_access" => $access));
     }
 
     function author_view()
