@@ -220,16 +220,24 @@ class TestBlock extends Block
 
     private function vipsActivated() 
     {
-        $plugin_manager = \PluginManager::getInstance();
-        $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
-        return $plugin_manager->isPluginActivated($plugin_info['id'], $this->getModel()->seminar_id);
+        if ($this->vipsInstalled()) {
+            $plugin_manager = \PluginManager::getInstance();
+            $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
+            return $plugin_manager->isPluginActivated($plugin_info['id'], $this->getModel()->seminar_id);
+        } else {
+            return false;
+        }
     }
 
     private function vipsVersion()
     {
-        $plugin_manager = \PluginManager::getInstance();
-        $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())["version"];
-        return version_compare("1.3",$version) <= 0;
+        if ($this->vipsInstalled()) {
+            $plugin_manager = \PluginManager::getInstance();
+            $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())["version"];
+            return version_compare("1.3",$version) <= 0;
+        } else {
+            return false;
+        }
     }
 
     private function vipsInstalled()
