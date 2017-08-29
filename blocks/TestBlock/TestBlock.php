@@ -27,11 +27,14 @@ class TestBlock extends Block
 
     function student_view()
     {   
+        if (!$installed = $this->vipsInstalled()) {
+            return compact('installed');
+        }
         if (!$active = $this->vipsActivated()) {
-            return compact('active');
+            return array('active' => $active, 'installed'=> $installed);
         }
         if (!$version = $this->vipsVersion()) {
-            return array('active' => $active, 'version' => $version);
+            return array('active' => $active, 'version'=> $version, 'installed'=> $installed);
         }
         $this->calcGrades();
         $subtype =  $this->_model->sub_type;
@@ -42,7 +45,8 @@ class TestBlock extends Block
                 'exercises'     => false,
                 'typemismatch'  => false,
                 'active'        => $active, 
-                'version'       => $version
+                'version'       => $version,
+                'installed'     => $installed
             );
         }
         if ($type_mismatch) {
@@ -50,21 +54,25 @@ class TestBlock extends Block
                 'exercises'     => false,
                 'typemismatch'  => true,
                 'active'        => $active, 
-                'version'       => $version
+                'version'       => $version,
+                'installed'     => $installed
             );
         }
-        
-        return array_merge($this->getAttrArray(), array('active' => $active, 'version' => $version), $this->buildExercises());
+
+        return array_merge($this->getAttrArray(), array('active' => $active, 'version' => $version, 'installed' => $installed), $this->buildExercises());
     }
 
     function author_view()
     {
         $this->authorizeUpdate();
+        if (!$installed = $this->vipsInstalled()) {
+            return compact('installed');
+        }
         if (!$active = $this->vipsActivated()) {
-            return compact('active');
+            return array('active' => $active, 'installed'=> $installed);
         }
         if (!$version = $this->vipsVersion()) {
-            return array('active' => $active, 'version'=> $version);
+            return array('active' => $active, 'version'=> $version, 'installed'=> $installed);
         }
         $subtype =  $this->_model->sub_type;
         $stored_assignments = \VipsAssignment::findBySQL( 'course_id = ? and type = ?', array($this->_model->course->id, $subtype));
@@ -77,17 +85,18 @@ class TestBlock extends Block
                 'name'            => $test->title,
                 'created'         => isset($test->created) ? date('d.m.Y', strtotime($test->created)) : '',
                 'exercises_count' => count($test->exercises),
-                'current_test'    => $this->test_id === $test->id,
+                'current_test'    => $this->test_id === $test->id
             );
             
         }
         return array_merge($this->getAttrArray(), array( 
-            'has_tests' => !empty($tests),
-            'type' => $this->getSubTypes()[$subtype],
-            'tests' => $tests, 
-            'active' => $active, 
-            'version' => $version, 
-            'manage_tests_url' => \PluginEngine::getURL('VipsPlugin', array('action' => 'sheets'), 'show')
+            'has_tests'         => !empty($tests),
+            'type'              => $this->getSubTypes()[$subtype],
+            'tests'             => $tests, 
+            'active'            => $active, 
+            'version'           => $version,
+            'installed'         => $installed,
+            'manage_tests_url'  => \PluginEngine::getURL('VipsPlugin', array('action' => 'sheets'), 'show')
             ));
     }
 
@@ -215,13 +224,18 @@ class TestBlock extends Block
         $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
         return $plugin_manager->isPluginActivated($plugin_info['id'], $this->getModel()->seminar_id);
     }
-    
+
     private function vipsVersion()
     {
         $plugin_manager = \PluginManager::getInstance();
         $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())["version"];
-
         return version_compare("1.3",$version) <= 0;
+    }
+
+    private function vipsInstalled()
+    {
+        $plugin_manager = \PluginManager::getInstance();
+        return $plugin_manager->getPlugin('VipsPlugin') != null ? true : false;
     }
 
     private function buildExercises()
