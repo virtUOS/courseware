@@ -1,18 +1,18 @@
 <input type="hidden" class="assorttype-selection-assort" name="assorttype-selection-assort" value="{{assorttype}}">
 <input type="hidden" class="assortblocks-selection-assort" name="assortblocks-selection-assort" value="{{assortblocks}}">
-<div id="assorttypeselectors">
+<div class="assorttypeselectors">
     <label>{{#i18n}}Accordion{{/i18n}}
     <input type="radio"  name="assorttype" value="accordion" checked></label>
     <label>{{#i18n}}Tabs{{/i18n}}
     <input type="radio"  name="assorttype" value="tabs"></label>
 </div>
 
-<ul id="assortblock-list">
+<ul class="assortblock-list">
 {{#blocks}}
     <li>
         <label>
         <input type="checkbox" name="assortblocks" value="{{blockid}}">
-        {{#i18n}}Block:{{/i18n}} {{blockid}}</label>
+        {{#i18n}}Block:{{/i18n}} {{blockid}} ({{blocktype}})</label>
         <input type="text" id="blockname-{{blockid}}" name="assortblockname" size="20" placeholder="Titel">
         
     </li>

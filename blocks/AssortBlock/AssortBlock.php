@@ -51,8 +51,8 @@ class AssortBlock extends Block
         
         foreach($children as $child)
         {
-            if (!in_array($child["type"], array("AssortBlock", "TestBlock", "AudioBlock"))){
-                $blocks[] = array('blockid' =>$child["id"]);
+            if (!in_array($child["type"], array("AssortBlock", "TestBlock", "AudioBlock", "GalleryBlock"))){
+                $blocks[] = array('blockid' =>$child->id, 'blocktype'=> $child->type);
             }
             
         }
@@ -80,9 +80,15 @@ class AssortBlock extends Block
                 
             case "DownloadBlock":
                 $name = 'file_id';
+                break;
                 
             case "ForumBlock":
                 $name = 'area_id';
+                break;
+                
+            case "KeyPointBlock":
+                $name = 'keypoint_content';
+                break;
         }
         
         $field = current(\Mooc\DB\Field::findBySQL('user_id = "" AND name = ? AND block_id = ?', array($name , $block->id)));

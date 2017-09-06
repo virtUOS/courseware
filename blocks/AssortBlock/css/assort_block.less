@@ -1,7 +1,7 @@
 @import '../../../assets/less/mixins';
 /* author mode */
 .AssortBlock {
-    #assorttypeselectors {
+    .assorttypeselectors {
         margin-left: 5px;
         margin-bottom: 16px;
         input[type="radio"]{
@@ -12,13 +12,16 @@
             
         }
     }
-    #assortblock-list{
+    .assortblock-list{
         padding-left: 0;
         
         li {
             list-style: none;
             margin-bottom: 5px;
             
+            label {
+                min-width: 16em !important;
+            }
             input[type="text"] {
                 margin-left: 16px;
             }
