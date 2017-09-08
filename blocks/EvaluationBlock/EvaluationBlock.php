@@ -2,6 +2,7 @@
 namespace Mooc\UI\EvaluationBlock;
 
 use Mooc\UI\Block;
+use Mooc\UI\Section\Section;
 
 
 /**
@@ -43,7 +44,7 @@ class EvaluationBlock extends Block
     /**
      * {@inheritdoc}
      */
-    public static function additionalInstanceAllowed()
+    public static function additionalInstanceAllowed($container, Section $section, $subType = null)
     {
         return self::evaluationActivated();
     }

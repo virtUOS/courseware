@@ -4,6 +4,7 @@ namespace Mooc\UI;
 use Courseware\Container;
 use Mooc\DB\Field;
 use Mooc\DB\UserProgress;
+use Mooc\UI\Section\Section;
 
 /**
  * Objects of this class represent a UI component bundling model, view
@@ -424,7 +425,7 @@ abstract class Block {
      *
      * @return bool True if a new block instance is allowed, false otherwise
      */
-    public static function additionalInstanceAllowed()
+    public static function additionalInstanceAllowed($container, Section $section, $subType = null)
     {
         return true;
     }
