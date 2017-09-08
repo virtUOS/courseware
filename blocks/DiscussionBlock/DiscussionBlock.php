@@ -3,6 +3,7 @@
 namespace Mooc\UI\DiscussionBlock;
 
 use Mooc\UI\Block;
+use Mooc\UI\Section\Section;
 
 /**
  */
@@ -10,7 +11,7 @@ class DiscussionBlock extends Block
 {
     const NAME = 'Diskussion';
 
-    public static function additionalInstanceAllowed($container)
+    public static function additionalInstanceAllowed($container, Section $section, $subType = null)
     {
         return $container['current_courseware']->getDiscussionBlockActivation();
     }

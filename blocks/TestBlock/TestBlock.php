@@ -701,7 +701,7 @@ class TestBlock extends Block
                     'user_answers_string' => join(',' , $exercise->getAnswersStrategy()->getUserAnswers($exercise->getVipsSolutionFor($this->test, $user))),
                     'correct' => $correct,
                     'tryagain' => $tryagain,
-                    'character_picker' => $exercise->getVipsExercise()->characterPicker,
+                    //'character_picker' => $exercise->getVipsExercise()->characterPicker,
                     'exercise_hint' => $exercise->getVipsExercise()->getHint()
                 );
                 $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
