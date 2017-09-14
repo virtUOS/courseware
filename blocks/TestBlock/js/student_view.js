@@ -60,8 +60,6 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     $exercise_index = $form.find("input[name='exercise_index']").val(),
                     $block = this.$el.parent();
 
-
-
                 helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
                     .then(
                         function () {
@@ -75,6 +73,8 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                         $block.find('.exercise').hide();
                         view.postRenderExercise($block.find('#exercise' + $exercise_index).show());
                         $block.find(".submitinfo").slideDown(250).delay(1500).slideUp(250);
+                        location.reload();
+                        
                     })
                     .done();
 
