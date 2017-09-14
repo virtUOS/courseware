@@ -24,7 +24,7 @@ $titleize = function ($content) {
       <th colspan=2>
         <?= $titleize(htmlReady($chapter['title'])) ?>
         <? if (sizeof($chapter['children'])) : ?>
-          <span class=progress><?= $progress($chapter, "%") ?></span>
+          <span class=progress>:&nbsp;&nbsp; <?= $progress($chapter, "%") ?></span>
         <? endif ?>
       </th>
     </tr>
@@ -34,7 +34,7 @@ $titleize = function ($content) {
         <th>
           <?= $titleize(htmlReady($subchapter['title'])) ?>
           <? if (sizeof($subchapter['children'])) : ?>
-            <span class=progress><?= $progress($subchapter, "%") ?></span>
+            <span class=progress>:&nbsp;&nbsp; <?= $progress($subchapter, "%") ?></span>
           <? endif ?>
         </th>
         <td>
