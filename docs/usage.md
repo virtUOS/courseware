@@ -8,7 +8,7 @@ und wechseln Sie in den Reiter "Courseware".
 
 Direkt nach der Aktivierung enthält Courseware bereits die grundlegenden 
 [Strunkturelemente](structure.md). Zu Beginn befindet man sich in der Studentenansicht. 
-Mit einem Klick auf der Doctoral-Cap-Icon wird der Autorenmodus aktiviert. 
+Mit einem Klick auf das Doctoral-Cap-Icon wird der Autorenmodus aktiviert. 
 
 ![Autorenansicht](img/start_edit.png)
 
