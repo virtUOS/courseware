@@ -30,6 +30,9 @@
         {{^active_chapter.aside_section}}
           <button class=activate-aside-section>{{#i18n}}Seitenblöcke aktivieren{{/i18n}}</button>
         {{/active_chapter.aside_section}}
+        {{#active_chapter.aside_section}}
+            <button class=deactivate-aside-section data-type=Chapter>{{#i18n}}Seitenblöcke entfernen{{/i18n}}</button>
+        {{/active_chapter.aside_section}}
 
         <a class="button export" href="{{#plugin_url}}export{{/plugin_url}}">
           {{#i18n}}Export{{/i18n}}

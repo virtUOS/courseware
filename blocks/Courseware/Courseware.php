@@ -195,6 +195,7 @@ class Courseware extends Block {
 
         return array('status' => 'ok');
     }
+
     /**
      * {@inheritdoc}
      */

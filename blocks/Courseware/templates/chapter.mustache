@@ -22,6 +22,9 @@
         {{^active_subchapter.aside_section}}
           <button class=activate-aside-section>{{#i18n}}Seitenblöcke aktivieren{{/i18n}}</button>
         {{/active_subchapter.aside_section}}
+        {{#active_subchapter.aside_section}}
+          <button class=deactivate-aside-section data-type=Subchapter>{{#i18n}}Seitenblöcke entfernen{{/i18n}}</button>
+        {{/active_subchapter.aside_section}}
       </li>
       <div class="clear"></div>
     </ol>

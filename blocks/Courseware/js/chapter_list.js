@@ -26,7 +26,8 @@ export default Backbone.View.extend({
     'click .stop-sort-chapter': 'stopSorting',
     'click .stop-sort-subchapter': 'stopSorting',
 
-    'click .activate-aside-section': 'activateAsideSection'
+    'click .activate-aside-section': 'activateAsideSection',
+    'click .deactivate-aside-section': 'deactivateAsideSection'
   },
 
   initialize() {
@@ -316,5 +317,39 @@ export default Backbone.View.extend({
         alert(errorMessage);
         console.log(errorMessage, arguments);
       });
+  },
+  
+  deactivateAsideSection(event) {
+    var $button = jQuery(event.target);
+    var model = "", $parent = "";
+    var view = this;
+    $.each($button.closest('ol.chapters').siblings('.aside-section'), function(index, value){
+        if ($(value).data('parenttype') == $button.data('type')) {
+            $parent  = $(value);
+            model = view._modelFromElement($parent);
+        }
+    });
+
+    if (model.isNew()) {
+      return;
+    }
+    if (confirm(i18n('Wollen Sie wirklich löschen? Sämtliche enthaltenen Blöcke werden unwiderruflich entfernt!'))) {
+        $parent.addClass('loading');
+        model.destroy({ 
+            dataType: "text", 
+            success: function(model, response) {
+                        console.log("success");
+                        helper.reload();
+            },
+            error: function(model, response) {
+                var errorMessage = 'Could not delete the chapter: ' + jQuery.parseJSON(response);
+                alert(errorMessage);
+                console.log(response);
+                $parent.removeClass('loading');
+            }
+      });
+    }
+
   }
+  
 });
