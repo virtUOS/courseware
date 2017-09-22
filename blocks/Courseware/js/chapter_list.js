@@ -103,7 +103,7 @@ export default Backbone.View.extend({
     var titles = {
       chapter:    i18n('Neues Kapitel'),
       subchapter: i18n('Neues Unterkapitel'),
-      section:    i18n('Neue Section')
+      section:    i18n('Neuer Abschnitt')
     };
 
     var visible_since_title = i18n('Sichtbar ab');
