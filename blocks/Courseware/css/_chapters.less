@@ -210,6 +210,24 @@ ol.subchapters {
         &:hover {
             background-color: #eee;
         }
+        
+        &.no-content {
+            display: none;
+        }
+        &.controls,
+        &.addStructure {
+            border-bottom: none;
+            padding-left: 0;
+        }
+        
+        &.controls:hover ,
+        &.addStructure:hover {
+            background-color: #fff;
+        }
+        
+        button {
+            line-height: 15px;
+        }
     }
   }
 }
@@ -220,7 +238,8 @@ ol.subchapters {
 // ***** EDITING SUB/CHAPTERS *****
 
 .chapters > li > .edit-structure,
-.subchapters > li > .edit-structure {
+.subchapters > li > .edit-structure,
+.chapters > .selected > .subchapters > .selected > .sections > li > .edit-structure {
   position: relative;
 
   input {

@@ -2,7 +2,8 @@
 
 .chapters > .controls > button,
 .chapters > .chapter > .subchapters > .controls > button,
-.active-subchapter > .controls > button {
+.active-subchapter > .controls > button,
+.chapters > .selected > .subchapters > .selected > .sections > .controls > button{ 
   .courseware-btn;
   margin: 4px 0px 0px;
   width: 90%;
@@ -76,4 +77,8 @@ a {
     background-image: none;
     background-color: #e9e9e9;
   }
+}
+
+.chapters > .selected > .subchapters > .selected > .sections > li > .edit-structure > form >.hasDatepicker {
+    display: none;
 }

@@ -13,6 +13,7 @@ export default Backbone.View.extend({
   events: {
     'click .add-chapter': 'addStructure',
     'click .add-subchapter': 'addStructure',
+    'click .add-section': 'addStructure',
 
     'click .chapter    > .title .edit': 'editStructure',
     'click .subchapter > .title .edit': 'editStructure',
@@ -52,7 +53,7 @@ export default Backbone.View.extend({
     var model = this._newBlockFromButton($button),
         view = new EditView({ model }),
         insert_point = $button.closest('.controls').prev('.no-content'),
-        tag = '<' + insert_point[0].tagName + '/>',
+        tag = '<' + insert_point[0].tagName + ' class="addStructure"/>',
         li_wrapper = view.$el.wrap(tag).parent(),
         courseware = this,
         placeholder_item;
@@ -95,24 +96,38 @@ export default Backbone.View.extend({
       type = 'chapter';
     } else if ($button.hasClass('add-subchapter')) {
       type = 'subchapter';
+    } else if($button.hasClass('add-section')) {
+      type = 'section';
     }
 
     var titles = {
       chapter:    i18n('Neues Kapitel'),
-      subchapter: i18n('Neues Unterkapitel')
+      subchapter: i18n('Neues Unterkapitel'),
+      section:    i18n('Neue Section')
     };
 
     var visible_since_title = i18n('Sichtbar ab');
-
-    return new BlockModel({ title: titles[type], type: type, visible_since_title: visible_since_title });
+    if (type != 'section') {
+        return new BlockModel({ title: titles[type], type: type, visible_since_title: visible_since_title });
+    } else if (type == 'section') {
+        return new BlockModel({ title: titles[type], type: type });
+    }
   },
 
   _addStructure(parent_id, model) {
-    var data = {
-      parent: parent_id,
-      title:  model.get('title'),
-      publication_date: model.get('publication_date')
-    };
+      
+    if (model.attributes.type !='section') {
+        var data = {
+          parent: parent_id,
+          title:  model.get('title'),
+          publication_date: model.get('publication_date')
+        };
+    } else if (model.attributes.type =='section') {
+        var data = {
+          parent: parent_id,
+          title:  model.get('title'),
+        };
+    } 
     return helper.callHandler(this.model.id, 'add_structure', data);
   },
 
