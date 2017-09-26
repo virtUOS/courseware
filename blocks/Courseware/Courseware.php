@@ -48,14 +48,16 @@ class Courseware extends Block
 
     public function student_view($context = array())
     {
+        $lastSelected = $this->getSelected($context);
+
         if (!$this->getCurrentUser()->isNobody()) {
-            $this->lastSelected = $this->getSelected($context);
+            $this->lastSelected = $lastSelected;
         }
 
         /** @var \Mooc\DB\Block $courseware */
         /** @var \Mooc\DB\Block $chapter */
         /** @var \Mooc\DB\Block $subchapter */
-        $tree = $this->getPrunedChapterNodes(list($courseware, $chapter, $subchapter, $section) = $this->getSelectedPath($this->lastSelected));
+        $tree = $this->getPrunedChapterNodes(list($courseware, $chapter, $subchapter, $section) = $this->getSelectedPath($lastSelected));
 
         $active_section = array();
         if ($section && $this->getCurrentUser()->canRead($section)) {
