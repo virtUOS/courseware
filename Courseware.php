@@ -6,14 +6,14 @@ use Courseware\Container;
 use Mooc\DB\CoursewareFactory;
 use Mooc\UI\BlockFactory;
 use Courseware\User;
-use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
 
-function _cw($message) {
+function _cw($message)
+{
     return dgettext('courseware', $message);
 }
 
 /**
- * MoocIP.class.php
+ * MoocIP.class.php.
  *
  * ...
  *
@@ -28,7 +28,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin
      */
     private $container;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->setupAutoload();
@@ -36,15 +37,14 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         // more setup if this plugin is active in this course
         if ($this->isActivated($this->container['cid'])) {
-
             // markup for link element to courseware
-            StudipFormat::addStudipMarkup('courseware', '\[(mooc-forumblock):([0-9]{1,32})\]', NULL, 'Courseware::markupForumLink');
+            StudipFormat::addStudipMarkup('courseware', '\[(mooc-forumblock):([0-9]{1,32})\]', null, 'Courseware::markupForumLink');
 
             $this->setupNavigation();
         }
 
         // set text-domain for translations in this plugin
-        bindtextdomain('courseware', dirname(__FILE__) . '/locale');
+        bindtextdomain('courseware', dirname(__FILE__).'/locale');
     }
 
     public function getPluginname()
@@ -53,54 +53,52 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     }
 
     // bei Aufruf des Plugins über plugin.php/mooc/...
-    public function initialize ()
+    public function initialize()
     {
         //PageLayout::setTitle($_SESSION['SessSemName']['header_line'] . ' - ' . $this->getPluginname());
         // setTitle -> courseware_controller.php
-        PageLayout::setHelpKeyword("MoocIP.Courseware"); // Hilfeseite im Hilfewiki
+        PageLayout::setHelpKeyword('MoocIP.Courseware'); // Hilfeseite im Hilfewiki
         $this->getHelpbarContent();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getTabNavigation($course_id)
+    public function getTabNavigation($courseId)
     {
-        $cid = $course_id;
+        $cid = $courseId;
         $tabs = array();
 
         $courseware = $this->container['current_courseware'];
 
-        $navigation = new Navigation($courseware->title,
-                                     PluginEngine::getURL($this, compact('cid'), 'courseware', true));
+        $navigation = new Navigation(
+            $courseware->title,
+            PluginEngine::getURL($this, compact('cid'), 'courseware', true)
+        );
         $navigation->setImage(Icon::create('group3', 'info_alt'));
         $navigation->setActiveImage(Icon::create('group3', 'info'));
         $tabs['mooc_courseware'] = $navigation;
 
-        $navigation->addSubnavigation('index',    clone $navigation);
+        $navigation->addSubnavigation('index', clone $navigation);
 
-        $navigation->addSubnavigation('news', 
-            new Navigation(_cw("Letzte Änderungen"),
-            PluginEngine::getURL($this, compact('cid'), 'courseware/news', true)));
+        $navigation->addSubnavigation(
+            'news',
+            new Navigation(
+                _cw('Letzte Änderungen'),
+                PluginEngine::getURL($this, compact('cid'), 'courseware/news', true)
+            )
+        );
 
+        if ($this->container['current_user']->hasPerm($courseId, 'tutor')) {
+            $tabs = $this->getTabNavigationForLecturers($tabs, $cid);
 
-        // tabs for students
-        if (!$this->container['current_user']->hasPerm($course_id, 'tutor')) {
-            $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
-            $tabs['mooc_progress'] = new Navigation(_cw('Fortschrittsübersicht'), $progress_url);
-            $tabs['mooc_progress']->setImage(Icon::create('assessment', 'info_alt'));
-            $tabs['mooc_progress']->setActiveImage(Icon::create('assessment', 'info'));
-        }
-        // tabs for tutors and up
-        else {
-            $navigation->addSubnavigation('settings',
-                new Navigation(_cw("Einstellungen"),
-                PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true)));
-            //Comprehensive progress overview
-            $cpo_url = PluginEngine::getURL($this, compact('cid'), 'cpo', true);
-            $tabs['mooc_cpo'] = new Navigation(_cw('Fortschrittsübersicht'), $cpo_url);
-            $tabs['mooc_cpo']->setImage(Icon::create('assessment', 'info_alt'));
-            $tabs['mooc_cpo']->setActiveImage(Icon::create('assessment', 'info'));
+            $settingsUrl = PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true);
+            $navigation->addSubnavigation(
+                'settings',
+                new Navigation(_cw('Einstellungen'), $settingsUrl)
+            );
+        } else {
+            $tabs = $this->getTabNavigationForStudents($tabs, $cid);
         }
 
         return $tabs;
@@ -109,7 +107,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     /**
      * {@inheritdoc}
      */
-    public function getNotificationObjects($course_id, $since, $user_id)
+    public function getNotificationObjects($courseId, $since, $user_id)
     {
         return array();
     }
@@ -117,15 +115,19 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     /**
      * {@inheritdoc}
      */
-    public function getIconNavigation($course_id, $last_visit, $user_id)
+    public function getIconNavigation($courseId, $last_visit, $user_id)
     {
         if (!$user_id) {
             $user_id = $GLOBALS['user']->id;
         }
-        $icon = new AutoNavigation($this->getDisplayTitle(), PluginEngine::getURL($this, compact('cid'), 'courseware/news', true));
-        
+        $icon = new AutoNavigation(
+            $this->getDisplayTitle(),
+            PluginEngine::getURL($this, array('cid' => $courseId), 'courseware/news', true)
+        );
+
         $db = DBManager::get();
-        $stmt = $db->prepare("
+
+        $stmt = $db->prepare('
             SELECT
                 COUNT(*)
             FROM
@@ -134,44 +136,43 @@ class Courseware extends StudIPPlugin implements StandardPlugin
                 seminar_id = :cid
             AND
                 chdate >= :last_visit
-        ");
-        $stmt->bindParam(":cid", $course_id);
-        $stmt->bindParam(":last_visit", $last_visit);
+        ');
+        $stmt->bindParam(':cid', $courseId);
+        $stmt->bindParam(':last_visit', $last_visit);
         $stmt->execute();
-        $new_ones =  (int) $stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"];
+        $new_ones = (int) $stmt->fetch(PDO::FETCH_ASSOC)['COUNT(*)'];
 
         $plugin_manager = \PluginManager::getInstance();
         $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
-        if($plugin_info) {
+        if ($plugin_info) {
             // getting all tests
-            $db = DBManager::get();
             $stmt = $db->prepare("
-                SELECT 
-                    json_data 
-                FROM 
+                SELECT
+                    json_data
+                FROM
                     mooc_blocks
-                JOIN 
-                    mooc_fields 
-                ON 
-                    mooc_blocks.id = mooc_fields.block_id 
-                WHERE 
+                JOIN
+                    mooc_fields
+                ON
+                    mooc_blocks.id = mooc_fields.block_id
+                WHERE
                     mooc_blocks.type = 'TestBlock'
                 AND
                     mooc_blocks.seminar_id = :cid
-                AND 
-                    mooc_fields.name = 'test_id' 
+                AND
+                    mooc_fields.name = 'test_id'
             ");
-            $stmt->bindParam(":cid", $course_id);
+            $stmt->bindParam(':cid', $courseId);
             $stmt->execute();
-            
-            $tests =  $stmt->fetch(PDO::FETCH_ASSOC);
-            if($tests) {
+
+            $tests = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($tests) {
                 $test_ids = array();
-                foreach ($tests as $key=>$value){
-                        array_push($test_ids, (int) str_replace('"', '', $value));
+                foreach ($tests as $key => $value) {
+                    array_push($test_ids, (int) str_replace('"', '', $value));
                 }
                 //looking for new tests
-                $stmt = $db->prepare("
+                $stmt = $db->prepare('
                     SELECT
                         COUNT(*)
                     FROM
@@ -181,36 +182,35 @@ class Courseware extends StudIPPlugin implements StandardPlugin
                     ON
                         vips_exercise_ref.exercise_id = vips_exercise.ID
                     WHERE
-                        vips_exercise_ref.test_id IN (".implode(', ', $test_ids).")
+                        vips_exercise_ref.test_id IN ('.implode(', ', $test_ids).')
                     AND
                         unix_timestamp(created) >=  :last_visit
-                ");
-                $stmt->bindParam(":last_visit", $last_visit);
+                ');
+                $stmt->bindParam(':last_visit', $last_visit);
                 $stmt->execute();
-                $new_ones +=  (int) $stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"];
+                $new_ones += (int) $stmt->fetch(PDO::FETCH_ASSOC)['COUNT(*)'];
             }
         }
         if ($new_ones) {
-            $title = $new_ones > 1 ? sprintf(_("%s neue Courseware-Inhalte"), $new_ones) : _("1 neuer Courseware-Inhalt");
-            $icon->setImage(Icon::create('group3', 'attention', ["title" => $title]));
+            $title = $new_ones > 1 ? sprintf(_('%s neue Courseware-Inhalte'), $new_ones) : _('1 neuer Courseware-Inhalt');
+            $icon->setImage(Icon::create('group3', 'attention', ['title' => $title]));
             $icon->setBadgeNumber($new_ones);
         } else {
-            $icon->setImage(Icon::create('group3', 'inactive', ["title" => "Courseware"]));
+            $icon->setImage(Icon::create('group3', 'inactive', ['title' => 'Courseware']));
         }
+
         return $icon;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getInfoTemplate($course_id)
+    public function getInfoTemplate($courseId)
     {
         return null;
     }
 
-
-
-    public function perform($unconsumed_path)
+    public function perform($unconsumedPath)
     {
         if (!$this->isActivated($this->container['cid'])) {
             throw new AccessDeniedException('plugin not activated for this course!');
@@ -222,15 +222,15 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         // load i18n only if plugin is un use
         PageLayout::addHeadElement('script', array(),
-            "String.toLocaleString('".PluginEngine::getLink($this, array('cid' => null), "localization") ."');");
+            "String.toLocaleString('".PluginEngine::getLink($this, array('cid' => null), 'localization')."');");
 
         $dispatcher = new Trails_Dispatcher(
             $this->getPluginPath(),
             rtrim(PluginEngine::getLink($this, array(), null), '/'),
-            NULL
+            null
         );
         $dispatcher->plugin = $this;
-        $dispatcher->dispatch($unconsumed_path);
+        $dispatcher->dispatch($unconsumedPath);
     }
 
     /**
@@ -289,18 +289,20 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         return $this->container;
     }
 
-    static function onEnable($id)
+    public static function onEnable($id)
     {
-        $db = DBManager::get();
+        $dbm = DBManager::get();
 
         // find plugin activations of old Mooc.IP plugin and duplicate them for the new courseware plugin
-        $plugin_id     = (int)$db->query("SELECT pluginid FROM plugins
-            WHERE pluginclassname = 'Mooc'")->fetchColumn();
+        $pluginId = (int) $dbm->query("SELECT pluginid FROM plugins WHERE pluginclassname = 'Mooc'")->fetchColumn();
 
-        if ($plugin_id) {
-            $db->exec("INSERT INTO plugins_activated
-                SELECT $id as pluginid, poiid, state FROM plugins_activated WHERE pluginid = $plugin_id");
+        if ($pluginId) {
+            $dbm->exec("INSERT INTO plugins_activated
+                SELECT $id as pluginid, poiid, state FROM plugins_activated WHERE pluginid = $pluginId");
         }
+
+        // enable nobody role by default
+        RolePersistence::assignPluginRoles($id, array(7));
     }
 
     /**********************************************************************/
@@ -312,17 +314,16 @@ class Courseware extends StudIPPlugin implements StandardPlugin
      */
     protected function getHelpbarContent()
     {
-
-        $can_edit = $GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid']);
+        $can_edit = $GLOBALS['perm']->have_studip_perm('tutor', $this->container['cid']);
 
         if ($can_edit) {
-            $description = _cw("Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. Schalten Sie zwischen Teilnehmenden-Sicht und Editier-Modus um und fügen Sie Abschnitte und Blöcke (Text und Bild, Video, Diskussion, Quiz)  hinzu. Aufgaben erstellen und verwalten Sie mit dem Vips-Plugin und binden Sie dann in einen Courseware-Abschnitt ein.");
+            $description = _cw('Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. Schalten Sie zwischen Teilnehmenden-Sicht und Editier-Modus um und fügen Sie Abschnitte und Blöcke (Text und Bild, Video, Diskussion, Quiz)  hinzu. Aufgaben erstellen und verwalten Sie mit dem Vips-Plugin und binden Sie dann in einen Courseware-Abschnitt ein.');
             Helpbar::get()->addPlainText(_cw('Information'), $description, 'icons/white/info-circle.svg');
 
             $tip = _cw("Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt 'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden.");
             Helpbar::get()->addPlainText(_cw('Tipp'), $tip, 'icons/white/info-circle.svg');
         } else {
-            $description = _cw("Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, Kommunikationselemente und kleine Quizzes beinhalten. Ihren Bearbeitungsfortschritt sehen Sie auf einen Blick im Reiter Fortschrittsübersicht.");
+            $description = _cw('Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, Kommunikationselemente und kleine Quizzes beinhalten. Ihren Bearbeitungsfortschritt sehen Sie auf einen Blick im Reiter Fortschrittsübersicht.');
             Helpbar::get()->addPlainText(_cw('Hinweis'), $description, 'icons/white/info-circle.svg');
         }
     }
@@ -346,7 +347,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         if (!$once) {
             $once = true;
-            StudipAutoloader::addAutoloadPath(__DIR__ . '/models');
+            StudipAutoloader::addAutoloadPath(__DIR__.'/models');
         }
     }
 
@@ -362,17 +363,17 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         }
 
         // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
-        if ( (!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) && $courseware->getVipsTabVisible() ) {
-            if (Navigation::hasItem('/course/vipsplugin')){
+        if ((!$GLOBALS['perm']->have_studip_perm('tutor', $this->container['cid'])) && $courseware->getVipsTabVisible()) {
+            if (Navigation::hasItem('/course/vipsplugin')) {
                 Navigation::removeItem('/course/vipsplugin');
             }
         }
-
     }
 
     private function getSemClass()
     {
         global $SEM_CLASS, $SEM_TYPE, $SessSemName;
+
         return $SEM_CLASS[$SEM_TYPE[$SessSemName['art_num']]['class']];
     }
 
@@ -380,16 +381,39 @@ class Courseware extends StudIPPlugin implements StandardPlugin
      * * * * *   F O R U M   M A R K U P   * * * * *
      * * * * * * * * * * * * * * * * * * * * * * * */
 
-    static function markupForumLink($markup, $matches, $contents)
+    public static function markupForumLink($markup, $matches, $contents)
     {
         // create a widget for given id (md5 hash - ensured by markup regex)
         return '<span class="mooc-forumblock">'
-            . '<a href="'. PluginEngine::getLink('courseware' , array('selected' => $matches[2]), 'courseware') .'">'
-            . _cw('Zurück zur Courseware')
-            . '</a></span>';
+            .'<a href="'.PluginEngine::getLink('courseware', array('selected' => $matches[2]), 'courseware').'">'
+            ._cw('Zurück zur Courseware')
+            .'</a></span>';
     }
-    
-    public function getDisplayTitle() {
-        return _("Courseware");
+
+    public function getDisplayTitle()
+    {
+        return _('Courseware');
+    }
+
+    private function getTabNavigationForLecturers($tabs, $cid)
+    {
+        $cpoUrl = PluginEngine::getURL($this, compact('cid'), 'cpo', true);
+        $tabs['mooc_cpo'] = new Navigation(_cw('Fortschrittsübersicht'), $cpoUrl);
+        $tabs['mooc_cpo']->setImage(Icon::create('assessment', 'info_alt'));
+        $tabs['mooc_cpo']->setActiveImage(Icon::create('assessment', 'info'));
+
+        return $tabs;
+    }
+
+    private function getTabNavigationForStudents($tabs, $cid)
+    {
+        if (!$this->container['current_user']->isNobody()) {
+            $progressUrl = PluginEngine::getURL($this, compact('cid'), 'progress', true);
+            $tabs['mooc_progress'] = new Navigation(_cw('Fortschrittsübersicht'), $progressUrl);
+            $tabs['mooc_progress']->setImage(Icon::create('assessment', 'info_alt'));
+            $tabs['mooc_progress']->setActiveImage(Icon::create('assessment', 'info'));
+        }
+
+        return $tabs;
     }
 }

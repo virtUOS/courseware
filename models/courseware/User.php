@@ -1,4 +1,5 @@
 <?php
+
 namespace Courseware;
 
 use Mooc\DB\Block as DbBlock;
@@ -11,23 +12,21 @@ use Mooc\UI\Block as UiBlock;
  */
 class User extends \User
 {
-
     private $container;
 
     /**
      * constructor, give primary key of record as param to fetch
      * corresponding record from db if available, if not preset primary key
-     * with given value. Give null to create new record
+     * with given value. Give null to create new record.
      *
-     * @param \Courseware\Container $container  the DI container to use
-     * @param mixed           $id         primary key of table
+     * @param \Courseware\Container $container the DI container to use
+     * @param mixed                 $id        primary key of table
      */
-    function __construct(Container $container, $id = null)
+    public function __construct(Container $container, $id = null)
     {
         $this->container = $container;
         parent::__construct($id);
     }
-
 
     public function canCreate($model)
     {
@@ -39,7 +38,7 @@ class User extends \User
             return $this->canEditBlock($model);
         }
 
-        throw new \RuntimeException('not implemented: ' . __METHOD__);
+        throw new \RuntimeException('not implemented: '.__METHOD__);
     }
 
     public function canRead($model)
@@ -53,10 +52,18 @@ class User extends \User
         }
 
         if ($model instanceof DbBlock) {
-            return $model->isPublished() && $this->hasPerm($model->seminar_id, 'user');
+            $perm = false;
+            if ($this->isNobody()) {
+                $course = \Course::find($model->seminar_id);
+                $perm = get_config('ENABLE_FREE_ACCESS') && $course->lesezugriff == 0;
+            } else {
+                $perm = $this->hasPerm($model->seminar_id, 'user');
+            }
+
+            return $model->isPublished() && $perm;
         }
 
-        throw new \RuntimeException('not implemented: ' . __METHOD__);
+        throw new \RuntimeException('not implemented: '.__METHOD__);
     }
 
     public function canUpdate($model)
@@ -69,7 +76,7 @@ class User extends \User
             return $this->canEditBlock($model);
         }
 
-        throw new \RuntimeException('not implemented: ' . __METHOD__);
+        throw new \RuntimeException('not implemented: '.__METHOD__);
     }
 
     public function canDelete($model)
@@ -82,7 +89,7 @@ class User extends \User
             return $this->canEditBlock($model);
         }
 
-        throw new \RuntimeException('not implemented: ' . __METHOD__);
+        throw new \RuntimeException('not implemented: '.__METHOD__);
     }
 
     public function hasPerm($cid, $perm_level)
@@ -103,6 +110,11 @@ class User extends \User
         return $GLOBALS['perm']->get_studip_perm($cid, $this->id);
     }
 
+    public function isNobody()
+    {
+        return $this->id === 'nobody';
+    }
+
     /////////////////////
     // PRIVATE HELPERS //
     /////////////////////
@@ -110,6 +122,10 @@ class User extends \User
     // get the editing permission level from the courseware's settings
     private function canEditBlock(DbBlock $block)
     {
+        if ($this->isNobody()) {
+            return false;
+        }
+
         // optimistically get the current courseware
         $courseware = $this->container['current_courseware'];
 

@@ -33,6 +33,8 @@ class UserProgress extends \SimpleORMap
     public function __construct($id = null) {
         parent::__construct($id);
 
+        $this->registerCallback('before_store', 'denyNobodyProgress');
+
         if ($this->isNew()) {
             $this->grade = 0;
             $this->max_grade = 1;
@@ -82,5 +84,10 @@ class UserProgress extends \SimpleORMap
             throw new \InvalidArgumentException('Grade must be within [0..'.$this->max_grade.'].');
         }
         $this->content['grade'] = $grade;
+    }
+
+    public function denyNobodyProgress()
+    {
+        return $this->content['user_id'] != 'nobody';
     }
 }

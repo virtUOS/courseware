@@ -16,7 +16,9 @@
       courseware_url: <?= json_encode(studip_utf8encode($courseware_url)) ?>,
       plugin_url: <?= json_encode(studip_utf8encode($plugin_url)) ?>,
       block_types: <?= json_encode(studip_utf8encode($block_types)) ?>,
-      templates: <?= json_encode(studip_utf8encode($templates)) ?>
+      templates: <?= json_encode(studip_utf8encode($templates)) ?>,
+      nobody: <?= json_encode($container['current_user']->isNobody()) ?>,
+      user_may_author: <?= json_encode($container['current_user']->canUpdate($courseware_block)) ?>,
     }
   };
 </script>
