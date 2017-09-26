@@ -1,0 +1,42 @@
+{{#download_title}}<h2>{{download_title}}</h2>{{/download_title}}
+{{^confirmed}}
+{{#download_info}}
+<div class="messagebox messagebox_info">
+    {{download_info}}
+</div>
+{{/download_info}}
+{{/confirmed}}
+
+{{#confirmed}}
+{{#download_success}}
+<div class="messagebox messagebox_success">
+    {{download_success}}
+</div>
+{{/download_success}}
+
+
+<table class=download-file>
+    <tbody>
+        <tr>
+            <td width="100%">
+                <a href="../../sendfile.php?force_download=1&type=0&file_id={{file_id}}&file_name={{file_name}}" target="_blank"> 
+                <img style="margin-bottom: -3px; max-width:30%" src="../../sendfile.php?type=0&file_id={{file_id}}&file_name={{file_name}}" height="{{file_height}}" width="{{file_width}}"> 
+                </a> 
+                <h3><a style='padding-left:20px' href='../../plugins.php/vhsviewplugin/badges' target='_blank'>Übersicht über meine Badges</a></h3>
+            </td>
+        </tr>
+    </tbody>
+    
+    
+</table>
+
+{{/confirmed}}
+
+<input type="hidden" name="file" value="{{file}}" />
+<input type="hidden" name="file_name" value="{{file_name}}" />
+<input type="hidden" name="file_id" value="{{file_id}}" />
+<input type="hidden" name="file_height" value="{{file_height}}" />
+<input type="hidden" name="file_width" value="{{file_width}}" />
+<input type="hidden" name="download_title" value="{{download_title}}" />
+<input type="hidden" name="download_info" value="{{download_info}}" />
+<input type="hidden" name="download_success" value="{{download_success}}" />

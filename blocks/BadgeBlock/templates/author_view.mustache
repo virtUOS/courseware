@@ -1,0 +1,46 @@
+<table>
+    <tr>
+        <td>
+            <label for="download-file">{{#i18n}}Eine Datei ausw&auml;hlen{{/i18n}}:</label>
+        </td>
+        <td>
+            <select type="text" class="download-file" name="file">
+                <option value="{{file}}" file_id="{{file_id}}" file_name="{{file_name}}" selected>{{file}}</option>
+                {{#allfiles}}
+                    <option value="{{name}}" file_id="{{dokument_id}}" file_name="{{filename}}">{{name}}</option>
+                {{/allfiles}}
+            </select>
+        </td>
+    </tr>
+    
+    <tr>
+        <td>
+            <label for="download-title">{{#i18n}}Titel des Blocks{{/i18n}}:</label>
+        </td>
+        <td>
+            <input type="textbox" value="{{download_title}}" name="download-title" class="download-textbox">
+        </td>
+    </tr>
+    
+    <tr>
+        <td>
+            <label for="download-info">{{#i18n}}Infobox wenn Voraussetzungen für Badge noch nicht erfüllt sind{{/i18n}}:</label>
+        </td>
+        <td>
+            <input type="textbox" value="{{download_info}}" name="download-info" class="download-textbox">
+        </td>
+    </tr>
+    
+    <tr>
+        <td>
+            <label for="download-success">{{#i18n}}Infobox wenn Badge zur Verfügung steht{{/i18n}}:</label>
+        </td>
+        <td>
+            <input type="textbox" value="{{download_success}}" name="download-success" class="download-textbox">
+        </td>
+    </tr>
+
+</table>
+
+<button name=save class=button>{{#i18n}}Speichern{{/i18n}}</button>
+<button name=cancel class=button>{{#i18n}}Abbrechen{{/i18n}}</button>
