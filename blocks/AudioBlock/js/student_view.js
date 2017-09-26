@@ -98,7 +98,7 @@ export default StudentView.extend({
         }).catch(function (error) {
           var errorMessage = 'Could not update the block: ' + $.parseJSON(error.responseText).reason;
           alert(errorMessage);
-          console.log(errorMessage, arguments);
+          console.log(error, errorMessage, arguments);
         });
     }
   },

@@ -27,6 +27,11 @@ class TestBlock extends Block
 
     function student_view()
     {   
+        if ($this->container['current_user']->isNobody()) {
+            return array(
+                'is_nobody' => true
+            );
+        }
         if (!$installed = $this->vipsInstalled()) {
             return compact('installed');
         }

@@ -1,3 +1,7 @@
+{{#isNobody}}
+    <div class="messagebox messagebox_info">{{#i18n}}Test-Blöcke sind nur für eingeloggte Nutzer sichtbar!{{/i18n}}</div>
+{{/isNobody}}
+{{^isNobody}}
 {{^installed}}
     {{> _vips_not_installed}}
 {{/installed}}
@@ -137,3 +141,4 @@
         {{> _vips_deactivated}}
     {{/active}}
 {{/installed}}
+{{/isNobody}}
