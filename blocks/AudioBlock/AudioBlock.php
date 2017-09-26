@@ -101,13 +101,13 @@ class AudioBlock extends Block
             'audio_source' => $this->audio_source,
             'audio_file' => $this->audio_file,
             'audio_file_name' => $this->audio_file_name,
-            'audio_id' => $this->audio_id,
+            'audio_id' => $this->audio_id
         );
     }
 
     public function exportProperties()
     {
-        return $this->getAttrArray();
+       return $this->getAttrArray();
     }
 
     public function getFiles()

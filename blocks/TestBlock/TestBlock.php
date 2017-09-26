@@ -26,12 +26,7 @@ class TestBlock extends Block
     }
 
     function student_view()
-    {   
-        if ($this->container['current_user']->isNobody()) {
-            return array(
-                'is_nobody' => true
-            );
-        }
+    {
         if (!$installed = $this->vipsInstalled()) {
             return compact('installed');
         }
@@ -92,7 +87,7 @@ class TestBlock extends Block
                 'exercises_count' => count($test->exercises),
                 'current_test'    => $this->test_id === $test->id
             );
-            
+
         }
         return array_merge($this->getAttrArray(), array( 
             'has_tests'         => !empty($tests),
@@ -120,6 +115,7 @@ class TestBlock extends Block
         $requestParams = studip_utf8decode($requestParams);
         $test_id = $requestParams['assignment_id'];
         $exercise_id = $requestParams['exercise_id'];
+        $exercise_index = $requestParams['exercise_index'];
 
         check_exercise_access($exercise_id, $test_id);
 
@@ -151,6 +147,19 @@ class TestBlock extends Block
         }
 
         $solution = $exercise->getSolutionFromRequest($requestParams);
+        if ($this->container['current_user']->isNobody()) {
+                $assignment->correctSolution($solution);
+                return array(
+                    'is_nobody' => true, 
+                    'hasSolution' => true, 
+                    'solution' => $exercise->getCorrectionTemplate($solution)->render(),
+                    'exercise_index' => $exercise_index,
+                    'title'  => $exercise->title
+                );
+           
+        }
+        
+        
         $assignment->storeSolution($solution);
 
         $progress = $this->calcGrades();
@@ -166,6 +175,7 @@ class TestBlock extends Block
         parse_str($data, $requestData);
         $test_id     = $requestData['test_id'];
         $exercise_id = $requestData['exercise_id'];
+        
 
         check_test_access($test_id);
 

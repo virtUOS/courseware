@@ -56,13 +56,19 @@ export default StudentView.extend({
             $block = this.$el.parent();
 
             helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
-            .then(function () {
-                return view.renderServerSide();
+            .then(function (resp) {
+                if(resp.is_nobody) {
+                    var $ex =view.$("#exercise"+resp.exercise_index);
+                    $ex.find(".cw-test-content").first().html('<form class="studip_form"><fieldset><legend>'+resp.title+'</legend>'+resp.solution+'</fieldset></form>');
+                } else {
+                    return view.renderServerSide();
+                }
             }).then(function () {
                 $block.find('.exercise').hide();
                 view.postRenderExercise($block.find('#exercise' + $exercise_index).show());
                 $block.find('.submitinfo').slideDown(250).delay(1500).slideUp(250);
-            }).catch(function () {
+            })
+            .catch(function () {
                 console.log('failed to store the solution');
             });
             return false;

@@ -500,6 +500,9 @@ abstract class Block {
     // TODO
     public function save()
     {
+        if ($this->container['current_user']->isNobody()) {
+            return;
+        }
         foreach ($this->_fields as $field) {
             $field->store();
         }
