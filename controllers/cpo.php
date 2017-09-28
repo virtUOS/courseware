@@ -19,7 +19,7 @@ class CpoController extends CoursewareStudipController {
         $title = Request::option('cid', false)
                ? $_SESSION['SessSemName']['header_line'] . ' - '
                : '';
-        $title .= $courseware->title." - FortschrittsÃ¼bersicht fÃ¼r Dozenten";
+        $title .= $courseware->title." - Fortschrittsübersicht für Dozenten";
         PageLayout::setTitle($title);
         
 
