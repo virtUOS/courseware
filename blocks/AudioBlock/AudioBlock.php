@@ -19,8 +19,11 @@ class AudioBlock extends Block
 
     public function student_view()
     {
-        $access = \StudipDocument::find($this->audio_id)->checkAccess($this->container['current_user_id']);
-
+        if ($this->audio_source == "cw") {
+            $access = \StudipDocument::find($this->audio_id)->checkAccess($this->container['current_user_id']);
+        } else {
+            $access = true;
+        }
         return array_merge(
             $this->getAttrArray(),
             array(
