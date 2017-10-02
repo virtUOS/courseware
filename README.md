@@ -16,7 +16,7 @@ das Courseware Plugin erstellt nachdem Teile des Quellcode verändert wurden.
 Anforderungen
 ------------
 
-- StudIP Version >= 3.1
+- StudIP Version >= 3.4
 - PHP Version >= 5.4
 
 
