@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Mooc\UI\AssortBlock;
 
 use Mooc\UI\Block;
@@ -16,6 +16,7 @@ class AssortBlock extends Block
     function student_view()
     {
         $this->setGrade(1.0);
+
         return $this->getAttrArray();
     }
 
@@ -36,6 +37,7 @@ class AssortBlock extends Block
            $block->hash = $this->getBlockHash($block->id);
         }
         $this->assortblocks = json_encode($assortblocks);
+        
         return $this->getAttrArray();
     }
     
@@ -48,18 +50,14 @@ class AssortBlock extends Block
     {
         $children = $this->getModel()->parent->children;
         $blocks = array();
-        
         foreach($children as $child)
         {
             if (!in_array($child["type"], array("AssortBlock", "TestBlock", "AudioBlock", "GalleryBlock"))){
                 $blocks[] = array('blockid' =>$child->id, 'blocktype'=> $child->type);
             }
-            
         }
-       
-        return array(
-            'blocks'    => $blocks
-        );
+
+        return array('blocks' => $blocks);
     }
 
     private function getBlockHash($blockid)
@@ -69,34 +67,34 @@ class AssortBlock extends Block
             case "HtmlBlock":
                 $name = 'content';
                 break;
-                
+
             case "VideoBlock":
                 $name = 'url';
                 break;
-                
+
             case "IFrameBlock":
                 $name = "url";
                 break;
-                
+
             case "DownloadBlock":
                 $name = 'file_id';
                 break;
-                
+
             case "ForumBlock":
                 $name = 'area_id';
                 break;
-                
+
             case "KeyPointBlock":
                 $name = 'keypoint_content';
                 break;
         }
-        
+
         $field = current(\Mooc\DB\Field::findBySQL('user_id = "" AND name = ? AND block_id = ?', array($name , $block->id)));
         $hash = hash('md5', $field->json_data);
-        
+
         return $hash;
     }
-    
+
     public function exportProperties()
     {
        return array('assortblocks' => $this->assortblocks, 'assorttype' => $this->assorttype);
@@ -127,7 +125,6 @@ class AssortBlock extends Block
             $model = $this->getModel();
             $assortblocks = json_decode($properties['assortblocks']);
             $size = count($assortblocks);
-            
             foreach ($assortblocks as $i => $block) {
                 if($model->previousSibling()) {
                     $modelP = $model->previousSibling();
@@ -152,12 +149,10 @@ class AssortBlock extends Block
             }
             $this->assortblocks = json_encode($assortblocks); 
         }
-
         if (isset($properties['assorttype'])) {
             $this->assorttype = $properties['assorttype'];
         }
 
         $this->save();
     }
-    
 }

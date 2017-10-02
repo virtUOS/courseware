@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Mooc\UI\KeyPointBlock;
 
 use Mooc\UI\Block;
@@ -6,51 +6,52 @@ use Mooc\UI\Block;
 class KeyPointBlock extends Block 
 {
     const NAME = 'Merksatz';
-    
-    function initialize()
+
+    public function initialize()
     {
         $this->defineField('keypoint_content', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('keypoint_color', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('keypoint_icon', \Mooc\SCOPE_BLOCK, '');
     }
-    
-     function student_view()
+
+    public function student_view()
     {   
         return array_merge($this->getAttrArray());
     }
 
-    function author_view()
+    public function author_view()
     {
         $this->authorizeUpdate();
+
         return array_merge($this->getAttrArray());
     }
-    
+
     private function getAttrArray() 
     {
         return array(
             'keypoint_content' => $this->keypoint_content,
-            'keypoint_color' => $this->keypoint_color,
+            'keypoint_color'   => $this->keypoint_color,
             'keypoint_icon'    => $this->keypoint_icon
         );
     }
-    
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
 
         if (isset ($data['keypoint_content'])) {
             $this->keypoint_content = \STUDIP\Markup::purify((string) $data['keypoint_content']);
-        } 
+        }
         if (isset ($data['keypoint_color'])) {
             $this->keypoint_color = (string) $data['keypoint_color'];
-        } 
+        }
         if (isset ($data['keypoint_icon'])) {
             $this->keypoint_icon = (string) $data['keypoint_icon'];
-        } 
+        }
 
         return;
     }
-    
+
     public function exportProperties()
     {
        return $this->getAttrArray();

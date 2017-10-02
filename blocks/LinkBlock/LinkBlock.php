@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Mooc\UI\LinkBlock;
 
 use Mooc\UI\Block;
@@ -7,14 +7,14 @@ class LinkBlock extends Block
 {
     const NAME = 'Link';
 
-    function initialize()
+    public function initialize()
     {
         $this->defineField('link_type', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('link_target', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('link_title', \Mooc\SCOPE_BLOCK, '');
     }
 
-     function student_view()
+    public function student_view()
     {   
         if ($this->link_type == "internal") {
             $link_id = $this->getTargetId($this->link_target);
@@ -25,7 +25,7 @@ class LinkBlock extends Block
         return array_merge($this->getAttrArray(), array('link_id' => $link_id, 'link_href' => $link_href));
     }
 
-    function author_view()
+    public function author_view()
     {
         $this->authorizeUpdate();
         $inthischapter = $this->getThisChapterSiblings();
@@ -39,33 +39,33 @@ class LinkBlock extends Block
     private function getAttrArray() 
     {
         return array(
-            'link_type'     => $this->link_type,
-            'link_target'   => $this->link_target,
-            'link_title'   => $this->link_title
+            'link_type'   => $this->link_type,
+            'link_target' => $this->link_target,
+            'link_title'  => $this->link_title
         );
     }
 
     private function getTargetId($target)
     {
-        $id = "";
+        $id = '';
         $section = $this->getModel()->parent;
         $subchapter = $section->parent;
         $chapter = $subchapter->parent;
         $courseware = $this->container['current_courseware'];
-        if ($target == "next") {
-            $id = $courseware->getNeighborSections($section)["next"]["id"];
+        if ($target == 'next') {
+            $id = $courseware->getNeighborSections($section)['next']['id'];
         }
-        if ($target == "prev") {
-            $id = $courseware->getNeighborSections($section)["prev"]["id"];
+        if ($target == 'prev') {
+            $id = $courseware->getNeighborSections($section)['prev']['id'];
         }
-        if (strpos($target, "sibling") > -1) {
+        if (strpos($target, 'sibling') > -1) {
             $num = (int)substr($target, 7);
-            $id = $this->getModel()->parent->parent->parent->children[$num]["id"];
+            $id = $this->getModel()->parent->parent->parent->children[$num]['id'];
         }
-        if (strpos($target, "other") > -1) {
+        if (strpos($target, 'other') > -1) {
             $chapter_pos = substr($target, 5);
             $chapter_pos = (int)strtok($chapter_pos,'_cpos');
-            $subchapter_pos = (int)substr($target, strpos($target, "_item") + 5);
+            $subchapter_pos = (int)substr($target, strpos($target, '_item') + 5);
 
             $thischapter = $this->getModel()->parent->parent->parent;
             $allchapters = $thischapter->parent->children;
@@ -78,9 +78,9 @@ class LinkBlock extends Block
             }
 
             $chatper = $allchapters[$this_chapter_pos + $chapter_pos];
-            $id = $chatper->children[$subchapter_pos]["id"];
-
+            $id = $chatper->children[$subchapter_pos]['id'];
         }
+
         return $id;
     }
 
@@ -102,7 +102,7 @@ class LinkBlock extends Block
         $inotherchapters = array();
         $thischapter = $this->getModel()->parent->parent->parent;
         $allchapters = $thischapter->parent->children;
-        $i = 0; $this_chapter_pos = "";
+        $i = 0; $this_chapter_pos = '';
 
         foreach($allchapters as $chapter) {
             if($thischapter->id == $chapter->id) {
@@ -120,8 +120,8 @@ class LinkBlock extends Block
             $i = 0;
             foreach ($subchapters as $subchapter) {
                 array_push($inotherchapters, array(
-                    "value" => "other_cpos".$relativ_chapter_pos."_item".$i, 
-                    "title" => $chapter->title." -> ".$subchapter->title
+                    'value' => 'other_cpos'.$relativ_chapter_pos.'_item'.$i, 
+                    'title' => $chapter->title.' -> '.$subchapter->title
                 ));
                 $i++;
             }
@@ -137,7 +137,7 @@ class LinkBlock extends Block
             $this->link_type = (string) $data['link_type'];
         } 
         if (isset ($data['link_target'])) {
-            $this->link_target = str_replace("http://", "", \STUDIP\Markup::purify((string) $data['link_target']));
+            $this->link_target = str_replace('http://', '', \STUDIP\Markup::purify((string) $data['link_target']));
         } 
         if (isset ($data['link_title'])) {
             $this->link_title = \STUDIP\Markup::purify((string) $data['link_title']);

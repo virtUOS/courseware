@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Mooc\UI\SearchBlock;
 
 use Mooc\UI\Block;
@@ -8,28 +8,29 @@ class SearchBlock extends Block
 {
     const NAME = 'Suche';
 
-    function initialize()
+    public function initialize()
     {
         $this->defineField('searchtitle', \Mooc\SCOPE_BLOCK, "");
     }
 
-    function student_view()
+    public function student_view()
     {
         // on view: grade with 100%
         $this->setGrade(1.0);
+
         return array('searchtitle' => $this->searchtitle);
     }
 
-    function author_view()
+    public function author_view()
     {
         $this->authorizeUpdate();
+
         return array('searchtitle' => $this->searchtitle);
     }
 
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-
         $this->searchtitle = ($data['searchtitle']);
 
         return array('searchtitle' => $this->searchtitle);
@@ -76,7 +77,7 @@ class SearchBlock extends Block
         $db = \DBManager::get();
         $cid = $this->container['cid'];
         $uid = $this->container['current_user_id'];
-        $isSequential = $this->container["current_courseware"]->getProgressionType() == "seq";
+        $isSequential = $this->container['current_courseware']->getProgressionType() == 'seq';
         $answer = array();
 
         $stmt = $db->prepare('
@@ -103,34 +104,33 @@ class SearchBlock extends Block
                          "gallery_file_names"
                          )
         ');
-        $stmt->bindParam(":request", $request);
+        $stmt->bindParam(':request', $request);
         $stmt->execute();
         $sqlfields = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        
         foreach ($sqlfields as $item) {
-            $block = new DBBlock($item["block_id"]);
+            $block = new DBBlock($item['block_id']);
             if ($block->isPublished()) {
                 if ($isSequential) {
                     if (!$block->parent->hasUserCompleted($uid)) {continue;}
                 }
-                if ($item["name"] == "content") {
-                    $content = str_replace( '<!-- HTML: Insert text after this line only. -->', '', $item["json_data"]);
+                if ($item['name'] == 'content') {
+                    $content = str_replace( '<!-- HTML: Insert text after this line only. -->', '', $item['json_data']);
                     if(!stripos($content, $request)) {continue;}
                 }
-                if ($item["name"] == "url") {
+                if ($item['name'] == 'url') {
                     // remove opencast part from url 
-                    $url = str_replace( '\/engage\/theodul\/ui\/core.html', '', $item["json_data"]);
+                    $url = str_replace( '\/engage\/theodul\/ui\/core.html', '', $item['json_data']);
                     if(!stripos($url, $request)) {continue;}
                 }
                 array_push($answer, array(
-                    "link"          =>  \PluginEngine::getURL("courseware/courseware")."&selected=".$block->parent_id,
-                    "type"          => $block->type,
-                    "title"         => (new DBBlock($block->parent_id))->title, // section title
-                    "subchapter"    => (new DBBlock($block->parent->parent->id))->title, //subchapter title
-                    "chapter"       => (new DBBlock($block->parent->parent->parent->id))->title, //chapter title
-                    "chap"          => false,
-                    "name"          => str_replace( '\/engage\/theodul\/ui\/core.html', '', $item["json_data"])
+                    'link'       =>  \PluginEngine::getURL('courseware/courseware').'&selected='.$block->parent_id,
+                    'type'       => $block->type,
+                    'title'      => (new DBBlock($block->parent_id))->title, // section title
+                    'subchapter' => (new DBBlock($block->parent->parent->id))->title, //subchapter title
+                    'chapter'    => (new DBBlock($block->parent->parent->parent->id))->title, //chapter title
+                    'chap'       => false,
+                    'name'       => str_replace( '\/engage\/theodul\/ui\/core.html', '', $item['json_data'])
                 ));
             }
         }
@@ -147,34 +147,34 @@ class SearchBlock extends Block
             AND 
                 seminar_id = :cid
         ');
-        $stmt->bindParam(":request", $request);
-        $stmt->bindParam(":cid", $cid);
+        $stmt->bindParam(':request', $request);
+        $stmt->bindParam(':cid', $cid);
         $stmt->execute();
         $sqlblocks = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    
+
         foreach ($sqlblocks as $item) {
-            $block = new DBBlock($item["id"]);
+            $block = new DBBlock($item['id']);
             if ($isSequential) {
                     if (!$block->hasUserCompleted($uid)) {continue;}
             }
-            if (strpos($item["title"], "AsideSection") >-1) { 
+            if (strpos($item['title'], 'AsideSection') >-1) { 
                 continue;
             }
             if ($block->isPublished()) {
                 array_push($answer, array(
-                    "link"  => \PluginEngine::getURL("courseware/courseware")."&selected=".$item["id"],
-                    "title" => $item["title"],
-                    "type"  => $item["type"],
-                    "chap"  => true
+                    'link'  => \PluginEngine::getURL('courseware/courseware').'&selected='.$item['id'],
+                    'title' => $item['title'],
+                    'type'  => $item['type'],
+                    'chap'  => true
                 ));
             }
         }
 
         return json_encode($answer);
-
     }
-    
-    private static function Ansi_utf8($string) {
+
+    private static function Ansi_utf8($string)
+    {
         $ansi_utf8 = array(
             "À" => "\\\\\\\u00c0",
             "Á" => "\\\\\\\u00c1",
@@ -236,7 +236,7 @@ class SearchBlock extends Block
             "ı" => "\\\\\\\u00fd",
             "ÿ" => "\\\\\\\u00ff",
         );
-        return strtr($string, $ansi_utf8);      
 
+        return strtr($string, $ansi_utf8);      
     }
 }

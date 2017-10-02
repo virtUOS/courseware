@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Mooc\UI\HtmlBlock;
 
 use Mooc\UI\Block;
@@ -11,19 +11,19 @@ class HtmlBlock extends Block
 {
     const NAME = 'Freitext';
 
-    function initialize()
+    public function initialize()
     {
         $this->defineField('content', \Mooc\SCOPE_BLOCK, '');
     }
 
-    function student_view()
+    public function student_view()
     {
         $this->setGrade(1.0);
+
         return array('content' => formatReady($this->content));
     }
 
-
-    function author_view()
+    public function author_view()
     {
         $this->authorizeUpdate();
 
@@ -32,6 +32,7 @@ class HtmlBlock extends Block
         } else {
             $content = htmlReady($this->content);
         }
+
         return compact('content');
     }
 

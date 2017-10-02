@@ -24,6 +24,7 @@ class AudioBlock extends Block
         } else {
             $access = true;
         }
+
         return array_merge(
             $this->getAttrArray(),
             array(
@@ -43,7 +44,6 @@ class AudioBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-
         if (isset($data['audio_description'])) {
             $this->audio_description = (string) $data['audio_description'];
         }
@@ -86,7 +86,6 @@ class AudioBlock extends Block
         $stmt->bindParam(':seminar_id', $this->container['cid']);
         $stmt->execute();
         $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
         $filesarray = array();
         foreach ($response as $item) {
             if ((strpos($item['filename'], 'mp3') > -1) || (strpos($item['filename'], 'ogg') > -1) || (strpos($item['filename'], 'wav') > -1)) {
@@ -162,11 +161,8 @@ class AudioBlock extends Block
         if (isset($properties['audio_file_name'])) {
             $this->audio_file_name = $properties['audio_file_name'];
         }
-
         $this->setFileId($this->audio_file_name);
-
         $this->audio_file = '../../sendfile.php?type=0&file_id='.$this->audio_id.'&file_name='.$this->audio_file_name;
-
         $this->save();
     }
 

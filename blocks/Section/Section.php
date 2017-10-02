@@ -28,14 +28,14 @@ class Section extends Block
 
     // mapping of block types to icons
     private static $map_blocks_to_icons = array(
-        'BlubberBlock' => self::ICON_CHAT,
-        'ForumBlock' => self::ICON_CHAT,
-        'VideoBlock' => self::ICON_VIDEO,
-        'AudioBlock' => self::ICON_AUDIO,
-        'TestBlock' => self::ICON_TASK,
-        'SearchBlock' => self::ICON_SEARCH,
-        'CodeBlock' => self::ICON_CODE,
-        'GalleryBlock' => self::ICON_GALLERY,
+        'BlubberBlock'  => self::ICON_CHAT,
+        'ForumBlock'    => self::ICON_CHAT,
+        'VideoBlock'    => self::ICON_VIDEO,
+        'AudioBlock'    => self::ICON_AUDIO,
+        'TestBlock'     => self::ICON_TASK,
+        'SearchBlock'   => self::ICON_SEARCH,
+        'CodeBlock'     => self::ICON_CODE,
+        'GalleryBlock'  => self::ICON_GALLERY,
     );
 
     public function initialize()

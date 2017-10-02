@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Mooc\UI\IFrameBlock;
 
 use Mooc\UI\Block;
@@ -7,7 +7,7 @@ class IFrameBlock extends Block
 {
     const NAME = 'externer Inhalt (iframe)';
 
-    function initialize()
+    public function initialize()
     {
         $this->defineField('url',    \Mooc\SCOPE_BLOCK, "http://studip.de");
         $this->defineField('height', \Mooc\SCOPE_BLOCK, 600);
@@ -19,8 +19,10 @@ class IFrameBlock extends Block
         
     }
 
-    function array_rep($url = "") {
+    private function array_rep($url = "")
+    {
         if ($url == "") $url = $this->url;
+
         return array(
             'url'               => $url,
             'height'            => $this->height,
@@ -32,7 +34,7 @@ class IFrameBlock extends Block
         );
     }
 
-    function student_view()
+    public function student_view()
     {
         // on view: grade with 100%
         $this->setGrade(1.0);
@@ -44,12 +46,14 @@ class IFrameBlock extends Block
             $array = $this->array_rep();
         }
         $array['cc_infos'] = json_decode($array['cc_infos']);
+
         return $array;
     }
 
-    function author_view()
+    public function author_view()
     {
         $this->authorizeUpdate();
+
         return $this->array_rep();
     }
 
@@ -156,6 +160,7 @@ class IFrameBlock extends Block
         $url .= "?".$this->submit_param."=";
         $userid = $GLOBALS['user']->id;
         $url .= md5($userid . $this->salt);
+
         return $url;
     }
 }

@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Mooc\UI\CodeBlock;
 
 use Mooc\UI\Block;
@@ -8,19 +8,19 @@ class CodeBlock extends Block
 {
     const NAME = 'Quellcode';
 
-    function initialize()
+    public function initialize()
     {
         $this->defineField('code_content', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('code_lang', \Mooc\SCOPE_BLOCK, '');
     }
 
-    function student_view()
+    public function student_view()
     {
         $this->setGrade(1.0);
         return array_merge($this->getAttrArray());
     }
 
-    function author_view()
+    public function author_view()
     {
         $this->authorizeUpdate();
 

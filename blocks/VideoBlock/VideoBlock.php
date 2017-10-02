@@ -11,7 +11,7 @@ class VideoBlock extends Block
 {
     const NAME = 'Video';
 
-    function initialize()
+    public function initialize()
     {
         $this->defineField('url', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('webvideo', \Mooc\SCOPE_BLOCK, '');
@@ -20,17 +20,17 @@ class VideoBlock extends Block
         $this->defineField('aspect', \Mooc\SCOPE_BLOCK, 'aspect-169');
     }
 
-    function array_rep() {
+    private function array_rep() {
         return array(
-            'url'    => $this->url,
-            'webvideo'    => $this->webvideo, 
-            'webvideosettings'    => $this->webvideosettings, 
-            'videoTitle'    => $this->videoTitle,
-            'aspect' => $this->aspect
+            'url'               => $this->url,
+            'webvideo'          => $this->webvideo, 
+            'webvideosettings'  => $this->webvideosettings, 
+            'videoTitle'        => $this->videoTitle,
+            'aspect'            => $this->aspect
         );
     }
 
-    function student_view()
+    public function student_view()
     {
         $this->setGrade(1.0);
         $array = $this->array_rep();
@@ -38,14 +38,14 @@ class VideoBlock extends Block
         return $array;
     }
 
-    function author_view()
+    public function author_view()
     {
         $this->authorizeUpdate();
 
         return $this->array_rep();
     }
 
-    function save_handler($data)
+    public function save_handler($data)
     {
         $this->authorizeUpdate();
 
@@ -63,7 +63,7 @@ class VideoBlock extends Block
      */
     public function exportProperties()
     {
-       return array('url' => $this->url, 'webvideo' => $this->webvideo, 'webvideosettings' => $this->webvideosettings, 'videoTitle' => $this->videoTitle, 'aspect' => $this->aspect);
+        return $this->array_rep();
     }
 
     /**

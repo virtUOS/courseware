@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Mooc\UI\GalleryBlock;
 
 use Mooc\UI\Block;
@@ -8,7 +8,7 @@ class GalleryBlock extends Block
 {
     const NAME = 'Galerie';
 
-    function initialize()
+    public function initialize()
     {
         $this->defineField('gallery_file_ids', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('gallery_file_names', \Mooc\SCOPE_BLOCK, '');
@@ -18,13 +18,18 @@ class GalleryBlock extends Block
         $this->defineField('gallery_hidenav', \Mooc\SCOPE_BLOCK, '');
     }
 
-    function student_view()
+    public function student_view()
     {
         $this->setGrade(1.0);
-        return array_merge($this->getAttrArray(), ["showFiles" => $this->showFiles($this->gallery_folder_id ), "url"  => \URLHelper::getLink('sendfile', array()) ]);
+        return array_merge(
+            $this->getAttrArray(), 
+            ['showFiles' => $this->showFiles($this->gallery_folder_id ), 
+            'url' => \URLHelper::getLink('sendfile', array()) 
+            ]
+        );
     }
 
-    function author_view()
+    public function author_view()
     {
         $this->authorizeUpdate();
         return array_merge($this->getAttrArray(), ["foldernames" => $this->getFolderNames()]);
@@ -33,12 +38,12 @@ class GalleryBlock extends Block
     private function getAttrArray() 
     {
         return array(
-            'gallery_file_ids'          => $this->gallery_file_ids,
-            'gallery_file_names'        => $this->gallery_file_names,
-            'gallery_folder_id'         => $this->gallery_folder_id,
-            'gallery_autoplay'          => $this->gallery_autoplay,
-            'gallery_autoplay_timer'    => $this->gallery_autoplay_timer,
-            'gallery_hidenav'           => $this->gallery_hidenav
+            'gallery_file_ids'       => $this->gallery_file_ids,
+            'gallery_file_names'     => $this->gallery_file_names,
+            'gallery_folder_id'      => $this->gallery_folder_id,
+            'gallery_autoplay'       => $this->gallery_autoplay,
+            'gallery_autoplay_timer' => $this->gallery_autoplay_timer,
+            'gallery_hidenav'        => $this->gallery_hidenav
         );
     }
 
@@ -62,36 +67,52 @@ class GalleryBlock extends Block
         $file_ids = array();
         $file_names = array();
         foreach ($files as $file) {
-            array_push($file_ids , array($file["dokument_id"]));
-            array_push($file_names , array($file["filename"]));
+            array_push($file_ids , array($file['dokument_id']));
+            array_push($file_names , array($file['filename']));
         }
         $this->gallery_file_ids = json_encode($file_ids);
         $this->gallery_file_names = json_encode($file_names);
-        
+
         return;
     }
     
     private function getFolderNames() {
         $cid = $this->container['cid'];
         $db = \DBManager::get();
-        $stmt = $db->prepare("SELECT * FROM folder WHERE  seminar_id = :cid");
-        $stmt->bindParam(":cid", $cid);
+        $stmt = $db->prepare('
+            SELECT
+                *
+            FROM
+                folder
+            WHERE
+                seminar_id = :cid
+        ');
+        $stmt->bindParam(':cid', $cid);
         $stmt->execute();
+
         return $stmt->fetchAll();
     }
 
     private function showFiles($folderId)
     {
         $db = \DBManager::get();
-        $stmt = $db->prepare("SELECT * FROM `dokumente` WHERE `range_id` = :range_id
-            ORDER BY `name`");
-        $stmt->bindParam(":range_id", $folderId);
+        $stmt = $db->prepare('
+            SELECT
+                *
+            FROM
+                dokumente
+            WHERE
+                range_id = :range_id
+            ORDER BY
+                name
+        ');
+        $stmt->bindParam(':range_id', $folderId);
         $stmt->execute();
         $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $filesarray = array();
-        $mimetypes = ["jpg", "png"];
+        $mimetypes = ['jpg', 'png'];
         foreach ($response as $item) {
-            if(in_array(substr($item["name"], -3), $mimetypes))
+            if(in_array(substr($item['name'], -3), $mimetypes))
             {
                 if (\StudipDocument::find($item['dokument_id'])->checkAccess($this->container['current_user_id'])) {
                     $item["url"] = GetDownloadLink($item['dokument_id'], $item['filename']);
@@ -99,7 +120,7 @@ class GalleryBlock extends Block
                 }
             }
         }
-        
+
         return $filesarray;
     }
 
@@ -107,31 +128,39 @@ class GalleryBlock extends Block
     {
        $folder_name = \DocumentFolder::find($this->gallery_folder_id)->name;
 
-       return array_merge($this->getAttrArray() , array( 'gallery_folder_name' =>$folder_name) );
+       return array_merge($this->getAttrArray() , array( 'gallery_folder_name' => $folder_name) );
     }
     
     public function getFiles()
     {
         $db = \DBManager::get();
-        $stmt = $db->prepare("SELECT * FROM dokumente WHERE range_id = :range_id");
-        $stmt->bindParam(":range_id", $this->gallery_folder_id);
+        $stmt = $db->prepare('
+            SELECT
+                *
+            FROM
+                dokumente
+            WHERE
+                range_id = :range_id
+        ');
+        $stmt->bindParam(':range_id', $this->gallery_folder_id);
         $stmt->execute();
         $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        $mimetypes = ["jpg", "png"];
+        $mimetypes = ['jpg', 'png'];
         $files = array();
         foreach ($response as $item) {
-            if(in_array(substr($item["name"], -3), $mimetypes)) {
+            if(in_array(substr($item['name'], -3), $mimetypes)) {
                 array_push( $files, array (
-                    'id' => $item['dokument_id'],
-                    'name' => $item['name'],
+                    'id'          => $item['dokument_id'],
+                    'name'        => $item['name'],
                     'description' => $item['description'],
-                    'filename' => $item['filename'],
-                    'filesize' => $item['filesize'],
-                    'url' => $item['url'],
-                    'path' => get_upload_file_path($item['dokument_id']),
+                    'filename'    => $item['filename'],
+                    'filesize'    => $item['filesize'],
+                    'url'         => $item['url'],
+                    'path'        => get_upload_file_path($item['dokument_id']),
                 ));
             }
         }
+
         return $files;
     }
 
@@ -165,6 +194,7 @@ class GalleryBlock extends Block
 
         $this->save();
     }
+
     private function createGalleryFolder($gallery_folder_name)
     {
         $seminar_id = $this->container['cid'];
@@ -176,8 +206,12 @@ class GalleryBlock extends Block
         $id = md5(uniqid('elvis',1));
         $folder_tree = \TreeAbstract::GetInstance('StudipDocumentTree', array('range_id' => $seminar_id));
 
-        $query = "INSERT INTO folder (name, folder_id, description, range_id, seminar_id, user_id, permission, mkdate, chdate)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())";
+        $query = '
+            INSERT INTO 
+                folder (name, folder_id, description, range_id, seminar_id, user_id, permission, mkdate, chdate)
+            VALUES 
+                (?, ?, ?, ?, ?, ?, ?, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
+        ';
         $statement = \DBManager::get()->prepare($query);
         $statement->execute(array(
             $gallery_folder_name,
@@ -191,16 +225,17 @@ class GalleryBlock extends Block
         if ($statement->rowCount()) {
             $folder_tree->init();
         }
+
         return $id;
     }
-    
+
     private function moveFiles()
     {
         $seminar_id = $this->container['cid'];
         $db = \DBManager::get();
         $filenames = json_decode($this->gallery_file_names);
         foreach ($filenames as $filename) {
-            $stmt = $db->prepare("
+            $stmt = $db->prepare('
                 UPDATE 
                     dokumente t1 
                 INNER JOIN 
@@ -220,21 +255,18 @@ class GalleryBlock extends Block
                     t1.filename = :filename
                 AND 
                     t1.seminar_id = :cid
-            
-            ");
-            $stmt->bindParam(":gallery_folder", $this->gallery_folder_id);
-            $stmt->bindParam(":cid", $seminar_id);
-            $stmt->bindParam(":filename", $filename);
+            ');
+            $stmt->bindParam(':gallery_folder', $this->gallery_folder_id);
+            $stmt->bindParam(':cid', $seminar_id);
+            $stmt->bindParam(':filename', $filename);
             $stmt->execute();
         }
     }
-    
+
     public function importContents($contents, array $files)
     {
         $file = reset($files);
-        
-            $this->save();
-        
+        $this->save();
     }
 
     public function getXmlNamespace()
@@ -242,7 +274,7 @@ class GalleryBlock extends Block
         return 'http://moocip.de/schema/block/gallery/';
     }
 
-        public function getXmlSchemaLocation()
+    public function getXmlSchemaLocation()
     {
         return 'http://moocip.de/schema/block/gallery/gallery-1.0.xsd';
     }

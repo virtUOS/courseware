@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Mooc\UI\TestBlock;
 
 use Mooc\UI\Block;
@@ -25,7 +25,7 @@ class TestBlock extends Block
         );
     }
 
-    function student_view()
+    public function student_view()
     {
         if (!$installed = $this->vipsInstalled()) {
             return compact('installed');
@@ -62,7 +62,7 @@ class TestBlock extends Block
         return array_merge($this->getAttrArray(), array('active' => $active, 'version' => $version, 'installed' => $installed), $this->buildExercises());
     }
 
-    function author_view()
+    public function author_view()
     {
         $this->authorizeUpdate();
         if (!$installed = $this->vipsInstalled()) {
@@ -89,6 +89,7 @@ class TestBlock extends Block
             );
 
         }
+
         return array_merge($this->getAttrArray(), array( 
             'has_tests'         => !empty($tests),
             'type'              => $this->getSubTypes()[$subtype],
@@ -106,6 +107,7 @@ class TestBlock extends Block
         if (isset ($data['test_id'])) {
             $this->test_id = (string) $data['test_id'];
         } 
+
         return;
     }
 
@@ -116,9 +118,7 @@ class TestBlock extends Block
         $test_id = $requestParams['assignment_id'];
         $exercise_id = $requestParams['exercise_id'];
         $exercise_index = $requestParams['exercise_index'];
-
         check_exercise_access($exercise_id, $test_id);
-
         $test = \VipsTest::findOneBySQL('id = ?', array($test_id));
         $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
         $exercise = \Exercise::find($exercise_id);
@@ -145,42 +145,31 @@ class TestBlock extends Block
         if ($start > $now || $now > $end) {
             throw new \Exception(_cw('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
         }
-
         $solution = $exercise->getSolutionFromRequest($requestParams);
         if ($this->container['current_user']->isNobody()) {
                 $assignment->correctSolution($solution);
                 return array(
-                    'is_nobody' => true, 
-                    'hasSolution' => true, 
-                    'solution' => $exercise->getCorrectionTemplate($solution)->render(),
+                    'is_nobody'      => true, 
+                    'hasSolution'    => true, 
+                    'solution'       => $exercise->getCorrectionTemplate($solution)->render(),
                     'exercise_index' => $exercise_index,
-                    'title'  => $exercise->title
+                    'title'          => $exercise->title
                 );
-           
         }
-        
-        
         $assignment->storeSolution($solution);
-
         $progress = $this->calcGrades();
-        return array(
-            'grade' => $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0
-        );
+
+        return array('grade' => $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0);
     }
 
     public function exercise_reset_handler($data)
     {
         $user = $this->container['current_user'];
-
         parse_str($data, $requestData);
         $test_id     = $requestData['test_id'];
         $exercise_id = $requestData['exercise_id'];
-        
-
         check_test_access($test_id);
-
         $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($test_id));
-
         $now = time();
         $start = strtotime($assignment->start);
         $end = strtotime($assignment->end);
@@ -206,7 +195,7 @@ class TestBlock extends Block
     }
 
     public function calcGrades()
-     {
+    {
         global $user;
 
         $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
@@ -219,17 +208,17 @@ class TestBlock extends Block
         $progress->grade = 0;
 
         foreach ($test->getExercises() as $exercise) {
-            $solution = \VipsSolution::findOneBySQL("exercise_id = ? AND user_id = ?", array($exercise->id, $user->id));
-            $exercise_ref = \VipsExerciseRef::findOneBySQL("exercise_id = ?", array($exercise->id));
-
-            $correct = $solution ? ($exercise_ref["points"]== $solution->points) : false;
-            if (($assignment->type != "selftest")&&($solution != "")) {
+            $solution = \VipsSolution::findOneBySQL('exercise_id = ? AND user_id = ?', array($exercise->id, $user->id));
+            $exercise_ref = \VipsExerciseRef::findOneBySQL('exercise_id = ?', array($exercise->id));
+            $correct = $solution ? ($exercise_ref['points']== $solution->points) : false;
+            if (($assignment->type != 'selftest')&&($solution != '')) {
                 $correct = true;
             } 
             if ($correct) {
                 $progress->grade++;
             }
         }
+
         return $progress;
      }
 
@@ -248,8 +237,8 @@ class TestBlock extends Block
     {
         if ($this->vipsInstalled()) {
             $plugin_manager = \PluginManager::getInstance();
-            $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())["version"];
-            return version_compare("1.3",$version) <= 0;
+            $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
+            return version_compare('1.3',$version) <= 0;
         } else {
             return false;
         }
@@ -258,6 +247,7 @@ class TestBlock extends Block
     private function vipsInstalled()
     {
         $plugin_manager = \PluginManager::getInstance();
+
         return $plugin_manager->getPlugin('VipsPlugin') != null ? true : false;
     }
 
@@ -269,10 +259,8 @@ class TestBlock extends Block
         $available = false;
         $test = \VipsTest::findOneBySQL('id = ?', array($this->test_id));
         $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
-
         $numberofex = $test->getExerciseCount();
         $exindex = 1;
-
         $now = time();
         $start = strtotime($assignment->start);
         $end = strtotime($assignment->end);
@@ -280,16 +268,15 @@ class TestBlock extends Block
         $solved_completely = true;
 
         foreach ($test->getExercises() as $exercise){
-            $solution = \VipsSolution::findOneBySQL("exercise_id = ? AND user_id = ?", array($exercise->id, $user->id));
+            $solution = \VipsSolution::findOneBySQL('exercise_id = ? AND user_id = ?', array($exercise->id, $user->id));
             $has_solution = $solution != null;
             $correct = false;
             $tryagain = false;
             $try_counter = 0;
 
-            if (($assignment->type == "selftest")&& $has_solution) {
+            if (($assignment->type == 'selftest')&& $has_solution) {
                 $evaluation = $exercise->evaluate($solution);
                 $correct = $evaluation['percent'] == 1;
-
                 if(!$this->tries) {
                     $local_tries = array();
                 } else {
@@ -313,49 +300,49 @@ class TestBlock extends Block
             } else {
                 // limited tries
                 $tries_left = $max_counter - $try_counter;
-                $show_corrected_solution = ($correct || (($tries_left < 1) && ($assignment->type == "selftest") ));
+                $show_corrected_solution = ($correct || (($tries_left < 1) && ($assignment->type == 'selftest') ));
             }
             $tries_pl = false;
             if ($tries_left > 1) {
                 $tries_pl = true;
             }
-            if ( $exercise->options["feedback"] !== "") {
-                $corrector_comment = $exercise->options["feedback"];
+            if ( $exercise->options['feedback'] !== '') {
+                $corrector_comment = $exercise->options['feedback'];
             } else {
                 $corrector_comment = false;
             }
 
-            if ( $exercise->task["answers"][0]["text"] !== "") {
-                $sample_solution = $exercise->task["answers"][0]["text"];
+            if ( $exercise->task['answers'][0]['text'] !== '') {
+                $sample_solution = $exercise->task['answers'][0]['text'];
             } else {
                 $sample_solution = false;
             }
             $entry = array(
-                'exercise_type'         => $exercise->getTypeName(),
-                'id'                    => $exercise->getId(),
-                'test_id'               => $this->test_id,
-                'self_test'             => $assignment->type == "selftest",
-                'exercise_sheet'        => $assignment->type == "practice",
-                'show_correction'       => $assignment->type == "selftest",
-                'show_solution'         => $has_solution && $show_corrected_solution,
-                'title'                 => $exercise->title,
-                'question'              => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $exercise->getSolveTemplate($solution)->render() ),
-                'single-choice'         => get_class($exercise) == "sc_exercise",
-                'multiple-choice'       => get_class($exercise) == "mc_exercise",
-                'solver_user_id'        => $user->cfg->getUserId(),
-                'has_solution'          => $has_solution,
-                'solution'              => $exercise->getCorrectionTemplate($solution)->render(),
-                'solving_allowed'       => $solving_allowed,
-                'number_of_exercises'   => $numberofex,
-                'exercise_index'        => $exindex++,
-                'correct'               => $correct,
-                'tryagain'              => $tryagain,
-                'exercise_hint'         => $exercise->options["hint"],
-                'corrector_comment'     => $corrector_comment, 
-                'sample_solution'       => $sample_solution,
-                'is_corrected'          => $solution["corrected"],
-                'tries_left'            => $tries_left, 
-                'tries_pl'              => $tries_pl
+                'exercise_type'       => $exercise->getTypeName(),
+                'id'                  => $exercise->getId(),
+                'test_id'             => $this->test_id,
+                'self_test'           => $assignment->type == 'selftest',
+                'exercise_sheet'      => $assignment->type == 'practice',
+                'show_correction'     => $assignment->type == 'selftest',
+                'show_solution'       => $has_solution && $show_corrected_solution,
+                'title'               => $exercise->title,
+                'question'            => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $exercise->getSolveTemplate($solution)->render() ),
+                'single-choice'       => get_class($exercise) == 'sc_exercise',
+                'multiple-choice'     => get_class($exercise) == 'mc_exercise',
+                'solver_user_id'      => $user->cfg->getUserId(),
+                'has_solution'        => $has_solution,
+                'solution'            => $exercise->getCorrectionTemplate($solution)->render(),
+                'solving_allowed'     => $solving_allowed,
+                'number_of_exercises' => $numberofex,
+                'exercise_index'      => $exindex++,
+                'correct'             => $correct,
+                'tryagain'            => $tryagain,
+                'exercise_hint'       => $exercise->options['hint'],
+                'corrector_comment'   => $corrector_comment, 
+                'sample_solution'     => $sample_solution,
+                'is_corrected'        => $solution['corrected'],
+                'tries_left'          => $tries_left, 
+                'tries_pl'            => $tries_pl
             );
             $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
             $available = !$entry['show_solution'] && !$entry['solving_allowed']; //or correction is available
@@ -376,15 +363,16 @@ class TestBlock extends Block
                 break;
             }
         }
+
         return array(
-            'title'                 => $test->title,
-            'description'           => formatReady($test->description),
-            'exercises'             => $exercises,
-            'available'             => $available,
-            'exercises_available'   => $exercises_available,
-            'solved_completely'     => $solved_completely, 
-            'isSequential'          => $this->container["current_courseware"]->getProgressionType() == "seq",
-            'correction_available'  => $correction_available
+            'title'                => $test->title,
+            'description'          => formatReady($test->description),
+            'exercises'            => $exercises,
+            'available'            => $available,
+            'exercises_available'  => $exercises_available,
+            'solved_completely'    => $solved_completely, 
+            'isSequential'         => $this->container['current_courseware']->getProgressionType() == 'seq',
+            'correction_available' => $correction_available
         );
     }
 
@@ -399,6 +387,7 @@ class TestBlock extends Block
     {
         $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
         $xml = $assignment->exportXML();
+
         return array(
             'xml' => $xml
         );
