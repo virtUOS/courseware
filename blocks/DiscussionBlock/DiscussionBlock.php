@@ -28,7 +28,7 @@ class DiscussionBlock extends Block
             return compact('inactive');
         }
 
-        return array('threads' => $this->getThreadsOfUser());
+        return array('threads' => $this->getThreadsOfUser(), 'isNobody' => $this->container['current_user']->isNobody());
     }
 
     function author_view()

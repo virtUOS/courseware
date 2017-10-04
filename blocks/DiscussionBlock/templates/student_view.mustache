@@ -7,12 +7,12 @@
         </a>
       </header>
       <ul class="comments"></ul>
-
+    {{^isNobody}}
       <div class="comment-writer">
         <textarea placeholder="{{#i18n}}Kommentiere dies{{/i18n}}"
                   aria-label="{{#i18n}}Kommentiere dies{{/i18n}}"></textarea>
       </div>
-
+    {{/isNobody}}
     </article>
   {{/threads}}
 
