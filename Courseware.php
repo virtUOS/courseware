@@ -71,10 +71,15 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         $courseware = $this->container['current_courseware'];
 
-        $navigation = new Navigation($courseware->title,
-                                     PluginEngine::getURL($this, compact('cid'), 'courseware', true));
-        $navigation->setImage(Icon::create('group3', 'info_alt'));
-        $navigation->setActiveImage(Icon::create('group3', 'info'));
+        $navigation = new Navigation($courseware->title, PluginEngine::getURL($this, compact('cid'), 'courseware', true));
+        if (version_compare($GLOBALS['SOFTWARE_VERSION'], "3.4", ">=")) {
+            $navigation->setImage(Icon::create('group3', 'info_alt'));
+            $navigation->setActiveImage(Icon::create('group3', 'info'));
+        } else {
+            $navigation->setImage('icons/white/group3.svg');
+            $navigation->setActiveImage('icons/black/group3.svg');
+        }
+
         $tabs['mooc_courseware'] = $navigation;
 
         $navigation->addSubnavigation('index',    clone $navigation);
@@ -86,8 +91,13 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         if (!$this->container['current_user']->hasPerm($course_id, 'tutor')) {
             $progress_url = PluginEngine::getURL($this, compact('cid'), 'progress', true);
             $tabs['mooc_progress'] = new Navigation(_cw('Fortschrittsübersicht'), $progress_url);
-            $tabs['mooc_progress']->setImage(Icon::create('assessment', 'info_alt'));
-            $tabs['mooc_progress']->setActiveImage(Icon::create('assessment', 'info'));
+            if (version_compare($GLOBALS['SOFTWARE_VERSION'], "3.4", ">=")) {
+                $tabs['mooc_progress']->setImage(Icon::create('assessment', 'info_alt'));
+                $tabs['mooc_progress']->setActiveImage(Icon::create('assessment', 'info'));
+            } else {
+                $tabs['mooc_progress']->setImage('icons/white/assessment.svg');
+                $tabs['mooc_progress']->setActiveImage('icons/black/assessment.svg');
+            }
         }
         // tabs for tutors and up
         else {
@@ -181,10 +191,18 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         }
         if ($new_ones) {
             $title = $new_ones > 1 ? sprintf(_("%s neue Courseware-Inhalte"), $new_ones) : _("1 neuer Courseware-Inhalt");
-            $icon->setImage(Icon::create('group3', 'attention', ["title" => $title]));
+            if (version_compare($GLOBALS['SOFTWARE_VERSION'], "3.4", ">=")) {
+                $icon->setImage(Icon::create('group3', 'attention', ["title" => $title]));
+            } else {
+                $icon->setImage('icons/red/group3.svg', ['width' => 20, 'heigth' => 20]);
+            }
             $icon->setBadgeNumber($new_ones);
         } else {
-            $icon->setImage(Icon::create('group3', 'inactive', ["title" => "Courseware"]));
+            if (version_compare($GLOBALS['SOFTWARE_VERSION'], "3.4", ">=")) {
+                $icon->setImage(Icon::create('group3', 'inactive', ["title" => "Courseware"]));
+            } else {
+                $icon->setImage('icons/grey/group3.svg', ['width' => 20, 'heigth' => 20]);
+            }
         }
         return $icon;
     }
