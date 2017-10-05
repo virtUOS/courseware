@@ -26,12 +26,7 @@ class HtmlBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-
-        if ($this->container['wysiwyg_refined']) {
-            $content = wysiwygReady($this->content);
-        } else {
-            $content = htmlReady($this->content);
-        }
+        $content = htmlReady($this->content);
 
         return compact('content');
     }
@@ -46,12 +41,7 @@ class HtmlBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-
-        if ($this->container['wysiwyg_refined']) {
-            $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify((string) $data['content']));
-        } else {
-            $this->content = \STUDIP\Markup::purify((string) $data['content']);
-        }
+        $this->content = \STUDIP\Markup::purifyHtml((string) $data['content']);
 
         return array('content' => $this->content);
     }
@@ -94,11 +84,7 @@ class HtmlBlock extends Block
             });
         }
 
-        if ($this->container['version']->newerThan(3.1) || $this->container['wysiwyg_refined']) {
-            return \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
-        } else {
-            return $document->saveHTML();
-        }
+        return \STUDIP\Markup::purifyHtml($document->saveHTML());
     }
 
     /**
@@ -199,11 +185,7 @@ class HtmlBlock extends Block
             });
         }
 
-        if ($this->container['version']->newerThan(3.1) || $this->container['wysiwyg_refined']) {
-            $this->content = \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
-        } else {
-            $this->content = $document->saveHTML();
-        }
+        $this->content = \STUDIP\Markup::purifyHtml($document->saveHTML());
 
         $this->save();
     }
