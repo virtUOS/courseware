@@ -1,27 +1,34 @@
-<audio class="cw-audio-player">
-    <source src="{{audio_file}}" type="audio/mpeg" />
-</audio>
-{{#audio_file}}
-    {{#audio_access}}
-        <div class="cw-audio-container">
-            <p class="cw-audio-description">{{audio_description}}</p>
-            <div class="cw-audio-controls">
-                <div class="cw-audio-range" ></div>
-                <span class="cw-audio-time"></span>
-                <button name="stop" class="cw-audio-stopbutton"></button>
-                <button name="play" class="cw-audio-playbutton" played="{{audio_played}}"></button>
+{{^inactive}}
+    <audio class="cw-audio-player">
+        <source src="{{audio_file}}" type="audio/mpeg" />
+    </audio>
+    {{#audio_file}}
+        {{#audio_access}}
+            <div class="cw-audio-container">
+                <p class="cw-audio-description">{{audio_description}}</p>
+                <div class="cw-audio-controls">
+                    <div class="cw-audio-range" ></div>
+                    <span class="cw-audio-time"></span>
+                    <button name="stop" class="cw-audio-stopbutton"></button>
+                    <button name="play" class="cw-audio-playbutton" played="{{audio_played}}"></button>
+                </div>
             </div>
-        </div>
-    {{/audio_access}}
-    {{^audio_access}}
+        {{/audio_access}}
+        {{^audio_access}}
+            <div class="messagebox messagebox_info">
+                {{#i18n}}Wegen des gewählten Lizenzstatus können Sie diese Audiodatei nicht abspielen.{{/i18n}}
+            </div>
+        {{/audio_access}}
+    {{/audio_file}}
+    
+    {{^audio_file}}
         <div class="messagebox messagebox_info">
-            {{#i18n}}Wegen des gewählten Lizenzstatus können Sie diese Audiodatei nicht abspielen.{{/i18n}}
+            {{#i18n}}Es wurde keine Audiodatei ausgewählt{{/i18n}}
         </div>
-    {{/audio_access}}
-{{/audio_file}}
-
-{{^audio_file}}
+    {{/audio_file}}
+{{/inactive}}
+{{#inactive}}
     <div class="messagebox messagebox_info">
-        {{#i18n}}Es wurde keine Audiodatei ausgewählt{{/i18n}}
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
     </div>
-{{/audio_file}}
+{{/inactive}}

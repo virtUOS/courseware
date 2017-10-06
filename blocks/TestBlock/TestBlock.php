@@ -27,6 +27,9 @@ class TestBlock extends Block
 
     public function student_view()
     {
+        if (!$this->isAuthorized()) {
+            return array('inactive' => true);
+        }
         if (!$installed = $this->vipsInstalled()) {
             return compact('installed');
         }

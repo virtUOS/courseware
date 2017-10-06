@@ -1,13 +1,20 @@
-{{#active}}
-  <h2>Diskussion</h2>
-
-  <div class="blubber-stream loading"
-    data-stream-url="{{stream_url}}"
-    data-assets-base-url="{{assets_base_url}}">
-    Diskussionen werden geladen...
-  </div>
-{{/active}}
-
-{{^active}}
-  {{> _blubber_deactivated}}
-{{/active}}
+{{^inactive}}
+    {{#active}}
+      <h2>Diskussion</h2>
+    
+      <div class="blubber-stream loading"
+        data-stream-url="{{stream_url}}"
+        data-assets-base-url="{{assets_base_url}}">
+        Diskussionen werden geladen...
+      </div>
+    {{/active}}
+    
+    {{^active}}
+      {{> _blubber_deactivated}}
+    {{/active}}
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive}}

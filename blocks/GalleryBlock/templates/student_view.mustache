@@ -1,17 +1,24 @@
-<input type="hidden" name="gallery-autoplay" value="{{gallery_autoplay}}">
-<input type="hidden" name="gallery-autoplay-timer" value="{{gallery_autoplay_timer}}">
-<input type="hidden" name="gallery-hidenav" value="{{gallery_hidenav}}">
-<div class="cw-gallery">
-{{#showFiles}}
-    <div>
-        <img src="{{url}}">
+{{^inactive}}
+    <input type="hidden" name="gallery-autoplay" value="{{gallery_autoplay}}">
+    <input type="hidden" name="gallery-autoplay-timer" value="{{gallery_autoplay_timer}}">
+    <input type="hidden" name="gallery-hidenav" value="{{gallery_hidenav}}">
+    <div class="cw-gallery">
+    {{#showFiles}}
+        <div>
+            <img src="{{url}}">
+        </div>
+    {{/showFiles}}
+    
     </div>
-{{/showFiles}}
-
-</div>
-
-{{^showFiles}}
-    <div class="messagebox messagebox_info answerinfo">
-        {{#i18n}}In dem ausgew&auml;hlten Ordner befinden sich keine Bilder.{{/i18n}} 
+    
+    {{^showFiles}}
+        <div class="messagebox messagebox_info answerinfo">
+            {{#i18n}}In dem ausgew&auml;hlten Ordner befinden sich keine Bilder.{{/i18n}} 
+        </div>
+    {{/showFiles}}
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
     </div>
-{{/showFiles}}
+{{/inactive}}

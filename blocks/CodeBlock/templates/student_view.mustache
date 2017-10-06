@@ -1,3 +1,10 @@
-<div class="code-content content">
-    <pre><code class="{{code_lang}}">{{code_content}}</code></pre><div class="code-lang"><span>{{code_lang}}</span></div>
-</div>
+{{^inactive}}
+    <div class="code-content content">
+        <pre><code class="{{code_lang}}">{{code_content}}</code></pre><div class="code-lang"><span>{{code_lang}}</span></div>
+    </div>
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive}}

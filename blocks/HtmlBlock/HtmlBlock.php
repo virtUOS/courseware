@@ -18,6 +18,9 @@ class HtmlBlock extends Block
 
     public function student_view()
     {
+        if (!$this->isAuthorized()) {
+            return array('inactive' => true);
+        }
         $this->setGrade(1.0);
 
         return array('content' => formatReady($this->content));

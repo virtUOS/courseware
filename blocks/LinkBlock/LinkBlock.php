@@ -16,6 +16,9 @@ class LinkBlock extends Block
 
     public function student_view()
     {   
+        if (!$this->isAuthorized()) {
+            return array('inactive' => true);
+        }
         if ($this->link_type == "internal") {
             $link_id = $this->getTargetId($this->link_target);
         }

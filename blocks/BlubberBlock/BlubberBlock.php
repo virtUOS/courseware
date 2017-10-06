@@ -16,6 +16,9 @@ class BlubberBlock extends Block
 
     public function student_view()
     {
+        if (!$this->isAuthorized()) {
+            return array('inactive' => true);
+        }
         if (!$active = self::blubberActivated($this)) {
             return compact('active');
         }

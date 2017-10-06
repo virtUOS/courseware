@@ -19,6 +19,9 @@ class AudioBlock extends Block
 
     public function student_view()
     {
+        if (!$this->isAuthorized()) {
+            return array('inactive' => true);
+        }
         if ($this->audio_source == "cw") {
             $access = \StudipDocument::find($this->audio_id)->checkAccess($this->container['current_user_id']);
         } else {

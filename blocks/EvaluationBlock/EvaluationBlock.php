@@ -21,6 +21,9 @@ class EvaluationBlock extends Block
 
     public function student_view()
     {
+        if (!$this->isAuthorized()) {
+            return array('inactive' => true);
+        }
         if (!$active = self::evaluationActivated()) {
             return compact('active');
         }

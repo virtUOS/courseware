@@ -1,26 +1,33 @@
-<h2>Diskussion{{#area_name}} - {{area_name}}{{/area_name}}</h2>
-
-{{^inactive}}
-<div>
-    {{^connected}}
-    Es wurde bisher kein Bereich verknüpft!
-    {{/connected}}
-
-    {{#connected}}
-    {{#topics}}
+{{^inactive_block}}
+    <h2>Diskussion{{#area_name}} - {{area_name}}{{/area_name}}</h2>
+    
+    {{^inactive}}
     <div>
-        <a href="{{link_to_post}}">{{name}}</a> <span style="font-size: 0.8em">{{human_date}}</span><br>
+        {{^connected}}
+        Es wurde bisher kein Bereich verknüpft!
+        {{/connected}}
+    
+        {{#connected}}
+        {{#topics}}
+        <div>
+            <a href="{{link_to_post}}">{{name}}</a> <span style="font-size: 0.8em">{{human_date}}</span><br>
+        </div>
+        {{/topics}}
+    
+        <br>
+        <a href="{{area_url}}">Alles anzeigen / Eigenen Beitrag schreiben</a>
+        {{/connected}}
     </div>
-    {{/topics}}
-
-    <br>
-    <a href="{{area_url}}">Alles anzeigen / Eigenen Beitrag schreiben</a>
-    {{/connected}}
-</div>
-{{/inactive}}
-
-{{#inactive}}
-<div class="messagebox messagebox_info">
-    {{#i18n}}Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet werden...{{/i18n}}
-</div>
-{{/inactive}}
+    {{/inactive}}
+    
+    {{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet werden...{{/i18n}}
+    </div>
+    {{/inactive}}
+{{/inactive_block}}
+{{#inactive_block}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive_block}}

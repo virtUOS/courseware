@@ -19,6 +19,9 @@ class ConfirmBlock extends Block
 
     public function student_view()
     {
+        if (!$this->isAuthorized()) {
+            return array('inactive' => true);
+        }
         return array(
             'confirmed' => !! $this->getProgress()->grade,
             'title'     => $this->title

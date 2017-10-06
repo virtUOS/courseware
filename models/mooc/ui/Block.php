@@ -5,6 +5,7 @@ use Courseware\Container;
 use Mooc\DB\Field;
 use Mooc\DB\UserProgress;
 use Mooc\UI\Section\Section;
+use Mooc\UI\Courseware\Courseware;
 
 /**
  * Objects of this class represent a UI component bundling model, view
@@ -559,5 +560,62 @@ abstract class Block {
     protected function getCurrentUser()
     {
         return $this->container['current_user'];
+    }
+
+    protected function isAuthorized()
+    {
+
+        // on sequential courseware progression a student may only
+        // access this section if he completed this or the previous
+        // sub/chapter
+        if (!$this->container['current_user']->canUpdate($this)) {
+            $courseware = $this->container['current_courseware'];
+            if ($courseware->getProgressionType() === Courseware::PROGRESSION_SEQ && !$this->checkSeqCompletion()) {
+                return false;
+            }
+        }
+
+        // else user may access this section
+        return true;
+    }
+
+    protected function checkSeqCompletion()
+    {
+        $uid = $this->container['current_user_id'];
+        if ($this->_model->type == "Section") {
+            $sub = $this->_model->parent;
+        } else {
+            $sub = $this->_model->parent->parent;
+        }
+        // TODO: solve in a more elegant way
+        if (!$sub) {
+            return true;
+        }
+        // proceed if this subchapter has been completed by this user
+        if ($sub->hasUserCompleted($uid)) {
+            return true;
+        }
+        // else check the previous (sub)chapter for completion
+        else {
+
+            // get previous subchapter
+            $previous = $sub->previousSibling();
+
+            // if this section's subchapter is the first of the
+            // chapter, there is no previous subchapter. Get the
+            // previous chapter instead.
+            if (!$previous) {
+                $previous = $sub->parent->previousSibling();
+            }
+
+            // if there is no previous chapter, this section is
+            // the very first
+            if (!$previous) {
+                return true;
+            }
+
+            // else check the previous (sub)chapter for completion
+            return $previous->hasUserCompleted($uid);
+        }
     }
 }

@@ -1,3 +1,10 @@
-<div class="cw-keypoint cw-keypoint-{{keypoint_color}}" style='background-image: url("../../assets/images/icons/{{keypoint_color}}/{{keypoint_icon}}.svg")'>
-    <p class="cw-keypoint-sentence" >{{keypoint_content}}</p>
-</div>
+{{^inactive}}
+    <div class="cw-keypoint cw-keypoint-{{keypoint_color}}" style='background-image: url("../../assets/images/icons/{{keypoint_color}}/{{keypoint_icon}}.svg")'>
+        <p class="cw-keypoint-sentence" >{{keypoint_content}}</p>
+    </div>
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive}}

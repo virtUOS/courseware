@@ -36,6 +36,9 @@ class IFrameBlock extends Block
 
     public function student_view()
     {
+        if (!$this->isAuthorized()) {
+            return array('inactive' => true);
+        }
         // on view: grade with 100%
         $this->setGrade(1.0);
         

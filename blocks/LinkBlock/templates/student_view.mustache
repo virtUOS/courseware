@@ -1,11 +1,18 @@
-{{#link_id}}
-    <div class="cw-link internal">
-        <a href="{{#plugin_url}}courseware?selected={{link_id}}{{/plugin_url}}">{{link_title}}</a>
+{{^inactive}}
+    {{#link_id}}
+        <div class="cw-link internal">
+            <a href="{{#plugin_url}}courseware?selected={{link_id}}{{/plugin_url}}">{{link_title}}</a>
+        </div>
+    {{/link_id}}
+    
+    {{#link_href}}
+        <div class="cw-link external">
+            <a href="http://{{link_href}}" target="_blank">{{link_title}}</a>
+        </div>
+    {{/link_href}}
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
     </div>
-{{/link_id}}
-
-{{#link_href}}
-    <div class="cw-link external">
-        <a href="http://{{link_href}}" target="_blank">{{link_title}}</a>
-    </div>
-{{/link_href}}
+{{/inactive}}

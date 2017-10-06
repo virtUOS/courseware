@@ -32,6 +32,9 @@ class VideoBlock extends Block
 
     public function student_view()
     {
+        if (!$this->isAuthorized()) {
+            return array('inactive' => true);
+        }
         $this->setGrade(1.0);
         $array = $this->array_rep();
         $array['webvideo'] = json_decode($array['webvideo']);

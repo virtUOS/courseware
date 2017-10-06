@@ -1,1 +1,8 @@
-<div class=content>{{{content}}}</div>
+{{^inactive}}
+    <div class=content>{{{content}}}</div>
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive}}

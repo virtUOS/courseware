@@ -1,16 +1,25 @@
-{{#videoTitle}}<h1 class="video-header">{{videoTitle}}</h1>{{/videoTitle}}
-<div class="video-wrapper {{aspect}}">
-{{#url}}
-    <iframe src="{{.}}" scrolling="no" allowfullscreen></iframe>
-{{/url}}
-{{^url}}
-    <video width="100%" {{webvideosettings}}>
-        {{#webvideo}}
-            <source src="{{src}}" type="video/{{type}}" media="{{media}}" >
+{{^inactive}}
+    {{#videoTitle}}
+        <h1 class="video-header">{{videoTitle}}</h1>
+    {{/videoTitle}}
+    <div class="video-wrapper {{aspect}}">
+    {{#url}}
+        <iframe src="{{.}}" scrolling="no" allowfullscreen></iframe>
+    {{/url}}
+    {{^url}}
+        <video width="100%" {{webvideosettings}}>
+            {{#webvideo}}
+                <source src="{{src}}" type="video/{{type}}" media="{{media}}" >
+            {{/webvideo}}
+        </video>
+        {{^webvideo}}
+            {{#i18n}}Es wurde noch kein Video eingetragen.{{/i18n}}
         {{/webvideo}}
-    </video>
-    {{^webvideo}}
-        {{#i18n}}Es wurde noch kein Video eingetragen.{{/i18n}}
-    {{/webvideo}}
-{{/url}}
+    {{/url}}
+    </div>
+{{/inactive}}
+{{#inactive}}
+<div class="messagebox messagebox_info">
+    {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
 </div>
+{{/inactive}}

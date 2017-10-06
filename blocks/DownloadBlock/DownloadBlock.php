@@ -26,6 +26,9 @@ class DownloadBlock extends Block
 
     public function author_view()
     {
+        if (!$this->isAuthorized()) {
+            return array('inactive' => true);
+        }
         $this->authorizeUpdate();
         $allfiles = $this->showFiles($this->folder_id);
         return array_merge($this->getAttrArray(), ["allfiles" => $allfiles, "foldernames" => $this->getFolderNames()]);

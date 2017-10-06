@@ -23,6 +23,9 @@ class DiscussionBlock extends Block
 
     function student_view()
     {
+        if (!$this->isAuthorized()) {
+            return array('inactive_block' => true);
+        }
         // cannot do anything withough blubber activated in this course
         if ($inactive = !self::blubberActivated($this)) {
             return compact('inactive');

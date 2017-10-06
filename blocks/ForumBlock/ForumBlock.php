@@ -28,6 +28,9 @@ class ForumBlock extends Block
 
     public function student_view()
     {
+        if (!$this->isAuthorized()) {
+            return array('inactive_block' => true);
+        }
         if ($inactive = !self::forumActivated($this)) {
             return compact('inactive');
         }
