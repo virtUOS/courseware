@@ -203,11 +203,11 @@ class HtmlBlock extends Block
         }
 
         if ($this->container['version']->newerThan(3.1) && !$this->container['version']->newerThan(3.4)) {
-            return \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
+            $this->content =  \STUDIP\Markup::markAsHtml(\STUDIP\Markup::purify($document->saveHTML()));
         } else if ($this->container['version']->newerThan(3.4)) {
-            return \STUDIP\Markup::purifyHtml($document->saveHTML());
+            $this->content =  \STUDIP\Markup::purifyHtml($document->saveHTML());
         } else {
-            return $document->saveHTML();
+            $this->content =  $document->saveHTML();
         }
 
         $this->save();
