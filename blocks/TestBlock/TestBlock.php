@@ -675,6 +675,14 @@ class TestBlock extends Block
                     // limited tries
                     $show_corrected_solution = ($correct || (($try_counter >= $max_counter) && $this->test->isSelfTest()));
                 }
+                
+                if ( $exercise->getVipsExercise()->getAnswerArray()[0] !== '') {
+                    $sample_solution = $exercise->getVipsExercise()->getAnswerArray()[0];
+                } else {
+                    $sample_solution = false;
+                }
+                
+                
                 $entry = array(
                     'exercise_type' => $exercise->getType(),
                     $exercise->getType() => 1,
@@ -702,7 +710,8 @@ class TestBlock extends Block
                     'correct' => $correct,
                     'tryagain' => $tryagain,
                     'character_picker' => $exercise->getVipsExercise()->characterPicker,
-                    'exercise_hint' => $exercise->getVipsExercise()->getHint()
+                    'exercise_hint' => $exercise->getVipsExercise()->getHint(),
+                    'sample_solution'     => $sample_solution
                 );
                 $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
                 $available = !$entry['show_solution'] && !$entry['solving_allowed']; //or correction is available
