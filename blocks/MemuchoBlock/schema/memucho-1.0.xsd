@@ -4,5 +4,7 @@
     targetNamespace="http://moocip.de/schema/block/memucho/"
     elementFormDefault="qualified"
 >
-    <xsd:attribute name="data_id" type="xsd:int" />
+    <xsd:attribute name="data_id" type="xsd:string" />
+    <xsd:attribute name="data_t" type="xsd:string" />
+    <xsd:attribute name="data_questionCount" type="xsd:string" />
 </xsd:schema>

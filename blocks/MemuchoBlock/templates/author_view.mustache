@@ -5,9 +5,14 @@
         </p>
     </div>
     <div class="memucho-data">
+        <input type="hidden" class="memucho-data-id-stored" value="{{data_id}}">
+        <input type="hidden" class="memucho-data-t-stored" value="{{data_t}}">
+        <input type="hidden" class="memucho-data-questionCount-stored" value="{{data_questionCount}}">
         <ul>
-            <li><label>Memucho-Quizz-ID:</label><input class="scriptinput" type=text size=32 value={{data_id}}></li>
- 
+            <li><label>{{#i18n}}Memucho-Einbett-Code{{/i18n}}:</label><input class="scriptinput" type=text size=32 value='<script src="https://memucho.de/views/widgets/w.js" data-t="{{data_t}}" data-id="{{data_id}}" data-questionCount="{{data-questionCount}}" data-width="100%" data-maxWidth="870px" data-hideKnowledgeBtn="true"></script>'></li>
+            <li><label>{{#i18n}}Data-ID{{/i18n}}:</label><input class="readonly memucho-data-id" type=text size=32 value="{{data_id}}" readonly></li>
+            <li><label>{{#i18n}}Data-T{{/i18n}}:</label><input class="readonly memucho-data-t" type=text size=32 value="{{data_t}}" readonly></li>
+            <li><label>{{#i18n}}questionCount{{/i18n}}:</label><input class="readonly memucho-data-questionCount" type=text size=32 value="{{data_questionCount}}" readonly></li>
 
         </ul>
     </div>

@@ -9,14 +9,16 @@ class MemuchoBlock extends Block
 
     function initialize()
     {
-        $this->defineField('data_id',    \Mooc\SCOPE_BLOCK, "");
+        $this->defineField('data_id', \Mooc\SCOPE_BLOCK, "");
+        $this->defineField('data_t', \Mooc\SCOPE_BLOCK, "");
+        $this->defineField('data_questionCount', \Mooc\SCOPE_BLOCK, "");
     }
 
     function array_rep() {
-    
-        
         return array(
-            'data_id'    => $this->data_id
+            'data_id'            => $this->data_id,
+            'data_t'             => $this->data_t,
+            'data_questionCount' => $this->data_questionCount
         );
     }
 
@@ -44,7 +46,9 @@ class MemuchoBlock extends Block
     {
         $this->authorizeUpdate();
 
-        $this->data_id = (int) $data['data_id'];
+        $this->data_id            = $data['data_id'];
+        $this->data_t             = $data['data_t'];
+        $this->data_questionCount = $data['data_questionCount'];
 
         return $this->array_rep();
     }
@@ -54,7 +58,7 @@ class MemuchoBlock extends Block
      */
     public function exportProperties()
     {
-        return array('data_id' => $this->data_id);
+        return $this->array_rep();
     }
 
     /**
@@ -81,8 +85,12 @@ class MemuchoBlock extends Block
         if (isset($properties['data_id'])) {
             $this->data_id = $properties['data_id'];
         }
-        
-
+        if (isset($properties['data_t'])) {
+            $this->data_t = $properties['data_t'];
+        }
+        if (isset($properties['data_questionCount'])) {
+            $this->data_questionCount = $properties['data_questionCount'];
+        }
         $this->save();
     }
 
