@@ -676,7 +676,7 @@ class TestBlock extends Block
                     $show_corrected_solution = ($correct || (($try_counter >= $max_counter) && $this->test->isSelfTest()));
                 }
                 
-                if ( $exercise->getVipsExercise()->getAnswerArray()[0] !== '') {
+                if ( $exercise->getVipsExercise()->getAnswerArray()[0] !== '' && $exercise->getVipsExercise()->type == 'tb_exercise') {
                     $sample_solution = $exercise->getVipsExercise()->getAnswerArray()[0];
                 } else {
                     $sample_solution = false;
