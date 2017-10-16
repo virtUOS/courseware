@@ -25,18 +25,20 @@
             {{#has_solution}}
 
                {{#tryagain}}
-                {{#sample_solution}}{{#self_test}}
+                {{#sample_solution}}
+                {{#self_test}}
                 <div class="messagebox messagebox_success">
                     {{#i18n}}Vergleichen Sie Ihre Lösung mit der Musterlösung unten.{{/i18n}}
                 </div>
                 {{/self_test}}{{/sample_solution}}
-                {{/tryagain}}
+                
 
-              {{#tryagain}} {{^sample_solution}}
+              {{^sample_solution}}{{^self_test}}
                 <div class="messagebox messagebox_error">
                     {{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal.{{/i18n}}
-                </div>
-                 {{/sample_solution}}
+                </div>  
+                {{/self_test}}
+                {{/sample_solution}}
               {{/tryagain}}
               {{#correct}}
                 <div class="messagebox messagebox_success">
@@ -80,15 +82,6 @@
                {{exercise_hint}}
              </div>
           {{/exercise_hint}}
-
-          {{#tryagain}}
-                {{#sample_solution}}{{#self_test}}
-                    <div class="exercise-sample-solution">
-                        <span>{{#i18n}}Musterlösung:{{/i18n}}</span>
-                        <p>{{sample_solution}}</p>
-                    </div>
-                {{/self_test}}{{/sample_solution}}
-            {{/tryagain}}
         </li>
       </ul>
       {{/skip_entry}}
