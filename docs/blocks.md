@@ -62,8 +62,8 @@ _Autorenansicht des Audio-Blocks_
 _Studentenansicht des Audio-Blocks_
 
 
-Quellcode-Block
-----------------
+Quellcode-Block (ab 2.2)
+------------------------
 Der Quellcode-Block verwendet das Syntax-Highlighting-Tool [highlight.js](https://highlightjs.org/).
 Eingegebener Quelltext wird mittels der angegebenen Sprache dargestellt wie in einer IDE.
 
