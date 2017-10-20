@@ -47,7 +47,8 @@ class CpoController extends CoursewareStudipController {
                     $memo[$item->block_id] = array(
                         'grade' => $item->grade,
                         'max_grade' => $item->max_grade,
-                        'users' => 1
+                        'users' => 1,
+                        'date' => $item->chdate
                     );
                 }
                 return $memo;
@@ -70,6 +71,22 @@ class CpoController extends CoursewareStudipController {
             array());
         $this->courseware = current($grouped['']);
         $this->buildTree($grouped, $progress, $this->courseware);
+        $this->usage = $this->getUsage();
+    }
+    
+    private function getUsage()
+    {
+        $teachers = (new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), "dozent");
+        $dids = array_map(function($teacher){return $teacher->user_id;} , $teachers); // dozent ids
+        $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position', array($this->plugin->getCourseId()));
+        $bids   = array_map(function ($block) { return (int) $block->id; }, $blocks); // block ids
+        $progress = \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id NOT IN (?)', array($bids, $dids));
+        $usage = array();
+        foreach ($progress as $block){
+            $usage[date('N', strtotime($block->chdate))] += 1;
+            $usage[0] += 1;
+        }
+        return $usage;
     }
 
     private function buildTree($grouped, $progress, &$root)
@@ -80,6 +97,7 @@ class CpoController extends CoursewareStudipController {
                 $this->buildTree($grouped, $progress, $child);
             }
             $root['progress'] = $this->computeProgress($root);
+            $root['date'] = $this->setDate($progress, $root);
         }
 
         else {
@@ -126,12 +144,31 @@ class CpoController extends CoursewareStudipController {
         if (!sizeof($block['children'])) {
             return 0;
         }
-
         return
             array_sum(
                 array_map(
                     function ($section) {return $section['progress']; },
                     $block['children'])
             ) / sizeof($block['children']);
+    }
+    
+    private function setDate($progress, &$block)
+    {
+        if (!sizeof($block['children'])) {
+            return null;
+        }
+        $date = date('');
+        foreach ($block['children'] as $section) {
+            foreach($section['children']as $blocks) {
+               if ($b = $progress[$blocks['id']]) {
+                    if ($date < date($b['date'])){ 
+                        $date = date($b['date']);
+                    }
+                    
+                }
+               
+            }
+        }
+        return $date;
     }
 }

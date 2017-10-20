@@ -1,4 +1,5 @@
-#mooc-progress-index #layout_container {
+#mooc-progress-index #layout_container,
+#courseware-cpo-index #layout_container {
 
   // TODO move to OHN-layout
   h1 {
@@ -12,7 +13,7 @@
     border: solid thin #ddd;
 
     tr:nth-child(even) {
-      background: #eee;
+      background: #f8f8f8;
     }
 
     tr + tr {
@@ -25,8 +26,8 @@
     text-align: left;
     font-weight: 700;
     line-height: 1.1;
-    padding-top: 1.1em;
-    padding-bottom: 0.55em;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
     color: #444;
     > a {
         display: block;
@@ -45,11 +46,66 @@
     width: 10%;
   }
 
+th.subchapter-description {
+    progress {
+        /* Reset the default appearance */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        /* Get rid of default border in Firefox. */
+        border: none;
+
+        /* Dimensions */
+        width: 100%;
+        height: 20px;
+
+        /* For IE10 */
+        color: #006533;
+        /*background: #006533;*/
+
+        font-size: .6em;
+        line-height: 1.5em;
+        
+      }
+
+      progress::-webkit-progress-value {
+        background: #28497c;
+      }
+
+      progress::-webkit-progress-bar {
+        background: #bbbbbb;
+      }
+
+      progress::-moz-progress-bar {
+        background: #28497c;
+      }
+      p {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        position: relative;
+        width: 100%;
+
+        &:after {
+          content: attr(data-progress) '%';
+          font-size: 14px;
+          color: white;
+          position: absolute;
+          top: 0;
+          left: 0.5em;
+          line-height: 1.5em;
+        }
+
+      }
+
+}
 
   ol.sections {
     list-style: none;
     padding: 5px;
-    margin: 0;
+    margin: 0 0 0 3em;
 
     li {
       progress {
@@ -88,6 +144,7 @@
       a {
         box-sizing: border-box;
         padding: 0.5em 1em;
+        margin: 0.9em 0 0 0;
         display: inline-block;
         position: relative;
 
@@ -122,48 +179,7 @@
   .discussion-thread();
 }
 
-html.flexbox #mooc-progress-index #layout_container {
 
-
-  ol.sections {
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-align-content: stretch;
-    -ms-flex-line-pack: stretch;
-    align-content: stretch;
-    -webkit-align-items: stretch;
-    -ms-flex-align: stretch;
-    align-items: stretch;
-
-    li {
-      -webkit-order: 0;
-      -ms-flex-order: 0;
-      order: 0;
-      -webkit-flex: 1 1 auto;
-      -ms-flex: 1 1 auto;
-      flex: 1 1 auto;
-      -webkit-align-self: auto;
-      -ms-flex-item-align: auto;
-      align-self: auto;
-      float: none;
-
-      a {
-        width: 100%;
-      }
-    }
-
-  }
-}
 
 // small avatars in participant list
 .user_avatar .avatar-normal {
