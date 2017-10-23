@@ -4,6 +4,8 @@ $body_id = 'mooc-progress-index';
 $progress = function ($block, $format = "") {
     return ceil($block['progress'] * 100) . $format;
 };
+
+$monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>"Jul", 8=>"Aug", 9=>"Sep", 10=>"Okt",11=>"Nov", 12=>"Dez");
 ?>
 
 <h1><?= $courseware['title'] ?></h1>
@@ -61,7 +63,14 @@ $progress = function ($block, $format = "") {
                     <? endforeach ?>
                   </ol>
                 </td>
-                <td></td>
+                <td>
+                    <? if($subchapter['date'] != ''):?>
+                    <div class="overview-date" title="zuletzt genutzt am: <?= date('d.m.Y h:i', strtotime($subchapter['date']))?> Uhr">
+                        <p class="overview-date-month"><?= $monate[date('n', strtotime($subchapter['date']))]?></p>
+                        <p class="overview-date-day"><?= date('d', strtotime($subchapter['date']))?></p>
+                        <p class="overview-date-time"><?= date('h:i', strtotime($subchapter['date']))?></p>
+                    </div>
+                    <? endif?></td>
               </tr>
             <? endforeach ?>
         </table>

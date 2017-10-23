@@ -27,6 +27,7 @@ class ProgressController extends CoursewareStudipController
                 $memo[$item->block_id] = array(
                     'grade' => $item->grade,
                     'max_grade' => $item->max_grade,
+                    'date' => $item->chdate
                 );
 
                 return $memo;
@@ -62,6 +63,7 @@ class ProgressController extends CoursewareStudipController
                 $this->buildTree($grouped, $progress, $child);
             }
             $root['progress'] = $this->computeProgress($root);
+            $root['date'] = $this->setDate($progress, $root);
         } else {
             $root['children'] = $this->addChildren($grouped, $root);
             if ($root['children']) {
@@ -112,5 +114,24 @@ class ProgressController extends CoursewareStudipController
                     function ($section) {return $section['progress']; },
                     $block['children'])
             ) / sizeof($block['children']);
+    }
+
+    private function setDate($progress, &$block)
+    {
+        if (!sizeof($block['children'])) {
+            return null;
+        }
+        $date = date('');
+        foreach ($block['children'] as $section) {
+            foreach($section['children']as $blocks) {
+               if ($b = $progress[$blocks['id']]) {
+                    if ($date < date($b['date'])){ 
+                        $date = date($b['date']);
+                    }
+                }
+               
+            }
+        }
+        return $date;
     }
 }
