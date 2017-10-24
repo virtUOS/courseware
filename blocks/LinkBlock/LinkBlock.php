@@ -25,6 +25,7 @@ class LinkBlock extends Block
         if ($this->link_type == "external") {
             $link_href = $this->link_target;
         }
+        $this->setGrade(1.0);
         return array_merge($this->getAttrArray(), array('link_id' => $link_id, 'link_href' => $link_href));
     }
 

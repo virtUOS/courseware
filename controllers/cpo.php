@@ -21,14 +21,13 @@ class CpoController extends CoursewareStudipController {
                : '';
         $title .= $courseware->title." - Fortschrittsübersicht für Dozenten";
         PageLayout::setTitle($title);
-        
 
         if (Navigation::hasItem('/course/mooc_cpo')) {
             Navigation::activateItem("/course/mooc_cpo");
         }
         $teachers = (new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), "dozent");
         $dids = array_map(function($teacher){return $teacher->user_id;} , $teachers); // dozent ids
-        $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position', array($this->plugin->getCourseId()));
+        $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId()));
         $bids   = array_map(function ($block) { return (int) $block->id; }, $blocks); // block ids
         $progress = array_reduce(
             \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id NOT IN (?)', array($bids, $dids)),
@@ -37,10 +36,12 @@ class CpoController extends CoursewareStudipController {
                     $stored_grade = $memo[$item->block_id]['grade'];
                     $users = $memo[$item->block_id]['users']+1;
                     $grade = ($stored_grade+$item->grade) / $users;
+                    $memo[$item->block_id]['date'] > $item->chdate ? $date = $memo[$item->block_id]['date'] : $date = $item->chdate;
                     $memo[$item->block_id] = array(
                         'grade' => $grade,
                         'max_grade' => $item->max_grade,
-                        'users' => $users
+                        'users' => $users,
+                        'date' => $date
                     );
                     
                 } else {
@@ -73,7 +74,7 @@ class CpoController extends CoursewareStudipController {
         $this->buildTree($grouped, $progress, $this->courseware);
         $this->usage = $this->getUsage();
     }
-    
+
     private function getUsage()
     {
         $teachers = (new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), "dozent");
@@ -83,8 +84,10 @@ class CpoController extends CoursewareStudipController {
         $progress = \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id NOT IN (?)', array($bids, $dids));
         $usage = array();
         foreach ($progress as $block){
-            $usage[date('N', strtotime($block->chdate))] += 1;
-            $usage[0] += 1;
+            if(strtotime($block->chdate) > 0){
+                $usage[date('N', strtotime($block->chdate))] += 1;
+                $usage[0] += 1;
+            }
         }
         return $usage;
     }
@@ -127,7 +130,6 @@ class CpoController extends CoursewareStudipController {
             }
         }
     }
-
 
     private function addChildren($grouped, &$parent)
     {

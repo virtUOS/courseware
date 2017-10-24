@@ -19,7 +19,7 @@ class ProgressController extends CoursewareStudipController
             Navigation::activateItem('/course/mooc_progress');
         }
 
-        $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position', array($this->plugin->getCourseId()));
+        $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId()));
         $bids = array_map(function ($block) { return (int) $block->id; }, $blocks);
         $progress = array_reduce(
             \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id = ?', array($bids, $this->plugin->getCurrentUserId())),
@@ -50,7 +50,7 @@ class ProgressController extends CoursewareStudipController
         $title = Request::option('cid', false)
                ? $_SESSION['SessSemName']['header_line'].' - '
                : '';
-        $title .= $courseware->title.' - FortschrittsÃ¼bersicht';
+        $title .= $courseware->title.' - Fortschrittsübersicht';
         PageLayout::setTitle($title);
     }
 
@@ -129,9 +129,9 @@ class ProgressController extends CoursewareStudipController
                         $date = date($b['date']);
                     }
                 }
-               
             }
         }
+
         return $date;
     }
 }

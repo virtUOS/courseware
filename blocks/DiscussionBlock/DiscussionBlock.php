@@ -30,7 +30,10 @@ class DiscussionBlock extends Block
         if ($inactive = !self::blubberActivated($this)) {
             return compact('inactive');
         }
-
+        // TODO How should we grade this block when the observer is not enabled???
+        if ($not_observed = !self::coursewareObserverActivated($this)) {
+            $this->setGrade(1.0);
+        }
         return array('threads' => $this->getThreadsOfUser(), 'isNobody' => $this->container['current_user']->isNobody());
     }
 
@@ -177,5 +180,13 @@ class DiscussionBlock extends Block
         $plugin_manager = \PluginManager::getInstance();
         $plugin_info = $plugin_manager->getPluginInfo('Blubber');
         return $plugin_manager->isPluginActivated($plugin_info['id'], $block->getModel()->seminar_id);
+    }
+    
+    // is the CoursewareObserver plugin activated
+    private static function coursewareObserverActivated($block)
+    {
+        $plugin_manager = \PluginManager::getInstance();
+        $plugin_info = $plugin_manager->getPluginInfo('CoursewareObserver');
+        return $plugin_info["enabled"];
     }
 }
