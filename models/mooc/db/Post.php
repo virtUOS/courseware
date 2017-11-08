@@ -32,7 +32,7 @@ class Post extends \SimpleORMap
         parent::__construct($id);
         $this->registerCallback('before_store', 'denyNobodyPost');
     }
-    
+
     public function findPosts($thread_id, $cid)
     {
         $db = \DBManager::get();
@@ -52,7 +52,56 @@ class Post extends \SimpleORMap
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
-    
+
+    public function findPost($thread_id, $post_id, $cid)
+    {
+        $db = \DBManager::get();
+        $stmt = $db->prepare("
+            SELECT
+                *
+            FROM
+                mooc_posts
+            WHERE
+                thread_id = :thread_id
+            AND
+                post_id = :post_id
+            AND
+                seminar_id = :cid
+            LIMIT
+                1
+        ");
+        $stmt->bindParam(":thread_id", $thread_id);
+        $stmt->bindParam(":post_id", $post_id);
+        $stmt->bindParam(":cid", $cid);
+        $stmt->execute();
+
+        return $stmt->fetch();
+    }
+
+    public function alterPost($thread_id, $post_id, $cid, $content)
+    {
+        $db = \DBManager::get();
+        $stmt = $db->prepare("
+            UPDATE
+                mooc_posts
+            SET
+                content = :content
+            WHERE
+                thread_id = :thread_id
+            AND
+                post_id = :post_id
+            AND
+                seminar_id = :cid
+            LIMIT
+                1
+        ");
+        $stmt->bindParam(":content", $content);
+        $stmt->bindParam(":thread_id", $thread_id);
+        $stmt->bindParam(":post_id", $post_id);
+        $stmt->bindParam(":cid", $cid);
+        $stmt->execute();
+    }
+
     public function getNextPostId($thread_id, $cid)
     {
         $db = \DBManager::get();

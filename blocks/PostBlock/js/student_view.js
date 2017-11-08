@@ -21,6 +21,9 @@ export default StudentView.extend({
     postRender() {
         var $view = this;
         $view.$('.cw-postblock-posts').scrollTop($view.$('.cw-postblock-posts')[0].scrollHeight);
+        if($view.$('.cw-postblock-posts').outerHeight() < 420) {
+            $view.$('.cw-postblock-showall-messages').hide();
+        }
         var updateLoop = setInterval(function() {
             $view.updateContent(updateLoop); 
         }, 5000);
@@ -79,6 +82,9 @@ export default StudentView.extend({
                     $view.model.set('timestamp',content.timestamp);
                     $view.render();
                     $view.$('.cw-postblock-posts').scrollTop($view.$('.cw-postblock-posts')[0].scrollHeight);
+                    if($view.$('.cw-postblock-posts').outerHeight() < 420) {
+                        $view.$('.cw-postblock-showall-messages').hide();
+                    }
                 }
             },
 

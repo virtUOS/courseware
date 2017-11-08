@@ -33,6 +33,7 @@ class PostBlock extends Block
             $user = \User::find($post['user_id']);
             if ($user){
                 $post['user_name'] = $user->getFullName();
+                $post['avatar'] = \Avatar::getAvatar($post['user_id'])->getImageTag(\Avatar::SMALL);
                 if ($timestamp < strtotime($post['mkdate'])) {$timestamp = strtotime($post['mkdate']);}
                 $post['date'] = date('H:i', strtotime($post['mkdate'])).' Uhr, am '.date('d.m.Y', strtotime($post['mkdate']));
                 if ($post['user_id'] == $uid) {$post['own_post'] = true;} else {$post['own_post'] = false;} 
@@ -57,7 +58,13 @@ class PostBlock extends Block
     {
         $this->authorizeUpdate();
         if (isset($data['post_title']) && isset($data['thread_id'])) {
+
+            if ($this->post_title == Post::findPost($this->thread_id, 0, $this->container['cid'])["content"]) {
+                Post::alterPost($this->thread_id, 0, $this->container['cid'], (string) $data['post_title']);
+            }
+
             $this->post_title = (string) $data['post_title'];
+
             if ($data['thread_id'] != 'new'){
                 $this->thread_id = (string) $data['thread_id'];
             } else {

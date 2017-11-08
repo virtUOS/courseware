@@ -65,6 +65,7 @@ export default AuthorView.extend({
         function () {
           $(event.target).addClass('accept');
           $view.switchBack();
+          $view.postRender();
         },
 
         // error
