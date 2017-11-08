@@ -51,6 +51,8 @@ define(['assets/js/author_view', 'assets/js/url'],
             var $view = this;
             var $title = this.$("input[name=cw-selfevaluation-title]").val();
             var $subtitle = this.$("input[name=cw-selfevaluation-subtitle]").val();
+            var $headerleft = this.$("input[name=cw-selfevaluation-headerleft]").val();
+            var $headerright = this.$("input[name=cw-selfevaluation-headerright]").val();
             var $description = this.$("textarea[name=cw-selfevaluation-description]").val();
             var $value = '[{"good":"'+this.$("input[name=cw-selfevaluation-content-value-good]").val()+'", "bad":"'+this.$("input[name=cw-selfevaluation-content-value-bad]").val()+'"}]';
             var $elements = new Array();
@@ -67,6 +69,8 @@ define(['assets/js/author_view', 'assets/js/url'],
                 .callHandler(this.model.id, "save", {
                     selfevaluation_title: $title,
                     selfevaluation_subtitle: $subtitle,
+                    selfevaluation_headerleft: $headerleft,
+                    selfevaluation_headerright: $headerright,
                     selfevaluation_description: $description,
                     selfevaluation_value: $value,
                     selfevaluation_content: $elements})

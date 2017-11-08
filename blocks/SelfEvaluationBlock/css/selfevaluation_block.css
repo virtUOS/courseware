@@ -1,0 +1,109 @@
+.btn-base {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+}
+.btn-base:hover {
+  cursor: pointer;
+}
+.SelfEvaluationBlock label {
+  width: 8em;
+  padding: 1em;
+  display: inline-block;
+}
+.SelfEvaluationBlock label[for='cw-selfevaluation-description'] {
+  vertical-align: top;
+  font-weight: 600;
+}
+.SelfEvaluationBlock input,
+.SelfEvaluationBlock textarea {
+  width: 500px;
+  background-color: #fff;
+  border: solid thin #ccc;
+}
+.SelfEvaluationBlock textarea {
+  height: 6em;
+  margin-left: -3px;
+}
+.SelfEvaluationBlock hr {
+  border: solid thin #ccc;
+  width: 800px;
+  float: left;
+  margin-left: 15px;
+}
+.SelfEvaluationBlock .cw-selfevaluation-item-element {
+  font-weight: bold;
+}
+.SelfEvaluationBlock .cw-selfevaluation-author-button {
+  margin-left: 15px !important;
+}
+.SelfEvaluationBlock .cw-selfevaluation-radio {
+  width: 1em;
+  margin: 0 0.25em;
+}
+.SelfEvaluationBlock .cw-selfevaluation-button {
+  border: none;
+  height: 20px;
+  width: 20px;
+  margin: 2px 12px;
+  cursor: pointer;
+  vertical-align: top;
+}
+.SelfEvaluationBlock .cw-selfevaluation-input-button {
+  color: #000;
+  border: 1px solid #d0d0d0;
+  background-color: #e9e9e9;
+  background-repeat: no-repeat;
+  min-height: 27px;
+  padding: 9px 6px 9px 28px;
+  margin: 0px;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 2px;
+  padding: 10px 20px;
+  line-height: 0.5em;
+  height: 2.5em;
+  background-color: #1d9dd9;
+  border: 0px;
+  border-radius: 0;
+  color: #fff;
+  width: initial;
+}
+.SelfEvaluationBlock .cw-selfevaluation-input-button:hover {
+  background-color: #F8F8F8;
+  border-color: #cccccc;
+}
+.SelfEvaluationBlock .cw-selfevaluation-input-button:hover {
+  color: #1d9dd9;
+  border: solid thin #1d9dd9;
+  background-color: #fff;
+}
+.SelfEvaluationBlock .cw-selfevaluation-button-right {
+  background: #fff url("../../../../assets/images/icons/16/blue/arr_1right.png") no-repeat scroll 0 0;
+}
+.SelfEvaluationBlock .cw-selfevaluation-button-left {
+  background: #fff url("../../../../assets/images/icons/16/blue/arr_1left.png") no-repeat scroll 0 0;
+}
+.SelfEvaluationBlock .cw-selfevaluation-container {
+  border: solid thin #ccc;
+  padding-top: 10px;
+}
+.SelfEvaluationBlock .cw-selfevaluation-container hr {
+  margin-bottom: 10px;
+}
+.SelfEvaluationBlock .cw-selfevaluation-item {
+  padding: 10px 15px 5px 15px;
+}
+.SelfEvaluationBlock .cw-selfevaluation-title {
+  font-weight: 600;
+}
+.SelfEvaluationBlock .cw-selfevaluation-item-value-good {
+  padding-right: 1em;
+}
+.SelfEvaluationBlock .cw-selfevaluation-item-value-bad {
+  padding-left: 1em;
+}
+.SelfEvaluationBlock .message_after_download {
+  display: none;
+}

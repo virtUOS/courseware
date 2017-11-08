@@ -7,6 +7,8 @@
     <xsd:attribute name="selfevaluation_title" type="xsd:string" />
     <xsd:attribute name="selfevaluation_subtitle" type="xsd:string" />
     <xsd:attribute name="selfevaluation_description" type="xsd:string" />
+    <xsd:attribute name="selfevaluation_headerleft" type="xsd:string" />
+    <xsd:attribute name="selfevaluation_headerright" type="xsd:string" />
     <xsd:attribute name="selfevaluation_value" type="xsd:string" />
     <xsd:attribute name="selfevaluation_content" type="xsd:string" />
 </xsd:schema>

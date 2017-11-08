@@ -59,7 +59,7 @@ define(['assets/js/student_view', 'assets/js/url'], function (StudentView, helpe
                     
                     $html += 
                         '<div class="cw-selfevaluation-item">'+
-                        '<p class="cw-selfevaluation-item-element">'+$element+'</p>';
+                        '<p class="cw-selfevaluation-item-element" style="clear:both">'+$element+'</p>';
                     $element = $element.replace(/\W/g, '');
                     $html += 
                         '<span class="cw-selfevaluation-item-value-good">'+$values.good+'</span>'+

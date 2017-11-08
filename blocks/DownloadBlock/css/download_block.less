@@ -1,23 +1,35 @@
+@import '../../../assets/mixins';
+
 .DownloadBlock {
-    table {
-        tr {}
-        td {
-            
-            padding-bottom: 1em;
-            &:first-child {
-                padding-right: 2em;
-            }
-            &:nth-child(2) {
-                width: 69%;
-                input {
-                    width: 100%;
-                }
-                select {
-                    width: 102%;
-                }
-            }
+    border: solid thin #ccc;
+    padding: 10px;
+
+    .cw-download-info { 
+        background-image: url("@{blocks-icons-dir}/blue/file.svg");
+        background-repeat: no-repeat;
+        background-size: 24px;
+        padding-left: 26px;
+        line-height: 24px; 
+        margin-top: 20px;
+        span {
+            color: lightgrey;
         }
-        
+    }
+    .cw-download-button-wrapper {
+        text-align: right;
+        margin-top: -2em;
+        .cw-download-button {
+        .courseware-btn;
+            background-position: 16px center;
+            font-size: 14px;
+            padding-left: 48px;
+            padding-right: 20px;;
+            background-color: #eee;
+            display: inline-block;
+            background-image: url("@{blocks-icons-dir}/blue/download.svg");
+            background-repeat: no-repeat;
+            background-size: 20px;
+        }
     }
 
 }

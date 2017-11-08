@@ -12,6 +12,8 @@ class SelfEvaluationBlock extends Block
         $this->defineField('selfevaluation_title', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('selfevaluation_subtitle', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('selfevaluation_description', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('selfevaluation_headerleft', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('selfevaluation_headerright', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('selfevaluation_value', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('selfevaluation_content', \Mooc\SCOPE_BLOCK, '');
 
@@ -45,6 +47,12 @@ class SelfEvaluationBlock extends Block
         if (isset ($data['selfevaluation_description'])) {
             $this->selfevaluation_description = \STUDIP\Markup::purify((string) $data['selfevaluation_description']);
         } 
+        if (isset ($data['selfevaluation_headerleft'])) {
+            $this->selfevaluation_headerleft = \STUDIP\Markup::purify((string) $data['selfevaluation_headerleft']);
+        } 
+        if (isset ($data['selfevaluation_headerright'])) {
+            $this->selfevaluation_headerright = \STUDIP\Markup::purify((string) $data['selfevaluation_headerright']);
+        } 
         if (isset ($data['selfevaluation_value'])) {
             $this->selfevaluation_value = (string) $data['selfevaluation_value'];
         } 
@@ -67,6 +75,8 @@ class SelfEvaluationBlock extends Block
             'selfevaluation_title'          => $this->selfevaluation_title,
             'selfevaluation_subtitle'       => $this->selfevaluation_subtitle,
             'selfevaluation_description'    => $this->selfevaluation_description, 
+            'selfevaluation_headerleft'    => $this->selfevaluation_headerleft, 
+            'selfevaluation_headerright'    => $this->selfevaluation_headerright, 
             'selfevaluation_value'          => $this->selfevaluation_value, 
             'selfevaluation_content'        => $this->selfevaluation_content
         );
@@ -106,6 +116,12 @@ class SelfEvaluationBlock extends Block
         }
         if (isset($properties['selfevaluation_description'])) {
             $this->selfevaluation_description = $properties['selfevaluation_description'];
+        }
+        if (isset($properties['selfevaluation_headerleft'])) {
+            $this->selfevaluation_headerleft = $properties['selfevaluation_headerleft'];
+        }
+        if (isset($properties['selfevaluation_headerright'])) {
+            $this->selfevaluation_headerright = $properties['selfevaluation_headerright'];
         }
         if (isset($properties['selfevaluation_value'])) {
             $this->selfevaluation_value = $properties['selfevaluation_value'];
