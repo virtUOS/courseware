@@ -1,0 +1,165 @@
+<?php
+
+namespace Mooc\UI\PostBlock;
+
+use Mooc\UI\Block;
+use Mooc\DB\Post as Post;
+
+class PostBlock extends Block
+{
+    const NAME = 'Post';
+
+    public function initialize()
+    {
+        $this->defineField('post_title', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('thread_id', \Mooc\SCOPE_BLOCK, '');
+    }
+
+    public function student_view()
+    {
+        if (!$this->isAuthorized()) {
+            return array('inactive' => true);
+        }
+        return array_merge($this->getAttrArray(), $this->getPosts());
+    }
+
+    private function getPosts()
+    {
+        $posts = Post::findPosts($this->thread_id, $this->container['cid']);
+        $uid = $this->container['current_user_id'];
+        $timestamp = 0;
+        array_shift($posts);
+        foreach($posts as $key => &$post){
+            $user = \User::find($post['user_id']);
+            if ($user){
+                $post['user_name'] = $user->getFullName();
+                if ($timestamp < strtotime($post['mkdate'])) {$timestamp = strtotime($post['mkdate']);}
+                $post['date'] = date('H:i', strtotime($post['mkdate'])).' Uhr, am '.date('d.m.Y', strtotime($post['mkdate']));
+                if ($post['user_id'] == $uid) {$post['own_post'] = true;} else {$post['own_post'] = false;} 
+            }
+            else  {
+                unset($posts[$key]);
+            }
+        }
+
+        return array('posts'=>$posts, 'timestamp' => $timestamp);
+    }
+
+    public function author_view()
+    {
+        $this->authorizeUpdate();
+        $post_ids = Post::getThreadIds($this->container['cid']);
+
+        return array_merge($this->getAttrArray(), array("post_ids" => $post_ids));
+    }
+
+    public function save_handler(array $data)
+    {
+        $this->authorizeUpdate();
+        if (isset($data['post_title']) && isset($data['thread_id'])) {
+            $this->post_title = (string) $data['post_title'];
+            if ($data['thread_id'] != 'new'){
+                $this->thread_id = (string) $data['thread_id'];
+            } else {
+                $this->thread_id = Post::newThreadId($this->container['cid']);
+                $data = array(
+                    'thread_id' => $this->thread_id ,
+                    'post_id' => 0,
+                    'seminar_id' => $this->container['cid'],
+                    'user_id' => $this->container['current_user_id'],
+                    'content' => $data['post_title'],
+                    'mkdate' => (new \DateTime())->format('Y-m-d H:i:s')
+                );
+                POST::create($data);
+            }
+        } 
+
+        return;
+    }
+
+    public function message_handler($data)
+    {
+        if (isset($data['message'])) {
+            $this->setGrade(1.0);
+            $post_id = POST::getNextPostId($this->thread_id, $this->container['cid']);
+
+            $data = array(
+                'thread_id' => $this->thread_id ,
+                'post_id' => $post_id,
+                'seminar_id' => $this->container['cid'],
+                'user_id' => $this->container['current_user_id'],
+                'content' => $data["message"],
+                'mkdate' => (new \DateTime())->format('Y-m-d H:i:s')
+            );
+
+            Post::create($data);
+        }
+
+        return array();
+    }
+
+    public function update_handler($data)
+    {
+        if ($data['timestamp']) {
+            $posts = Post::findBySQL("thread_id ORDER BY mkdate DESC LIMIT 1", array($this->thread_id));
+            
+            if (strtotime($posts[0]["mkdate"]) > $data['timestamp']) {
+                return array_merge($this->getAttrArray(), $this->getPosts(), array("update" => true, "timestamp" =>strtotime($posts[0]["mkdate"])));
+            } 
+        }
+
+        return array("update" => false);
+    }
+
+    private function getAttrArray()
+    {
+        return array(
+            'post_title' => $this->post_title,
+            'thread_id' => $this->thread_id
+        );
+    }
+
+    public function exportProperties()
+    {
+       return $this->getAttrArray();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlNamespace()
+    {
+        return 'http://moocip.de/schema/block/post/';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXmlSchemaLocation()
+    {
+        return 'http://moocip.de/schema/block/post/post-1.0.xsd';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function importProperties(array $properties)
+    {
+        if (isset($properties['post_title'])) {
+            $this->post_title = $properties['post_title'];
+            $this->thread_id = Post::newThreadId($this->container['cid']);
+                $data = array(
+                    'thread_id' => $this->thread_id ,
+                    'post_id' => 0,
+                    'seminar_id' => $this->container['cid'],
+                    'user_id' => $this->container['current_user_id'],
+                    'content' => $properties['post_title'],
+                    'mkdate' => (new \DateTime())->format('Y-m-d H:i:s')
+                );
+                POST::create($data);
+        }
+
+        $this->save();
+    }
+
+}

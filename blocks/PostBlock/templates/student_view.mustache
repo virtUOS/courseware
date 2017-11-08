@@ -1,0 +1,35 @@
+{{^inactive}}
+<h1 class="cw-postblock-header">{{post_title}}</h1>
+<input type="hidden" class="cw-postblock-timestamp" value="{{timestamp}}">
+<div class="cw-postblock-posts shrink-messages">
+    {{#posts}}
+        <div class="talk-bubble {{#own_post}}own-{{/own_post}}post">
+            {{^own_post}}
+            <div class="post-user">
+                <img src='http://localhost/studip34/pictures/user/nobody_small.png?d=1505977562'/>
+                <p>{{user_name}}</p>
+            </div>
+            {{/own_post}}
+          <div class="talktext">
+            <p>{{content}}</p>
+            <p class="talktext-time">{{date}}</p>
+          </div>
+        </div>
+    {{/posts}}
+</div>
+<div class="clear"></div>
+<div class="cw-postblock-buttonbox">
+    <button name="showall" class="button cw-postblock-showall-messages">{{#i18n}}alles zeigen{{/i18n}}</button>
+    <button name="shrink" class="button cw-postblock-shrink-messages" style="display: none;">{{#i18n}}weniger zeigen{{/i18n}}</button>
+</div>
+<div class="cw-postblock-messagebox">
+    <textarea class="cw-postblock-textbox" style="width: calc(100% - 2em);"></textarea>
+    <button name="send" class="button cw-postblock-sendmessage">{{#i18n}}senden{{/i18n}}</button>
+</div>
+<div class="clear"></div>
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive}}
