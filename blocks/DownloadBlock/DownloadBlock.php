@@ -72,10 +72,11 @@ class DownloadBlock extends Block
     
     private function showFiles($folderId, $filetype = "")
     {
+        $cid = $this->container['cid'];
         $db = \DBManager::get();
-        $stmt = $db->prepare("SELECT * FROM `dokumente` WHERE `range_id` = :range_id
+        $stmt = $db->prepare("SELECT * FROM `dokumente` WHERE `seminar_id` = :range_id
             ORDER BY `name`");
-        $stmt->bindParam(":range_id", $folderId);
+        $stmt->bindParam(":range_id", $cid);
         $stmt->execute();
         $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $filesarray = array();
