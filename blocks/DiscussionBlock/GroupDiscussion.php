@@ -25,7 +25,18 @@ class GroupDiscussion extends  Discussion
 
     protected function getDefaultName()
     {
-        return $this->generateID();
+        $ancestors = array_map(
+            function ($ancestor) {
+                return $ancestor->title;
+            },
+            \Mooc\DB\Block::find($this->block_id)->getAncestors()
+        );
+
+        return sprintf(
+            '%s (id:%s)',
+            join(' » ', $ancestors),
+            $this->generateID()
+        );
     }
 
     protected function generateID()
