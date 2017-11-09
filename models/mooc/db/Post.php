@@ -32,6 +32,25 @@ class Post extends \SimpleORMap
         parent::__construct($id);
         $this->registerCallback('before_store', 'denyNobodyPost');
     }
+    
+    public function getAllThreadIds($cid)
+    {
+        $db = \DBManager::get();
+        $stmt = $db->prepare("
+            SELECT
+                thread_id
+            FROM
+                mooc_posts
+            WHERE
+                seminar_id = :cid
+            GROUP BY
+                thread_id
+        ");
+        $stmt->bindParam(":cid", $cid);
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
+    }
 
     public function findPosts($thread_id, $cid)
     {

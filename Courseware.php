@@ -398,9 +398,20 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     private function getTabNavigationForLecturers($tabs, $cid)
     {
         $cpoUrl = PluginEngine::getURL($this, compact('cid'), 'cpo', true);
-        $tabs['mooc_cpo'] = new Navigation(_cw('Fortschrittsübersicht'), $cpoUrl);
-        $tabs['mooc_cpo']->setImage(Icon::create('assessment', 'info_alt'));
-        $tabs['mooc_cpo']->setActiveImage(Icon::create('assessment', 'info'));
+        $navigation = new Navigation(_cw('Fortschrittsübersicht'), $cpoUrl);
+        $navigation->setImage(Icon::create('assessment', 'info_alt'));
+        $navigation->setActiveImage(Icon::create('assessment', 'info'));
+
+        $tabs['mooc_cpo'] = $navigation;
+
+        $navigation->addSubnavigation('index', clone $navigation);
+        $navigation->addSubnavigation(
+            'postoverview',
+            new Navigation(
+                _cw('Diskussionsübersicht'),
+                PluginEngine::getURL($this, compact('cid'), 'cpo/postoverview', true)
+            )
+        );
 
         return $tabs;
     }
