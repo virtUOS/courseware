@@ -124,7 +124,7 @@ class CpoController extends CoursewareStudipController {
         foreach ($result as $item){
             $block =  (new \Mooc\DB\Block($item["id"]));
             $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$block->parent_id;
-            $title = $block->parent->parent["title"]."->".$block->parent["title"];
+            $title = $block->parent->parent->parent["title"].">".$block->parent->parent["title"].">".$block->parent["title"];
             if (array_key_exists(str_replace('"', '', $item["json_data"]), $list) ){
                 array_push($list[str_replace('"', '', $item["json_data"])], array("link"=> $link, "title" => $title));
             } else {
