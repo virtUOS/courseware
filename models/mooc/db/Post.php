@@ -52,7 +52,7 @@ class Post extends \SimpleORMap
         return $stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
     }
 
-    public function findPosts($thread_id, $cid)
+    public function findPosts($thread_id, $cid, $uid)
     {
         $db = \DBManager::get();
         $stmt = $db->prepare("
@@ -69,7 +69,25 @@ class Post extends \SimpleORMap
         $stmt->bindParam(":cid", $cid);
         $stmt->execute();
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        
+        $posts = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $timestamp = 0;
+        array_shift($posts);
+        foreach($posts as $key => &$post){
+            $user = \User::find($post['user_id']);
+            if ($user){
+                $post['user_name'] = $user->getFullName();
+                $post['avatar'] = \Avatar::getAvatar($post['user_id'])->getImageTag(\Avatar::SMALL);
+                if ($timestamp < strtotime($post['mkdate'])) {$timestamp = strtotime($post['mkdate']);}
+                $post['date'] = date('H:i', strtotime($post['mkdate'])).' Uhr, am '.date('d.m.Y', strtotime($post['mkdate']));
+                if ($post['user_id'] == $uid) {$post['own_post'] = true;} else {$post['own_post'] = false;} 
+            }
+            else  {
+                unset($posts[$key]);
+            }
+        }
+
+        return array('posts'=>$posts, 'timestamp' => $timestamp);
     }
 
     public function findPost($thread_id, $post_id, $cid)

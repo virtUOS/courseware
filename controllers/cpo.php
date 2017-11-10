@@ -80,6 +80,7 @@ class CpoController extends CoursewareStudipController {
         if (Navigation::hasItem('/course/mooc_cpo/postoverview')) {
             Navigation::activateItem("/course/mooc_cpo/postoverview");
         }
+        PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
         $this->cid = $this->plugin->getCourseId();
         $this->threads = array();
         $thread_ids = \Mooc\DB\Post::getAllThreadIds($this->cid);
@@ -90,7 +91,7 @@ class CpoController extends CoursewareStudipController {
             $thread = array(
                 "thread_id" => $thread_id, 
                 "thread_title" => \Mooc\DB\Post::findPost($thread_id, 0, $this->cid)["content"],
-                "posts" => \Mooc\DB\Post::findPosts($thread_id, $this->cid)
+                "thread_posts" => \Mooc\DB\Post::findPosts($thread_id, $this->cid, $this->container['current_user']['id'])
             );
             array_push($this->threads, $thread);
         }

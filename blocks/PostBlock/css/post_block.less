@@ -11,74 +11,6 @@
             overflow: auto;
         }
     }
-    
-    .talk-bubble {
-        margin: 10px 20px;
-        display: inline-block;
-        position: relative;
-        width: 80%;
-        height: auto;
-        background-color: #ecf0f1;
-        border-radius: 5px;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-
-        &.post {
-            float: left;
-        }
-        &.own-post {
-            float: right;
-        }
-        &:after{
-            content: ' ';
-            position: absolute;
-            width: 0;
-            height: 0;
-            top: 0px;
-            bottom: auto;
-            border: 22px solid;
-            border-color: #ecf0f1 transparent transparent transparent;
-            border-radius: 5px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-        }
-        &.post:after{
-            left: -20px;
-            right: auto;
-        }
-        &.own-post:after{
-            left: auto;
-            right: -20px;
-        }
-        .post-user {
-            padding: 1em 1em 0 1em;
-
-            img {
-                vertical-align: bottom;
-            }
-            p {
-                display: inline; 
-                padding-left: 0.5em; 
-                color:#aaa; 
-                font-weight:600;
-                span {
-                    font-weight: 400;
-                }
-            }
-        }
-        .talktext{
-            padding: 1em;
-            text-align: left;
-            line-height: 1.5em;
-
-            .talktext-time {
-                color: #aaa;
-                text-align: right;
-                font-size: 0.8em;
-                margin-bottom: -0.5em;
-            }
-        }
-    }
 
     .cw-postblock-messagebox {
         margin: 20px;
@@ -98,4 +30,72 @@
         }
     }
 
+}
+
+.talk-bubble {
+    margin: 10px 20px;
+    display: inline-block;
+    position: relative;
+    width: 80%;
+    height: auto;
+    background-color: #ecf0f1;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+
+    &.post {
+        float: left;
+    }
+    &.own-post {
+        float: right;
+    }
+    &:after{
+        content: ' ';
+        position: absolute;
+        width: 0;
+        height: 0;
+        top: 0px;
+        bottom: auto;
+        border: 22px solid;
+        border-color: #ecf0f1 transparent transparent transparent;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+    }
+    &.post:after{
+        left: -20px;
+        right: auto;
+    }
+    &.own-post:after{
+        left: auto;
+        right: -20px;
+    }
+    .post-user {
+        padding: 1em 1em 0 1em;
+
+        img {
+            vertical-align: bottom;
+        }
+        p {
+            display: inline; 
+            padding-left: 0.5em; 
+            color:#aaa; 
+            font-weight:600;
+            span {
+                font-weight: 400;
+            }
+        }
+    }
+    .talktext{
+        padding: 1em;
+        text-align: left;
+        line-height: 1.5em;
+
+        .talktext-time {
+            color: #aaa;
+            text-align: right;
+            font-size: 0.8em;
+            margin-bottom: -0.5em;
+        }
+    }
 }

@@ -20,30 +20,7 @@ class PostBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
-        return array_merge($this->getAttrArray(), $this->getPosts());
-    }
-
-    private function getPosts()
-    {
-        $posts = Post::findPosts($this->thread_id, $this->container['cid']);
-        $uid = $this->container['current_user_id'];
-        $timestamp = 0;
-        array_shift($posts);
-        foreach($posts as $key => &$post){
-            $user = \User::find($post['user_id']);
-            if ($user){
-                $post['user_name'] = $user->getFullName();
-                $post['avatar'] = \Avatar::getAvatar($post['user_id'])->getImageTag(\Avatar::SMALL);
-                if ($timestamp < strtotime($post['mkdate'])) {$timestamp = strtotime($post['mkdate']);}
-                $post['date'] = date('H:i', strtotime($post['mkdate'])).' Uhr, am '.date('d.m.Y', strtotime($post['mkdate']));
-                if ($post['user_id'] == $uid) {$post['own_post'] = true;} else {$post['own_post'] = false;} 
-            }
-            else  {
-                unset($posts[$key]);
-            }
-        }
-
-        return array('posts'=>$posts, 'timestamp' => $timestamp);
+        return array_merge($this->getAttrArray(), Post::findPosts($this->thread_id, $this->container['cid'], $this->container['current_user_id']));
     }
 
     public function author_view()
