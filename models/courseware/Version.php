@@ -12,7 +12,6 @@ class Version
     {
         $this->version = substr($GLOBALS['SOFTWARE_VERSION'], 0, 3);
     }
-
  
     /**
      * Returns true if passed version is newer than the current Stud.IP version

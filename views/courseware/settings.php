@@ -22,12 +22,9 @@ if ($flash['success']) {
         </caption>
 
         <tbody>
-
             <tr>
                 <th colspan="2"><?= _cw('Allgemeines') ?></th>
             </tr>
-
-
             <tr>
                 <td>
                     <label for="courseware-title">
@@ -41,7 +38,6 @@ if ($flash['success']) {
                     <input id="courseware-title" type="text" name="courseware[title]" value="<?= htmlReady($courseware_block->title) ?>" aria-describedby="courseware-progression-description">
                 </td>
             </tr>
-
             <tr>
                 <td>
                     <label for="courseware-progression">
@@ -59,7 +55,6 @@ if ($flash['success']) {
                     </select>
                 </td>
             </tr>
-
 
             <?= $this->render_partial('courseware/_settings_editing_permission') ?>
             

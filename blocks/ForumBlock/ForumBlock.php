@@ -156,6 +156,7 @@ class ForumBlock extends Block
             }
             $path[] = $parent->title;
         }
+
         return implode(' > ', array_reverse($path));
     }
 
@@ -220,6 +221,7 @@ class ForumBlock extends Block
     {
         $plugin_manager = \PluginManager::getInstance();
         $plugin_info = $plugin_manager->getPluginInfo('CoreForum');
+
         return $plugin_manager->isPluginActivated($plugin_info['id'], $block->getModel()->seminar_id);
     }
 }

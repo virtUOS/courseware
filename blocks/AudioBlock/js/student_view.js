@@ -65,7 +65,6 @@ export default StudentView.extend({
       $playbutton.removeClass('cw-audio-playbutton-playing');
       $player.prop('currentTime', 0);
     }, false);
-
   },
 
   playAudioFile() {

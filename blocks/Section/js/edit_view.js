@@ -26,6 +26,7 @@ export default Backbone.View.extend({
   render() {
     var template = templates('Section', 'edit_view', this.model.toJSON());
     this.$el.html(template);
+
     return this;
   },
 

@@ -2,7 +2,7 @@
 
 class LocalizationController extends CoursewareStudipController
 {
-    function index_action()
+    public function index_action()
     {
         $this->set_content_type('application/javascript; charset=UTF-8');
 
@@ -13,6 +13,7 @@ class LocalizationController extends CoursewareStudipController
             if (strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) === $modified) {
                 $this->set_status(304, "Not modified.");
                 $this->render_nothing();
+
                 return;
             }
         }
@@ -40,10 +41,8 @@ class LocalizationController extends CoursewareStudipController
                     }
                 }
             }
-
             $cache->write('courseware/translatables', serialize($this->translatable_texts));
         }
-
 
         $this->layout = null;
         $this->language = str_replace('.UTF-8', '', $_SESSION['_language']);

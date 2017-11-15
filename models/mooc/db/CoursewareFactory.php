@@ -53,7 +53,6 @@ class CoursewareFactory
     private function createChapter($courseware, $title)
     {
         $chapter = $this->createGenericBlock($courseware, 'Chapter', $title);
-
         $this->createSubchapter($chapter, _cw("Unterkapitel 1"));
 
         return $chapter;
@@ -62,7 +61,6 @@ class CoursewareFactory
     private function createSubchapter($chapter, $title)
     {
         $subchapter = $this->createGenericBlock($chapter, 'Subchapter', $title);
-
         $this->createSection($subchapter, _cw("Abschnitt 1"));
         $this->createSection($subchapter, _cw("Abschnitt 2"));
 
@@ -72,7 +70,6 @@ class CoursewareFactory
     private function createSection($subchapter, $title)
     {
         $section = $this->createGenericBlock($subchapter, 'Section', $title);
-
         $this->createHtmlBlock($section, _cw("Name des HTML-Blocks"));
 
         return $section;

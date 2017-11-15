@@ -24,6 +24,7 @@ class GalleryBlock extends Block
             return array('inactive' => true);
         }
         $this->setGrade(1.0);
+
         return array_merge(
             $this->getAttrArray(), 
             ['showFiles' => $this->showFiles($this->gallery_folder_id ), 
@@ -35,6 +36,7 @@ class GalleryBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
+
         return array_merge($this->getAttrArray(), ["foldernames" => $this->getFolderNames()]);
     }
 
@@ -78,8 +80,9 @@ class GalleryBlock extends Block
 
         return;
     }
-    
-    private function getFolderNames() {
+
+    private function getFolderNames()
+    {
         $cid = $this->container['cid'];
         $db = \DBManager::get();
         $stmt = $db->prepare('
@@ -112,6 +115,7 @@ class GalleryBlock extends Block
         $stmt->bindParam(':range_id', $folderId);
         $stmt->execute();
         $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
         $filesarray = array();
         $mimetypes = ['jpg', 'png'];
         foreach ($response as $item) {
@@ -148,6 +152,7 @@ class GalleryBlock extends Block
         $stmt->bindParam(':range_id', $this->gallery_folder_id);
         $stmt->execute();
         $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
         $mimetypes = ['jpg', 'png'];
         $files = array();
         foreach ($response as $item) {
@@ -225,6 +230,7 @@ class GalleryBlock extends Block
             $user->id,
             $permission
         ));
+
         if ($statement->rowCount()) {
             $folder_tree->init();
         }

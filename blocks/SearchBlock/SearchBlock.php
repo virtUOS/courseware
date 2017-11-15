@@ -71,6 +71,7 @@ class SearchBlock extends Block
         if (isset($properties['searchtitle'])) {
             $this->searchtitle = $properties['searchtitle'];
         }
+
         $this->save();
     }
 

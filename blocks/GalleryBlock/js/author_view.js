@@ -41,16 +41,15 @@ export default AuthorView.extend({
         });
         var $stored_autoplay = $view.$el.find('.gallery-stored-autoplay').val();
         var $stored_hidenav = $view.$el.find('.gallery-stored-hidenav').val();
-        
+
         if ($stored_autoplay == 1) {
             $view.$el.find('input[name="gallery-autoplay"]').prop( "checked", true)
         }
         if ($stored_hidenav == 1) {
             $view.$el.find('input[name="gallery-hidenav"]').prop( "checked", true)
         }
-        
     },
-    
+
     onSave(event) {
         var view = this;
         var $folder = this.$el.find('.gallery-folder');
@@ -69,7 +68,7 @@ export default AuthorView.extend({
             console.log(errorMessage, arguments);
           });
     },
-    
+
     onModeSwitch(toView, event) {
         if (toView != 'student') {
           return;

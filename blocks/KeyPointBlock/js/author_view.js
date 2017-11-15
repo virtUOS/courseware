@@ -27,6 +27,7 @@ export default AuthorView.extend({
     if($view.$(".cw-keypoint-stored-color").val() != "") {
         $view.$('select.cw-keypoint-select-color option[value="'+$view.$('.cw-keypoint-stored-color').val()+'"]').prop('selected', true);
     }
+
     return this;
   },
 

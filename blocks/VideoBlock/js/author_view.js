@@ -12,6 +12,7 @@ export default AuthorView.extend({
     'click button[name=videotimereset]': 'videotimereset',
     'click button[name=addmediatype]': 'addmediatype'
   },
+
   initialize() {
     Backbone.on('beforemodeswitch', this.onModeSwitch, this);
     Backbone.on('beforenavigate', this.onNavigate, this);
@@ -43,9 +44,11 @@ export default AuthorView.extend({
     event.isUserInputHandled = true;
     Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
   },
+
   render() {
     return this;
   },
+
   postRender() {
     var url = this.$el.find('.videourl').val();
     var videotype = this.getVideoType(url);
@@ -54,6 +57,7 @@ export default AuthorView.extend({
     this.selection();
 
   },
+
   saveVideo() {
     this.preview();
     var view = this;
@@ -95,7 +99,6 @@ export default AuthorView.extend({
       webvideo = '';
       webvideosettings = '';
     }
-
     status.text('Speichere Änderungen...');
 
     helper.callHandler(this.model.id, 'save', {
@@ -119,10 +122,9 @@ export default AuthorView.extend({
     }
     this.showPreview(this, url);
     this.$('.video-wrapper').attr('class', 'video-wrapper ' + aspect);
-
   },
-  selection() {
 
+  selection() {
     var videotype = this.$el.find('.videotype').val();
     this.$el.find('.videosource').hide();
     this.$el.find('.videotimer').hide();
@@ -160,7 +162,6 @@ export default AuthorView.extend({
     }
     this.resetVideoData(this);
     this.setVideoData(this, this.$el.find('.videourl').val(), videotype);
-
   },
 
   videotimereset() {
@@ -356,8 +357,8 @@ export default AuthorView.extend({
       }
       break;
     }
-
   },
+
   buildYouTubeLink(id, startmin, startsec, endmin, endsec, autoplay) {
     var url = '//www.youtube.com/embed/' + id, start = 0, end = 0;    // ommit protocol to prevent http/https-problems
     if (startmin != '') {
@@ -387,6 +388,7 @@ export default AuthorView.extend({
         url += '?autoplay=1';
       }
     }
+
     return url;
   },
 

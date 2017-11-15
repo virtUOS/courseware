@@ -16,7 +16,6 @@ class IFrameBlock extends Block
         $this->defineField('submit_param', \Mooc\SCOPE_BLOCK, "uid");
         $this->defineField('salt', \Mooc\SCOPE_BLOCK, md5(uniqid('', true)));
         $this->defineField('cc_infos',    \Mooc\SCOPE_BLOCK, "");
-        
     }
 
     private function array_rep($url = "")
@@ -156,7 +155,7 @@ class IFrameBlock extends Block
 
         $this->save();
     }
-    
+
     private function buildUID()
     {
         $url = $this->url;

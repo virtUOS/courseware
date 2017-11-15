@@ -22,7 +22,7 @@ export default AuthorView.extend({
         var $sortingButtons = jQuery('button.lower', $section);
         $sortingButtons = $sortingButtons.add(jQuery('button.raise', $section));
         $sortingButtons.addClass('no-sorting');
-    
+
         Backbone.on('beforemodeswitch', this.onModeSwitch, this);
         Backbone.on('beforenavigate', this.onNavigate, this);
     },
@@ -44,7 +44,6 @@ export default AuthorView.extend({
 
     postRender() {
         hljs.highlightBlock(this.$('.code-content-preview > pre > code')[0]);
-
     },
     
     updatePreview() {

@@ -21,7 +21,6 @@ class ImportController extends CoursewareStudipController
         Navigation::activateItem('course/mooc_courseware');
     }
 
-
     public function index_action()
     {
         $this->errors = array();
@@ -89,7 +88,8 @@ class ImportController extends CoursewareStudipController
         return true;
     }
 
-    private function installModule($filename) {
+    private function installModule($filename)
+    {
         // create a temporary directory
         $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
         mkdir($tempDir);
@@ -104,7 +104,6 @@ class ImportController extends CoursewareStudipController
         }
 
         $this->deleteRecursively($tempDir);
-
     }
 
     private function deleteRecursively($path)

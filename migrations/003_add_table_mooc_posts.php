@@ -9,14 +9,15 @@ require __DIR__.'/../vendor/autoload.php';
  */
 
 
-class SetupCourseware extends Migration {
-
-    public function description () {
+class SetupCourseware extends Migration
+{
+    public function description()
+    {
         return 'Setup table mooc_posts for the new PostBlock';
     }
 
-    public function up () {
-
+    public function up()
+    {
         $db = DBManager::get();
 
         $db->exec("CREATE TABLE IF NOT EXISTS `mooc_posts` (
@@ -33,7 +34,7 @@ class SetupCourseware extends Migration {
         SimpleORMap::expireTableScheme();
     }
 
-    public function down ()
+    public function down()
     {
         // To avoid data loss, nothing is deleted by default
         // remove the following "return;"-statement to clean tables on uninstall

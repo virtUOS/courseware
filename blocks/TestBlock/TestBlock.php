@@ -320,6 +320,7 @@ class TestBlock extends Block
             } else {
                 $sample_solution = false;
             }
+
             $entry = array(
                 'exercise_type'       => $exercise->getTypeName(),
                 'id'                  => $exercise->getId(),

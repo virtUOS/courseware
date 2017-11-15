@@ -38,6 +38,7 @@ export default AuthorView.extend({
         if($view.$(".cw-link-stored-title").val() != "") {
             $view.$('input.cw-link-title').val($view.$('.cw-link-stored-title').val());
         }
+
         return this;
     },
 
@@ -66,7 +67,7 @@ export default AuthorView.extend({
         event.isUserInputHandled = true;
         Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie die Seite trotzdem verlassen?'));
     },
-    
+
     onModeSwitch(toView, event) {
         if (toView != 'student') {
             return;

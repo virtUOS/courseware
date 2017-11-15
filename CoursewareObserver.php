@@ -15,14 +15,14 @@ require_once __DIR__.'/vendor/autoload.php';
  */
 class CoursewareObserver extends StudIPPlugin implements SystemPlugin
 {
-
     /**
      * Initialize this plugin and observe these Notifications:
      *
      *   - PostingHasSaved
      *   - PersonalNotificationsWillStore
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->observeBlubber();
@@ -122,7 +122,6 @@ class CoursewareObserver extends StudIPPlugin implements SystemPlugin
         }
     }
 
-
     // find the BlubberPosting matching the PersonalNotification
     private function findBlubberFromPersonalNotification($personal_notification)
     {
@@ -149,7 +148,6 @@ class CoursewareObserver extends StudIPPlugin implements SystemPlugin
                     $posting->root_id
             ));
     }
-
 
     // rewrite the URL of the GroupDiscussion's PN
     private function redirectGroupDiscussionPN($personal_notification, $posting, $block)

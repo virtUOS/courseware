@@ -45,7 +45,8 @@ export default StudentView.extend({
                     $block.find('.exercise').hide();
                     $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
                 });
-            } 
+            }
+
           return false;
         },
 
@@ -71,6 +72,7 @@ export default StudentView.extend({
             .catch(function () {
                 console.log('failed to store the solution');
             });
+
             return false;
         },
 
@@ -104,7 +106,6 @@ export default StudentView.extend({
                 this.$(event.target).html("Hinweis ausblenden");
             }
         }
-        
     },
 
     initialize() {

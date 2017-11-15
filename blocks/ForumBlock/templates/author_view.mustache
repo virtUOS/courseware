@@ -1,30 +1,27 @@
 <h2>Diskussion</h2>
-
-
 {{^inactive}}
-<div>
-    {{#connected}}
-    Momentan verknüpft mit: <a href="{{area_url}}">{{area_name}}</a><br>
-    <br>
-    {{/connected}}
+    <div>
+        {{#connected}}
+        Momentan verknüpft mit: <a href="{{area_url}}">{{area_name}}</a><br>
+        <br>
+        {{/connected}}
 
-    Wählen Sie hier einen vorhandenen Forenbereich aus oder lassen Sie automatisch einen neuen erstellen:
-    <select name="area">
-        <option value="-1">Automatisch neuen Forenbereich erstellen</option>
-    {{#areas}}
-    <option value="{{topic_id}}">
-        {{name_raw}}
-    </option>
-    {{/areas}}
-    </select><br>
+        Wählen Sie hier einen vorhandenen Forenbereich aus oder lassen Sie automatisch einen neuen erstellen:
+        <select name="area">
+            <option value="-1">Automatisch neuen Forenbereich erstellen</option>
+        {{#areas}}
+        <option value="{{topic_id}}">
+            {{name_raw}}
+        </option>
+        {{/areas}}
+        </select><br>
 
-    <button name="save" class="button">Speichern</button>
-    <button name="cancel" class="button">Abbrechen</button>
-</div>
+        <button name="save" class="button">Speichern</button>
+        <button name="cancel" class="button">Abbrechen</button>
+    </div>
 {{/inactive}}
-
 {{#inactive}}
-<div class="messagebox messagebox_info">
-    {{#i18n}}Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet werden...{{/i18n}}
-</div>
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet werden...{{/i18n}}
+    </div>
 {{/inactive}}

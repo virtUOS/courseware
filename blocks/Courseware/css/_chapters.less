@@ -9,7 +9,6 @@
 }
 
 ol.chapters {
-
   padding: 0;
 
   .title span.indented {
@@ -75,10 +74,8 @@ ol.chapters {
 
 
   // ***** SORTING SUB/CHAPTERS *****
-
   .handle {
     display: none;
-
     color: transparent;
     width: 25px;
     padding: 5px;
@@ -87,7 +84,6 @@ ol.chapters {
   }
 
   &.sorting {
-
     & > .controls button,
     .subchapters > .controls button,
     .chapter > .title button,
@@ -96,11 +92,8 @@ ol.chapters {
     }
 
     &.ui-sortable {
-
       .chapter > .title {
-
         background-image: none;
-
         // display chapter handles
         .handle {
           display: table-cell;
@@ -119,7 +112,6 @@ ol.chapters {
 
     // sorting subchapters
     .subchapters.ui-sortable {
-
       // display subchapter handles
       .subchapter > .title .handle {
         display: table-cell;
@@ -131,7 +123,6 @@ ol.chapters {
     }
   }
 }
-
 
 ol.subchapters {
   padding-left: 25px;
@@ -173,7 +164,6 @@ ol.subchapters {
       padding: 2px;
     }
 
-
     &:hover {
       background-color: #eee;
 
@@ -186,7 +176,6 @@ ol.subchapters {
   li.no-content {
     padding: 10px 5px;
   }
-
 
   .subchapter.loading > .title {
      .ajax-indicator-bg-icon();
@@ -232,11 +221,7 @@ ol.subchapters {
   }
 }
 
-
-
-
 // ***** EDITING SUB/CHAPTERS *****
-
 .chapters > li > .edit-structure,
 .subchapters > li > .edit-structure,
 .chapters > .selected > .subchapters > .selected > .sections > li > .edit-structure {
@@ -288,6 +273,7 @@ ol.subchapters {
 .activate-aside-section {
   display: none;
 }
+
 li.selected ~ li.controls .activate-aside-section {
   display: inline-block;
 }

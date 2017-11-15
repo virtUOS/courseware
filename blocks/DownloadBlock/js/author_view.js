@@ -29,7 +29,6 @@ export default AuthorView.extend({
         $(this).prop('selected', true);
       }
     });
-
     var $files = $view.$el.find('.download-file option');
     var $stored_file = $view.$el.find('.download-stored-file').val();
     $files.each(function () {
@@ -37,7 +36,6 @@ export default AuthorView.extend({
         $(this).prop('selected', true);
       }
     });
-
   },
 
   onNavigate(event) {

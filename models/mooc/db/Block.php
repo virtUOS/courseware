@@ -148,8 +148,7 @@ class Block extends \SimpleORMap implements \Serializable
             $types = (array) $types;
         }
 
-        return static::findBySQL('seminar_id = ? AND type IN (?) ORDER BY position ASC',
-                                 array($cid, $types));
+        return static::findBySQL('seminar_id = ? AND type IN (?) ORDER BY position ASC', array($cid, $types));
     }
 
     // enumerate all known structural block classes

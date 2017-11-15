@@ -18,7 +18,6 @@ class BlocksController extends CoursewareStudipController {
         if ($this->acceptsJSON() || !$ui_block) {
             $json = $block->toArray();
 
-
             // FIXME: braucht irgendwer die children? Ich hab noch
             // keine Stelle gefunden.
             $json['children'] = array();
@@ -43,7 +42,6 @@ class BlocksController extends CoursewareStudipController {
         }
     }
 
-
     function post($id)
     {
         // we need the handler and the data
@@ -65,7 +63,6 @@ class BlocksController extends CoursewareStudipController {
 
         $this->callBlockHandler($ui_block, $this->data['handler'], $this->data['data']);
     }
-
 
     function put($id)
     {
@@ -105,7 +102,6 @@ class BlocksController extends CoursewareStudipController {
             $this->json_error('Could not modify block.');
         }
     }
-
 
     function delete($id)
     {
@@ -150,7 +146,6 @@ class BlocksController extends CoursewareStudipController {
         return $block;
     }
 
-
     /**
      * Extracts action and args from a string.
      *
@@ -159,17 +154,18 @@ class BlocksController extends CoursewareStudipController {
      * @return array        an array with two elements - a string containing the
      *                      action and an array of strings representing the args
      */
-    function extract_action_and_args($string) {
+    function extract_action_and_args($string)
+    {
         return array($this->get_verb(), explode('/', $string));
     }
 
-
-    function map_action($action) {
+    function map_action($action)
+    {
         return array(&$this, strtolower($action));
     }
 
-
-    function get_verb() {
+    function get_verb() 
+    {
 
         $verb = strtoupper(isset($_REQUEST['_method'])
         ? $_REQUEST['_method'] : @$_SERVER['REQUEST_METHOD']);

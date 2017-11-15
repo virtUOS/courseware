@@ -97,6 +97,7 @@ export default StudentView.extend({
                 clearInterval(updateLoop);
               }
             });
+
         return;
     }
 });

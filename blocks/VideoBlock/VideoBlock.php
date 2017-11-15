@@ -38,6 +38,7 @@ class VideoBlock extends Block
         $this->setGrade(1.0);
         $array = $this->array_rep();
         $array['webvideo'] = json_decode($array['webvideo']);
+
         return $array;
     }
 
@@ -51,7 +52,6 @@ class VideoBlock extends Block
     public function save_handler($data)
     {
         $this->authorizeUpdate();
-
         $this->url = (string) $data['url'];
         $this->webvideo = (string) $data['webvideo'];
         $this->webvideosettings = (string) $data['webvideosettings'];

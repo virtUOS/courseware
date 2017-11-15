@@ -97,7 +97,7 @@ export default AuthorView.extend({
         }
         event.isUserInputHandled = true;
         Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
-    },
-    
+    }
+
 });
 

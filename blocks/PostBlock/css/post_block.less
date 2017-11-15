@@ -2,8 +2,8 @@
 
 .PostBlock {
     .cw-postblock-header {
-
     }
+
     .cw-postblock-posts {
         margin-bottom: 1em;
         &.shrink-messages {
@@ -24,12 +24,12 @@
             -moz-border-radius: 5px;
             border: solid thin #ccc;
         }
+
         .cw-postblock-sendmessage {
             margin-bottom: 24px;
             float: right;
         }
     }
-
 }
 
 .talk-bubble {
@@ -46,9 +46,11 @@
     &.post {
         float: left;
     }
+
     &.own-post {
         float: right;
     }
+
     &:after{
         content: ' ';
         position: absolute;
@@ -62,30 +64,36 @@
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
     }
+
     &.post:after{
         left: -20px;
         right: auto;
     }
+
     &.own-post:after{
         left: auto;
         right: -20px;
     }
+
     .post-user {
         padding: 1em 1em 0 1em;
 
         img {
             vertical-align: bottom;
         }
+
         p {
             display: inline; 
             padding-left: 0.5em; 
             color:#aaa; 
             font-weight:600;
+
             span {
                 font-weight: 400;
             }
         }
     }
+
     .talktext{
         padding: 1em;
         text-align: left;

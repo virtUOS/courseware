@@ -9,14 +9,16 @@ require __DIR__.'/../vendor/autoload.php';
  */
 
 
-class SetupCourseware extends Migration {
+class SetupCourseware extends Migration
+{
 
-    public function description () {
+    public function description()
+    {
         return 'Setup tables for the mooc.ip courseware-plugin and adds editable display name of the plugin.';
     }
 
-    public function up () {
-
+    public function up()
+    {
         $db = DBManager::get();
 
         // check if Mooc.IP is already installed and the schema-version of Mooc.IP
@@ -61,7 +63,6 @@ class SetupCourseware extends Migration {
           PRIMARY KEY (`block_id`,`user_id`)
         )");
 
-
         if (is_null(Config::get()->getValue(\Mooc\PLUGIN_DISPLAY_NAME_ID))) {
             Config::get()->create(\Mooc\PLUGIN_DISPLAY_NAME_ID, array(
                 'value'       => 'Mooc.IP',
@@ -76,7 +77,7 @@ class SetupCourseware extends Migration {
         SimpleORMap::expireTableScheme();
     }
 
-    public function down ()
+    public function down()
     {
         // To avoid data loss, nothing is deleted by default
         // remove the following "return;"-statement to clean tables on uninstall

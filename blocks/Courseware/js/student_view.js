@@ -9,7 +9,6 @@ import ChapterListView from './chapter_list'
 import SectionListView from './section_list'
 import tooltip from 'js/tooltip'
 
-
 function getHash(el) {
   return el.ownerDocument.location.hash;
 }
@@ -22,9 +21,7 @@ function clearHash(el) {
   setHash(el, '');
 }
 
-
 export default StudentView.extend({
-
   chaptersView:      null,
   sectionsView:      null,
   activeSectionView: null,
@@ -34,7 +31,6 @@ export default StudentView.extend({
     'click .mode-switch .student': 'switchToStudentMode',
     'click .mode-switch .author':  'switchToAuthorMode',
     'click .mobile-show-nav-button' : 'showMobileNavigation',
-
     'click a.navigate':            'navigateTo'
   },
 
@@ -44,9 +40,7 @@ export default StudentView.extend({
     if (getHash(this.el) === '#author') {
       this.switchToAuthorMode();
     }
-
     this.postRender();
-
     this.$el.removeClass('loading');
   },
 
@@ -113,10 +107,8 @@ export default StudentView.extend({
     if (this.activeSectionView) {
       this.activeSectionView.postRender();
     }
-
     tooltip(this.$el, 'button');
     this.resizeColumnHeights();
-    
   },
 
   navigateTo(event) {
@@ -181,7 +173,6 @@ export default StudentView.extend({
     this.$el.removeClass('view-student').addClass('view-author');
     setHash(this.el, 'author');
     Backbone.trigger('modeswitch', 'author');
-
     this.resizeColumnHeights();
   },
 
@@ -192,7 +183,6 @@ export default StudentView.extend({
   },
   
   showMobileNavigation(event) {
-
     if (jQuery(event.target).hasClass("nav-on")) {
         this.$el.find("aside").hide("slow");
         jQuery(event.target).removeClass("nav-on");

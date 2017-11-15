@@ -120,7 +120,6 @@ export default StudentView.extend({
         model = block_view.model,
         $block_wrapper = block_view.$el.closest('section.block');
 
-
     // already switched
     if (block_view.view_name === view_name) {
       return;
@@ -150,7 +149,6 @@ export default StudentView.extend({
   },
 
   addNewBlock(event) {
-
     var view = this,
         $button = $(event.target),
         $option = $button.closest('.block-adder').find(':selected'),
@@ -172,7 +170,6 @@ export default StudentView.extend({
         $el.addClass('loading');
         block_stub.renderServerSide().then(function () {
           $el.removeClass('loading');
-
           // hide the edit button when the form is shown
           $el.find('.controls button.author').hide();
           //insert block name
@@ -183,7 +180,6 @@ export default StudentView.extend({
         $('html, body').animate({
             scrollTop: $el.offset().top
         }, 2000);
-        
       })
       .catch(function (error) {
         var errorMessage = 'Could not add the block: ' + $.parseJSON(error.responseText).reason;
@@ -267,12 +263,10 @@ export default StudentView.extend({
           }
           view.remove();
           $wrapped.children().unwrap();
-
         });
   },
 
   destroySection() {
-
     if (confirm(i18n('Wollen Sie den gesamten Abschnitt wirklich löschen?'))) {
       $('#courseware').addClass('loading');
 
@@ -311,6 +305,7 @@ export default StudentView.extend({
           }
         });
       })
+
       return deferred;
     };
 

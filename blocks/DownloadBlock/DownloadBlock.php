@@ -124,7 +124,7 @@ class DownloadBlock extends Block
         foreach ($response as $item) {
             $filesarray[] = $item;
         }
-        
+
         return $filesarray;
     }
 

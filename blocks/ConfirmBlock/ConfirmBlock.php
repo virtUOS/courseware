@@ -4,8 +4,6 @@ namespace Mooc\UI\ConfirmBlock;
 
 use Mooc\UI\Block;
 
-/**
- */
 class ConfirmBlock extends Block
 {
     const NAME = 'Bestätigung';
@@ -22,6 +20,7 @@ class ConfirmBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
+
         return array(
             'confirmed' => !! $this->getProgress()->grade,
             'title'     => $this->title
@@ -42,6 +41,7 @@ class ConfirmBlock extends Block
     public function confirm_handler($data)
     {
         $this->setGrade(1);
+
         return array();
     }
 }

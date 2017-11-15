@@ -3,8 +3,8 @@
 /**
  * @property \Courseware $plugin
  */
-class CoursewareStudipController extends StudipController {
-
+class CoursewareStudipController extends StudipController
+{
     public function __construct($dispatcher)
     {
         parent::__construct($dispatcher);
@@ -16,11 +16,8 @@ class CoursewareStudipController extends StudipController {
     public function before_filter(&$action, &$args)
     {
         parent::before_filter($action, $args);
-
         $this->data = studip_utf8decode($this->parseRequestBody());
-
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base'));
-
         $this->setDefaultPageTitle();
     }
 
@@ -46,7 +43,6 @@ class CoursewareStudipController extends StudipController {
 
         return PluginEngine::getURL($this->dispatcher->plugin, $params, join('/', $args));
     }
-
 
     /**
      * Render some data as JSON.
@@ -79,7 +75,6 @@ class CoursewareStudipController extends StudipController {
 
         return parent::map_action($action);
     }
-
 
     protected function isJSONRequest()
     {
@@ -126,13 +121,13 @@ class CoursewareStudipController extends StudipController {
     }
 
     // predicat returning true if the client wants JSON
-    public function acceptsJSON() {
+    public function acceptsJSON()
+    {
         $negotiator   = new \Negotiation\FormatNegotiator();
-
         $acceptHeader = $_SERVER['HTTP_ACCEPT'];
         $priorities   = array('application/json', 'text/html');
-
         $format = $negotiator->getBest($acceptHeader, $priorities);
+
         return $format && $format->getValue() === $priorities[0];
     }
 

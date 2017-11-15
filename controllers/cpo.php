@@ -1,7 +1,7 @@
 <?php
 // CPO -> course progress overview
-class CpoController extends CoursewareStudipController {
-
+class CpoController extends CoursewareStudipController
+{
     public function before_filter(&$action, &$args)
     {
         parent::before_filter($action, $args);
@@ -14,17 +14,16 @@ class CpoController extends CoursewareStudipController {
         }
 
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
-       
+
         $courseware = $this->container['current_courseware'];
-        $title = Request::option('cid', false)
-               ? $_SESSION['SessSemName']['header_line'] . ' - '
-               : '';
+        $title = Request::option('cid', false) ? $_SESSION['SessSemName']['header_line'] . ' - ' : '';
         $title .= $courseware->title." - Fortschrittsübersicht für Lehrende";
         PageLayout::setTitle($title);
 
         if (Navigation::hasItem('/course/mooc_cpo/index')) {
             Navigation::activateItem("/course/mooc_cpo/index");
         }
+
         $teachers = (new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), "dozent");
         $dids = array_map(function($teacher){return $teacher->user_id;} , $teachers); // dozent ids
         $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId()));
@@ -43,7 +42,6 @@ class CpoController extends CoursewareStudipController {
                         'users' => $users,
                         'date' => $date
                     );
-                    
                 } else {
                     $memo[$item->block_id] = array(
                         'grade' => $item->grade,
@@ -52,6 +50,7 @@ class CpoController extends CoursewareStudipController {
                         'date' => $item->chdate
                     );
                 }
+
                 return $memo;
             },
             array());
@@ -80,7 +79,9 @@ class CpoController extends CoursewareStudipController {
         if (Navigation::hasItem('/course/mooc_cpo/postoverview')) {
             Navigation::activateItem("/course/mooc_cpo/postoverview");
         }
+
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
+
         $this->cid = $this->plugin->getCourseId();
         $this->threads = array();
         $thread_ids = \Mooc\DB\Post::getAllThreadIds($this->cid);
@@ -149,6 +150,7 @@ class CpoController extends CoursewareStudipController {
                 $usage[0] += 1;
             }
         }
+
         return $usage;
     }
 
@@ -161,9 +163,7 @@ class CpoController extends CoursewareStudipController {
             }
             $root['progress'] = $this->computeProgress($root);
             $root['date'] = $this->setDate($progress, $root);
-        }
-
-        else {
+        } else {
             $root['children'] = $this->addChildren($grouped, $root);
             if ($root['children']) {
                 $grades = array_map(
@@ -198,6 +198,7 @@ class CpoController extends CoursewareStudipController {
             function ($item) {
                 return $item['publication_date'] <= time();
             });
+
         return $parent['children'];
     }
 
@@ -206,14 +207,15 @@ class CpoController extends CoursewareStudipController {
         if (!sizeof($block['children'])) {
             return 0;
         }
-        return
-            array_sum(
+
+        return array_sum(
                 array_map(
                     function ($section) {return $section['progress']; },
                     $block['children'])
-            ) / sizeof($block['children']);
+            ) / sizeof($block['children']
+        );
     }
-    
+
     private function setDate($progress, &$block)
     {
         if (!sizeof($block['children'])) {
@@ -231,6 +233,7 @@ class CpoController extends CoursewareStudipController {
                
             }
         }
+
         return $date;
     }
 }

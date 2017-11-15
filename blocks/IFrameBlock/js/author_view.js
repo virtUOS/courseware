@@ -117,6 +117,7 @@ export default AuthorView.extend({
     if ($url.indexOf("//") == -1) {
         $url = "http://" + $url;
     }
+
     helper
         .callHandler(this.model.id, 'save', {
             url: $url,

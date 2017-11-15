@@ -6,6 +6,7 @@ class AddChdateToUserProgress extends DBMigration
     {
         return 'adds a coloum for change date to user_progress table';
     }
+
     public function up()
     {
         $db = DBManager::get();
@@ -14,6 +15,7 @@ class AddChdateToUserProgress extends DBMigration
         ");
         SimpleORMap::expireTableScheme();
     }
+
     function down()
     {
 

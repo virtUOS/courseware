@@ -319,6 +319,7 @@ abstract class Block {
         $json['fields'] = $this->getFields();
         $json['readable_name'] = $this->getReadableName();
         $json['editable'] = $this->isEditable();
+
         return $json;
     }
 

@@ -20,6 +20,7 @@ class CodeBlock extends Block
             return array('inactive' => true);
         }
         $this->setGrade(1.0);
+
         return array_merge($this->getAttrArray());
     }
 
@@ -73,7 +74,7 @@ class CodeBlock extends Block
         return 'http://moocip.de/schema/block/code/';
     }
 
-        public function getXmlSchemaLocation()
+    public function getXmlSchemaLocation()
     {
         return 'http://moocip.de/schema/block/code/code-1.0.xsd';
     }

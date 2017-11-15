@@ -36,9 +36,9 @@ export default Backbone.View.extend({
       }
       data.chapter = true;
     }
-
     var template = templates('Courseware', 'edit_structure', data);
     this.$el.html(template);
+
     return this;
   },
 
@@ -70,6 +70,7 @@ export default Backbone.View.extend({
     });
     this.resolve(this.model);
   },
+
   cancel() {
     this.reject && this.reject();
   }

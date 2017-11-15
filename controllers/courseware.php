@@ -3,10 +3,8 @@
 use Mooc\UI\Courseware\Courseware;
 use Mooc\UI\TestBlock\Vips\Bridge as VipsBridge;
 
-
-
-class CoursewareController extends CoursewareStudipController {
-
+class CoursewareController extends CoursewareStudipController
+{
     public function before_filter(&$action, &$args)
     {
         parent::before_filter($action, $args);
@@ -31,7 +29,6 @@ class CoursewareController extends CoursewareStudipController {
         $this->templates = $this->getMustacheTemplates();
     }
 
-
     // show this course's settings page but only to tutors+
     public function settings_action()
     {
@@ -55,8 +52,8 @@ class CoursewareController extends CoursewareStudipController {
         if (Request::isPost()) {
             CSRFProtection::verifyUnsafeRequest();
             $this->storeSettings();
-
             $this->flash['success'] = _cw("Die Einstellungen wurden gespeichert.");
+
             return $this->redirect('courseware/settings');
         }
     }
@@ -104,7 +101,7 @@ class CoursewareController extends CoursewareStudipController {
             ");
             $stmt->bindParam(":cid", $this->container['cid']);
             $stmt->execute();
-            
+
             $tests =  $stmt->fetch(PDO::FETCH_ASSOC);
             if($tests) {
                 $test_ids = array();
@@ -131,19 +128,17 @@ class CoursewareController extends CoursewareStudipController {
                 $stmt->bindParam(":last_visit", $time);
                 $stmt->execute();
                 $new_tests =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+
                 $this->new_ones = array_merge($this->new_ones, $new_tests);
             }
         }
-        
-        
-        
-        
+
         if (Navigation::hasItem('/course/mooc_courseware/news')) {
             Navigation::activateItem('/course/mooc_courseware/news');
         }
+
         return true;
     }
-
 
     /////////////////////
     // PRIVATE HELPERS //
@@ -165,7 +160,6 @@ class CoursewareController extends CoursewareStudipController {
             }
 
             $content = file_get_contents($file);
-
             $templates[$block][$name] = $content;
         }
 
@@ -195,12 +189,12 @@ class CoursewareController extends CoursewareStudipController {
         // DISCUSSION BLOCK ACTIVATION //
         /////////////////////////////////
         $this->storeDiscussionBlockActivation(isset($courseware_settings['discussionblock_activation']) ? true : false);
-        
+
         //////////////////////
         // VIPS TAB VISIBLE //
         //////////////////////
         $this->storeVipsTabVisible(isset($courseware_settings['vipstab_visible']) ? true : false);
-        
+
         /////////////////////////
         // Sections Navigation //
         ////////////////////////
@@ -217,7 +211,7 @@ class CoursewareController extends CoursewareStudipController {
         if (!$this->is_tutor) {
             $this->storeEditingPermission(isset($courseware_settings['editing_permission']) ? true : false);
         }
-        
+
         /////////////////////////////
         // MAX COUNT FOR SELFTESTS //
         /////////////////////////////

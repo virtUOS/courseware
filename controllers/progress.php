@@ -108,12 +108,12 @@ class ProgressController extends CoursewareStudipController
             return 0;
         }
 
-        return
-            array_sum(
+        return array_sum(
                 array_map(
                     function ($section) {return $section['progress']; },
                     $block['children'])
-            ) / sizeof($block['children']);
+            ) / sizeof($block['children']
+        );
     }
 
     private function setDate($progress, &$block)

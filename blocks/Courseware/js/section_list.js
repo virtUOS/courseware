@@ -18,7 +18,6 @@ export default Backbone.View.extend({
 
   initialize(options) {
     this.listenTo(Backbone, 'modeswitch', this.stopSorting, this);
-
     this.active_section = options.active_section;
     this.listenTo(this.active_section, 'change', this.updateSectionList, this);
   },
@@ -102,10 +101,12 @@ export default Backbone.View.extend({
       parent: parent_id,
       title:  model.get('title')
     };
+
     return helper.callHandler(this.model.id, 'add_structure', data);
   },
 
   _sortable: null,
+
   _original_positions: null,
 
   _get_positions() {
@@ -116,7 +117,6 @@ export default Backbone.View.extend({
     if (this._sortable) {
       throw 'Already sorting!';
     }
-
     this._sortable = this.$el;
     this._sortable.sortable({
       items:       '.section',
@@ -126,21 +126,17 @@ export default Backbone.View.extend({
       distance:    5,
       placeholder: 'sortable-placeholder'
     });
-
     this._original_positions = this._get_positions();
     this.$el.addClass('sorting');
   },
 
   stopSorting() {
-
     if (!this._sortable) {
       return;
     }
-
     var positions = this._get_positions(),
         subchapter_id = this._sortable.attr('data-blockid'),
         data;
-
     this._sortable.sortable('destroy');
 
     if (JSON.stringify(positions) !== JSON.stringify(this._original_positions)) {
@@ -148,7 +144,6 @@ export default Backbone.View.extend({
         parent:    subchapter_id,
         positions: positions
       };
-
       helper.callHandler(this.model.id, 'update_positions', data);
     }
 

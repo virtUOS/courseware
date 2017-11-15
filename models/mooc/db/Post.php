@@ -68,9 +68,8 @@ class Post extends \SimpleORMap
         $stmt->bindParam(":thread_id", $thread_id);
         $stmt->bindParam(":cid", $cid);
         $stmt->execute();
-
-        
         $posts = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
         $timestamp = 0;
         array_shift($posts);
         foreach($posts as $key => &$post){
@@ -182,7 +181,7 @@ class Post extends \SimpleORMap
         $stmt->bindParam(":cid", $cid);
         $stmt->execute();
         $thread_ids = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        
+
         return $thread_ids;
     }
 

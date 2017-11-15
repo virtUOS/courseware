@@ -22,7 +22,6 @@ section#courseware {
     // end move
   }
 
-
   // ***** Title *****
   & > .title {
     h1 {
@@ -41,7 +40,6 @@ section#courseware {
       padding-left: 20px;
     }
   }
-
 
   // ***** Blocks *****
   section.block {
@@ -69,7 +67,6 @@ section#courseware {
         visibility: hidden;
       }
     }
-
 
     div.controls {
       background-color: #eee;
@@ -117,6 +114,7 @@ section#courseware {
         height: 34px;
         overflow: hidden;
         width: (@sidebar-width - 50);
+
         > select {
             background: transparent;
             .assets-bg-icon("blue/arr_1down.svg");
@@ -133,6 +131,7 @@ section#courseware {
             -webkit-appearance: none;
             -moz-appearance: none;
         }
+
         > select::-ms-expand {
             display: none;
         }
@@ -148,7 +147,6 @@ section#courseware {
       margin: 0;
       width: initial;
       text-align: left;
-
       .assets-bg-icon("blue/add.svg");
       background-position: 6px center;
       padding-left: 28px;
@@ -161,7 +159,6 @@ section#courseware {
   }
 
   .edit-section {
-
     input {
       .section-title();
     }
@@ -184,7 +181,6 @@ section#courseware {
   }
 }
 
-
 &.view-author .aside-section section.block,
 &.view-author .active-section section.block {
   box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.1);
@@ -203,7 +199,6 @@ section#courseware {
   }
 }
 
-
 button.init-sort-block {
   .assets-bg-icon("blue/ranking.svg");
   background-position: 6px 2px;
@@ -215,7 +210,6 @@ button.stop-sort-block {
   display: none;
 }
 
-
 &.view-student {
   .active-section, .aside-section {
     div.controls, .block-adder, button.init-sort-block {
@@ -224,13 +218,11 @@ button.stop-sort-block {
   }
 }
 
-
 //////////////////
 // ASIDE STYLES //
 //////////////////
 
 .aside-section {
-
   // do not show section's title
   > .title {
     display: none;
@@ -246,7 +238,6 @@ button.stop-sort-block {
 }
 
 &.view-student .aside-section {
-
   // hide header of aside sections unless authoring
   > header {
     display: none;

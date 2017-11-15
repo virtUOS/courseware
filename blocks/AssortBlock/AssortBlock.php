@@ -29,7 +29,7 @@ class AssortBlock extends Block
 
         return array_merge($this->getBlocksInSection(), $this->getAttrArray());
     }
-    
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
@@ -43,12 +43,12 @@ class AssortBlock extends Block
         
         return $this->getAttrArray();
     }
-    
+
     private function getAttrArray() 
     {
         return array('assortblocks' => $this->assortblocks, 'assorttype' => $this->assorttype);
     }
-    
+
     private function getBlocksInSection()
     {
         $children = $this->getModel()->parent->children;
@@ -91,7 +91,6 @@ class AssortBlock extends Block
                 $name = 'keypoint_content';
                 break;
         }
-
         $field = current(\Mooc\DB\Field::findBySQL('user_id = "" AND name = ? AND block_id = ?', array($name , $block->id)));
         $hash = hash('md5', $field->json_data);
 

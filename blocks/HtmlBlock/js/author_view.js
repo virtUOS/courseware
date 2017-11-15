@@ -8,7 +8,6 @@ export default AuthorView.extend({
   events: {
     'click button[name=save]':   'onSave',
     'click button[name=cancel]': 'switchBack'
-
   },
 
   initialize() {

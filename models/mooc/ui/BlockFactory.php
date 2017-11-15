@@ -44,6 +44,7 @@ class BlockFactory {
         if (!isset($classes)) {
             $classes = array_map("basename", glob($this->getPluginDir() . '/blocks/*'));
         }
+
         return $classes;
     }
 
@@ -51,6 +52,7 @@ class BlockFactory {
     public function getContentBlockClasses()
     {
         $all = $this->getBlockClasses();
+
         return array_diff($all, \Mooc\DB\Block::getStructuralBlockClasses());
     }
 

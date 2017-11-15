@@ -20,6 +20,7 @@ class KeyPointBlock extends Block
             return array('inactive' => true);
         }
         $this->setGrade(1.0);
+
         return array_merge($this->getAttrArray());
     }
 

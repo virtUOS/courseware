@@ -66,9 +66,7 @@ class HtmlBlock extends Block
             if (!$element instanceof \DOMElement || !$element->hasAttribute('href')) {
                 continue;
             }
-
             $block = $this;
-
             $this->applyCallbackOnInternalUrl($element->getAttribute('href'), function ($components) use ($block, $element) {
                 $element->setAttribute('href', $block->buildUrl('http://internal.moocip.de', '/sendfile.php', $components));
             });
@@ -79,9 +77,7 @@ class HtmlBlock extends Block
             if (!$element instanceof \DOMElement || !$element->hasAttribute('src')) {
                 continue;
             }
-
             $block = $this;
-
             $this->applyCallbackOnInternalUrl($element->getAttribute('src'), function ($components) use ($block, $element) {
                 $element->setAttribute('src', $block->buildUrl('http://internal.moocip.de', '/sendfile.php', $components));
             });
@@ -161,9 +157,7 @@ class HtmlBlock extends Block
             if (!$element instanceof \DOMElement || !$element->hasAttribute('href')) {
                 continue;
             }
-
             $block = $this;
-
             $this->applyCallbackOnInternalUrl($element->getAttribute('href'), function ($components) use ($block, $element, $files) {
                 parse_str($components['query'], $queryParams);
                 $queryParams['file_id'] = $files[$queryParams['file_id']]->id;
@@ -177,9 +171,7 @@ class HtmlBlock extends Block
             if (!$element instanceof \DOMElement || !$element->hasAttribute('src')) {
                 continue;
             }
-
             $block = $this;
-
             $this->applyCallbackOnInternalUrl($element->getAttribute('src'), function ($components) use ($block, $element, $files) {
                 parse_str($components['query'], $queryParams);
                 $queryParams['file_id'] = $files[$queryParams['file_id']]->id;
@@ -187,7 +179,6 @@ class HtmlBlock extends Block
                 $element->setAttribute('src', $block->buildUrl($GLOBALS['ABSOLUTE_URI_STUDIP'], '/sendfile.php', $components));
             });
         }
-
         $this->content = \STUDIP\Markup::purifyHtml($document->saveHTML());
 
         $this->save();
@@ -207,9 +198,7 @@ class HtmlBlock extends Block
         if (!\Studip\MarkupPrivate\MediaProxy\isInternalLink($url) && substr($url, 0, 25) !== 'http://internal.moocip.de') {
             return null;
         }
-
         $components = parse_url($url);
-
         if (
             isset($components['path'])
             && substr($components['path'], -13) == '/sendfile.php'

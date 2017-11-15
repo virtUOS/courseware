@@ -19,13 +19,17 @@ class LinkBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
+
         if ($this->link_type == "internal") {
             $link_id = $this->getTargetId($this->link_target);
         }
+
         if ($this->link_type == "external") {
             $link_href = $this->link_target;
         }
+
         $this->setGrade(1.0);
+
         return array_merge($this->getAttrArray(), array('link_id' => $link_id, 'link_href' => $link_href));
     }
 
@@ -34,6 +38,7 @@ class LinkBlock extends Block
         $this->authorizeUpdate();
         $inthischapter = $this->getThisChapterSiblings();
         $inotherchapters= $this->getOtherSubchapters();
+
         return array_merge($this->getAttrArray(), array(
             'inthischapter' => $inthischapter, 
             'inotherchapters' => $inotherchapters
@@ -56,16 +61,20 @@ class LinkBlock extends Block
         $subchapter = $section->parent;
         $chapter = $subchapter->parent;
         $courseware = $this->container['current_courseware'];
+
         if ($target == 'next') {
             $id = $courseware->getNeighborSections($section)['next']['id'];
         }
+
         if ($target == 'prev') {
             $id = $courseware->getNeighborSections($section)['prev']['id'];
         }
+
         if (strpos($target, 'sibling') > -1) {
             $num = (int)substr($target, 7);
             $id = $this->getModel()->parent->parent->parent->children[$num]['id'];
         }
+
         if (strpos($target, 'other') > -1) {
             $chapter_pos = substr($target, 5);
             $chapter_pos = (int)strtok($chapter_pos,'_cpos');
@@ -98,6 +107,7 @@ class LinkBlock extends Block
             array_push($inthischapter, array("value" => "sibling".$i, "title" => $sibling->title));
             $i++;
         }
+
         return $inthischapter;
     }
 
@@ -130,6 +140,7 @@ class LinkBlock extends Block
                 $i++;
             }
         }
+
         return $inotherchapters;
     }
 

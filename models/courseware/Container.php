@@ -32,14 +32,13 @@ class Container extends \Pimple\Container
             if ($user->isNew()) {
                 // TODO: mlunzena: create a nobody user
             }
+
             return $user;
         };
 
         $this['version'] = new Version();
-
         $this['cid'] = \Request::option('cid') ?: $GLOBALS['SessionSeminar'];
     }
-
 
     private function setupCoursewareStuff()
     {
@@ -49,6 +48,7 @@ class Container extends \Pimple\Container
 
         $this['current_courseware'] = function ($c) {
             $courseware_model = $c['courseware_factory']->makeCourseware($c['cid']);
+
             return $c['block_factory']->makeBlock($courseware_model);
         };
     }
@@ -71,13 +71,10 @@ class Container extends \Pimple\Container
     {
         $c = $this;
         return array(
-
             'i18n' => function ($text) { return _cw($text); },
-
             'plugin_url' => function ($text, $helper) use ($c) {
                 return \PluginEngine::getURL($c['plugin'], array(), $helper->render($text));
             },
-
             'titleize' => function ($text, $helper) {
                 $content = $helper->render($text);
                 if (preg_match('/^\+\+/', $content)) {

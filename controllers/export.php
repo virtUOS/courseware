@@ -20,7 +20,6 @@ class ExportController extends CoursewareStudipController
 
     public function index_action()
     {
-
         // create a temporary directory
         $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
         mkdir($tempDir);

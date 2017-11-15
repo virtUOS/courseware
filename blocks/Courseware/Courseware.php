@@ -101,7 +101,8 @@ class Courseware extends Block
             'show_section_nav' => $this->show_section_nav,
             'sections_as_chapters' => $this->sections_as_chapters,
             'isSequential' => $this->progression == 'seq',
-            'active_section' => $active_section, ));
+            'active_section' => $active_section, )
+        );
     }
 
     public function branchComplete(&$tree)
