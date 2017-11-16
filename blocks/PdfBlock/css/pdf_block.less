@@ -1,0 +1,49 @@
+@import '../../../assets/less/variables';
+@import '../../../assets/less/mixins';
+@media screen and (max-width: @mobile-max-width) {
+    .cw-pdf-wrapper {
+        width: 99%;
+    }
+}
+.cw-pdf-wrapper {
+    .cw-pdf-header {
+        min-width: 10%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        background-color: #eee;
+        color: #28497c;
+        font-size: 14px;
+        line-height: 20px;
+        padding: 10px 20px;
+        position: relative;
+        margin: 0 0 20px 0;
+        text-align: center;
+
+        .cw-pdf-button-prev, 
+        .cw-pdf-button-next {
+            position: absolute;
+            border: none;
+            height: 20px;
+            width: 20px;
+            margin: 2px 12px;
+            cursor: pointer;
+        }
+
+        .cw-pdf-button-prev {
+            left: 0;
+            background: no-repeat scroll 0 0 ;
+            .assets-bg-icon("blue/arr_1left.svg");
+        }
+
+        .cw-pdf-button-next {
+            right: 0;
+            background: no-repeat scroll 0 0;
+            .assets-bg-icon("blue/arr_1right.svg");
+        }
+    }
+}

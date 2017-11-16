@@ -1,0 +1,20 @@
+<input type="hidden" class="cw-keypoint-stored-icon" value="{{keypoint_icon}}">
+<input type="hidden" class="cw-keypoint-stored-color" value="{{keypoint_color}}">
+
+<label for="cw-pdf-title">{{#i18n}}Title{{/i18n}}:</label>
+<input type="text" name="cw-pdf-title" class="cw-pdf-set-title" value="{{pdf_title}}">
+<br>
+
+<label for="cw-pdf-file">{{#i18n}}Datei{{/i18n}}:</label>
+<input type="hidden" class="cw-pdf-file-stored" value="{{pdf_file}}">
+<select class="cw-pdf-set-file" name="cw-pdf-file">
+    {{#pdf_files}}
+        <option value="../../sendfile.php?type=0&file_id={{dokument_id}}&file_name={{filename}}" document-id="{{dokument_id}}" filename="{{filename}}">{{name}}</option>
+    {{/pdf_files}}
+</select>
+<br>
+
+<div class="cw-button-box">
+    <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
+    <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+</div>

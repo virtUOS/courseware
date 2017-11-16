@@ -1,0 +1,18 @@
+{{^inactive}}
+<script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+<div class="cw-pdf-wrapper">
+    <div class="cw-pdf-header">
+        <button class="cw-pdf-button-prev" title=""></button>
+        <span class="cw-pdf-title">{{pdf_title}}</span> - 
+        <span>Seite: <span id="page_num" class="cw-pdf-page-num"></span> von <span id="page_count" class="cw-pdf-page-count"></span></span>
+        <button class="cw-pdf-button-next" title="Seite 1"></button>
+    </div>
+    <canvas class="cw-pdf-canvas" style="border: solid thin #ccc; width: 100%;"></canvas>
+    <input type="hidden" class="cw-pdf-file-url" value="{{pdf_file}}">
+</div>
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive}}
