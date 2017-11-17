@@ -72,6 +72,7 @@ section#courseware {
       background-color: #eee;
       text-align: right;
       overflow: hidden;
+      padding: 0.7em;
 
       span.type {
         margin-left: 5px;
@@ -80,13 +81,14 @@ section#courseware {
 
       button {
         .btn-base();
+        width: 24px;
         background-color: transparent;
       }
 
-      button.raise  { .bgImg(arr_2up, grey); }
-      button.lower  { .bgImg(arr_2down, grey); }
-      button.author { .bgImg(edit, grey); }
-      button.trash  { .bgImg(trash, grey); }
+      button.raise  { .bgImg(arr_2up, grey, 20); }
+      button.lower  { .bgImg(arr_2down, grey, 20); }
+      button.author { .bgImg(edit, grey, 20); }
+      button.trash  { .bgImg(trash, grey, 20); }
     }
 
     & + .no-content {
@@ -183,7 +185,7 @@ section#courseware {
 
 &.view-author .aside-section section.block,
 &.view-author .active-section section.block {
-  box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.1);
+  border: solid thin #ccc;
   padding: 0px;
 
   .block-content {
@@ -195,7 +197,7 @@ section#courseware {
   }
 
   &:hover {
-    box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.3);
+    border: solid thin #888;
   }
 }
 
