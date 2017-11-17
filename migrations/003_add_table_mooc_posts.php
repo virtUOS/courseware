@@ -9,7 +9,7 @@ require __DIR__.'/../vendor/autoload.php';
  */
 
 
-class SetupCourseware extends Migration
+class AddTableMoocPosts extends Migration
 {
     public function description()
     {
