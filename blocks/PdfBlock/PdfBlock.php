@@ -57,6 +57,7 @@ class PdfBlock extends Block
         $filesarray = array();
         foreach ($response as $item) {
             if ((strpos($item['filename'], 'pdf') > -1)) {
+                if($item['url'] == "") {unset($item['url']);}
                 $filesarray[] = $item;
             }
         }
