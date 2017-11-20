@@ -61,5 +61,6 @@
     $('.show-thread-button').click(function(event){
         $('.thread').hide();
         $('#thread_'+$(event.target).data('showthread')).show();
+        $('.post-overview-postings').scrollTop($('.post-overview-postings')[0].scrollHeight);
     });
 </script>
