@@ -85,12 +85,16 @@ class PostBlock extends Block
 
     public function update_handler($data)
     {
-        if ($data['timestamp']) {
+        if (isset($data['timestamp'])) {
             $posts = Post::findBySQL("thread_id ORDER BY mkdate DESC LIMIT 1", array($this->thread_id));
-            
+
             if (strtotime($posts[0]["mkdate"]) > $data['timestamp']) {
-                return array_merge($this->getAttrArray(), $this->getPosts(), array("update" => true, "timestamp" =>strtotime($posts[0]["mkdate"])));
-            } 
+                return array_merge(
+                    $this->getAttrArray(), 
+                    Post::findPosts($this->thread_id, $this->container['cid'], $this->container['current_user_id']), 
+                    array("update" => true, "timestamp" =>strtotime($posts[0]["mkdate"]))
+                );
+            }
         }
 
         return array("update" => false);

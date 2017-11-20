@@ -90,9 +90,7 @@ export default StudentView.extend({
 
             // error
             function (error) {
-              var errorMessage = 'Could not update the Content: '+$.parseJSON(error.responseText).reason;
               console.log("error");
-              console.log(errorMessage, arguments);
               if(updateLoop != null) { 
                 clearInterval(updateLoop);
               }
