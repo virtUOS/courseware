@@ -10,6 +10,8 @@ class PdfBlock extends Block
     public function initialize()
     {
         $this->defineField('pdf_file', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('pdf_filename', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('pdf_file_id', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('pdf_title', \Mooc\SCOPE_BLOCK, '');
     }
 
@@ -34,6 +36,8 @@ class PdfBlock extends Block
     {
         return array(
             'pdf_file' => $this->pdf_file,
+            'pdf_filename' => $this->pdf_filename,
+            'pdf_file_id' => $this->pdf_file_id,
             'pdf_title' => $this->pdf_title
         );
     }
@@ -72,6 +76,12 @@ class PdfBlock extends Block
         if (isset ($data['pdf_file'])) {
             $this->pdf_file = $data['pdf_file'];
         }
+        if (isset ($data['pdf_filename'])) {
+            $this->pdf_filename = $data['pdf_filename'];
+        }
+        if (isset ($data['pdf_file_id'])) {
+            $this->pdf_file_id = $data['pdf_file_id'];
+        }
         if (isset ($data['pdf_title'])) {
             $this->pdf_title = $data['pdf_title'];
         }
@@ -82,6 +92,22 @@ class PdfBlock extends Block
     public function exportProperties()
     {
        return $this->getAttrArray();
+    }
+
+    public function getFiles()
+    {
+        $document = new \StudipDocument($this->pdf_file_id);
+        $files[] = array(
+            'id' => $this->pdf_file_id,
+            'name' => $document->name,
+            'description' => $document->description,
+            'filename' => $document->filename,
+            'filesize' => $document->filesize,
+            'url' => $document->url,
+            'path' => get_upload_file_path($this->pdf_file_id),
+        );
+
+        return $files;
     }
 
     public function getXmlNamespace()
@@ -102,7 +128,24 @@ class PdfBlock extends Block
         if (isset($properties['pdf_title'])) {
             $this->pdf_title = $properties['pdf_title'];
         }
-
+        $this->setFileId($this->pdf_filename);
         $this->save();
+    }
+
+    private function setFileId($file_name)
+    {
+        $cid = $this->container['cid'];
+        $document = current(\StudipDocument::findBySQL('filename = ? AND seminar_id = ?', array($file_name, $cid)));
+        $this->pdf_file_id = $document->dokument_id;
+
+        return;
+    }
+
+    public function importContents($contents, array $files)
+    {
+        $file = reset($files);
+        if (($file->id == $this->pdf_file_id)) {
+            $this->save();
+        }
     }
 }

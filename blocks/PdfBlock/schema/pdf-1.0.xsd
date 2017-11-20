@@ -5,5 +5,7 @@
     elementFormDefault="qualified"
 >
     <xsd:attribute name="pdf_file" type="xsd:string" />
+    <xsd:attribute name="pdf_filename" type="xsd:string" />
+    <xsd:attribute name="pdf_file_id" type="xsd:string" />
     <xsd:attribute name="pdf_title" type="xsd:string" />
 </xsd:schema>

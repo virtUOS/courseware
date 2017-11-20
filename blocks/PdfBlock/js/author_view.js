@@ -54,12 +54,16 @@ export default AuthorView.extend({
 
   onSave(event) {
     var $view = this;
-    var $pdf_file = $view.$('.cw-pdf-set-file').val();
-    var $pdf_title = $view.$('.cw-pdf-set-title').val();
+    var $pdf_file     = $view.$('.cw-pdf-set-file').val();
+    var $pdf_file_id  = $view.$('.cw-pdf-set-file option:selected').attr('document_id');
+    var $pdf_filename = $view.$('.cw-pdf-set-file option:selected').attr('filename');
+    var $pdf_title    = $view.$('.cw-pdf-set-title').val();
 
     helper
       .callHandler(this.model.id, 'save', {
         pdf_file: $pdf_file,
+        pdf_filename: $pdf_filename,
+        pdf_file_id: $pdf_file_id,
         pdf_title: $pdf_title,
       })
       .then(
