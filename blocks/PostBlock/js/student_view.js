@@ -7,7 +7,8 @@ export default StudentView.extend({
     events: {
         'click button[name=send]':  'onSend',
         'click button[name=shrink]':  'shrinkMessages',
-        'click button[name=showall]':  'showAllMessages'
+        'click button[name=showall]':  'showAllMessages',
+        'keydown textarea.cw-postblock-textbox': 'sendShortcut'
     },
 
     initialize() { 
@@ -97,5 +98,13 @@ export default StudentView.extend({
             });
 
         return;
+    },
+    
+    sendShortcut(e) {
+        var $view =  this;
+        if (e.ctrlKey && e.keyCode == 13) {
+            // Ctrl-Enter pressed
+            $view.onSend($view.$('button[name=send]'));
+        }
     }
 });
