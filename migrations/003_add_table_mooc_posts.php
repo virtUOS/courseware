@@ -1,7 +1,5 @@
 <?php
 
-require __DIR__.'/../vendor/autoload.php';
-
 /**
  * Setup table mooc_posts for the new PostBlock.
  *
@@ -9,7 +7,7 @@ require __DIR__.'/../vendor/autoload.php';
  */
 
 
-class AddTableMoocPosts extends Migration
+class AddTableMoocPosts extends DBMigration
 {
     public function description()
     {
