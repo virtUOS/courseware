@@ -34,7 +34,7 @@ class GroupDiscussion extends  Discussion
 
         return sprintf(
             '%s (id:%s)',
-            join(' » ', $ancestors),
+            join(' > ', $ancestors),
             $this->generateID()
         );
     }
