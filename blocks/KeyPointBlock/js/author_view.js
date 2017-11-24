@@ -22,10 +22,10 @@ export default AuthorView.extend({
   postRender() {
       var $view = this;
     if($view.$(".cw-keypoint-stored-icon").val() != "") {
-        $view.$('select.cw-keypoint-select-icon option[value="'+$view.$('.cw-keypoint-stored-icon').val()+'"]').prop('selected', true);
+        $view.$('.cw-keypoint-input-icon[value="'+$view.$('.cw-keypoint-stored-icon').val()+'"]').attr('checked', 'checked');
     }
     if($view.$(".cw-keypoint-stored-color").val() != "") {
-        $view.$('select.cw-keypoint-select-color option[value="'+$view.$('.cw-keypoint-stored-color').val()+'"]').prop('selected', true);
+        $view.$('.cw-keypoint-input-color[value="'+$view.$('.cw-keypoint-stored-color').val()+'"]').attr('checked', 'checked');
     }
 
     return this;
@@ -61,8 +61,8 @@ export default AuthorView.extend({
   onSave(event) {
     var $view = this;
     var $keypoint_content = $view.$('.cw-keypoint-set-content').val();
-    var $keypoint_color = $view.$('select.cw-keypoint-select-color option:selected').val();
-    var $keypoint_icon = $view.$('select.cw-keypoint-select-icon option:selected').val();
+    var $keypoint_color = $view.$('input[name=cw-keypoint-color]:checked').val();
+    var $keypoint_icon = $view.$('input[name=cw-keypoint-icon]:checked').val();
 
     helper
       .callHandler(this.model.id, 'save', {

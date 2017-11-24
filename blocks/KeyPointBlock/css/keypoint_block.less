@@ -1,8 +1,11 @@
 @red: #cb1800;
 @blue: #24437c;
+@lightblue: #abb7ce;
 @green: #00962d;
 @grey: #6e6e6e;
 @yellow: #ffad00;
+@import '../../../assets/less/variables';
+@import '../../../assets/less/mixins';
 
 .cw-keypoint-red {
     border-color: @red;
@@ -24,6 +27,26 @@
     border-color: @yellow;
 }
 
+.cw-keypoint-bg-red {
+    background-color: @red;
+}
+
+.cw-keypoint-bg-blue {
+    background-color: @blue;
+}
+
+.cw-keypoint-bg-green {
+    background-color: @green;
+}
+
+.cw-keypoint-bg-grey {
+    background-color: @grey;
+}
+
+.cw-keypoint-bg-yellow {
+    background-color: @yellow;
+}
+
 .cw-keypoint {
     background-repeat: no-repeat;
     background-size: 48px;
@@ -40,7 +63,172 @@
     padding-top: 0.75em;
 }
 
-.cw-keypoint-select-icon option{
+.cw-keypoint-select-icon option {
     padding-left: 2em;
     background-repeat: no-repeat;
 }
+
+.cw-keypoint-label-color {
+    width: 32px !important;
+    min-width: 32px !important;
+    height: 32px;
+    padding: 5px !important;
+    
+    > .cw-keypoint-input-color {
+        visibility: hidden; 
+        position: absolute;
+    }
+
+    > .cw-keypoint-input-color + div{ 
+        cursor:pointer;
+        border:2px solid transparent;
+        height: 32px;
+        width: 32px;
+    }
+    
+    > .cw-keypoint-input-color:checked + div{ /* (RADIO CHECKED) IMAGE STYLES */
+        .assets-bg-icon("white/accept.svg");
+        background-size: 24px 24px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}
+
+.cw-keypoint-label-wrapper-color,
+.cw-keypoint-label-wrapper-icon {
+    padding: 6px 0 6px 5px;
+    width: 30em;
+    display: inline-block;
+}
+
+.cw-keypoint-label-wrapper-color {
+    padding-left: 0.7em;
+}
+
+.cw-keypoint-label-wrapper-icon {
+    margin-left: -0.5em;
+}
+
+label[for="cw-keypoint-icon"],
+label[for="cw-keypoint-color"] {
+    vertical-align: top;
+}
+
+.cw-keypoint-label-icon {
+    width: 4em !important;
+    min-width: 4em !important;
+    padding: 0.5em !important;
+    
+    > .cw-keypoint-input-icon {
+        visibility: hidden; 
+        position: absolute;
+    }
+
+    > .cw-keypoint-input-icon + div{ 
+        cursor:pointer;
+        border:2px solid transparent;
+        background-size: 24px 24px;
+        background-repeat: no-repeat;
+        background-position: top center;
+        width: 5em;
+        height: 3em;
+        line-height: 5em;
+        text-align: center;
+        font-size: 0.9em;
+        color: @lightblue;
+    }
+
+    > .cw-keypoint-input-icon:checked + div{ /* (RADIO CHECKED) IMAGE STYLES */
+        color: @blue;
+        font-weight: 600;
+    }
+    
+    > .cw-keypoint-input-icon:checked + .cw-keypoint-icon-accept {
+        .assets-bg-icon("blue/accept.svg");
+    }
+    > .cw-keypoint-input-icon:checked + .cw-keypoint-icon-decline {
+        .assets-bg-icon("blue/decline.svg");
+    }
+     > .cw-keypoint-input-icon:checked +.cw-keypoint-icon-add {
+        .assets-bg-icon("blue/add.svg");
+    }
+     > .cw-keypoint-input-icon:checked +.cw-keypoint-icon-remove {
+        .assets-bg-icon("blue/remove.svg");
+    }
+     > .cw-keypoint-input-icon:checked +.cw-keypoint-icon-chat2 {
+        .assets-bg-icon("blue/chat2.svg");
+    }
+    > .cw-keypoint-input-icon:checked + .cw-keypoint-icon-exclaim {
+        .assets-bg-icon("blue/exclaim.svg");
+    }
+    > .cw-keypoint-input-icon:checked + .cw-keypoint-icon-info {
+        .assets-bg-icon("blue/info.svg");
+    }
+    > .cw-keypoint-input-icon:checked + .cw-keypoint-icon-visibility-visible {
+        .assets-bg-icon("blue/visibility-visible.svg");
+    }
+    > .cw-keypoint-input-icon:checked + .cw-keypoint-icon-date {
+        .assets-bg-icon("blue/date.svg");
+    }
+    > .cw-keypoint-input-icon:checked + .cw-keypoint-icon-doctoral_cap {
+        .assets-bg-icon("blue/doctoral_cap.svg");
+    }
+    > .cw-keypoint-input-icon:checked + .cw-keypoint-icon-community {
+        .assets-bg-icon("blue/community.svg");
+    }
+    > .cw-keypoint-input-icon:checked + .cw-keypoint-icon-edit {
+        .assets-bg-icon("blue/edit.svg");
+    }
+    > .cw-keypoint-input-icon:checked + .cw-keypoint-icon-plugin {
+        .assets-bg-icon("blue/plugin.svg");
+    }
+    > .cw-keypoint-input-icon:checked + .cw-keypoint-icon-graph {
+        .assets-bg-icon("blue/graph.svg");
+    }
+    
+    
+    
+    .cw-keypoint-icon-accept {
+        .assets-bg-icon("lightblue/accept.svg");
+    }
+    .cw-keypoint-icon-decline {
+        .assets-bg-icon("lightblue/decline.svg");
+    }
+    .cw-keypoint-icon-add {
+        .assets-bg-icon("lightblue/add.svg");
+    }
+    .cw-keypoint-icon-remove {
+        .assets-bg-icon("lightblue/remove.svg");
+    }
+    .cw-keypoint-icon-chat2 {
+        .assets-bg-icon("lightblue/chat2.svg");
+    }
+    .cw-keypoint-icon-exclaim {
+        .assets-bg-icon("lightblue/exclaim.svg");
+    }
+    .cw-keypoint-icon-info {
+        .assets-bg-icon("lightblue/info.svg");
+    }
+    .cw-keypoint-icon-visibility-visible {
+        .assets-bg-icon("lightblue/visibility-visible.svg");
+    }
+    .cw-keypoint-icon-date {
+        .assets-bg-icon("lightblue/date.svg");
+    }
+    .cw-keypoint-icon-doctoral_cap {
+        .assets-bg-icon("lightblue/doctoral_cap.svg");
+    }
+    .cw-keypoint-icon-community {
+        .assets-bg-icon("lightblue/community.svg");
+    }
+    .cw-keypoint-icon-edit {
+        .assets-bg-icon("lightblue/edit.svg");
+    }
+    .cw-keypoint-icon-plugin {
+        .assets-bg-icon("lightblue/plugin.svg");
+    }
+    .cw-keypoint-icon-graph {
+        .assets-bg-icon("lightblue/graph.svg");
+    }
+}
+
