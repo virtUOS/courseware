@@ -99,7 +99,7 @@ export default StudentView.extend({
 
         return;
     },
-    
+
     sendShortcut(e) {
         var $view =  this;
         if (e.ctrlKey && e.keyCode == 13) {
