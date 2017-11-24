@@ -5,7 +5,7 @@ use Mooc\UI\Block;
 
 class PdfBlock extends Block 
 {
-    const NAME = 'PDF';
+    const NAME = 'PDF mit Vorschau';
 
     public function initialize()
     {
