@@ -21,7 +21,7 @@ class TestBlock extends Block
     {
         return array(
             'selftest' => _cw('Selbsttest'),
-            'practice' => _cw('Ãœbungsblatt'),
+            'practice' => _cw('Übung'),
         );
     }
 

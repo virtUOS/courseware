@@ -7,7 +7,7 @@ use Mooc\DB\Post as Post;
 
 class PostBlock extends Block
 {
-    const NAME = 'Post';
+    const NAME = 'Kommentare & Diskussion';
 
     public function initialize()
     {

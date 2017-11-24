@@ -9,7 +9,7 @@ use Mooc\UI\Section\Section;
  */
 class DiscussionBlock extends Block
 {
-    const NAME = 'Diskussion';
+    const NAME = 'Blubber-Diskussion';
 
     public static function additionalInstanceAllowed($container, Section $section, $subType = null)
     {
