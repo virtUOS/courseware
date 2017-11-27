@@ -69,21 +69,10 @@ class Section extends Block
         );
 
         // block adder
-        $content_block_types = $this->getBlockTypes();
-
-        return compact('blocks', 'content_block_types', 'icon', 'title', 'visited');
-    }
-
-    /**
-     * View rendering buttons to add new blocks.
-     *
-     * @return array The available block types
-     */
-    public function block_types_view()
-    {
-        $this->authorizeUpdate();
-
-        return array('content_block_types' => $this->getBlockTypes());
+        $content_block_types_basic = $this->getBlockTypes()['basic_blocks'];
+        $content_block_types_advanced = $this->getBlockTypes()['advanced_blocks'];
+        
+        return compact('blocks', 'content_block_types_basic', 'content_block_types_advanced', 'icon', 'title', 'visited');
     }
 
     public function add_content_block_handler($data)
@@ -214,25 +203,36 @@ class Section extends Block
                     if (!$className::additionalInstanceAllowed($this->container, $this, $subType)) {
                         continue;
                     }
-
-                    $blockTypes[] = array(
+                    $name = $readableName.' ('.$name.')';
+                    $blockTypes[$name] = array(
                         'type' => $type,
                         'sub_type' => $subType,
-                        'name' => $readableName.' ('.$name.')',
+                        'name' => $name
                     );
                 }
             } else {
                 if ($className::additionalInstanceAllowed($this->container, $this)) {
-                    $blockTypes[] = array(
+                    $name = $readableName;
+                    $blockTypes[$name] = array(
                         'type' => $type,
                         'sub_type' => null,
-                        'name' => $readableName,
+                        'name' => $name
                     );
                 }
             }
         }
+        ksort($blockTypes);
+        $basic_blocks = array();
+        $advanced_blocks = array();
+        foreach($blockTypes as $key => $value){
+            if (in_array($value['type'], array('HtmlBlock', 'VideoBlock', 'PostBlock',  'TestBlock') )) {
+                array_push($basic_blocks, $value);
+            } else {
+                array_push($advanced_blocks, $value);
+            }
+        }
 
-        return $blockTypes;
+        return array('basic_blocks' =>$basic_blocks, 'advanced_blocks' => $advanced_blocks);
     }
 
     private function refreshIcon()
