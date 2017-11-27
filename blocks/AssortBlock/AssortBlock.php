@@ -55,8 +55,9 @@ class AssortBlock extends Block
         $blocks = array();
         foreach($children as $child)
         {
-            if (!in_array($child["type"], array("AssortBlock", "TestBlock", "AudioBlock", "GalleryBlock"))){
-                $blocks[] = array('blockid' =>$child->id, 'blocktype'=> $child->type);
+            if (!in_array($child["type"], array("AssortBlock", "TestBlock", "AudioBlock", "GalleryBlock", "PdfBlock", "PostBlock", "SearchBlock"))){
+                $className = '\Mooc\UI\\'.$child["type"].'\\'.$child["type"];
+                $blocks[] = array('blockid' =>$child->id, 'blocktype'=> $child->type, 'blockname' => _cw(constant($className.'::NAME')));
             }
         }
 

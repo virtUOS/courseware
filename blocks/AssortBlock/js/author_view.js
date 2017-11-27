@@ -37,7 +37,6 @@ export default AuthorView.extend({
                 $view.$("#blockname-"+this["id"]).val(this["name"]);
             });
         }
-        
     },
 
     onSave(event) {

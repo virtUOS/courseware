@@ -1,5 +1,14 @@
 <input type="hidden" class="assorttype-selection-assort" name="assorttype-selection-assort" value="{{assorttype}}">
 <input type="hidden" class="assortblocks-selection-assort" name="assortblocks-selection-assort" value="{{assortblocks}}">
+<div class="cw-assort-description">
+    <p>
+        {{#i18n}}Mit diesem Block fassen Sie mehrere Blöcke dieser Seite zum Durchblättern zusammen.{{/i18n}}
+        <br>
+        {{#i18n}}Bewegen Sie den Cursor über das Informations-Icon des gewünschten Blocks um die Block-Id zu erfahren.{{/i18n}}
+        <br>
+        {{#i18n}}Bitte beachten Sie das nicht alle Blocktypen in diesen Block eingebunden werden können.{{/i18n}}
+    </p>
+</div>
 <div class="assorttypeselectors">
     <label>{{#i18n}}Accordion{{/i18n}}
     <input type="radio"  name="assorttype" value="accordion" checked></label>
@@ -12,8 +21,8 @@
     <li>
         <label>
         <input type="checkbox" name="assortblocks" value="{{blockid}}">
-        {{#i18n}}Block:{{/i18n}} {{blockid}} ({{blocktype}})</label>
-        <input type="text" id="blockname-{{blockid}}" name="assortblockname" size="20" placeholder="Titel">
+        {{blockname}} (Id: {{blockid}})</label>
+        <input type="text" id="blockname-{{blockid}}" name="assortblockname" size="20" placeholder="Überschrift">
     </li>
 {{/blocks}}
 </ul>
