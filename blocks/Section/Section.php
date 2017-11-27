@@ -67,7 +67,9 @@ class Section extends Block
                 return $json;
             }
         );
-
+        foreach ($blocks as &$block){
+            $block['make_date'] = date("d.n.Y",$block['mkdate']);
+        }
         // block adder
         $content_block_types_basic = $this->getBlockTypes()['basic_blocks'];
         $content_block_types_advanced = $this->getBlockTypes()['advanced_blocks'];
