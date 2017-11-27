@@ -123,9 +123,7 @@ class CoursewareController extends CoursewareStudipController
                     AND
                         unix_timestamp(created) >=  :last_visit
                 ");
-                //$stmt->bindParam(":last_visit", object_get_visit($_SESSION['SessionSeminar'], "courseware"));
-                $time = "1492684354";
-                $stmt->bindParam(":last_visit", $time);
+                $stmt->bindParam(":last_visit", object_get_visit($_SESSION['SessionSeminar'], "courseware"));
                 $stmt->execute();
                 $new_tests =  $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -135,6 +133,9 @@ class CoursewareController extends CoursewareStudipController
 
         if (Navigation::hasItem('/course/mooc_courseware/news')) {
             Navigation::activateItem('/course/mooc_courseware/news');
+        }
+        if(empty($this->new_ones)) {
+            return $this->redirect('courseware');
         }
 
         return true;

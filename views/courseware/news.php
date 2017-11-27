@@ -3,12 +3,21 @@
     <ul class="cw-news-list">
         <? foreach ($new_ones as  $item):?>
             <? $block = new Mooc\DB\Block($item["id"]); ?>
+            <? // get readable name
+                $classname = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
+                if(class_exists($classname)) {
+                    $uiblock = new $classname();
+                    $title = $uiblock::NAME;
+                } else {
+                    $title = $block->title;
+                }
+            ?>
             <? if ( (strpos($item["title"], "AsideSection") >-1) || (in_array($block->type , array("Chapter", "Subchapter"))) ): continue; endif; ?>
             <? if ($block->parent->parent->id):?>
             <li class="cw-news-item">
                 <?= (new Mooc\DB\Block($block->parent->parent->parent->id))->title ?> &rarr; 
                 <?= (new Mooc\DB\Block($block->parent->parent->id))->title ?> &rarr; 
-                <a href="<?= \PluginEngine::getURL("courseware/courseware")."&selected=".$block->parent_id ?>"><?= $block->title; ?></a>
+                <a href="<?= \PluginEngine::getURL("courseware/courseware")."&selected=".$block->parent_id ?>"><?= $title; ?></a>
             </li>
              <? endif; ?>
         <? endforeach ?>

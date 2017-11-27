@@ -127,9 +127,18 @@ class SearchBlock extends Block
                     $url = str_replace( '\/engage\/theodul\/ui\/core.html', '', $item['json_data']);
                     if(!stripos($url, $request)) {continue;}
                 }
+                // get readable name
+                $classname = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
+                if(class_exists($classname)) {
+                    $uiblock = new $classname();
+                    $type = $uiblock::NAME;
+                } else {
+                    $type = $block->type;
+                }
+
                 array_push($answer, array(
                     'link'       =>  \PluginEngine::getURL('courseware/courseware').'&selected='.$block->parent_id,
-                    'type'       => $block->type,
+                    'type'       => $type,
                     'title'      => (new DBBlock($block->parent_id))->title, // section title
                     'subchapter' => (new DBBlock($block->parent->parent->id))->title, //subchapter title
                     'chapter'    => (new DBBlock($block->parent->parent->parent->id))->title, //chapter title
