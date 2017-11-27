@@ -15,7 +15,7 @@ export default StudentView.extend({
 
   postRender() {
       var $autoplay = this.$el.find('input[name="gallery-autoplay"]').val() == 1;
-      var $autoplaytimer = this.$el.find('input[name="gallery-autoplay-timer"]').val() ;
+      var $autoplaytimer = this.$el.find('input[name="gallery-autoplay-timer"]').val()*1000;
       var $hidenav = this.$el.find('input[name="gallery-hidenav"]').val() == 0;
       if (!$hidenav) {
             this.$el.find(".cw-gallery").addClass("cw-gallery-hidenav");
@@ -24,7 +24,9 @@ export default StudentView.extend({
       this.$('.cw-gallery').slick({
             arrows: $hidenav,
             autoplay: $autoplay,
-            autoplaySpeed: $autoplaytimer
+            autoplaySpeed: $autoplaytimer,
+            adaptiveHeight: true,
+            infinite: true
       });
   }
 });
