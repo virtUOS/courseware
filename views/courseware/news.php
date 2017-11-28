@@ -4,10 +4,11 @@
         <? foreach ($new_ones as  $item):?>
             <? $block = new Mooc\DB\Block($item["id"]); ?>
             <? // get readable name
-                $classname = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
-                if(class_exists($classname)) {
-                    $uiblock = new $classname();
-                    $title = $uiblock::NAME;
+                $class_name = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
+                $name_constant = $class_name.'::NAME';
+
+                if (defined($name_constant)) {
+                    $title = _cw(constant($name_constant));
                 } else {
                     $title = $block->title;
                 }
