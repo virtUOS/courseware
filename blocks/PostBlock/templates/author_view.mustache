@@ -4,9 +4,12 @@
 <input type="text" name="cw-postblock-title" class="cw-postblock-title" value="{{post_title}}">
 <br>
 
+<label for="cw-postblock-reuse">{{#i18n}}Bereits vorhandene Diskussion verwenden{{/i18n}}:</label>
+<input type="checkbox" name="cw-postblock-reuse" class="cw-postblock-reuse" {{#thread_id}} checked {{/thread_id}}>
+<br>
+
 <label for="cw-postblock-id">{{#i18n}}ID{{/i18n}}:</label>
 <select name="cw-postblock-id" class="cw-postblock-id">
-    <option value="new">neu</option>
     {{#post_ids}}
         <option value="{{thread_id}}">{{thread_id}} ({{content}})</option>
     {{/post_ids}}

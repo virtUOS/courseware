@@ -1,4 +1,7 @@
 <?php
+
+use Mooc\DB\Post as Post;
+
 // CPO -> course progress overview
 class CpoController extends CoursewareStudipController
 {
@@ -96,6 +99,37 @@ class CpoController extends CoursewareStudipController
             );
             array_push($this->threads, $thread);
         }
+    }
+
+    public function answer_action()
+    {
+        if ((Request::get("thread_id") != "") && (Request::get("content") != "")) { 
+            $thread_id = Request::get("thread_id");
+            $content = Request::get("content");
+            $answer = "answer=true";
+        } else {
+            return $this->redirect('cpo/postoverview?answer=false');
+        }
+
+        $cid = $this->plugin->getCourseId();
+        $post_id = Post::getNextPostId($thread_id, $cid);
+
+        $data = array(
+                'thread_id' => $thread_id ,
+                'post_id' => $post_id,
+                'seminar_id' => $cid,
+                'user_id' => $GLOBALS['user']->id,
+                'content' => $content,
+                'mkdate' => (new \DateTime())->format('Y-m-d H:i:s')
+            );
+
+        if (Post::create($data)) {
+            $answer = "answer=true&thread_id=".$thread_id;
+        } else {
+            $answer = "answer=false";
+        }
+
+        return $this->redirect('cpo/postoverview?'.$answer);
     }
 
     private function getThreadsInBlocks()

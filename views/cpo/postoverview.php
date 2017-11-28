@@ -6,7 +6,7 @@
                 $counter++;
             }
         }?>
-        <li class="post-overview-thread <?if ($counter > 0):?> post-overview-highlight <?endif;?>">
+        <li id="container_<?= $thread["thread_id"]?>" class="post-overview-thread <?if ($counter > 0):?> post-overview-highlight <?endif;?>">
             <h3><?= $thread["thread_title"]?> (id = <?= $thread["thread_id"]?>)</h3>
             <? if (array_key_exists($thread["thread_id"], ($thrads_in_blocks))) :?>
                 <? foreach($thrads_in_blocks[$thread["thread_id"]] as $block): ?>
@@ -57,10 +57,25 @@
         </div>
     <? endforeach;?> 
 </div>
+<form class="postoverview-form" action="answer" method="get">
+    <input type="hidden" name="thread_id" id="input_thread_id" value="">
+    <textarea name="content"></textarea>
+    <input type="submit" value="senden">
+</form>
 <script>
-    $('.show-thread-button').click(function(event){
-        $('.thread').hide();
-        $('#thread_'+$(event.target).data('showthread')).show();
+    var thread_id_from_url = location.search.split('thread_id=')[1];
+    if(thread_id_from_url){
+        $('#thread_'+thread_id_from_url).show();
         $('.post-overview-postings').scrollTop($('.post-overview-postings')[0].scrollHeight);
+        $('.post-overview').scrollTop(
+            $('#container_'+thread_id_from_url).offset().top - $('.post-overview').offset().top + $('.post-overview').scrollTop()
+        );
+    }
+    $('.show-thread-button').click(function(event){
+        var $thread_id = $(event.target).data('showthread');
+        $('.thread').hide();
+        $('#thread_'+$thread_id).show();
+        $('.post-overview-postings').scrollTop($('.post-overview-postings')[0].scrollHeight);
+        $('#input_thread_id').val($thread_id);
     });
 </script>

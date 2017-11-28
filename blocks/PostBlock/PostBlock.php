@@ -55,7 +55,7 @@ class PostBlock extends Block
                     'content' => $data['post_title'],
                     'mkdate' => (new \DateTime())->format('Y-m-d H:i:s')
                 );
-                POST::create($data);
+                Post::create($data);
             }
         } 
 
@@ -66,7 +66,7 @@ class PostBlock extends Block
     {
         if (isset($data['message'])) {
             $this->setGrade(1.0);
-            $post_id = POST::getNextPostId($this->thread_id, $this->container['cid']);
+            $post_id = Post::getNextPostId($this->thread_id, $this->container['cid']);
 
             $data = array(
                 'thread_id' => $this->thread_id ,

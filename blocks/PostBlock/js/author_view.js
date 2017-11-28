@@ -6,8 +6,9 @@ import helper from 'js/url'
 export default AuthorView.extend({
 
   events: {
-    'click button[name=save]':   'onSave',
-    'click button[name=cancel]': 'switchBack',
+    'click button[name=save]'   : 'onSave',
+    'click button[name=cancel]' : 'switchBack',
+    'click .cw-postblock-reuse' : 'toggleSwitch',
   },
 
   initialize() {
@@ -21,7 +22,11 @@ export default AuthorView.extend({
 
   postRender() {
     var $view = this;
-    $view.$('select.cw-postblock-id option[value="'+$view.$('.cw-postblock-id-stored').val()+'"]').prop('selected', true);
+    var $stored_id = $view.$('.cw-postblock-id-stored').val();
+    if ($stored_id != "") {
+        $view.$('select.cw-postblock-id option[value="'+$stored_id+'"]').prop('selected', true);
+    }
+    this.toggleSwitch();
   },
 
   onNavigate(event) {
@@ -54,7 +59,11 @@ export default AuthorView.extend({
   onSave(event) {
     var $view = this;
     var $post_title = $view.$(".cw-postblock-title").val();
-    var $thread_id = $view.$(".cw-postblock-id").val();
+    var $thread_id = "new";
+    var $reuse = $view.$(".cw-postblock-reuse").is(":checked");
+    if ($reuse) {
+        $thread_id = $view.$(".cw-postblock-id").val();
+    }
     helper
       .callHandler(this.model.id, 'save', {
         post_title: $post_title,
@@ -74,6 +83,17 @@ export default AuthorView.extend({
           alert(errorMessage);
           console.log(errorMessage, arguments);
         });
+  },
+  
+  toggleSwitch() {
+    var state = this.$(".cw-postblock-reuse").is(":checked");
+    if (state) {
+        this.$('label[for="cw-postblock-id"]').css("display", "inline-block");
+        this.$('.cw-postblock-id').show();
+    } else {
+        this.$('label[for="cw-postblock-id"]').hide();
+        this.$('.cw-postblock-id').hide();
+    }
   }
 
 });
