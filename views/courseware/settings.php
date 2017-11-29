@@ -76,33 +76,19 @@ if ($flash['success']) {
 
             <tr>
                 <td>
-                    <label for="courseware-sectionsnav-visible">
+                    <label for="courseware-section-navigation">
                         <?= _cw('Dritte Navigationsebene anzeigen') ?><br>
-                        <dfn id="courseware-sectionsnav-description">
-                            <?= _cw('Wenn Sie diesen Schalter deaktivieren, wird die dritte Navigationsebene ausgeblendet.'); ?>
+                        <dfn id="courseware-section-navigation-description">
+                            <?= _cw('Wählen Sie hier aus wie die dritte Navigationsebene dargestellt werden soll.'); ?>
                         </dfn>
                     </label>
                 </td>
                 <td>
-                    <input id="courseware-sectionsnav"
-                           name="courseware[show_section_nav]"
-                           type="checkbox" <?= $courseware_block->getShowSectionNav() ? "checked" : "" ?>>
-                </td>
-            </tr>
-            
-            <tr>
-                <td>
-                    <label for="courseware-sections-as-chapters">
-                        <?= _cw('Dritte Navigationsebene in der Kapitelnavigation anzeigen') ?><br>
-                        <dfn id="courseware-sections-as-chapters-description">
-                            <?= _cw('Wenn Sie diesen Schalter aktivieren, wird die dritte Navigationsebene nicht mehr als horizontale Navigation, sondern in der Kapitelnavigation angezeigt.'); ?>
-                        </dfn>
-                    </label>
-                </td>
-                <td>
-                    <input id="courseware-sections-as-chapters"
-                           name="courseware[sections_as_chapters]"
-                           type="checkbox" <?= $courseware_block->getSectionsAsChapters() ? "checked" : "" ?>>
+                    <select name="courseware[section_navigation]" id="courseware-section-navigation">
+                        <option value="default"  <?= (!$courseware_block->getSectionsAsChapters() && $courseware_block->getShowSectionNav()) ? "selected" : "" ?> ><?= _cw("Über dem Seiteninhalt horizontal anzeigen") ?></option>
+                        <option value="chapter" <?= $courseware_block->getSectionsAsChapters() ? "selected" : "" ?>><?= _cw("Links in der Kapitelnavigation anzeigen") ?></option>
+                        <option value="hide" <?= $courseware_block->getShowSectionNav() ? "" : "selected" ?> ><?= _cw("Nicht anzeigen") ?></option>
+                    </select>
                 </td>
             </tr>
 

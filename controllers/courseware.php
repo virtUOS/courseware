@@ -199,12 +199,19 @@ class CoursewareController extends CoursewareStudipController
         /////////////////////////
         // Sections Navigation //
         ////////////////////////
-        $this->storeShowSectionNav(isset($courseware_settings['show_section_nav']) ? true : false);
-
-        //////////////////////////
-        // Sections as Chapters //
-        /////////////////////////
-        $this->storeSectionsAsChatpers(isset($courseware_settings['sections_as_chapters']) ? true : false);
+        switch ($courseware_settings['section_navigation']) {
+            case "default":
+                $this->storeShowSectionNav(true);
+                $this->storeSectionsAsChatpers(false);
+                break;
+            case "chapter":
+                $this->storeShowSectionNav(true);
+                $this->storeSectionsAsChatpers(true);
+                break;
+            case "hide":
+                $this->storeShowSectionNav(false);
+                break;
+        }
 
         ////////////////////////
         // EDITING PERMISSION //
