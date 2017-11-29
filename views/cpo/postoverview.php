@@ -59,8 +59,9 @@
 </div>
 <form class="postoverview-form" action="answer" method="get">
     <input type="hidden" name="thread_id" id="input_thread_id" value="">
-    <textarea name="content"></textarea>
-    <input type="submit" value="senden">
+    
+    <textarea name="content" placeholder="Auf Beitrag antworten..."></textarea>
+    <input type="submit" value="senden" class="button">
 </form>
 <script>
     var thread_id_from_url = location.search.split('thread_id=')[1];
