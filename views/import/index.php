@@ -3,7 +3,7 @@
 /** @var string[] $errors */
 
 if (count($errors) > 0) {
-    echo"<p>"._cw("Es sind Fehler aufgetreten:")."</p>";
+    echo"<p><b>"._cw("Es sind Fehler aufgetreten:")."</b></p>";
     echo '<ul>';
     foreach ($errors as $error):
         echo '<li>'.htmlReady($error).'</li>';
@@ -12,7 +12,7 @@ if (count($errors) > 0) {
 }
 ?>
 <p>&nbsp;</p>
-<p><?= _cw("Laden Sie eine Datei hoch, die Sie zuvor in einer MOOC.IP-Installation exportiert haben.")?></p>
+<p><?= _cw("Laden Sie eine Datei hoch, die Sie zuvor aus einer Courseware exportiert haben.")?></p>
 
 <p>&nbsp;</p>
 <form method="post" enctype="multipart/form-data">
@@ -26,7 +26,7 @@ if (count($errors) > 0) {
         ?>
     </div>
 </form>
-
+<!---
 <p>&nbsp;</p>
 <h2><?=_cw("Im Content-Marktplatz suchen")?></h2>
 <p>&nbsp;</p>
@@ -98,6 +98,6 @@ if (count($errors) > 0) {
         <? endforeach ?>
     </table>
 <? endif ?>
-
+-->
 <p>&nbsp;</p>
 

@@ -98,9 +98,16 @@ class ImportController extends CoursewareStudipController
         if ($this->validateUploadFile($tempDir, $this->errors)) {
             $courseware = $this->container['current_courseware'];
             $importer = new XmlImport($this->plugin->getBlockFactory());
-            $importer->import($tempDir, $courseware);
-
-            $this->redirect(PluginEngine::getURL($this->plugin, array(), 'courseware'));
+            $redirect = true;
+            try {
+                $importer->import($tempDir, $courseware);
+            } catch (Exception $e){
+                $this->errors[] = $e;
+                $redirect = false;
+            }
+            if($redirect){
+                $this->redirect(PluginEngine::getURL($this->plugin, array(), 'courseware'));
+            }
         }
 
         $this->deleteRecursively($tempDir);

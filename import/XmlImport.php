@@ -202,7 +202,9 @@ class XmlImport implements ImportInterface
 
         foreach ($node->childNodes as $blockNode) {
             if ($blockNode instanceof \DOMElement) {
-                $this->processBlockNode($blockNode, $uiSection, $files);
+                if (!$this->processBlockNode($blockNode, $uiSection, $files)) {
+                    continue;
+                }
             }
         }
 
@@ -238,7 +240,9 @@ class XmlImport implements ImportInterface
 
         foreach ($node->childNodes as $blockNode) {
             if ($blockNode instanceof \DOMElement) {
-                $this->processBlockNode($blockNode, $uiSection, $files);
+                if (!$this->processBlockNode($blockNode, $uiSection, $files)) {
+                    continue;
+                }
             }
         }
 
@@ -272,6 +276,11 @@ class XmlImport implements ImportInterface
 
         /** @var \Mooc\UI\Block $uiBlock */
         $uiBlock = $this->blockFactory->makeBlock($block);
+
+        if (gettype($uiBlock) != 'object') { 
+            //throw new \Exception($node->getAttribute('type'));
+            return false;
+        }
         $properties = array();
 
         foreach ($node->attributes as $attribute) {
@@ -297,6 +306,8 @@ class XmlImport implements ImportInterface
         } else {
             $uiBlock->importContents(trim($node->textContent), $files);
         }
+        
+        return true;
     }
 
     private function createBlock($data)
