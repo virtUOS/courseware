@@ -15,6 +15,10 @@ export default StudentView.extend({
   postRender() {
     var $view = this;
     var url = $view.$('.cw-pdf-file-url').val();
+    if(url == ""){
+        $view.$('.cw-pdf-wrapper').hide();
+        return;
+    }
     PDFJS.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
     var pdfDoc = null,
