@@ -128,10 +128,11 @@ class SearchBlock extends Block
                     if(!stripos($url, $request)) {continue;}
                 }
                 // get readable name
-                $classname = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
-                if(class_exists($classname)) {
-                    $uiblock = new $classname();
-                    $type = $uiblock::NAME;
+                $class_name = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
+                $name_constant = $class_name.'::NAME';
+
+                if (defined($name_constant)) {
+                    $type = _cw(constant($name_constant));
                 } else {
                     $type = $block->type;
                 }
