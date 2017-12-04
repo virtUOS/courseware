@@ -55,7 +55,7 @@ class AssortBlock extends Block
         $blocks = array();
         foreach($children as $child)
         {
-            if (!in_array($child["type"], array("AssortBlock", "TestBlock", "AudioBlock", "GalleryBlock", "PdfBlock", "PostBlock", "SearchBlock"))){
+            if (!in_array($child["type"], array("AssortBlock", "TestBlock", "AudioBlock", "GalleryBlock", "PdfBlock", "PostBlock", "SearchBlock", "ForumBlock"))){
                 $className = '\Mooc\UI\\'.$child["type"].'\\'.$child["type"];
                 $blocks[] = array('blockid' =>$child->id, 'blocktype'=> $child->type, 'blockname' => _cw(constant($className.'::NAME')));
             }
@@ -67,6 +67,7 @@ class AssortBlock extends Block
     private function getBlockHash($blockid)
     {
         $block = \Mooc\DB\Block::find($blockid);
+        
         switch ($block->type) {
             case "HtmlBlock":
                 $name = 'content';
@@ -81,19 +82,23 @@ class AssortBlock extends Block
                 break;
 
             case "DownloadBlock":
-                $name = 'file_id';
-                break;
-
-            case "ForumBlock":
-                $name = 'area_id';
+                $name = 'file_name';
                 break;
 
             case "KeyPointBlock":
                 $name = 'keypoint_content';
                 break;
+
+            case "CodeBlock":
+                $name = 'code_content';
+                break;
+
+            case "LinkBlock":
+                $name = 'link_target';
+                break;
         }
         $field = current(\Mooc\DB\Field::findBySQL('user_id = "" AND name = ? AND block_id = ?', array($name , $block->id)));
-        $hash = hash('md5', $field->json_data);
+        $hash = hash('md5', trim(preg_replace('/\\\n/', '', json_decode($field->json_data))));
 
         return $hash;
     }
