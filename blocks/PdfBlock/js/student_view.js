@@ -63,7 +63,7 @@ export default StudentView.extend({
       }
     }
 
-    $view.$(".cw-pdf-button-prev").click( function() {
+    function nextPage() {
       if (pageNum <= 1) {
         return;
       }
@@ -72,9 +72,9 @@ export default StudentView.extend({
       if(pageNum > 1) { $view.$(".cw-pdf-button-prev").prop('title', 'Seite '+(pageNum-1));}
       else {$view.$(".cw-pdf-button-prev").prop('title', '');}
       $view.$(".cw-pdf-button-next").prop('title', 'Seite '+(pageNum+1));
-    });
+    }
 
-    $view.$(".cw-pdf-button-next").click( function() {
+    function  prevPage() {
       if (pageNum >= pdfDoc.numPages) {
         return;
       }
@@ -83,6 +83,23 @@ export default StudentView.extend({
       if (pageNum < pdfDoc.numPages) { $view.$(".cw-pdf-button-next").prop('title', 'Seite '+(pageNum+1)); }
       else { $view.$(".cw-pdf-button-next").prop('title', ''); }
       $view.$(".cw-pdf-button-prev").prop('title', 'Seite '+(pageNum-1));
+    }
+
+    $(document).keypress( function(e) {
+        if(e.keyCode == 37) {
+            nextPage();
+        }
+        if(e.keyCode == 39) {
+            prevPage();
+        }
+    });
+
+    $view.$(".cw-pdf-button-prev").click( function() {
+        nextPage();
+    });
+
+    $view.$(".cw-pdf-button-next").click( function() {
+        prevPage();
     });
 
     PDFJS.getDocument(url).then(function(pdfDoc_) {
