@@ -9,11 +9,14 @@ CHANGELOG
 * add new block: KeyPointBlock
 * add new block: LinkBlock
 * add new block: SearchBlock
+* add new block: PdfBlock
+* add new block: PostBlock (Courseware discussions)
 * imporved iFrameBlock with CC informations
 * modernized TestBlock compatible with vips 1.3
 * ability to switch off horizontal navigation
 * embed horizontal navigation in sidebar navigation (optional)
 * comprehensive progress overview for teachers
+* discussion overview for teachers
 * overview of new contents in the courseware
 * responsive layout to fit mobile devices
 * courseware can be used in public courses
