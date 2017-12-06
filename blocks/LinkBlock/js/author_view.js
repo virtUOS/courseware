@@ -95,6 +95,10 @@ export default AuthorView.extend({
         }
         var $linktitle = $view.$(".cw-link-title").val();
 
+        if ($linktitle == "") {
+            $linktitle = $linktarget;
+        }
+
         helper
         .callHandler(this.model.id, 'save', {
               link_type : $linktype,
@@ -110,9 +114,7 @@ export default AuthorView.extend({
 
             // error
             function (error) {
-                var errorMessage = 'Could not update the block: '+$.parseJSON(error.responseText).reason;
-                alert(errorMessage);
-                console.log(errorMessage, arguments);
+                console.log(error);
             }
         );
     }

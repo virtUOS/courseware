@@ -12,8 +12,12 @@
 <label for="cw-link-target">{{#i18n}}Ziel des Links{{/i18n}}:</label>
 <select name="cw-link-target" class="cw-link-target">
     <optgroup label="Schnellauswahl">
-        <option value="next">weiter</option>
-        <option value="prev">zur&uuml;ck</option>
+        {{#hasnext}}
+            <option value="next">weiter</option>
+        {{/hasnext}}
+        {{#hasprev}}
+            <option value="prev">zur&uuml;ck</option>
+        {{/hasprev}}
     </optgroup>
     <optgroup label="in diesem Kapitel">
         {{#inthischapter}}

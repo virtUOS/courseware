@@ -41,7 +41,9 @@ class LinkBlock extends Block
 
         return array_merge($this->getAttrArray(), array(
             'inthischapter' => $inthischapter, 
-            'inotherchapters' => $inotherchapters
+            'inotherchapters' => $inotherchapters,
+            'hasnext'   => $this->getTargetId("next") != null,
+            'hasprev'   => $this->getTargetId("prev") != null
         ));
     }
 
@@ -152,10 +154,10 @@ class LinkBlock extends Block
             $this->link_type = (string) $data['link_type'];
         } 
         if (isset ($data['link_target'])) {
-            $this->link_target = str_replace('http://', '', \STUDIP\Markup::purify((string) $data['link_target']));
+            $this->link_target = str_replace('http://', '', \STUDIP\Markup::purifyHtml((string) $data['link_target']));
         } 
         if (isset ($data['link_title'])) {
-            $this->link_title = \STUDIP\Markup::purify((string) $data['link_title']);
+            $this->link_title = \STUDIP\Markup::purifyHtml((string) $data['link_title']);
         } 
 
         return;
