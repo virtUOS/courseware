@@ -14,12 +14,12 @@ export default StudentView.extend({
     render() {
         return this;
     },
-    
+
     onSearch(event) {
         var view = this;
         var input_request = this.$(".cw-search-input-search").val();
         this.$(".cw-search-result-empty").hide();
-        
+
         helper
             .callHandler(this.model.id, "search", {request: input_request}) 
             .then(function (success) {
@@ -30,7 +30,7 @@ export default StudentView.extend({
                 console.log(error, arguments);
             });
     }, 
-    
+
     keyListener(){
         var view = this;
         this.$(".cw-search-input-search").keypress(function(event){
@@ -43,7 +43,6 @@ export default StudentView.extend({
         var $html ="";
         if ($result) {
         $.each($result, function(index, value){
-            
             if(value.chap){
                 $html += "<li><a href='"+ value.link + "'>"+value.title+"</a></li>";
                 
@@ -56,7 +55,6 @@ export default StudentView.extend({
         if ($html == "") {
             this.$(".cw-search-result-empty").show();
         }
-        
     }
 });
 

@@ -21,7 +21,10 @@ class PostBlock extends Block
             return array('inactive' => true);
         }
 
-        return array_merge($this->getAttrArray(), Post::findPosts($this->thread_id, $this->container['cid'], $this->container['current_user_id']));
+        return array_merge(
+            $this->getAttrArray(),
+            Post::findPosts($this->thread_id, $this->container['cid'], $this->container['current_user_id'])
+        );
     }
 
     public function author_view()

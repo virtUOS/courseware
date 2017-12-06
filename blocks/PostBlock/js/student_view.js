@@ -16,6 +16,7 @@ export default StudentView.extend({
 
     render() {
         this.$el.html(templates('PostBlock', 'student_view', { ...this.model.attributes }));
+
         return this;
     },
 
@@ -49,53 +50,54 @@ export default StudentView.extend({
             return false;
         }
         helper
-          .callHandler(this.model.id, 'message', {
-            message: $message
-          })
-          .then(
-            // success
-            function () {
-              $(event.target).addClass('accept');
-              $view.updateContent(null);
-            },
-
-            // error
-            function (error) {
-              var errorMessage = 'Could not update the block: '+$.parseJSON(error.responseText).reason;
-              alert(errorMessage);
-              console.log(errorMessage, arguments);
-            });
+            .callHandler(this.model.id, 'message', {
+                message: $message
+            })
+            .then(
+                // success
+                function () {
+                  $(event.target).addClass('accept');
+                  $view.updateContent(null);
+                },
+    
+                // error
+                function (error) {
+                  var errorMessage = 'Could not update the block: '+$.parseJSON(error.responseText).reason;
+                  alert(errorMessage);
+                  console.log(errorMessage, arguments);
+                }
+            );
     },
 
     updateContent(updateLoop) {
         var $view = this;
         var $timestamp = $view.$(".cw-postblock-timestamp").val();
         helper
-          .callHandler(this.model.id, 'update', {
-            timestamp: $timestamp
-          })
-          .then(
-            // success
-            function (content) {
-                if (content.update) {
-                    $view.model.set('post_title',content.post_title);
-                    $view.model.set('posts',content.posts);
-                    $view.model.set('timestamp',content.timestamp);
-                    $view.render();
-                    $view.$('.cw-postblock-posts').scrollTop($view.$('.cw-postblock-posts')[0].scrollHeight);
-                    if($view.$('.cw-postblock-posts').outerHeight() < 420) {
-                        $view.$('.cw-postblock-showall-messages').hide();
+            .callHandler(this.model.id, 'update', {
+                timestamp: $timestamp
+            })
+            .then(
+                // success
+                function (content) {
+                    if (content.update) {
+                        $view.model.set('post_title',content.post_title);
+                        $view.model.set('posts',content.posts);
+                        $view.model.set('timestamp',content.timestamp);
+                        $view.render();
+                        $view.$('.cw-postblock-posts').scrollTop($view.$('.cw-postblock-posts')[0].scrollHeight);
+                        if($view.$('.cw-postblock-posts').outerHeight() < 420) {
+                            $view.$('.cw-postblock-showall-messages').hide();
+                        }
+                    }
+                },
+                // error
+                function (error) {
+                    console.log("error");
+                    if(updateLoop != null) { 
+                        clearInterval(updateLoop);
                     }
                 }
-            },
-
-            // error
-            function (error) {
-              console.log("error");
-              if(updateLoop != null) { 
-                clearInterval(updateLoop);
-              }
-            });
+            );
 
         return;
     },

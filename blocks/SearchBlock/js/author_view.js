@@ -44,7 +44,7 @@ export default AuthorView.extend({
                 })
             .done();
     },
-    
+
     onNavigate(event) {
         if (!$('section .block-content button[name=save]').length) {
             return;

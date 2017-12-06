@@ -35,10 +35,10 @@ class PdfBlock extends Block
     private function getAttrArray() 
     {
         return array(
-            'pdf_file' => $this->pdf_file,
-            'pdf_filename' => $this->pdf_filename,
-            'pdf_file_id' => $this->pdf_file_id,
-            'pdf_title' => $this->pdf_title
+            'pdf_file'      => $this->pdf_file,
+            'pdf_filename'  => $this->pdf_filename,
+            'pdf_file_id'   => $this->pdf_file_id,
+            'pdf_title'     => $this->pdf_title
         );
     }
     
@@ -58,6 +58,7 @@ class PdfBlock extends Block
         $stmt->bindParam(':seminar_id', $this->container['cid']);
         $stmt->execute();
         $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
         $filesarray = array();
         foreach ($response as $item) {
             if ((strpos($item['filename'], 'pdf') > -1)) {
@@ -98,13 +99,13 @@ class PdfBlock extends Block
     {
         $document = new \StudipDocument($this->pdf_file_id);
         $files[] = array(
-            'id' => $this->pdf_file_id,
-            'name' => $document->name,
-            'description' => $document->description,
-            'filename' => $document->filename,
-            'filesize' => $document->filesize,
-            'url' => $document->url,
-            'path' => get_upload_file_path($this->pdf_file_id),
+            'id'            => $this->pdf_file_id,
+            'name'          => $document->name,
+            'description'   => $document->description,
+            'filename'      => $document->filename,
+            'filesize'      => $document->filesize,
+            'url'           => $document->url,
+            'path'          => get_upload_file_path($this->pdf_file_id)
         );
 
         return $files;

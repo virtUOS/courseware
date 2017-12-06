@@ -22,16 +22,16 @@ export default AuthorView.extend({
     postRender() {
         var $view = this;
         $("section.block").show();
-        
+
         var $assorttype = $view.$(".assorttype-selection-assort").val();
         $view.$("input[name='assorttype'][value='"+$assorttype+"']").attr("checked", "checked");
-       
+
         $view.$("input[name='assortblocks']").removeAttr("checked");
         var $assortblocksselection = $view.$(".assortblocks-selection-assort").val();
 
         if ($assortblocksselection != ""){
             var $assortblocks = JSON.parse($assortblocksselection);
-            
+
             $.each($assortblocks , function(){
                 $view.$("input[name='assortblocks'][value='"+this["id"]+"']").prop("checked", true);
                 $view.$("#blockname-"+this["id"]).val(this["name"]);
@@ -43,7 +43,7 @@ export default AuthorView.extend({
         var view = this;
         var $assorttype = this.$('input[name="assorttype"]:checked').val();
         var $assortblocksarray = new Array();
-        
+
         this.$('input[name="assortblocks"]:checked').each(function(){
             var $id = $(this).val();
             var $name = $("#blockname-"+$id)
@@ -61,7 +61,6 @@ export default AuthorView.extend({
                     jQuery(event.target).addClass("accept");
                     view.switchBack();
                 },
-
                 // error
                 function (error) {
                     var errorMessage = 'Could not update the block: '+jQuery.parseJSON(error.responseText).reason;
