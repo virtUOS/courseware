@@ -22,10 +22,12 @@
     <button name="showall" class="button cw-postblock-showall-messages">{{#i18n}}alles zeigen{{/i18n}}</button>
     <button name="shrink" class="button cw-postblock-shrink-messages" style="display: none;">{{#i18n}}weniger zeigen{{/i18n}}</button>
 </div>
-<div class="cw-postblock-messagebox">
-    <textarea class="cw-postblock-textbox" style="width: calc(100% - 2em);"></textarea>
-    <button name="send" class="button cw-postblock-sendmessage">{{#i18n}}senden{{/i18n}}</button>
-</div>
+{{^nobody}}
+    <div class="cw-postblock-messagebox">
+        <textarea class="cw-postblock-textbox" style="width: calc(100% - 2em);"></textarea>
+        <button name="send" class="button cw-postblock-sendmessage">{{#i18n}}senden{{/i18n}}</button>
+    </div>
+{{/nobody}}
 <div class="clear"></div>
 {{/inactive}}
 {{#inactive}}

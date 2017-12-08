@@ -4,6 +4,7 @@ namespace Mooc\UI\PostBlock;
 
 use Mooc\UI\Block;
 use Mooc\DB\Post as Post;
+use Courseware\User as User;
 
 class PostBlock extends Block
 {
@@ -20,10 +21,11 @@ class PostBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
-
+        $user = new User($this->container, $this->container['current_user_id']);
         return array_merge(
             $this->getAttrArray(),
-            Post::findPosts($this->thread_id, $this->container['cid'], $this->container['current_user_id'])
+            Post::findPosts($this->thread_id, $this->container['cid'], $this->container['current_user_id']),
+            array('nobody' => $user->isNobody())
         );
     }
 
