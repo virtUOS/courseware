@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-0321 13:15+0200\n"
+"POT-Creation-Date: 2017-12-1220 09:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,6 +12,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "Abbrechen"
+msgstr ""
+
+msgid "ablehnen"
 msgstr ""
 
 msgid "Abschicken"
@@ -32,6 +35,18 @@ msgstr ""
 msgid "Absenken"
 msgstr ""
 
+msgid "absolvieren"
+msgstr ""
+
+msgid "Accordion"
+msgstr ""
+
+msgid "akzeptieren"
+msgstr ""
+
+msgid "alles zeigen"
+msgstr ""
+
 msgid "Ändern"
 msgstr ""
 
@@ -44,6 +59,9 @@ msgstr ""
 msgid "Anzeigen"
 msgstr ""
 
+msgid "Art des Links"
+msgstr ""
+
 msgid "Audiodatei"
 msgstr ""
 
@@ -53,13 +71,40 @@ msgstr ""
 msgid "Aufgabenblätter verwalten"
 msgstr ""
 
+msgid "ausrufen"
+msgstr ""
+
+msgid "auswerten"
+msgstr ""
+
+msgid "Autoplay"
+msgstr ""
+
+msgid "Autoplay-Timer (in Sekunden)"
+msgstr ""
+
 msgid "Autorenmodus"
+msgstr ""
+
+msgid "Bereits vorhandene Diskussion verwenden"
 msgstr ""
 
 msgid "Beschreibung"
 msgstr ""
 
+msgid "betrachten"
+msgstr ""
+
+msgid "Bewegen Sie den Cursor über das Informations-Icon des gewünschten Blocks um die Block-Id zu erfahren."
+msgstr ""
+
+msgid "Bezeichung des Links"
+msgstr ""
+
 msgid "Bildschirm"
+msgstr ""
+
+msgid "Bitte beachten Sie das nicht alle Blocktypen in diesen Block eingebunden werden können."
 msgstr ""
 
 msgid "Block hinzufügen"
@@ -68,10 +113,25 @@ msgstr ""
 msgid "Blubber muss in dieser Veranstaltung aktiviert sein."
 msgstr ""
 
+msgid "Breite"
+msgstr ""
+
+msgid "CC Lizenztyp angeben:"
+msgstr ""
+
+msgid "chatten"
+msgstr ""
+
+msgid "Danke! Sie haben alle Aufgaben gelöst."
+msgstr ""
+
 msgid "Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten Abschnitt fortfahren."
 msgstr ""
 
 msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
+msgstr ""
+
+msgid "Datei aus dem Dateibereich"
 msgstr ""
 
 msgid "Dateibereich"
@@ -86,7 +146,31 @@ msgstr ""
 msgid "Die Evaluationen müssen im System aktiviert sein."
 msgstr ""
 
+msgid "Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an Ihren Administrator."
+msgstr ""
+
+msgid "Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an Ihren Dozenten."
+msgstr ""
+
+msgid "Diese Aufgabe wurde bereits korrigiert."
+msgstr ""
+
+msgid "Diese Aufgabe wurde noch nicht korrigiert."
+msgstr ""
+
 msgid "Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
+msgstr ""
+
+msgid "Dieser Block ermöglicht das Suchen innerhalb der Courseware dieser Veranstaltung."
+msgstr ""
+
+msgid "Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
+msgstr ""
+
+msgid "Dieser Test ist zurzeit nicht verfügbar."
+msgstr ""
+
+msgid "editieren"
 msgstr ""
 
 msgid "Eine Datei ausw&auml;hlen"
@@ -104,6 +188,9 @@ msgstr ""
 msgid "Ende"
 msgstr ""
 
+msgid "entfernen"
+msgstr ""
+
 msgid "Entfernen"
 msgstr ""
 
@@ -111,6 +198,9 @@ msgid "erstellt am"
 msgstr ""
 
 msgid "Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen."
+msgstr ""
+
+msgid "Es sind keine Aufgabenblätter des Types \""
 msgstr ""
 
 msgid "Es wurde bisher keine Evaluation erstellt!"
@@ -126,6 +216,9 @@ msgid "Es wurde noch kein Video eingetragen."
 msgstr ""
 
 msgid "Export"
+msgstr ""
+
+msgid "Farbe"
 msgstr ""
 
 msgid "Frage"
@@ -155,10 +248,22 @@ msgstr ""
 msgid "Gesamtes Unterkapitel löschen"
 msgstr ""
 
+msgid "hinzufügen"
+msgstr ""
+
 msgid "Höhe"
 msgstr ""
 
+msgid "Icon"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
 msgid "Ihre Lösung ist korrekt!"
+msgstr ""
+
+msgid "Ihre Lösung ist nicht korrekt!"
 msgstr ""
 
 msgid "Ihre Lösung wurde eingetragen."
@@ -173,10 +278,22 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
+msgid "in Courseware suchen..."
+msgstr ""
+
+msgid "In dem ausgew&auml;hlten Ordner befinden sich keine Bilder."
+msgstr ""
+
+msgid "Info"
+msgstr ""
+
 msgid "Infobox nach Download"
 msgstr ""
 
 msgid "Infobox vor Download"
+msgstr ""
+
+msgid "informieren"
 msgstr ""
 
 msgid "Kapitel einfügen"
@@ -200,7 +317,16 @@ msgstr ""
 msgid "Keine Kapitel"
 msgstr ""
 
+msgid "keinen Treffer gefunden"
+msgstr ""
+
 msgid "Keine Unterkapitel"
+msgstr ""
+
+msgid "Kein Test verfügbar. Vips muss in dieser Veranstaltung aktiviert sein."
+msgstr ""
+
+msgid "Kein Test verfügbar. Vips muss installiert sein."
 msgstr ""
 
 msgid "Kommentiere dies"
@@ -209,13 +335,34 @@ msgstr ""
 msgid "Kontrollelemente verstecken"
 msgstr ""
 
-msgid "Matterhorn"
+msgid "kooperieren"
+msgstr ""
+
+msgid "Merksatz"
+msgstr ""
+
+msgid "Mit diesem Block fassen Sie mehrere Blöcke dieser Seite zum Durchblättern zusammen."
+msgstr ""
+
+msgid "Musterlösung:"
 msgstr ""
 
 msgid "Name des Übergabeparameters"
 msgstr ""
 
+msgid "Navigation verbergen"
+msgstr ""
+
 msgid "Nutzerspezifische ID übergeben"
+msgstr ""
+
+msgid "openCast"
+msgstr ""
+
+msgid "planen"
+msgstr ""
+
+msgid "puz­zeln"
 msgstr ""
 
 msgid "Quelle"
@@ -227,7 +374,16 @@ msgstr ""
 msgid "Seitenblöcke aktivieren"
 msgstr ""
 
+msgid "Seitenblöcke entfernen"
+msgstr ""
+
 msgid "Seitenverhältnis"
+msgstr ""
+
+msgid "senden"
+msgstr ""
+
+msgid "sichtbar ab:"
 msgstr ""
 
 msgid "Sidebar für"
@@ -245,6 +401,12 @@ msgstr ""
 msgid "Studentenmodus"
 msgstr ""
 
+msgid "suchen"
+msgstr ""
+
+msgid "Tabs"
+msgstr ""
+
 msgid "Titel"
 msgstr ""
 
@@ -252,6 +414,12 @@ msgid "Titel des Blocks"
 msgstr ""
 
 msgid "Titel des Unterkapitels bearbeiten"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Überschrift"
 msgstr ""
 
 msgid "Unterkapitel einfügen"
@@ -269,9 +437,6 @@ msgstr ""
 msgid "Video-Typ:"
 msgstr ""
 
-msgid "Vips muss in dieser Veranstaltung aktiviert sein."
-msgstr ""
-
 msgid "Vorschau"
 msgstr ""
 
@@ -284,7 +449,16 @@ msgstr ""
 msgid "Webvideo (URL)"
 msgstr ""
 
+msgid "Wegen des gewählten Lizenzstatus können Sie diese Audiodatei nicht abspielen."
+msgstr ""
+
+msgid "Wegen des gewählten Lizenzstatus können Sie diese Datei nicht herunterladen."
+msgstr ""
+
 msgid "weiter"
+msgstr ""
+
+msgid "weniger zeigen"
 msgstr ""
 
 msgid "Youtube"
@@ -293,31 +467,13 @@ msgstr ""
 msgid "Zeit zurücksetzen"
 msgstr ""
 
+msgid "Ziel des Links"
+msgstr ""
+
 msgid "Zufallszeichen für Verschlüsselung"
 msgstr ""
 
 msgid "zurück"
-msgstr ""
-
-msgid "Neuer Abschnitt"
-msgstr ""
-
-msgid "Neues Kapitel"
-msgstr ""
-
-msgid "Neues Unterkapitel"
-msgstr ""
-
-msgid "Sichtbar ab"
-msgstr ""
-
-msgid "Wollen Sie den Block wirklich löschen?"
-msgstr ""
-
-msgid "Wollen Sie den gesamten Abschnitt wirklich löschen?"
-msgstr ""
-
-msgid "Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke werden unwiderruflich entfernt!"
 msgstr ""
 
 msgid "Bestätigung"
