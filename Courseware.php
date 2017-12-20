@@ -143,8 +143,20 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $new_ones = (int) $stmt->fetch(PDO::FETCH_ASSOC)['COUNT(*)'];
 
         $plugin_manager = \PluginManager::getInstance();
-        $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
-        if ($plugin_info) {
+        $vips = true;
+        if ($plugin_manager->getPluginInfo('VipsPlugin') == null){
+            $vips = false;
+        }
+        if($plugin_manager->getPlugin('VipsPlugin')){ 
+            $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
+            if (version_compare('1.3',$version) > 0) {
+                $vips = false;
+            }
+        } else {
+            $vips = false;
+        }
+
+        if ($vips) {
             // getting all tests
             $stmt = $db->prepare("
                 SELECT

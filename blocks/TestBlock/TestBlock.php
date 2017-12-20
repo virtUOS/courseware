@@ -389,7 +389,14 @@ class TestBlock extends Block
 
     public function exportProperties()
     {
+        var_dump($this->vipsVersion());
+        if ( ($this->test_id == "") ||  !($this->vipsVersion()) ){
+            return;
+        }
         $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
+        if ($assignment == null) {
+            return;
+        }
         $xml = $assignment->exportXML();
 
         return array(

@@ -79,8 +79,20 @@ class CoursewareController extends CoursewareStudipController
         $this->new_ones = $new_ones;
 
         $plugin_manager = \PluginManager::getInstance();
-        $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
-        if($plugin_info) {
+        $vips = true;
+        if ($plugin_manager->getPluginInfo('VipsPlugin') == null){
+            $vips = false;
+        }
+        if($plugin_manager->getPlugin('VipsPlugin')){ 
+            $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
+            if (version_compare('1.3',$version) > 0) {
+                $vips = false;
+            }
+        } else {
+            $vips = false;
+        }
+
+        if ($vips) {
             // getting all tests
             $db = DBManager::get();
             $stmt = $db->prepare("
