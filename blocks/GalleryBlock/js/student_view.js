@@ -25,7 +25,6 @@ export default StudentView.extend({
             arrows: $hidenav,
             autoplay: $autoplay,
             autoplaySpeed: $autoplaytimer,
-            adaptiveHeight: true,
             infinite: true
       });
   }

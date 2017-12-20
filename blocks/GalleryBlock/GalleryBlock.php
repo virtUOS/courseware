@@ -16,6 +16,7 @@ class GalleryBlock extends Block
         $this->defineField('gallery_autoplay', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('gallery_autoplay_timer', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('gallery_hidenav', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('gallery_height', \Mooc\SCOPE_BLOCK, '600');
     }
 
     public function student_view()
@@ -48,7 +49,8 @@ class GalleryBlock extends Block
             'gallery_folder_id'      => $this->gallery_folder_id,
             'gallery_autoplay'       => $this->gallery_autoplay,
             'gallery_autoplay_timer' => $this->gallery_autoplay_timer,
-            'gallery_hidenav'        => $this->gallery_hidenav
+            'gallery_hidenav'        => $this->gallery_hidenav,
+            'gallery_height'         => $this->gallery_height
         );
     }
 
@@ -68,6 +70,11 @@ class GalleryBlock extends Block
         if (isset ($data['gallery_hidenav'])) {
             $this->gallery_hidenav = (string) $data['gallery_hidenav'];
         } 
+        if (isset ($data['gallery_height']) && ($data['gallery_height'] > 0) && ($data['gallery_height'] <= 2000)) {
+            $this->gallery_height = (string) $data['gallery_height'];
+        } else {
+            $this->gallery_height = "600";
+        }
         $files = $this->showFiles($this->gallery_folder_id );
         $file_ids = array();
         $file_names = array();
@@ -185,6 +192,9 @@ class GalleryBlock extends Block
         } 
         if (isset ($properties['gallery_hidenav'])) {
             $this->gallery_hidenav = $properties['gallery_hidenav'];
+        } 
+        if (isset ($properties['gallery_height'])) {
+            $this->gallery_height = $properties['gallery_height'];
         } 
         if (isset ($properties['gallery_folder_name'])) {
             $gallery_folder_name = $properties['gallery_folder_name'];

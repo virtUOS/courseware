@@ -55,10 +55,11 @@ export default AuthorView.extend({
         var $folder = this.$el.find('.gallery-folder');
         var $autoplay = this.$el.find('input[name="gallery-autoplay"]').prop( "checked") ? 1 : 0;
         var $autoplaytimer = this.$el.find('input[name="gallery-autoplay-timer"]').val();
+        var $height = this.$el.find('input[name="gallery-height"]').val();
         var $hidenav = this.$el.find('input[name="gallery-hidenav"]').prop( "checked") ? 1 : 0;
         var $gallery_folder_id = $folder.find('option:selected').attr('folder_id');
         helper
-          .callHandler(this.model.id, 'save', {gallery_folder_id: $gallery_folder_id, gallery_autoplay: $autoplay, gallery_autoplay_timer: $autoplaytimer, gallery_hidenav: $hidenav})
+          .callHandler(this.model.id, 'save', {gallery_folder_id: $gallery_folder_id, gallery_height: $height, gallery_autoplay: $autoplay, gallery_autoplay_timer: $autoplaytimer, gallery_hidenav: $hidenav})
           .then(function () {
             jQuery(event.target).addClass('accept');
             view.switchBack();

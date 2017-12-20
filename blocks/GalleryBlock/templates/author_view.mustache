@@ -9,10 +9,13 @@
     {{/foldernames}}
 </select>
 <br>
+<label for="gallery-height">{{#i18n}}H&ouml;he der Galerie (in Pixeln){{/i18n}}:</label>
+<input name="gallery-height" type="number" min=1 max=2000 step=1 value={{gallery_height}}>
+<br>
 <label for="gallery-autoplay">{{#i18n}}Autoplay{{/i18n}}:</label>
 <input name="gallery-autoplay" type="checkbox">
 <br>
-<label for="gallery--autoplay-timer">{{#i18n}}Autoplay-Timer (in Sekunden){{/i18n}}:</label>
+<label for="gallery-autoplay-timer">{{#i18n}}Autoplay-Timer (in Sekunden){{/i18n}}:</label>
 <input name="gallery-autoplay-timer" type="number" min=1 max=60 step=1 value={{gallery_autoplay_timer}}>
 <br>
 <label for="gallery-hidenav">{{#i18n}}Navigation verbergen{{/i18n}}:</label>
