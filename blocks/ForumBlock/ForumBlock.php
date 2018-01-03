@@ -44,6 +44,7 @@ class ForumBlock extends Block
         foreach ($topics as $key => $topic) {
             $topics[$key]['human_date']   = date('d.m.Y', $topic['chdate']);
             $topics[$key]['link_to_post'] = \URLHelper::getLink('plugins.php/coreforum/index/index/' . $topic['topic_id']);
+            $topics[$key]['name']   = strip_tags($topic['name']);
         }
 
         return array(
