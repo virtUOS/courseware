@@ -30,7 +30,7 @@
                 default:
                     echo '<p><b>' . _cw('Es gibt ') . $counter . _cw(' neue Beiträge') . '</b></p>';
             }?>
-            <button class="button show-thread-button" name="show_thread_<?= $thread['thread_id']?>" data-showthread="<?= $thread['thread_id']?>"><?= cw_('Beiträge anzeigen') ?></button>
+            <button class="button show-thread-button" name="show_thread_<?= $thread['thread_id']?>" data-showthread="<?= $thread['thread_id']?>"><?= _cw('Beiträge anzeigen') ?></button>
         </li>
     <? endforeach;?>
 </ul>
