@@ -177,7 +177,7 @@ export default Backbone.View.extend({
       }
 
       if ($parent.attr('data-publication') != '') {
-        $parent.attr('title', dateformat(new Date($parent.attr('data-publication') * 1000), 'dd.mm.yyyy'));
+        $parent.attr('title', 'Freigegeben ab: '+dateformat(new Date($parent.attr('data-publication') * 1000), 'dd.mm.yyyy'));
       } else {
         $parent.attr('title', '');
       }

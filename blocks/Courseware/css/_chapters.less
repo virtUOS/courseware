@@ -257,12 +257,15 @@ ol.subchapters {
 
 &.user-may-author {
   li[data-type="Chapter"]:not([data-publication='']),
-  li[data-type="Subchapter"]:not([data-publication='']) {
-    & > div.title > a.navigate {
-      .bgImg(date, grey, 16);
-      background-position: center right;
-      opacity: 0.5;
-    }
+  li[data-type="Subchapter"]:not([data-publication='']) 
+  {
+        & > div.title > a.navigate {
+          .bgImg(date, grey, 16);
+          background-position: center right;
+        }
+        &.unpublished > div.title > a.navigate {
+            opacity: 0.5;
+        }
   }
   span.complete {
     display: none;
