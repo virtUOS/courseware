@@ -16,21 +16,21 @@
                     </p>
                 <? endforeach; ?>
             <? else :?>
-                <p>Dieser Thread wird in keinem Block genutzt.</p>
+                <p><?= _cw('Dieser Thread wird in keinem Block genutzt.') ?></p>
             <? endif; ?>
             <div class="clear"></div>
 
             <? switch ($counter) {
                 case 0:
-                    echo "<p>Es gibt keine neuen Beiträge.</p>";
+                    echo '<p>' . _cw('Es gibt keine neuen Beiträge.') . '</p>';
                     break;
                 case 1:
-                    echo "<p><b>Es gibt einen neuen Beitrag</b></p>";
+                    echo '<p><b>' . _cw('Es gibt einen neuen Beitrag') . '</b></p>';
                     break;
                 default:
-                    echo "<p><b>Es gibt " . $counter . " neue Beiträge</b></p>";
+                    echo '<p><b>' . _cw('Es gibt ') . $counter . _cw(' neue Beiträge') . '</b></p>';
             }?>
-            <button class="button show-thread-button" name="show_thread_<?= $thread['thread_id']?>" data-showthread="<?= $thread['thread_id']?>">Beiträge anzeigen</button>
+            <button class="button show-thread-button" name="show_thread_<?= $thread['thread_id']?>" data-showthread="<?= $thread['thread_id']?>"><?= cw_('Beiträge anzeigen') ?></button>
         </li>
     <? endforeach;?>
 </ul>
@@ -60,7 +60,7 @@
 <form class="postoverview-form" action="answer" method="get">
     <input type="hidden" name="thread_id" id="input_thread_id" value="">
     
-    <textarea name="content" placeholder="Auf Beitrag antworten..."></textarea>
+    <textarea name="content" placeholder="<?= _cw('Auf Beitrag antworten...') ?>"></textarea>
     <input type="submit" value="senden" class="button">
 </form>
 <script>

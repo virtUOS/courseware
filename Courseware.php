@@ -89,16 +89,47 @@ class Courseware extends StudIPPlugin implements StandardPlugin
             )
         );
 
+        //NavigationForLecturers
         if ($this->container['current_user']->hasPerm($courseId, 'tutor')) {
-            $tabs = $this->getTabNavigationForLecturers($tabs, $cid);
-
             $settingsUrl = PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true);
             $navigation->addSubnavigation(
-                'settings',
+                'settings', 
                 new Navigation(_cw('Einstellungen'), $settingsUrl)
             );
+
+            $cpoUrl = PluginEngine::getURL($this, compact('cid'), 'cpo', true);
+            $navigation->addSubnavigation(
+                'progressoverview',
+                new Navigation(_cw('Fortschrittsübersicht'), $cpoUrl)
+            );
+
+            $postoverviewUrl = PluginEngine::getURL($this, compact('cid'), 'cpo/postoverview', true);
+            $navigation->addSubnavigation(
+                'postoverview',
+                new Navigation(_cw('Diskussionsübersicht'), $postoverviewUrl)
+            );
+
+            $exportUrl = PluginEngine::getURL($this, compact('cid'), 'export', true);
+            $navigation->addSubnavigation(
+                'export',
+                new Navigation(_cw('Export'), $exportUrl)
+            );
+
+            $importUrl = PluginEngine::getURL($this, compact('cid'), 'import', true);
+            $navigation->addSubnavigation(
+                'import',
+                new Navigation(_cw('Import'), $importUrl)
+            );
+
+        //NavigationForStudents
         } else {
-            $tabs = $this->getTabNavigationForStudents($tabs, $cid);
+            if (!$this->container['current_user']->isNobody()) {
+                $progressUrl = PluginEngine::getURL($this, compact('cid'), 'progress', true);
+                $navigation->addSubnavigation(
+                    'progress',
+                    new Navigation(_cw('Fortschrittsübersicht'), $progressUrl)
+                );
+            }
         }
 
         return $tabs;
@@ -407,36 +438,4 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         return _('Courseware');
     }
 
-    private function getTabNavigationForLecturers($tabs, $cid)
-    {
-        $cpoUrl = PluginEngine::getURL($this, compact('cid'), 'cpo', true);
-        $navigation = new Navigation(_cw('Fortschrittsübersicht'), $cpoUrl);
-        $navigation->setImage(Icon::create('assessment', 'info_alt'));
-        $navigation->setActiveImage(Icon::create('assessment', 'info'));
-
-        $tabs['mooc_cpo'] = $navigation;
-
-        $navigation->addSubnavigation('index', clone $navigation);
-        $navigation->addSubnavigation(
-            'postoverview',
-            new Navigation(
-                _cw('Diskussionsübersicht'),
-                PluginEngine::getURL($this, compact('cid'), 'cpo/postoverview', true)
-            )
-        );
-
-        return $tabs;
-    }
-
-    private function getTabNavigationForStudents($tabs, $cid)
-    {
-        if (!$this->container['current_user']->isNobody()) {
-            $progressUrl = PluginEngine::getURL($this, compact('cid'), 'progress', true);
-            $tabs['mooc_progress'] = new Navigation(_cw('Fortschrittsübersicht'), $progressUrl);
-            $tabs['mooc_progress']->setImage(Icon::create('assessment', 'info_alt'));
-            $tabs['mooc_progress']->setActiveImage(Icon::create('assessment', 'info'));
-        }
-
-        return $tabs;
-    }
 }

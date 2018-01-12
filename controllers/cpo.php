@@ -20,14 +20,14 @@ class CpoController extends CoursewareStudipController
 
         $courseware = $this->container['current_courseware'];
         $title = Request::option('cid', false) ? $_SESSION['SessSemName']['header_line'] . ' - ' : '';
-        $title .= $courseware->title." - Fortschrittsübersicht für Lehrende";
+        $title .= $courseware->title.' - Fortschrittsübersicht für Lehrende';
         PageLayout::setTitle($title);
 
-        if (Navigation::hasItem('/course/mooc_cpo/index')) {
-            Navigation::activateItem("/course/mooc_cpo/index");
+        if (Navigation::hasItem('/course/mooc_courseware/progressoverview')) {
+            Navigation::activateItem('/course/mooc_courseware/progressoverview');
         }
 
-        $teachers = (new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), "dozent");
+        $teachers = (new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), 'dozent');
         $dids = array_map(function($teacher){return $teacher->user_id;} , $teachers); // dozent ids
         $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId()));
         $bids   = array_map(function ($block) { return (int) $block->id; }, $blocks); // block ids
@@ -58,10 +58,10 @@ class CpoController extends CoursewareStudipController
             },
             array());
 
-        $members = count((new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), "autor"));
+        $members = count((new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), 'autor'));
         foreach ($progress as &$block) {
-            if($block["users"] < $members) {
-                $block["grade"] =($block["grade"]*$block["users"])/$members;
+            if($block['users'] < $members) {
+                $block['grade'] = ($block['grade'] * $block['users']) / $members;
             }
         }
 
@@ -79,8 +79,8 @@ class CpoController extends CoursewareStudipController
 
     public function postoverview_action()
     {
-        if (Navigation::hasItem('/course/mooc_cpo/postoverview')) {
-            Navigation::activateItem("/course/mooc_cpo/postoverview");
+        if (Navigation::hasItem('/course/mooc_courseware/postoverview')) {
+            Navigation::activateItem('/course/mooc_courseware/postoverview');
         }
 
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
@@ -93,9 +93,9 @@ class CpoController extends CoursewareStudipController
 
         foreach ($thread_ids as $thread_id){
             $thread = array(
-                "thread_id" => $thread_id, 
-                "thread_title" => \Mooc\DB\Post::findPost($thread_id, 0, $this->cid)["content"],
-                "thread_posts" => \Mooc\DB\Post::findPosts($thread_id, $this->cid, $this->container['current_user']['id'])
+                'thread_id' => $thread_id, 
+                'thread_title' => \Mooc\DB\Post::findPost($thread_id, 0, $this->cid)['content'],
+                'thread_posts' => \Mooc\DB\Post::findPosts($thread_id, $this->cid, $this->container['current_user']['id'])
             );
             array_push($this->threads, $thread);
         }
@@ -103,12 +103,12 @@ class CpoController extends CoursewareStudipController
 
     public function answer_action()
     {
-        if ((Request::get("thread_id") != "") && (Request::get("content") != "")) { 
-            $thread_id = Request::get("thread_id");
-            $content = Request::get("content");
-            $answer = "answer=true";
+        if ((Request::get('thread_id') != '') && (Request::get('content') != '')) { 
+            $thread_id = Request::get('thread_id');
+            $content = Request::get('content');
+            $answer = 'answer=true';
         } else {
-            return $this->redirect('cpo/postoverview?answer=false');
+            return $this->redirect('postoverview?answer=false');
         }
 
         $cid = $this->plugin->getCourseId();
@@ -124,12 +124,12 @@ class CpoController extends CoursewareStudipController
             );
 
         if (Post::create($data)) {
-            $answer = "answer=true&thread_id=".$thread_id;
+            $answer = 'answer=true&thread_id='.$thread_id;
         } else {
-            $answer = "answer=false";
+            $answer = 'answer=false';
         }
 
-        return $this->redirect('cpo/postoverview?'.$answer);
+        return $this->redirect('postoverview?'.$answer);
     }
 
     private function getThreadsInBlocks()
@@ -151,19 +151,19 @@ class CpoController extends CoursewareStudipController
             AND 
                 mooc_fields.name = 'thread_id'
         ");
-        $stmt->bindParam(":cid", $this->plugin->getCourseId());
+        $stmt->bindParam(':cid', $this->plugin->getCourseId());
         $stmt->execute();
 
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $list = array();
         foreach ($result as $item){
-            $block =  (new \Mooc\DB\Block($item["id"]));
+            $block =  (new \Mooc\DB\Block($item['id']));
             $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$block->parent_id;
-            $title = $block->parent->parent->parent["title"].">".$block->parent->parent["title"].">".$block->parent["title"];
-            if (array_key_exists(str_replace('"', '', $item["json_data"]), $list) ){
-                array_push($list[str_replace('"', '', $item["json_data"])], array("link"=> $link, "title" => $title));
+            $title = $block->parent->parent->parent['title'].'>'.$block->parent->parent['title'].'>'.$block->parent['title'];
+            if (array_key_exists(str_replace('"', '', $item['json_data']), $list) ){
+                array_push($list[str_replace('"', '', $item['json_data'])], array('link'=> $link, 'title' => $title));
             } else {
-                $list[str_replace('"', '', $item["json_data"])] = array(array("link"=> $link, "title" => $title));
+                $list[str_replace('"', '', $item['json_data'])] = array(array('link'=> $link, 'title' => $title));
             }
         }
 
@@ -172,7 +172,7 @@ class CpoController extends CoursewareStudipController
 
     private function getUsage()
     {
-        $teachers = (new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), "dozent");
+        $teachers = (new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), 'dozent');
         $dids = array_map(function($teacher){return $teacher->user_id;} , $teachers); // dozent ids
         $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position', array($this->plugin->getCourseId()));
         $bids   = array_map(function ($block) { return (int) $block->id; }, $blocks); // block ids
@@ -255,6 +255,7 @@ class CpoController extends CoursewareStudipController
         if (!sizeof($block['children'])) {
             return null;
         }
+
         $date = date('');
         foreach ($block['children'] as $section) {
             foreach($section['children']as $blocks) {
@@ -262,9 +263,7 @@ class CpoController extends CoursewareStudipController
                     if ($date < date($b['date'])){ 
                         $date = date($b['date']);
                     }
-                    
                 }
-               
             }
         }
 

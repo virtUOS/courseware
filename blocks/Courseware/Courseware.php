@@ -90,10 +90,12 @@ class Courseware extends Block
         }
 
         $this->branchComplete($tree);
+        $cid = $this->container['cid'];
 
         return array_merge($tree, array(
             'user_is_nobody' => $this->getCurrentUser()->isNobody(),
             'user_may_author' => $this->getCurrentUser()->canUpdate($this->_model),
+            'user_is_teacher' => $this->getCurrentUser()->hasPerm($cid, 'tutor'),
             'section_nav' => $section_nav,
             'courseware' => $courseware,
             'active_chapter' => $active_chapter,

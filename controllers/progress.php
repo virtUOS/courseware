@@ -15,8 +15,8 @@ class ProgressController extends CoursewareStudipController
     {
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
 
-        if (Navigation::hasItem('/course/mooc_progress')) {
-            Navigation::activateItem('/course/mooc_progress');
+        if (Navigation::hasItem('/course/mooc_courseware/progress')) {
+            Navigation::activateItem('/course/mooc_courseware/progress');
         }
 
         $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId()));

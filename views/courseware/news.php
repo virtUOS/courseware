@@ -1,7 +1,8 @@
 <div class="cw-news">
-    <h1>Neue Inhalte</h1>
+    <h1><?= _cw('Neue Inhalte') ?></h1>
     <ul class="cw-news-list">
-        <? foreach ($new_ones as  $item):?>
+        <? $newsCounter = 0;?>
+        <? foreach ($new_ones as $item):?>
             <? $block = new Mooc\DB\Block($item["id"]); ?>
             <? // get readable name
                 $class_name = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
@@ -20,9 +21,13 @@
                 <?= (new Mooc\DB\Block($block->parent->parent->id))->title ?> &rarr; 
                 <a href="<?= \PluginEngine::getURL("courseware/courseware")."&selected=".$block->parent_id ?>"><?= $title; ?></a>
             </li>
+            <? $newsCounter++;?>
              <? endif; ?>
         <? endforeach ?>
     </ul>
+    <? if ($newsCounter == 0): ?>
+        <?= _cw('Es wurden keine neuen Inhalte seit Ihrem letzten Besuch erstellt.') ?>
+    <? endif?> 
 </div>
 
 <style>
