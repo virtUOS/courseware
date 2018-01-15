@@ -146,7 +146,7 @@ class CoursewareController extends CoursewareStudipController
         if (Navigation::hasItem('/course/mooc_courseware/news')) {
             Navigation::activateItem('/course/mooc_courseware/news');
         }
-        if(empty($this->new_ones)) {
+        if(empty($this->new_ones) && (Request::get("iconnav") == 'true')) {
             return $this->redirect('courseware');
         }
 

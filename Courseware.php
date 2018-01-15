@@ -153,7 +153,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         }
         $icon = new AutoNavigation(
             $this->getDisplayTitle(),
-            PluginEngine::getURL($this, array('cid' => $courseId), 'courseware/news', true)
+            PluginEngine::getURL($this, array('cid' => $courseId, 'iconnav' => 'true'), 'courseware/news', true)
         );
 
         $db = DBManager::get();
