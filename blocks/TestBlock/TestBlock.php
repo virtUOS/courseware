@@ -389,7 +389,7 @@ class TestBlock extends Block
 
     public function exportProperties()
     {
-        var_dump($this->vipsVersion());
+
         if ( ($this->test_id == "") ||  !($this->vipsVersion()) ){
             return;
         }
