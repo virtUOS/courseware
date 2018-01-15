@@ -56,7 +56,14 @@ class IFrameBlock extends Block
     {
         $this->authorizeUpdate();
 
-        return $this->array_rep();
+        $https = false; 
+
+        if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) {
+            
+            $https = true; 
+        }
+
+        return array_merge($this->array_rep(), array('https' => $https));
     }
 
     /**

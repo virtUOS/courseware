@@ -6,6 +6,15 @@
             Bitte beachten Sie, dass manche Seiten die Darstellung in einem iFrame blockieren.{{/i18n}}
         </p>
     </div>
+    {{#https}}
+        <div class="iframe-description">
+        <p><b>
+            {{#i18n}}Bitte beachten Sie das StudIP über eine sichere Verbindung aufgerufen wird. 
+            Es können nur Quellen eingebunden werden die auch über eine sichere Verbindung verfügen. 
+            Nutzen Sie das Protokoll https in der URL!{{/i18n}}
+        </b></p>
+    </div>
+    {{/https}}
     <div class="iframe-data">
         <label>URL:</label><input class="urlinput" type=text size=32 value={{url}}>
         <br>
