@@ -1,6 +1,18 @@
 {{^inactive}}
     <div class=content>
-    <iframe width={{#width}}{{width}}{{/width}}{{^width}}100{{/width}}% height={{height}} src={{url}}></iframe>
+    {{#loading_denyed}}
+        <div class="messagebox messagebox_error">
+            {{#i18n}}Eine Einbindung per IFrame ist nicht möglich. Bitte wenden Sie sich an Ihren Dozenten.{{/i18n}}
+        </div>
+    {{/loading_denyed}}
+    {{#wrong_protocol}}
+        <div class="messagebox messagebox_error">
+            {{#i18n}}Eine Einbindung per IFrame ist nicht möglich. Bitte wenden Sie sich an Ihren Dozenten.{{/i18n}}
+        </div>
+    {{/wrong_protocol}}
+    {{^loading_denyed}}{{^wrong_protocol}}
+        <iframe width={{#width}}{{width}}{{/width}}{{^width}}100{{/width}}% height={{height}} src={{url}}></iframe>
+    {{/wrong_protocol}}{{/loading_denyed}}
     {{#cc_infos}}
         <div class="iframe-cc-data">
             <span class="iframe-cc-icon {{cc_type}}"></span>

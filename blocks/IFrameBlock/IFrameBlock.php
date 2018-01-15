@@ -40,30 +40,30 @@ class IFrameBlock extends Block
         }
         // on view: grade with 100%
         $this->setGrade(1.0);
-        
+
         if ($this->submit_user_id){ 
             $url = $this->buildUID(); 
             $array = $this->array_rep($url);
         }else {
             $array = $this->array_rep();
         }
-        $array['cc_infos'] = json_decode($array['cc_infos']);
 
-        return $array;
+        if ($this->isHTTPS()) {
+            $wrong_protocol = strpos($this->url, 'https') <= -1;
+        }
+
+        return array_merge($array, array('cc_infos' => json_decode($array['cc_infos']), 'loading_denyed' => $this->isLoadingDenyed(), 'wrong_protocol' => $wrong_protocol));
     }
 
     public function author_view()
     {
         $this->authorizeUpdate();
-
-        $https = false; 
-
-        if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) {
-            
-            $https = true; 
+        $https = $this->isHTTPS();
+        if ($https) {
+            $wrong_protocol = strpos($this->url, 'https') <= -1;
         }
 
-        return array_merge($this->array_rep(), array('https' => $https));
+        return array_merge($this->array_rep(), array('https' => $https, 'loading_denyed' => $this->isLoadingDenyed(), 'wrong_protocol' => $wrong_protocol));
     }
 
     /**
@@ -171,5 +171,41 @@ class IFrameBlock extends Block
         $url .= md5($userid . $this->salt);
 
         return $url;
+    }
+
+    private function isLoadingDenyed()
+    {
+        $error=false;
+        if (in_array('curl', get_loaded_extensions())) {
+            $ch = curl_init();
+            $options = array(
+                    CURLOPT_URL            => $this->url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_HEADER         => true,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_ENCODING       => "",
+                    CURLOPT_AUTOREFERER    => true,
+                    CURLOPT_CONNECTTIMEOUT => 120,
+                    CURLOPT_TIMEOUT        => 120,
+                    CURLOPT_MAXREDIRS      => 10,
+            );
+            curl_setopt_array($ch, $options);
+            $headers = substr(curl_exec($ch), 0, curl_getinfo($ch)['header_size']);
+            if(strpos($headers, 'X-Frame-Options: deny')>-1||strpos($headers, 'X-Frame-Options: SAMEORIGIN')>-1) {
+                    $error = true;
+            }
+            curl_close($ch);
+        }
+
+        return $error;
+    }
+
+    private function isHTTPS()
+    {
+        if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) {
+            return true; 
+        } else {
+            return false;
+        }
     }
 }

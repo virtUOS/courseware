@@ -1,3 +1,13 @@
+{{#loading_denyed}}
+    <div class="messagebox messagebox_error">
+        {{#i18n}}Die gewählte Seite verbietet eine Einbindung per IFrame!{{/i18n}}
+    </div>
+{{/loading_denyed}}
+{{#wrong_protocol}}
+    <div class="messagebox messagebox_error">
+        {{#i18n}}Die gewählte Seite kann nur mit einer sicheren Verbindung eingebunden werden. Bitte geben Sie wenn möglich https in der URL an.{{/i18n}}
+    </div>
+{{/wrong_protocol}}
 <input type="hidden" class="iframe-cc-infos-stored" value="{{cc_infos}}">
 <div class="iframe-author-view">
     <div class="iframe-description">
