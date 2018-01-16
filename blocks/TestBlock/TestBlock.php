@@ -14,6 +14,7 @@ class TestBlock extends Block
     function initialize()
     {
         $this->defineField('test_id', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('assignment_id', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('tries',   \Mooc\SCOPE_USER, array()); // Field to count the tries
     }
 
@@ -41,7 +42,17 @@ class TestBlock extends Block
         }
         $this->calcGrades();
         $subtype =  $this->_model->sub_type;
-        $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
+
+        if ($this->assignment_id == "") {
+            if ($this->test_id != "") {
+                $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
+            } else {
+                $assignment = null;
+            }
+        } else {
+            $assignment = \VipsAssignment::find($this->assignment_id);
+        }
+
         $type_mismatch = !($assignment->type ==  $subtype);
         if ($assignment->type == null) {
             return array(
@@ -79,24 +90,25 @@ class TestBlock extends Block
         }
         $subtype =  $this->_model->sub_type;
         $stored_assignments = \VipsAssignment::findBySQL( 'course_id = ? and type = ?', array($this->_model->course->id, $subtype));
-        $tests       = array();
+       
+        $assignments = array();
         foreach ($stored_assignments as $assignment) {
-            $test_id = $assignment->test_id;
-            $test = \VipsTest::findOneBySQL('id = ?', array($test_id));
-            $tests[] = array(
-                'id'              => $test->id,
-                'name'            => $test->title,
-                'created'         => isset($test->created) ? date('d.m.Y', strtotime($test->created)) : '',
-                'exercises_count' => count($test->exercises),
-                'current_test'    => $this->test_id === $test->id
+            //$test_id = $assignment->test_id;
+            //$test = \VipsTest::find(array($test_id));
+            $assignments[] = array(
+                'id'                    => $assignment->id,
+                'name'                  => $assignment->test->title,
+                'created'               => isset($assignment->test->created) ? date('d.m.Y', strtotime($assignment->test->created)) : '',
+                'exercises_count'       => count($assignment->test->exercises),
+                'current_assignment'    => $this->assignment_id === $assignment->id
             );
 
         }
 
         return array_merge($this->getAttrArray(), array( 
-            'has_tests'         => !empty($tests),
+            'has_assignments'   => !empty($assignments),
             'type'              => $this->getSubTypes()[$subtype],
-            'tests'             => $tests, 
+            'assignments'       => $assignments, 
             'active'            => $active, 
             'version'           => $version,
             'installed'         => $installed,
@@ -107,8 +119,8 @@ class TestBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        if (isset ($data['test_id'])) {
-            $this->test_id = (string) $data['test_id'];
+        if (isset ($data['assignment_id'])) {
+            $this->assignment_id = (string) $data['assignment_id'];
         } 
 
         return;
@@ -118,12 +130,20 @@ class TestBlock extends Block
     {
         parse_str($data, $requestParams);
         $requestParams = studip_utf8decode($requestParams);
-        $test_id = $requestParams['assignment_id'];
         $exercise_id = $requestParams['exercise_id'];
         $exercise_index = $requestParams['exercise_index'];
-        check_exercise_access($exercise_id, $test_id);
-        $test = \VipsTest::findOneBySQL('id = ?', array($test_id));
-        $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
+        
+        if ($this->assignment_id == "") {
+            if ($this->test_id != "") {
+                $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
+            } else {
+                $assignment = null;
+            }
+        } else {
+            $assignment = \VipsAssignment::find($this->assignment_id);
+        }
+
+        check_exercise_access($exercise_id, $assignment->id);
         $exercise = \Exercise::find($exercise_id);
 
         // if it is a self test, count the tries
@@ -169,10 +189,19 @@ class TestBlock extends Block
     {
         $user = $this->container['current_user'];
         parse_str($data, $requestData);
-        $test_id     = $requestData['test_id'];
         $exercise_id = $requestData['exercise_id'];
+        
+        if($this->assignment_id == "") {
+            if ($this->test_id != "") {
+                $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
+                $test_id = $this->test_id;
+            }
+        } else {
+            $assignment = \VipsAssignment::find($this->assignment_id);
+            $test_id = $assignment->test->id;
+        }
+        
         check_test_access($test_id);
-        $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($test_id));
         $now = time();
         $start = strtotime($assignment->start);
         $end = strtotime($assignment->end);
@@ -181,6 +210,7 @@ class TestBlock extends Block
         if ($start > $now || $now > $end) {
             throw new \Exception(_cw('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
         }
+
         // resetting tries
         if(!$this->tries) {
             $local_tries = array();
@@ -260,8 +290,15 @@ class TestBlock extends Block
 
         $exercises = array();
         $available = false;
-        $test = \VipsTest::findOneBySQL('id = ?', array($this->test_id));
-        $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
+        if($this->assignment_id == "") {
+            if ($this->test_id != "") {
+                $test = \VipsTest::findOneBySQL('id = ?', array($this->test_id));
+                $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
+            }
+        } else {
+            $assignment = \VipsAssignment::find($this->assignment_id);
+            $test = $assignment->test;
+        }
         $numberofex = $test->getExerciseCount();
         $exindex = 1;
         $now = time();
@@ -321,6 +358,10 @@ class TestBlock extends Block
                 $sample_solution = false;
             }
 
+            if ($tries_left == -1) {
+                $tries_left = false;
+            }
+
             $entry = array(
                 'exercise_type'       => $exercise->getTypeName(),
                 'id'                  => $exercise->getId(),
@@ -330,7 +371,7 @@ class TestBlock extends Block
                 'show_correction'     => $assignment->type == 'selftest',
                 'show_solution'       => $has_solution && $show_corrected_solution,
                 'title'               => $exercise->title,
-                'question'            => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $exercise->getSolveTemplate($solution)->render() ),
+                'question'            => $exercise->getSolveTemplate($solution)->render(),
                 'single-choice'       => get_class($exercise) == 'sc_exercise',
                 'multiple-choice'     => get_class($exercise) == 'mc_exercise',
                 'solver_user_id'      => $user->cfg->getUserId(),
@@ -384,18 +425,22 @@ class TestBlock extends Block
     {
         return array(
             'test_id' => $this->test_id,
+            'assignment_id' => $this->assignment_id,
         );
     }
 
     public function exportProperties()
     {
-
-        if ( ($this->test_id == "") ||  !($this->vipsVersion()) ){
-            return;
-        }
-        $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
-        if ($assignment == null) {
-            return;
+        if ($this->assignment_id == "") {
+            if ( ($this->test_id == "") ||  !($this->vipsVersion()) ){
+                return;
+            }
+            $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
+            if ($assignment == null) {
+                return;
+            }
+        } else {
+            $assignment = \VipsAssignment::find($this->assignment_id);
         }
         $xml = $assignment->exportXML();
 
@@ -428,7 +473,7 @@ class TestBlock extends Block
         if (isset($properties['xml'])) {
             $xml = $properties['xml'];
             $result = \VipsAssignment::importXML($xml, $this->container['current_user_id'] , $this->container['cid']);
-            $this->test_id = $result->test->id;
+            $this->assignment_id = $result->id;
         }
         $this->save();
     }

@@ -51,9 +51,9 @@ export default AuthorView.extend({
 
     onSave() {
         var view = this;
-        var $test_id = this.$('select[name="test_id"]').val();
+        var $assignment_id = this.$('select[name="assignment_id"]').val();
         helper
-        .callHandler(this.model.id, 'save',{test_id: $test_id})
+        .callHandler(this.model.id, 'save',{assignment_id: $assignment_id})
         .then(function () {
             view.switchBack();
         }).catch(function (error) {
