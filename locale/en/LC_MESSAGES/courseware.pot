@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  js.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-1220 10:56+0200\n"
+"POT-Creation-Date: 2018-01-0117 09:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "#-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-20 10:56+0100\n"
+"POT-Creation-Date: 2018-01-17 09:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -174,6 +174,14 @@ msgid "Die Evaluationen müssen im System aktiviert sein."
 msgstr ""
 
 msgid ""
+"Die gewählte Seite kann nur mit einer sicheren Verbindung eingebunden "
+"werden. Bitte geben Sie wenn möglich https in der URL an."
+msgstr ""
+
+msgid "Die gewählte Seite verbietet eine Einbindung per IFrame!"
+msgstr ""
+
+msgid ""
 "Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an "
 "Ihren Administrator."
 msgstr ""
@@ -207,10 +215,19 @@ msgstr ""
 msgid "Dieser Test ist zurzeit nicht verfügbar."
 msgstr ""
 
+#: Courseware.php:109
+msgid "Diskussionsübersicht"
+msgstr ""
+
 msgid "editieren"
 msgstr ""
 
 msgid "Eine Datei ausw&auml;hlen"
+msgstr ""
+
+msgid ""
+"Eine Einbindung per IFrame ist nicht möglich. Bitte wenden Sie sich an Ihren "
+"Dozenten."
 msgstr ""
 
 msgid "Einen Ordner ausw&auml;hlen"
@@ -219,7 +236,7 @@ msgstr ""
 msgid "eingebettetes Video (iframe)"
 msgstr ""
 
-#: Courseware.php:98
+#: Courseware.php:97
 msgid "Einstellungen"
 msgstr ""
 
@@ -254,14 +271,21 @@ msgstr ""
 msgid "Es wurde noch kein Video eingetragen."
 msgstr ""
 
-#: Courseware.php:108
+#: Courseware.php:115
 msgid "Export"
 msgstr ""
 
 msgid "Farbe"
 msgstr ""
 
+#: Courseware.php:103 Courseware.php:130
+msgid "Fortschrittsübersicht"
+msgstr ""
+
 msgid "Frage"
+msgstr ""
+
+msgid "Freigegeben ab:"
 msgstr ""
 
 msgid "für alle Displaygrößen"
@@ -324,7 +348,7 @@ msgid ""
 "Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
 msgstr ""
 
-#: Courseware.php:103
+#: Courseware.php:121
 msgid "Import"
 msgstr ""
 
@@ -388,6 +412,10 @@ msgstr ""
 msgid "kooperieren"
 msgstr ""
 
+#: Courseware.php:87
+msgid "Letzte Änderungen"
+msgstr ""
+
 msgid "Merksatz"
 msgstr ""
 
@@ -448,6 +476,9 @@ msgid "Speichern"
 msgstr ""
 
 msgid "Start"
+msgstr ""
+
+msgid "Stellen Sie eine Frage oder kommentieren Sie..."
 msgstr ""
 
 msgid "Studentenmodus"
@@ -542,20 +573,16 @@ msgstr ""
 msgid "Freitext"
 msgstr ""
 
-#: Courseware.php:87
-msgid "Letzte Änderungen"
-msgstr ""
-
-#: Courseware.php:205
+#: Courseware.php:238
 #, php-format
 msgid "%s neue Courseware-Inhalte"
 msgstr ""
 
-#: Courseware.php:205
+#: Courseware.php:238
 msgid "1 neuer Courseware-Inhalt"
 msgstr ""
 
-#: Courseware.php:330
+#: Courseware.php:363
 msgid ""
 "Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
 "erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
@@ -565,21 +592,21 @@ msgid ""
 "in einen Courseware-Abschnitt ein."
 msgstr ""
 
-#: Courseware.php:331
+#: Courseware.php:364
 msgid "Information"
 msgstr ""
 
-#: Courseware.php:333
+#: Courseware.php:366
 msgid ""
 "Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
 "'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
 msgstr ""
 
-#: Courseware.php:334
+#: Courseware.php:367
 msgid "Tipp"
 msgstr ""
 
-#: Courseware.php:336
+#: Courseware.php:369
 msgid ""
 "Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
 "direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
@@ -588,31 +615,23 @@ msgid ""
 "Fortschrittsübersicht."
 msgstr ""
 
-#: Courseware.php:337
+#: Courseware.php:370
 msgid "Hinweis"
 msgstr ""
 
-#: Courseware.php:400
+#: Courseware.php:432
 msgid "Zurück zur Courseware"
 msgstr ""
 
-#: Courseware.php:406 models/mooc/db/CoursewareFactory.php:45
+#: Courseware.php:438 models/mooc/db/CoursewareFactory.php:45
 msgid "Courseware"
-msgstr ""
-
-#: Courseware.php:412 Courseware.php:434
-msgid "Fortschrittsübersicht"
-msgstr ""
-
-#: Courseware.php:422
-msgid "Diskussionsübersicht"
 msgstr ""
 
 #: controllers/courseware.php:55
 msgid "Die Einstellungen wurden gespeichert."
 msgstr ""
 
-#: controllers/courseware.php:293
+#: controllers/courseware.php:305
 msgid "Tutoren können diese Einstellung nicht speichern."
 msgstr ""
 
@@ -628,12 +647,12 @@ msgstr ""
 msgid "Die Datendatei data.xml enthält kein valides XML."
 msgstr ""
 
-#: blocks/Courseware/Courseware.php:570
+#: blocks/Courseware/Courseware.php:572
 #: models/mooc/db/CoursewareFactory.php:56
 msgid "Unterkapitel 1"
 msgstr ""
 
-#: blocks/Courseware/Courseware.php:578
+#: blocks/Courseware/Courseware.php:580
 #: models/mooc/db/CoursewareFactory.php:64
 msgid "Abschnitt 1"
 msgstr ""
@@ -654,16 +673,24 @@ msgstr ""
 msgid "Sie sind nicht berechtigt Blöcke zu löschen."
 msgstr ""
 
-#: blocks/TestBlock/TestBlock.php:23
+#: blocks/TestBlock/TestBlock.php:24
 msgid "Selbsttest"
 msgstr ""
 
-#: blocks/TestBlock/TestBlock.php:24
+#: blocks/TestBlock/TestBlock.php:25
 msgid "Übung"
 msgstr ""
 
-#: blocks/TestBlock/TestBlock.php:149 blocks/TestBlock/TestBlock.php:182
+#: blocks/TestBlock/TestBlock.php:167 blocks/TestBlock/TestBlock.php:209
 msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
+msgstr ""
+
+#: views/courseware/news.php:2
+msgid "Neue Inhalte"
+msgstr ""
+
+#: views/courseware/news.php:29
+msgid "Es wurden keine neuen Inhalte seit Ihrem letzten Besuch erstellt."
 msgstr ""
 
 #: views/courseware/_settings_discussionblock.php:4
@@ -787,6 +814,46 @@ msgstr ""
 msgid "Änderungen übernehmen"
 msgstr ""
 
+#: views/cpo/index.php:11
+msgid "Fortschrittsübersicht für Lehrende"
+msgstr ""
+
+#: views/cpo/index.php:38
+msgid "Nutzung: "
+msgstr ""
+
+#: views/cpo/index.php:100
+msgid "zuletzt genutzt am: "
+msgstr ""
+
+#: views/cpo/postoverview.php:19
+msgid "Dieser Thread wird in keinem Block genutzt."
+msgstr ""
+
+#: views/cpo/postoverview.php:25
+msgid "Es gibt keine neuen Beiträge."
+msgstr ""
+
+#: views/cpo/postoverview.php:28
+msgid "Es gibt einen neuen Beitrag"
+msgstr ""
+
+#: views/cpo/postoverview.php:31
+msgid "Es gibt "
+msgstr ""
+
+#: views/cpo/postoverview.php:31
+msgid " neue Beiträge"
+msgstr ""
+
+#: views/cpo/postoverview.php:33
+msgid "Beiträge anzeigen"
+msgstr ""
+
+#: views/cpo/postoverview.php:63
+msgid "Auf Beitrag antworten..."
+msgstr ""
+
 #: views/import/index.php:1
 msgid "Datei hochladen"
 msgstr ""
@@ -854,6 +921,6 @@ msgstr ""
 msgid "Name des HTML-Blocks"
 msgstr ""
 
-#: models/mooc/ui/Block.php:521
+#: models/mooc/ui/Block.php:522
 msgid "Sie sind nicht berechtigt diesen Block zu editieren."
 msgstr ""

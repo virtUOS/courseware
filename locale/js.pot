@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-1220 09:41+0200\n"
+"POT-Creation-Date: 2018-01-0117 09:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,6 +146,12 @@ msgstr ""
 msgid "Die Evaluationen müssen im System aktiviert sein."
 msgstr ""
 
+msgid "Die gewählte Seite kann nur mit einer sicheren Verbindung eingebunden werden. Bitte geben Sie wenn möglich https in der URL an."
+msgstr ""
+
+msgid "Die gewählte Seite verbietet eine Einbindung per IFrame!"
+msgstr ""
+
 msgid "Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an Ihren Administrator."
 msgstr ""
 
@@ -170,10 +176,16 @@ msgstr ""
 msgid "Dieser Test ist zurzeit nicht verfügbar."
 msgstr ""
 
+msgid "Diskussionsübersicht"
+msgstr ""
+
 msgid "editieren"
 msgstr ""
 
 msgid "Eine Datei ausw&auml;hlen"
+msgstr ""
+
+msgid "Eine Einbindung per IFrame ist nicht möglich. Bitte wenden Sie sich an Ihren Dozenten."
 msgstr ""
 
 msgid "Einen Ordner ausw&auml;hlen"
@@ -221,7 +233,13 @@ msgstr ""
 msgid "Farbe"
 msgstr ""
 
+msgid "Fortschrittsübersicht"
+msgstr ""
+
 msgid "Frage"
+msgstr ""
+
+msgid "Freigegeben ab:"
 msgstr ""
 
 msgid "für alle Displaygrößen"
@@ -252,6 +270,9 @@ msgid "hinzufügen"
 msgstr ""
 
 msgid "Höhe"
+msgstr ""
+
+msgid "H&ouml;he der Galerie (in Pixeln)"
 msgstr ""
 
 msgid "Icon"
@@ -338,6 +359,9 @@ msgstr ""
 msgid "kooperieren"
 msgstr ""
 
+msgid "Letzte Änderungen"
+msgstr ""
+
 msgid "Merksatz"
 msgstr ""
 
@@ -396,6 +420,9 @@ msgid "Speichern"
 msgstr ""
 
 msgid "Start"
+msgstr ""
+
+msgid "Stellen Sie eine Frage oder kommentieren Sie..."
 msgstr ""
 
 msgid "Studentenmodus"
