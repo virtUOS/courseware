@@ -93,8 +93,6 @@ class TestBlock extends Block
        
         $assignments = array();
         foreach ($stored_assignments as $assignment) {
-            //$test_id = $assignment->test_id;
-            //$test = \VipsTest::find(array($test_id));
             $assignments[] = array(
                 'id'                    => $assignment->id,
                 'name'                  => $assignment->test->title,
