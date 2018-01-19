@@ -177,22 +177,22 @@ Link-Block (ab 2.2)
 --------------------
 Mit dem Link-Block lassen sich Links auf Strukturelemente innerhalb der Courseware setzen und externe Links erstellen.
 
-![Autorenansicht des Such-Blocks](img/linkBlock_edit.png)
-_Autorenansicht des Such-Blocks_
+![Autorenansicht des Link-Blocks](img/linkBlock_edit.png)
+_Autorenansicht des Link-Blocks_
 
-![Studentenansicht des Such-Blocks](img/linkBlock.png)
-_Studentenansicht des Such-Blocks_
+![Studentenansicht des Link-Blocks](img/linkBlock.png)
+_Studentenansicht des Link-Blocks_
 
 
 PDF-Block (ab 2.2)
 --------------------
 Der PDF-Block kann PDF Dateien aus dem Dateibereich darstellen. Die Datei lässt sich wie gewohnt durchblättern und runter laden.
 
-![Autorenansicht des Such-Blocks](img/pdfBlock_edit.png)
-_Autorenansicht des Such-Blocks_
+![Autorenansicht des PDF-Blocks](img/pdfBlock_edit.png)
+_Autorenansicht des PDF-Blocks_
 
-![Studentenansicht des Such-Blocks](img/pdfBlock.png)
-_Studentenansicht des Such-Blocks_
+![Studentenansicht des PDF-Blocks](img/pdfBlock.png)
+_Studentenansicht des PDF-Blocks_
 
 
 Kommentare & Diskussion Block (ab 2.2)
@@ -201,11 +201,11 @@ Dieser Block ermöglicht eine Kommunikation zwischen den Lernenden untereinander
 Kommentare und Fragen können hiermit gezielt an einer gewünschten Stelle eingebunden werden. Der Lehrende hat die 
 Möglichkeit über die Diskussionsübersicht alle Diskussionen einer Veranstaltung auf einen Blick zu sehen.
 
-![Autorenansicht des Such-Blocks](img/postBlock_edit.png)
-_Autorenansicht des Such-Blocks_
+![Autorenansicht des Kommentare & Diskussion Blocks](img/postBlock_edit.png)
+_Autorenansicht des Kommentare & Diskussion Blocks_
 
-![Studentenansicht des Such-Blocks](img/postBlock.png)
-_Studentenansicht des Such-Blocks_
+![Studentenansicht des Kommentare & Diskussion Blocks](img/postBlock.png)
+_Studentenansicht des Kommentare & Diskussion Blocks_
 
-![Studentenansicht des Such-Blocks](img/cpo_post.png)
+![Diskussionsübersicht für Lehrende](img/cpo_post.png)
 _Diskussionsübersicht für Lehrende_
