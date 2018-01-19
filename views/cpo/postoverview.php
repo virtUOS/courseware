@@ -60,7 +60,7 @@
 <form class="postoverview-form" action="answer" method="get">
     <input type="hidden" name="thread_id" id="input_thread_id" value="">
     
-    <textarea name="content" placeholder="<?= _cw('Auf Beitrag antworten...') ?>"></textarea>
+    <textarea name="content" placeholder="<?= _cw('Auf Beitrag antworten...') ?>" spellcheck="true"></textarea>
     <input type="submit" value="senden" class="button">
 </form>
 <script>

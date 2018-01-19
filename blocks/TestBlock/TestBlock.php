@@ -90,7 +90,7 @@ class TestBlock extends Block
         }
         $subtype =  $this->_model->sub_type;
         $stored_assignments = \VipsAssignment::findBySQL( 'course_id = ? and type = ?', array($this->_model->course->id, $subtype));
-       
+
         $assignments = array();
         foreach ($stored_assignments as $assignment) {
             $assignments[] = array(
@@ -100,7 +100,6 @@ class TestBlock extends Block
                 'exercises_count'       => count($assignment->test->exercises),
                 'current_assignment'    => $this->assignment_id === $assignment->id
             );
-
         }
 
         return array_merge($this->getAttrArray(), array( 
@@ -130,7 +129,7 @@ class TestBlock extends Block
         $requestParams = studip_utf8decode($requestParams);
         $exercise_id = $requestParams['exercise_id'];
         $exercise_index = $requestParams['exercise_index'];
-        
+
         if ($this->assignment_id == "") {
             if ($this->test_id != "") {
                 $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
@@ -188,7 +187,7 @@ class TestBlock extends Block
         $user = $this->container['current_user'];
         parse_str($data, $requestData);
         $exercise_id = $requestData['exercise_id'];
-        
+
         if($this->assignment_id == "") {
             if ($this->test_id != "") {
                 $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
@@ -198,7 +197,7 @@ class TestBlock extends Block
             $assignment = \VipsAssignment::find($this->assignment_id);
             $test_id = $assignment->test->id;
         }
-        
+
         check_test_access($test_id);
         $now = time();
         $start = strtotime($assignment->start);

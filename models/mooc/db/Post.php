@@ -32,7 +32,7 @@ class Post extends \SimpleORMap
         parent::__construct($id);
         $this->registerCallback('before_store', 'denyNobodyPost');
     }
-    
+
     public function getAllThreadIds($cid)
     {
         $db = \DBManager::get();
