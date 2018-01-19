@@ -18,3 +18,12 @@ Courseware-Konfiguration. Hier sind verschiedenste Einstellungen zum Verhalten d
 Courseware möglich.
 
 ![Coursewareeinstellungen](img/settings.png)
+
+Lernende und Lehrende haben die Möglichkeit den Fortschritt in einer Übersicht zu betrachten.
+Hierbei wird bei den Lernenden der individuelle Fortschritt dargestellt. Lehrende erhalten hingegen eine
+Zusammenfassung der Kursteilnehmen. Der Fortschritt aller Kursteilnehmer wird aggregierte, der Lehrende 
+kann nicht den Fortschritt eines einzelnen Teilnehmers einsehen.
+
+![Coursewareeinstellungen](img/progress.png)
+
+![Coursewareeinstellungen](img/cpo.png)

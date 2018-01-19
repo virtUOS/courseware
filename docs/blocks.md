@@ -172,3 +172,40 @@ _Autorenansicht des Such-Blocks_
 ![Studentenansicht des Such-Blocks](img/searchBlock.png)
 _Studentenansicht des Such-Blocks_
 
+
+Link-Block (ab 2.2)
+--------------------
+Mit dem Link-Block lassen sich Links auf Strukturelemente innerhalb der Courseware setzen und externe Links erstellen.
+
+![Autorenansicht des Such-Blocks](img/linkBlock_edit.png)
+_Autorenansicht des Such-Blocks_
+
+![Studentenansicht des Such-Blocks](img/linkBlock.png)
+_Studentenansicht des Such-Blocks_
+
+
+PDF-Block (ab 2.2)
+--------------------
+Der PDF-Block kann PDF Dateien aus dem Dateibereich darstellen. Die Datei lässt sich wie gewohnt durchblättern und runter laden.
+
+![Autorenansicht des Such-Blocks](img/pdfBlock_edit.png)
+_Autorenansicht des Such-Blocks_
+
+![Studentenansicht des Such-Blocks](img/pdfBlock.png)
+_Studentenansicht des Such-Blocks_
+
+
+Kommentare & Diskussion Block (ab 2.2)
+--------------------
+Dieser Block ermöglicht eine Kommunikation zwischen den Lernenden untereinander und mit dem Lehrenden. 
+Kommentare und Fragen können hiermit gezielt an einer gewünschten Stelle eingebunden werden. Der Lehrende hat die 
+Möglichkeit über die Diskussionsübersicht alle Diskussionen einer Veranstaltung auf einen Blick zu sehen.
+
+![Autorenansicht des Such-Blocks](img/postBlock_edit.png)
+_Autorenansicht des Such-Blocks_
+
+![Studentenansicht des Such-Blocks](img/postBlock.png)
+_Studentenansicht des Such-Blocks_
+
+![Studentenansicht des Such-Blocks](img/cpo_post.png)
+_Diskussionsübersicht für Lehrende_
