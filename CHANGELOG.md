@@ -2,6 +2,7 @@ CHANGELOG
 =========
 2.2.0
 -----
+* change from requirejs to webpack
 * add new block: AssortBlock
 * add new block: CodeBlock
 * add new block: DownloadBlock
