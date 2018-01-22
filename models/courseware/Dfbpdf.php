@@ -6,7 +6,7 @@ class DFBPDF extends TCPDF {
     //Page header
     public function Header() {
             //rect
-            $this->Rect(15, 8, 180, 30, 'F', '', array(0, 152, 101));
+            $this->Rect(15, 8, 180, 30, 'F', '', array(29, 157, 217));
             
             // Logo
             //$this->Image('plugins_packages/virtUOS/VipsPlugin/images/DFB-Logo_4c.png', 20, 15, 15, '', '', '', '', false, 300);
