@@ -21,7 +21,7 @@ Courseware möglich.
 
 Lernende und Lehrende haben die Möglichkeit den Fortschritt in einer Übersicht zu betrachten.
 Hierbei wird bei den Lernenden der individuelle Fortschritt dargestellt. Lehrende erhalten hingegen eine
-Zusammenfassung der Kursteilnehmen. Der Fortschritt aller Kursteilnehmer wird aggregierte, der Lehrende 
+Zusammenfassung der Kursteilnehmen. Der Fortschritt aller Kursteilnehmer wird aggregiert, der Lehrende 
 kann nicht den Fortschritt eines einzelnen Teilnehmers einsehen.
 
 ![Coursewareeinstellungen](img/progress.png)
