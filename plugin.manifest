@@ -7,6 +7,7 @@ category=Lehr- und Lernorganisation
 icon=../../../assets/images/icons/black/group3.svg
 homepage=https://github.com/virtuos/courseware
 studipMinVersion=3.4
+studipMaxVersion=3.5.99
 summary=Interaktive multimediale Lernmodule erstellen und bereitstellen
 description=Mit der Courseware können Sie interaktive multimediale Lernmodule erstellen und nutzen. Die Module sind in Kapitel, Unterkapitel und Abschnitte unterteilt und können aus Textblöcken, Videosequenzen, Aufgaben (benötigt das Vips-Plugin) und Kommunkationselementen bestehen. Fertige Module können exportiert und in andere Kurse oder andere Installationen importiert werden.
 descriptionShort=Interaktive multimediale Lernmodule erstellen und bereitstellen
