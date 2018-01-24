@@ -20,9 +20,14 @@ class PdfBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
+        
+        $document = \StudipDocument::find($this->pdf_file_id);
+        if ($document) {
+            $access = $document->checkAccess($this->container['current_user_id']);
+        }
         $this->setGrade(1.0);
 
-        return array_merge($this->getAttrArray());
+        return array_merge($this->getAttrArray(), array('access' => $access));
     }
 
     public function author_view()

@@ -1,5 +1,6 @@
-{{^inactive}}
 <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+{{^inactive}}
+{{#access}}
 <div class="cw-pdf-wrapper">
     <div class="cw-pdf-header">
         <button class="cw-pdf-button-prev" title=""></button>
@@ -11,6 +12,13 @@
     <canvas class="cw-pdf-canvas" style="border: solid thin #ccc; width: 100%;"></canvas>
     <input type="hidden" class="cw-pdf-file-url" value="{{pdf_file}}">
 </div>
+{{/access}}
+{{^access}}
+     <div class="messagebox messagebox_info">
+                {{#i18n}}Wegen des gewählten Lizenzstatus kann diese PDF-Datei nicht angezeigt werden.{{/i18n}}
+    </div>
+    <input type="hidden" class="cw-pdf-file-url" value="">
+{{/access}}
 {{/inactive}}
 {{#inactive}}
     <div class="messagebox messagebox_info">
