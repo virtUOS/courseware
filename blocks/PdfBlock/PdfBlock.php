@@ -123,11 +123,11 @@ class PdfBlock extends Block
 
     public function importProperties(array $properties)
     {
-        if (isset($properties['pdf_file'])) {
-            $this->pdf_file = $properties['pdf_file'];
-        }
         if (isset($properties['pdf_title'])) {
             $this->pdf_title = $properties['pdf_title'];
+        }
+        if (isset($properties['pdf_filename'])) {
+            $this->pdf_filename = $properties['pdf_filename'];
         }
         $this->setFileId($this->pdf_filename);
         $this->save();
@@ -138,7 +138,11 @@ class PdfBlock extends Block
         $cid = $this->container['cid'];
         $document = current(\StudipDocument::findBySQL('filename = ? AND seminar_id = ?', array($file_name, $cid)));
         $this->pdf_file_id = $document->dokument_id;
-
+        if ($document->url == "") {
+            $this->pdf_file = "../../sendfile.php?type=0&file_id=".$document->dokument_id."&file_name=".$file_name;
+        } else {
+            $this->pdf_file = "../../sendfile.php?type=6&file_id=".$document->dokument_id."&file_name=".$file_name;
+        }
         return;
     }
 

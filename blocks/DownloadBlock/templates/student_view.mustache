@@ -24,7 +24,7 @@
             <div class="download-file">
                 <div class="cw-download-info" > &nbsp; {{file}} &nbsp; <span>{{file_name}}</span></div>
                  <div class="cw-download-button-wrapper">
-                    <a href="../../sendfile.php?force_download=1&type=0&file_id={{file_id}}&file_name={{file_name}}" target="_blank"> 
+                    <a href="../../sendfile.php?force_download=1&type={{#url}}6{{/url}}{{^url}}0{{/url}}&file_id={{file_id}}&file_name={{file_name}}" target="_blank"> 
                         <button name="download" class="cw-download-button" style="display: inline-block;">download</button>
                     </a> 
                 </div>

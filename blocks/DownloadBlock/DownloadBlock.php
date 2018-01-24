@@ -20,8 +20,12 @@ class DownloadBlock extends Block
 
     public function student_view()
     {
-        $access = \StudipDocument::find($this->file_id)->checkAccess($this->container['current_user_id']);
-        return array_merge($this->getAttrArray(), array('confirmed' => !! $this->getProgress()->grade, "download_access" => $access));
+        $document = \StudipDocument::find($this->file_id);
+        if ($document) {
+            $access = $document->checkAccess($this->container['current_user_id']);
+            $url = ($document->url != "") ? true : false;
+        }
+        return array_merge($this->getAttrArray(), array('confirmed' => !! $this->getProgress()->grade, "download_access" => $access, 'url' => $url));
     }
 
     public function author_view()
@@ -199,7 +203,7 @@ class DownloadBlock extends Block
             $this->file_name = $properties['file_name'];
         }
 
-        $this->setFileId($this->file, $this->file_name);
+        $this->setFileId($this->file_name);
 
         if (isset($properties['download_title'])) {
             $this->download_title = $properties['download_title'];
@@ -216,11 +220,12 @@ class DownloadBlock extends Block
         $this->save();
     }
 
-    private function setFileId($file, $file_name)
+    private function setFileId($file_name)
     {
         $cid = $this->container['cid'];
-        $document =  current(\StudipDocument::findBySQL('filename = ? AND name = ? AND seminar_id = ?', array($file_name, $file, $cid)));
+        $document =  current(\StudipDocument::findBySQL('filename = ? AND seminar_id = ?', array($file_name, $cid)));
         $this->file_id = $document->dokument_id;
+        $this->file = $document->name;
         $this->folder_id = $document->range_id;
 
         return;
