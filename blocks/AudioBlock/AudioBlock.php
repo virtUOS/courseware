@@ -51,7 +51,7 @@ class AudioBlock extends Block
     {
         $this->authorizeUpdate();
 
-        return array_merge($this->getAttrArray(), array('audio_files' => $this->showFiles()));
+        return array_merge($this->getAttrArray(), array('audio_files' => $this->showFiles(), 'audio_file' => $this->audio_file));
     }
 
     public function save_handler(array $data)
