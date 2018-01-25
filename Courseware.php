@@ -45,7 +45,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
 
     public function getPluginname()
     {
-        return 'MOOC.IP - Courseware';
+        return 'Courseware';
     }
 
     // bei Aufruf des Plugins über plugin.php/mooc/...
@@ -298,7 +298,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
     private function setupNavigation()
     {
         // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
-        if (!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) {
+        if ( (!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) && $courseware->getVipsTabVisible() ) {
             if (Navigation::hasItem('/course/vipsplugin')){
                 Navigation::removeItem('/course/vipsplugin');
             }
