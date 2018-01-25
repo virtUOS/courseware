@@ -297,16 +297,18 @@ class Courseware extends StudIPPlugin implements StandardPlugin, HomepagePlugin
 
     private function setupNavigation()
     {
+
+
+        // FIXME: hier den Courseware-Block in die Hand zu bekommen,
+        //        ist definitiv falsch.
+        $courseware = $this->container['current_courseware'];
+
         // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin
         if ( (!$GLOBALS['perm']->have_studip_perm("tutor", $this->container['cid'])) && $courseware->getVipsTabVisible() ) {
             if (Navigation::hasItem('/course/vipsplugin')){
                 Navigation::removeItem('/course/vipsplugin');
             }
         }
-
-        // FIXME: hier den Courseware-Block in die Hand zu bekommen,
-        //        ist definitiv falsch.
-        $courseware = $this->container['current_courseware'];
 
         // hide blubber tab if the discussion block is active
         if ($courseware->getDiscussionBlockActivation()) {
