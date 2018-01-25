@@ -23,9 +23,18 @@ class AudioBlock extends Block
             return array('inactive' => true);
         }
         if ($this->audio_source == "cw") {
-            $access = \StudipDocument::find($this->audio_id)->checkAccess($this->container['current_user_id']);
+            $document = \StudipDocument::find($this->audio_id);
+            if ($document) {
+                $access = $document->checkAccess($this->container['current_user_id']);
+                if ($document->url == "") {
+                    $audio_file = "../../sendfile.php?type=0&file_id=".$document->id."&file_name=".$document->name;
+                } else {
+                    $audio_file = "../../sendfile.php?type=6&file_id=".$document->id."&file_name=".$document->name;
+                }
+            }
         } else {
             $access = true;
+            $audio_file = $this->audio_file;
         }
 
         return array_merge(
@@ -33,6 +42,7 @@ class AudioBlock extends Block
             array(
                 'audio_played' => $this->container['current_user']->isNobody() ? 1 : $this->getProgress()['grade'],
                 'audio_access' => $access,
+                'audio_file' => $audio_file,
             )
         );
     }
@@ -104,7 +114,6 @@ class AudioBlock extends Block
         return array(
             'audio_description' => $this->audio_description,
             'audio_source' => $this->audio_source,
-            'audio_file' => $this->audio_file,
             'audio_file_name' => $this->audio_file_name,
             'audio_id' => $this->audio_id
         );
@@ -112,7 +121,10 @@ class AudioBlock extends Block
 
     public function exportProperties()
     {
-       return $this->getAttrArray();
+       return array_merge(
+            $this->getAttrArray(),
+            array('audio_file' => $this->audio_file)
+        );
     }
 
     public function getFiles()
