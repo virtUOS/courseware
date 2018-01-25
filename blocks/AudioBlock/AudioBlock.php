@@ -176,8 +176,13 @@ class AudioBlock extends Block
         if (isset($properties['audio_file_name'])) {
             $this->audio_file_name = $properties['audio_file_name'];
         }
-        $this->setFileId($this->audio_file_name);
-        $this->audio_file = '../../sendfile.php?type=0&file_id='.$this->audio_id.'&file_name='.$this->audio_file_name;
+        if ($this->audio_source == "cw") {
+            $this->setFileId($this->audio_file_name);
+        } else {
+            if (isset($properties['audio_file'])) {
+                $this->audio_file = $properties['audio_file'];
+            }
+        }
         $this->save();
     }
 
@@ -185,7 +190,12 @@ class AudioBlock extends Block
     {
         $cid = $this->container['cid'];
         $document = current(\StudipDocument::findBySQL('filename = ? AND seminar_id = ?', array($file_name, $cid)));
-        $this->audio_id = $document->dokument_id;
+        $this->audio_id = $document->id;
+        if ($document->url == "") {
+            $this->audio_file = '../../sendfile.php?type=0&file_id='.$document->id.'&file_name='.$document->name;
+        } else {
+            $this->audio_file = '../../sendfile.php?type=6&file_id='.$document->id.'&file_name='.$document->name;
+        }
 
         return;
     }
