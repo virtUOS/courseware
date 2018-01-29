@@ -73,6 +73,10 @@ export default AuthorView.extend({
                 function () {
                   $(event.target).addClass('accept');
                   $view.switchBack();
+                  // reload if PDFJS has not been loaded jet
+                  if (typeof PDFJS === 'undefined') {
+                    helper.reload();
+                  }
                 },
                 // error
                 function (error) {
