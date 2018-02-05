@@ -45,7 +45,7 @@ class KeyPointBlock extends Block
         $this->authorizeUpdate();
 
         if (isset ($data['keypoint_content'])) {
-            $this->keypoint_content = \STUDIP\Markup::purify((string) $data['keypoint_content']);
+            $this->keypoint_content = \STUDIP\Markup::purifyHtml((string) $data['keypoint_content']);
         }
         if (isset ($data['keypoint_color'])) {
             $this->keypoint_color = (string) $data['keypoint_color'];
