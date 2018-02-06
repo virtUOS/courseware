@@ -368,7 +368,7 @@ class TestBlock extends Block
                 'show_correction'     => $assignment->type == 'selftest',
                 'show_solution'       => $has_solution && $show_corrected_solution,
                 'title'               => $exercise->title,
-                'question'            => $exercise->getSolveTemplate($solution)->render(),
+                'question'            => $exercise->getSolveTemplate($solution, $assignment, $user->cfg->getUserId())->render(),
                 'single-choice'       => get_class($exercise) == 'sc_exercise',
                 'multiple-choice'     => get_class($exercise) == 'mc_exercise',
                 'solver_user_id'      => $user->cfg->getUserId(),
