@@ -8,23 +8,7 @@
 
 .cw-pdf-wrapper {
     .cw-pdf-header {
-        min-width: 10%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 100%;
-        font-family: 'Source Sans Pro', sans-serif;
-        font-style: normal;
-        font-weight: 600;
-        color: #28497c;
-        font-size: 14px;
-        line-height: 20px;
-        padding: 10px 20px;
-        position: relative;
-        margin: 0 0 1em 0;
-        text-align: center;
-        border: solid thin #ccc;
-        background-color: #fcfcfc;
+        .cw-block-header();
 
         .cw-pdf-button-prev, 
         .cw-pdf-button-next {
@@ -61,4 +45,21 @@
 
 section#courseware .block-content:not([data-view="student"]) label {
     width: 14em;
+}
+
+/* sidebar special */
+.cw-sidebar {
+    .cw-pdf-wrapper {
+        border: 1px solid #d0d7e3;
+
+        .cw-pdf-header {
+            .cw-block-header-sidebar();
+            padding: 4px 50px;
+            margin: 0;
+        }
+        .cw-pdf-canvas {
+            width: 268px !important;
+            border: none !important;
+        }
+    }
 }

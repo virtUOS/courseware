@@ -8,9 +8,13 @@ input::-moz-focus-inner {
   padding: 0;
 }
 
-#mooc-courseware-index {
+#courseware-index {
   #layout_container {
     position: relative;
+    
+    #layout_content {
+        margin-left: 0;
+    }
   }
 
   /* FIXME: hide sidebar for now */
@@ -23,7 +27,7 @@ section#courseware {
   /* CSS for the Courseware controls */
   position:relative;
   padding-left: @sidebar-overall-width;
-  max-width: @courseware-max-width;
+  max-width: @content-max-width;
 
   ol.chapters, ol.subchapters, ol.active-subchapter {
     list-style: none;
@@ -40,6 +44,7 @@ section#courseware {
   @import './_controls';
   @import './_buttons';
   @import './_author';
+  @import './_sidebar';
   
 }
 .mobile-show-nav-button {
@@ -47,20 +52,3 @@ section#courseware {
 }
 @import './_mobile';
 
-.cw-navigation {
-    border: 1px solid #d0d7e3; 
-    margin-top: 2em;
-
-    .cw-navigation-header {
-        background: #e7ebf1;
-        color: #28497c;
-        font-weight: bold;
-        padding: 4px;
-    }
-
-    .cw-navigation-teacher,
-    .cw-navigation-student {
-        list-style: none; 
-        padding: 0 0 0.5em 1em;
-    }
-}

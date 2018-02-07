@@ -1,0 +1,40 @@
+.cw-sidebar {
+    position:absolute;
+    top: 0;
+    left: 0;
+    margin: 0 0 0 5px;
+    padding-left: 0;
+    padding-right: @sidebar-padding-right;
+    width: @sidebar-width;
+
+    .cw-sidebar-image {
+        background-image: url("../../../../../assets/images/sidebar/seminar-sidebar.png");
+        width: @sidebar-width;
+        height: 62px;
+    }
+
+    .cw-navigation {
+        padding: 0 0 1em 0;
+        border: 1px solid #d0d7e3; 
+        margin: 0.75em 0;
+
+        .cw-navigation-header {
+            background: #e7ebf1;
+            color: #28497c;
+            font-weight: bold;
+            padding: 4px;
+        }
+
+        .cw-navigation-teacher,
+        .cw-navigation-student {
+            list-style: none; 
+            padding: 0 0 0.5em 1em;
+        }
+    }
+    .chapters-header {
+        .cw-block-header-sidebar();
+    }
+    /* chapters style -> _chapters.less */
+
+    /* sidebar section style -> blocks/Section/css/section.less */
+}

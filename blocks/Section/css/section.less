@@ -47,7 +47,7 @@ section#courseware {
     min-height: 1em;
     line-height: 20px;
     display: block;
-    margin-bottom: 3em;
+    margin-bottom: 1.5em;
 
     &::before {
       color: #ccc;
@@ -226,6 +226,13 @@ button.stop-sort-block {
 //////////////////
 
 .aside-section {
+    width: unset;
+    padding-top: 0;
+        
+    > section.block {
+        margin-bottom: 0.75em;
+    }
+
   // do not show section's title
   > .title {
     display: none;

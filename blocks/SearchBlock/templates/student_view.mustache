@@ -1,12 +1,14 @@
 {{^inactive}}
-    {{#searchtitle}}
-        <h2 class="cw-search-title">{{searchtitle}}</h2>
-    {{/searchtitle}}
-    <input class="cw-search-input-search" type="text" placeholder="{{#i18n}}in Courseware suchen...{{/i18n}}">
-    <button class="button cw-search-button-search" name="search">{{#i18n}}suchen{{/i18n}}</button>
-    <div class="cw-search-result">
-        <p class="cw-search-result-empty">{{#i18n}}keinen Treffer gefunden{{/i18n}}</p>
-        <ul></ul>
+    <div class="cw-search">
+        {{#searchtitle}}
+            <p class="cw-search-title">{{searchtitle}}</p>
+        {{/searchtitle}}
+        <input class="cw-search-input-search" type="text" placeholder="{{#i18n}}in Courseware suchen...{{/i18n}}">
+        <button class="button cw-search-button-search" name="search">{{#i18n}}suchen{{/i18n}}</button>
+        <div class="cw-search-result">
+            <p class="cw-search-result-empty">{{#i18n}}keinen Treffer gefunden{{/i18n}}</p>
+            <ul></ul>
+        </div>
     </div>
 {{/inactive}}
 {{#inactive}}

@@ -1,3 +1,5 @@
+@import '../../../assets/less/mixins';
+
 section.HtmlBlock {
   .controls button.no-sorting {
     visibility: hidden;
@@ -19,4 +21,19 @@ section.HtmlBlock {
       clear: both;
     }
   }
+}
+
+/* sidebar special */
+.cw-sidebar {
+    .cw-html-wrapper {
+        border: 1px solid #d0d7e3;
+        
+        .cw-html-header {
+            .cw-block-header-sidebar();
+            height: 20px;
+        }
+    }
+    .content {
+        padding: 0 5px;
+    }
 }

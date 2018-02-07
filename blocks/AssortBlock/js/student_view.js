@@ -51,7 +51,7 @@ export default StudentView.extend({
             case "accordion":
                 $div.accordion({
                     heightStyle: "content" 
-                }).css({"min-height": 34+$maxheight+$assortblocks.length*45});
+                });
                 break;
             case "tabs":
                 $div.tabs({

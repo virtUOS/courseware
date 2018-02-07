@@ -36,12 +36,16 @@ class LinkBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
+        if (strpos($this->getModel()->parent->title, "AsideSection") > -1) {
+            return $this->getAttrArray();
+        }
         $inthischapter = $this->getThisChapterSiblings();
         $inotherchapters= $this->getOtherSubchapters();
 
         return array_merge($this->getAttrArray(), array(
             'inthischapter' => $inthischapter, 
             'inotherchapters' => $inotherchapters,
+            'hasinternal' => true, 
             'hasnext'   => $this->getTargetId("next") != null,
             'hasprev'   => $this->getTargetId("prev") != null
         ));

@@ -15,27 +15,9 @@
     </ul>
   </nav>
 
-  <aside>
-    <ol class=chapters>
-
-      {{#chapters}}
-        {{> chapter}}
-      {{/chapters}}
-
-      <li class=no-content>{{#i18n}}Keine Kapitel{{/i18n}}</li>
-      <li class=controls>
-        <button class=add-chapter>{{#i18n}}Kapitel einfügen{{/i18n}}</button>
-        <button class=init-sort-chapter>{{#i18n}}Kapitel sortieren{{/i18n}}</button>
-        <button class=stop-sort-chapter>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
-        {{^active_chapter.aside_section}}
-          <button class=activate-aside-section>{{#i18n}}Seitenblöcke aktivieren{{/i18n}}</button>
-        {{/active_chapter.aside_section}}
-        {{#active_chapter.aside_section}}
-            <button class=deactivate-aside-section data-type=Chapter>{{#i18n}}Seitenblöcke entfernen{{/i18n}}</button>
-        {{/active_chapter.aside_section}}
-
-      </li>
-      <li class="cw-navigation">
+  <aside class="cw-sidebar">
+    <div class="cw-sidebar-image"></div>
+    <nav class="cw-navigation">
           <p class="cw-navigation-header">
             Navigation
           </p>
@@ -87,7 +69,28 @@
               </li>
           </ul>
         {{/user_is_teacher}}
+      </nav>
+    
+    <ol class=chapters>
+        <p class="chapters-header">{{#i18n}}Inhalt{{/i18n}}</p>
+      {{#chapters}}
+        {{> chapter}}
+      {{/chapters}}
+
+      <li class=no-content>{{#i18n}}Keine Kapitel{{/i18n}}</li>
+      <li class=controls>
+        <button class=add-chapter>{{#i18n}}Kapitel einfügen{{/i18n}}</button>
+        <button class=init-sort-chapter>{{#i18n}}Kapitel sortieren{{/i18n}}</button>
+        <button class=stop-sort-chapter>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
+        {{^active_chapter.aside_section}}
+          <button class=activate-aside-section>{{#i18n}}Seitenblöcke aktivieren{{/i18n}}</button>
+        {{/active_chapter.aside_section}}
+        {{#active_chapter.aside_section}}
+            <button class=deactivate-aside-section data-type=Chapter>{{#i18n}}Seitenblöcke entfernen{{/i18n}}</button>
+        {{/active_chapter.aside_section}}
+
       </li>
+      
     </ol>
     {{#active_chapter}}
       {{#aside_section}}

@@ -17,11 +17,16 @@ export default StudentView.extend({
 
     onSearch(event) {
         var view = this;
-        var input_request = this.$(".cw-search-input-search").val();
-        this.$(".cw-search-result-empty").hide();
+        var input_request = $.trim(view.$(".cw-search-input-search").val());
+
+        if (input_request == "") {
+            view.$(".cw-search-result-empty").show();
+            return;
+        }
+        view.$(".cw-search-result-empty").hide();
 
         helper
-            .callHandler(this.model.id, "search", {request: input_request}) 
+            .callHandler(view.model.id, "search", {request: input_request}) 
             .then(function (success) {
                     view.showResults(success);
             })

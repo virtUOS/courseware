@@ -1,5 +1,5 @@
 <?php
-$body_id = 'mooc-progress-index';
+$body_id = 'courseware-progress-index';
 
 $progress = function ($block, $format = "") {
     return ceil($block['progress'] * 100) . $format;

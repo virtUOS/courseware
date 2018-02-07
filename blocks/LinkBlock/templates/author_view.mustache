@@ -4,7 +4,7 @@
 
 <label for="cw-link-type">{{#i18n}}Art des Links{{/i18n}}:</label>
 <select name="cw-link-type" class="cw-link-type">
-    <option value="internal">interner Link</option>
+    {{#hasinternal}}<option value="internal">interner Link</option>{{/hasinternal}}
     <option value="external">externer Link</option>
 </select>
 <br>

@@ -1,4 +1,4 @@
-<? $body_id = 'mooc-courseware-index'; ?>
+<? $body_id = 'courseware-index'; ?>
 
 <?
   $block_types = $plugin->getBlockFactory()->getBlockClasses();

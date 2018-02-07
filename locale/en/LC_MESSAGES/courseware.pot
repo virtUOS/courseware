@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  js.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-0117 09:56+0200\n"
+"POT-Creation-Date: 2018-02-0207 10:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "#-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-17 09:56+0100\n"
+"POT-Creation-Date: 2018-02-07 10:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -370,6 +370,9 @@ msgstr ""
 msgid "informieren"
 msgstr ""
 
+msgid "Inhalt"
+msgstr ""
+
 msgid "Kapitel einfügen"
 msgstr ""
 
@@ -533,6 +536,10 @@ msgid "Webvideo (URL)"
 msgstr ""
 
 msgid ""
+"Wegen des gewählten Lizenzstatus kann diese PDF-Datei nicht angezeigt werden."
+msgstr ""
+
+msgid ""
 "Wegen des gewählten Lizenzstatus können Sie diese Audiodatei nicht abspielen."
 msgstr ""
 
@@ -681,7 +688,7 @@ msgstr ""
 msgid "Übung"
 msgstr ""
 
-#: blocks/TestBlock/TestBlock.php:167 blocks/TestBlock/TestBlock.php:209
+#: blocks/TestBlock/TestBlock.php:166 blocks/TestBlock/TestBlock.php:208
 msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
 msgstr ""
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-0117 09:56+0200\n"
+"POT-Creation-Date: 2018-02-0207 10:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -317,6 +317,9 @@ msgstr ""
 msgid "informieren"
 msgstr ""
 
+msgid "Inhalt"
+msgstr ""
+
 msgid "Kapitel einfügen"
 msgstr ""
 
@@ -474,6 +477,9 @@ msgid "webAudio"
 msgstr ""
 
 msgid "Webvideo (URL)"
+msgstr ""
+
+msgid "Wegen des gewählten Lizenzstatus kann diese PDF-Datei nicht angezeigt werden."
 msgstr ""
 
 msgid "Wegen des gewählten Lizenzstatus können Sie diese Audiodatei nicht abspielen."
