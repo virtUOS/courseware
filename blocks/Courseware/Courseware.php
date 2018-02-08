@@ -93,17 +93,19 @@ class Courseware extends Block
         $cid = $this->container['cid'];
 
         return array_merge($tree, array(
-            'user_is_nobody' => $this->getCurrentUser()->isNobody(),
-            'user_may_author' => $this->getCurrentUser()->canUpdate($this->_model),
-            'user_is_teacher' => $this->getCurrentUser()->hasPerm($cid, 'tutor'),
-            'section_nav' => $section_nav,
-            'courseware' => $courseware,
-            'active_chapter' => $active_chapter,
-            'active_subchapter' => $active_subchapter,
-            'show_section_nav' => $this->show_section_nav,
-            'sections_as_chapters' => $this->sections_as_chapters,
-            'isSequential' => $this->progression == 'seq',
-            'active_section' => $active_section, )
+            'user_is_nobody'        => $this->getCurrentUser()->isNobody(),
+            'user_may_author'       => $this->getCurrentUser()->canUpdate($this->_model),
+            'user_is_teacher'       => $this->getCurrentUser()->hasPerm($cid, 'tutor'),
+            'section_nav'           => $section_nav,
+            'courseware'            => $courseware,
+            'active_chapter'        => $active_chapter,
+            'active_subchapter'     => $active_subchapter,
+            'show_section_nav'      => $this->show_section_nav,
+            'sections_as_chapters'  => $this->sections_as_chapters,
+            'isSequential'          => $this->progression == 'seq',
+            'active_section'        => $active_section, 
+            'cw_title'              => $courseware->title
+            )
         );
     }
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-0207 10:46+0200\n"
-"PO-Revision-Date: 2018-02-07 10:50+0100\n"
+"POT-Creation-Date: 2018-02-0208 10:22+0200\n"
+"PO-Revision-Date: 2018-02-08 10:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: en\n"
@@ -574,6 +574,38 @@ msgstr "random symbols for encryption"
 msgid "zurück"
 msgstr "back"
 
+msgid "Neuer Abschnitt"
+msgstr "New section"
+
+msgid "Neues Kapitel"
+msgstr "New chapter"
+
+msgid "Neues Unterkapitel"
+msgstr "New subchapter"
+
+msgid "Sichtbar ab"
+msgstr "visible from:"
+
+msgid "Wollen Sie den Block wirklich löschen?"
+msgstr "Do you really want to delete this block?"
+
+msgid "Wollen Sie den gesamten Abschnitt wirklich löschen?"
+msgstr "Do your really want to delete the whole chapter?"
+
+msgid ""
+"Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke "
+"werden unwiderruflich entfernt!"
+msgstr ""
+"Do you really want to delete? All sections and blocks will be deleted "
+"permanently!"
+
+msgid ""
+"Wollen Sie wirklich löschen? Sämtliche enthaltenen Blöcke werden "
+"unwiderruflich entfernt!"
+msgstr ""
+"Do you really want to delete? All sections and blocks will be deleted "
+"permanently!"
+
 msgid "Bestätigung"
 msgstr "Confirmation"
 
@@ -669,12 +701,12 @@ msgstr "The import archive does not contain a data.xml file."
 msgid "Die Datendatei data.xml enthält kein valides XML."
 msgstr "The data file data.xml does not contain valid XML."
 
-#: blocks/Courseware/Courseware.php:572
+#: blocks/Courseware/Courseware.php:574
 #: models/mooc/db/CoursewareFactory.php:56
 msgid "Unterkapitel 1"
 msgstr "Sub-chapter 1"
 
-#: blocks/Courseware/Courseware.php:580
+#: blocks/Courseware/Courseware.php:582
 #: models/mooc/db/CoursewareFactory.php:64
 msgid "Abschnitt 1"
 msgstr "Section 1"
@@ -963,28 +995,6 @@ msgstr "You are not authorized to edit this block."
 msgid "Matterhorn"
 msgstr "Matterhorn"
 
-msgid "Neuer Abschnitt"
-msgstr "New section"
-
-msgid "Neues Kapitel"
-msgstr "New chapter"
-
-msgid "Neues Unterkapitel"
-msgstr "New subchapter"
-
-msgid "Wollen Sie den Block wirklich löschen?"
-msgstr "Do you really want to delete this block?"
-
-msgid "Wollen Sie den gesamten Abschnitt wirklich löschen?"
-msgstr "Do your really want to delete the whole chapter?"
-
-msgid ""
-"Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke "
-"werden unwiderruflich entfernt!"
-msgstr ""
-"Do you really want to delete? All sections and blocks will be deleted "
-"permanently!"
-
 msgid "Alles anzeigen / Eigenen Beitrag schreiben"
 msgstr "Show all / Contribute own text"
 
@@ -996,28 +1006,26 @@ msgstr "Currently linked to"
 
 msgid ""
 "Sie können mehrere Quellen pro Video angeben. Neben unterschiedlichen "
-"Formaten sind auch Videos für kleine Displays (&le;800px) und große "
-"Displays (>800px) möglich."
+"Formaten sind auch Videos für kleine Displays (&le;800px) und große Displays "
+"(>800px) möglich."
 msgstr ""
-"You can list several sources for a video. In addition to different "
-"formats, you may also use videos for small (&le;800px) and large (>800px) "
-"displays."
+"You can list several sources for a video. In addition to different formats, "
+"you may also use videos for small (&le;800px) and large (>800px) displays."
 
 msgid ""
 "Sie wurden noch keiner Gruppe zugeordnet. Bitte wenden Sie sich an Ihren "
 "Dozenten."
 msgstr ""
-"You have not been added to a group yet. Please contact your course "
-"lecturer."
+"You have not been added to a group yet. Please contact your course lecturer."
 
 msgid ""
-"Tragen Sie in das Feld URL(Uniform Resource Locator) die Adresse der "
-"Seite ein die im iFrame erscheinen soll.<br> Bitte beachten Sie, dass "
-"manche Seiten die Darstellung in einem iFrame blockieren."
+"Tragen Sie in das Feld URL(Uniform Resource Locator) die Adresse der Seite "
+"ein die im iFrame erscheinen soll.<br> Bitte beachten Sie, dass manche "
+"Seiten die Darstellung in einem iFrame blockieren."
 msgstr ""
-"Enter the address of the website which is to appear in the iFrame into "
-"the URL(Uniform Resource Locator) field. Please consider that some sites "
-"do not allow an integration into an iFrame"
+"Enter the address of the website which is to appear in the iFrame into the "
+"URL(Uniform Resource Locator) field. Please consider that some sites do not "
+"allow an integration into an iFrame"
 
 msgid ""
 "Wählen Sie hier einen vorhandenen Forenbereich aus oder lassen Sie "

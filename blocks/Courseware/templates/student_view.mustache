@@ -23,6 +23,11 @@
           </p>
         {{#user_is_teacher}}
           <ul class="cw-navigation-teacher">
+              <li class="cw-navigation-active">
+                <a class="cw-navigation-courseware" href="#">
+                  {{cw_title}}
+                </a>
+              </li>
               <li>
                 <a class="cw-navigation-news" href="{{#plugin_url}}courseware/news{{/plugin_url}}">
                   {{#i18n}}Letzte Änderungen{{/i18n}}
@@ -57,6 +62,11 @@
         {{/user_is_teacher}}
         {{^user_is_teacher}}
           <ul class="cw-navigation-student">
+              <li class="cw-navigation-active">
+                <a class="cw-navigation-courseware" href="#">
+                  {{cw_title}}
+                </a>
+              </li>
               <li>
                 <a class="cw-navigation-news" href="{{#plugin_url}}courseware/news{{/plugin_url}}">
                   {{#i18n}}Letzte Änderungen{{/i18n}}

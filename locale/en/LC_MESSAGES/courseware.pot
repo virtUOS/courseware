@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  js.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-0207 10:46+0200\n"
+"POT-Creation-Date: 2018-02-0208 10:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "#-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-07 10:46+0100\n"
+"POT-Creation-Date: 2018-02-08 10:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -568,7 +568,35 @@ msgstr ""
 msgid "zurück"
 msgstr ""
 
-msgid "Bestätigung"
+msgid "Neuer Abschnitt"
+msgstr ""
+
+msgid "Neues Kapitel"
+msgstr ""
+
+msgid "Neues Unterkapitel"
+msgstr ""
+
+msgid "Sichtbar ab"
+msgstr ""
+
+msgid "Wollen Sie den Block wirklich löschen?"
+msgstr ""
+
+msgid "Wollen Sie den gesamten Abschnitt wirklich löschen?"
+msgstr ""
+
+msgid ""
+"Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke "
+"werden unwiderruflich entfernt!"
+msgstr ""
+
+msgid ""
+"Wollen Sie wirklich löschen? Sämtliche enthaltenen Blöcke werden "
+"unwiderruflich entfernt!"
+msgstr ""
+
+msgid "Best?tigung"
 msgstr ""
 
 msgid "Diskussion"
@@ -654,12 +682,12 @@ msgstr ""
 msgid "Die Datendatei data.xml enthält kein valides XML."
 msgstr ""
 
-#: blocks/Courseware/Courseware.php:572
+#: blocks/Courseware/Courseware.php:574
 #: models/mooc/db/CoursewareFactory.php:56
 msgid "Unterkapitel 1"
 msgstr ""
 
-#: blocks/Courseware/Courseware.php:580
+#: blocks/Courseware/Courseware.php:582
 #: models/mooc/db/CoursewareFactory.php:64
 msgid "Abschnitt 1"
 msgstr ""

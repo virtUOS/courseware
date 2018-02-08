@@ -28,7 +28,17 @@
         .cw-navigation-teacher,
         .cw-navigation-student {
             list-style: none; 
-            padding: 0 0 0.5em 1em;
+            padding: 0;
+            
+            li {
+                padding: 0 1em;
+                &.cw-navigation-active {
+                    background-color: #28497c;
+                    a {
+                        color: #fff;
+                    }
+                }
+            }
         }
     }
     .chapters-header {
