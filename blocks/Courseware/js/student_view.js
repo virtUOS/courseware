@@ -109,7 +109,7 @@ export default StudentView.extend({
     }
     tooltip(this.$el, 'button');
     this.resizeColumnHeights();
-    console.log($(".mobile-show-nav-button").is(":visible"));
+
     if ($(".mobile-show-nav-button").is(":visible")) {
         this.$el.find(".aside-section").appendTo("#courseware");
     }
