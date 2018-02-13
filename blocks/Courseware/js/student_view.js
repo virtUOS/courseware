@@ -109,6 +109,11 @@ export default StudentView.extend({
     }
     tooltip(this.$el, 'button');
     this.resizeColumnHeights();
+    console.log($(".mobile-show-nav-button").is(":visible"));
+    if ($(".mobile-show-nav-button").is(":visible")) {
+        this.$el.find(".aside-section").appendTo("#courseware");
+    }
+    
   },
 
   navigateTo(event) {
@@ -184,11 +189,11 @@ export default StudentView.extend({
   
   showMobileNavigation(event) {
     if (jQuery(event.target).hasClass("nav-on")) {
-        this.$el.find("aside").hide("slow");
+        this.$el.find(".cw-sidebar").hide("slow");
         jQuery(event.target).removeClass("nav-on");
         this.$el.find(".breadcrumb").show();
     } else {
-        this.$el.find("aside").show("slow");
+        this.$el.find(".cw-sidebar").show("slow");
         this.$el.find(".breadcrumb").hide();
         jQuery(event.target).addClass("nav-on");
     }
