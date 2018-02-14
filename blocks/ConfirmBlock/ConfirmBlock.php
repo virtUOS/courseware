@@ -6,7 +6,7 @@ use Mooc\UI\Block;
 
 class ConfirmBlock extends Block
 {
-    const NAME = 'Best‰tigung';
+    const NAME = 'Best√§tigung';
 
     public function initialize()
     {

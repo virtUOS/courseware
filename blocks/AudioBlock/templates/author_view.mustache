@@ -14,7 +14,7 @@
 <label for="cw-audioblock-file">{{#i18n}}Audiodatei{{/i18n}}: </label>
 <select class="cw-audioblock-file" name="cw-audioblock-file">
     {{#audio_files}}
-        <option value="" document-id="{{dokument_id}}" filename="{{filename}}">{{name}}</option>
+        <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
     {{/audio_files}}
 </select>
 <input class="cw-audioblock-file" name="cw-audioblock-file">

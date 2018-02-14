@@ -93,14 +93,28 @@ class ImportController extends CoursewareStudipController
         // create a temporary directory
         $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
         mkdir($tempDir);
-        unzip_file($filename, $tempDir);
+        Studip\ZipArchive::extractToPath($filename, $tempDir);
+        
+        $root_folder = Folder::findTopFolder($GLOBALS['SessionSeminar']);
+        $parent_folder = FileManager::getTypedFolder($root_folder->id);
+        
+        $courseware_folder = Folder::findOneBySQL('range_id = ? AND name = ?', array( $GLOBALS['SessionSeminar'] , 'Courseware'));
+        if(!$courseware_folder) {
+            $request = array('name' => 'Courseware', 'description' => 'a courseware folder');
+            $new_folder = new StandardFolder();
+            $new_folder->setDataFromEditTemplate($request);
+            $new_folder->user_id = User::findCurrent()->id;
+            $courseware_folder = $parent_folder->createSubfolder($new_folder);
+        }
+
+        $install_folder = FileManager::getTypedFolder($courseware_folder->id);
 
         if ($this->validateUploadFile($tempDir, $this->errors)) {
             $courseware = $this->container['current_courseware'];
             $importer = new XmlImport($this->plugin->getBlockFactory());
             $redirect = true;
             try {
-                $importer->import($tempDir, $courseware);
+                $importer->import($tempDir, $courseware, $install_folder);
             } catch (Exception $e){
                 $this->errors[] = $e;
                 $redirect = false;

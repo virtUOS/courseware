@@ -10,7 +10,7 @@
             {{/description}}
             {{#available}}
                 {{^correction_available}}
-                    <div class="messagebox messagebox_info">{{#i18n}}Dieser Test ist zurzeit nicht verfügbar.{{/i18n}}</div>
+                    <div class="messagebox messagebox_info">{{#i18n}}Dieser Test ist zurzeit nicht verfÃ¼gbar.{{/i18n}}</div>
                 {{/correction_available}}
             {{/available}}
             {{#exercises}}
@@ -26,34 +26,34 @@
                                 {{#self_test}}
                                     {{#has_solution}}
                                         {{#tryagain}}{{#tries_left}}
-                                            <div class="messagebox messagebox_error">{{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal. {{#tries_left}}Sie haben noch {{tries_left}} Versuch{{#tries_pl}}e{{/tries_pl}}.{{/tries_left}}{{/i18n}}</div>
+                                            <div class="messagebox messagebox_error">{{#i18n}}Ihr LÃ¶sungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal. {{#tries_left}}Sie haben noch {{tries_left}} Versuch{{#tries_pl}}e{{/tries_pl}}.{{/tries_left}}{{/i18n}}</div>
                                             {{#corrector_comment}}
                                                 <div class="messagebox messagebox_info answerinfo exercise-corrector-comment">{{corrector_comment}}</div>
                                             {{/corrector_comment}}
                                         {{/tries_left}}{{/tryagain}}
                                         {{#correct}}
-                                            <div class="messagebox messagebox_success">{{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}</div>
+                                            <div class="messagebox messagebox_success">{{#i18n}}Ihre LÃ¶sung ist korrekt!{{/i18n}}</div>
                                         {{/correct}}
                                         {{^correct}}
                                             {{^tries_left}}
-                                                <div class="messagebox messagebox_error">{{#i18n}}Ihre Lösung ist nicht korrekt!{{/i18n}}</div>
+                                                <div class="messagebox messagebox_error">{{#i18n}}Ihre LÃ¶sung ist nicht korrekt!{{/i18n}}</div>
                                             {{/tries_left}}
                                         {{/correct}}
                                     {{/has_solution}}
                                 {{/self_test}}
                                 {{^self_test}}
                                     {{#has_solution}}
-                                        <div class="messagebox messagebox_info answerinfo">{{#i18n}}Für diese Frage haben Sie bereits eine Antwort abgegeben.{{/i18n}}</div>
+                                        <div class="messagebox messagebox_info answerinfo">{{#i18n}}FÃ¼r diese Frage haben Sie bereits eine Antwort abgegeben.{{/i18n}}</div>
                                     {{/has_solution}}
-                                        <div class="messagebox messagebox_info submitinfo" style="display: none;">{{#i18n}}Ihre Lösung wurde eingetragen.{{/i18n}}</div>
+                                        <div class="messagebox messagebox_info submitinfo" style="display: none;">{{#i18n}}Ihre LÃ¶sung wurde eingetragen.{{/i18n}}</div>
                                 {{/self_test}}
                                 {{#solved_completely}}
                                     <div class="messagebox messagebox_success">
                                         {{#isSequential}}
-                                            {{#i18n}}Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
+                                            {{#i18n}}Danke! Sie haben alle Aufgaben gelÃ¶st und kÃ¶nnen nun mit dem nÃ¤chsten Abschnitt fortfahren.{{/i18n}}
                                         {{/isSequential}}
                                         {{^isSequential}}
-                                            {{#i18n}}Danke! Sie haben alle Aufgaben gelöst.{{/i18n}}
+                                            {{#i18n}}Danke! Sie haben alle Aufgaben gelÃ¶st.{{/i18n}}
                                         {{/isSequential}}
                                     </div>
                                 {{/solved_completely}}
@@ -86,7 +86,7 @@
                                 {{#tryagain}}
                                     {{#sample_solution}}{{^self_test}}
                                         <div class="exercise-sample-solution">
-                                            <span>{{#i18n}}Musterlösung:{{/i18n}}</span>
+                                            <span>{{#i18n}}MusterlÃ¶sung:{{/i18n}}</span>
                                             <p>{{sample_solution}}</p>
                                         </div>
                                     {{/self_test}}{{/sample_solution}}
@@ -119,14 +119,14 @@
             {{/exercises}}
             {{^exercises}}
                 {{#typemismatch}}
-                    <div class="messagebox messagebox_error"> {{#i18n}}Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten.{{/i18n}}</div>
+                    <div class="messagebox messagebox_error"> {{#i18n}}Der Aufgabentyp hat sich geÃ¤ndert. Bitte wenden Sie sich an Ihren Dozenten.{{/i18n}}</div>
                 {{/typemismatch}}
                 {{^typemismatch}}
                     <div class="messagebox messagebox_info">{{#i18n}}Keine Aufgaben.{{/i18n}}</div>
                 {{/typemismatch}}
             {{/exercises}}
             {{^exercises_available}}{{^correction_available}}
-                <div class="messagebox messagebox_info">{{#i18n}}Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen.{{/i18n}}</div>
+                <div class="messagebox messagebox_info">{{#i18n}}Es gibt momentan keine Aufgaben, die zum Bearbeiten zur VerfÃ¼gung stehen.{{/i18n}}</div>
             {{/correction_available}}{{/exercises_available}}
         {{/version}}
         {{^version}}
@@ -140,7 +140,7 @@
 {{/inactive}}
 {{#inactive}}
     <div class="messagebox messagebox_info">
-        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+        {{#i18n}}Dieser Block steht Ihnen erst zur VerfÃ¼gung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloÃŸen haben.{{/i18n}}
     </div>
 {{/inactive}}
 

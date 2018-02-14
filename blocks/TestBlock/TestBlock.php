@@ -22,7 +22,7 @@ class TestBlock extends Block
     {
         return array(
             'selftest' => _cw('Selbsttest'),
-            'practice' => _cw('Übung'),
+            'practice' => _cw('Ãœbung'),
         );
     }
 

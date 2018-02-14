@@ -27,7 +27,7 @@ class XmlImport implements ImportInterface
     /**
      * {@inheritdoc}
      */
-    public function import($path, Courseware $courseware)
+    public function import($path, Courseware $courseware, $folder)
     {
         $dataFile = $path.'/data.xml';
         $document = new \DOMDocument();
@@ -41,7 +41,7 @@ class XmlImport implements ImportInterface
         foreach ($coursewareNode->childNodes as $child) {
             if ($child instanceof \DOMElement) {
                 if  ($child->tagName === 'file') {
-                    $this->processFile($child, $courseware, $path, $files);
+                    $this->processFile($child, $courseware, $path, $files, $folder);
                 }
             }
         }
@@ -73,39 +73,31 @@ class XmlImport implements ImportInterface
      * @param array       $files      Mapping of original file ids to new
      *                                document instances
      */
-    private function processFile(\DOMElement $node, Courseware $courseware, $path, &$files)
+    private function processFile(\DOMElement $node, Courseware $courseware, $path, &$files, $folder)
     {
         /** @var \Seminar_User $user */
         global $user;
-
-        $folder = \TreeAbstract::getInstance('StudipDocumentTree', array('range_id' => $courseware->getModel()->seminar_id));
-        $folders = $folder->getKids($courseware->getModel()->seminar_id);
         $originId = $node->getAttribute('id');
-        $filename = utf8_decode($node->getAttribute('filename'));
-        $sourceFile = $path.'/'.$originId.'/'.$filename;
-        $data = array(
-            'range_id' => $folders[0],
-            'user_id' => $user->cfg->getUserId(),
-            'seminar_id' => $courseware->getModel()->seminar_id,
-            'name' => utf8_decode($node->getAttribute('name')),
-            'description' => utf8_decode($node->textContent),
-            'filename' => $filename,
-            'filesize' => utf8_decode($node->getAttribute('filesize')),
-            'url' => utf8_decode($node->getAttribute('url')),
-            'author_name' => $user->getFullName(),
-        );
-
-        if (file_exists($sourceFile)) {
-            // the file is part of the uploaded ZIP archive
-            $document = \StudipDocument::createWithFile($sourceFile, $data);
+        $filename = $node->getAttribute('filename');
+        
+        
+        $stored_file = \FileRef::findOneBySQL('name = ? AND folder_id = ?', array($node->getAttribute('name'), $folder->id));
+        if(!$stored_file) {
+            $file = [
+                        'name'     => $filename,
+                        'type'     => "mp3",
+                        'tmp_name' => $path.'/'.$originId.'/'.$filename,
+                        'url'      => $node->getAttribute('url'),
+                        'size'     => $node->getAttribute('filesize'),
+                        'user_id'  => $user->id,
+                        'error'    => ""
+                    ];
+            $new_reference = $folder->createFile($file);
         } else {
-            // the file is referenced by URL
-            $document = new \StudipDocument();
-            $document->setData($data);
-            $document->store();
+            $new_reference = $stored_file;
         }
 
-        $files[$originId] = $document;
+        $files[$originId] = $new_reference;
     }
 
     /**

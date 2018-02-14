@@ -23,14 +23,10 @@ class AudioBlock extends Block
             return array('inactive' => true);
         }
         if ($this->audio_source == "cw") {
-            $document = \StudipDocument::find($this->audio_id);
-            if ($document) {
-                $access = $document->checkAccess($this->container['current_user_id']);
-                if ($document->url == "") {
-                    $audio_file = "../../sendfile.php?type=0&file_id=".$document->id."&file_name=".$document->name;
-                } else {
-                    $audio_file = "../../sendfile.php?type=6&file_id=".$document->id."&file_name=".$document->name;
-                }
+            $file = \FileRef::find($this->audio_id);
+            if ($file) {
+                $access = true;
+                $audio_file = $file->getDownloadURL();
             }
         } else {
             $access = true;
@@ -85,24 +81,15 @@ class AudioBlock extends Block
 
     private function showFiles()
     {
-        $db = \DBManager::get();
-        $stmt = $db->prepare('
-            SELECT 
-                * 
-            FROM 
-                dokumente 
-            WHERE 
-                seminar_id = :seminar_id
-            ORDER BY 
-                name
-        ');
-        $stmt->bindParam(':seminar_id', $this->container['cid']);
-        $stmt->execute();
-        $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $filesarray = array();
-        foreach ($response as $item) {
-            if ((strpos($item['filename'], 'mp3') > -1) || (strpos($item['filename'], 'ogg') > -1) || (strpos($item['filename'], 'wav') > -1)) {
-                $filesarray[] = $item;
+        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        
+        foreach ($folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if ($ref->isAudio())  {
+                    $filesarray[] = $ref;
+                }
             }
         }
 
@@ -129,18 +116,21 @@ class AudioBlock extends Block
 
     public function getFiles()
     {
+        
         if ($this->audio_source != 'cw') {
             return array();
         }
-        $document = new \StudipDocument($this->audio_id);
+        $file_ref = new \FileRef($this->audio_id);
+        $file = new \File($file_ref->file_id);
+        
         $files[] = array(
             'id' => $this->audio_id,
-            'name' => $document->name,
-            'description' => $document->description,
-            'filename' => $document->filename,
-            'filesize' => $document->filesize,
-            'url' => $document->url,
-            'path' => get_upload_file_path($this->audio_id),
+            'name' => $file_ref->name,
+            'description' => $file_ref->description,
+            'filename' => $file->name,
+            'filesize' => $file->size,
+            'url' => $file->getURL(),
+            'path' => $file->getPath()
         );
 
         return $files;
@@ -176,34 +166,18 @@ class AudioBlock extends Block
         if (isset($properties['audio_file_name'])) {
             $this->audio_file_name = $properties['audio_file_name'];
         }
-        if ($this->audio_source == "cw") {
-            $this->setFileId($this->audio_file_name);
-        } else {
-            if (isset($properties['audio_file'])) {
+        if (isset($properties['audio_file'])) {
                 $this->audio_file = $properties['audio_file'];
-            }
         }
         $this->save();
-    }
-
-    private function setFileId($file_name)
-    {
-        $cid = $this->container['cid'];
-        $document = current(\StudipDocument::findBySQL('filename = ? AND seminar_id = ?', array($file_name, $cid)));
-        $this->audio_id = $document->id;
-        if ($document->url == "") {
-            $this->audio_file = '../../sendfile.php?type=0&file_id='.$document->id.'&file_name='.$document->name;
-        } else {
-            $this->audio_file = '../../sendfile.php?type=6&file_id='.$document->id.'&file_name='.$document->name;
-        }
-
-        return;
     }
 
     public function importContents($contents, array $files)
     {
         $file = reset($files);
-        if (($this->audio_source == 'cw') && ($file->id == $this->audio_id)) {
+        $this->audio_id = $file->id;
+        if ($this->audio_source == 'cw') {
+            $this->audio_file = $file->getDownloadURL();
             $this->save();
         }
     }

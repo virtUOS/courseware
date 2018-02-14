@@ -72,7 +72,7 @@ export default AuthorView.extend({
     var $audiofile, $audioid, $audio_file_name;
     if ($audiosource == 'cw') {
       $audiofile = $view.$('select.cw-audioblock-file').val();
-      $audioid = $view.$('select.cw-audioblock-file option:selected').attr('document-id');
+      $audioid = $view.$('select.cw-audioblock-file option:selected').attr('file-id');
       $audio_file_name = $view.$('select.cw-audioblock-file option:selected').attr('filename');
     } else {
       $audiofile = $view.$('input.cw-audioblock-file').val();

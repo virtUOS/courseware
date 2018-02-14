@@ -11,12 +11,12 @@
 <script>
   var COURSEWARE = {
     config: {
-      blocks_url: <?= json_encode(studip_utf8encode($blocks_url)) ?>,
-      cid: <?= json_encode(studip_utf8encode($cid)) ?>,
-      courseware_url: <?= json_encode(studip_utf8encode($courseware_url)) ?>,
-      plugin_url: <?= json_encode(studip_utf8encode($plugin_url)) ?>,
-      block_types: <?= json_encode(studip_utf8encode($block_types)) ?>,
-      templates: <?= json_encode(studip_utf8encode($templates)) ?>,
+      blocks_url: <?= json_encode($blocks_url) ?>,
+      cid: <?= json_encode($cid) ?>,
+      courseware_url: <?= json_encode($courseware_url) ?>,
+      plugin_url: <?= json_encode($plugin_url) ?>,
+      block_types: <?= json_encode($block_types) ?>,
+      templates: <?= json_encode($templates) ?>,
       nobody: <?= json_encode($container['current_user']->isNobody()) ?>,
       user_may_author: <?= json_encode($container['current_user']->canUpdate($courseware_block)) ?>,
     }

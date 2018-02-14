@@ -47,22 +47,20 @@ class CoursewareStudipController extends StudipController
     /**
      * Render some data as JSON.
      *
-     * @param Mixed $data  some WINDOWS-1252 encoded data
      */
     function render_json($data)
     {
         $this->response->add_header('Content-Type', 'application/json');
-        $this->render_text(json_encode(studip_utf8encode($data)));
+        $this->render_text(json_encode($data));
     }
 
     /**
      * Render Stud.IP specific HTML
      *
-     * @param string $html  the WINDOWS-1252 encoded html string
      */
     function render_html($html)
     {
-        $this->response->add_header('Content-Type', 'text/html;charset=windows-1252');
+        $this->response->add_header('Content-Type', 'text/html;charset=utf-8');
         $this->render_text($html);
     }
 

@@ -255,9 +255,9 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
     public function perform($unconsumedPath)
     {
-        if (!$this->isActivated($this->container['cid'])) {
-            throw new AccessDeniedException('plugin not activated for this course!');
-        }
+        //if (!$this->isActivated($this->container['cid'])) {
+            //throw new AccessDeniedException('plugin not activated for this course!');
+        //}
 
         require_once 'vendor/trails/trails.php';
         require_once 'app/controllers/studip_controller.php';
@@ -265,7 +265,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         // load i18n only if plugin is un use
         PageLayout::addHeadElement('script', array(),
-            "String.toLocaleString('".PluginEngine::getLink($this, array('cid' => null), 'localization')."');");
+            "String.toLocaleString('".PluginEngine::getLink($this, array('cid' => $this->container['cid']), 'localization')."');");
 
         $dispatcher = new Trails_Dispatcher(
             $this->getPluginPath(),

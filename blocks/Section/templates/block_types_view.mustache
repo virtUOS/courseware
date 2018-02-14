@@ -1,13 +1,13 @@
 <div class="styled-select">
     <select class="block-types">
-         <optgroup label="Standard-Blöcke">
+         <optgroup label="Standard-BlÃ¶cke">
         {{#content_block_types_basic}}
             <option data-blocktype="{{type}}" {{#sub_type}} data-blocksubtype="{{sub_type}}"{{/sub_type}}>
                 {{#i18n}}{{name}}{{/i18n}}
             </option>
         {{/content_block_types_basic}}
          </optgroup>
-         <optgroup label="Erweiterte-Blöcke">
+         <optgroup label="Erweiterte-BlÃ¶cke">
         {{#content_block_types_advanced}}
             <option data-blocktype="{{type}}" {{#sub_type}} data-blocksubtype="{{sub_type}}"{{/sub_type}}>
                 {{#i18n}}{{name}}{{/i18n}}
@@ -16,4 +16,4 @@
         </optgroup>
     </select>
 </div>
-<button class="button add-block">{{#i18n}}Block hinzufügen{{/i18n}}</button>
+<button class="button add-block">{{#i18n}}Block hinzufÃ¼gen{{/i18n}}</button>

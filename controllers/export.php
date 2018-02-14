@@ -27,6 +27,7 @@ class ExportController extends CoursewareStudipController
         // dump the XML to the filesystem
         $export = new XmlExport($this->plugin->getBlockFactory());
         $courseware = $this->container['current_courseware'];
+        
         foreach ($courseware->getFiles() as $file) {
             if (trim($file['url']) !== '') {
                 continue;
@@ -36,6 +37,7 @@ class ExportController extends CoursewareStudipController
             mkdir($destination);
             copy($file['path'], $destination.'/'.$file['filename']);
         }
+        
         if (Request::submitted('plaintext')) {
             $this->response->add_header('Content-Type', 'text/xml;charset=utf-8');
             $this->render_text($export->export($courseware));
@@ -44,7 +46,7 @@ class ExportController extends CoursewareStudipController
         file_put_contents($tempDir.'/data.xml', $export->export($courseware));
 
         $zipFile = $GLOBALS['TMP_PATH'].'/'.uniqid().'.zip';
-        create_zip_from_directory($tempDir, $zipFile);
+        FileArchiveManager::createArchiveFromPhysicalFolder($tempDir, $zipFile);
         $this->set_layout(null);
         header('Content-Type: application/zip');
         header('Content-Disposition: attachment; filename=courseware.zip');

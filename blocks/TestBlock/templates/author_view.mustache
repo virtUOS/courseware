@@ -6,7 +6,7 @@
     {{#active}}{{#version}}
         {{#unsupported_question}}
             <div class="messagebox messagebox_error">
-                {{#i18n}}Im aktuellen Aufgabenblatt sind nicht unterst¸tzte Aufgabentypen enthalten!{{/i18n}}
+                {{#i18n}}Im aktuellen Aufgabenblatt sind nicht unterst√ºtzte Aufgabentypen enthalten!{{/i18n}}
             </div>
         {{/unsupported_question}}
         {{#has_assignments}}
@@ -19,14 +19,14 @@
                 {{/assignments}}
             </select>
             <div class="cw-button-box">
-                <a href="{{manage_tests_url}}" class="button">{{#i18n}}Aufgabenbl‰tter verwalten{{/i18n}}</a>
+                <a href="{{manage_tests_url}}" class="button">{{#i18n}}Aufgabenbl√§tter verwalten{{/i18n}}</a>
                 <button name="save" class="button">Speichern</button>
                 <button name="cancel" class="button">Abbrechen</button>
             </div>
         {{/has_assignments}}
         {{^has_assignments}}
             <div class="messagebox messagebox_error">
-                {{#i18n}}Es sind keine Aufgabenbl‰tter des Types "{{type}}" vorhanden.{{/i18n}}
+                {{#i18n}}Es sind keine Aufgabenbl√§tter des Types "{{type}}" vorhanden.{{/i18n}}
             </div>
         {{/has_assignments}}
     {{/version}}

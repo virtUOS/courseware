@@ -1,11 +1,11 @@
 {{#loading_denyed}}
     <div class="messagebox messagebox_error">
-        {{#i18n}}Die gewählte Seite verbietet eine Einbindung per IFrame!{{/i18n}}
+        {{#i18n}}Die gewÃ¤hlte Seite verbietet eine Einbindung per IFrame!{{/i18n}}
     </div>
 {{/loading_denyed}}
 {{#wrong_protocol}}
     <div class="messagebox messagebox_error">
-        {{#i18n}}Die gewählte Seite kann nur mit einer sicheren Verbindung eingebunden werden. Bitte geben Sie wenn möglich https in der URL an.{{/i18n}}
+        {{#i18n}}Die gewÃ¤hlte Seite kann nur mit einer sicheren Verbindung eingebunden werden. Bitte geben Sie wenn mÃ¶glich https in der URL an.{{/i18n}}
     </div>
 {{/wrong_protocol}}
 <input type="hidden" class="iframe-cc-infos-stored" value="{{cc_infos}}">
@@ -19,8 +19,8 @@
     {{#https}}
         <div class="iframe-description">
         <p><b>
-            {{#i18n}}Bitte beachten Sie das StudIP über eine sichere Verbindung aufgerufen wird. 
-            Es können nur Quellen eingebunden werden die auch über eine sichere Verbindung verfügen. 
+            {{#i18n}}Bitte beachten Sie das StudIP Ã¼ber eine sichere Verbindung aufgerufen wird. 
+            Es kÃ¶nnen nur Quellen eingebunden werden die auch Ã¼ber eine sichere Verbindung verfÃ¼gen. 
             Nutzen Sie das Protokoll https in der URL!{{/i18n}}
         </b></p>
     </div>
@@ -28,21 +28,21 @@
     <div class="iframe-data">
         <label>URL:</label><input class="urlinput" type=text size=32 value={{url}}>
         <br>
-        <label>{{#i18n}}Höhe{{/i18n}}:</label><input class="heightinput" type=number min=20 max=3000 value={{height}}> {{#i18n}}Pixel{{/i18n}}
+        <label>{{#i18n}}HÃ¶he{{/i18n}}:</label><input class="heightinput" type=number min=20 max=3000 value={{height}}> {{#i18n}}Pixel{{/i18n}}
         <br>
         <label>{{#i18n}}Breite{{/i18n}}:</label><input class="widthinput" type=number min=5 max=100 value={{#width}}{{width}}{{/width}}{{^width}}100{{/width}}> {{#i18n}}%{{/i18n}}
         <br>
-        <label>{{#i18n}}Nutzerspezifische ID übergeben{{/i18n}}</label>
+        <label>{{#i18n}}Nutzerspezifische ID Ã¼bergeben{{/i18n}}</label>
         <input class="submit-user-id-switch" name="submit-user-id-switch" type="checkbox" {{#submit_user_id}} checked{{/submit_user_id}}>
         <div class="iframe-submit-user">
-            <label>{{#i18n}}Name des Übergabeparameters{{/i18n}}:</label><input  class="submit-param" type=text size=32 value={{submit_param}}>
-            <label>{{#i18n}}Zufallszeichen für Verschlüsselung{{/i18n}}:</label><input class="salt" type=text size=32 min=8 value={{salt}}>
+            <label>{{#i18n}}Name des Ãœbergabeparameters{{/i18n}}:</label><input  class="submit-param" type=text size=32 value={{submit_param}}>
+            <label>{{#i18n}}Zufallszeichen fÃ¼r VerschlÃ¼sselung{{/i18n}}:</label><input class="salt" type=text size=32 min=8 value={{salt}}>
         </div>
         <div class="iframe-description iframe-submit-user">
             <p>
-                {{#i18n}}Für jede NutzerIn wird ein individueller Wert übergeben mit dem die Anwendung die NutzerIn wiedererkennen kann.
-                Um Rückschlüssen auf die Identität zu verhindern, wird die StudIp-Nutzer-Id mit der Zufallszeichenfolge verschlüsselt.
-                Wählen Sie identische Zufallszeichenfolgen, wenn an verschiedenen Stellen gleiche Nutzer-Ids erzeugt werden sollen.{{/i18n}}
+                {{#i18n}}FÃ¼r jede NutzerIn wird ein individueller Wert Ã¼bergeben mit dem die Anwendung die NutzerIn wiedererkennen kann.
+                Um RÃ¼ckschlÃ¼ssen auf die IdentitÃ¤t zu verhindern, wird die StudIp-Nutzer-Id mit der Zufallszeichenfolge verschlÃ¼sselt.
+                WÃ¤hlen Sie identische Zufallszeichenfolgen, wenn an verschiedenen Stellen gleiche Nutzer-Ids erzeugt werden sollen.{{/i18n}}
             </p>
         </div>
         <br>
