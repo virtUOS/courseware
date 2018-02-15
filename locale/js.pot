@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-0213 11:56+0200\n"
+"POT-Creation-Date: 2018-02-0215 12:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -509,31 +509,7 @@ msgstr ""
 msgid "zurück"
 msgstr ""
 
-msgid "Neuer Abschnitt"
-msgstr ""
-
-msgid "Neues Kapitel"
-msgstr ""
-
-msgid "Neues Unterkapitel"
-msgstr ""
-
-msgid "Sichtbar ab"
-msgstr ""
-
-msgid "Wollen Sie den Block wirklich löschen?"
-msgstr ""
-
-msgid "Wollen Sie den gesamten Abschnitt wirklich löschen?"
-msgstr ""
-
-msgid "Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke werden unwiderruflich entfernt!"
-msgstr ""
-
-msgid "Wollen Sie wirklich löschen? Sämtliche enthaltenen Blöcke werden unwiderruflich entfernt!"
-msgstr ""
-
-msgid "Best?tigung"
+msgid "Bestätigung"
 msgstr ""
 
 msgid "Diskussion"
