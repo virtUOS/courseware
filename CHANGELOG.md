@@ -1,6 +1,6 @@
 CHANGELOG
 =========
-2.2.0
+3.0.0
 -----
 * change from requirejs to webpack
 * add new block: AssortBlock
@@ -21,6 +21,7 @@ CHANGELOG
 * overview of new contents in the courseware
 * responsive layout to fit mobile devices
 * courseware can be used in public courses
+* new sidebar layout
 
 2.1.0
 -----
