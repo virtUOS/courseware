@@ -100,8 +100,9 @@ export default AuthorView.extend({
   selectFolder() {
     var view = this;
     var $folder = this.$el.find('.download-folder').find('option:selected').val();
+    var $folder_id = this.$el.find('.download-folder').find('option:selected').attr('folder_id');
     helper
-      .callHandler(this.model.id, 'setfolder', { folder: $folder })
+      .callHandler(this.model.id, 'setfolder', { folder: $folder, folder_id: $folder_id })
       .then(function (event) {
         $(event.target).addClass('accept');
         if (event) {

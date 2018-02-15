@@ -3,9 +3,9 @@
 
 <label for="download-folder">{{#i18n}}Einen Ordner ausw&auml;hlen{{/i18n}}:</label>
 <select type="text" class="download-folder" name="folder">
-    {{#foldernames}}
+    {{#folders}}
         <option value="{{name}}" folder_id="{{folder_id}}">{{name}}</option>
-    {{/foldernames}}
+    {{/folders}}
 </select>
 <br>
 
