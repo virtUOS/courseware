@@ -3,16 +3,16 @@
 
 <label for="download-folder">{{#i18n}}Einen Ordner ausw&auml;hlen{{/i18n}}:</label>
 <select type="text" class="download-folder" name="folder">
-    {{#foldernames}}
-        <option value="{{name}}" folder_id="{{folder_id}}">{{name}}</option>
-    {{/foldernames}}
+    {{#folders}}
+        <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
+    {{/folders}}
 </select>
 <br>
 
 <label for="download-file">{{#i18n}}Eine Datei ausw&auml;hlen{{/i18n}}:</label>
 <select type="text" class="download-file" name="file">
     {{#allfiles}}
-        <option value="{{name}}" file_id="{{dokument_id}}" file_name="{{filename}}">{{name}}</option>
+        <option value="{{name}}" file_id="{{id}}">{{name}}</option>
     {{/allfiles}}
 </select>
 <br>

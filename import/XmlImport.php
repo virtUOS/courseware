@@ -80,7 +80,7 @@ class XmlImport implements ImportInterface
         $originId = $node->getAttribute('id');
         $filename = $node->getAttribute('filename');
         
-        
+        // is this file already stored
         $stored_file = \FileRef::findOneBySQL('name = ? AND folder_id = ?', array($node->getAttribute('name'), $folder->id));
         if(!$stored_file) {
             $file = [

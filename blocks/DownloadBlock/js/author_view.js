@@ -100,8 +100,10 @@ export default AuthorView.extend({
   selectFolder() {
     var view = this;
     var $folder = this.$el.find('.download-folder').find('option:selected').val();
+    var $folder_id = this.$el.find('.download-folder').find('option:selected').attr('folder_id');
+    console.log($folder_id);
     helper
-      .callHandler(this.model.id, 'setfolder', { folder: $folder })
+      .callHandler(this.model.id, 'setfolder', { folder: $folder, folder_id: $folder_id })
       .then(function (event) {
         $(event.target).addClass('accept');
         if (event) {
@@ -120,9 +122,8 @@ export default AuthorView.extend({
     $.each($allfiles, function (key, value) {
       $files.append($('<option>', {
         value: value.name,
-        text: value.filename,
-        file_id: value.dokument_id,
-        file_name: value.filename
+        file_id: value.id,
+        text: value.name
       }));
     });
   }
