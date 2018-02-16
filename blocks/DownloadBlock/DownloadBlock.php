@@ -20,10 +20,16 @@ class DownloadBlock extends Block
 
     public function student_view()
     {
+        if ($this->file_id != "") { 
+            $url = \FileRef::find($this->file_id)->getDownloadURL('force') ;
+        } else { 
+            $url = "";
+        }
+
         return array_merge(
             $this->getAttrArray(), 
             array('confirmed' => !! $this->getProgress()->grade, 
-                  'url' => \FileRef::find($this->file_id)->getDownloadURL('force')
+                  'url' => $url
             )
         );
     }
@@ -110,18 +116,20 @@ class DownloadBlock extends Block
 
     public function getFiles()
     {
-        //$document = new \StudipDocument($this->file_id);
-        //$files[] = array (
-            //'id' => $this->file_id,
-            //'name' => $this->file_name,
-            //'description' => $document->description,
-            //'filename' => $document->filename,
-            //'filesize' => $document->filesize,
-            //'url' => $document->url,
-            //'path' => get_upload_file_path($this->file_id),
-        //);
+        $file_ref = new \FileRef($this->file_id);
+        $file = new \File($file_ref->file_id);
+        
+        $files[] = array(
+            'id' => $this->file_id,
+            'name' => $file_ref->name,
+            'description' => $file_ref->description,
+            'filename' => $file->name,
+            'filesize' => $file->size,
+            'url' => $file->getURL(),
+            'path' => $file->getPath()
+        );
 
-        //return $files;
+        return $files;
     }
 
     /**
@@ -153,8 +161,6 @@ class DownloadBlock extends Block
             $this->file_name = $properties['file_name'];
         }
 
-        $this->setFileId($this->file_name);
-
         if (isset($properties['download_title'])) {
             $this->download_title = $properties['download_title'];
         }
@@ -170,23 +176,12 @@ class DownloadBlock extends Block
         $this->save();
     }
 
-    private function setFileId($file_name)
-    {
-        $cid = $this->container['cid'];
-        //$document =  current(\StudipDocument::findBySQL('filename = ? AND seminar_id = ?', array($file_name, $cid)));
-        //$this->file_id = $document->dokument_id;
-        //$this->file = $document->name;
-        //$this->folder_id = $document->range_id;
-
-        return;
-    }
-
     public function importContents($contents, array $files)
     {
         $file = reset($files);
-        if ($file->id == $this->file_id) {
-            $this->save();
-        }
+        $this->file_id = $file->id;
+        $this->save();
+
     }
 
 }
