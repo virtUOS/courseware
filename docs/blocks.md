@@ -62,7 +62,7 @@ _Autorenansicht des Audio-Blocks_
 _Studentenansicht des Audio-Blocks_
 
 
-Quellcode-Block (ab 2.2)
+Quellcode-Block (ab 3.0)
 ------------------------
 Der Quellcode-Block verwendet das Syntax-Highlighting-Tool [highlight.js](https://highlightjs.org/).
 Eingegebener Quelltext wird mittels der angegebenen Sprache dargestellt wie in einer IDE.
@@ -150,7 +150,7 @@ _Studentenansicht des Galerie-Blocks mit Navigationspfeilen_
 _Studentenansicht des Galerie-Blocks ohne Navigationspfeile_
 
 
-Merksatz-Block (ab 2.2)
+Merksatz-Block (ab 3.0)
 ------------------------
 Der Merksatz-Block ermöglicht das hervorheben von Informationen. Es können 5 verschiedene Farben und 15 verschiedene Icons ausgewählt werden.
 
@@ -161,7 +161,7 @@ _Autorenansicht des Merksatz-Blocks_
 _Studentenansicht des Merksatz-Blocks_
 
 
-Such-Block (ab 2.2)
+Such-Block (ab 3.0)
 --------------------
 Der Such-Block ermöglicht das Suchen innerhalb der Courseware einer Veranstaltung. 
 Dieser Block kann sowohl in Sektionen als auch in der Sidebar verwendet werden.
@@ -173,7 +173,7 @@ _Autorenansicht des Such-Blocks_
 _Studentenansicht des Such-Blocks_
 
 
-Link-Block (ab 2.2)
+Link-Block (ab 3.0)
 --------------------
 Mit dem Link-Block lassen sich Links auf Strukturelemente innerhalb der Courseware setzen und externe Links erstellen.
 
@@ -184,7 +184,7 @@ _Autorenansicht des Link-Blocks_
 _Studentenansicht des Link-Blocks_
 
 
-PDF-Block (ab 2.2)
+PDF-Block (ab 3.0)
 --------------------
 Der PDF-Block kann PDF Dateien aus dem Dateibereich darstellen. Die Datei lässt sich wie gewohnt durchblättern und runter laden.
 
@@ -195,7 +195,7 @@ _Autorenansicht des PDF-Blocks_
 _Studentenansicht des PDF-Blocks_
 
 
-Kommentare & Diskussion Block (ab 2.2)
+Kommentare & Diskussion Block (ab 3.0)
 --------------------
 Dieser Block ermöglicht eine Kommunikation zwischen den Lernenden untereinander und mit dem Lehrenden. 
 Kommentare und Fragen können hiermit gezielt an einer gewünschten Stelle eingebunden werden. Der Lehrende hat die 
