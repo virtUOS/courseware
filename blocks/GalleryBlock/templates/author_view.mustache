@@ -4,9 +4,9 @@
 
 <label for="gallery-folder">{{#i18n}}Einen Ordner ausw&auml;hlen{{/i18n}}:</label>
 <select type="text" class="gallery-folder" name="folder">
-    {{#foldernames}}
-        <option value="{{name}}" folder_id="{{folder_id}}">{{name}}</option>
-    {{/foldernames}}
+    {{#folders}}
+        <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
+    {{/folders}}
 </select>
 <br>
 <label for="gallery-height">{{#i18n}}H&ouml;he der Galerie (in Pixeln){{/i18n}}:</label>

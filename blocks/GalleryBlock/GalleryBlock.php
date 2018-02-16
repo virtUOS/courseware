@@ -28,17 +28,17 @@ class GalleryBlock extends Block
 
         return array_merge(
             $this->getAttrArray(), 
-            ['showFiles' => $this->showFiles($this->gallery_folder_id ), 
-            'url' => \URLHelper::getLink('sendfile', array()) 
-            ]
+            array('showFiles' => $this->showFiles($this->gallery_folder_id )
+            )
         );
     }
 
     public function author_view()
     {
         $this->authorizeUpdate();
+        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
 
-        return array_merge($this->getAttrArray(), ["foldernames" => $this->getFolderNames()]);
+        return array_merge($this->getAttrArray(), array("folders" => $folders));
     }
 
     private function getAttrArray() 
@@ -75,105 +75,55 @@ class GalleryBlock extends Block
         } else {
             $this->gallery_height = "600";
         }
-        $files = $this->showFiles($this->gallery_folder_id );
-        $file_ids = array();
-        $file_names = array();
-        foreach ($files as $file) {
-            array_push($file_ids , array($file['dokument_id']));
-            array_push($file_names , array($file['filename']));
-        }
-        $this->gallery_file_ids = json_encode($file_ids);
-        $this->gallery_file_names = json_encode($file_names);
+        $this->setGalleryFiles();
 
         return;
     }
 
-    private function getFolderNames()
+    private function showFiles($folder_id)
     {
-        $cid = $this->container['cid'];
-        $db = \DBManager::get();
-        $stmt = $db->prepare('
-            SELECT
-                *
-            FROM
-                folder
-            WHERE
-                seminar_id = :cid
-        ');
-        $stmt->bindParam(':cid', $cid);
-        $stmt->execute();
-
-        return $stmt->fetchAll();
-    }
-
-    private function showFiles($folderId)
-    {
-        $db = \DBManager::get();
-        $stmt = $db->prepare('
-            SELECT
-                *
-            FROM
-                dokumente
-            WHERE
-                range_id = :range_id
-            ORDER BY
-                name
-        ');
-        $stmt->bindParam(':range_id', $folderId);
-        $stmt->execute();
-        $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
+        $response = \FileRef::findBySQL('folder_id = ?', array($folder_id));
         $filesarray = array();
-        $mimetypes = ['jpg', 'png'];
         foreach ($response as $item) {
-            if(in_array(substr($item['name'], -3), $mimetypes))
-            {
-                if (\StudipDocument::find($item['dokument_id'])->checkAccess($this->container['current_user_id'])) {
-                    $item["url"] = GetDownloadLink($item['dokument_id'], $item['filename']);
-                    $filesarray[] = $item;
-                }
+            
+            if ($item->isImage()) {
+                $filesarray[] = array(
+                    "id"    => $item->id,
+                    "name"  => $item->name,
+                    "url"   => $item->getDownloadURL()
+                );
             }
         }
-
         return $filesarray;
     }
 
     public function exportProperties()
     {
-       $folder_name = \DocumentFolder::find($this->gallery_folder_id)->name;
+        $folder_name = \Folder::find($this->gallery_folder_id)->name;
+        $this->setGalleryFiles();
 
-       return array_merge($this->getAttrArray() , array( 'gallery_folder_name' => $folder_name) );
+        return array_merge($this->getAttrArray() , array( 'gallery_folder_name' => $folder_name) );
     }
-    
+
     public function getFiles()
     {
-        $db = \DBManager::get();
-        $stmt = $db->prepare('
-            SELECT
-                *
-            FROM
-                dokumente
-            WHERE
-                range_id = :range_id
-        ');
-        $stmt->bindParam(':range_id', $this->gallery_folder_id);
-        $stmt->execute();
-        $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $file_ids = json_decode($this->gallery_file_ids);
 
-        $mimetypes = ['jpg', 'png'];
         $files = array();
-        foreach ($response as $item) {
-            if(in_array(substr($item['name'], -3), $mimetypes)) {
-                array_push( $files, array (
-                    'id'          => $item['dokument_id'],
-                    'name'        => $item['name'],
-                    'description' => $item['description'],
-                    'filename'    => $item['filename'],
-                    'filesize'    => $item['filesize'],
-                    'url'         => $item['url'],
-                    'path'        => get_upload_file_path($item['dokument_id']),
-                ));
-            }
+
+        foreach ($file_ids as $file_id) {
+            $file_ref = new \FileRef($file_id);
+            $file = new \File($file_ref->file_id);
+
+            array_push( $files, array (
+                'id' => $file_ref->id,
+                'name' => $file_ref->name,
+                'description' => $file_ref->description,
+                'filename' => $file->name,
+                'filesize' => $file->size,
+                'url' => $file->getURL(),
+                'path' => $file->getPath()
+            ));
         }
 
         return $files;
@@ -202,89 +152,58 @@ class GalleryBlock extends Block
             $gallery_folder_name = "Galerie-".$this->id;
         }
         $this->gallery_folder_id = $this->createGalleryFolder($gallery_folder_name);
-        $this->moveFiles();
-        $files = $this->showFiles($this->gallery_folder_id );
-        $file_ids = array();
-        foreach ($files as $file) {
-            array_push($content , $file["dokument_id"]);
-        }
-        $this->gallery_file_ids = json_encode($file_ids);
 
         $this->save();
     }
 
     private function createGalleryFolder($gallery_folder_name)
     {
-        $seminar_id = $this->container['cid'];
-        $parent_id = md5( $seminar_id. 'top_folder');
-        $description = "created by courseware";
-        $permission = 7;
         global $user;
+        $cid = $this->container['cid'];
+        $courseware_folder = \Folder::findOneBySQL('range_id = ? AND name = ?', array( $cid , 'Courseware'));
+        $parent_folder = \FileManager::getTypedFolder($courseware_folder->id);
+        $request = array('name' => $gallery_folder_name, 'description' => 'gallery folder');
+        $new_folder = new \StandardFolder();
+        $new_folder->setDataFromEditTemplate($request);
+        $new_folder->user_id = $user->id;
+        $folder = $parent_folder->createSubfolder($new_folder);
 
-        $id = md5(uniqid('elvis',1));
-        $folder_tree = \TreeAbstract::GetInstance('StudipDocumentTree', array('range_id' => $seminar_id));
-
-        $query = '
-            INSERT INTO 
-                folder (name, folder_id, description, range_id, seminar_id, user_id, permission, mkdate, chdate)
-            VALUES 
-                (?, ?, ?, ?, ?, ?, ?, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
-        ';
-        $statement = \DBManager::get()->prepare($query);
-        $statement->execute(array(
-            $gallery_folder_name,
-            $id,
-            $description,
-            $parent_id,
-            $seminar_id,
-            $user->id,
-            $permission
-        ));
-
-        if ($statement->rowCount()) {
-            $folder_tree->init();
-        }
-
-        return $id;
+        return $folder->id;
     }
 
     private function moveFiles()
     {
-        $seminar_id = $this->container['cid'];
-        $db = \DBManager::get();
-        $filenames = json_decode($this->gallery_file_names);
-        foreach ($filenames as $filename) {
-            $stmt = $db->prepare('
-                UPDATE 
-                    dokumente t1 
-                INNER JOIN 
-                (
-                    SELECT Max(mkdate) mkdate, filename
-                    FROM   dokumente 
-                    GROUP BY filename 
-                ) 
-                AS t2 
-                ON 
-                    t1.filename = t2.filename
-                AND 
-                    t1.mkdate = t2.mkdate
-                SET 
-                    range_id = :gallery_folder
-                WHERE 
-                    t1.filename = :filename
-                AND 
-                    t1.seminar_id = :cid
-            ');
-            $stmt->bindParam(':gallery_folder', $this->gallery_folder_id);
-            $stmt->bindParam(':cid', $seminar_id);
-            $stmt->bindParam(':filename', $filename);
-            $stmt->execute();
+        $current_user = \User::findCurrent();
+        $file_ids = json_decode($this->gallery_file_ids);
+        $gallery_folder = \FileManager::getTypedFolder($this->gallery_folder_id);
+        foreach ($file_ids as $file_id) {
+            $file_ref = new \FileRef($file_id);
+            \FileManager::moveFileRef($file_ref, $gallery_folder, $current_user);
         }
+    }
+    
+    private function setGalleryFiles()
+    {
+        $files = $this->showFiles($this->gallery_folder_id);
+        $file_ids = array();
+        $file_names = array();
+        foreach ($files as $file) {
+            array_push($file_ids , array($file['id']));
+            array_push($file_names , array($file['name']));
+        }
+        $this->gallery_file_ids = json_encode($file_ids);
+        $this->gallery_file_names = json_encode($file_names);
     }
 
     public function importContents($contents, array $files)
     {
-        $file = reset($files);
+        $file_ids = array();
+        foreach($files as $file) {
+            var_dump($file->id); 
+            array_push($file_ids , array($file->id));
+        }
+        $this->gallery_file_ids = json_encode($file_ids);
+        $this->moveFiles();
         $this->save();
     }
 
