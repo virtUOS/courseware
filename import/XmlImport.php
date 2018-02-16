@@ -85,7 +85,7 @@ class XmlImport implements ImportInterface
         if(!$stored_file) {
             $file = [
                         'name'     => $filename,
-                        'type'     => "mp3",
+                        'type'     => mime_content_type($path.'/'.$originId.'/'.$filename),
                         'tmp_name' => $path.'/'.$originId.'/'.$filename,
                         'url'      => $node->getAttribute('url'),
                         'size'     => $node->getAttribute('filesize'),
