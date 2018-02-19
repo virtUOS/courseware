@@ -20,11 +20,8 @@ class PdfBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
-        
-        $document = \StudipDocument::find($this->pdf_file_id);
-        if ($document) {
-            $access = $document->checkAccess($this->container['current_user_id']);
-        }
+        $access = true;
+
         $this->setGrade(1.0);
 
         return array_merge($this->getAttrArray(), array('access' => $access));
@@ -46,29 +43,18 @@ class PdfBlock extends Block
             'pdf_title'     => $this->pdf_title
         );
     }
-    
+
     private function showFiles()
     {
-        $db = \DBManager::get();
-        $stmt = $db->prepare('
-            SELECT 
-                * 
-            FROM 
-                dokumente 
-            WHERE 
-                seminar_id = :seminar_id
-            ORDER BY 
-                name
-        ');
-        $stmt->bindParam(':seminar_id', $this->container['cid']);
-        $stmt->execute();
-        $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
         $filesarray = array();
-        foreach ($response as $item) {
-            if ((strpos($item['filename'], 'pdf') > -1)) {
-                if($item['url'] == "") {unset($item['url']);}
-                $filesarray[] = $item;
+        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        
+        foreach ($folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if ($ref->mime_type == "application/pdf")  {
+                    $filesarray[] = $ref;
+                }
             }
         }
 
@@ -79,14 +65,13 @@ class PdfBlock extends Block
     {
         $this->authorizeUpdate();
 
-        if (isset ($data['pdf_file'])) {
-            $this->pdf_file = $data['pdf_file'];
-        }
         if (isset ($data['pdf_filename'])) {
             $this->pdf_filename = $data['pdf_filename'];
         }
         if (isset ($data['pdf_file_id'])) {
             $this->pdf_file_id = $data['pdf_file_id'];
+            $file_ref = new \FileRef($this->pdf_file_id);
+            $this->pdf_file = $file_ref->getDownloadURL();
         }
         if (isset ($data['pdf_title'])) {
             $this->pdf_title = $data['pdf_title'];
@@ -102,15 +87,17 @@ class PdfBlock extends Block
 
     public function getFiles()
     {
-        $document = new \StudipDocument($this->pdf_file_id);
+        $file_ref = new \FileRef($this->pdf_file_id);
+        $file = new \File($file_ref->file_id);
+        
         $files[] = array(
-            'id'            => $this->pdf_file_id,
-            'name'          => $document->name,
-            'description'   => $document->description,
-            'filename'      => $document->filename,
-            'filesize'      => $document->filesize,
-            'url'           => $document->url,
-            'path'          => get_upload_file_path($this->pdf_file_id)
+            'id' => $this->pdf_file_id,
+            'name' => $file_ref->name,
+            'description' => $file_ref->description,
+            'filename' => $file->name,
+            'filesize' => $file->size,
+            'url' => $file->getURL(),
+            'path' => $file->getPath()
         );
 
         return $files;
@@ -134,28 +121,16 @@ class PdfBlock extends Block
         if (isset($properties['pdf_filename'])) {
             $this->pdf_filename = $properties['pdf_filename'];
         }
-        $this->setFileId($this->pdf_filename);
         $this->save();
-    }
-
-    private function setFileId($file_name)
-    {
-        $cid = $this->container['cid'];
-        $document = current(\StudipDocument::findBySQL('filename = ? AND seminar_id = ?', array($file_name, $cid)));
-        $this->pdf_file_id = $document->dokument_id;
-        if ($document->url == "") {
-            $this->pdf_file = "../../sendfile.php?type=0&file_id=".$document->dokument_id."&file_name=".$file_name;
-        } else {
-            $this->pdf_file = "../../sendfile.php?type=6&file_id=".$document->dokument_id."&file_name=".$file_name;
-        }
-        return;
     }
 
     public function importContents($contents, array $files)
     {
         $file = reset($files);
-        if (($file->id == $this->pdf_file_id)) {
-            $this->save();
-        }
+        $this->pdf_file_id = $file->id;
+        $this->pdf_file = $file->getDownloadURL();
+
+        $this->save();
+        
     }
 }

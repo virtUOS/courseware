@@ -6,7 +6,7 @@
 <input type="hidden" class="cw-pdf-file-stored" value="{{pdf_file}}">
 <select class="cw-pdf-set-file" name="cw-pdf-file">
     {{#pdf_files}}
-        <option value="../../sendfile.php?type={{#url}}6{{/url}}{{^url}}0{{/url}}&file_id={{dokument_id}}&file_name={{filename}}" document_id="{{dokument_id}}" filename="{{filename}}">{{name}}</option>
+        <option file_id="{{id}}" file_name="{{name}}">{{name}}</option>
     {{/pdf_files}}
 </select>
 <br>
