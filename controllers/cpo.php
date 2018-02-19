@@ -20,7 +20,7 @@ class CpoController extends CoursewareStudipController
 
         $courseware = $this->container['current_courseware'];
         $title = Request::option('cid', false) ? $_SESSION['SessSemName']['header_line'] . ' - ' : '';
-        $title .= $courseware->title.' - Fortschritts¸bersicht f¸r Lehrende';
+        $title .= $courseware->title.' - Fortschritts√ºbersicht f√ºr Lehrende';
         PageLayout::setTitle($title);
 
         if (Navigation::hasItem('/course/mooc_courseware/progressoverview')) {

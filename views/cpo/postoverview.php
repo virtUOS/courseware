@@ -22,15 +22,15 @@
 
             <? switch ($counter) {
                 case 0:
-                    echo '<p>' . _cw('Es gibt keine neuen Beitr‰ge.') . '</p>';
+                    echo '<p>' . _cw('Es gibt keine neuen Beitr√§ge.') . '</p>';
                     break;
                 case 1:
                     echo '<p><b>' . _cw('Es gibt einen neuen Beitrag') . '</b></p>';
                     break;
                 default:
-                    echo '<p><b>' . _cw('Es gibt ') . $counter . _cw(' neue Beitr‰ge') . '</b></p>';
+                    echo '<p><b>' . _cw('Es gibt ') . $counter . _cw(' neue Beitr√§ge') . '</b></p>';
             }?>
-            <button class="button show-thread-button" name="show_thread_<?= $thread['thread_id']?>" data-showthread="<?= $thread['thread_id']?>"><?= _cw('Beitr‰ge anzeigen') ?></button>
+            <button class="button show-thread-button" name="show_thread_<?= $thread['thread_id']?>" data-showthread="<?= $thread['thread_id']?>"><?= _cw('Beitr√§ge anzeigen') ?></button>
         </li>
     <? endforeach;?>
 </ul>

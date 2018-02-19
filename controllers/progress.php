@@ -50,7 +50,7 @@ class ProgressController extends CoursewareStudipController
         $title = Request::option('cid', false)
                ? $_SESSION['SessSemName']['header_line'].' - '
                : '';
-        $title .= $courseware->title.' - Fortschritts¸bersicht';
+        $title .= $courseware->title.' - Fortschritts√ºbersicht';
         PageLayout::setTitle($title);
     }
 

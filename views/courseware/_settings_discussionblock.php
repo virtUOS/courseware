@@ -3,7 +3,7 @@
         <label for="courseware-discussionblock">
             <?= _cw('Blubber-Diskussionsblock aktivieren') ?><br>
             <dfn id="courseware-discussionblock-description">
-                <?= _cw('Der Blubber-Diskussionsblock bietet eine Möglichkeit zur Kommunikation zwischen den Teilnehmern. Durch die Aktivierung muss aber der Blubber-Reiter entfernt werden.'); ?>
+                <?= _cw('Der Blubber-Diskussionsblock bietet eine MÃ¶glichkeit zur Kommunikation zwischen den Teilnehmern. Durch die Aktivierung muss aber der Blubber-Reiter entfernt werden.'); ?>
             </dfn>
         </label>
     </td>

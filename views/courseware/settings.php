@@ -30,7 +30,7 @@ if ($flash['success']) {
                     <label for="courseware-title">
                         <?= _cw('Titel der Courseware') ?><br>
                         <dfn id="courseware-title-description">
-                            <?= _cw('Der Titel der Courseware erscheint als Beschriftung des Courseware-Reiters. Sie können den Reiter also z.B. auch "Online-Skript", "Lernmodul" o.ä. nennen.'); ?>
+                            <?= _cw('Der Titel der Courseware erscheint als Beschriftung des Courseware-Reiters. Sie kÃ¶nnen den Reiter also z.B. auch "Online-Skript", "Lernmodul" o.Ã¤. nennen.'); ?>
                         </dfn>
                     </label>
                 </td>
@@ -43,7 +43,7 @@ if ($flash['success']) {
                     <label for="courseware-progression">
                         <?= _cw('Art der Kapitelabfolge') ?><br>
                         <dfn id="courseware-progression-description">
-                            <?= _cw('Bei freier Kapitelabfolge können alle sichtbaren Kapitel in beliebiger Reihenfolge ausgewählt werden. Bei sequentieller Abfolge müssen alle vorangehenden Unterkapitel erfolgreich abgeschlossen sein, damit ein Unterkapitel ausgewählt und angezeigt werden kann.'); ?>
+                            <?= _cw('Bei freier Kapitelabfolge kÃ¶nnen alle sichtbaren Kapitel in beliebiger Reihenfolge ausgewÃ¤hlt werden. Bei sequentieller Abfolge mÃ¼ssen alle vorangehenden Unterkapitel erfolgreich abgeschlossen sein, damit ein Unterkapitel ausgewÃ¤hlt und angezeigt werden kann.'); ?>
                         </dfn>
                     </label>
                 </td>
@@ -61,9 +61,9 @@ if ($flash['success']) {
             <tr>
                 <td>
                     <label for="courseware-vipstab-visible">
-                        <?= _cw('Vips-Reiter für AutorInnen entfernen') ?><br>
+                        <?= _cw('Vips-Reiter fÃ¼r AutorInnen entfernen') ?><br>
                         <dfn id="courseware-vipstab-visible-description">
-                            <?= _cw('Wenn Sie diesen Schalter aktivieren, wird der Vips-Reiter für normale Teilnehmende entfernt.'); ?>
+                            <?= _cw('Wenn Sie diesen Schalter aktivieren, wird der Vips-Reiter fÃ¼r normale Teilnehmende entfernt.'); ?>
                         </dfn>
                     </label>
                 </td>
@@ -79,13 +79,13 @@ if ($flash['success']) {
                     <label for="courseware-section-navigation">
                         <?= _cw('Dritte Navigationsebene anzeigen') ?><br>
                         <dfn id="courseware-section-navigation-description">
-                            <?= _cw('Wählen Sie hier aus wie die dritte Navigationsebene dargestellt werden soll.'); ?>
+                            <?= _cw('WÃ¤hlen Sie hier aus wie die dritte Navigationsebene dargestellt werden soll.'); ?>
                         </dfn>
                     </label>
                 </td>
                 <td>
                     <select name="courseware[section_navigation]" id="courseware-section-navigation">
-                        <option value="default"  <?= (!$courseware_block->getSectionsAsChapters() && $courseware_block->getShowSectionNav()) ? "selected" : "" ?> ><?= _cw("Über dem Seiteninhalt horizontal anzeigen") ?></option>
+                        <option value="default"  <?= (!$courseware_block->getSectionsAsChapters() && $courseware_block->getShowSectionNav()) ? "selected" : "" ?> ><?= _cw("Ãœber dem Seiteninhalt horizontal anzeigen") ?></option>
                         <option value="chapter" <?= $courseware_block->getSectionsAsChapters() ? "selected" : "" ?>><?= _cw("Links in der Kapitelnavigation anzeigen") ?></option>
                         <option value="hide" <?= $courseware_block->getShowSectionNav() ? "" : "selected" ?> ><?= _cw("Nicht anzeigen") ?></option>
                     </select>
@@ -107,7 +107,7 @@ if ($flash['success']) {
                     <label for="max-tries">
                         <?= _cw('Anzahl Versuche') ?><br>
                         <dfn id="courseware-max-tries-description">
-                            <?= _cw('Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben eines Selbsttests hat, bevor die Lösung der Aufgabe angezeigt wird.'); ?>
+                            <?= _cw('Die Anzahl der Versuche, die ein Student beim LÃ¶sen von Aufgaben eines Selbsttests hat, bevor die LÃ¶sung der Aufgabe angezeigt wird.'); ?>
                         </dfn>
                     </label>
                 </td>
@@ -137,7 +137,7 @@ if ($flash['success']) {
         <tfoot>
             <tr>
                 <td class="table_row_odd" colspan="2" align="center">
-                    <?= Button::create(_cw('Übernehmen'), 'submit', array('title' => _cw('Änderungen übernehmen'))) ?>
+                    <?= Button::create(_cw('Ãœbernehmen'), 'submit', array('title' => _cw('Ã„nderungen Ã¼bernehmen'))) ?>
                 </td>
             </tr>
         </tfoot>

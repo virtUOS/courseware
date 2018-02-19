@@ -1,4 +1,3 @@
-# #-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
@@ -7,605 +6,39 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  js.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-0208 10:22+0200\n"
+"POT-Creation-Date: 2018-02-19 09:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
-"Content-Transfer-Encoding: 8bit\n"
-"#-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-08 10:22+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views/import/index.php:25
-msgid "Abbrechen"
-msgstr ""
-
-msgid "ablehnen"
-msgstr ""
-
-msgid "Abschicken"
-msgstr ""
-
-msgid "Abschnitt einfügen"
-msgstr ""
-
-msgid "Abschnitte sortieren"
-msgstr ""
-
-msgid "Abschnitt löschen"
-msgstr ""
-
-msgid "Abschnittstitel bearbeiten"
-msgstr ""
-
-msgid "Absenken"
-msgstr ""
-
-msgid "absolvieren"
-msgstr ""
-
-msgid "Accordion"
-msgstr ""
-
-msgid "akzeptieren"
-msgstr ""
-
-msgid "alles zeigen"
-msgstr ""
-
-msgid "Ändern"
-msgstr ""
-
-msgid "Anheben"
-msgstr ""
-
-msgid "Antwort zurücksetzen"
-msgstr ""
-
-msgid "Anzeigen"
-msgstr ""
-
-msgid "Art des Links"
-msgstr ""
-
-msgid "Audiodatei"
-msgstr ""
-
-msgid "Aufgabenblatt"
-msgstr ""
-
-msgid "Aufgabenblätter verwalten"
-msgstr ""
-
-msgid "ausrufen"
-msgstr ""
-
-msgid "auswerten"
-msgstr ""
-
-msgid "Autoplay"
-msgstr ""
-
-msgid "Autoplay-Timer (in Sekunden)"
-msgstr ""
-
-msgid "Autorenmodus"
-msgstr ""
-
-msgid "Bereits vorhandene Diskussion verwenden"
-msgstr ""
-
-msgid "Beschreibung"
-msgstr ""
-
-msgid "betrachten"
-msgstr ""
-
-msgid ""
-"Bewegen Sie den Cursor über das Informations-Icon des gewünschten Blocks um "
-"die Block-Id zu erfahren."
-msgstr ""
-
-msgid "Bezeichung des Links"
-msgstr ""
-
-msgid "Bildschirm"
-msgstr ""
-
-msgid ""
-"Bitte beachten Sie das nicht alle Blocktypen in diesen Block eingebunden "
-"werden können."
-msgstr ""
-
-msgid "Block hinzufügen"
-msgstr ""
-
-msgid "Blubber muss in dieser Veranstaltung aktiviert sein."
-msgstr ""
-
-msgid "Breite"
-msgstr ""
-
-msgid "CC Lizenztyp angeben:"
-msgstr ""
-
-msgid "chatten"
-msgstr ""
-
-msgid "Danke! Sie haben alle Aufgaben gelöst."
-msgstr ""
-
-msgid ""
-"Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten "
-"Abschnitt fortfahren."
-msgstr ""
-
-msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
-msgstr ""
-
-msgid "Datei aus dem Dateibereich"
-msgstr ""
-
-msgid "Dateibereich"
-msgstr ""
-
-msgid "Dateityp"
-msgstr ""
-
-msgid ""
-"Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
-msgstr ""
-
-msgid "Die Evaluationen müssen im System aktiviert sein."
-msgstr ""
-
-msgid ""
-"Die gewählte Seite kann nur mit einer sicheren Verbindung eingebunden "
-"werden. Bitte geben Sie wenn möglich https in der URL an."
-msgstr ""
-
-msgid "Die gewählte Seite verbietet eine Einbindung per IFrame!"
-msgstr ""
-
-msgid ""
-"Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an "
-"Ihren Administrator."
-msgstr ""
-
-msgid ""
-"Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an "
-"Ihren Dozenten."
-msgstr ""
-
-msgid "Diese Aufgabe wurde bereits korrigiert."
-msgstr ""
-
-msgid "Diese Aufgabe wurde noch nicht korrigiert."
-msgstr ""
-
-msgid ""
-"Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die "
-"vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
-msgstr ""
-
-msgid ""
-"Dieser Block ermöglicht das Suchen innerhalb der Courseware dieser "
-"Veranstaltung."
-msgstr ""
-
-msgid ""
-"Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden "
-"Abschnitte erfolgreich abgeschloßen haben."
-msgstr ""
-
-msgid "Dieser Test ist zurzeit nicht verfügbar."
-msgstr ""
-
-#: Courseware.php:109
-msgid "Diskussionsübersicht"
-msgstr ""
-
-msgid "editieren"
-msgstr ""
-
-msgid "Eine Datei ausw&auml;hlen"
-msgstr ""
-
-msgid ""
-"Eine Einbindung per IFrame ist nicht möglich. Bitte wenden Sie sich an Ihren "
-"Dozenten."
-msgstr ""
-
-msgid "Einen Ordner ausw&auml;hlen"
-msgstr ""
-
-msgid "eingebettetes Video (iframe)"
+#: Courseware.php:87
+msgid "Letzte Ã„nderungen"
 msgstr ""
 
 #: Courseware.php:97
 msgid "Einstellungen"
 msgstr ""
 
-msgid "Ende"
+#: Courseware.php:103 Courseware.php:130
+msgid "Fortschrittsbersicht"
 msgstr ""
 
-msgid "entfernen"
-msgstr ""
-
-msgid "Entfernen"
-msgstr ""
-
-msgid "erstellt am"
-msgstr ""
-
-msgid ""
-"Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen."
-msgstr ""
-
-msgid "Es sind keine Aufgabenblätter des Types \""
-msgstr ""
-
-msgid "Es wurde bisher keine Evaluation erstellt!"
-msgstr ""
-
-msgid "Es wurde keine Audiodatei ausgewählt"
-msgstr ""
-
-msgid "Es wurde keine Datei ausw&auml;hlt"
-msgstr ""
-
-msgid "Es wurde noch kein Video eingetragen."
+#: Courseware.php:109
+msgid "Diskussionsbersicht"
 msgstr ""
 
 #: Courseware.php:115
 msgid "Export"
 msgstr ""
 
-msgid "Farbe"
-msgstr ""
-
-#: Courseware.php:103 Courseware.php:130
-msgid "Fortschrittsübersicht"
-msgstr ""
-
-msgid "Frage"
-msgstr ""
-
-msgid "Freigegeben ab:"
-msgstr ""
-
-msgid "für alle Displaygrößen"
-msgstr ""
-
-msgid "Für diese Frage haben Sie bereits eine Antwort abgegeben."
-msgstr ""
-
-msgid ""
-"Für diesen Diskussionsblock muss \"Blubber\" in dieser Veranstaltung "
-"eingeschaltet werden.."
-msgstr ""
-
-msgid ""
-"Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet "
-"werden..."
-msgstr ""
-
-msgid "für große Displays"
-msgstr ""
-
-msgid "für kleine Displays"
-msgstr ""
-
-msgid "Gesamtes Kapitel löschen"
-msgstr ""
-
-msgid "Gesamtes Unterkapitel löschen"
-msgstr ""
-
-msgid "hinzufügen"
-msgstr ""
-
-msgid "Höhe"
-msgstr ""
-
-msgid "H&ouml;he der Galerie (in Pixeln)"
-msgstr ""
-
-msgid "Icon"
-msgstr ""
-
-msgid "ID"
-msgstr ""
-
-msgid "Ihre Lösung ist korrekt!"
-msgstr ""
-
-msgid "Ihre Lösung ist nicht korrekt!"
-msgstr ""
-
-msgid "Ihre Lösung wurde eingetragen."
-msgstr ""
-
-msgid ""
-"Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal."
-msgstr ""
-
-msgid ""
-"Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
-msgstr ""
-
 #: Courseware.php:121
 msgid "Import"
-msgstr ""
-
-msgid "in Courseware suchen..."
-msgstr ""
-
-msgid "In dem ausgew&auml;hlten Ordner befinden sich keine Bilder."
-msgstr ""
-
-msgid "Info"
-msgstr ""
-
-msgid "Infobox nach Download"
-msgstr ""
-
-msgid "Infobox vor Download"
-msgstr ""
-
-msgid "informieren"
-msgstr ""
-
-msgid "Inhalt"
-msgstr ""
-
-msgid "Kapitel einfügen"
-msgstr ""
-
-msgid "Kapitel sortieren"
-msgstr ""
-
-msgid "Kapiteltitel bearbeiten"
-msgstr ""
-
-msgid "Keine Abschnitte"
-msgstr ""
-
-msgid "Keine Aufgaben."
-msgstr ""
-
-msgid "Keine Inhaltsblöcke"
-msgstr ""
-
-msgid "Keine Kapitel"
-msgstr ""
-
-msgid "keinen Treffer gefunden"
-msgstr ""
-
-msgid "Keine Unterkapitel"
-msgstr ""
-
-msgid "Kein Test verfügbar. Vips muss in dieser Veranstaltung aktiviert sein."
-msgstr ""
-
-msgid "Kein Test verfügbar. Vips muss installiert sein."
-msgstr ""
-
-msgid "Kommentiere dies"
-msgstr ""
-
-msgid "Kontrollelemente verstecken"
-msgstr ""
-
-msgid "kooperieren"
-msgstr ""
-
-#: Courseware.php:87
-msgid "Letzte Änderungen"
-msgstr ""
-
-msgid "Merksatz"
-msgstr ""
-
-msgid ""
-"Mit diesem Block fassen Sie mehrere Blöcke dieser Seite zum Durchblättern "
-"zusammen."
-msgstr ""
-
-msgid "Musterlösung:"
-msgstr ""
-
-msgid "Name des Übergabeparameters"
-msgstr ""
-
-msgid "Navigation verbergen"
-msgstr ""
-
-msgid "Nutzerspezifische ID übergeben"
-msgstr ""
-
-msgid "openCast"
-msgstr ""
-
-msgid "planen"
-msgstr ""
-
-msgid "puz­zeln"
-msgstr ""
-
-msgid "Quelle"
-msgstr ""
-
-msgid "Quelle hinzufügen"
-msgstr ""
-
-msgid "Seitenblöcke aktivieren"
-msgstr ""
-
-msgid "Seitenblöcke entfernen"
-msgstr ""
-
-msgid "Seitenverhältnis"
-msgstr ""
-
-msgid "senden"
-msgstr ""
-
-msgid "sichtbar ab:"
-msgstr ""
-
-msgid "Sidebar für"
-msgstr ""
-
-msgid "Sortieren abschließen"
-msgstr ""
-
-msgid "Speichern"
-msgstr ""
-
-msgid "Start"
-msgstr ""
-
-msgid "Stellen Sie eine Frage oder kommentieren Sie..."
-msgstr ""
-
-msgid "Studentenmodus"
-msgstr ""
-
-msgid "suchen"
-msgstr ""
-
-msgid "Tabs"
-msgstr ""
-
-msgid "Titel"
-msgstr ""
-
-msgid "Titel des Blocks"
-msgstr ""
-
-msgid "Titel des Unterkapitels bearbeiten"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "Überschrift"
-msgstr ""
-
-msgid "Unterkapitel einfügen"
-msgstr ""
-
-msgid "Unterkapitel sortieren"
-msgstr ""
-
-msgid "URL"
-msgstr ""
-
-msgid "Video automatisch starten"
-msgstr ""
-
-msgid "Video-Typ:"
-msgstr ""
-
-msgid "Vorschau"
-msgstr ""
-
-msgid "Was sollen die Lernenden bestätigen?"
-msgstr ""
-
-msgid "webAudio"
-msgstr ""
-
-msgid "Webvideo (URL)"
-msgstr ""
-
-msgid ""
-"Wegen des gewählten Lizenzstatus kann diese PDF-Datei nicht angezeigt werden."
-msgstr ""
-
-msgid ""
-"Wegen des gewählten Lizenzstatus können Sie diese Audiodatei nicht abspielen."
-msgstr ""
-
-msgid ""
-"Wegen des gewählten Lizenzstatus können Sie diese Datei nicht herunterladen."
-msgstr ""
-
-msgid "weiter"
-msgstr ""
-
-msgid "weniger zeigen"
-msgstr ""
-
-msgid "Youtube"
-msgstr ""
-
-msgid "Zeit zurücksetzen"
-msgstr ""
-
-msgid "Ziel des Links"
-msgstr ""
-
-msgid "Zufallszeichen für Verschlüsselung"
-msgstr ""
-
-msgid "zurück"
-msgstr ""
-
-msgid "Neuer Abschnitt"
-msgstr ""
-
-msgid "Neues Kapitel"
-msgstr ""
-
-msgid "Neues Unterkapitel"
-msgstr ""
-
-msgid "Sichtbar ab"
-msgstr ""
-
-msgid "Wollen Sie den Block wirklich löschen?"
-msgstr ""
-
-msgid "Wollen Sie den gesamten Abschnitt wirklich löschen?"
-msgstr ""
-
-msgid ""
-"Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke "
-"werden unwiderruflich entfernt!"
-msgstr ""
-
-msgid ""
-"Wollen Sie wirklich löschen? Sämtliche enthaltenen Blöcke werden "
-"unwiderruflich entfernt!"
-msgstr ""
-
-msgid "Best?tigung"
-msgstr ""
-
-msgid "Diskussion"
-msgstr ""
-
-msgid "Evaluationen"
-msgstr ""
-
-msgid "Freitext"
 msgstr ""
 
 #: Courseware.php:238
@@ -619,10 +52,10 @@ msgstr ""
 
 #: Courseware.php:363
 msgid ""
-"Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
+"Mit dem Courseware-Modul knnen Sie interaktive Lernmodule in Stud.IP "
 "erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
-"Schalten Sie zwischen Teilnehmenden-Sicht und Editier-Modus um und fügen Sie "
-"Abschnitte und Blöcke (Text und Bild, Video, Diskussion, Quiz)  hinzu. "
+"Schalten Sie zwischen Teilnehmenden-Sicht und Editier-Modus um und fgen Sie "
+"Abschnitte und Blcke (Text und Bild, Video, Diskussion, Quiz)  hinzu. "
 "Aufgaben erstellen und verwalten Sie mit dem Vips-Plugin und binden Sie dann "
 "in einen Courseware-Abschnitt ein."
 msgstr ""
@@ -633,7 +66,7 @@ msgstr ""
 
 #: Courseware.php:366
 msgid ""
-"Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
+"Sie knnen den Courseware-Reiter umbenennen! Whlen Sie dazu den Punkt "
 "'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
 msgstr ""
 
@@ -643,11 +76,11 @@ msgstr ""
 
 #: Courseware.php:369
 msgid ""
-"Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
-"direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
+"ber dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule direkt "
+"in Stud.IP zur Verfgung. Die Module knnen Texte, Bilder, Videos, "
 "Kommunikationselemente und kleine Quizzes beinhalten. Ihren "
 "Bearbeitungsfortschritt sehen Sie auf einen Blick im Reiter "
-"Fortschrittsübersicht."
+"Fortschrittsbersicht."
 msgstr ""
 
 #: Courseware.php:370
@@ -655,7 +88,7 @@ msgid "Hinweis"
 msgstr ""
 
 #: Courseware.php:432
-msgid "Zurück zur Courseware"
+msgid "Zurck zur Courseware"
 msgstr ""
 
 #: Courseware.php:438 models/mooc/db/CoursewareFactory.php:45
@@ -667,7 +100,7 @@ msgid "Die Einstellungen wurden gespeichert."
 msgstr ""
 
 #: controllers/courseware.php:305
-msgid "Tutoren können diese Einstellung nicht speichern."
+msgid "Tutoren kÃ¶nnen diese Einstellung nicht speichern."
 msgstr ""
 
 #: controllers/import.php:47
@@ -675,11 +108,11 @@ msgid "Das Herunterladen des Moduls ist fehlgeschlagen."
 msgstr ""
 
 #: controllers/import.php:70
-msgid "Import-Archiv enthält keine Datendatei data.xml."
+msgid "Import-Archiv enthÃ¤lt keine Datendatei data.xml."
 msgstr ""
 
 #: controllers/import.php:79
-msgid "Die Datendatei data.xml enthält kein valides XML."
+msgid "Die Datendatei data.xml enthÃ¤lt kein valides XML."
 msgstr ""
 
 #: blocks/Courseware/Courseware.php:574
@@ -701,11 +134,11 @@ msgid "in Gruppen"
 msgstr ""
 
 #: blocks/Section/Section.php:83
-msgid "Sie sind nicht berechtigt Blöcke anzulegen."
+msgid "Sie sind nicht berechtigt BlÃ¶cke anzulegen."
 msgstr ""
 
 #: blocks/Section/Section.php:125
-msgid "Sie sind nicht berechtigt Blöcke zu löschen."
+msgid "Sie sind nicht berechtigt BlÃ¶cke zu lÃ¶schen."
 msgstr ""
 
 #: blocks/TestBlock/TestBlock.php:24
@@ -713,7 +146,7 @@ msgid "Selbsttest"
 msgstr ""
 
 #: blocks/TestBlock/TestBlock.php:25
-msgid "Übung"
+msgid "Ãœbung"
 msgstr ""
 
 #: blocks/TestBlock/TestBlock.php:166 blocks/TestBlock/TestBlock.php:208
@@ -734,18 +167,18 @@ msgstr ""
 
 #: views/courseware/_settings_discussionblock.php:6
 msgid ""
-"Der Blubber-Diskussionsblock bietet eine Möglichkeit zur Kommunikation "
+"Der Blubber-Diskussionsblock bietet eine MÃ¶glichkeit zur Kommunikation "
 "zwischen den Teilnehmern. Durch die Aktivierung muss aber der Blubber-Reiter "
 "entfernt werden."
 msgstr ""
 
 #: views/courseware/_settings_editing_permission.php:4
-msgid "Editierberechtigung für TutorInnen"
+msgid "Editierberechtigung fÃ¼r TutorInnen"
 msgstr ""
 
 #: views/courseware/_settings_editing_permission.php:6
 msgid ""
-"Wenn Sie diesen Schalter aktivieren, dürfen neben den DozentInnen auch "
+"Wenn Sie diesen Schalter aktivieren, dÃ¼rfen neben den DozentInnen auch "
 "TutorInnen Ihre Courseware editieren."
 msgstr ""
 
@@ -764,7 +197,7 @@ msgstr ""
 #: views/courseware/settings.php:33
 msgid ""
 "Der Titel der Courseware erscheint als Beschriftung des Courseware-Reiters. "
-"Sie können den Reiter also z.B. auch \"Online-Skript\", \"Lernmodul\" o.ä. "
+"Sie kÃ¶nnen den Reiter also z.B. auch \"Online-Skript\", \"Lernmodul\" o.Ã¤. "
 "nennen."
 msgstr ""
 
@@ -774,10 +207,10 @@ msgstr ""
 
 #: views/courseware/settings.php:46
 msgid ""
-"Bei freier Kapitelabfolge können alle sichtbaren Kapitel in beliebiger "
-"Reihenfolge ausgewählt werden. Bei sequentieller Abfolge müssen alle "
+"Bei freier Kapitelabfolge kÃ¶nnen alle sichtbaren Kapitel in beliebiger "
+"Reihenfolge ausgewÃ¤hlt werden. Bei sequentieller Abfolge mÃ¼ssen alle "
 "vorangehenden Unterkapitel erfolgreich abgeschlossen sein, damit ein "
-"Unterkapitel ausgewählt und angezeigt werden kann."
+"Unterkapitel ausgewÃ¤hlt und angezeigt werden kann."
 msgstr ""
 
 #: views/courseware/settings.php:53
@@ -789,12 +222,12 @@ msgid "sequentiell"
 msgstr ""
 
 #: views/courseware/settings.php:64
-msgid "Vips-Reiter für AutorInnen entfernen"
+msgid "Vips-Reiter fÃ¼r AutorInnen entfernen"
 msgstr ""
 
 #: views/courseware/settings.php:66
 msgid ""
-"Wenn Sie diesen Schalter aktivieren, wird der Vips-Reiter für normale "
+"Wenn Sie diesen Schalter aktivieren, wird der Vips-Reiter fÃ¼r normale "
 "Teilnehmende entfernt."
 msgstr ""
 
@@ -804,11 +237,11 @@ msgstr ""
 
 #: views/courseware/settings.php:82
 msgid ""
-"Wählen Sie hier aus wie die dritte Navigationsebene dargestellt werden soll."
+"WÃ¤hlen Sie hier aus wie die dritte Navigationsebene dargestellt werden soll."
 msgstr ""
 
 #: views/courseware/settings.php:88
-msgid "Über dem Seiteninhalt horizontal anzeigen"
+msgid "Ãœber dem Seiteninhalt horizontal anzeigen"
 msgstr ""
 
 #: views/courseware/settings.php:89
@@ -833,8 +266,8 @@ msgstr ""
 
 #: views/courseware/settings.php:110
 msgid ""
-"Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben eines "
-"Selbsttests hat, bevor die Lösung der Aufgabe angezeigt wird."
+"Die Anzahl der Versuche, die ein Student beim LÃ¶sen von Aufgaben eines "
+"Selbsttests hat, bevor die LÃ¶sung der Aufgabe angezeigt wird."
 msgstr ""
 
 #: views/courseware/settings.php:117
@@ -842,15 +275,15 @@ msgid "Unbegrenzt"
 msgstr ""
 
 #: views/courseware/settings.php:140
-msgid "Übernehmen"
+msgid "Ãœbernehmen"
 msgstr ""
 
 #: views/courseware/settings.php:140
-msgid "Änderungen übernehmen"
+msgid "Ã„nderungen Ã¼bernehmen"
 msgstr ""
 
 #: views/cpo/index.php:11
-msgid "Fortschrittsübersicht für Lehrende"
+msgid "FortschrittsÃ¼bersicht fÃ¼r Lehrende"
 msgstr ""
 
 #: views/cpo/index.php:38
@@ -866,7 +299,7 @@ msgid "Dieser Thread wird in keinem Block genutzt."
 msgstr ""
 
 #: views/cpo/postoverview.php:25
-msgid "Es gibt keine neuen Beiträge."
+msgid "Es gibt keine neuen BeitrÃ¤ge."
 msgstr ""
 
 #: views/cpo/postoverview.php:28
@@ -878,11 +311,11 @@ msgid "Es gibt "
 msgstr ""
 
 #: views/cpo/postoverview.php:31
-msgid " neue Beiträge"
+msgid " neue BeitrÃ¤ge"
 msgstr ""
 
 #: views/cpo/postoverview.php:33
-msgid "Beiträge anzeigen"
+msgid "BeitrÃ¤ge anzeigen"
 msgstr ""
 
 #: views/cpo/postoverview.php:63
@@ -901,6 +334,10 @@ msgstr ""
 msgid ""
 "Laden Sie eine Datei hoch, die Sie zuvor aus einer Courseware exportiert "
 "haben."
+msgstr ""
+
+#: views/import/index.php:25
+msgid "Abbrechen"
 msgstr ""
 
 #: views/import/index.php:31

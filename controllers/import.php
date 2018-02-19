@@ -67,7 +67,7 @@ class ImportController extends CoursewareStudipController
         $dataFile = $tempDir.'/data.xml';
 
         if (!is_file($dataFile)) {
-            $errors[] = _cw('Import-Archiv enth‰lt keine Datendatei data.xml.');
+            $errors[] = _cw('Import-Archiv enth√§lt keine Datendatei data.xml.');
 
             return false;
         }
@@ -76,7 +76,7 @@ class ImportController extends CoursewareStudipController
         $validationErrors = $validator->validate(file_get_contents($dataFile));
 
         if (count($validationErrors) > 0) {
-            $errors[] = _cw('Die Datendatei data.xml enth‰lt kein valides XML.');
+            $errors[] = _cw('Die Datendatei data.xml enth√§lt kein valides XML.');
 
             foreach ($validationErrors as $validationError) {
                 $errors[] = $validationError;
