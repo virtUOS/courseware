@@ -1,6 +1,6 @@
 CHANGELOG
 =========
-2.2.0
+4.0.0
 -----
 * change from requirejs to webpack
 * add new block: AssortBlock
