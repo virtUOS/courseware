@@ -102,20 +102,17 @@ class HtmlBlock extends Block
         $extractFile = function ($url) use ($user, $block) {
             return $block->applyCallbackOnInternalUrl($url, function ($components, $queryParams) use ($user) {
                 if (isset($queryParams['file_id'])) {
-                    $document = new \StudipDocument($queryParams['file_id']);
-
-                    if (!$document->checkAccess($user->cfg->getUserId())) {
-                        return null;
-                    }
+                    $file_ref = new \FileRef($queryParams['file_id']);
+                    $file = new \File($file_ref->file_id);
 
                     return array(
                         'id' => $queryParams['file_id'],
-                        'name' => $document->name,
-                        'description' => $document->description,
-                        'filename' => $document->filename,
-                        'filesize' => $document->filesize,
-                        'url' => $document->url,
-                        'path' => get_upload_file_path($queryParams['file_id']),
+                        'name' => $file_ref->name,
+                        'description' => $file_ref->description,
+                        'filename' => $file->name,
+                        'filesize' => $file->size,
+                        'url' => $file->getURL(),
+                        'path' => $file->getPath()
                     );
                 }
 

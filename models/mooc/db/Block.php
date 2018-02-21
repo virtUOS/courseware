@@ -100,6 +100,11 @@ class Block extends \SimpleORMap implements \Serializable
         }
     }
 
+    public function getNewPosition($parent_id)
+    {
+        return static::countBySQL( 'parent_id = ? ORDER BY position ASC', array($parent_id));
+    }
+
     public function getAncestors()
     {
         $ancestors = array();

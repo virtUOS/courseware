@@ -106,6 +106,7 @@ class Section extends Block
             'type' => $data['type'],
             'sub_type' => $data['sub_type'],
             'title' => 'Ein weiterer '.$data['type'],
+            'position' => $block->getNewPosition($this->_model->id)
         ));
 
         $block->store();

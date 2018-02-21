@@ -37,7 +37,7 @@ class Container extends \Pimple\Container
         };
 
         $this['version'] = new Version();
-        $this['cid'] = \Request::option('cid') ?: $GLOBALS['SessionSeminar'];
+        $this['cid'] = $GLOBALS['SessionSeminar'];
     }
 
     private function setupCoursewareStuff()

@@ -255,9 +255,9 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
     public function perform($unconsumedPath)
     {
-        //if (!$this->isActivated($this->container['cid'])) {
-            //throw new AccessDeniedException('plugin not activated for this course!');
-        //}
+        if ((!$this->isActivated($this->container['cid']))&& ($_SERVER['REQUEST_METHOD'] === 'GET')) {
+            throw new AccessDeniedException('plugin not activated for this course!');
+        }
 
         require_once 'vendor/trails/trails.php';
         require_once 'app/controllers/studip_controller.php';
@@ -281,7 +281,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
      */
     public function getContext()
     {
-        return Request::option('cid') ?: $GLOBALS['SessionSeminar'];
+        return $GLOBALS['SessionSeminar'];
     }
 
     /**

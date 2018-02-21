@@ -317,6 +317,7 @@ class XmlImport implements ImportInterface
 
         if ($parent) {
             $block->parent = $parent;
+            $block->position = $block->getNewPosition($parent->id);
         }
 
         if ($uuid) {

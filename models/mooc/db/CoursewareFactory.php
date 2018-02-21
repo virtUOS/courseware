@@ -96,7 +96,8 @@ class CoursewareFactory
             'seminar_id' => $seminar_id,
             'parent_id'  => $parent_id,
             'type'       => $type,
-            'title'      => $title
+            'title'      => $title,
+            'position'   => $block->getNewPosition($parent_id)
         ));
 
         $block->store();
