@@ -1,6 +1,6 @@
 {
   "name": "courseware",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "Interaktive multimediale Lernmodule erstellen und bereitstellen",
   "repository": "git@github.com:virtUOS/courseware.git",
   "author": "Zentrum virtUOS / ELAN e.V.",
