@@ -1,5 +1,10 @@
 CHANGELOG
 =========
+3.0.1
+-----
+* fix TestBlock link and layout
+* enhance sidebar layout
+
 3.0.0
 -----
 * change from requirejs to webpack

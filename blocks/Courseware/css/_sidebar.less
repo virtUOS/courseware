@@ -2,21 +2,30 @@
     position:absolute;
     top: 0;
     left: 0;
-    margin: 0 0 0 5px;
-    padding-left: 0;
-    padding-right: @sidebar-padding-right;
+    margin: 0;
     width: @sidebar-width;
+    border: 1px solid #8b8f95;
+    border-left: none;
 
     .cw-sidebar-image {
         background-image: url("../../../../../assets/images/sidebar/seminar-sidebar.png");
         width: @sidebar-width;
-        height: 62px;
+        height: 103px;
+        .cw-sidebar-image-title {
+            padding: 5px 8px;
+            color: #fff; 
+            font-size: 1.2em;
+            text-overflow: ellipsis;
+            position: relative;
+            top: 72px;
+            
+        }
     }
 
     .cw-navigation {
-        padding: 0 0 1em 0;
+        padding: 0 0 1em;
         border: 1px solid #d0d7e3; 
-        margin: 0.75em 0;
+        margin: 7px 5px 0;
 
         .cw-navigation-header {
             background: #e7ebf1;
