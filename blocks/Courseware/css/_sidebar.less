@@ -2,7 +2,7 @@
     position:absolute;
     top: 0;
     left: 0;
-    margin: 0 0 0 5px;
+    margin: 0;
     padding-left: 0;
     padding-right: @sidebar-padding-right;
     width: @sidebar-width;
@@ -11,10 +11,10 @@
         background-image: url("../../../../../assets/images/sidebar/seminar-sidebar.png");
         width: @sidebar-width;
         height: 62px;
+        background-size: 270px auto;
     }
 
     .cw-navigation {
-        padding: 0 0 1em 0;
         border: 1px solid #d0d7e3; 
         margin: 0.75em 0;
 
@@ -28,15 +28,15 @@
         .cw-navigation-teacher,
         .cw-navigation-student {
             list-style: none; 
-            padding: 0;
-            
+            padding: 4px 0;
+            a.cw-navigation-active-link {
+                color: #fff;
+            }
             li {
                 padding: 0 1em;
                 &.cw-navigation-active {
                     background-color: #28497c;
-                    a {
-                        color: #fff;
-                    }
+                    line-height: 2em;
                 }
             }
         }

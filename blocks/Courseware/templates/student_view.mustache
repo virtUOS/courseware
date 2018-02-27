@@ -18,46 +18,43 @@
   <aside class="cw-sidebar">
     <div class="cw-sidebar-image"></div>
     <nav class="cw-navigation">
-          <p class="cw-navigation-header">
-            Navigation
-          </p>
         {{#user_is_teacher}}
           <ul class="cw-navigation-teacher">
-              <li class="cw-navigation-active">
-                <a class="cw-navigation-courseware" href="#">
-                  {{cw_title}}
-                </a>
-              </li>
-              <li>
-                <a class="cw-navigation-news" href="{{#plugin_url}}courseware/news{{/plugin_url}}">
-                  {{#i18n}}Letzte Änderungen{{/i18n}}
-                </a>
-              </li>
-              <li>
-                <a class="cw-navigation-settings" href="{{#plugin_url}}courseware/settings{{/plugin_url}}">
-                  {{#i18n}}Einstellungen{{/i18n}}
-                </a>
-              </li>
-              <li>
-                <a class="cw-navigation-progressoverview" href="{{#plugin_url}}cpo{{/plugin_url}}">
-                  {{#i18n}}Fortschrittsübersicht{{/i18n}}
-                </a>
-              </li>
-              <li>
-                <a class="cw-navigation-postoverview" href="{{#plugin_url}}cpo/postoverview{{/plugin_url}}">
-                  {{#i18n}}Diskussionsübersicht{{/i18n}}
-                </a>
-              </li>
-              <li>
-                <a class="cw-navigation-export" href="{{#plugin_url}}export{{/plugin_url}}">
-                  {{#i18n}}Export{{/i18n}}
-                </a>
-              </li>
-              <li>
-                <a class="cw-navigation-import" href="{{#plugin_url}}import{{/plugin_url}}">
-                  {{#i18n}}Import{{/i18n}}
-                </a>
-              </li>
+            <a class="cw-navigation-courseware cw-navigation-active-link" href="#">
+                <li class="cw-navigation-active">
+                    {{cw_title}}
+                </li>
+            </a>
+            <a class="cw-navigation-news" href="{{#plugin_url}}courseware/news{{/plugin_url}}">
+                <li>
+                    {{#i18n}}Letzte Änderungen{{/i18n}}
+                </li>
+            </a>
+            <a class="cw-navigation-settings" href="{{#plugin_url}}courseware/settings{{/plugin_url}}">
+                <li>
+                    {{#i18n}}Einstellungen{{/i18n}}
+                </li>
+            </a>
+            <a class="cw-navigation-progressoverview" href="{{#plugin_url}}cpo{{/plugin_url}}">
+                <li>
+                    {{#i18n}}Fortschrittsübersicht{{/i18n}}
+                </li>
+            </a>
+            <a class="cw-navigation-postoverview" href="{{#plugin_url}}cpo/postoverview{{/plugin_url}}">
+                <li>
+                    {{#i18n}}Diskussionsübersicht{{/i18n}}
+                </li>
+            </a>
+            <a class="cw-navigation-export" href="{{#plugin_url}}export{{/plugin_url}}">
+                <li>
+                    {{#i18n}}Export{{/i18n}}
+                </li>
+            </a>
+            <a class="cw-navigation-import" href="{{#plugin_url}}import{{/plugin_url}}">
+                <li>
+                    {{#i18n}}Import{{/i18n}}
+                </li>
+            </a>
           </ul>
         {{/user_is_teacher}}
         {{^user_is_teacher}}
