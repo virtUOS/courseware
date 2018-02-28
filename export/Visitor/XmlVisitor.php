@@ -78,7 +78,7 @@ class XmlVisitor extends AbstractVisitor
             $fileNode = $this->appendBlockNode('file', null, $attributes);
 
             if (trim($file['description']) !== '') {
-                $fileNode->appendChild($this->document->createCDATASection(utf8_encode($file['description'])));
+                $fileNode->appendChild($this->document->createCDATASection(studip_utf8encode($file['description'])));
             }
         }
     }
@@ -256,7 +256,7 @@ class XmlVisitor extends AbstractVisitor
             $contents = $block->exportContents();
 
             if ($contents !== null) {
-                $blockNode->appendChild($this->document->createCDATASection(utf8_encode($contents)));
+                $blockNode->appendChild($this->document->createCDATASection(studip_utf8encode($contents)));
             }
         }
     }
@@ -363,7 +363,7 @@ class XmlVisitor extends AbstractVisitor
     private function createAttributeNode($name, $value)
     {
         $attribute = $this->document->createAttribute($name);
-        $attribute->value = htmlspecialchars(utf8_encode($value));
+        $attribute->value = htmlspecialchars(studip_utf8encode($value));
 
         return $attribute;
     }

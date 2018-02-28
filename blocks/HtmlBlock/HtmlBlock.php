@@ -150,7 +150,7 @@ class HtmlBlock extends Block
     public function importContents($contents, array $files)
     {
         $document = new \DOMDocument();
-        $document->loadHTML(utf8_decode($contents));
+        $document->loadHTML(studip_utf8decode($contents));
 
         $anchorElements = $document->getElementsByTagName('a');
         foreach ($anchorElements as $element) {

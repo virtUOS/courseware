@@ -442,7 +442,7 @@ class TestBlock extends Block
         $xml = $assignment->exportXML();
 
         return array(
-            'xml' => $xml
+            'xml' => studip_utf8decode($xml)
         );
     }
 
@@ -468,7 +468,7 @@ class TestBlock extends Block
     public function importProperties(array $properties)
     {
         if (isset($properties['xml'])) {
-            $xml = $properties['xml'];
+            $xml = studip_utf8encode($properties['xml']);
             $result = \VipsAssignment::importXML($xml, $this->container['current_user_id'] , $this->container['cid']);
             $this->assignment_id = $result->id;
         }
