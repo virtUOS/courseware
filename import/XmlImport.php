@@ -114,9 +114,9 @@ class XmlImport implements ImportInterface
             array(
                 'type'       => 'Chapter',
                 'parent'     => $courseware->getModel(),
-                'title'      => utf8_decode($node->getAttribute('title')),
+                'title'      => $node->getAttribute('title'),
                 'seminar_id' => $courseware->getModel()->seminar_id,
-                'uuid'       => utf8_decode($node->getAttribute('uuid'))
+                'uuid'       => $node->getAttribute('uuid')
             ));
 
         foreach ($node->childNodes as $childNode) {
@@ -149,9 +149,9 @@ class XmlImport implements ImportInterface
             array(
                 'type'       => 'Subchapter',
                 'parent'     => $chapter,
-                'title'      => utf8_decode($node->getAttribute('title')),
+                'title'      => $node->getAttribute('title'),
                 'seminar_id' => $chapter->seminar_id,
-                'uuid'       => utf8_decode($node->getAttribute('uuid'))
+                'uuid'       => $node->getAttribute('uuid')
             ));
 
         foreach ($node->childNodes as $childNode) {
@@ -184,9 +184,9 @@ class XmlImport implements ImportInterface
             array(
                 'type'       => 'Section',
                 'parent'     => $subChapter,
-                'title'      => utf8_decode($node->getAttribute('title')),
+                'title'      => $node->getAttribute('title'),
                 'seminar_id' => $subChapter->seminar_id,
-                'uuid'       => utf8_decode($node->getAttribute('uuid'))
+                'uuid'       => $node->getAttribute('uuid')
             ));
 
         /** @var \Mooc\UI\Section\Section $uiSection */
@@ -216,9 +216,9 @@ class XmlImport implements ImportInterface
         $section = $this->createBlock(
             array(
                 'type'       => 'Section',
-                'title'      => utf8_decode($node->getAttribute('title')),
+                'title'      => $node->getAttribute('title'),
                 'seminar_id' => $subChapter->seminar_id,
-                'uuid'       => utf8_decode($node->getAttribute('uuid'))
+                'uuid'       => $node->getAttribute('uuid')
             ));
 
         // store aside section's ID in sub/chapter's field
@@ -254,14 +254,14 @@ class XmlImport implements ImportInterface
 
         $block = $this->createBlock(
             array(
-                'type'       => utf8_decode($node->getAttribute('type')),
+                'type'       => $node->getAttribute('type'),
                 'sub_type'   => $node->hasAttribute('sub-type')
-                                ? utf8_decode($node->getAttribute('sub-type'))
+                                ? $node->getAttribute('sub-type')
                                 : null,
                 'parent'     => $section->getModel(),
-                'title'      => utf8_decode($node->getAttribute('title')),
+                'title'      => $node->getAttribute('title'),
                 'seminar_id' => $section->getModel()->seminar_id,
-                'uuid'       => utf8_decode($node->getAttribute('uuid'))
+                'uuid'       => $node->getAttribute('uuid')
             ));
 
         $section->updateIconWithBlock($block);
@@ -281,7 +281,7 @@ class XmlImport implements ImportInterface
             }
 
             if ($attribute->namespaceURI !== null) {
-                $properties[$attribute->name] = utf8_decode($attribute->value);
+                $properties[$attribute->name] = $attribute->value;
             }
         }
 

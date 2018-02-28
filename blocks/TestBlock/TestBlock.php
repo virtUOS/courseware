@@ -109,7 +109,7 @@ class TestBlock extends Block
             'active'            => $active, 
             'version'           => $version,
             'installed'         => $installed,
-            'manage_tests_url'  => \PluginEngine::getURL('VipsPlugin', array('action' => 'sheets'), 'show')
+            'manage_tests_url'  => \PluginEngine::getURL('vipsplugin', array(), 'sheets')
             ));
     }
 

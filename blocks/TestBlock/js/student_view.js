@@ -2,30 +2,6 @@ import $ from 'jquery'
 import StudentView from 'js/student_view'
 import helper from 'js/url'
 
-function rh_update_sizes(event) {
-    jQuery('.rh_list').parent().each(function(i) {
-        var columns = jQuery(this).children();
-        var items = columns.children();
-        var height = 0;
-
-        if (event != null) {
-            // reset to default sizes
-            items.css('height', 'auto');
-            columns.css('width', 'auto');
-        }
-
-        items.each(function(i) {
-            height = Math.max(height, jQuery(this).height());
-        });
-
-        // set to fixed sizes again
-        items.height(height);
-        columns.width(function(index, width) {
-            return width + 1;
-        });
-    });
-}
-
 export default StudentView.extend({
     events: {
         'click button[name=reset-exercise]': function (event) {
@@ -167,8 +143,6 @@ export default StudentView.extend({
         });
         // helper functions
         function createSortable($element) {
-            rh_update_sizes(null);
-            jQuery(window).resize(rh_update_sizes);
             $element.sortable({
                 axis: 'y',
                 containment: 'parent',
