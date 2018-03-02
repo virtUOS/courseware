@@ -137,6 +137,11 @@ class Block extends \SimpleORMap implements \Serializable
         return current(self::findBySQL('seminar_id = ? AND type = ? LIMIT 1', array($cid, 'Courseware')));
     }
 
+    public function getCoursewareOfThisBlock()
+    {
+        return static::findOneBySQL('seminar_id = ? AND type = ? LIMIT 1', array($this->seminar_id, 'Courseware'));
+    }
+
     /**
      * Find all Block of given types in a single course.
      *

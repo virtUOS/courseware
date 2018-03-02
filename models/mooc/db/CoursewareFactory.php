@@ -29,6 +29,9 @@ class CoursewareFactory
      */
     public function makeCourseware($cid)
     {
+        if ($cid == null) {
+            return false;
+        }
         // try to find it first
         $courseware = Block::findCourseware($cid);
 
