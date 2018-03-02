@@ -217,7 +217,7 @@ class XmlImport implements ImportInterface
             array(
                 'type'       => 'Section',
                 'title'      => $node->getAttribute('title'),
-                'seminar_id' => $subChapter->seminar_id,
+                'seminar_id' => $sub_chapter->seminar_id,
                 'uuid'       => $node->getAttribute('uuid')
             ));
 

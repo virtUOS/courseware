@@ -93,8 +93,12 @@ class ImportController extends CoursewareStudipController
         // create a temporary directory
         $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
         mkdir($tempDir);
-        Studip\ZipArchive::extractToPath($filename, $tempDir);
-        
+        $extracted = Studip\ZipArchive::extractToPath($filename, $tempDir);
+        if (!$extracted) {
+            $this->errors[] = _cw('Das Import-Archiv ist beschädigt.');
+            return false;
+        }
+
         $root_folder = Folder::findTopFolder($GLOBALS['SessionSeminar']);
         $parent_folder = FileManager::getTypedFolder($root_folder->id);
         
