@@ -30,6 +30,7 @@ class Section extends Block
     private static $map_blocks_to_icons = array(
         'BlubberBlock'  => self::ICON_CHAT,
         'ForumBlock'    => self::ICON_CHAT,
+        'PostBlock'     => self::ICON_CHAT,
         'VideoBlock'    => self::ICON_VIDEO,
         'AudioBlock'    => self::ICON_AUDIO,
         'TestBlock'     => self::ICON_TASK,
