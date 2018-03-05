@@ -1,6 +1,8 @@
 Development Documentation
 =========================
 
+For Courseware <= 2.1.7
+-----------------------
 The MOOC.IP plugin ships with a build script that automates several steps which
 are performed during the development cycle. When you cloned the plugin source
 code using Git, you'll have to install all dependencies. After that, you have
@@ -52,4 +54,26 @@ and that you have [compiled the LESS files](#compile-less-files)):
 
 ```bash
 $ php build.php zip
+```
+
+For Courseware >= 3.0.0
+-----------------------
+
+Get composer and install with the composer.phar file:
+```bash
+curl -sS https://getcomposer.org/installer | php
+php composer.phar install
+php composer.phar update
+```
+
+Use npm to download and create necessary files:
+```bash
+npm install
+npm run build:dev
+```
+From this point you can develop and make changes. If you change some js or less files just call npm run build:dev to build new static js and css files.
+
+If you like to have a ready to install zip file:
+```bash
+npm run zip
 ```
