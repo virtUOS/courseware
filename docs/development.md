@@ -74,3 +74,6 @@ If you like to have a ready to install zip file:
 ```bash
 npm run zip
 ```
+
+**Note:**  
+ Nodejs has to be installed on your system!
