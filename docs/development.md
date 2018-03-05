@@ -8,8 +8,7 @@ are performed during the development cycle. When you cloned the plugin source
 code using Git, you'll have to install all dependencies. After that, you have
 to compile LESS files into CSS.
 
-Installing Dependencies
------------------------
+### Installing Dependencies
 
 The MOOC.IP plugin uses [Composer](https://getcomposer.org/) as the dependency
 manager. Make sure that you have [installed it globally](https://getcomposer.org/doc/00-intro.md).
@@ -19,8 +18,7 @@ Then, run the ``composer`` command to install all required dependencies:
 $ composer install
 ```
 
-Compile LESS Files
-------------------
+### Compile LESS Files
 
 Run the build script to compile the LESS files into CSS files and create the
 minified productive CSS file (namely ``assets/courseware.min.css``):
@@ -45,8 +43,7 @@ five seconds):
 $ php build.php watch 10
 ```
 
-Create the Plugin Archive
--------------------------
+### Create the Plugin Archive
 
 You can create an installable Stud.IP plugin archive using the ``zip`` command
 (make your that you have [installed all dependencies](#installing-dependencies)
