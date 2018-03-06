@@ -26,8 +26,15 @@ class PdfBlock extends Block
             $access = $document->checkAccess($this->container['current_user_id']);
         }
         $this->setGrade(1.0);
+        $plugin_manager = \PluginManager::getInstance();
+        $courseware_path = $plugin_manager->getPlugin('Courseware')->getPluginURL();
+        
 
-        return array_merge($this->getAttrArray(), array('access' => $access));
+        return array_merge($this->getAttrArray(), array(
+            'access'           => $access,
+            'courseware_path'  => $courseware_path
+            
+        ));
     }
 
     public function author_view()
