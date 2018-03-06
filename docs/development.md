@@ -76,4 +76,4 @@ npm run zip
 ```
 
 **Note:**  
- Nodejs and npm must be installed on your system!
+ [Nodejs](https://nodejs.org/en/download/package-manager/) and npm must be installed on your system!
