@@ -108,7 +108,7 @@ class CpoController extends CoursewareStudipController
             $content = Request::get('content');
             $answer = 'answer=true';
         } else {
-            return $this->redirect('postoverview?answer=false');
+            return $this->redirect('cpo/postoverview?answer=false');
         }
 
         $cid = $this->plugin->getCourseId();
@@ -129,7 +129,7 @@ class CpoController extends CoursewareStudipController
             $answer = 'answer=false';
         }
 
-        return $this->redirect('postoverview?'.$answer);
+        return $this->redirect('cpo/postoverview?'.$answer);
     }
 
     private function getThreadsInBlocks()
