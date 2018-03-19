@@ -513,6 +513,9 @@ abstract class Block {
         if (isset($this->_progress)) {
             $this->_progress->store();
         }
+
+        $this->_model->chdate = time();
+        $this->_model->store();
     }
 
     // enforce current user with 'canUpdate' permission of this block
