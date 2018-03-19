@@ -7,7 +7,7 @@
  */
 
 
-class AddTableMoocPosts extends DBMigration
+class AddTableMoocPosts extends Migration
 {
     public function description()
     {
@@ -23,7 +23,7 @@ class AddTableMoocPosts extends DBMigration
           `post_id` int(4) NOT NULL,
           `seminar_id` varchar(32) NOT NULL,
           `user_id` varchar(32) NOT NULL,
-          `content` text NOT NULL DEFAULT '',
+          `content` text NOT NULL,
           `mkdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
           `chdate` timestamp NULL DEFAULT NULL,
           PRIMARY KEY (`thread_id`,`post_id`, `seminar_id`)
