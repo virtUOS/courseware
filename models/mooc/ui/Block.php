@@ -133,12 +133,12 @@ abstract class Block {
     // TODO
     function __set($name, $value)
     {
-        // `id` darf nicht geändert werden
+        // `id` darf nicht geÃ¤ndert werden
         if ('id' === $name) {
             throw new \InvalidArgumentException("Cannot mutate attribute 'id'.");
         }
 
-        // `title` wird direkt im SORM-Objekt geändert
+        // `title` wird direkt im SORM-Objekt geÃ¤ndert
         if ('title' === $name) {
             $this->_model->title = $value;
             $this->_model->store();
@@ -513,6 +513,9 @@ abstract class Block {
         if (isset($this->_progress)) {
             $this->_progress->store();
         }
+      
+        $this->_model->chdate = time();
+        $this->_model->store();
     }
 
     // enforce current user with 'canUpdate' permission of this block
