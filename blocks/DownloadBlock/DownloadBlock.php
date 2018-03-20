@@ -20,16 +20,20 @@ class DownloadBlock extends Block
 
     public function student_view()
     {
-        if ($this->file_id != "") { 
-            $url = \FileRef::find($this->file_id)->getDownloadURL('force') ;
+        $file = \FileRef::find($this->file_id);
+        if ($file) { 
+            $url = $file->getDownloadURL('force');
+            $access = ($file->terms_of_use->download_condition == 0) ? true : false;
         } else { 
             $url = "";
+            $access = true;
         }
 
         return array_merge(
             $this->getAttrArray(), 
             array('confirmed' => !! $this->getProgress()->grade, 
-                  'url' => $url
+                  'url' => $url,
+                  'download_access' => $access
             )
         );
     }

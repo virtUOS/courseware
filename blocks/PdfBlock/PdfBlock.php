@@ -20,7 +20,8 @@ class PdfBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
-        $access = true;
+        $file = \FileRef::find($this->pdf_file_id);
+        $access = ($file->terms_of_use->download_condition == 0) ? true : false;
 
         $this->setGrade(1.0);
         $plugin_manager = \PluginManager::getInstance();

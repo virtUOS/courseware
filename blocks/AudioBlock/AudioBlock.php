@@ -22,15 +22,17 @@ class AudioBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
+
         if ($this->audio_source == "cw") {
             $file = \FileRef::find($this->audio_id);
             if ($file) {
-                $access = true;
                 $audio_file = $file->getDownloadURL();
+                $access = ($file->terms_of_use->download_condition == 0) ? true : false;
             }
+
         } else {
-            $access = true;
             $audio_file = $this->audio_file;
+            $access = true;
         }
 
         return array_merge(

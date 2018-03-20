@@ -32,9 +32,11 @@ export default StudentView.extend({
     helper
       .callHandler(this.model.id, 'download', {})
       .catch(function (error) {
-        var errorMessage = 'Could not update the block: ' + $.parseJSON(error.responseText).reason;
-        alert(errorMessage);
-        console.log(errorMessage, arguments);
+        if (error.responseText) {
+            var errorMessage = 'Could not update the block: ' + $.parseJSON(error.responseText).reason;
+            alert(errorMessage);
+            console.log(errorMessage, arguments);
+        }
       });
   }
 });
