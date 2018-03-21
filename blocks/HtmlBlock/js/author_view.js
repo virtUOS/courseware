@@ -42,12 +42,17 @@ export default AuthorView.extend({
   },
 
   onSave(event) {
-    var textarea = this.$('textarea'),
-        new_val = textarea.val(),
-        view = this;
+    var view = this;
+    var $content = '';
+    var cke = this.$('.cke_editable');
+    if (cke.is('div')) {
+        $content = cke.html();
+    } else {
+        $content = cke.val();
+    }
 
     helper
-      .callHandler(this.model.id, 'save', { content: new_val })
+      .callHandler(this.model.id, 'save', { content: $content })
       .then(function () {
         jQuery(event.target).addClass('accept');
         view.switchBack();
