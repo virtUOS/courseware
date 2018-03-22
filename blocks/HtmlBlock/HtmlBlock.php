@@ -29,7 +29,7 @@ class HtmlBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-        $content = htmlReady($this->content);
+        $content = wysiwygReady($this->content);
 
         return compact('content');
     }
@@ -37,14 +37,30 @@ class HtmlBlock extends Block
     /**
      * Updates the block's contents.
      *
-     * @param array $data                  The request data
+     * @param array $data The request data
      *
      * @return array The block's data
      */
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        $this->content = \STUDIP\Markup::purifyHtml((string) $data['content']);
+        $content = \STUDIP\Markup::purifyHtml((string) $data['content']);
+        if ($content == "") {
+            $this->content = "";
+        } else {
+            $dom = new \DOMDocument();
+            $dom->loadHTML($content);
+            $xpath = new \DOMXPath($dom);
+            $hrefs = $xpath->evaluate("//a");
+            for ($i = 0; $i < $hrefs->length; $i++) {
+                $href = $hrefs->item($i);
+                if($href->getAttribute("class") == "link-extern") {
+                $href->removeAttribute('target');
+                $href->setAttribute("target", "_blank");
+                }
+            }
+            $this->content = $dom->saveHTML();
+        }
 
         return array('content' => $this->content);
     }

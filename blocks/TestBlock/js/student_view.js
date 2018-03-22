@@ -145,9 +145,9 @@ export default StudentView.extend({
         function createSortable($element) {
             $element.sortable({
                 axis: 'y',
-                containment: 'parent',
                 item: '> .rh_item',
                 tolerance: 'pointer',
+                placeholder: "ui-state-highlight",
                 update: rh_move_choice
             });
         }
