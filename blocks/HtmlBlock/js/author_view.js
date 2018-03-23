@@ -44,12 +44,12 @@ export default AuthorView.extend({
   onSave(event) {
     var view = this;
     var $content = '';
-    var cke = this.$('.cke_editable');
-    if (cke.is('div')) {
-        $content = cke.html();
-    } else {
-        $content = cke.val();
-    }
+    var $textarea = this.$('textarea');
+    var wysiwyg_editor = CKEDITOR.instances[$textarea.get(0).id]; 
+
+    wysiwyg_editor.setData(STUDIP.wysiwyg.markAsHtml(wysiwyg_editor.getData())); 
+    wysiwyg_editor.updateElement();
+    $content = $textarea.val();
 
     helper
       .callHandler(this.model.id, 'save', { content: $content })

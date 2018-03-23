@@ -22,8 +22,15 @@ class HtmlBlock extends Block
             return array('inactive' => true);
         }
         $this->setGrade(1.0);
+        
+        $content = $this->content;
+        if (strpos($content, "<!DOCTYPE html") == 0 ) {
+            $content = \STUDIP\Markup::markAsHtml($content);
+        }
 
-        return array('content' => formatReady($this->content));
+        $content = formatReady($content);
+
+        return array('content' => $content);
     }
 
     public function author_view()
