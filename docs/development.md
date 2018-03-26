@@ -1,7 +1,7 @@
 Development Documentation
 =========================
 
-For Courseware <= 2.1.7
+Build Courseware <= 2.1.7
 -----------------------
 The MOOC.IP plugin ships with a build script that automates several steps which
 are performed during the development cycle. When you cloned the plugin source
@@ -53,7 +53,7 @@ and that you have [compiled the LESS files](#compile-less-files)):
 $ php build.php zip
 ```
 
-For Courseware >= 3.0.0
+Build Courseware >= 3.0.0
 -----------------------
 
 Get composer and install with the composer.phar file:
@@ -77,3 +77,13 @@ npm run zip
 
 **Note:**  
  [Nodejs](https://nodejs.org/en/download/package-manager/) and npm must be installed on your system!
+ 
+ 
+ 
+How to build a block for Courseware 3.0 and 4.0
+------------------------------------------------
+
+Each courseware block is in block folder. It contains the block object and the folders css, js, schema and templates.
+Look at the [DemoBlock](demoblock.zip) to see how it works.
+After building your new block, it has to be imoprted into the assets/js/courseware.js before creating the new dependencies.
+Just insert  ```import 'DemoBlock/js/DemoBlock'```  after all other imports and use npm run build:dev.
