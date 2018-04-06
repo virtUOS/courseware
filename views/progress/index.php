@@ -13,7 +13,7 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>
 <ul id="overview-chapter-nav">
     <li class="overview-chapter-nav-arrow" id="overview-chapter-nav-left"></li>
     <li id="chapter-container" style="width:calc(100% - 140px);">
-            <ul style="width: <?= count($courseware['children'])*200;?>px;" id="chapter-list">
+            <ul style="width: <?= count($courseware['children'])*203;?>px;" id="chapter-list">
                 <? foreach ($courseware['children'] as $chapter) : ?>
                     <li class="course-box" data-course="chapter-<?= $chapter['id'] ?>">
                         <p><?= htmlReady($chapter['title']) ?></p>
