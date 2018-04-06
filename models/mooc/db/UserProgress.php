@@ -61,21 +61,6 @@ class UserProgress extends \SimpleORMap
         return $this->max_grade > 0 ? ($this->grade / $this->max_grade) : 0;
     }
 
-    /**
-     * Grade must be a float in [0..1]
-     *
-     * As as is usual with SimpleORMap this method gets called on
-     *
-     * \code
-     * $progress->grade = 0.5;
-     * \endcode
-     *
-     * @param float $grade a floating point number between 0.0 and and the
-     *                     value of the max_grade field
-     *
-     * @throws \InvalidArgumentException if the grade is not in the allowed
-     *                                   range
-     */
     protected function setGrade($grade)
     {
         $this->content['grade'] = $grade;
