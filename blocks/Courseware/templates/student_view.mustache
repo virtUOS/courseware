@@ -59,21 +59,21 @@
         {{/user_is_teacher}}
         {{^user_is_teacher}}
           <ul class="cw-navigation-student">
-              <li class="cw-navigation-active">
-                <a class="cw-navigation-courseware" href="#">
-                  {{cw_title}}
-                </a>
-              </li>
+            <a class="cw-navigation-courseware cw-navigation-active-link" href="#">
+                <li class="cw-navigation-active">
+                    {{cw_title}}
+                </li>
+            </a>
+            <a class="cw-navigation-news" href="{{#plugin_url}}courseware/news{{/plugin_url}}">
               <li>
-                <a class="cw-navigation-news" href="{{#plugin_url}}courseware/news{{/plugin_url}}">
                   {{#i18n}}Letzte Änderungen{{/i18n}}
-                </a>
               </li>
+            </a>
+            <a class="cw-navigation-progress" href="{{#plugin_url}}progress{{/plugin_url}}">
               <li>
-                <a class="cw-navigation-progress" href="{{#plugin_url}}progress{{/plugin_url}}">
                   {{#i18n}}Fortschrittsübersicht{{/i18n}}
-                </a>
               </li>
+            </a>
           </ul>
         {{/user_is_teacher}}
       </nav>

@@ -126,6 +126,7 @@ export default AuthorView.extend({
 
   selection() {
     var videotype = this.$el.find('.videotype').val();
+    var videourl = this.$el.find('.videourl').val();
     this.$el.find('.videosource').hide();
     this.$el.find('.videotimer').hide();
     this.$el.find('iframe').hide();
@@ -137,6 +138,8 @@ export default AuthorView.extend({
     case 'webvideo':
       this.$el.find('.videosource-webvideo').show();
       this.$el.find('video').show();
+      var webvideodata = JSON.parse(this.$el.find('.webvideodata').val());
+      videourl = webvideodata.src;
       break;
     case 'youtube':
       this.$el.find('.videosource-url').show();
@@ -161,7 +164,7 @@ export default AuthorView.extend({
       break;
     }
     this.resetVideoData(this);
-    this.setVideoData(this, this.$el.find('.videourl').val(), videotype);
+    this.setVideoData(this, videourl, videotype);
   },
 
   videotimereset() {

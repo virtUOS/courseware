@@ -227,9 +227,17 @@ class TestBlock extends Block
     public function calcGrades()
     {
         global $user;
+        
+        if($this->assignment_id == "") {
+            if ($this->test_id != "") {
+                $test = \VipsTest::findOneBySQL('id = ?', array($this->test_id));
+                $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
+            }
+        } else {
+            $assignment = \VipsAssignment::find($this->assignment_id);
+            $test = $assignment->test;
+        }
 
-        $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
-        $test = \VipsTest::findOneBySQL('id = ?', array($this->test_id));
         if($test == null) {
             return null;
         }

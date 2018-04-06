@@ -208,6 +208,9 @@ class CpoController extends CoursewareStudipController
                 );
                 $maxGrades = array_map(
                     function ($block) use ($progress) {
+                        if ($progress[$block['id']]['max_grade'] == null) {
+                            return 1;
+                        }
                         return (double) $progress[$block['id']]['max_grade'];
                     },
                     $root['children']
