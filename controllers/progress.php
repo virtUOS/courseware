@@ -89,7 +89,7 @@ class ProgressController extends CoursewareStudipController
                     $root['progress'] = 0;
                 }
             } else {
-                $root['progress'] = 0;
+                $root['progress'] = 1;
             }
         }
     }
