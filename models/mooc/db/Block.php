@@ -63,9 +63,6 @@ class Block extends \SimpleORMap implements \Serializable
         $this->registerCallback('after_delete', 'destroyUserProgress');
         $this->registerCallback('after_delete', 'updatePositionsAfterDelete');
 
-        $events = words('after_create after_update after_store after_delete');
-        $this->registerCallback($events, 'callbackToMetrics');
-
         parent::__construct($id);
     }
 
@@ -294,16 +291,6 @@ class Block extends \SimpleORMap implements \Serializable
         list($data, $is_new) = unserialize($serialized);
         $this->setData($data, true);
         $this->setNew($is_new);
-    }
-
-    public function callbackToMetrics($callback_type)
-    {
-        if ($this->type) {
-            $metric = sprintf('moocip.block.%s.%s',
-                              strtolower($this->type),
-                              substr(strtolower($callback_type), strlen('after_')));
-            \Metrics::increment($metric);
-        }
     }
 
     // has the given user completed (progress = 100%) this content
