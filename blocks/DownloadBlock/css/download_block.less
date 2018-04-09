@@ -1,6 +1,7 @@
 @import '../../../assets/mixins';
 
 .DownloadBlock {
+
     border: solid thin #ccc;
     padding: 10px;
 
@@ -39,7 +40,7 @@
     }
 
     .cw-download-info { 
-        background-image: url("@{blocks-icons-dir}/blue/file.svg");
+        background-image: url("@{blocks-icons-dir}/black/file.svg");
         background-repeat: no-repeat;
         background-size: 24px;
         padding-left: 26px;
@@ -53,16 +54,24 @@
         text-align: right;
         margin-top: -2em;
         .cw-download-button {
-        .courseware-btn;
+            .courseware-btn;
             background-position: 16px center;
             font-size: 14px;
             padding-left: 48px;
             padding-right: 20px;;
-            background-color: #eee;
             display: inline-block;
-            background-image: url("@{blocks-icons-dir}/blue/download.svg");
+            background-image: url("@{blocks-icons-dir}/white/download.svg");
             background-repeat: no-repeat;
             background-size: 20px;
+            border: 0;
+            border-radius: 0;
+            background-color: #007f4b;
+            color: #fff;
+            text-transform: uppercase;
+            &:hover {
+                color: #fff;
+                background-color: #007f4b;
+            }
         }
     }
 
