@@ -138,8 +138,10 @@ export default AuthorView.extend({
     case 'webvideo':
       this.$el.find('.videosource-webvideo').show();
       this.$el.find('video').show();
-      var webvideodata = JSON.parse(this.$el.find('.webvideodata').val());
-      videourl = webvideodata.src;
+      var webvideodata = this.$el.find('.webvideodata').val();
+      if (webvideodata != "") {
+        videourl = JSON.parse(webvideodata).src;
+      }
       break;
     case 'youtube':
       this.$el.find('.videosource-url').show();
