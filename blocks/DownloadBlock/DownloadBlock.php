@@ -20,16 +20,14 @@ class DownloadBlock extends Block
 
     function student_view()
     {
-        $this->setGrade(1.0);
         return array_merge($this->getAttrArray(), ['confirmed' => !! $this->getProgress()->grade]);
     }
 
     function author_view()
     {
         $this->authorizeUpdate();
-        $this->setFolderId();
         $allfiles = $this->showFiles($this->folder_id);
-        return array_merge($this->getAttrArray(), ["allfiles" => $allfiles]);
+        return array_merge($this->getAttrArray(), ["allfiles" => $allfiles, "foldernames" => $this->getFolderNames()]);
     }
 
     public function save_handler(array $data)
@@ -40,17 +38,25 @@ class DownloadBlock extends Block
             $this->file = (string) $data['file'];
             $this->file_id = (string) $data['file_id'];
             $this->file_name = (string) $data['file_name'];
-
+            $this->folder_id = (string) $data['folder_id'];
             $this->download_title = (string) $data['download_title'];
             $this->download_info = (string) $data['download_info'];
             $this->download_success = (string) $data['download_success'];
-
-        } else {
-            $this->file_id = "";
-            $this->file_name = "";
         }
 
         return;
+    }
+
+    public function setfolder_handler(array $data)
+    {
+        $this->authorizeUpdate();
+
+        if (isset ($data['folder'])) {
+            $folderId = $this->getFolderId((string) $data['folder']);
+            return $this->showFiles($folderId);
+        }
+
+        return false;
     }
 
     function download_handler($data)
@@ -59,15 +65,23 @@ class DownloadBlock extends Block
         return ;
     }
 
-    private function setFolderId($foldername = "Allgemeiner Dateiordner"){
+    function getFolderId($foldername){
         $cid = $this->container['cid'];
         $db = \DBManager::get();
         $stmt = $db->prepare("SELECT folder_id FROM folder WHERE name = :foldername AND seminar_id = :cid");
         $stmt->bindParam(":foldername", $foldername);
         $stmt->bindParam(":cid", $cid);
         $stmt->execute();
-        $this->folder_id = $stmt->fetch()['folder_id'];
-        return ;
+        return $stmt->fetch()['folder_id'];
+    }
+
+    private function getFolderNames() {
+        $cid = $this->container['cid'];
+        $db = \DBManager::get();
+        $stmt = $db->prepare("SELECT * FROM folder WHERE  seminar_id = :cid");
+        $stmt->bindParam(":cid", $cid);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
     private function showFiles($folderId, $filetype = "")
@@ -79,25 +93,25 @@ class DownloadBlock extends Block
         $stmt->execute();
         $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $filesarray = array();
+        
         foreach ($response as $item) {
-            if($this->file !=  $item['name']){
-                $filesarray[] = $item;
-            }
+            $filesarray[] = $item;
         }
+        
         return $filesarray;
     }
 
-    private function getAttrArray()
+    private function getAttrArray() 
     {
         return array(
-            'file' => $this->file,
-            'file_id' => $this->file_id,
-            'file_name' => $this->file_name,
+            'file' => $this->file, 
+            'file_id' => $this->file_id, 
+            'file_name' => $this->file_name, 
             'folder_id' => $this->folder_id,
             'download_title' => $this->download_title,
             'download_info' => $this->download_info,
             'download_success' => $this->download_success
-
+            
         );
     }
 
@@ -107,6 +121,7 @@ class DownloadBlock extends Block
             'file' => $this->file,
             'file_id' => $this->file_id,
             'file_name' => $this->file_name,
+            'folder_id' => $this->folder_id,
             'download_title' => $this->download_title,
             'download_info' => $this->download_info,
             'download_success' => $this->download_success
@@ -149,8 +164,6 @@ class DownloadBlock extends Block
      */
     public function importProperties(array $properties)
     {
-        $this->setFolderId();
-
         if (isset($properties['file'])) {
             $this->file = $properties['file'];
         }
@@ -181,6 +194,7 @@ class DownloadBlock extends Block
         $cid = $this->container['cid'];
         $document =  current(\StudipDocument::findBySQL('filename = ? AND name = ? AND seminar_id = ?', array($file_name, $file, $cid)));
         $this->file_id = $document->dokument_id;
+        $this->folder_id = $document->range_id;
         return;
     }
 

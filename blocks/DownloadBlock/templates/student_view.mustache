@@ -1,35 +1,32 @@
-{{#download_title}}<h2>{{download_title}}</h2>{{/download_title}}
+{{#download_title}}
+    <h4>{{download_title}}</h4>
+{{/download_title}}
 {{#confirmed}}
-{{#download_success}}
-<div class="messagebox messagebox_success">
-    {{download_success}}
-</div>
-{{/download_success}}
+    {{#download_success}}
+        <div class="messagebox messagebox_success">
+            {{download_success}}
+        </div>
+    {{/download_success}}
 {{/confirmed}}
 
 {{^confirmed}}
-{{#download_info}}
-<div class="messagebox messagebox_info">
-    {{download_info}}
-</div>
-{{/download_info}}
+    {{#download_info}}
+        <div class="messagebox messagebox_info">
+            {{download_info}}
+        </div>
+    {{/download_info}}
 {{/confirmed}}
-
-<table class=download-file>
-    <tbody>
-        <tr>
-            <td width="100%"><img style="margin-bottom: -3px;" src="../../plugins_packages/virtUOS/Courseware/assets/images/download.png" height="18" width="18"> &nbsp; {{file}} &nbsp; <span style="color: lightgrey">{{file_name}}</span></td>
-            <td width="112px">
-                <a href="../../sendfile.php?force_download=1&type=0&file_id={{file_id}}&file_name={{file_name}}" target="_blank" class="button"> 
-                    download
-                </a>
-            </td>
-        </tr>
-    </tbody>
-
-
-</table>
-
+{{#file}}
+<div class="download-file">
+    <div class="cw-download-info" > &nbsp; {{file}} &nbsp; <span>{{file_name}}</span></div>
+     <div class="cw-download-button-wrapper">
+        <a href="../../sendfile.php?force_download=1&type=0&file_id={{file_id}}&file_name={{file_name}}" target="_blank"> 
+            <button name="download" class="cw-download-button" style="display: inline-block;">download</button>
+        </a> 
+    </div>
+</div>
+{{/file}}
+{{^file}}{{#i18n}}Es wurde keine Datei ausw&auml;hlt{{/i18n}}{{/file}}
 <input type="hidden" name="file" value="{{file}}" />
 <input type="hidden" name="file_name" value="{{file_name}}" />
 <input type="hidden" name="file_id" value="{{file_id}}" />
