@@ -29,14 +29,6 @@ define(['assets/js/author_view', 'assets/js/url'],
                             $(this).prop("selected", true);
                     }
             });
-
-            var $files = $view.$el.find(".download-file option");
-            var $stored_file = $view.$el.find(".download-stored-file").val();
-            $files.each(function(){
-                    if($(this).attr("file_id") == $stored_file) {
-                            $(this).prop("selected", true);
-                    }
-            });
             this.selectFolder();
         },
 
@@ -131,15 +123,18 @@ define(['assets/js/author_view', 'assets/js/url'],
 
         showFiles: function($allfiles) {
             var $files = this.$el.find(".download-file");
+            var $stored_file = this.$el.find(".download-stored-file").val();
             $files.find('option').remove();
             $.each($allfiles, function(key, value){
                $files.append($('<option>', {
                     value: value.name,
                     text: value.filename,
                     file_id: value.dokument_id,
-                    file_name: value.filename
+                    file_name: value.filename,
+                    selected: value.dokument_id == $stored_file
                 }));
             });
+
         }
         
     });
