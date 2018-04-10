@@ -50,35 +50,24 @@ class DownloadBlock extends Block
     public function setfolder_handler(array $data)
     {
         $this->authorizeUpdate();
+        if (isset ($data['folder_id'])) {
 
-        if (isset ($data['folder'])) {
-            $folderId = $this->getFolderId((string) $data['folder']);
-            return $this->showFiles($folderId);
+            return $this->showFiles($data['folder_id']);
         }
 
         return false;
     }
 
-    function download_handler($data)
+    public function download_handler($data)
     {
         $this->setGrade(1.0);
         return ;
     }
 
-    function getFolderId($foldername){
-        $cid = $this->container['cid'];
-        $db = \DBManager::get();
-        $stmt = $db->prepare("SELECT folder_id FROM folder WHERE name = :foldername AND seminar_id = :cid");
-        $stmt->bindParam(":foldername", $foldername);
-        $stmt->bindParam(":cid", $cid);
-        $stmt->execute();
-        return $stmt->fetch()['folder_id'];
-    }
-
     private function getFolderNames() {
         $cid = $this->container['cid'];
         $db = \DBManager::get();
-        $stmt = $db->prepare("SELECT * FROM folder WHERE  seminar_id = :cid");
+        $stmt = $db->prepare("SELECT * FROM folder WHERE seminar_id = :cid OR range_id = :cid");
         $stmt->bindParam(":cid", $cid);
         $stmt->execute();
         return $stmt->fetchAll();
