@@ -29,13 +29,7 @@ export default AuthorView.extend({
         $(this).prop('selected', true);
       }
     });
-    var $files = $view.$el.find('.download-file option');
-    var $stored_file = $view.$el.find('.download-stored-file').val();
-    $files.each(function () {
-      if ($(this).attr('file_id') == $stored_file) {
-        $(this).prop('selected', true);
-      }
-    });
+    $view.selectFolder();
   },
 
   onNavigate(event) {
@@ -101,7 +95,6 @@ export default AuthorView.extend({
     var view = this;
     var $folder = this.$el.find('.download-folder').find('option:selected').val();
     var $folder_id = this.$el.find('.download-folder').find('option:selected').attr('folder_id');
-    console.log($folder_id);
     helper
       .callHandler(this.model.id, 'setfolder', { folder: $folder, folder_id: $folder_id })
       .then(function (event) {
@@ -118,13 +111,25 @@ export default AuthorView.extend({
 
   showFiles($allfiles) {
     var $files = this.$el.find('.download-file');
+    var $stored_file = this.$el.find('.download-stored-file').val();
     $files.find('option').remove();
+    if ($allfiles.length == 0) {
+        $files.append($('<option>', {
+            value: "",
+            text: "In diesem Ordner befinden sich keine Dateien."
+        }));
+        $files.prop('disabled', 'disabled');
+        return false;
+    }
     $.each($allfiles, function (key, value) {
       $files.append($('<option>', {
         value: value.name,
         file_id: value.id,
-        text: value.name
+        text: value.name,
+        selected: value.id == $stored_file
       }));
     });
+    $files.prop('disabled', false);
+    return true;
   }
 });
