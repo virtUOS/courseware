@@ -98,7 +98,7 @@ ul.exercise {
         input {
             border: thin solid #ccc;
         }
-        
+        /* vips 1.3 rh_exercise */
         table {
             padding: 1em 0;
             
@@ -111,6 +111,39 @@ ul.exercise {
                 border: solid thin #ccc;
                 cursor: move;
                 background: #fff;
+                
+                &:hover {
+                    border: solid thin #28497c;
+                }
+            }
+        }
+        /* vips 1.4 rh_exercise */
+        .rh_table {
+            padding: 1em 0;
+            border-spacing: 1.5em;
+            margin-left: -1em;
+            
+            .rh_label {
+                padding: 1em 1em 1em 0;
+            }
+
+            .rh_list {
+                border: 1px solid #ccc;
+                background-color: #fcfcfc;
+                min-width: 160px;
+            }
+
+            .rh_list.hover {
+                border-color: #28497c;
+                background-color: #eee;
+            }
+
+            .rh_item {
+                padding: 0.5em;
+                border: solid thin #ccc;
+                cursor: move;
+                background: #fff;
+                margin: 0.25em;
                 
                 &:hover {
                     border: solid thin #28497c;
@@ -219,10 +252,11 @@ ul.exercise {
                 white-space: normal !important;
             }
         }
-        
-        .vips_display_toggle {
-            display: none;
-        }
+
+    }
+
+    .cw-test-buttons-wrapper {
+        padding-left: 6px;
     }
 
     .exercise-sample-solution {
@@ -236,4 +270,43 @@ ul.exercise {
         }
     }
 
+}
+
+/********************/
+/* CHARACTER PICKER */
+/********************/
+
+#character_picker {
+  span.block {
+    background-color: rgb(230, 230, 230);
+    border-radius: .25em;
+    display: inline-block;
+    margin: .125em .25em;
+    padding: .0625em .25em;
+    white-space: nowrap;
+    
+    span.block_title {
+        background-color: rgb(207, 207, 207);
+        border-radius: .25em 0 0 .25em;
+        display: inline-block;
+        font-weight: bold;
+        margin-left: -.125em;
+        padding: 0 .5em;
+    }
+    button {
+        border: 0;
+        border-radius: .25em;
+        padding: 0 .25em;
+        &:hover {
+            background-color: rgb(243, 243, 243);
+        }
+    }
+  }
+}
+#character_picker_header {
+    background-color: rgb(204, 204, 204);
+    border-radius: .25em .25em 0 0;
+    font-size: smaller;
+    padding: .5em;
+    margin: -.25em -.25em .5em .5em;
 }

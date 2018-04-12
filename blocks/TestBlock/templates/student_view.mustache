@@ -128,6 +128,10 @@
             {{^exercises_available}}{{^correction_available}}
                 <div class="messagebox messagebox_info">{{#i18n}}Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen.{{/i18n}}</div>
             {{/correction_available}}{{/exercises_available}}
+            <script>
+                var VIPS_BASE_URL = "{{vips_path}}";
+            </script>
+            <script src="{{vips_url}}/js/vips.js"></script>
         {{/version}}
         {{^version}}
             <div class="messagebox messagebox_error">{{#i18n}}Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an Ihren Dozenten.{{/i18n}}</div>

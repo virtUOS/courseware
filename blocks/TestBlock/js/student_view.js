@@ -9,7 +9,6 @@ export default StudentView.extend({
             view = this,
             $exercise_index = $form.find('input[name="exercise_index"]').val(),
             $block = this.$el.parent();
-            var $this_block = this; // We need 'this' in the handler for postRender functions
 
             if (confirm('Soll die Antwort zurückgesetzt werden?')) {
                 helper.callHandler(this.model.id, 'exercise_reset', $form.serialize())
@@ -19,7 +18,7 @@ export default StudentView.extend({
                     console.log('failed to reset the exercise');
                 }).then(function () {
                     $block.find('.exercise').hide();
-                    $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
+                    $block.find('#exercise' + $exercise_index).show();
                 });
             }
 
@@ -42,7 +41,7 @@ export default StudentView.extend({
                 }
             }).then(function () {
                 $block.find('.exercise').hide();
-                view.postRenderExercise($block.find('#exercise' + $exercise_index).show());
+                $block.find('#exercise' + $exercise_index).show();
                 $block.find('.submitinfo').slideDown(250).delay(1500).slideUp(250);
             })
             .catch(function () {
@@ -69,7 +68,7 @@ export default StudentView.extend({
                 $num = parseInt(options.numexes, 10);
             }
             $block.find('.exercise').hide();
-            this.postRenderExercise($block.find('#exercise' + $num).show());
+            $block.find('#exercise' + $num).show();
         },
 
         'click button[name=exercise-hint-button]': function (event) {
@@ -129,32 +128,8 @@ export default StudentView.extend({
                 }
             }
         });
-        // search for rh_lists
-        var $firstExercise = this.$('ul.exercise').eq(0);
-        this.postRenderExercise($firstExercise);
         // re-format LaTeX stuff
         window.MathJax.Hub.Queue([ 'Typeset', window.MathJax.Hub, this.el ]);
-    },
-
-    postRenderExercise($exerciseElement) {
-        // für Zuordnungsaufgaben
-        $exerciseElement.find('.rh_list').each(function (index, rhListEl) {
-            createSortable($(rhListEl));
-        });
-        // helper functions
-        function createSortable($element) {
-            $element.sortable({
-                axis: 'y',
-                item: '> .rh_item',
-                tolerance: 'pointer',
-                placeholder: "ui-state-highlight",
-                update: rh_move_choice
-            });
-        }
-        function rh_move_choice(event, ui) {
-            jQuery(this).children().each(function(i) {
-                jQuery(this).find('input').val(i);
-            });
-        }
     }
+
 });

@@ -14,6 +14,11 @@
         <legend>{{question_description}}</legend>
         {{{question}}}
     </fieldset>
-
+    <div class="cw-test-buttons-wrapper">
+    {{#character_picker}}
+            <button class="open_character_picker button">Zeichenwähler öffnen</a>
+            <div id="character_picker"></div>
+    {{/character_picker}}
     <button name="submit-exercise" class="button" style="display: inline-block">{{#i18n}}Abschicken{{/i18n}}</button>
+    </div>
 </form>
