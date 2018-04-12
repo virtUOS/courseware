@@ -1,3 +1,5 @@
+@import 'mixins';
+
 #courseware-progress-index #layout_container,
 #courseware-cpo-index #layout_container {
 
@@ -607,4 +609,44 @@ th.subchapter-description {
 
 .thread h3 {
     padding: 0 1em;
+}
+
+.talk-bubble.hidden-post {
+    border: solid #e74c3c;
+    
+    &::after {
+        border: none;
+    }
+}
+
+.post-hide, .post-show {
+    .courseware-btn();
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: 6px center;
+    float: right;
+    margin: 5px 0;
+}
+
+.post-hide {
+    background-image: url("../../../../../assets/images/icons/blue/remove-circle.svg");
+    &:hover {
+        background-image: url("../../../../../assets/images/icons/white/remove-circle.svg");
+    }
+}
+
+.post-show {
+    background-image: url("../../../../../assets/images/icons/blue/add-circle.svg");
+    &:hover {
+        background-image: url("../../../../../assets/images/icons/white/add-circle.svg");
+    }
+}
+
+.post-is-hidden-info {
+    padding: 0.5em 1em 0 1em;
+    color: #e74c3c;
+    font-weight: 600;
+    p {
+        margin: 0;
+    }
 }

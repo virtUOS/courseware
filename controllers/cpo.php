@@ -79,6 +79,10 @@ class CpoController extends CoursewareStudipController
 
     public function postoverview_action()
     {
+        if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->plugin->getCourseId())) {
+            throw new Trails_Exception(401);
+        }
+        
         if (Navigation::hasItem('/course/mooc_courseware/postoverview')) {
             Navigation::activateItem('/course/mooc_courseware/postoverview');
         }
@@ -95,7 +99,7 @@ class CpoController extends CoursewareStudipController
             $thread = array(
                 'thread_id' => $thread_id, 
                 'thread_title' => \Mooc\DB\Post::findPost($thread_id, 0, $this->cid)['content'],
-                'thread_posts' => \Mooc\DB\Post::findPosts($thread_id, $this->cid, $this->container['current_user']['id'])
+                'thread_posts' => \Mooc\DB\Post::findPosts($thread_id, $this->cid, $this->container['current_user']['id'], true)
             );
             array_push($this->threads, $thread);
         }
@@ -130,6 +134,21 @@ class CpoController extends CoursewareStudipController
         }
 
         return $this->redirect('cpo/postoverview?'.$answer);
+    }
+
+    public function hide_post_action()
+    {
+        if ((Request::get('thread_id') != '') && (Request::get('post_id') != '') && (Request::get('cid') != '')) { 
+            $thread_id = Request::get('thread_id');
+            $post_id = Request::get('post_id');
+            $cid = Request::get('cid');
+            $hide = Request::get('hide_post');
+        } else {
+            return $this->redirect('cpo/postoverview?hide=false');
+        }
+        $hidden = Post::hidePost($thread_id, $post_id, $cid, $hide);
+
+        return $this->redirect('cpo/postoverview?hide='.$hidden.'&thread_id='.$thread_id);
     }
 
     private function getThreadsInBlocks()

@@ -39,16 +39,35 @@
         <div class="thread" id="thread_<?= $thread["thread_id"]?>">
             <h3><?= $thread["thread_title"]?></h3>
             <? foreach ($thread["thread_posts"]["posts"] as $post): ?>
-            <div class="talk-bubble <?if ($post["own_post"]):?>own-<?endif;?>post">
-                <?if (!$post["own_post"]):?>
+            <div class="talk-bubble <?if ($post["own_post"]):?>own-<?endif;?>post <?if ($post["hidden"]):?>hidden-post<?endif;?>">
+                <? if ($post["hidden"]): ?>
+                    <div class="post-is-hidden-info">
+                        <p><?= _cw('Beitrag ist ausgeblendet!') ?></p>
+                    </div>
+                <? endif; ?>
+                <? if (!$post["own_post"]): ?>
                 <div class="post-user">
                     <?= $post["avatar"]?>
                     <p><?= $post["user_name"]?></p>
                 </div>
-                <?endif;?>
+                <? endif; ?>
               <div class="talktext">
                  <p><?= $post["content"]?></p>
-                <p class="talktext-time"><?= $post["date"]?></p>
+                <p class="talktext-time">
+                    <?= $post["date"]?>
+                    <form class="" action="hide_post" method="get">
+                        <input type="hidden" name="thread_id" value="<?= $thread["thread_id"]?>">
+                        <input type="hidden" name="post_id"  value="<?= $post["post_id"]?>">
+                        <input type="hidden" name="cid" value="<?= $cid ?>">
+                        <? if ($post["hidden"]): ?>
+                            <input type="hidden" name="hide_post"  value="0">
+                            <input type="submit" value="einblenden" class="button post-show">
+                        <? else: ?>
+                            <input type="hidden" name="hide_post"  value="1">
+                            <input type="submit" value="ausblenden" class="button post-hide">
+                        <? endif; ?>
+                    </form>
+                </p>
               </div>
             </div>
                
@@ -59,6 +78,7 @@
 </div>
 <form class="postoverview-form" action="answer" method="get">
     <input type="hidden" name="thread_id" id="input_thread_id" value="">
+    <input type="hidden" name="cid" value="<?= $cid ?>">
     
     <textarea name="content" placeholder="<?= _cw('Auf Beitrag antworten...') ?>" spellcheck="true"></textarea>
     <input type="submit" value="senden" class="button">
