@@ -15,7 +15,6 @@ class BlocksController extends CoursewareStudipController {
         $block = $this->requireBlock($id);
         $ui_block = $this->plugin->getBlockFactory()->makeBlock($block);
 
-
         if ($this->acceptsJSON() || !$ui_block) {
             $json = $block->toArray();
 

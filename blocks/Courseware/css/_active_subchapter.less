@@ -68,7 +68,6 @@ ol.active-subchapter {
     &.selected {
       & > a {
         background-color: #28497c;
-        border: none;
         outline: 0;
         font-weight: normal;
       }
@@ -146,6 +145,9 @@ ol.active-subchapter {
     }
     &.disabled {
         .bgImg('arr_1left', 'grey', 24);
+        &:hover {
+        background-color: #fff;
+        }
     }
   }
 
@@ -157,6 +159,9 @@ ol.active-subchapter {
     }
     &.disabled {
         .bgImg('arr_1right', 'grey', 24);
+        &:hover {
+        background-color: #fff;
+        }
     }
   }
 
