@@ -21,11 +21,7 @@
 
 .btn(@img) {
   .btn-base();
-  background: url("@{blocks-icons-dir}/grey/@{img}.svg") center center no-repeat;
-
-  &:hover {
-    background-image: url("@{blocks-icons-dir}/black/@{img}.svg");
-  }
+  background: url("@{blocks-icons-dir}/blue/@{img}.svg") center center no-repeat;
 }
 
 .bgImg(@icon, @color, @size: 16) {
@@ -36,20 +32,30 @@
 }
 
 .courseware-btn() {
-  color: #000;
-  border: 1px solid #d0d0d0;
-  background-color: #e9e9e9;
+  color: #28497c;
+  border: solid thin #28497c;
+  background-color: #fff;
   background-repeat: no-repeat;
   min-height: 27px;
-  padding: 9px 6px 9px 28px;
-  margin: 0px;
+  line-height: 130%;
+  min-width: 100px;
+  padding: 5px 15px 5px 30px;
+  margin: 0 0 0.25em 0;
   cursor: pointer;
-  font-size: 12px;
-  border-radius: 2px;
+  font-size: 14px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: bottom;
+  white-space: nowrap;
+  width: auto;
 
   &:hover {
-    background-color: #F8F8F8;
-    border-color: #cccccc;
+    background-color: #28497c;
+    color: #fff;
+    outline: 0;
   }
 }
 

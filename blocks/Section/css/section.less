@@ -11,15 +11,13 @@ section#courseware {
   max-width: @content-max-width;
 
   .section-title() {
-    // move this to the OHN-Layout
     font-weight: 700;
-    color: #444444;
-    line-height: 1.1;
+    color: #444;
     margin-top: 15px;
     margin-bottom: 30px;
     font-size: 32px;
     padding: 0px;
-    // end move
+
   }
 
   // ***** Title *****
@@ -28,9 +26,13 @@ section#courseware {
       .section-title();
       border-bottom: none;
 
-      .controls button {
-        &.edit  { .btn(edit); }
-        &.trash { .btn(trash); }
+      .controls {
+        display: inline-block;
+        font-size: unset;
+        button {
+            &.edit  { .btn(edit); }
+            &.trash { .btn(trash); }
+        }
       }
     }
 
@@ -85,11 +87,11 @@ section#courseware {
         background-color: transparent;
       }
 
-      button.raise  { .bgImg(arr_2up, grey, 20); }
-      button.lower  { .bgImg(arr_2down, grey, 20); }
-      button.author { .bgImg(edit, grey, 20); }
-      button.trash  { .bgImg(trash, grey, 20); }
-      button.info   { .bgImg(info, grey, 20); cursor: help;}
+      button.raise  { .bgImg(arr_2up, yellow, 20); }
+      button.lower  { .bgImg(arr_2down, yellow, 20); }
+      button.author { .bgImg(edit, blue, 20); }
+      button.trash  { .bgImg(trash, blue, 20); }
+      button.info   { .bgImg(info, blue, 20); cursor: help;}
     }
 
     & + .no-content {
@@ -111,20 +113,20 @@ section#courseware {
         float:left;
         margin-right: 5px;
         .assets-bg-icon("blue/arr_1down.svg");
-        background:  #eee no-repeat scroll right 10px center;
-        border: 1px solid #d0d0d0;
-        border-radius: 2px;
+        background:  #fff no-repeat scroll right 10px center;
+        border: 1px solid #28497c;
         height: 34px;
         overflow: hidden;
-        width: (@sidebar-width - 50);
+        width: (@sidebar-width - 52);
 
         > select {
             background: transparent;
+            color: #28497c;
             .assets-bg-icon("blue/arr_1down.svg");
             background-repeat: no-repeat;
             background-position-x: right+5px;
             background-position-y: 50%;
-            width: (@sidebar-width - 50);
+            width: (@sidebar-width - 52);
             padding: 5px;
             font-size: 16px;
             line-height: 1;
@@ -153,6 +155,10 @@ section#courseware {
       .assets-bg-icon("blue/add.svg");
       background-position: 6px center;
       padding-left: 28px;
+      
+      &:hover {
+        .assets-bg-icon("white/add.svg");
+      }
 
       &.loading {
         .ajax-indicator-bg-icon();
@@ -164,21 +170,25 @@ section#courseware {
   .edit-section {
     input {
       .section-title();
+      border: solid thin #ccc;
+        &:focus {
+            border: solid thin #009eff;
+        }
     }
 
     button {
       .btn-base();
       background-position: center center;
       background-repeat: no-repeat;
+      width: 36px;
+      height: 36px;
 
       &.cancel {
         .assets-bg-icon("grey/decline.svg");
-        right: 20px;
       }
 
       &.ok {
         .assets-bg-icon("grey/accept.svg");
-        right: 0;
       }
     }
   }
@@ -228,7 +238,6 @@ button.stop-sort-block {
 .aside-section {
     width: unset;
     padding-top: 0;
-    margin: 7px 5px 0;
         
     > section.block {
         margin-bottom: 0.75em;

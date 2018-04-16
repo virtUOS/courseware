@@ -125,13 +125,9 @@ class User extends \User
         if ($this->isNobody()) {
             return false;
         }
-
-        // optimistically get the current courseware
         $courseware = $this->container['current_courseware'];
-
-        // if the $block is not a descendant of it, get its courseware
-        if ($courseware->getModel()->seminar_id !== $block->seminar_id) {
-            $courseware_model = $this->container['courseware_factory']->makeCourseware($block->seminar_id);
+        if(!$courseware){
+            $courseware_model = $block->getCoursewareOfThisBlock();
             $courseware = $this->container['block_factory']->makeBlock($courseware_model);
         }
 

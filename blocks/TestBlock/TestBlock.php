@@ -73,7 +73,13 @@ class TestBlock extends Block
             );
         }
 
-        return array_merge($this->getAttrArray(), array('active' => $active, 'version' => $version, 'installed' => $installed), $this->buildExercises());
+        return array_merge($this->getAttrArray(), array(
+            'active' => $active,
+            'version' => $version,
+            'installed' => $installed,
+            'vips_url' => $this->getVipsURL(),
+            'vips_path' => dirname(\PluginEngine::getURL('vipsplugin'))
+        ), $this->buildExercises());
     }
 
     public function author_view()
@@ -265,6 +271,7 @@ class TestBlock extends Block
         if ($this->vipsInstalled()) {
             $plugin_manager = \PluginManager::getInstance();
             $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
+
             return $plugin_manager->isPluginActivated($plugin_info['id'], $this->getModel()->seminar_id);
         } else {
             return false;
@@ -276,6 +283,7 @@ class TestBlock extends Block
         if ($this->vipsInstalled()) {
             $plugin_manager = \PluginManager::getInstance();
             $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
+
             return version_compare('1.3',$version) <= 0;
         } else {
             return false;
@@ -287,6 +295,17 @@ class TestBlock extends Block
         $plugin_manager = \PluginManager::getInstance();
 
         return $plugin_manager->getPlugin('VipsPlugin') != null ? true : false;
+    }
+
+    private function getVipsURL()
+    {
+        if ($this->vipsInstalled()) {
+            $plugin_manager = \PluginManager::getInstance();
+
+            return $plugin_manager->getPlugin('VipsPlugin')->getPluginURL();
+        } else {
+            return false;
+        }
     }
 
     private function buildExercises()
@@ -367,8 +386,14 @@ class TestBlock extends Block
                 $tries_left = false;
             }
 
+            if (in_array($exercise->type, array('lt_exercise', 'tb_exercise', 'cloze_exercise'))) {
+                $character_picker = true;
+            } else {
+                $character_picker = false;
+            }
+
             $entry = array(
-                'exercise_type'       => $exercise->getTypeName(),
+                'exercise_type'       => $exercise->type,
                 'id'                  => $exercise->getId(),
                 'test_id'             => $this->test_id,
                 'self_test'           => $assignment->type == 'selftest',
@@ -393,7 +418,9 @@ class TestBlock extends Block
                 'sample_solution'     => $sample_solution,
                 'is_corrected'        => $solution['corrected'],
                 'tries_left'          => $tries_left, 
-                'tries_pl'            => $tries_pl
+                'tries_pl'            => $tries_pl,
+                'character_picker'    => $character_picker,
+                'file_upload'         => $exercise->options['file_upload']
             );
             $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
             $available = !$entry['show_solution'] && !$entry['solving_allowed']; //or correction is available

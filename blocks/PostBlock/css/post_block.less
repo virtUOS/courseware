@@ -1,17 +1,16 @@
 @import '../../../assets/less/mixins';
 
-section#courseware .PostBlock .block-content:not([data-view="student"]){
-    label {
-        width: 20em;
+section#courseware .PostBlock { 
+    .block-content:not([data-view="student"]){
+        label {
+            width: 26em;
+        }
+        
+        label[for="cw-postblock-id"],
+        .cw-postblock-id {
+            display: none ;
+        }
     }
-    
-    label[for="cw-postblock-id"],
-    .cw-postblock-id {
-        display: none ;
-    }
-}
-
-.PostBlock {
     .cw-postblock-header {
         .cw-block-header();
     }
@@ -34,8 +33,8 @@ section#courseware .PostBlock .block-content:not([data-view="student"]){
             border: solid thin #ccc;
         }
 
-        .cw-postblock-sendmessage {
-            margin-bottom: 24px;
+        .button.cw-postblock-sendmessage {
+            margin: 0 -2px 24px 0;
             float: right;
         }
     }

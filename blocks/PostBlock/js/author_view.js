@@ -65,10 +65,12 @@ export default AuthorView.extend({
         if ($reuse) {
             $thread_id = $view.$(".cw-postblock-id").val();
         }
+        var $has_to_post = $view.$(".cw-postblock-has-to-post").is(":checked");
         helper
             .callHandler(this.model.id, 'save', {
                 post_title: $post_title,
-                thread_id: $thread_id
+                thread_id: $thread_id,
+                has_to_post: $has_to_post
             })
             .then(
                 // success

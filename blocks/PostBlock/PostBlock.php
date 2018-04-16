@@ -14,6 +14,7 @@ class PostBlock extends Block
     {
         $this->defineField('post_title', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('thread_id', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('has_to_post', \Mooc\SCOPE_BLOCK, false);
     }
 
     public function student_view()
@@ -21,7 +22,12 @@ class PostBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
+
         $user = new User($this->container, $this->container['current_user_id']);
+
+        if(!$this->has_to_post){
+            $this->setGrade(1.0);
+        }
         return array_merge(
             $this->getAttrArray(),
             Post::findPosts($this->thread_id, $this->container['cid'], $this->container['current_user_id']),
@@ -34,35 +40,50 @@ class PostBlock extends Block
         $this->authorizeUpdate();
         $post_ids = Post::getThreadIds($this->container['cid']);
 
-        return array_merge($this->getAttrArray(), array("post_ids" => $post_ids));
+        return array_merge($this->getAttrArray(), array('post_ids' => $post_ids, 'has_to_post' => $this->has_to_post));
     }
 
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        if (isset($data['post_title']) && isset($data['thread_id'])) {
 
-            if ($this->post_title == Post::findPost($this->thread_id, 0, $this->container['cid'])["content"]) {
-                Post::alterPost($this->thread_id, 0, $this->container['cid'], (string) $data['post_title']);
-            }
+        if ($this->post_title == Post::findPost($this->thread_id, 0, $this->container['cid'])["content"]) {
+            Post::alterPost($this->thread_id, 0, $this->container['cid'], (string) $data['post_title']);
+        }
 
-            $this->post_title = (string) $data['post_title'];
-
-            if ($data['thread_id'] != 'new'){
-                $this->thread_id = (string) $data['thread_id'];
+        if ($data['post_title'] == "") {
+            if ($data['thread_id'] == 'new'){
+                $this->post_title = 'Diskussion-'. $this->_model->id;
             } else {
-                $this->thread_id = Post::newThreadId($this->container['cid']);
-                $data = array(
-                    'thread_id' => $this->thread_id ,
-                    'post_id' => 0,
-                    'seminar_id' => $this->container['cid'],
-                    'user_id' => $this->container['current_user_id'],
-                    'content' => $data['post_title'],
-                    'mkdate' => (new \DateTime())->format('Y-m-d H:i:s')
-                );
-                Post::create($data);
+                $this->post_title = Post::findOneBySQL('thread_id = ? AND seminar_id = ? AND post_id = 0', 
+                                    array($data['thread_id'], $this->container['cid']))->content;
             }
-        } 
+        } else {
+             $this->post_title = (string) $data['post_title'];
+        }
+
+        if (isset($data['has_to_post'])) {
+            $this->has_to_post = $data['has_to_post'];
+        } else {
+            $this->has_to_post = false;
+        }
+
+        if ($data['thread_id'] != 'new'){
+            $this->thread_id = (string) $data['thread_id'];
+        } else {
+            $this->thread_id = Post::newThreadId($this->container['cid']);
+            $data = array(
+                'thread_id' => $this->thread_id ,
+                'post_id' => 0,
+                'seminar_id' => $this->container['cid'],
+                'user_id' => $this->container['current_user_id'],
+                'content' => $this->post_title,
+                'mkdate' => (new \DateTime())->format('Y-m-d H:i:s'),
+                'chdate' => (new \DateTime())->format('Y-m-d H:i:s')
+            );
+            Post::create($data);
+        }
+
 
         return;
     }
@@ -79,7 +100,8 @@ class PostBlock extends Block
                 'seminar_id' => $this->container['cid'],
                 'user_id' => $this->container['current_user_id'],
                 'content' => $data["message"],
-                'mkdate' => (new \DateTime())->format('Y-m-d H:i:s')
+                'mkdate' => (new \DateTime())->format('Y-m-d H:i:s'),
+                'chdate' => (new \DateTime())->format('Y-m-d H:i:s')
             );
 
             Post::create($data);
@@ -108,8 +130,8 @@ class PostBlock extends Block
     private function getAttrArray()
     {
         return array(
-            'post_title' => $this->post_title,
-            'thread_id' => $this->thread_id
+            'post_title'    => $this->post_title,
+            'thread_id'     => $this->thread_id
         );
     }
 
@@ -151,6 +173,10 @@ class PostBlock extends Block
                     'mkdate' => (new \DateTime())->format('Y-m-d H:i:s')
                 );
                 POST::create($data);
+        }
+        
+        if (isset($properties['has_to_post'])) {
+            $this->has_to_post = $properties['has_to_post'];
         }
 
         $this->save();

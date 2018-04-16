@@ -7,7 +7,21 @@
             }
         }?>
         <li id="container_<?= $thread["thread_id"]?>" class="post-overview-thread <?if ($counter > 0):?> post-overview-highlight <?endif;?>">
-            <h3><?= $thread["thread_title"]?> (id = <?= $thread["thread_id"]?>)</h3>
+            <h3 class="thread-title">
+                <span class="thread-title-content">
+                    <?= $thread["thread_title"]?> (id = <?= $thread["thread_id"]?>)
+                    <span class="edit-thread-title-button"><?= Icon::create('edit', 'clickable'); ?></span>
+                </span>
+                <form class="edit-thread-title" action="edit_title" style="display:none;">
+                    <input type="hidden" value="<?= $thread["thread_id"]?>" name="thread_id">
+                    <input type="text" value="<?= $thread["thread_title"]?>" name="thread_title">
+                    <input type="hidden" name="cid" value="<?= $cid ?>">
+                    <button class="edit-thread-button" type="submit"> <?= Icon::create('accept', 'accept') ?> </button>
+                    <button class="edit-thread-button edit-reset" type="reset"> <?= Icon::create('decline', 'status-red') ?> </button>
+                </form>
+            </h3>
+
+            
             <? if (array_key_exists($thread["thread_id"], ($thrads_in_blocks))) :?>
                 <? foreach($thrads_in_blocks[$thread["thread_id"]] as $block): ?>
                     <p class="post-overview-block-link"><a href="<?= $block['link']?>">
@@ -39,16 +53,35 @@
         <div class="thread" id="thread_<?= $thread["thread_id"]?>">
             <h3><?= $thread["thread_title"]?></h3>
             <? foreach ($thread["thread_posts"]["posts"] as $post): ?>
-            <div class="talk-bubble <?if ($post["own_post"]):?>own-<?endif;?>post">
-                <?if (!$post["own_post"]):?>
+            <div class="talk-bubble <?if ($post["own_post"]):?>own-<?endif;?>post <?if ($post["hidden"]):?>hidden-post<?endif;?>">
+                <? if ($post["hidden"]): ?>
+                    <div class="post-is-hidden-info">
+                        <p><?= _cw('Beitrag ist ausgeblendet!') ?></p>
+                    </div>
+                <? endif; ?>
+                <? if (!$post["own_post"]): ?>
                 <div class="post-user">
                     <?= $post["avatar"]?>
                     <p><?= $post["user_name"]?></p>
                 </div>
-                <?endif;?>
+                <? endif; ?>
               <div class="talktext">
                  <p><?= $post["content"]?></p>
-                <p class="talktext-time"><?= $post["date"]?></p>
+                <p class="talktext-time">
+                    <?= $post["date"]?>
+                    <form class="" action="hide_post" method="get">
+                        <input type="hidden" name="thread_id" value="<?= $thread["thread_id"]?>">
+                        <input type="hidden" name="post_id"  value="<?= $post["post_id"]?>">
+                        <input type="hidden" name="cid" value="<?= $cid ?>">
+                        <? if ($post["hidden"]): ?>
+                            <input type="hidden" name="hide_post"  value="0">
+                            <input type="submit" value="einblenden" class="button post-show">
+                        <? else: ?>
+                            <input type="hidden" name="hide_post"  value="1">
+                            <input type="submit" value="ausblenden" class="button post-hide">
+                        <? endif; ?>
+                    </form>
+                </p>
               </div>
             </div>
                
@@ -59,6 +92,7 @@
 </div>
 <form class="postoverview-form" action="answer" method="get">
     <input type="hidden" name="thread_id" id="input_thread_id" value="">
+    <input type="hidden" name="cid" value="<?= $cid ?>">
     
     <textarea name="content" placeholder="<?= _cw('Auf Beitrag antworten...') ?>" spellcheck="true"></textarea>
     <input type="submit" value="senden" class="button">
@@ -67,6 +101,7 @@
     var thread_id_from_url = location.search.split('thread_id=')[1];
     if(thread_id_from_url){
         $('#thread_'+thread_id_from_url).show();
+        $('#container_'+thread_id_from_url).addClass("post-overview-thread-selected");
         $('.post-overview-postings').scrollTop($('.post-overview-postings')[0].scrollHeight);
         $('.post-overview').scrollTop(
             $('#container_'+thread_id_from_url).offset().top - $('.post-overview').offset().top + $('.post-overview').scrollTop()
@@ -78,5 +113,15 @@
         $('#thread_'+$thread_id).show();
         $('.post-overview-postings').scrollTop($('.post-overview-postings')[0].scrollHeight);
         $('#input_thread_id').val($thread_id);
+        $('.post-overview-thread').removeClass("post-overview-thread-selected");
+        $('#container_'+$thread_id).addClass("post-overview-thread-selected");
+    });
+    $('.edit-thread-title-button').click(function(event){
+        $(this).parent().hide();
+        $(this).parent().siblings("form").show();
+    });
+    $('.edit-reset').click(function(event){
+        $(this).parent().hide();
+        $(this).parent().siblings(".thread-title-content").show();
     });
 </script>

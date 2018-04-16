@@ -592,12 +592,14 @@ class Courseware extends Block
     private function createAnyBlock($parent, $type, $data)
     {
         $block = new \Mooc\DB\Block();
+        $parent_id = is_object($parent) ? $parent->id : $parent;
         $block->setData(array(
             'seminar_id' => $this->_model->seminar_id,
-            'parent_id' => is_object($parent) ? $parent->id : $parent,
+            'parent_id' => $parent_id,
             'type' => $type,
             'title' => $data['title'],
             'publication_date' => $data['publication_date'],
+            'position' => $block->getNewPosition($parent_id)
         ));
 
         $block->store();

@@ -97,6 +97,11 @@ class Block extends \SimpleORMap implements \Serializable
         }
     }
 
+    public function getNewPosition($parent_id)
+    {
+        return static::countBySQL( 'parent_id = ? ORDER BY position ASC', array($parent_id));
+    }
+
     public function getAncestors()
     {
         $ancestors = array();
@@ -127,6 +132,11 @@ class Block extends \SimpleORMap implements \Serializable
     public static function findCourseware($cid)
     {
         return current(self::findBySQL('seminar_id = ? AND type = ? LIMIT 1', array($cid, 'Courseware')));
+    }
+
+    public function getCoursewareOfThisBlock()
+    {
+        return static::findOneBySQL('seminar_id = ? AND type = ? LIMIT 1', array($this->seminar_id, 'Courseware'));
     }
 
     /**

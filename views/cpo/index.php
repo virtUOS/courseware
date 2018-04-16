@@ -87,8 +87,12 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>"
                     <? foreach ($subchapter['children'] as $section) : ?>
                       <li>
                         <a href="<?= $controller->url_for('courseware', array('selected' => $section['id'])) ?>"
-                           title="<?= htmlReady($section['title']) ?>"
-                           data-progress="<?= $progress($section) ?>">
+                           data-progress="<?= $progress($section) ?>"><span class="progress-section-title">
+                                <?  $title = htmlReady($section['title']);
+                                    if(strlen($title) > 16) { $title =  substr($title, 0, 12) . "...";}
+                                    echo $title;
+                                ?>
+                            </span>
                           <progress value=<?= $progress($section) ?> max=100></progress>
                         </a>
                       </li>

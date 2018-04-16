@@ -18,10 +18,8 @@
 button {
   &.button {
     .courseware-btn;
-    margin: 4px 0 px 0px;
     background-image: none;
-    background-color: #e9e9e9;
-    padding-left: 6px;
+    padding-left: 15px;
     min-width: 80px;
 
     &[name="save"],
@@ -36,6 +34,9 @@ button {
   &.add-section {
     .assets-bg-icon("blue/add.svg");
     background-position: 6px center;
+    &:hover {
+        .assets-bg-icon("white/add.svg");
+    }
   }
 
   &.init-sort-chapter,
@@ -43,6 +44,9 @@ button {
   &.init-sort-section {
     background-image: url("../../assets/images/icons/blue/arr_1sort.svg");
     background-position: 6px center;
+    &:hover {
+        background-image: url("../../assets/images/icons/white/arr_1sort.svg");
+    }
   }
 
   &.stop-sort-chapter,
@@ -53,14 +57,23 @@ button {
     background-repeat: no-repeat;
     background-color: #E9E9E9;
     display: none;
+    &:hover {
+        .assets-bg-icon("white/accept.svg");
+    }
   }
   &.activate-aside-section {
     .assets-bg-icon("blue/check-circle-full.svg");
     background-position: 6px center;
+    &:hover {
+        .assets-bg-icon("white/check-circle-full.svg");
+    }
   }
   &.deactivate-aside-section {
     .assets-bg-icon("blue/decline-circle-full.svg");
     background-position: 6px center;
+    &:hover {
+        .assets-bg-icon("white/decline-circle-full.svg");
+    }
   }
 
   &.activate-aside-section.loading {
@@ -68,14 +81,10 @@ button {
   }
 }
 
-a {
-  &.button {
+a.button {
     .courseware-btn;
-    padding: 9px 6px;
-    margin: 10px 5px 0;
-    background-image: none;
-    background-color: #e9e9e9;
-  }
+    padding: 5px 15px;
+ 
 }
 
 .chapters > .selected > .subchapters > .selected > .sections > li > .edit-structure > form >.hasDatepicker {

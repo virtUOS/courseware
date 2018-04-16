@@ -29,13 +29,7 @@ export default AuthorView.extend({
         $(this).prop('selected', true);
       }
     });
-    var $files = $view.$el.find('.download-file option');
-    var $stored_file = $view.$el.find('.download-stored-file').val();
-    $files.each(function () {
-      if ($(this).attr('file_id') == $stored_file) {
-        $(this).prop('selected', true);
-      }
-    });
+    $view.selectFolder();
   },
 
   onNavigate(event) {
@@ -117,14 +111,26 @@ export default AuthorView.extend({
 
   showFiles($allfiles) {
     var $files = this.$el.find('.download-file');
+    var $stored_file = this.$el.find('.download-stored-file').val();
     $files.find('option').remove();
+    if ($allfiles.length == 0) {
+        $files.append($('<option>', {
+            value: "",
+            text: "In diesem Ordner befinden sich keine Dateien."
+        }));
+        $files.prop('disabled', 'disabled');
+        return false;
+    }
     $.each($allfiles, function (key, value) {
       $files.append($('<option>', {
         value: value.name,
         text: value.filename,
         file_id: value.dokument_id,
-        file_name: value.filename
+        file_name: value.filename,
+        selected: value.dokument_id == $stored_file
       }));
     });
+    $files.prop('disabled', false);
+    return true;
   }
 });

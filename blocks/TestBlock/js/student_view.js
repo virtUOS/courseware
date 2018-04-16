@@ -9,7 +9,6 @@ export default StudentView.extend({
             view = this,
             $exercise_index = $form.find('input[name="exercise_index"]').val(),
             $block = this.$el.parent();
-            var $this_block = this; // We need 'this' in the handler for postRender functions
 
             if (confirm('Soll die Antwort zurückgesetzt werden?')) {
                 helper.callHandler(this.model.id, 'exercise_reset', $form.serialize())
@@ -19,7 +18,7 @@ export default StudentView.extend({
                     console.log('failed to reset the exercise');
                 }).then(function () {
                     $block.find('.exercise').hide();
-                    $this_block.postRenderExercise($block.find('#exercise' + $exercise_index).show());
+                    $block.find('#exercise' + $exercise_index).show();
                 });
             }
 
@@ -42,7 +41,7 @@ export default StudentView.extend({
                 }
             }).then(function () {
                 $block.find('.exercise').hide();
-                view.postRenderExercise($block.find('#exercise' + $exercise_index).show());
+                $block.find('#exercise' + $exercise_index).show();
                 $block.find('.submitinfo').slideDown(250).delay(1500).slideUp(250);
             })
             .catch(function () {
@@ -69,7 +68,11 @@ export default StudentView.extend({
                 $num = parseInt(options.numexes, 10);
             }
             $block.find('.exercise').hide();
-            this.postRenderExercise($block.find('#exercise' + $num).show());
+            var $ex = $block.find('#exercise' + $num).show();
+            if ($ex.find("input[name=exercise_type]").val() == 'tb_exercise') {
+                $ex.find('table.default').hide();
+            }
+            $(window).trigger('resize');
         },
 
         'click button[name=exercise-hint-button]': function (event) {
@@ -92,69 +95,6 @@ export default StudentView.extend({
     },
 
     postRender() {
-        var $form = this.$('.cw-test-content form');
-
-        $form.each(function () {
-            var $exercise_type = $(this).find('input[name="exercise_type"]').val();
-            var $user_answers = $(this).find('input[name="user_answers_string"]').val();
-            var $thisform = $(this);
-            if (!($user_answers)) {
-                return; //break the loop
-            } else {
-                switch ($exercise_type) {
-                    case 'sc_exercise':
-                    case 'yn_exercise':
-                        var $radioid = $thisform.find('label:contains(' + $user_answers + ')').attr('for');
-                        var $radio = $('#' + $radioid);
-                        $radio.attr('checked', 'checked');
-                        break;
-                    case 'mc_exercise':
-                        var $mc_answers = $user_answers.split(',');
-                        $.each($mc_answers, function (index, value) {
-                            var $checkboxid = $thisform.find('label:contains(' + value + ')').attr('for');
-                            var $checkbox = $('#' + $checkboxid);
-                            $checkbox.attr('checked', 'checked');
-                        });
-                        break;
-                    case 'tb_exercise':
-                        var $textbox = $thisform.find('textarea');
-                        $textbox.val($user_answers);
-                        break;
-                    case 'lt_exercise':
-                        var $textfield = $thisform.find('input[type="text"]');
-                        $textfield.val($user_answers);
-                        break;
-                    default:
-                        return false;
-                }
-            }
-        });
-        // search for rh_lists
-        var $firstExercise = this.$('ul.exercise').eq(0);
-        this.postRenderExercise($firstExercise);
-        // re-format LaTeX stuff
-        window.MathJax.Hub.Queue([ 'Typeset', window.MathJax.Hub, this.el ]);
-    },
-
-    postRenderExercise($exerciseElement) {
-        // für Zuordnungsaufgaben
-        $exerciseElement.find('.rh_list').each(function (index, rhListEl) {
-            createSortable($(rhListEl));
-        });
-        // helper functions
-        function createSortable($element) {
-            $element.sortable({
-                axis: 'y',
-                item: '> .rh_item',
-                tolerance: 'pointer',
-                placeholder: "ui-state-highlight",
-                update: rh_move_choice
-            });
-        }
-        function rh_move_choice(event, ui) {
-            jQuery(this).children().each(function(i) {
-                jQuery(this).find('input').val(i);
-            });
-        }
     }
+
 });

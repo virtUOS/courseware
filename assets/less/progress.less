@@ -1,3 +1,5 @@
+@import 'mixins';
+
 #courseware-progress-index #layout_container,
 #courseware-cpo-index #layout_container {
 
@@ -143,16 +145,19 @@ th.subchapter-description {
       a {
         box-sizing: border-box;
         padding: 0.5em 1em;
-        margin: 0.9em 0 0 0;
+        margin: -0.4em 0 0 0;
         display: inline-block;
         position: relative;
+        
+        span.progress-section-title {
+            font-size: 0.8em;
+        }
 
         &:after {
           content: attr(data-progress) '%';
           font-size: 14px;
           color: white;
           position: absolute;
-          top: 0.5em;
           left: 1.5em;
           line-height: 1.5em;
         }
@@ -189,6 +194,7 @@ th.subchapter-description {
 #overview-usage {
   float:right;
   margin-bottom: 2em;
+  cursor: help;
   ul {
     list-style: none;
   }
@@ -300,6 +306,7 @@ th.subchapter-description {
   background-color: #fff;
   float: right;
   margin-right: 0.5em;
+  cursor: help;
 
   .overview-date-month {
     background-color: #e74c3c;
@@ -589,10 +596,24 @@ th.subchapter-description {
     border: solid thin #ccc;
     padding: 0.5em 1em;  
     margin-bottom: 1em;
-}
 
-.post-overview-highlight { 
-    border: solid 2px #28497c;
+    &.post-overview-thread-selected { 
+        border: solid 4px #28497c;
+    }
+
+    &.post-overview-highlight { 
+        border: solid thin #28497c;
+    }
+
+    .edit-thread-title-button {
+        cursor: pointer;
+    }
+
+    .edit-thread-button {
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+    }
 }
 
 .post-overview-block-link{
@@ -606,4 +627,44 @@ th.subchapter-description {
 
 .thread h3 {
     padding: 0 1em;
+}
+
+.talk-bubble.hidden-post {
+    border: solid #e74c3c;
+    
+    &::after {
+        border: none;
+    }
+}
+
+.post-hide, .post-show {
+    .courseware-btn();
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: 6px center;
+    float: right;
+    margin: 5px 0;
+}
+
+.post-hide {
+    background-image: url("../../../../../assets/images/icons/blue/remove-circle.svg");
+    &:hover {
+        background-image: url("../../../../../assets/images/icons/white/remove-circle.svg");
+    }
+}
+
+.post-show {
+    background-image: url("../../../../../assets/images/icons/blue/add-circle.svg");
+    &:hover {
+        background-image: url("../../../../../assets/images/icons/white/add-circle.svg");
+    }
+}
+
+.post-is-hidden-info {
+    padding: 0.5em 1em 0 1em;
+    color: #e74c3c;
+    font-weight: 600;
+    p {
+        margin: 0;
+    }
 }

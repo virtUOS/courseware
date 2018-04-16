@@ -6,18 +6,18 @@ ol.active-subchapter {
     display: block;
     float: left;
     margin: 0px 4px 0px 0px;
+    padding: 0 1px;
 
     & > a {
-      background-color: #f3f3f3;
+      background-color: #fff;
       background-size: 20px;
       color: transparent;
-
+      border: solid thin rgba(40, 73, 124, 0.4);
       width: @section-icon-width;
       height: @section-icon-height;
 
-      padding: 0px;
+      padding: 0 0.5em;
       display: inline-block;
-      border-radius: 2px;
       overflow: hidden;
 
       &[data-icon=""]         { .bgImg(info-small,  "blue", 24); }
@@ -37,9 +37,24 @@ ol.active-subchapter {
     }
 
     &:hover > a {
-      background-color: #ddd;
+      background-color: #28497c;
+      outline: 0;
+      &[data-icon=""]         { .bgImg(info-small,  "white", 24); }
+      &[data-icon="chat"]     { .bgImg(chat,        "white", 24); }
+      &[data-icon="document"] { .bgImg(info-small,  "white", 24); }
+      &[data-icon="task"]     { .bgImg(question,    "white", 24); }
+      &[data-icon="video"]    { .bgImg(video,       "white", 24); }
+      &[data-icon="audio"]    { .bgImg(play,        "white", 24); }
+      &[data-icon="code"]     { .bgImg(computer,    "white", 24); }
+      &[data-icon="search"]   { .bgImg(search,      "white", 24); }
+      &[data-icon="gallery"]  { 
+          background-image: url("../images/icons/white/image.svg");
+          background-size: 24px;
+          background-position: center center;
+          background-repeat: no-repeat;
+       }
     }
-
+/*
     &.visited {
       &:hover > a {
         background-color: #ddd;
@@ -49,19 +64,17 @@ ol.active-subchapter {
         background-color: #f3f3f3;
       }
     }
-
+*/
     &.selected {
       & > a {
-        background-color: #24437C;
-        border-color: #222;
-        border-radius: 2px;
+        background-color: #28497c;
+        outline: 0;
         font-weight: normal;
       }
 
       &:hover > a {
-        background-color: #24437C;
+        background-color: #28497c;
         border-color: #222;
-        border-radius: 2px;
         font-weight: normal;
       }
 
@@ -106,25 +119,50 @@ ol.active-subchapter {
     width: @section-icon-width;
     height: @section-icon-height;
 
-    background-color: #c8c8c8;
+    background-color: #fff;
     background-size: 20px;
-    border-radius: 2px;
 
     a {
-      background: inherit;
+      background: transparent;
+      border: none;
+      width: 24px;
+      height: 37px;
+      &:hover {
+       background: transparent;
+      }
     }
 
     &.disabled {
-      background-color: #e8e8e8;
+      background-color: #fff;
     }
   }
 
   .prev {
-    .bgImg('arr_1left', 'white', 24);
+    .bgImg('arr_1left', 'blue', 24);
+    &:hover {
+        background-color: #28497c;
+        .bgImg('arr_1left', 'white', 24);
+    }
+    &.disabled {
+        .bgImg('arr_1left', 'grey', 24);
+        &:hover {
+        background-color: #fff;
+        }
+    }
   }
 
   .next {
-    .bgImg('arr_1right', 'white', 24);
+    .bgImg('arr_1right', 'blue', 24);
+        &:hover {
+        background-color: #28497c;
+        .bgImg('arr_1right', 'white', 24);
+    }
+    &.disabled {
+        .bgImg('arr_1right', 'grey', 24);
+        &:hover {
+        background-color: #fff;
+        }
+    }
   }
 
 

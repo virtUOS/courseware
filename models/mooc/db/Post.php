@@ -11,6 +11,7 @@ namespace Mooc\DB;
  * @property \User $user
  * @property string $user_name
  * @property string $content
+ * @property tinyint $hidden
  * @property float $mkdate
  * @property float $chdate
  */
@@ -52,7 +53,7 @@ class Post extends \SimpleORMap
         return $stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
     }
 
-    public function findPosts($thread_id, $cid, $uid)
+    public function findPosts($thread_id, $cid, $uid, $show_hidden = false)
     {
         $db = \DBManager::get();
         $stmt = $db->prepare("
@@ -73,6 +74,10 @@ class Post extends \SimpleORMap
         $timestamp = 0;
         array_shift($posts);
         foreach($posts as $key => &$post){
+            if (!$show_hidden && $post['hidden']) {
+                unset($posts[$key]);
+                continue;
+            }
             $user = \User::find($post['user_id']);
             if ($user){
                 $post['user_name'] = $user->getFullName();
@@ -210,6 +215,30 @@ class Post extends \SimpleORMap
     public function denyNobodyPost()
     {
         return $this->content['user_id'] != 'nobody';
+    }
+
+    public function hidePost($thread_id, $post_id, $cid, $hide = 1)
+    {
+        $db = \DBManager::get();
+        $stmt = $db->prepare("
+            UPDATE
+                mooc_posts
+            SET
+                hidden = :hide
+            WHERE
+                thread_id = :thread_id
+            AND
+                post_id = :post_id
+            AND
+                seminar_id = :cid
+            LIMIT
+                1
+        ");
+        $stmt->bindParam(":hide", $hide);
+        $stmt->bindParam(":thread_id", $thread_id);
+        $stmt->bindParam(":post_id", $post_id);
+        $stmt->bindParam(":cid", $cid);
+        return $stmt->execute();
     }
 
 }
