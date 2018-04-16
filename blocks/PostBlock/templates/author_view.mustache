@@ -4,6 +4,10 @@
 <input type="text" name="cw-postblock-title" class="cw-postblock-title" value="{{post_title}}" spellcheck="true">
 <br>
 
+<label for="cw-postblock-reuse">{{#i18n}}Nutzer muss Beitrag verfassen um Fortschitt zu erreichen{{/i18n}}:</label>
+<input type="checkbox" name="cw-postblock-has-to-post" class="cw-postblock-has-to-post" {{#has_to_post}} checked {{/has_to_post}}>
+<br>
+
 <label for="cw-postblock-reuse">{{#i18n}}Bereits vorhandene Diskussion verwenden{{/i18n}}:</label>
 <input type="checkbox" name="cw-postblock-reuse" class="cw-postblock-reuse" {{#thread_id}} checked {{/thread_id}}>
 <br>

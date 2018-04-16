@@ -92,7 +92,7 @@ export default StudentView.extend({
                 },
                 // error
                 function (error) {
-                    console.log("error");
+                    console.log("error: could not update content");
                     if(updateLoop != null) { 
                         clearInterval(updateLoop);
                     }

@@ -7,7 +7,21 @@
             }
         }?>
         <li id="container_<?= $thread["thread_id"]?>" class="post-overview-thread <?if ($counter > 0):?> post-overview-highlight <?endif;?>">
-            <h3><?= $thread["thread_title"]?> (id = <?= $thread["thread_id"]?>)</h3>
+            <h3 class="thread-title">
+                <span class="thread-title-content">
+                    <?= $thread["thread_title"]?> (id = <?= $thread["thread_id"]?>)
+                    <span class="edit-thread-title-button"><?= Icon::create('edit', 'clickable'); ?></span>
+                </span>
+                <form class="edit-thread-title" action="edit_title" style="display:none;">
+                    <input type="hidden" value="<?= $thread["thread_id"]?>" name="thread_id">
+                    <input type="text" value="<?= $thread["thread_title"]?>" name="thread_title">
+                    <input type="hidden" name="cid" value="<?= $cid ?>">
+                    <button class="edit-thread-button" type="submit"> <?= Icon::create('accept', 'accept') ?> </button>
+                    <button class="edit-thread-button edit-reset" type="reset"> <?= Icon::create('decline', 'status-red') ?> </button>
+                </form>
+            </h3>
+
+            
             <? if (array_key_exists($thread["thread_id"], ($thrads_in_blocks))) :?>
                 <? foreach($thrads_in_blocks[$thread["thread_id"]] as $block): ?>
                     <p class="post-overview-block-link"><a href="<?= $block['link']?>">
@@ -87,6 +101,7 @@
     var thread_id_from_url = location.search.split('thread_id=')[1];
     if(thread_id_from_url){
         $('#thread_'+thread_id_from_url).show();
+        $('#container_'+thread_id_from_url).addClass("post-overview-thread-selected");
         $('.post-overview-postings').scrollTop($('.post-overview-postings')[0].scrollHeight);
         $('.post-overview').scrollTop(
             $('#container_'+thread_id_from_url).offset().top - $('.post-overview').offset().top + $('.post-overview').scrollTop()
@@ -98,5 +113,15 @@
         $('#thread_'+$thread_id).show();
         $('.post-overview-postings').scrollTop($('.post-overview-postings')[0].scrollHeight);
         $('#input_thread_id').val($thread_id);
+        $('.post-overview-thread').removeClass("post-overview-thread-selected");
+        $('#container_'+$thread_id).addClass("post-overview-thread-selected");
+    });
+    $('.edit-thread-title-button').click(function(event){
+        $(this).parent().hide();
+        $(this).parent().siblings("form").show();
+    });
+    $('.edit-reset').click(function(event){
+        $(this).parent().hide();
+        $(this).parent().siblings(".thread-title-content").show();
     });
 </script>

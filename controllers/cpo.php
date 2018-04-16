@@ -107,15 +107,15 @@ class CpoController extends CoursewareStudipController
 
     public function answer_action()
     {
-        if ((Request::get('thread_id') != '') && (Request::get('content') != '')) { 
+        if ((Request::get('thread_id') != '') && (Request::get('content') != '') && (Request::get('cid') != '')) { 
             $thread_id = Request::get('thread_id');
             $content = Request::get('content');
             $answer = 'answer=true';
+            $cid = Request::get('cid');
         } else {
             return $this->redirect('cpo/postoverview?answer=false');
         }
 
-        $cid = $this->plugin->getCourseId();
         $post_id = Post::getNextPostId($thread_id, $cid);
 
         $data = array(
@@ -149,6 +149,20 @@ class CpoController extends CoursewareStudipController
         $hidden = Post::hidePost($thread_id, $post_id, $cid, $hide);
 
         return $this->redirect('cpo/postoverview?hide='.$hidden.'&thread_id='.$thread_id);
+    }
+
+    public function edit_title_action()
+    {
+        if ((Request::get('thread_id') != '') && (Request::get('thread_title') != '')) { 
+            $thread_id = Request::get('thread_id');
+            $thread_title = Request::get('thread_title');
+            $cid = $this->plugin->getCourseId();
+        } else {
+            return $this->redirect('cpo/postoverview?update=false');
+        }
+        Post::alterPost($thread_id, 0, $cid, $thread_title);
+
+        return $this->redirect('cpo/postoverview?update=true&thread_id='.$thread_id);
     }
 
     private function getThreadsInBlocks()
