@@ -68,7 +68,11 @@ export default StudentView.extend({
                 $num = parseInt(options.numexes, 10);
             }
             $block.find('.exercise').hide();
-            $block.find('#exercise' + $num).show();
+            var $ex = $block.find('#exercise' + $num).show();
+            if ($ex.find("input[name=exercise_type]").val() == 'tb_exercise') {
+                $ex.find('table.default').hide();
+            }
+            $(window).trigger('resize');
         },
 
         'click button[name=exercise-hint-button]': function (event) {
@@ -91,45 +95,6 @@ export default StudentView.extend({
     },
 
     postRender() {
-        var $form = this.$('.cw-test-content form');
-
-        $form.each(function () {
-            var $exercise_type = $(this).find('input[name="exercise_type"]').val();
-            var $user_answers = $(this).find('input[name="user_answers_string"]').val();
-            var $thisform = $(this);
-            if (!($user_answers)) {
-                return; //break the loop
-            } else {
-                switch ($exercise_type) {
-                    case 'sc_exercise':
-                    case 'yn_exercise':
-                        var $radioid = $thisform.find('label:contains(' + $user_answers + ')').attr('for');
-                        var $radio = $('#' + $radioid);
-                        $radio.attr('checked', 'checked');
-                        break;
-                    case 'mc_exercise':
-                        var $mc_answers = $user_answers.split(',');
-                        $.each($mc_answers, function (index, value) {
-                            var $checkboxid = $thisform.find('label:contains(' + value + ')').attr('for');
-                            var $checkbox = $('#' + $checkboxid);
-                            $checkbox.attr('checked', 'checked');
-                        });
-                        break;
-                    case 'tb_exercise':
-                        var $textbox = $thisform.find('textarea');
-                        $textbox.val($user_answers);
-                        break;
-                    case 'lt_exercise':
-                        var $textfield = $thisform.find('input[type="text"]');
-                        $textfield.val($user_answers);
-                        break;
-                    default:
-                        return false;
-                }
-            }
-        });
-        // re-format LaTeX stuff
-        window.MathJax.Hub.Queue([ 'Typeset', window.MathJax.Hub, this.el ]);
     }
 
 });

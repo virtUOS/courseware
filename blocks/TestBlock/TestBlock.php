@@ -393,7 +393,7 @@ class TestBlock extends Block
             }
 
             $entry = array(
-                'exercise_type'       => $exercise->getTypeName(),
+                'exercise_type'       => $exercise->type,
                 'id'                  => $exercise->getId(),
                 'test_id'             => $this->test_id,
                 'self_test'           => $assignment->type == 'selftest',
@@ -419,7 +419,8 @@ class TestBlock extends Block
                 'is_corrected'        => $solution['corrected'],
                 'tries_left'          => $tries_left, 
                 'tries_pl'            => $tries_pl,
-                'character_picker'    => $character_picker
+                'character_picker'    => $character_picker,
+                'file_upload'         => $exercise->options['file_upload']
             );
             $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
             $available = !$entry['show_solution'] && !$entry['solving_allowed']; //or correction is available
