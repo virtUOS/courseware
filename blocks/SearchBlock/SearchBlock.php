@@ -3,6 +3,7 @@ namespace Mooc\UI\SearchBlock;
 
 use Mooc\UI\Block;
 use Mooc\DB\Block as DBBlock;
+use Mooc\DB\Field as Field;
 
 class SearchBlock extends Block
 {
@@ -77,20 +78,26 @@ class SearchBlock extends Block
 
     public function search_handler(array $data)
     {
-        $request = htmlspecialchars($this->Ansi_utf8($data['request']));
+        $request = \STUDIP\Markup::purifyHtml($data['request']);
+        $request_blocks = htmlentities($request);
+        $request_ansi = $this->Ansi_utf8($request);
+
         $db = \DBManager::get();
         $cid = $this->container['cid'];
         $uid = $this->container['current_user_id'];
+        $user = $this->container['current_user'];
         $isSequential = $this->container['current_courseware']->getProgressionType() == 'seq';
         $answer = array();
-
+        // Blocks
         $stmt = $db->prepare('
             SELECT 
                 *
             FROM
                 mooc_fields
             WHERE
-                json_data LIKE CONCAT ("%",:request,"%") 
+                json_data LIKE CONCAT ("%",:request_blocks,"%")
+            OR
+                json_data LIKE CONCAT ("%",:request_ansi,"%")
             AND
                 name IN ("webvideo", 
                          "url", 
@@ -108,25 +115,40 @@ class SearchBlock extends Block
                          "gallery_file_names"
                          )
         ');
-        $stmt->bindParam(':request', $request);
+        $stmt->bindParam(':request_blocks', $request_blocks);
+        $stmt->bindParam(':request_ansi', $request_ansi);
         $stmt->execute();
         $sqlfields = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         foreach ($sqlfields as $item) {
             $block = new DBBlock($item['block_id']);
-            if ($block->isPublished()) {
-                if ($isSequential) {
-                    if (!$block->parent->hasUserCompleted($uid)) {continue;}
+
+            if (($block->belongesToCourse($cid)) && ($block->isPublished())){
+                
+                if ($isSequential && !$user->hasPerm($cid, 'dozent') && !$block->parent->hasUserCompleted($uid)) {
+                    continue;
                 }
+
+                if ($block->type == 'PostBlock'){
+                    // we handle this type later
+                    continue;
+                }
+
                 if ($item['name'] == 'content') {
                     $content = str_replace( '<!-- HTML: Insert text after this line only. -->', '', $item['json_data']);
-                    if(!stripos($content, $request)) {continue;}
+                    if(!stripos($content, $request_blocks)) {
+                        continue;
+                    }
                 }
+
                 if ($item['name'] == 'url') {
                     // remove opencast part from url 
                     $url = str_replace( '\/engage\/theodul\/ui\/core.html', '', $item['json_data']);
-                    if(!stripos($url, $request)) {continue;}
+                    if(!stripos($url, $request_blocks)) {
+                        continue;
+                    }
                 }
+
                 // get readable name
                 $class_name = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
                 $name_constant = $class_name.'::NAME';
@@ -136,19 +158,48 @@ class SearchBlock extends Block
                 } else {
                     $type = $block->type;
                 }
+                $type .= " " . \Icon::create($this->getBlockIcon($block->type), 'clickable');
+                $section = new DBBlock($block->parent_id);
+                $title = $section->title; // section title
+                $subchapter = (new DBBlock($block->parent->parent->id))->title; //subchapter title
+                $chapter = (new DBBlock($block->parent->parent->parent->id))->title; //chapter title
+                
+                if (($title == null) || ($subchapter == null) || ($chapter == null) ) {
+                    continue;
+                }
+                $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$block->parent_id;
 
+                $html = "<li>".$chapter." &rarr; ".$subchapter." &rarr; ".$title." &rarr; <a href='".$link."'>".$type."</a></li>";
+
+                if (strpos($title, 'AsideSection') >-1) { 
+                    $chapter_id = str_replace('AsideSection for block ', '', $title);
+                    $title = "Sidebar";
+                    $chapter_block = new DBBlock($chapter_id);
+                    switch ($chapter_block->type) {
+                        case "Chapter":
+                            $chapter = $chapter_block->title;
+                            $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$chapter_block->id;
+                            $html = "<li>".$chapter." &rarr; ".$title." &rarr; <a href='".$link."'>".$type."</a></li>";
+                            break;
+                        case "Subchapter":
+                            $chapter = (new DBBlock($chapter_block->parent->id))->title;
+                            $subchapter = $chapter_block->title;
+                            $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$chapter_block->id;
+                            $html = "<li>".$chapter." &rarr; ".$subchapter." &rarr; ".$title." &rarr; <a href='".$link."'>".$type."</a></li>";
+                            break;
+                        default:
+                            continue;
+                    }
+                }
+
+                
                 array_push($answer, array(
-                    'link'       =>  \PluginEngine::getURL('courseware/courseware').'&selected='.$block->parent_id,
-                    'type'       => $type,
-                    'title'      => (new DBBlock($block->parent_id))->title, // section title
-                    'subchapter' => (new DBBlock($block->parent->parent->id))->title, //subchapter title
-                    'chapter'    => (new DBBlock($block->parent->parent->parent->id))->title, //chapter title
-                    'chap'       => false,
-                    'name'       => str_replace( '\/engage\/theodul\/ui\/core.html', '', $item['json_data'])
+                    'html'  =>  $html
                 ));
             }
         }
 
+        //Structural Elements
         $stmt = $db->prepare('
             SELECT 
                 *
@@ -168,87 +219,192 @@ class SearchBlock extends Block
 
         foreach ($sqlblocks as $item) {
             $block = new DBBlock($item['id']);
-            if ($isSequential) {
-                    if (!$block->hasUserCompleted($uid)) {continue;}
+
+            if ($isSequential && !$user->hasPerm($cid, 'dozent') && !$block->hasUserCompleted($uid)) {
+                continue;
             }
+
             if (strpos($item['title'], 'AsideSection') >-1) { 
                 continue;
             }
+
             if ($block->isPublished()) {
+                $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$item['id'];
+                $title = $item['title'];
+                $title .= " " . \Icon::create('category', 'clickable');
+                $type = $item['type'];
+                switch ($type) {
+                    case "Chapter":
+                        $html = "<li><a href='".$link."'>".$title."</a></li>";
+                        break;
+                    case "Subchapter":
+                        $chapter = (new DBBlock($block->parent_id))->title;
+                        $html = "<li>".$chapter." &rarr; <a href='".$link."'>".$title."</a></li>";
+                        break;
+                    case "Section":
+                        $chapter = (new DBBlock($block->parent->parent->id))->title;
+                        $subchapter = (new DBBlock($block->parent_id))->title;
+                        $html = "<li>".$chapter." &rarr; ".$subchapter." &rarr;<a href='".$link."'>".$title."</a></li>";
+                        break;
+                    default:
+                        $html = "";
+                }
                 array_push($answer, array(
-                    'link'  => \PluginEngine::getURL('courseware/courseware').'&selected='.$item['id'],
-                    'title' => $item['title'],
-                    'type'  => $item['type'],
-                    'chap'  => true
+                    'html'  => $html
                 ));
+            }
+        }
+
+        // Threads
+        $stmt = $db->prepare('
+            SELECT 
+                thread_id
+            FROM
+                mooc_posts
+            WHERE
+                content LIKE CONCAT ("%",:request,"%") 
+            AND 
+                seminar_id = :cid
+            AND
+                hidden = 0
+        ');
+        $stmt->bindParam(':request', $request);
+        $stmt->bindParam(':cid', $cid);
+        $stmt->execute();
+        $sqlthreads = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach ($sqlthreads as $thread) {
+            $fields = Field::findBySQL('name = ? AND json_data = ?', array("thread_id", $thread['thread_id']));
+
+            foreach ($fields as $field) {
+                $block = new DBBlock($field['block_id']);
+
+                if (($block->belongesToCourse($cid)) && ($block->isPublished())){
+                    if ($isSequential && !$user->hasPerm($cid, 'dozent') && !$block->parent->hasUserCompleted($uid)) {
+                        continue;
+                    }
+                    // get readable name
+                    $name = json_decode(Field::findOneBySQL('block_id = ? AND name = ?', array($block->id, "post_title"))->json_data);
+                    $name .= " " . \Icon::create('chat', 'clickable');
+                    $title = (new DBBlock($block->parent_id))->title; // section title
+                    $subchapter = (new DBBlock($block->parent->parent->id))->title; //subchapter title
+                    $chapter = (new DBBlock($block->parent->parent->parent->id))->title; //chapter title
+                    $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$block->parent_id;
+                    $html = "<li>".$chapter." &rarr; ".$subchapter." &rarr; ".$title." &rarr; <a href='".$link."'>".$name."</a></li>";
+
+                    if (strpos($title, 'AsideSection') >-1) { 
+                    $chapter_id = str_replace('AsideSection for block ', '', $title);
+                    $title = "Sidebar";
+                    $chapter_block = new DBBlock($chapter_id);
+                    switch ($chapter_block->type) {
+                        case "Chapter":
+                            $chapter = $chapter_block->title;
+                            $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$chapter_block->id;
+                            $html = "<li>".$chapter." &rarr; ".$title." &rarr; <a href='".$link."'>".$name."</a></li>";
+                            break;
+                        case "Subchapter":
+                            $chapter = (new DBBlock($chapter_block->parent->id))->title;
+                            $subchapter = $chapter_block->title;
+                            $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$chapter_block->id;
+                            $html = "<li>".$chapter." &rarr; ".$subchapter." &rarr; ".$title." &rarr; <a href='".$link."'>".$name."</a></li>";
+                            break;
+                        default:
+                            continue;
+                    }
+                }
+
+                    array_push($answer, array(
+                        'html'  =>  $html
+                    ));
+                } 
             }
         }
 
         return json_encode($answer);
     }
 
+    private static function getBlockIcon($type)
+    {
+        $icons = array(
+            'BlubberBlock'  => 'blubber',
+            'ForumBlock'    => 'forum',
+            'VideoBlock'    => 'video',
+            'AudioBlock'    => 'play',
+            'TestBlock'     => 'question',
+            'SearchBlock'   => 'search',
+            'CodeBlock'     => 'computer',
+            'GalleryBlock'  => 'image',
+        );
+
+        if ($icons[$type] != null) {
+            return $icons[$type];
+        } else {
+            return "info";
+        }
+    }
+
     private static function Ansi_utf8($string)
     {
         $ansi_utf8 = array(
-            "À" => "\\\\\\\u00c0",
-            "Á" => "\\\\\\\u00c1",
-            "Â" => "\\\\\\\u00c2",
-            "Ã" => "\\\\\\\u00c3",
-            "Ä" => "\\\\\\\u00c4",
-            "Å" => "\\\\\\\u00c5",
-            "Æ" => "\\\\\\\u00c6",
-            "Ç" => "\\\\\\\u00c7",
-            "È" => "\\\\\\\u00c8",
-            "É" => "\\\\\\\u00c9",
-            "Ê" => "\\\\\\\u00ca",
-            "Ë" => "\\\\\\\u00cb",
-            "Ì" => "\\\\\\\u00cc",
-            "Í" => "\\\\\\\u00cd",
-            "Î" => "\\\\\\\u00ce",
-            "Ï" => "\\\\\\\u00cf",
-            "Ñ" => "\\\\\\\u00d1",
-            "Ò" => "\\\\\\\u00d2",
-            "Ó" => "\\\\\\\u00d3",
-            "Ô" => "\\\\\\\u00d4",
-            "Õ" => "\\\\\\\u00d5",
-            "Ö" => "\\\\\\\u00d6",
-            "Ø" => "\\\\\\\u00d8",
-            "Ù" => "\\\\\\\u00d9",
-            "Ú" => "\\\\\\\u00da",
-            "Û" => "\\\\\\\u00db",
-            "Ü" => "\\\\\\\u00dc",
-            "Ý" => "\\\\\\\u00dd",
-            "ß" => "\\\\\\\u00df",
-            "à" => "\\\\\\\u00e0",
-            "á" => "\\\\\\\u00e1",
-            "â" => "\\\\\\\u00e2",
-            "ã" => "\\\\\\\u00e3",
-            "ä" => "\\\\\\\u00e4",
-            "å" => "\\\\\\\u00e5",
-            "æ" => "\\\\\\\u00e6",
-            "ç" => "\\\\\\\u00e7",
-            "è" => "\\\\\\\u00e8",
-            "é" => "\\\\\\\u00e9",
-            "ê" => "\\\\\\\u00ea",
-            "ë" => "\\\\\\\u00eb",
-            "ì" => "\\\\\\\u00ec",
-            "í" => "\\\\\\\u00ed",
-            "î" => "\\\\\\\u00ee",
-            "ï" => "\\\\\\\u00ef",
-            "ð" => "\\\\\\\u00f0",
-            "ñ" => "\\\\\\\u00f1",
-            "ò" => "\\\\\\\u00f2",
-            "ó" => "\\\\\\\u00f3",
-            "ô" => "\\\\\\\u00f4",
-            "õ" => "\\\\\\\u00f5",
-            "ö" => "\\\\\\\u00f6",
-            "ø" => "\\\\\\\u00f8",
-            "ù" => "\\\\\\\u00f9",
-            "ú" => "\\\\\\\u00fa",
-            "û" => "\\\\\\\u00fb",
-            "ü" => "\\\\\\\u00fc",
-            "ý" => "\\\\\\\u00fd",
-            "ÿ" => "\\\\\\\u00ff",
+            "Ã€" => "\\\\u00c0",
+            "Ã" => "\\\\u00c1",
+            "Ã‚" => "\\\\u00c2",
+            "Ãƒ" => "\\\\u00c3",
+            "Ã„" => "\\\\u00c4",
+            "Ã…" => "\\\\u00c5",
+            "Ã†" => "\\\\u00c6",
+            "Ã‡" => "\\\\u00c7",
+            "Ãˆ" => "\\\\u00c8",
+            "Ã‰" => "\\\\u00c9",
+            "ÃŠ" => "\\\\u00ca",
+            "Ã‹" => "\\\\u00cb",
+            "ÃŒ" => "\\\\u00cc",
+            "Ã" => "\\\\u00cd",
+            "ÃŽ" => "\\\\u00ce",
+            "Ã" => "\\\\u00cf",
+            "Ã‘" => "\\\\u00d1",
+            "Ã’" => "\\\\u00d2",
+            "Ã“" => "\\\\u00d3",
+            "Ã”" => "\\\\u00d4",
+            "Ã•" => "\\\\u00d5",
+            "Ã–" => "\\\\u00d6",
+            "Ã˜" => "\\\\u00d8",
+            "Ã™" => "\\\\u00d9",
+            "Ãš" => "\\\\u00da",
+            "Ã›" => "\\\\u00db",
+            "Ãœ" => "\\\\u00dc",
+            "Ã" => "\\\\u00dd",
+            "ÃŸ" => "\\\\u00df",
+            "Ã " => "\\\\u00e0",
+            "Ã¡" => "\\\\u00e1",
+            "Ã¢" => "\\\\u00e2",
+            "Ã£" => "\\\\u00e3",
+            "Ã¤" => "\\\\u00e4",
+            "Ã¥" => "\\\\u00e5",
+            "Ã¦" => "\\\\u00e6",
+            "Ã§" => "\\\\u00e7",
+            "Ã¨" => "\\\\u00e8",
+            "Ã©" => "\\\\u00e9",
+            "Ãª" => "\\\\u00ea",
+            "Ã«" => "\\\\u00eb",
+            "Ã¬" => "\\\\u00ec",
+            "Ã­" => "\\\\u00ed",
+            "Ã®" => "\\\\u00ee",
+            "Ã¯" => "\\\\u00ef",
+            "Ã°" => "\\\\u00f0",
+            "Ã±" => "\\\\u00f1",
+            "Ã²" => "\\\\u00f2",
+            "Ã³" => "\\\\u00f3",
+            "Ã´" => "\\\\u00f4",
+            "Ãµ" => "\\\\u00f5",
+            "Ã¶" => "\\\\u00f6",
+            "Ã¸" => "\\\\u00f8",
+            "Ã¹" => "\\\\u00f9",
+            "Ãº" => "\\\\u00fa",
+            "Ã»" => "\\\\u00fb",
+            "Ã¼" => "\\\\u00fc",
+            "Ã½" => "\\\\u00fd",
+            "Ã¿" => "\\\\u00ff",
         );
 
         return strtr($string, $ansi_utf8);      

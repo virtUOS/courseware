@@ -350,4 +350,9 @@ class Block extends \SimpleORMap implements \Serializable
                        substr($hash, 20, 12)
         );
     }
+    
+    public function belongesToCourse($cid)
+    {
+        return $this->seminar_id == $cid;
+    }
 }
