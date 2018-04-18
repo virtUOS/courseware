@@ -56,7 +56,7 @@ class HtmlBlock extends Block
             $this->content = "";
         } else {
             $dom = new \DOMDocument();
-            $dom->loadHTML($content);
+            $dom->loadHTML('<?xml encoding="utf-8" ?>'.$content);
             $xpath = new \DOMXPath($dom);
             $hrefs = $xpath->evaluate("//a");
             for ($i = 0; $i < $hrefs->length; $i++) {
