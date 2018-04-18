@@ -44,7 +44,6 @@ export default StudentView.extend({
     }, 
     
     showResults(response) {
-        console.log(response);
         var $result = jQuery.parseJSON(response);
         var $html ="";
         if ($result) {

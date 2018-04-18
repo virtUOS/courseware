@@ -163,6 +163,10 @@ class SearchBlock extends Block
                 $title = $section->title; // section title
                 $subchapter = (new DBBlock($block->parent->parent->id))->title; //subchapter title
                 $chapter = (new DBBlock($block->parent->parent->parent->id))->title; //chapter title
+                
+                if (($title == null) || ($subchapter == null) || ($chapter == null) ) {
+                    continue;
+                }
                 $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$block->parent_id;
 
                 $html = "<li>".$chapter." &rarr; ".$subchapter." &rarr; ".$title." &rarr; <a href='".$link."'>".$type."</a></li>";
