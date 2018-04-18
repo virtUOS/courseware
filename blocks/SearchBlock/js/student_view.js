@@ -44,16 +44,12 @@ export default StudentView.extend({
     }, 
     
     showResults(response) {
+        console.log(response);
         var $result = jQuery.parseJSON(response);
         var $html ="";
         if ($result) {
         $.each($result, function(index, value){
-            if(value.chap){
-                $html += "<li><a href='"+ value.link + "'>"+value.title+"</a></li>";
-                
-            } else {
-                $html += "<li>"+value.chapter+" &rarr; "+value.subchapter+" &rarr; "+value.title+" &rarr; <a href='"+ value.link + "'>"+value.type+"</a></li>";
-            }
+            $html += value.html;
         });}
 
         this.$(".cw-search-result ul").html($html);
