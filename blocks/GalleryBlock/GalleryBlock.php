@@ -165,10 +165,15 @@ class GalleryBlock extends Block
         $stmt->execute();
         $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        $mimetypes = ['jpg', 'png'];
+        $mimetypes = [
+            'bmp', 'cod', 'ras', 'fif', 'gif', 'ief', 'jpeg', 
+            'jpg', 'jpe', 'png', 'svg', 'tif', 'tiff', 'mcf', 
+            'wbmp', 'fh4', 'fh5', 'fhc', 'ico', 'pnm', 'pbm',
+            'pgm', 'ppm', 'rgb', 'xwd', 'xbm', 'xpm'
+        ];
         $files = array();
         foreach ($response as $item) {
-            if(in_array(substr($item['name'], -3), $mimetypes)) {
+            if(in_array(substr($item['name'], -3), $mimetypes) || in_array(substr($item['name'], -4), $mimetypes)) {
                 array_push( $files, array (
                     'id'          => $item['dokument_id'],
                     'name'        => $item['name'],
