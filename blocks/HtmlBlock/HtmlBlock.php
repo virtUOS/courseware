@@ -106,7 +106,7 @@ class HtmlBlock extends Block
             });
         }
 
-        return \STUDIP\Markup::purifyHtml($document->saveHTML());
+        return $document->saveHTML();
     }
 
     /**
