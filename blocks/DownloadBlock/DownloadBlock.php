@@ -182,9 +182,12 @@ class DownloadBlock extends Block
 
     public function importContents($contents, array $files)
     {
-        $file = reset($files);
-        $this->file_id = $file->id;
-        $this->save();
+        foreach($files as $file){
+            if($this->file_name == $file->name) {
+                $this->file_id = $file->id;
+                $this->save();
+            }
+        }
 
     }
 

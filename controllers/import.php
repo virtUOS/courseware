@@ -101,15 +101,12 @@ class ImportController extends CoursewareStudipController
 
         $root_folder = Folder::findTopFolder($GLOBALS['SessionSeminar']);
         $parent_folder = FileManager::getTypedFolder($root_folder->id);
-        
-        $courseware_folder = Folder::findOneBySQL('range_id = ? AND name = ?', array( $GLOBALS['SessionSeminar'] , 'Courseware'));
-        if(!$courseware_folder) {
-            $request = array('name' => 'Courseware', 'description' => 'a courseware folder');
-            $new_folder = new StandardFolder();
-            $new_folder->setDataFromEditTemplate($request);
-            $new_folder->user_id = User::findCurrent()->id;
-            $courseware_folder = $parent_folder->createSubfolder($new_folder);
-        }
+        // create new folder for import
+        $request = array('name' => 'Courseware-Import '.date("d.m.Y", time()), 'description' => 'folder for imported courseware content');
+        $new_folder = new StandardFolder();
+        $new_folder->setDataFromEditTemplate($request);
+        $new_folder->user_id = User::findCurrent()->id;
+        $courseware_folder = $parent_folder->createSubfolder($new_folder);
 
         $install_folder = FileManager::getTypedFolder($courseware_folder->id);
 

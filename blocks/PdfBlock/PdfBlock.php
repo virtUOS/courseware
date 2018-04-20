@@ -134,11 +134,12 @@ class PdfBlock extends Block
 
     public function importContents($contents, array $files)
     {
-        $file = reset($files);
-        $this->pdf_file_id = $file->id;
-        $this->pdf_file = $file->getDownloadURL();
-
-        $this->save();
-        
+        foreach($files as $file){
+            if($this->pdf_filename == $file->name) {
+                $this->pdf_file_id = $file->id;
+                $this->pdf_file = $file->getDownloadURL();
+                $this->save();
+            }
+        }
     }
 }

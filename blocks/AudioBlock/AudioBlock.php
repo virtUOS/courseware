@@ -171,16 +171,20 @@ class AudioBlock extends Block
         if (isset($properties['audio_file'])) {
                 $this->audio_file = $properties['audio_file'];
         }
+
         $this->save();
     }
 
     public function importContents($contents, array $files)
     {
-        $file = reset($files);
-        $this->audio_id = $file->id;
-        if ($this->audio_source == 'cw') {
-            $this->audio_file = $file->getDownloadURL();
-            $this->save();
+        foreach($files as $file){
+            if($this->audio_file_name == $file->name) {
+                $this->audio_id = $file->id;
+                if ($this->audio_source == 'cw') {
+                    $this->audio_file = $file->getDownloadURL();
+                    $this->save();
+                }
+            }
         }
     }
 }

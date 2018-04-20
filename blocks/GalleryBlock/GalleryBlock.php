@@ -200,9 +200,11 @@ class GalleryBlock extends Block
     public function importContents($contents, array $files)
     {
         $file_ids = array();
-        foreach($files as $file) {
-            var_dump($file->id); 
-            array_push($file_ids , array($file->id));
+        $file_names = array_map('current', json_decode($this->gallery_file_names));
+        foreach($files as $file){
+            if(in_array($file->name, $file_names)) {
+                array_push($file_ids , array($file->id));
+            }
         }
         $this->gallery_file_ids = json_encode($file_ids);
         $this->moveFiles();
