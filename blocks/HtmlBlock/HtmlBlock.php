@@ -82,7 +82,7 @@ class HtmlBlock extends Block
         }
 
         $document = new \DOMDocument();
-        $document->loadHTML($this->content);
+        $document->loadHTML('<?xml encoding="utf-8" ?>'.$this->content);
 
         $anchorElements = $document->getElementsByTagName('a');
         foreach ($anchorElements as $element) {
@@ -106,7 +106,7 @@ class HtmlBlock extends Block
             });
         }
 
-        return $this->cw_utf8_decode(utf8_decode(\STUDIP\Markup::purifyHtml($document->saveHTML())));
+        return $document->saveHTML();
     }
 
     /**
@@ -170,8 +170,7 @@ class HtmlBlock extends Block
     public function importContents($contents, array $files)
     {
         $document = new \DOMDocument();
-        $document->loadHTML($this->cw_utf8_decode($contents));
-
+        $document->loadHTML('<?xml encoding="utf-8" ?>'.$contents);
         $anchorElements = $document->getElementsByTagName('a');
         foreach ($anchorElements as $element) {
             if (!$element instanceof \DOMElement || !$element->hasAttribute('href')) {
@@ -246,85 +245,5 @@ class HtmlBlock extends Block
     {
         return rtrim($baseUrl, '/').'/'.ltrim($path, '/').'?'.$components['query'];
     }
-    
-    private function cw_utf8_decode($data)
-    {
-        if (is_array($data)) {
-            $new_data = array();
-            foreach ($data as $key => $value) {
-                $key = studip_utf8decode($key);
-                $new_data[$key] = studip_utf8decode($value);
-            }
-            return $new_data;
-        }
 
-        if (!preg_match('/[\200-\377]/', $data)) {
-            return $data;
-        } else {
-            $windows1252 = array(
-                "\x80" => '&#8364;',
-                "\x81" => '&#65533;',
-                "\x82" => '&#8218;',
-                "\x83" => '&#402;',
-                "\x84" => '&#8222;',
-                "\x85" => '&#8230;',
-                "\x86" => '&#8224;',
-                "\x87" => '&#8225;',
-                "\x88" => '&#710;',
-                "\x89" => '&#8240;',
-                "\x8A" => '&#352;',
-                "\x8B" => '&#8249;',
-                "\x8C" => '&#338;',
-                "\x8D" => '&#65533;',
-                "\x8E" => '&#381;',
-                "\x8F" => '&#65533;',
-                "\x90" => '&#65533;',
-                "\x91" => '&#8216;',
-                "\x92" => '&#8217;',
-                "\x93" => '&#8220;',
-                "\x94" => '&#8221;',
-                "\x95" => '&#8226;',
-                "\x96" => '&#8211;',
-                "\x97" => '&#8212;',
-                "\x98" => '&#732;',
-                "\x99" => '&#8482;',
-                "\x9A" => '&#353;',
-                "\x9B" => '&#8250;',
-                "\x9C" => '&#339;',
-                "\x9D" => '&#65533;',
-                "\x9E" => '&#382;',
-                "\x9F" => '&#376;');
-            return str_replace(
-                array_values($windows1252),
-                array_keys($windows1252),
-                utf8_decode(mb_encode_numericentity(
-                    $data,
-                    array(0x100, 0xffff, 0, 0xffff),
-                    'UTF-8'
-                ))
-            );
-        }
-    }
-    
-    private function cw_utf8_encode($data)
-    {
-        if (is_array($data)) {
-            $new_data = array();
-            foreach ($data as $key => $value) {
-                $key = studip_utf8encode($key);
-                $new_data[$key] = studip_utf8encode($value);
-            }
-            return $new_data;
-        }
-    
-        if (!preg_match('/[\200-\377]/', $data) && !preg_match("'&#[0-9]+;'", $data)) {
-            return $data;
-        } else {
-            return mb_decode_numericentity(
-                mb_convert_encoding($data,'UTF-8', 'WINDOWS-1252'),
-                array(0x100, 0xffff, 0, 0xffff),
-                'UTF-8'
-            );
-        }
-    }
 }
