@@ -24,15 +24,18 @@
     
     .cw-download-button {
         .courseware-btn;
+        height: 35px;
         background-position: 16px center;
         font-size: 14px;
         padding-left: 48px;
         padding-right: 20px;;
-        background-color: #eee;
         display: inline-block;
         .assets-bg-icon("blue/download.svg");
         background-repeat: no-repeat;
-        background-size: 20px;
+        
+        &:hover{
+            .assets-bg-icon("white/download.svg");
+        }
     }
 }
 
