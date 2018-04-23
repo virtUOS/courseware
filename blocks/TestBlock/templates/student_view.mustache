@@ -68,6 +68,9 @@
                                         {{#is_corrected}}
                                             <div class="messagebox messagebox_info">{{#i18n}}Diese Aufgabe wurde bereits korrigiert.{{/i18n}}</div>
                                             {{> _solution}}
+                                            {{#corrector_comment}}
+                                                <div class="cw-testblock-corrector-comment-corrected"><h4>{{#i18n}}Anmerkung zur Lösung{{/i18n}}:</h4>{{corrector_comment}}</div>
+                                            {{/corrector_comment}}
                                         {{/is_corrected}}
                                     {{/self_test}}
                                 {{/show_solution}}

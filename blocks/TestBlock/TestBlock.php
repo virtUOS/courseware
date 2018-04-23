@@ -370,10 +370,9 @@ class TestBlock extends Block
             if ($tries_left > 1) {
                 $tries_pl = true;
             }
-            if ( $exercise->options['feedback'] !== '') {
-                $corrector_comment = $exercise->options['feedback'];
-            } else {
-                $corrector_comment = false;
+
+            if($has_solution && $solution['corrected']) {
+                $corrector_comment = $solution['corrector_comment'];
             }
 
             if ( $exercise->task['answers'][0]['text'] !== '') {
