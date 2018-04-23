@@ -348,6 +348,13 @@ class TestBlock extends Block
                 }
                 $try_counter = $local_tries[$exercise->getId()];
                 $tryagain = $solution && !$correct;
+                $tb_exercise = false;
+
+                if ($exercise->type == "tb_exercise") {
+                    $tb_exercise = true;
+                    $tryagain = false;
+                    $correct = true;
+                }
             }
             if ($correct ==  false) {
                  $solved_completely = false;
@@ -393,6 +400,7 @@ class TestBlock extends Block
 
             $entry = array(
                 'exercise_type'       => $exercise->type,
+                'tb_exercise'         => $tb_exercise,
                 'id'                  => $exercise->getId(),
                 'test_id'             => $this->test_id,
                 'self_test'           => $assignment->type == 'selftest',

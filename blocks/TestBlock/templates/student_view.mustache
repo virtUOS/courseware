@@ -32,7 +32,8 @@
                                             {{/corrector_comment}}
                                         {{/tries_left}}{{/tryagain}}
                                         {{#correct}}
-                                            <div class="messagebox messagebox_success">{{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}</div>
+                                            {{^tb_exercise}}<div class="messagebox messagebox_success">{{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}</div>{{/tb_exercise}}
+                                            {{#tb_exercise}}<div class="messagebox messagebox_info">{{#i18n}}Bitte vergleichen Sie Ihre Lösung mit der Musterlösung.{{/i18n}}</div>{{/tb_exercise}}
                                         {{/correct}}
                                         {{^correct}}
                                             {{^tries_left}}
