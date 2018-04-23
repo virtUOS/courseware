@@ -84,7 +84,9 @@
                                     {{/self_test}}
                                 {{/show_solution}}
                                 {{#exercise_hint}}
-                                    <button class="button" name="exercise-hint-button" exercise-data="{{exercise_index}}">Hinweis anzeigen</button>
+                                    <div class="cw-test-buttons-wrapper">
+                                        <button class="button" name="exercise-hint-button" exercise-data="{{exercise_index}}">Hinweis anzeigen</button>
+                                    </div>
                                     <div class="exercise-hint" style="display: none;" id="exercise-hint-{{exercise_index}}">{{exercise_hint}}</div>
                                 {{/exercise_hint}}
                                 {{#tryagain}}
