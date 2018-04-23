@@ -18,11 +18,6 @@ class CpoController extends CoursewareStudipController
 
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
 
-        $courseware = $this->container['current_courseware'];
-        $title = Request::option('cid', false) ? $_SESSION['SessSemName']['header_line'] . ' - ' : '';
-        $title .= $courseware->title.' - Fortschrittsübersicht für Lehrende';
-        PageLayout::setTitle($title);
-
         if (Navigation::hasItem('/course/mooc_courseware/progressoverview')) {
             Navigation::activateItem('/course/mooc_courseware/progressoverview');
         }

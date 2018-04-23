@@ -45,13 +45,6 @@ class ProgressController extends CoursewareStudipController
 
         $this->courseware = current($grouped['']);
         $this->buildTree($grouped, $progress, $this->courseware);
-
-        $courseware = $this->container['current_courseware'];
-        $title = Request::option('cid', false)
-               ? $_SESSION['SessSemName']['header_line'].' - '
-               : '';
-        $title .= $courseware->title.' - Fortschrittsübersicht';
-        PageLayout::setTitle($title);
     }
 
     private function buildTree($grouped, $progress, &$root)
