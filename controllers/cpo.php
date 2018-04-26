@@ -77,12 +77,13 @@ class CpoController extends CoursewareStudipController
         if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->plugin->getCourseId())) {
             throw new Trails_Exception(401);
         }
-        
+
         if (Navigation::hasItem('/course/mooc_courseware/postoverview')) {
             Navigation::activateItem('/course/mooc_courseware/postoverview');
         }
 
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
+        PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/postoverview.js');
 
         $this->cid = $this->plugin->getCourseId();
         $this->threads = array();
