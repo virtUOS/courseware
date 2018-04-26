@@ -8,8 +8,6 @@ $progress = function ($block, $format = "") {
 $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>"Jul", 8=>"Aug", 9=>"Sep", 10=>"Okt",11=>"Nov", 12=>"Dez");
 ?>
 
-<h1><?= $courseware['title'] ?></h1>
-<br>
 <ul id="overview-chapter-nav">
     <li class="overview-chapter-nav-arrow" id="overview-chapter-nav-left"></li>
     <li id="chapter-container" style="width:calc(100% - 140px);">

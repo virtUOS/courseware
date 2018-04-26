@@ -18,11 +18,6 @@ class CpoController extends CoursewareStudipController
 
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
 
-        $courseware = $this->container['current_courseware'];
-        $title = Request::option('cid', false) ? $_SESSION['SessSemName']['header_line'] . ' - ' : '';
-        $title .= $courseware->title.' - Fortschrittsübersicht für Lehrende';
-        PageLayout::setTitle($title);
-
         if (Navigation::hasItem('/course/mooc_courseware/progressoverview')) {
             Navigation::activateItem('/course/mooc_courseware/progressoverview');
         }
@@ -82,12 +77,13 @@ class CpoController extends CoursewareStudipController
         if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->plugin->getCourseId())) {
             throw new Trails_Exception(401);
         }
-        
+
         if (Navigation::hasItem('/course/mooc_courseware/postoverview')) {
             Navigation::activateItem('/course/mooc_courseware/postoverview');
         }
 
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
+        PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/postoverview.js');
 
         $this->cid = $this->plugin->getCourseId();
         $this->threads = array();
