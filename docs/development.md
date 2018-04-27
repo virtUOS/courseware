@@ -68,17 +68,15 @@ Use npm to download and create necessary files:
 npm install
 npm run build:dev
 ```
+**Note:**  
+ [Nodejs](https://nodejs.org/en/download/package-manager/) and npm must be installed on your system!
+ 
 From this point you can develop and make changes. If you change some js or less files just call npm run build:dev to build new static js and css files.
 
 If you like to have a ready to install zip file:
 ```bash
 npm run zip
 ```
-
-**Note:**  
- [Nodejs](https://nodejs.org/en/download/package-manager/) and npm must be installed on your system!
- 
- 
  
 How to build a block for Courseware 3.0 and 4.0
 ------------------------------------------------
