@@ -69,7 +69,7 @@ npm install
 npm run build:dev
 ```
 **Note:**  
- [Nodejs](https://nodejs.org/en/download/package-manager/) and npm must be installed on your system!
+ The latest version of [nodejs](https://nodejs.org/en/download/package-manager/) and npm must be installed on your system!
  
 From this point you can develop and make changes. If you change some js or less files just call npm run build:dev to build new static js and css files.
 
