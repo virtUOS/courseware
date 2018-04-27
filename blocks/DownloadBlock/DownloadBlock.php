@@ -89,6 +89,10 @@ class DownloadBlock extends Block
 
     private function showFiles($folderId, $filetype = "")
     {
+        if ($folderId == "") {
+            return false;
+        }
+        $cid = $this->container['cid'];
         $db = \DBManager::get();
         $stmt = $db->prepare('
             SELECT
@@ -97,10 +101,13 @@ class DownloadBlock extends Block
                 dokumente
             WHERE
                 range_id = :range_id
+            AND 
+                seminar_id = :cid
             ORDER BY
                 name
         ');
         $stmt->bindParam(":range_id", $folderId);
+        $stmt->bindParam(":cid", $cid);
         $stmt->execute();
         $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $filesarray = array();
