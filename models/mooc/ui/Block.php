@@ -259,6 +259,11 @@ abstract class Block {
         $result = call_user_func_array($handler, array_slice(func_get_args(), 1));
         $this->save();
 
+        if ($name == 'save') {
+            $this->_model->chdate = time();
+            $this->_model->store();
+        }
+
         return $result;
     }
 
@@ -503,9 +508,6 @@ abstract class Block {
         if (isset($this->_progress)) {
             $this->_progress->store();
         }
-
-        $this->_model->chdate = time();
-        $this->_model->store();
     }
 
     // enforce current user with 'canUpdate' permission of this block
