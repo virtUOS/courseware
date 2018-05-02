@@ -37,11 +37,11 @@
 
 .cw-audio-playbutton, .cw-audio-stopbutton {
     .courseware-btn;
+    min-width: unset;
     margin: 5px;
     height: 46px;
     width: 46px;
     background-position: 6px center;
-    background-color: #f3f3f3;
     display: inline-block;
 }
 
@@ -50,6 +50,10 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 28px;
+    
+    &:hover {
+        .assets-bg-icon("white/play.svg");
+    }
 }
 
 .cw-audio-stopbutton {
@@ -57,22 +61,26 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 24px;
+    
+    &:hover {
+        .assets-bg-icon("white/stop.svg");
+    }
 }
 
-.cw-audio-playbutton:hover,
-.cw-audio-stopbutton:hover{
-    background-color: #ddd;
-}
 
 .cw-audio-playbutton-playing {
     .assets-bg-icon("blue/pause.svg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 24px;
+    
+    &:hover {
+        .assets-bg-icon("white/pause.svg");
+    }
 }
 
 .cw-audio-time {
     position: relative;
-    top: 0.5em;
+    top: -1em;
     color: #333;
 }
