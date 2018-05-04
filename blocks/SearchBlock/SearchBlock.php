@@ -160,10 +160,10 @@ class SearchBlock extends Block
                 }
                 $type .= " " . \Icon::create($this->getBlockIcon($block->type), 'clickable');
                 $section = new DBBlock($block->parent_id);
-                $title = $section->title; // section title
-                $subchapter = (new DBBlock($block->parent->parent->id))->title; //subchapter title
-                $chapter = (new DBBlock($block->parent->parent->parent->id))->title; //chapter title
-                
+                $title = utf8_encode($section->title); // section title
+                $subchapter = utf8_encode((new DBBlock($block->parent->parent->id))->title); //subchapter title
+                $chapter = utf8_encode((new DBBlock($block->parent->parent->parent->id))->title); //chapter title
+
                 if (($title == null) || ($subchapter == null) || ($chapter == null) ) {
                     continue;
                 }
@@ -177,13 +177,13 @@ class SearchBlock extends Block
                     $chapter_block = new DBBlock($chapter_id);
                     switch ($chapter_block->type) {
                         case "Chapter":
-                            $chapter = $chapter_block->title;
+                            $chapter = utf8_encode($chapter_block->title);
                             $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$chapter_block->id;
                             $html = "<li>".$chapter." &rarr; ".$title." &rarr; <a href='".$link."'>".$type."</a></li>";
                             break;
                         case "Subchapter":
-                            $chapter = (new DBBlock($chapter_block->parent->id))->title;
-                            $subchapter = $chapter_block->title;
+                            $chapter = utf8_encode((new DBBlock($chapter_block->parent->id))->title);
+                            $subchapter = utf8_encode($chapter_block->title);
                             $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$chapter_block->id;
                             $html = "<li>".$chapter." &rarr; ".$subchapter." &rarr; ".$title." &rarr; <a href='".$link."'>".$type."</a></li>";
                             break;
