@@ -162,7 +162,7 @@ class GalleryBlock extends Block
     {
         global $user;
         $cid = $this->container['cid'];
-        $courseware_folder = \Folder::findOneBySQL('range_id = ? AND name = ?', array( $cid , 'Courseware'));
+        $courseware_folder = \Folder::findOneBySQL('range_id = ? AND name LIKE ? ORDER BY mkdate DESC', array( $cid , '%Courseware-Import%'));
         $parent_folder = \FileManager::getTypedFolder($courseware_folder->id);
         $request = array('name' => $gallery_folder_name, 'description' => 'gallery folder');
         $new_folder = new \StandardFolder();
