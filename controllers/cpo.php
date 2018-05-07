@@ -32,7 +32,7 @@ class CpoController extends CoursewareStudipController
                 if (array_key_exists($item->block_id,$memo)) {
                     $stored_grade = $memo[$item->block_id]['grade'];
                     $users = $memo[$item->block_id]['users']+1;
-                    $grade = ($stored_grade+$item->grade) / $users;
+                    $grade = ($stored_grade+ $item->grade);
                     $memo[$item->block_id]['date'] > $item->chdate ? $date = $memo[$item->block_id]['date'] : $date = $item->chdate;
                     $memo[$item->block_id] = array(
                         'grade' => $grade,
@@ -42,7 +42,7 @@ class CpoController extends CoursewareStudipController
                     );
                 } else {
                     $memo[$item->block_id] = array(
-                        'grade' => $item->grade,
+                        'grade' => (int)$item->grade,
                         'max_grade' => $item->max_grade,
                         'users' => 1,
                         'date' => $item->chdate
@@ -55,6 +55,7 @@ class CpoController extends CoursewareStudipController
 
         $members = count((new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), 'autor'));
         foreach ($progress as &$block) {
+            $block['grade'] = $block['grade'] / $block['users'];
             if($block['users'] < $members) {
                 $block['grade'] = ($block['grade'] * $block['users']) / $members;
             }
