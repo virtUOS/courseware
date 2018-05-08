@@ -73,7 +73,7 @@ class CoursewareController extends CoursewareStudipController
                 chdate >= :last_visit
         ");
         $stmt->bindParam(":cid", $this->container['cid']);
-        $stmt->bindParam(":last_visit", object_get_visit($_SESSION['SessionSeminar'], "courseware"));
+        $stmt->bindParam(":last_visit", object_get_visit($this->container['cid'], "courseware"));
         $stmt->execute();
         $new_ones = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $this->new_ones = $new_ones;
