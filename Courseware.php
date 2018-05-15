@@ -438,4 +438,67 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         return _('Courseware');
     }
 
+    /* * * * * * * * * * * * * * * * * * * * * * * * *
+     * * * * Functions for DatenschutzPlugin * * * * *
+     * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    /*
+     * Returns the tables containing user data.
+     * the array consists of the tables containing user data
+     * the expected format for each table is:
+     * $array[ table display name ] = [ 'table_name' => name of the table, 'table_content' => array of db rows containing userdata]
+     * @param string $user_id
+     * @return array
+     */
+    public static function getUserdataInformation($user_id)
+    {
+        $db = DBManager::get();
+
+        $stmt = $db->prepare('
+            SELECT
+                *
+            FROM
+                mooc_userprogress
+            WHERE
+                user_id = :uid
+        ');
+        $stmt->bindParam(':uid', $user_id);
+        $stmt->execute();
+        $user_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $plugin_data = array();
+        $plugin_data['Courseware'] = ['table_name' => 'mooc_userprogress', 'table_content' => $user_data];
+
+        return $plugin_data;
+    }
+
+    /**
+     * Returns the filerefs of given user.
+     * @param string $user_id
+     * @return array
+     */
+    public static function getUserFileRefs($user_id)
+    {
+        return array();
+    }
+
+    /**
+     * Deletes the table content containing user data.
+     * @param string $user_id
+     * @return boolean
+     */
+    public static function deleteUserdata($user_id)
+    {
+        $db = DBManager::get();
+        
+        $stmt = $db->prepare('
+            DELETE FROM
+                mooc_userprogress 
+            WHERE 
+                user_id = :uid
+        ');
+        $stmt->bindParam(':uid', $user_id);
+
+        return $stmt->execute();
+    }
+
 }
