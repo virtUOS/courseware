@@ -464,9 +464,22 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         ');
         $stmt->bindParam(':uid', $user_id);
         $stmt->execute();
-        $user_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $user_progress = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $plugin_data = array();
-        $plugin_data['Courseware'] = ['table_name' => 'mooc_userprogress', 'table_content' => $user_data];
+        $plugin_data['Courseware - Nutzerfortschritt'] = ['table_name' => 'mooc_userprogress', 'table_content' => $user_progress];
+
+        $stmt = $db->prepare('
+            SELECT
+                *
+            FROM
+                mooc_fields
+            WHERE
+                user_id = :uid
+        ');
+        $stmt->bindParam(':uid', $user_id);
+        $stmt->execute();
+        $block_content = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $plugin_data['Courseware - Blöcke'] = ['table_name' => 'mooc_userprogress', 'table_content' => $block_content];
 
         return $plugin_data;
     }
@@ -489,7 +502,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     public static function deleteUserdata($user_id)
     {
         $db = DBManager::get();
-        
+        $exec = false;
+
         $stmt = $db->prepare('
             DELETE FROM
                 mooc_userprogress 
@@ -497,8 +511,20 @@ class Courseware extends StudIPPlugin implements StandardPlugin
                 user_id = :uid
         ');
         $stmt->bindParam(':uid', $user_id);
+        $exec = $stmt->execute();
 
-        return $stmt->execute();
+        $stmt = $db->prepare('
+            DELETE FROM
+                mooc_fields 
+            WHERE 
+                user_id = :uid
+            AND 
+                (name = "visited" OR name = "lastSelected")
+        ');
+        $stmt->bindParam(':uid', $user_id);
+        $exec = $stmt->execute();
+
+        return $exec;
     }
 
 }
