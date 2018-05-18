@@ -1,6 +1,6 @@
 CHANGELOG
 =========
-4.0.8
+4.1.0
 -----
 * Set seminar title
 * enhance TestBlock functions
