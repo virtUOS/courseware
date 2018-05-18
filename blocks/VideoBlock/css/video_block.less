@@ -89,6 +89,21 @@
     }
 }
 
+section#courseware {
+    button.button.cw-video-timer-reset {
+        float: right;
+        margin-top: 0.6em;
+    }
+
+    .block-content:not([data-view="student"]) label.cw-video-timer-label {
+        min-width: 0;
+        width: 2em;
+        &.cw-video-timer-label-end {
+            padding-left: 4em;
+        }
+    }
+}
+
 .video-header {
     .cw-block-header();
 }

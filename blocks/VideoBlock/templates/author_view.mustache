@@ -56,9 +56,9 @@
         <div class="videocontrols-wrapper"><label>{{#i18n}}Kontrollelemente verstecken{{/i18n}}</label><input type="checkbox" class="videocontrols" ></div>
         <div class="videoaspect"><label>{{#i18n}}Seitenverhältnis{{/i18n}}</label><input type="radio" class="videoaspect169" name="videoaspect" value="aspect-169" checked>16:9 <input type="radio" class="videoaspect43" name="videoaspect" value="aspect-43">4:3</div>
         <div class="videotimer">
-            <label style="min-width: 0;">{{#i18n}}Start{{/i18n}}</label><input class="videostartmin" type="number" min="0" placeholder="min" ><input class="videostartsec" type="number" step="1" max="59" min="0" placeholder="sek">
-            <label style="min-width: 0; padding-left: 4em;">{{#i18n}}Ende{{/i18n}}</label><input class="videoendmin" type="number" min="0" placeholder="min"><input class="videoendsec" type="number" step="1" max="59" min="0" placeholder="sek">
-            <button name="videotimereset" class="button" style="margin-left: 4em;">{{#i18n}}Zeit zurücksetzen{{/i18n}}</button>
+            <label class="cw-video-timer-label">{{#i18n}}Start{{/i18n}}</label><input class="videostartmin" type="number" min="0" placeholder="min" ><input class="videostartsec" type="number" step="1" max="59" min="0" placeholder="sek">
+            <label class="cw-video-timer-label cw-video-timer-label-end">{{#i18n}}Ende{{/i18n}}</label><input class="videoendmin" type="number" min="0" placeholder="min"><input class="videoendsec" type="number" step="1" max="59" min="0" placeholder="sek">
+            <button name="videotimereset" class="button cw-video-timer-reset">{{#i18n}}Zeit zurücksetzen{{/i18n}}</button>
         </div>
     </div>
     <div class="videostatus">
