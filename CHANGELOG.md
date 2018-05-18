@@ -1,5 +1,48 @@
 CHANGELOG
 =========
+3.0.8
+-----
+* enhance TestBlock functions
+* better usability for postoverview
+* fixing wrong change date
+* SearchBlock: fix encoding issue 
+* fix cid in news controller
+* fix progress calculation in cpo
+* fix some old layout issues
+* add functions for DatenschutzPlugin 
+
+3.0.7
+-----
+* modernized look and feel
+* enhance discussion overview and PostBlock - post can now be hidden
+* improve DownloadBlock author view
+* improve TestBlock - use vips.js, embed character picker, ready for vips 1.4
+* remove Metrics
+* some little layout and bug fixes
+
+3.0.6
+-----
+* fixing user progress
+* fixing progress overview layout
+* fixing webvideodata in VideoBlock
+* remove Metrics
+
+3.0.5
+-----
+* fixing TestBlock layout issues
+* fix HTMLBlock links and handle wysiwyg content
+* fixing mark as html issue
+
+3.0.4
+-----
+* fix post overview redirect
+* set chdate on block save
+* fix migration sql statement
+
+3.0.3
+-----
+* fix PdfBlock
+
 3.0.2
 -----
 * fix export and import encoding
