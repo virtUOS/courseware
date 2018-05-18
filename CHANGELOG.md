@@ -1,6 +1,6 @@
 CHANGELOG
 =========
-3.0.8
+3.1.0
 -----
 * enhance TestBlock functions
 * better usability for postoverview
