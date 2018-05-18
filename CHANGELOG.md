@@ -1,5 +1,52 @@
 CHANGELOG
 =========
+4.0.8
+-----
+* Set seminar title
+* enhance TestBlock functions
+* better usability for postoverview
+* fixing wrong change date
+* SearchBlock: fix encoding issue 
+* GalleryBlock: fix import
+* fix cid in news controller
+* fix progress calculation in cpo
+* fix some old layout issues
+* add functions for DatenschutzPlugin 
+
+4.0.7
+-----
+* modernized look and feel
+* enhance discussion overview and PostBlock - post can now be hidden
+* improve DownloadBlock author view
+* improve TestBlock - use vips.js, embed character picker, ready for vips 1.4
+* remove Metrics
+* fix file import
+* some little layout and bug fixes
+
+4.0.6
+-----
+* fixing user progress
+* fixing progress overview layout
+* fixing webvideodata in VideoBlock
+* remove Metrics
+
+4.0.5
+-----
+* fixing TestBlock layout issues
+* fix HTMLBlock links and handle wysiwyg content
+* fix migration 1 for studip 4.0
+* fixing mark as html issue
+
+4.0.4
+-----
+* fix post overview redirect
+* set chdate on block save
+* fix migration sql statement
+
+4.0.3 RC
+-----
+* same features as 3.0.3
+
 4.0.0
 -----
 * change from requirejs to webpack
