@@ -30,7 +30,11 @@
         {{/inotherchapters}}
     </optgroup>
 </select>
-<input name="cw-link-target" class="cw-link-target" type="text" placeholder="www.example.com">
+<select name="cw-link-protocol" class="cw-link-protocol">
+    <option value="http://">http://</option>
+    <option value="https://">https://</option>
+</select>
+<input name="cw-link-target" class="cw-link-target" type="text" placeholder="www.studip.de">
 <br>
 
 <label for="cw-link-title">{{#i18n}}Bezeichung des Links{{/i18n}}:</label>

@@ -26,6 +26,9 @@ class LinkBlock extends Block
 
         if ($this->link_type == "external") {
             $link_href = $this->link_target;
+            if (strrpos($link_href, "http") === false) {
+                $link_href = "http://".$link_href;
+            }
         }
 
         $this->setGrade(1.0);
@@ -158,7 +161,7 @@ class LinkBlock extends Block
             $this->link_type = (string) $data['link_type'];
         } 
         if (isset ($data['link_target'])) {
-            $this->link_target = str_replace('http://', '', \STUDIP\Markup::purifyHtml((string) $data['link_target']));
+            $this->link_target = \STUDIP\Markup::purifyHtml((string) $data['link_target']);
         } 
         if (isset ($data['link_title'])) {
             $this->link_title = \STUDIP\Markup::purifyHtml((string) $data['link_title']);
