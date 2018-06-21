@@ -131,7 +131,7 @@ class GalleryBlock extends Block
             'pgm', 'ppm', 'rgb', 'xwd', 'xbm', 'xpm'
         ];
         foreach ($response as $item) {
-            if(in_array(substr($item['name'], -3), $mimetypes) || in_array(substr($item['name'], -4), $mimetypes))
+            if(in_array(strtolower(substr($item['name'], -3)), $mimetypes) || in_array(strtolower(substr($item['name'], -4)), $mimetypes))
             {
                 if (\StudipDocument::find($item['dokument_id'])->checkAccess($this->container['current_user_id'])) {
                     $item["url"] = GetDownloadLink($item['dokument_id'], $item['filename']);
@@ -173,7 +173,7 @@ class GalleryBlock extends Block
         ];
         $files = array();
         foreach ($response as $item) {
-            if(in_array(substr($item['name'], -3), $mimetypes) || in_array(substr($item['name'], -4), $mimetypes)) {
+            if(in_array(strtolower(substr($item['name'], -3)), $mimetypes) || in_array(strtolower(substr($item['name'], -4)), $mimetypes)) {
                 array_push( $files, array (
                     'id'          => $item['dokument_id'],
                     'name'        => $item['name'],
