@@ -8,6 +8,7 @@ use Mooc\DB\Field as Field;
 class SearchBlock extends Block
 {
     const NAME = 'Suche';
+    const BLOCK_CLASS = 'function';
 
     public function initialize()
     {

@@ -6,6 +6,7 @@ use Mooc\UI\Block;
 class KeyPointBlock extends Block 
 {
     const NAME = 'Merksatz';
+    const BLOCK_CLASS = 'layout';
 
     public function initialize()
     {

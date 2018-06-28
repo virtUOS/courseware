@@ -1,19 +1,68 @@
-<div class="styled-select">
-    <select class="block-types">
-         <optgroup label="Standard-Blöcke">
-        {{#content_block_types_basic}}
-            <option data-blocktype="{{type}}" {{#sub_type}} data-blocksubtype="{{sub_type}}"{{/sub_type}}>
-                {{#i18n}}{{name}}{{/i18n}}
-            </option>
-        {{/content_block_types_basic}}
-         </optgroup>
-         <optgroup label="Erweiterte-Blöcke">
-        {{#content_block_types_advanced}}
-            <option data-blocktype="{{type}}" {{#sub_type}} data-blocksubtype="{{sub_type}}"{{/sub_type}}>
-                {{#i18n}}{{name}}{{/i18n}}
-            </option>
-        {{/content_block_types_advanced}}
-        </optgroup>
-    </select>
+<h3 class="cw-block-adder-header">{{#i18n}}Block hinzufügen{{/i18n}}</h3>
+<div class="cw-block-adder-wrapper">
+    <div class="cw-block-adder-menu" style="text-align: center; width: 100%; padding: 1em 0;">
+        <button class="button cw-block-adder-selector" data-blockclass="all">Alle</button>
+        <button class="button cw-block-adder-selector" data-blockclass="interaction">Interaktion</button>
+        <button class="button cw-block-adder-selector" data-blockclass="layout">Strukturen & Layout</button>
+        <button class="button cw-block-adder-selector" data-blockclass="multimedia">Multimedia</button>
+    </div>
+
+    <div class="cw-block-adder-tab" data-blockclass="all">
+        <ul>
+        {{#content_block_types_all}}
+            <li class="cw-block-adder-item" data-blocktype="{{type}}" {{#sub_type}} data-blocksubtype="{{sub_type}}"{{/sub_type}} data-blockname="{{name}}">
+                <div class="cw-block-adder-item-icon cw-block-adder-item-icon-{{type}} "></div>
+                <p class="cw-block-adder-item-name">{{#i18n}}{{name}}{{/i18n}}</p>
+                <p class="cw-block-adder-item-description">{{#i18n}}{{description}}{{/i18n}}</p>
+            </li>
+        {{/content_block_types_all}}
+        </ul>
+        <div class="clear"></div>
+    </div>
+
+    <div class="cw-block-adder-tab" data-blockclass="interaction">
+        <ul>
+        {{#content_block_types_interaction}}
+            <li class="cw-block-adder-item" data-blocktype="{{type}}" {{#sub_type}} data-blocksubtype="{{sub_type}}"{{/sub_type}} data-blockname="{{name}}">
+                <div class="cw-block-adder-item-icon cw-block-adder-item-icon-{{type}} "></div>
+                <p class="cw-block-adder-item-name">{{#i18n}}{{name}}{{/i18n}}</p>
+                <p class="cw-block-adder-item-description">{{#i18n}}{{description}}{{/i18n}}</p>
+            </li>
+        {{/content_block_types_interaction}}
+        </ul>
+        <div class="clear"></div>
+    </div>
+
+    <div class="cw-block-adder-tab" data-blockclass="layout">
+        <ul>
+        {{#content_block_types_layout}}
+            <li class="cw-block-adder-item" data-blocktype="{{type}}" {{#sub_type}} data-blocksubtype="{{sub_type}}"{{/sub_type}} data-blockname="{{name}}">
+                <div class="cw-block-adder-item-icon cw-block-adder-item-icon-{{type}} "></div>
+                <p class="cw-block-adder-item-name">{{#i18n}}{{name}}{{/i18n}}</p>
+                <p class="cw-block-adder-item-description">{{#i18n}}{{description}}{{/i18n}}</p>
+            </li>
+        {{/content_block_types_layout}}
+        {{#content_block_types_function}}
+            <li class="cw-block-adder-item" data-blocktype="{{type}}" {{#sub_type}} data-blocksubtype="{{sub_type}}"{{/sub_type}} data-blockname="{{name}}">
+                <div class="cw-block-adder-item-icon cw-block-adder-item-icon-{{type}} "></div>
+                <p class="cw-block-adder-item-name">{{#i18n}}{{name}}{{/i18n}}</p>
+                <p class="cw-block-adder-item-description">{{#i18n}}{{description}}{{/i18n}}</p>
+            </li>
+        {{/content_block_types_function}}
+        </ul>
+        <div class="clear"></div>
+    </div>
+
+    <div class="cw-block-adder-tab" data-blockclass="multimedia">
+        <ul>
+        {{#content_block_types_multimedia}}
+            <li class="cw-block-adder-item" data-blocktype="{{type}}" {{#sub_type}} data-blocksubtype="{{sub_type}}"{{/sub_type}} data-blockname="{{name}}">
+                <div class="cw-block-adder-item-icon cw-block-adder-item-icon-{{type}} "></div>
+                <p class="cw-block-adder-item-name">{{#i18n}}{{name}}{{/i18n}}</p>
+                <p class="cw-block-adder-item-description">{{#i18n}}{{description}}{{/i18n}}</p>
+            </li>
+        {{/content_block_types_multimedia}}
+        </ul>
+        <div class="clear"></div>
+    </div>
 </div>
-<button class="button add-block">{{#i18n}}Block hinzufügen{{/i18n}}</button>

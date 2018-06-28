@@ -10,6 +10,7 @@ use Symfony\Component\DomCrawler\Crawler;
 class HtmlBlock extends Block
 {
     const NAME = 'Freitext';
+    const BLOCK_CLASS = 'multimedia';
 
     public function initialize()
     {

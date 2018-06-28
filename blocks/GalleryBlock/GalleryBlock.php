@@ -7,6 +7,7 @@ use Symfony\Component\DomCrawler\Crawler;
 class GalleryBlock extends Block
 {
     const NAME = 'Galerie';
+    const BLOCK_CLASS = 'multimedia';
 
     public function initialize()
     {

@@ -9,6 +9,7 @@ use Courseware\User as User;
 class PostBlock extends Block
 {
     const NAME = 'Kommentare & Diskussion';
+    const BLOCK_CLASS = 'interaction';
 
     public function initialize()
     {

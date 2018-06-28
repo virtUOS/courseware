@@ -10,6 +10,7 @@ use Mooc\UI\Block;
 class VideoBlock extends Block
 {
     const NAME = 'Video';
+    const BLOCK_CLASS = 'multimedia';
 
     public function initialize()
     {

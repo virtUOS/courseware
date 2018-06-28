@@ -6,6 +6,7 @@ use Mooc\UI\Block;
 class IFrameBlock extends Block
 {
     const NAME = 'externer Inhalt (iframe)';
+    const BLOCK_CLASS = 'multimedia';
 
     public function initialize()
     {

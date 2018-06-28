@@ -7,6 +7,7 @@ use Symfony\Component\DomCrawler\Crawler;
 class CodeBlock extends Block
 {
     const NAME = 'Quellcode';
+    const BLOCK_CLASS = 'layout';
 
     public function initialize()
     {

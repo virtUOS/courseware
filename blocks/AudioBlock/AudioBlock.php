@@ -7,6 +7,8 @@ use Mooc\UI\Block;
 class AudioBlock extends Block
 {
     const NAME = 'Audio';
+    const BLOCK_CLASS = 'multimedia';
+    const DESCRIPTION = 'Spielt eine Audiodatei ab';
 
     public function initialize()
     {

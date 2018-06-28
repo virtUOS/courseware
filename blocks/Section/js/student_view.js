@@ -32,7 +32,9 @@ export default StudentView.extend({
     'click .title .edit':     'editSection',
     'click .title .trash':    'destroySection',
 
-    'click .add-block':       'addNewBlock',
+    'click .cw-block-adder-selector': 'showBlockAdderTab',
+    'click .cw-block-adder-header': 'toggleBlockAdder',
+    'click .cw-block-adder-item': 'addNewBlock',
 
     // child block stuff
 
@@ -70,6 +72,8 @@ export default StudentView.extend({
       }
     });
     tooltip(this.$el, 'button.edit,button.trash');
+    this.$('.cw-block-adder-tab').not('.cw-block-adder-tab[data-blockclass="all"]').hide();
+    this.$('.cw-block-adder-selector[data-blockclass="all"]').addClass('cw-active-selector');
   },
 
   switchMode(view) {
@@ -147,15 +151,35 @@ export default StudentView.extend({
       $block_wrapper.removeClass('loading');
     });
   },
+  
+   toggleBlockAdder() {
+        var $view = this,
+            $header = $view.$('.cw-block-adder-header'),
+            $wrapper = $view.$('.cw-block-adder-wrapper');
+        if ($header.hasClass('cw-block-adder-open')) {
+                $wrapper.hide();
+                $header.removeClass('cw-block-adder-open');
+        } else {
+            $wrapper.show();
+            $header.addClass('cw-block-adder-open');
+        }
+    },
+    
+    showBlockAdderTab(event) {
+        var $view = this,
+            $button = $(event.target),
+            $block_class = $button.attr('data-blockclass');
+        $view.$('.cw-block-adder-tab').hide();
+        $view.$('.cw-block-adder-selector').removeClass('cw-active-selector');
+        $button.addClass('cw-active-selector');
+        $view.$('.cw-block-adder-tab[data-blockclass="'+$block_class+'"]').show();
+    },
 
   addNewBlock(event) {
     var view = this,
-        $button = $(event.target),
-        $option = $button.closest('.block-adder').find(':selected'),
-        block_type = $option.attr('data-blocktype'),
-        block_sub_type = $option.attr('data-blocksubtype');
-
-    $button.prop('disabled', true).addClass('loading');
+        $item = $(event.currentTarget),
+        block_type = $item.attr('data-blocktype'),
+        block_sub_type = $item.attr('data-blocksubtype');
 
     helper
       .callHandler(this.model.id, 'add_content_block', { type: block_type, sub_type: block_sub_type })
@@ -165,7 +189,7 @@ export default StudentView.extend({
             view_name = model.get('editable') ? 'author' : 'student',
             block_stub = view.appendBlockStub(model, view_name),
             $el = block_stub.$el.closest('section.block'),
-            block_name = $option.html();
+            block_name = $item.attr('data-blockname');
 
         $el.addClass('loading');
         block_stub.renderServerSide().then(function () {
@@ -175,8 +199,7 @@ export default StudentView.extend({
           //insert block name
           $el.find('.controls span.type').html(block_name);
         });
-        $button.prop('disabled', false).removeClass('loading');
-        view.refreshBlockTypes(view.model.id, view.$('.block-types'));
+        view.toggleBlockAdder();
         $('html, body').animate({
             scrollTop: $el.offset().top
         }, 2000);
@@ -185,8 +208,7 @@ export default StudentView.extend({
         var errorMessage = 'Could not add the block: ' + $.parseJSON(error.responseText).reason;
         alert(errorMessage);
         console.log(errorMessage, arguments);
-        $button.prop('disabled', false).removeClass('loading');
-        view.refreshBlockTypes(view.model.id, view.$('.block-types'));
+        view.toggleBlockAdder();
       });
   },
 

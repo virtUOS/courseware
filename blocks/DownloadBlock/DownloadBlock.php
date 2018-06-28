@@ -6,6 +6,7 @@ use Mooc\UI\Block;
 class DownloadBlock extends Block 
 {
     const NAME = 'Download';
+    const BLOCK_CLASS = 'function';
 
     public function initialize()
     {

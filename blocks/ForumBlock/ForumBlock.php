@@ -13,6 +13,7 @@ use Mooc\UI\Section\Section;
 class ForumBlock extends Block
 {
     const NAME = 'Forum';
+    const BLOCK_CLASS = 'interaction';
 
     public function initialize()
     {

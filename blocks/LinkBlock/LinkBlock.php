@@ -6,6 +6,7 @@ use Mooc\UI\Block;
 class LinkBlock extends Block 
 {
     const NAME = 'Link';
+    const BLOCK_CLASS = 'function';
 
     public function initialize()
     {

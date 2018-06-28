@@ -72,10 +72,27 @@ class Section extends Block
             $block['make_date'] = date("d.n.Y",$block['mkdate']);
         }
         // block adder
-        $content_block_types_basic = $this->getBlockTypes()['basic_blocks'];
-        $content_block_types_advanced = $this->getBlockTypes()['advanced_blocks'];
-        
-        return compact('blocks', 'content_block_types_basic', 'content_block_types_advanced', 'icon', 'title', 'visited');
+        $block_types = $this->getBlockTypes();
+        $content_block_types_basic = $block_types['basic_blocks'];
+        $content_block_types_advanced = $block_types['advanced_blocks'];
+
+        $content_block_types_function = $block_types['function_blocks'];
+        $content_block_types_interaction = $block_types['interaction_blocks'];
+        $content_block_types_layout = $block_types['layout_blocks'];
+        $content_block_types_multimedia = $block_types['multimedia_blocks'];
+        $content_block_types_all = $block_types['all_blocks'];
+
+
+        return compact(
+            'blocks', 
+            'content_block_types_basic',
+            'content_block_types_advanced',
+            'content_block_types_function',
+            'content_block_types_interaction',
+            'content_block_types_layout',
+            'content_block_types_multimedia',
+            'content_block_types_all',
+            'icon', 'title', 'visited');
     }
 
     public function add_content_block_handler($data)
@@ -191,9 +208,25 @@ class Section extends Block
             $className = '\Mooc\UI\\'.$type.'\\'.$type;
             $readableName = $type;
             $nameConstant = $className.'::NAME';
+            $blockClassConstant = $className.'::BLOCK_CLASS';
+            $descriptionConstant = $className.'::DESCRIPTION';
 
             if (defined($nameConstant)) {
                 $readableName = _cw(constant($nameConstant));
+            } else {
+                $readableName = '';
+            }
+
+            if (defined($blockClassConstant)) {
+                $blockClass = _cw(constant($blockClassConstant));
+            } else {
+                $blockClass = '';
+            }
+
+            if (defined($descriptionConstant)) {
+                $description = _cw(constant($descriptionConstant));
+            } else {
+                $description = '';
             }
 
             if (!class_exists($className)) {
@@ -211,7 +244,9 @@ class Section extends Block
                     $blockTypes[$name] = array(
                         'type' => $type,
                         'sub_type' => $subType,
-                        'name' => $name
+                        'name' => $name,
+                        'block_class' => $blockClass,
+                        'description' => $description
                     );
                 }
             } else {
@@ -220,7 +255,9 @@ class Section extends Block
                     $blockTypes[$name] = array(
                         'type' => $type,
                         'sub_type' => null,
-                        'name' => $name
+                        'name' => $name,
+                        'block_class' => $blockClass,
+                        'description' => $description
                     );
                 }
             }
@@ -228,15 +265,48 @@ class Section extends Block
         ksort($blockTypes);
         $basic_blocks = array();
         $advanced_blocks = array();
+        
+        $function_blocks = array();
+        $interaction_blocks = array();
+        $layout_blocks = array();
+        $multimedia_blocks = array();
+        $all_blocks = array();
+        
         foreach($blockTypes as $key => $value){
             if (in_array($value['type'], array('HtmlBlock', 'VideoBlock', 'PostBlock',  'TestBlock') )) {
                 array_push($basic_blocks, $value);
             } else {
                 array_push($advanced_blocks, $value);
             }
+            array_push($all_blocks, $value);
+            switch ($value['block_class']) {
+                case 'function':
+                    array_push($function_blocks, $value);
+                    break;
+                case 'interaction':
+                    array_push($interaction_blocks, $value);
+                    break;
+                case 'layout':
+                    array_push($layout_blocks, $value);
+                    break;
+                case 'multimedia':
+                    array_push($multimedia_blocks, $value);
+                    break;
+
+            }
         }
 
-        return array('basic_blocks' =>$basic_blocks, 'advanced_blocks' => $advanced_blocks);
+
+        return array(
+            'basic_blocks' =>$basic_blocks, 
+            'advanced_blocks' => $advanced_blocks,
+
+            'function_blocks' => $function_blocks,
+            'interaction_blocks' => $interaction_blocks,
+            'layout_blocks' => $layout_blocks,
+            'multimedia_blocks' => $multimedia_blocks,
+            'all_blocks' => $all_blocks
+        );
     }
 
     private function refreshIcon()

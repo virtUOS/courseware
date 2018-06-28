@@ -10,6 +10,7 @@ use Mooc\UI\Block;
 class TestBlock extends Block 
 {
     const NAME = 'Quiz';
+    const BLOCK_CLASS = 'interaction';
 
     function initialize()
     {

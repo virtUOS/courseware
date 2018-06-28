@@ -7,6 +7,7 @@ use Mooc\UI\Block;
 class ConfirmBlock extends Block
 {
     const NAME = 'Bestätigung';
+    const BLOCK_CLASS = 'function';
 
     public function initialize()
     {
