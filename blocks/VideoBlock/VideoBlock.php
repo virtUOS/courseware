@@ -11,6 +11,7 @@ class VideoBlock extends Block
 {
     const NAME = 'Video';
     const BLOCK_CLASS = 'multimedia';
+    const DESCRIPTION = 'Spielt ein Video aus dem Dateibereich oder von einer URL ab';
 
     public function initialize()
     {

@@ -7,6 +7,7 @@ class AssortBlock extends Block
 {
     const NAME = 'Gruppieren';
     const BLOCK_CLASS = 'layout';
+    const DESCRIPTION = 'Vereint Blöcke und erzeugt eine zusätzlichen Navigation';
 
     function initialize()
     {

@@ -7,6 +7,7 @@ class LinkBlock extends Block
 {
     const NAME = 'Link';
     const BLOCK_CLASS = 'function';
+    const DESCRIPTION = 'Erstellt einen Link innerhalb der Courseware oder auf eine andere Seite';
 
     public function initialize()
     {

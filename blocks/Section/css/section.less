@@ -261,8 +261,8 @@ button.button.cw-active-selector {
     list-style: none;
     float: left;
     padding: 1em 2em;
-    min-width: 12em;
-    min-height: 7em;
+    width: 12em;
+    min-height: 9em;
     border: solid thin #ddd;
     margin: 1em;
     text-align: center;
@@ -279,6 +279,7 @@ button.button.cw-active-selector {
     .cw-block-adder-item-description {
         margin: 0;
         color: #888;
+        max-width: 12em;
     }
 
     .cw-block-adder-item-icon {
@@ -322,10 +323,13 @@ button.button.cw-active-selector {
             .assets-bg-icon("blue/file-pdf.svg");
         }
         &.cw-block-adder-item-icon-CodeBlock {
+            .assets-bg-icon("blue/computer.svg");
+        }
+        &.cw-block-adder-item-icon-EmbedBlock {
             .assets-bg-icon("blue/code.svg");
         }
         &.cw-block-adder-item-icon-TestBlock {
-            .assets-bg-icon("blue/assessment.svg");
+            .assets-bg-icon("blue/question-circle.svg");
         }
         &.cw-block-adder-item-icon-SearchBlock {
             .assets-bg-icon("blue/search.svg");

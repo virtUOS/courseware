@@ -8,6 +8,7 @@ class ConfirmBlock extends Block
 {
     const NAME = 'Bestätigung';
     const BLOCK_CLASS = 'function';
+    const DESCRIPTION = 'Vom Lernenden bestätigen lassen der der Inhalt betrachtet wurde';
 
     public function initialize()
     {

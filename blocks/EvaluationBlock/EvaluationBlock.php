@@ -13,6 +13,7 @@ use Mooc\UI\Section\Section;
 class EvaluationBlock extends Block
 {
     const NAME = 'Evaluationen';
+    const DESCRIPTION = 'Bindet eine Evaluation ein';
 
     public function initialize()
     {

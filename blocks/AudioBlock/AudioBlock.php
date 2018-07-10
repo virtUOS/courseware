@@ -8,7 +8,7 @@ class AudioBlock extends Block
 {
     const NAME = 'Audio';
     const BLOCK_CLASS = 'multimedia';
-    const DESCRIPTION = 'Spielt eine Audiodatei ab';
+    const DESCRIPTION = 'Spielt eine Audiodatei aus dem Dateibereich oder von einer URL ab';
 
     public function initialize()
     {

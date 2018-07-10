@@ -7,6 +7,7 @@ class IFrameBlock extends Block
 {
     const NAME = 'externer Inhalt (iframe)';
     const BLOCK_CLASS = 'multimedia';
+    const DESCRIPTION = 'Einbetten von einer Website oder Datei';
 
     public function initialize()
     {
