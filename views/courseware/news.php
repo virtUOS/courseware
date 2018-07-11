@@ -19,7 +19,7 @@
             <li class="cw-news-item">
                 <?= (new Mooc\DB\Block($block->parent->parent->parent->id))->title ?> &rarr; 
                 <?= (new Mooc\DB\Block($block->parent->parent->id))->title ?> &rarr; 
-                <a href="<?= \PluginEngine::getURL("courseware/courseware")."&selected=".$block->parent_id ?>"><?= $title; ?></a>
+                <a href="<?= \PluginEngine::getURL("courseware/courseware")."&selected=".$block->id ?>"><?= $title; ?></a>
             </li>
             <? $newsCounter++;?>
              <? endif; ?>
