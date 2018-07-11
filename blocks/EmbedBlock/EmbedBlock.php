@@ -38,19 +38,14 @@ class EmbedBlock extends Block
         switch ($oembed->type) {
             case 'video':
             case 'rich':
-                $height = ($oembed->height / $oembed->width) * 860;
-                $dom = new \DOMDocument;
-                $dom->loadHTML($oembed->html);
-                $xpath = new \DOMXPath($dom);
-                $nodes = $xpath->query("//iframe");
-                foreach($nodes as $node) {
-                    $node->setAttribute('height', $height.'px');
-                    $node->setAttribute('width', '860px');
-                }
-                $html = $dom->saveHTML();
+                $html = $oembed->html;
                 break;
             case 'photo':
-                $html = '<img src="'.$oembed->url.'" width="'.$oembed->width.'" height="'.$oembed->height.'" title="'.$oembed->title.'">';
+                $html = '<img class="embed-block-image" src="'.$oembed->url.'" width="'.$oembed->width.'px" 
+                data-originalwidth="'.$oembed->width.'"  data-originalheight="'.$oembed->height.'" height="'.$oembed
+                ->height.'px" title="'.$oembed->title.'">'; break;
+            default:
+                $html = '';
         }
 
         return array_merge(
@@ -80,7 +75,7 @@ class EmbedBlock extends Block
 
         return;
     }
-    
+
     private function curl_get($url) {
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -91,36 +86,73 @@ class EmbedBlock extends Block
 
         return $return;
     }
-    
+
     private function build_request($embed_source, $embed_url) {
         $endpoints = array(
-            'vimeo' => 'http://vimeo.com/api/oembed',
+            'vimeo' => 'http://vimeo.com/api/oembed.json',
             'youtube' => 'https://www.youtube.com/oembed',
             'giphy' => 'https://giphy.com/services/oembed',
             'flickr' => 'http://www.flickr.com/services/oembed/',
             'sway' => 'https://sway.com/api/v1.0/oembed',
-            'spotify' => 'https://embed.spotify.com/oembed/'
+            'spotify' => 'https://embed.spotify.com/oembed/',
+            'deviantart' => 'https://backend.deviantart.com/oembed',
+            'sketchfab' => 'https://sketchfab.com/oembed',
+            'codesandbox' => 'https://codesandbox.io/oembed',
+            'codepen' => 'https://codepen.io/api/oembed',
+            'ethfiddle' => 'https://ethfiddle.com/services/oembed/',
+            'amcharts' => 'https://live.amcharts.com/oembed',
+            'edumedia' => 'https://www.edumedia-sciences.com/oembed.json',
+            'slideshare' => 'http://www.slideshare.net/api/oembed/2',
+            'speakerdeck' => 'https://speakerdeck.com/oembed.json',
+            'audiomack' => 'https://www.audiomack.com/oembed',
+            'kidoju' => 'https://www.kidoju.com/api/oembed',
+            'learningapps' => 'http://learningapps.org/oembed.php'
+            
         );
 
         switch($embed_source) {
-            case 'vimeo':
-                return $endpoints[$embed_source] . '.json?url=' . rawurlencode($embed_url) . '&width=860';
             case 'youtube':
             case 'giphy':
             case 'spotify':
+            case 'sketchfab':
+            case 'vimeo':
+            case 'edumedia':
+            case 'speakerdeck':
                 return $endpoints[$embed_source] . '?url=' . rawurlencode($embed_url);
             case 'flickr':
             case 'sway':
+            case 'codepen':
+            case 'codesandbox':
+            case 'ethfiddle':
+            case 'amcharts':
+            case 'slideshare':
+            case 'audiomack':
+            case 'kidoju':
+            case 'learningapps':
                 return $endpoints[$embed_source] . '?url=' . rawurlencode($embed_url).'&format=json';
+            case 'deviantart':
+                return $endpoints[$embed_source] . '?format=json&url=' . rawurlencode($embed_url);
         }
 
     }
-    
+
     private function getSources() {
         $sources = array();
+        $sources[] = array('name' => 'amcharts', 'fullname' => 'amCharts');
+        $sources[] = array('name' => 'audiomack', 'fullname' => 'Audiomack');
+        $sources[] = array('name' => 'codepen', 'fullname' => 'CodePen');
+        $sources[] = array('name' => 'codesandbox', 'fullname' => 'CodeSandbox');
+        $sources[] = array('name' => 'deviantart', 'fullname' => 'DeviantArt');
+        $sources[] = array('name' => 'edumedia', 'fullname' => 'eduMedia');
+        $sources[] = array('name' => 'ethfiddle', 'fullname' => 'EthFiddle');
         $sources[] = array('name' => 'flickr', 'fullname' => 'Flickr');
         $sources[] = array('name' => 'giphy', 'fullname' => 'GIPHY');
+        $sources[] = array('name' => 'kidoju', 'fullname' => 'Kidoju');
+        $sources[] = array('name' => 'learningapps', 'fullname' => 'LearningApps');
         $sources[] = array('name' => 'sway', 'fullname' => 'Microsoft Sway');
+        $sources[] = array('name' => 'sketchfab', 'fullname' => 'Sketchfab');
+        $sources[] = array('name' => 'slideshare', 'fullname' => 'SlideShare');
+        $sources[] = array('name' => 'speakerdeck', 'fullname' => 'Speaker Deck');
         $sources[] = array('name' => 'spotify', 'fullname' => 'Spotify');
         $sources[] = array('name' => 'vimeo', 'fullname' => 'Vimeo');
         $sources[] = array('name' => 'youtube', 'fullname' => 'YouTube');
