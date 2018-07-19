@@ -1,0 +1,52 @@
+<input type="hidden" class="cw-chart-stored-type" value="{{chart_type}}">
+<input type="hidden" class="cw-chart-stored-content" value="{{chart_content}}">
+
+<label for="cw-chart-type">{{#i18n}}Chart type{{/i18n}}:</label>
+<select name="cw-chart-type" class="cw-chart-type">
+    <option value="bar">{{#i18n}}Säulendiagramm{{/i18n}}</option>
+    <option value="pie">{{#i18n}}Kreisdiagramm{{/i18n}}</option>
+    <option value="line">{{#i18n}}Liniendiagramm{{/i18n}}</option>
+</select>
+<br>
+<label for="cw-chart-label">{{#i18n}}Chart label{{/i18n}}:</label>
+<input type="text" name="cw-chart-label" class="cw-chart-label" value="{{chart_label}}">
+
+<!--
+<div class="cw-chart-item-dataset">
+    <h3>Datensatz 1</h3>
+    <label for="cw-chart-item-value">{{#i18n}}Chart item value{{/i18n}}:</label>
+    <input type="text" name="cw-chart-item-value" class="cw-chart-item-value">
+    <label for="cw-chart-item-label">{{#i18n}}Chart item label{{/i18n}}:</label>
+    <input type="text" name="cw-chart-item-label" class="cw-chart-item-label">
+    <label for="cw-chart-item-color">{{#i18n}}Chart item color{{/i18n}}:</label>
+    <input type="text" name="cw-chart-item-color" class="cw-chart-item-color">
+</div>
+<div class="cw-chart-item-dataset">
+    <h3>Datensatz 2</h3>
+    <label for="cw-chart-item-value">{{#i18n}}Chart item value{{/i18n}}:</label>
+    <input type="text" name="cw-chart-item-value" class="cw-chart-item-value">
+    <label for="cw-chart-item-label">{{#i18n}}Chart item label{{/i18n}}:</label>
+    <input type="text" name="cw-chart-item-label" class="cw-chart-item-label">
+    <label for="cw-chart-item-color">{{#i18n}}Chart item color{{/i18n}}:</label>
+    <input type="text" name="cw-chart-item-color" class="cw-chart-item-color">
+</div>
+-->
+
+<hr>
+<div class="cw-chart-item-datasets-wrapper">
+    <div class="cw-chart-item-dataset cw-chart-item-dataset-default">
+        <h4 class="cw-chart-item-title"></h4>
+        <label for="cw-chart-item-value">{{#i18n}}Chart item value{{/i18n}}:</label>
+        <input type="text" name="cw-chart-item-value" class="cw-chart-item-value">
+        <label for="cw-chart-item-label">{{#i18n}}Chart item label{{/i18n}}:</label>
+        <input type="text" name="cw-chart-item-label" class="cw-chart-item-label">
+        <label for="cw-chart-item-color">{{#i18n}}Chart item color{{/i18n}}:</label>
+        <input type="text" name="cw-chart-item-color" class="cw-chart-item-color">
+    </div>
+</div>
+
+<div class="cw-button-box">
+    <button name="additem" class="button">{{#i18n}}additem{{/i18n}}</button>
+    <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
+    <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+</div>
