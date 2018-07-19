@@ -6,18 +6,19 @@ import Chart from 'chart.js'
 export default StudentView.extend({
     events: {
     },
-    
-    initialize() { },
-    
+
+    initialize() { 
+    },
+
     render() {
         return this;
     },
-    
+
     postRender() {
         this.buildChart();
         return this;
     },
-    
+
     buildChart() {
         var $view = this;
         var ctx = $view.$('.cw-chartblock-canvas').get(0).getContext('2d');
@@ -33,13 +34,13 @@ export default StudentView.extend({
         $.each(json, function(i){
             $labels.push(json[i].label);
             $data.push(json[i].value);
-            $backgroundColor.push('rgba('+$view.getColor(json[i].color)+', 0.3)' );
+            $backgroundColor.push('rgba('+$view.getColor(json[i].color)+', 0.6)' );
             $borderColor.push('rgba('+$view.getColor(json[i].color)+', 1.0)' );
         });
 
-        var $label = 'just a label';
+        var $label = $view.$('.cw-chart-stored-label').val();
 
-        if ($type == 'bar') {
+        if (($type == 'bar') || ($type == 'horizontalBar')) {
             var myChart = new Chart(ctx, {
                 type: $type,
                 data: {
@@ -64,7 +65,7 @@ export default StudentView.extend({
             });
         }
 
-        if ($type == 'pie') {
+        if (($type == 'pie') || ($type == 'doughnut') || ($type == 'polarArea')){
             var myChart = new Chart(ctx, {
                 type: $type,
                 data: {
@@ -100,7 +101,7 @@ export default StudentView.extend({
     getColor($color) {
         switch($color) {
             case 'red':
-                return '231, 76,  60';
+                return '192, 57, 43';
             case 'blue': 
                 return '52, 152, 219';
             case 'yellow':
@@ -117,6 +118,8 @@ export default StudentView.extend({
                 return '52, 73, 94';
             case 'lightgrey':
                 return '149, 165, 166';
+            case 'black':
+                return '0, 0, 0';
         }
     }
 

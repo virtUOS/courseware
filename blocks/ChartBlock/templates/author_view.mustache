@@ -4,44 +4,36 @@
 <label for="cw-chart-type">{{#i18n}}Chart type{{/i18n}}:</label>
 <select name="cw-chart-type" class="cw-chart-type">
     <option value="bar">{{#i18n}}Säulendiagramm{{/i18n}}</option>
+    <option value="horizontalBar">{{#i18n}}Balkendiagramm{{/i18n}}</option>
     <option value="pie">{{#i18n}}Kreisdiagramm{{/i18n}}</option>
+    <option value="doughnut">{{#i18n}}Ringdiagramm{{/i18n}}</option>
+    <option value="polarArea">{{#i18n}}Polar-Area Diagram{{/i18n}}</option>
     <option value="line">{{#i18n}}Liniendiagramm{{/i18n}}</option>
 </select>
 <br>
 <label for="cw-chart-label">{{#i18n}}Chart label{{/i18n}}:</label>
 <input type="text" name="cw-chart-label" class="cw-chart-label" value="{{chart_label}}">
 
-<!--
-<div class="cw-chart-item-dataset">
-    <h3>Datensatz 1</h3>
-    <label for="cw-chart-item-value">{{#i18n}}Chart item value{{/i18n}}:</label>
-    <input type="text" name="cw-chart-item-value" class="cw-chart-item-value">
-    <label for="cw-chart-item-label">{{#i18n}}Chart item label{{/i18n}}:</label>
-    <input type="text" name="cw-chart-item-label" class="cw-chart-item-label">
-    <label for="cw-chart-item-color">{{#i18n}}Chart item color{{/i18n}}:</label>
-    <input type="text" name="cw-chart-item-color" class="cw-chart-item-color">
-</div>
-<div class="cw-chart-item-dataset">
-    <h3>Datensatz 2</h3>
-    <label for="cw-chart-item-value">{{#i18n}}Chart item value{{/i18n}}:</label>
-    <input type="text" name="cw-chart-item-value" class="cw-chart-item-value">
-    <label for="cw-chart-item-label">{{#i18n}}Chart item label{{/i18n}}:</label>
-    <input type="text" name="cw-chart-item-label" class="cw-chart-item-label">
-    <label for="cw-chart-item-color">{{#i18n}}Chart item color{{/i18n}}:</label>
-    <input type="text" name="cw-chart-item-color" class="cw-chart-item-color">
-</div>
--->
-
-<hr>
 <div class="cw-chart-item-datasets-wrapper">
     <div class="cw-chart-item-dataset cw-chart-item-dataset-default">
         <h4 class="cw-chart-item-title"></h4>
         <label for="cw-chart-item-value">{{#i18n}}Chart item value{{/i18n}}:</label>
-        <input type="text" name="cw-chart-item-value" class="cw-chart-item-value">
+        <input type="number" name="cw-chart-item-value" class="cw-chart-item-value">
         <label for="cw-chart-item-label">{{#i18n}}Chart item label{{/i18n}}:</label>
         <input type="text" name="cw-chart-item-label" class="cw-chart-item-label">
         <label for="cw-chart-item-color">{{#i18n}}Chart item color{{/i18n}}:</label>
-        <input type="text" name="cw-chart-item-color" class="cw-chart-item-color">
+        <select name="cw-chart-item-color" class="cw-chart-item-color">
+            <option value="red">{{#i18n}}rot{{/i18n}}</option>
+            <option value="blue">{{#i18n}}blau{{/i18n}}</option>
+            <option value="yellow">{{#i18n}}gelb{{/i18n}}</option>
+            <option value="green">{{#i18n}}grün{{/i18n}}</option>
+            <option value="purple">{{#i18n}}lila{{/i18n}}</option>
+            <option value="turquoise">{{#i18n}}türkis{{/i18n}}</option>
+            <option value="orange">{{#i18n}}orange{{/i18n}}</option>
+            <option value="grey">{{#i18n}}grau{{/i18n}}</option>
+            <option value="lightgrey">{{#i18n}}hellgrau{{/i18n}}</option>
+            <option value="black">{{#i18n}}schwarz{{/i18n}}</option>
+        </select>
     </div>
 </div>
 

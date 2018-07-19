@@ -36,7 +36,7 @@ export default AuthorView.extend({
                 $item.find('.cw-chart-item-title').text('item-'+i);
                 $item.find('input[name="cw-chart-item-value"]').val(content_json[i].value);
                 $item.find('input[name="cw-chart-item-label"]').val(content_json[i].label);
-                $item.find('input[name="cw-chart-item-color"]').val(content_json[i].color);
+                $item.find('.cw-chart-item-color option[value="'+content_json[i].color+'"]').prop('selected', true);
                 $item.removeClass('cw-chart-item-dataset-default');
                 $($item).appendTo($wrapper);
             }
@@ -78,6 +78,7 @@ export default AuthorView.extend({
     onSave(event) {
         var $view = this;
         var $chart_type = $view.$(".cw-chart-type").val();
+        var $chart_label = $view.$(".cw-chart-label").val();
 
         var $datasets = $view.$('.cw-chart-item-dataset');
         var $chart_content = new Array();
@@ -95,7 +96,8 @@ export default AuthorView.extend({
         helper
         .callHandler(this.model.id, 'save', {
               chart_type : $chart_type,
-              chart_content : $chart_content,
+              chart_label : $chart_label,
+              chart_content : $chart_content
         })
         .then(
             // success

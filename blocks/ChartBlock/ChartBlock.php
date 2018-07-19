@@ -12,6 +12,7 @@ class ChartBlock extends Block
     public function initialize()
     {
         $this->defineField('chart_content', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('chart_label', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('chart_type', \Mooc\SCOPE_BLOCK, '');
     }
 
@@ -33,6 +34,7 @@ class ChartBlock extends Block
     {
         return array(
             'chart_content' => $this->chart_content,
+            'chart_label' => $this->chart_label,
             'chart_type' => $this->chart_type
             
         );
@@ -47,6 +49,9 @@ class ChartBlock extends Block
         } 
         if (isset ($data['chart_type'])) {
             $this->chart_type = (string) $data['chart_type'];
+        } 
+        if (isset ($data['chart_label'])) {
+            $this->chart_label = (string) $data['chart_label'];
         } 
 
         return;
@@ -74,6 +79,9 @@ class ChartBlock extends Block
         }
         if (isset($properties['chart_type'])) {
             $this->chart_type = $properties['chart_type'];
+        }
+        if (isset($properties['chart_label'])) {
+            $this->chart_label = $properties['chart_label'];
         }
 
         $this->save();
