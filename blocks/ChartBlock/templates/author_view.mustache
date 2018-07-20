@@ -1,7 +1,7 @@
 <input type="hidden" class="cw-chart-stored-type" value="{{chart_type}}">
 <input type="hidden" class="cw-chart-stored-content" value="{{chart_content}}">
 
-<label for="cw-chart-type">{{#i18n}}Chart type{{/i18n}}:</label>
+<label for="cw-chart-type">{{#i18n}}Diagrammtyp{{/i18n}}:</label>
 <select name="cw-chart-type" class="cw-chart-type">
     <option value="bar">{{#i18n}}Säulendiagramm{{/i18n}}</option>
     <option value="horizontalBar">{{#i18n}}Balkendiagramm{{/i18n}}</option>
@@ -11,17 +11,17 @@
     <option value="line">{{#i18n}}Liniendiagramm{{/i18n}}</option>
 </select>
 <br>
-<label for="cw-chart-label">{{#i18n}}Chart label{{/i18n}}:</label>
+<label for="cw-chart-label">{{#i18n}}Diagrammbezeichnung{{/i18n}}:</label>
 <input type="text" name="cw-chart-label" class="cw-chart-label" value="{{chart_label}}">
 
 <div class="cw-chart-item-datasets-wrapper">
-    <div class="cw-chart-item-dataset cw-chart-item-dataset-default">
-        <h4 class="cw-chart-item-title"></h4>
-        <label for="cw-chart-item-value">{{#i18n}}Chart item value{{/i18n}}:</label>
+    <fieldset class="cw-chart-item-dataset cw-chart-item-dataset-default">
+        <legend class="cw-chart-item-title">{{#i18n}}Datensatz{{/i18n}}</legend>
+        <label for="cw-chart-item-value">{{#i18n}}Wert{{/i18n}}:</label>
         <input type="number" name="cw-chart-item-value" class="cw-chart-item-value">
-        <label for="cw-chart-item-label">{{#i18n}}Chart item label{{/i18n}}:</label>
+        <label for="cw-chart-item-label">{{#i18n}}Bezeichnung{{/i18n}}:</label>
         <input type="text" name="cw-chart-item-label" class="cw-chart-item-label">
-        <label for="cw-chart-item-color">{{#i18n}}Chart item color{{/i18n}}:</label>
+        <label for="cw-chart-item-color">{{#i18n}}Farbe{{/i18n}}:</label>
         <select name="cw-chart-item-color" class="cw-chart-item-color">
             <option value="red">{{#i18n}}rot{{/i18n}}</option>
             <option value="blue">{{#i18n}}blau{{/i18n}}</option>
@@ -34,11 +34,12 @@
             <option value="lightgrey">{{#i18n}}hellgrau{{/i18n}}</option>
             <option value="black">{{#i18n}}schwarz{{/i18n}}</option>
         </select>
-    </div>
+        <button name="removeitem" class="trash"></button>
+    </fieldset>
 </div>
 
 <div class="cw-button-box">
-    <button name="additem" class="button">{{#i18n}}additem{{/i18n}}</button>
+    <button name="additem" class="button">{{#i18n}}Datensatz hinzufügen{{/i18n}}</button>
     <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
     <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
 </div>
