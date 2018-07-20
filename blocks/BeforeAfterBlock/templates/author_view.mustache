@@ -1,10 +1,36 @@
-<input type="hidden" class="cw-demo-stored-content" value="">
+<input type="hidden" class="cw-ba-stored-source" value="{{ba_source}}">
+<input type="hidden" class="cw-ba-stored-url" value="{{ba_url}}">
+<input type="hidden" class="cw-ba-stored-files" value="{{ba_files}}">
 
-<label for="cw-beforeafter-slider-img-before">{{#i18n}}Bild vorher{{/i18n}}:</label>
-<input type="text" name="cw-beforeafter-slider-img-before" class="cw-beforeafter-slider-img-before" value="{{beforeafter_img_before}}">
-<br>
-<label for="cw-beforeafter-slider-img-after">{{#i18n}}Bild nachher{{/i18n}}:</label>
-<input type="text" name="cw-beforeafter-slider-img-after" class="cw-beforeafter-slider-img-after" value="{{beforeafter_img_after}}">
+
+<label for="cw-ba-source">{{#i18n}}Quelle{{/i18n}}:</label>
+<select class="cw-ba-source" name="cw-ba-source">
+    <option value="url">{{#i18n}}URL{{/i18n}}</option>
+    <option value="cw">{{#i18n}}Dateibereich{{/i18n}}</option>
+</select>
+
+<div class="cw-ba-wrapper cw-ba-wrapper-url">
+    <label for="cw-ba-url-before">{{#i18n}}Bild vorher{{/i18n}}:</label>
+    <input type="text" name="cw-ba-url-before" class="cw-ba-url-before" value="{{beforeafter_img_before}}">
+    <br>
+    <label for="cw-ba-url-after">{{#i18n}}Bild nachher{{/i18n}}:</label>
+    <input type="text" name="cw-ba-url-after" class="cw-ba-url-after" value="{{beforeafter_img_after}}">
+</div>
+
+<div class="cw-ba-wrapper cw-ba-wrapper-files">
+    <label for="cw-ba-file-before">{{#i18n}}Bild vorher{{/i18n}}: </label>
+    <select class="cw-ba-file-before" name="cw-ba-file-before">
+        {{#image_files}}
+            <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
+        {{/image_files}}
+    </select>
+    <label for="cw-ba-file-after">{{#i18n}}Bild nachher{{/i18n}}: </label>
+    <select class="cw-ba-file-after" name="cw-ba-file-after">
+        {{#image_files}}
+            <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
+        {{/image_files}}
+    </select>
+</div>
 
 <div class="cw-button-box">
     <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>

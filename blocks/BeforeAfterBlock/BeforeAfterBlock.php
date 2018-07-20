@@ -11,8 +11,9 @@ class BeforeAfterBlock extends Block
 
     public function initialize()
     {
-        $this->defineField('beforeafter_img_before', \Mooc\SCOPE_BLOCK, '');
-        $this->defineField('beforeafter_img_after', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('ba_source', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('ba_url', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('ba_files', \Mooc\SCOPE_BLOCK, '');
     }
 
     public function student_view()
@@ -25,15 +26,40 @@ class BeforeAfterBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
+        
+        
 
-        return array_merge($this->getAttrArray(), array());
+        return array_merge($this->getAttrArray(), array(
+
+            'image_files' => $this->showFiles()
+        ));
     }
 
     private function getAttrArray() 
     {
+        switch ($this->ba_source) {
+                case 'url':
+                    $url_json = json_decode($this->ba_url);
+                    $ba_img_before = $url_json->img_before;
+                    $ba_img_after = $url_json->img_after;
+                    break;
+                case 'cw':
+                    $url_json = json_decode($this->ba_files);
+                    $file_before = \FileRef::find($url_json->img_id_before);
+                    $file_after = \FileRef::find($url_json->img_id_after);
+                    if (($file_before)&&($file_after)) {
+                        $ba_img_before = $file_before->getDownloadURL();
+                        $ba_img_after = $file_after->getDownloadURL();
+                    }
+                    break;
+        }
+
         return array(
-            'beforeafter_img_before' => $this->beforeafter_img_before,
-            'beforeafter_img_after' => $this->beforeafter_img_after
+            'ba_source' => $this->ba_source,
+            'ba_url' => $this->ba_url,
+            'ba_files' => $this->ba_files,
+            'beforeafter_img_before' => $ba_img_before,
+            'beforeafter_img_after' => $ba_img_after
         );
     }
 
@@ -41,18 +67,21 @@ class BeforeAfterBlock extends Block
     {
         $this->authorizeUpdate();
 
-        if (isset ($data['beforeafter_img_before'])) {
-            $this->beforeafter_img_before = (string) $data['beforeafter_img_before'];
+        if (isset ($data['ba_source'])) {
+            $this->ba_source = (string) $data['ba_source'];
         } 
-        if (isset ($data['beforeafter_img_after'])) {
-            $this->beforeafter_img_after = (string) $data['beforeafter_img_after'];
+        if (isset ($data['ba_url'])) {
+            $this->ba_url = (string) $data['ba_url'];
+        } 
+        if (isset ($data['ba_files'])) {
+            $this->ba_files = (string) $data['ba_files'];
         } 
 
         return;
     }
 
     public function exportProperties()
-    {
+    { //TODO handle internal files!!!
        return $this->getAttrArray();
     }
 
@@ -68,13 +97,30 @@ class BeforeAfterBlock extends Block
 
     public function importProperties(array $properties)
     {
-        if (isset($properties['beforeafter_img_before'])) {
-            $this->beforeafter_img_before = $properties['beforeafter_img_before'];
+        if (isset($properties['ba_source'])) {
+            $this->ba_source = $properties['ba_source'];
         }
-        if (isset($properties['beforeafter_img_after'])) {
-            $this->beforeafter_img_after = $properties['beforeafter_img_after'];
+        if (isset($properties['ba_url'])) {
+            $this->ba_url = $properties['ba_url'];
         }
 
         $this->save();
+    }
+
+    private function showFiles()
+    {
+        $filesarray = array();
+        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        
+        foreach ($folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if ($ref->isImage())  {
+                    $filesarray[] = $ref;
+                }
+            }
+        }
+
+        return $filesarray;
     }
 }
