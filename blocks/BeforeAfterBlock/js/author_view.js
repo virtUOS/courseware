@@ -35,8 +35,8 @@ export default AuthorView.extend({
                 var $files = $view.$('.cw-ba-stored-files').val();
                 if ($files != ''){
                     $files = JSON.parse($files);
-                    $view.$('select.cw-ba-file-before option[file-id="'+$files.img_id_before+'"]').prop('selected', true);
-                    $view.$('select.cw-ba-file-after option[file-id="'+$files.img_id_after+'"]').prop('selected', true);
+                    $view.$('select.cw-ba-file-before option[file-id="'+$files.before.file_id+'"]').prop('selected', true);
+                    $view.$('select.cw-ba-file-after option[file-id="'+$files.after.file_id+'"]').prop('selected', true);
                 }
                 $view.$('.cw-ba-wrapper-files').show();
                 break;
@@ -80,17 +80,24 @@ export default AuthorView.extend({
         switch ($ba_source) {
             case 'url':
                 $ba_url = {};
-                $ba_url.img_before = $view.$('.cw-ba-url-before').val();
-                $ba_url.img_after = $view.$('.cw-ba-url-after').val();
+                $ba_url.before = {};
+                $ba_url.after = {};
+                $ba_url.before.url = $view.$('.cw-ba-url-before').val();
+                $ba_url.after.url = $view.$('.cw-ba-url-after').val();
                 $ba_url = JSON.stringify($ba_url);
                 break;
             case 'cw':
                 $ba_files = {};
-                $ba_files.img_id_before = $view.$('.cw-ba-file-before option:selected').attr('file-id');
-                $ba_files.img_id_after = $view.$('.cw-ba-file-after option:selected').attr('file-id');
+                $ba_files.before = {};
+                $ba_files.after = {};
+                $ba_files.before.file_id = $view.$('.cw-ba-file-before option:selected').attr('file-id');
+                $ba_files.before.file_name = $view.$('.cw-ba-file-before option:selected').attr('filename');
+                $ba_files.after.file_id = $view.$('.cw-ba-file-after option:selected').attr('file-id');
+                $ba_files.after.file_name = $view.$('.cw-ba-file-after option:selected').attr('filename');
                 $ba_files = JSON.stringify($ba_files);
                 break;
         }
+
         helper
         .callHandler(this.model.id, 'save', {
               ba_source : $ba_source,
