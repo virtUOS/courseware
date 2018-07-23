@@ -170,12 +170,7 @@ class EmbedBlock extends Block
 
     public function exportProperties()
     {
-       return;
-    }
-
-    public function getFiles()
-    {
-        return;
+       return $this->getAttrArray();
     }
 
     /**
@@ -209,7 +204,4 @@ class EmbedBlock extends Block
         $this->save();
     }
 
-    public function importContents($contents, array $files)
-    {
-    }
 }

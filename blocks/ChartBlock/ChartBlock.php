@@ -36,7 +36,6 @@ class ChartBlock extends Block
             'chart_content' => $this->chart_content,
             'chart_label' => $this->chart_label,
             'chart_type' => $this->chart_type
-            
         );
     }
 
