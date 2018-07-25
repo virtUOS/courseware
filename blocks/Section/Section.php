@@ -232,6 +232,10 @@ class Section extends Block
             if (!class_exists($className)) {
                 continue;
             }
+            
+            if ($type == 'EvaluationBlock') {
+                continue;
+            }
 
             $subTypes = call_user_func(array($className, 'getSubTypes'));
 
@@ -263,9 +267,6 @@ class Section extends Block
             }
         }
         ksort($blockTypes);
-        $basic_blocks = array();
-        $advanced_blocks = array();
-        
         $function_blocks = array();
         $interaction_blocks = array();
         $layout_blocks = array();
@@ -273,11 +274,6 @@ class Section extends Block
         $all_blocks = array();
         
         foreach($blockTypes as $key => $value){
-            if (in_array($value['type'], array('HtmlBlock', 'VideoBlock', 'PostBlock',  'TestBlock') )) {
-                array_push($basic_blocks, $value);
-            } else {
-                array_push($advanced_blocks, $value);
-            }
             array_push($all_blocks, $value);
             switch ($value['block_class']) {
                 case 'function':
@@ -298,9 +294,6 @@ class Section extends Block
 
 
         return array(
-            'basic_blocks' =>$basic_blocks, 
-            'advanced_blocks' => $advanced_blocks,
-
             'function_blocks' => $function_blocks,
             'interaction_blocks' => $interaction_blocks,
             'layout_blocks' => $layout_blocks,
