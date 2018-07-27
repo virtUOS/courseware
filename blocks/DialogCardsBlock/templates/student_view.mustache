@@ -1,36 +1,15 @@
-<!--
-<div class="cw-dialogcards">
-    <div class="card js-card">
-      <div class="card__wrapper">
-        <div class="card__side is-active">
-          <img src="http://localhost/studip40/sendfile.php?type=0&file_id=af75455b3713c7ea54ef1a31f91f93e2&file_name=after.jpg" style="verti">
-          <br>
-          <h3>Aus welchem Film stammt diese Scene?</h3>
-        </div>
-        <div class="card__side card__side--back">
-        <img src="http://localhost/studip40/sendfile.php?type=0&file_id=0d0accc7ef892bdf467f3f3a6922e443&file_name=gotg.jpg"  style="verti">
-          <br>
-          <h3>Guardians of the Galaxy</h3>
-        </div>
-      </div>
-    </div>
-    
-</div>
--->
 <button class="cw-dialogcards-prev cw-dialogcards-navbutton"></button>
 <div class="cw-dialogcards">
 {{#cards}}
-        <div class="card js-card" data-index="{{index}}">
-          <div class="card__wrapper">
-            <div class="card__side is-active">
+        <div class="scene scene--card" data-index="{{index}}">
+          <div class="card">
+            <div class="card__face card__face--front">
               <img src="{{front_img}}">
-              <br>
-              <h3>{{front_text}}</h3>
+              <p>{{front_text}}</p>
             </div>
-            <div class="card__side card__side--back">
+            <div class="card__face card__face--back">
             <img src="{{back_img}}">
-              <br>
-              <h3>{{back_text}}</h3>
+              <p>{{back_text}}</p>
             </div>
           </div>
         </div>

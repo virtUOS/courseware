@@ -7,7 +7,8 @@ export default AuthorView.extend({
 
     events: {
         'click button[name=save]':   'onSave',
-        'click button[name=cancel]': 'switchBack'
+        'click button[name=cancel]': 'switchBack',
+        'click button[name=addcard]': 'addCard'
     },
 
     initialize() {
@@ -20,8 +21,6 @@ export default AuthorView.extend({
     },
 
     postRender() {
-        var $view = this;
-
         return this;
     },
 
@@ -54,12 +53,17 @@ export default AuthorView.extend({
 
     onSave(event) {
         var $view = this;
-        var dialogcards_content = {};
-        dialogcards_content.front_img = $view.$(".cw-dialogcards-front-img").val();
-        dialogcards_content.front_text = $view.$(".cw-dialogcards-front-text").val();
-        dialogcards_content.back_img = $view.$(".cw-dialogcards-back-img").val();
-        dialogcards_content.back_text = $view.$(".cw-dialogcards-back-text").val();
-        dialogcards_content.index = 0;
+        var $cards = $view.$('.cw-dialogcards-card-content');
+        var dialogcards_content = [];
+        $.each($cards, function(index){
+            var card_content = {};
+            card_content.front_img = $(this).find(".cw-dialogcards-front-img").val();
+            card_content.front_text = $(this).find(".cw-dialogcards-front-text").val();
+            card_content.back_img = $(this).find(".cw-dialogcards-back-img").val();
+            card_content.back_text = $(this).find(".cw-dialogcards-back-text").val();
+            card_content.index = index;
+            dialogcards_content.push(card_content);
+        });
         dialogcards_content = JSON.stringify(dialogcards_content);
         helper
         .callHandler(this.model.id, 'save', {
@@ -77,5 +81,15 @@ export default AuthorView.extend({
                 console.log(error);
             }
         );
+    },
+
+    addCard() {
+        var $view = this;
+        var $card = $view.$('.cw-dialogcards-card-content-default').clone();
+        var index = $view.$('.cw-dialogcards-card-content').length;
+        var $last = $view.$('.cw-dialogcards-card-content').last();
+        $card.removeClass('cw-dialogcards-card-content-default').addClass('cw-dialogcards-card-content');
+        $card.find('.cw-dialogcards-card-content-legend').html('Karte '+index);
+        $card.insertAfter($last);
     }
 });

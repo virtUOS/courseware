@@ -19,7 +19,6 @@ class DialogCardsBlock extends Block
         $this->setGrade(1.0);
         $cards = json_decode($this->dialogcards_content);
 
-
         return array_merge($this->getAttrArray(), array(
             'cards' => json_decode($this->dialogcards_content)
         ));
@@ -29,7 +28,7 @@ class DialogCardsBlock extends Block
     {
         $this->authorizeUpdate();
 
-        return array_merge($this->getAttrArray(), array());
+        return array_merge($this->getAttrArray(), array('cards' => json_decode($this->dialogcards_content)));
     }
 
     private function getAttrArray() 

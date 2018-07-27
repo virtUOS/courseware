@@ -1,143 +1,73 @@
 @import '../../../assets/less/variables';
 @import '../../../assets/less/mixins';
+.cw-dialogcards-card-content {
+    border: solid thin #ccc;
+}
+
+.cw-dialogcards-card-content-default {
+    display: none;
+}
 
 .cw-dialogcards {
-    .card {
-      -webkit-perspective: 600px;
-              perspective: 600px;
-      position: relative;
-    }
-    .card.is-switched .card__wrapper {
-      -webkit-animation: rotate 0.5s linear both;
-              animation: rotate 0.5s linear both;
-    }
-
-    .card__wrapper {
-      -webkit-transform-style: preserve-3d;
-              transform-style: preserve-3d;
-      -webkit-animation: rotate-inverse 0.5s linear both;
-              animation: rotate-inverse 0.5s linear both;
-    }
-
-    .card__side {
-      -webkit-backface-visibility: hidden;
-              backface-visibility: hidden;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-    }
-    .card__side.is-active {
-      position: static;
-    }
-
-    .card__side--back {
-      -webkit-transform: rotateY(180deg);
-              transform: rotateY(180deg);
-    }
-
-    @-webkit-keyframes rotate {
-      0% {
-        -webkit-transform: rotateY(0);
-                transform: rotateY(0);
-      }
-      70% {
-        -webkit-transform: rotateY(200deg);
-                transform: rotateY(200deg);
-      }
-      100% {
-        -webkit-transform: rotateY(180deg);
-                transform: rotateY(180deg);
-      }
-    }
-
-    @keyframes rotate {
-      0% {
-        -webkit-transform: rotateY(0);
-                transform: rotateY(0);
-      }
-      70% {
-        -webkit-transform: rotateY(200deg);
-                transform: rotateY(200deg);
-      }
-      100% {
-        -webkit-transform: rotateY(180deg);
-                transform: rotateY(180deg);
-      }
-    }
-    @-webkit-keyframes rotate-inverse {
-      0% {
-        -webkit-transform: rotateY(180deg);
-                transform: rotateY(180deg);
-      }
-      70% {
-        -webkit-transform: rotateY(-20deg);
-                transform: rotateY(-20deg);
-      }
-      100% {
-        -webkit-transform: rotateY(0);
-                transform: rotateY(0);
-      }
-    }
-    @keyframes rotate-inverse {
-      0% {
-        -webkit-transform: rotateY(180deg);
-                transform: rotateY(180deg);
-      }
-      70% {
-        -webkit-transform: rotateY(-20deg);
-                transform: rotateY(-20deg);
-      }
-      100% {
-        -webkit-transform: rotateY(0);
-                transform: rotateY(0);
-      }
-    }
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: #5a5a5a;
-      text-align: center;
-      padding: 1.5rem;
-    }
-
-    .card {
-        margin: 2rem auto;
-        width: 480px;
-        cursor: pointer;
-        padding: 16px;
+    .scene {
+        margin: 0 auto;
+        width: 440px;
+        height: 520px;
+        perspective: 880px;
         &:not(:first-child) {
             display: none;
         }
     }
+    
+    .card {
+        width: 100%;
+        height: 100%;
+        transition: transform 1s;
+        transform-style: preserve-3d;
+        cursor: pointer;
+        position: relative;
+    }
 
-    .card__side {
-      padding: 1em;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.30);
-      color: white;
-      background-color: #fff;
-      height: 430px;
-      text-align: center;
-      .assets-bg-icon("blue/arr_1right.svg");
+    .card.is-flipped {
+        transform: rotateY(180deg);
+    }
+
+    .card__face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        color: #000;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.2em;
+        backface-visibility: hidden;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.30);
+
+        img {
+            max-width: 380px;
+            max-height: 220px;
+            margin-top: 1em;
+        }
+        p {
+            margin-top: 1em;
+        }
+    }
+
+    .card__face--front {
+        background-color: #fff;
+        .assets-bg-icon("blue/arr_1right.svg");
       background-repeat: no-repeat;
       background-position: 95% 95%;
+    }
 
-      &.card__side--back {
+    .card__face--back {
+        background-color: #fff;
         .assets-bg-icon("blue/arr_1left.svg");
-        background-repeat: no-repeat;
-        background-position: 5% 95%;
-      }
-      img {
-        max-width: 440px;
-        max-height: 220px;
-      }
+      background-repeat: no-repeat;
+      background-position: 5% 95%;
+        transform: rotateY(180deg);
     }
 
-    .title {
-      color: #fff;
-    }
 }
 
 .cw-dialogcards-navbutton {
