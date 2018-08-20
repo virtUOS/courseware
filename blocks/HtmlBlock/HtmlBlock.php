@@ -38,7 +38,7 @@ class HtmlBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-        $content = wysiwygReady($this->content);
+        $content = \STUDIP\Markup::markAsHtml($this->content);
 
         return compact('content');
     }
