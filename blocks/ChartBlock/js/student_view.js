@@ -15,7 +15,9 @@ export default StudentView.extend({
     },
 
     postRender() {
-        this.buildChart();
+        if (this.$(".cw-chart-stored-content").val() != "") {
+            this.buildChart();
+        }
         return this;
     },
 
