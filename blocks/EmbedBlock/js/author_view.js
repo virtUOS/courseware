@@ -8,6 +8,7 @@ export default AuthorView.extend({
   events: {
     'click button[name=save]':   'onSave',
     'click button[name=cancel]': 'switchBack',
+    'change select.cw-embedblock-source': 'selectPlatform'
   },
 
   initialize() {
@@ -23,6 +24,7 @@ export default AuthorView.extend({
     var $view = this;
     var $embed_source = $view.$('.cw-embedblock-source-stored').val();
     $view.$('.cw-embedblock-source option[value="'+$embed_source+'"]').prop('selected', true);
+    $view.selectPlatform();
   },
 
   onNavigate(event) {
@@ -74,5 +76,12 @@ export default AuthorView.extend({
           alert(errorMessage);
           console.log(errorMessage, arguments);
         });
+  },
+  
+  selectPlatform() {
+    var $view = this;
+    var $embed_source = $view.$('select.cw-embedblock-source option:selected').val();
+    $view.$('.cw-embedblock-link li').hide();
+    $view.$('.cw-embedblock-link li[value="'+$embed_source+'"]').show();
   }
 });

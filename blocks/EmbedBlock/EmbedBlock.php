@@ -138,24 +138,24 @@ class EmbedBlock extends Block
 
     private function getSources() {
         $sources = array();
-        $sources[] = array('name' => 'amcharts', 'fullname' => 'amCharts');
-        $sources[] = array('name' => 'audiomack', 'fullname' => 'Audiomack');
-        $sources[] = array('name' => 'codepen', 'fullname' => 'CodePen');
-        $sources[] = array('name' => 'codesandbox', 'fullname' => 'CodeSandbox');
-        $sources[] = array('name' => 'deviantart', 'fullname' => 'DeviantArt');
-        $sources[] = array('name' => 'edumedia', 'fullname' => 'eduMedia');
-        $sources[] = array('name' => 'ethfiddle', 'fullname' => 'EthFiddle');
-        $sources[] = array('name' => 'flickr', 'fullname' => 'Flickr');
-        $sources[] = array('name' => 'giphy', 'fullname' => 'GIPHY');
-        $sources[] = array('name' => 'kidoju', 'fullname' => 'Kidoju');
-        $sources[] = array('name' => 'learningapps', 'fullname' => 'LearningApps');
-        $sources[] = array('name' => 'sway', 'fullname' => 'Microsoft Sway');
-        $sources[] = array('name' => 'sketchfab', 'fullname' => 'Sketchfab');
-        $sources[] = array('name' => 'slideshare', 'fullname' => 'SlideShare');
-        $sources[] = array('name' => 'speakerdeck', 'fullname' => 'Speaker Deck');
-        $sources[] = array('name' => 'spotify', 'fullname' => 'Spotify');
-        $sources[] = array('name' => 'vimeo', 'fullname' => 'Vimeo');
-        $sources[] = array('name' => 'youtube', 'fullname' => 'YouTube');
+        $sources[] = array('name' => 'amcharts', 'fullname' => 'amCharts', 'url'=> 'https://www.amcharts.com/');
+        $sources[] = array('name' => 'audiomack', 'fullname' => 'Audiomack', 'url'=> 'https://audiomack.com/');
+        $sources[] = array('name' => 'codepen', 'fullname' => 'CodePen', 'url'=> 'https://codepen.io/');
+        $sources[] = array('name' => 'codesandbox', 'fullname' => 'CodeSandbox', 'url'=> 'https://codesandbox.io/');
+        $sources[] = array('name' => 'deviantart', 'fullname' => 'DeviantArt', 'url'=> 'https://www.deviantart.com/');
+        $sources[] = array('name' => 'edumedia', 'fullname' => 'eduMedia', 'url'=> 'https://www.edumedia.de/');
+        $sources[] = array('name' => 'ethfiddle', 'fullname' => 'EthFiddle', 'url'=> 'https://ethfiddle.com/');
+        $sources[] = array('name' => 'flickr', 'fullname' => 'Flickr', 'url'=> 'https://www.flickr.com/');
+        $sources[] = array('name' => 'giphy', 'fullname' => 'GIPHY', 'url'=> 'https://giphy.com/');
+        $sources[] = array('name' => 'kidoju', 'fullname' => 'Kidoju', 'url'=> 'https://www.kidoju.com/');
+        $sources[] = array('name' => 'learningapps', 'fullname' => 'LearningApps', 'url'=> 'https://learningapps.org/');
+        $sources[] = array('name' => 'sway', 'fullname' => 'Microsoft Sway', 'url'=> 'https://sway.com/');
+        $sources[] = array('name' => 'sketchfab', 'fullname' => 'Sketchfab', 'url'=> 'https://sketchfab.com/');
+        $sources[] = array('name' => 'slideshare', 'fullname' => 'SlideShare', 'url'=> 'https://www.slideshare.net/');
+        $sources[] = array('name' => 'speakerdeck', 'fullname' => 'Speaker Deck', 'url'=> 'https://speakerdeck.com/');
+        $sources[] = array('name' => 'spotify', 'fullname' => 'Spotify', 'url'=> 'https://www.spotify.com/');
+        $sources[] = array('name' => 'vimeo', 'fullname' => 'Vimeo', 'url'=> 'https://vimeo.com/');
+        $sources[] = array('name' => 'youtube', 'fullname' => 'YouTube', 'url'=> 'https://www.youtube.com/');
 
         return $sources;
     }

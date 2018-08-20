@@ -1,12 +1,18 @@
 <input type="hidden" class="cw-embedblock-source-stored" value="{{embed_source}}">
 
-<label for="cw-embedblock-source">{{#i18n}}Source{{/i18n}}:</label>
+<label for="cw-embedblock-source">{{#i18n}}Plattform{{/i18n}}:</label>
 <select class="cw-embedblock-source" name="cw-embedblock-source">
     {{#embed_sources}}
         <option value="{{name}}">{{fullname}}</option>
     {{/embed_sources}}
 </select>
-<br>
+<label>{{#i18n}}Link zur Plattform{{/i18n}}:</label>
+<ul class="cw-embedblock-link">
+    {{#embed_sources}}
+        <li value="{{name}}"><a href="{{url}}" target="_blank">{{fullname}}</a></li>
+    {{/embed_sources}}
+</ul>
+<br><br>
 <label for="cw-embedblock-url">{{#i18n}}URL{{/i18n}}:</label>
 <input type="text" name="cw-embedblock-url" class="cw-embedblock-url" value="{{embed_url}}">
 

@@ -23,15 +23,23 @@ export default StudentView.extend({
             width = $view.$el.width(),
             iframe = $view.$('iframe'),
             img = $view.$('img.embed-block-image');
+            console.log(width);
+            console.log(Math.round(width/1.65));
 
         if (iframe.length != 0) {
-            var iframe_width = iframe.attr('width'),
-                iframe_height = iframe.attr('height'),
-                new_height = (iframe_height / iframe_width) * width;
+            var iframe_width = iframe.attr('width');
+            var iframe_height = iframe.attr('height');
+            if (isNaN(iframe_height) || isNaN(iframe_width)) {
+                iframe.attr('height', Math.round(width/1.65));
+                iframe.css('height', Math.round(width/1.65));
+            } else {
+                var new_height = (iframe_height / iframe_width) * width;
+                iframe.attr('height', new_height);
+                iframe.css('height', new_height);
+            }
             iframe.attr('width', width);
-            iframe.attr('height', new_height);
             iframe.css('width', width);
-            iframe.css('height', new_height);
+            
         }
 
         if (img.length != 0) {
