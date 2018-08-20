@@ -7,7 +7,7 @@ class DialogCardsBlock extends Block
 {
     const NAME = 'Lernkarten';
     const BLOCK_CLASS = 'interaction';
-    const DESCRIPTION = 'flip cards in a carusel';
+    const DESCRIPTION = 'Karten zum Umdrehen, auf beiden Seiten lässt sich ein Bild und Text darstellen';
 
     public function initialize()
     {
