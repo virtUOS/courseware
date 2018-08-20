@@ -11,6 +11,7 @@
     <input type="text" name="cw-dialogcards-back-img" class="cw-dialogcards-back-img">
     <label for="cw-dialogcards-back-text">{{#i18n}}Rückseite Bild{{/i18n}}:</label>
     <input type="text" name="cw-dialogcards-back-text" class="cw-dialogcards-back-text">
+    <button name="removecard" class="trash"></button>
 </fieldset>
 {{#cards}}
     <fieldset class="cw-dialogcards-card-content" data-index={{index}}>
@@ -24,6 +25,7 @@
         <input type="text" name="cw-dialogcards-back-img" class="cw-dialogcards-back-img" value="{{back_img}}">
         <label for="cw-dialogcards-back-text">{{#i18n}}Rückseite Bild{{/i18n}}:</label>
         <input type="text" name="cw-dialogcards-back-text" class="cw-dialogcards-back-text" value="{{back_text}}">
+        <button name="removecard" class="trash"></button>
     </fieldset>
 {{/cards}}
 <div class="cw-button-box">

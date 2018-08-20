@@ -2,6 +2,7 @@
 @import '../../../assets/less/mixins';
 .cw-dialogcards-card-content {
     border: solid thin #ccc;
+    margin-bottom: 0.5em;
 }
 
 .cw-dialogcards-card-content-default {
@@ -97,4 +98,15 @@
         .assets-bg-icon("white/arr_1right.svg");
         right: 0;
     }
+}
+
+button[name="removecard"] {
+    width: 20px;
+    height: 20px;
+    color: transparent;
+    border: none;
+    background: url("../@{blocks-icons-dir}/blue/trash.svg") no-repeat;
+    cursor: pointer;
+    float: right;
+    margin-top: 20px;
 }

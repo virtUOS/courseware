@@ -25,25 +25,44 @@ export default StudentView.extend({
         $card.toggleClass('is-flipped');
     },
 
-    showNextCard() {
-        var $current_card = this.$('.scene.is-displayed');
-        var index = parseInt($current_card.attr('data-index'));
-        var $next_card = this.$('.scene[data-index="'+(index+1)+'"]');
-        if ($next_card.length != 0) {
-            $current_card.hide().removeClass('is-displayed');
-            $next_card.find('.card').removeClass('is-flipped');
-            $next_card.show().addClass('is-displayed').effect( "shake" );
+    showNextCard(event) {
+        var $button = this.$(event.target);
+        if ($button.data('clicked')) {
+            return;
+        } else {
+            $button.data('clicked', true);
+            var $current_card = this.$('.scene.is-displayed');
+            var index = parseInt($current_card.attr('data-index'));
+            var $next_card = this.$('.scene[data-index="'+(index+1)+'"]');
+            if ($next_card.length != 0) {
+                $current_card.removeClass('is-displayed');
+                $current_card.hide();
+                $next_card.find('.card').removeClass('is-flipped');
+                $next_card.show().addClass('is-displayed').effect('shake', {times:1, distance: 10, direction: 'right'}, 500);
+            }
+            window.setTimeout(function(){
+                $button.removeData('clicked');
+            }, 500)
         }
     }, 
 
-    showPrevCard() {
-        var $current_card = this.$('.scene.is-displayed');
-        var index = parseInt($current_card.attr('data-index'));
-        var $prev_card = this.$('.scene[data-index="'+(index-1)+'"]');
-        if ($prev_card.length != 0) {
-            $current_card.hide().removeClass('is-displayed');
-            $prev_card.find('.card').removeClass('is-flipped');
-            $prev_card.show().addClass('is-displayed').effect( "shake" );
+    showPrevCard(event) {
+        var $button = this.$(event.target);
+        if ($button.data('clicked')) {
+            return;
+        } else {
+            $button.data('clicked', true);
+            var $current_card = this.$('.scene.is-displayed');
+            var index = parseInt($current_card.attr('data-index'));
+            var $prev_card = this.$('.scene[data-index="'+(index-1)+'"]');
+            if ($prev_card.length != 0) {
+                $current_card.hide().removeClass('is-displayed');
+                $prev_card.find('.card').removeClass('is-flipped');
+                $prev_card.show().addClass('is-displayed').effect('shake', {times:1, distance: 10, direction: 'left'}, 500);
+            }
+            window.setTimeout(function(){
+                $button.removeData('clicked');
+            }, 500)
         }
     }
 });

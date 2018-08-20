@@ -8,7 +8,8 @@ export default AuthorView.extend({
     events: {
         'click button[name=save]':   'onSave',
         'click button[name=cancel]': 'switchBack',
-        'click button[name=addcard]': 'addCard'
+        'click button[name=addcard]': 'addCard',
+        'click button[name=removecard]': 'removeCard',
     },
 
     initialize() {
@@ -89,7 +90,18 @@ export default AuthorView.extend({
         var index = $view.$('.cw-dialogcards-card-content').length;
         var $last = $view.$('.cw-dialogcards-card-content').last();
         $card.removeClass('cw-dialogcards-card-content-default').addClass('cw-dialogcards-card-content');
-        $card.find('.cw-dialogcards-card-content-legend').html('Karte '+index);
+        $card.find('.cw-dialogcards-card-content-legend').html('Karte '+ index);
         $card.insertAfter($last);
+    },
+
+    removeCard(event) {
+        var $view = this;
+        var fieldset = this.$(event.target).closest('.cw-dialogcards-card-content');
+        fieldset.remove();
+        var $title = $view.$('.cw-dialogcards-card-content-default .cw-dialogcards-card-content-legend').text();
+        var $datasets = $view.$('.cw-dialogcards-card-content').not('.cw-dialogcards-card-content-default');
+        $.each($datasets, function(i){
+            $(this).find('.cw-dialogcards-card-content-legend').text($title+' '+i);
+        });
     }
 });
