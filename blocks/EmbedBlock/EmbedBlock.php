@@ -28,13 +28,8 @@ class EmbedBlock extends Block
             return array('inactive' => true);
         }
 
-        $embed_source = $this->embed_source;
-        $embed_url = $this->embed_url;
-
-        $json_url = $this->build_request($embed_source, $embed_url);
-
+        $json_url = $this->build_request($this->embed_source, $this->embed_url);
         $oembed = json_decode($this->curl_get($json_url));
-        
         switch ($oembed->type) {
             case 'video':
             case 'rich':
@@ -50,7 +45,11 @@ class EmbedBlock extends Block
 
         return array_merge(
             $this->getAttrArray(),
-            array('html' => $html)
+            array(
+                'html' => $html,
+                'oembed' => $oembed,
+                'embed_source' => $this->embed_source
+            )
         );
     }
 
@@ -101,7 +100,6 @@ class EmbedBlock extends Block
             'codepen' => 'https://codepen.io/api/oembed',
             'ethfiddle' => 'https://ethfiddle.com/services/oembed/',
             'amcharts' => 'https://live.amcharts.com/oembed',
-            'edumedia' => 'https://www.edumedia-sciences.com/oembed.json',
             'slideshare' => 'http://www.slideshare.net/api/oembed/2',
             'speakerdeck' => 'https://speakerdeck.com/oembed.json',
             'audiomack' => 'https://www.audiomack.com/oembed',
@@ -116,7 +114,6 @@ class EmbedBlock extends Block
             case 'spotify':
             case 'sketchfab':
             case 'vimeo':
-            case 'edumedia':
             case 'speakerdeck':
                 return $endpoints[$embed_source] . '?url=' . rawurlencode($embed_url);
             case 'flickr':
@@ -143,7 +140,6 @@ class EmbedBlock extends Block
         $sources[] = array('name' => 'codepen', 'fullname' => 'CodePen', 'url'=> 'https://codepen.io/');
         $sources[] = array('name' => 'codesandbox', 'fullname' => 'CodeSandbox', 'url'=> 'https://codesandbox.io/');
         $sources[] = array('name' => 'deviantart', 'fullname' => 'DeviantArt', 'url'=> 'https://www.deviantart.com/');
-        $sources[] = array('name' => 'edumedia', 'fullname' => 'eduMedia', 'url'=> 'https://www.edumedia.de/');
         $sources[] = array('name' => 'ethfiddle', 'fullname' => 'EthFiddle', 'url'=> 'https://ethfiddle.com/');
         $sources[] = array('name' => 'flickr', 'fullname' => 'Flickr', 'url'=> 'https://www.flickr.com/');
         $sources[] = array('name' => 'giphy', 'fullname' => 'GIPHY', 'url'=> 'https://giphy.com/');
