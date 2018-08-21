@@ -3,13 +3,13 @@ import StudentView from 'js/student_view'
 import helper from 'js/url'
 
 export default StudentView.extend({
-  events: {
-      'click .card' : 'flipCard',
-      'click .cw-dialogcards-next': 'showNextCard',
-      'click .cw-dialogcards-prev': 'showPrevCard'
-  },
+    events: {
+        'click .card' : 'flipCard',
+        'click .cw-dialogcards-next': 'showNextCard',
+        'click .cw-dialogcards-prev': 'showPrevCard'
+    },
 
-    initialize() { },
+    initialize() {},
 
     render() {
         return this;

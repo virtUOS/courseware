@@ -4,11 +4,9 @@ import helper from 'js/url'
 import Chart from 'chart.js'
 
 export default StudentView.extend({
-    events: {
-    },
+    events: {},
 
-    initialize() { 
-    },
+    initialize() {},
 
     render() {
         return this;
@@ -18,6 +16,7 @@ export default StudentView.extend({
         if (this.$(".cw-chart-stored-content").val() != "") {
             this.buildChart();
         }
+
         return this;
     },
 

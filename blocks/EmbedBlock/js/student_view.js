@@ -3,8 +3,7 @@ import StudentView from 'js/student_view'
 import helper from 'js/url'
 
 export default StudentView.extend({
-    events: {
-    },
+    events: {},
 
     initialize() { 
         $(window).on('resize.resizeview', this.onResize.bind(this));
@@ -39,7 +38,6 @@ export default StudentView.extend({
             }
             iframe.attr('width', width);
             iframe.css('width', width);
-            
         }
 
         if (img.length != 0) {

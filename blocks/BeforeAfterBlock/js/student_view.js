@@ -4,18 +4,16 @@ import helper from 'js/url'
 import beforeAfter from 'before-after.js'
 
 export default StudentView.extend({
-    events: {
-    },
-    
-    initialize() { },
-    
+    events: {},
+
+    initialize() {},
+
     render() {
         return this;
     },
-    
+
     postRender() {
         this.$('.cw-beforeafter-slider').beforeAfter();
         return this;
-    },
-
+    }
 });

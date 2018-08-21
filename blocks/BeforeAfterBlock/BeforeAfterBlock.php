@@ -26,11 +26,8 @@ class BeforeAfterBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-        
-        
 
         return array_merge($this->getAttrArray(), array(
-
             'image_files' => $this->showFiles()
         ));
     }

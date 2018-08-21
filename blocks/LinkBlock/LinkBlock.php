@@ -49,7 +49,7 @@ class LinkBlock extends Block
             default:
                 $progress = false;
         }
-        
+
         return array_merge($this->getAttrArray(), array(
             'link_id' => $link_id, 
             'link_href' => $link_href,

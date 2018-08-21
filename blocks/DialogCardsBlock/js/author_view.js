@@ -4,7 +4,6 @@ import AuthorView from 'js/author_view'
 import helper from 'js/url'
 
 export default AuthorView.extend({
-
     events: {
         'click button[name=save]':   'onSave',
         'click button[name=cancel]': 'switchBack',

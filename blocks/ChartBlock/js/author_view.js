@@ -4,7 +4,6 @@ import AuthorView from 'js/author_view'
 import helper from 'js/url'
 
 export default AuthorView.extend({
-
     events: {
         'click button[name=save]':   'onSave',
         'click button[name=cancel]': 'switchBack',
@@ -24,11 +23,10 @@ export default AuthorView.extend({
     postRender() {
         var $view = this;
         var $type = $view.$(".cw-chart-stored-type").val();
+        var $content = $view.$(".cw-chart-stored-content").val();
         if ($type != '') {
             $view.$('.cw-chart-type option[value="'+$type+'"]').prop('selected', true);
         }
-        
-        var $content = $view.$(".cw-chart-stored-content").val();
         if ($content != '') {
             var content_json = JSON.parse($content);
             var $wrapper = $view.$('.cw-chart-item-datasets-wrapper');
@@ -126,7 +124,7 @@ export default AuthorView.extend({
         $item.removeClass('cw-chart-item-dataset-default');
         $($item).appendTo($wrapper).show();
     },
-    
+
     removeitem(event) {
         var $view = this;
         var fieldset = this.$(event.target).closest('.cw-chart-item-dataset');
@@ -136,7 +134,5 @@ export default AuthorView.extend({
         $.each($datasets, function(i){
             $(this).find('.cw-chart-item-title').text($title+' '+(parseInt(i)+1));
         });
-        
     }
-
 });
