@@ -1,29 +1,35 @@
+<input type="hidden" class="cw-videoblock-stored-url" value="{{url}}">
+<input type="hidden" class="cw-videoblock-stored-aspect" value="{{aspect}}">
+<input type="hidden" class="webvideodata" value="{{webvideo}}">
+<input type="hidden" class="webvideosettingsdata" value="{{webvideosettings}}">
+
 <div class="video-wrapper {{aspect}}">
   <iframe src="{{url}}" scrolling="no" allowfullscreen></iframe>
   <video width="100%" controls ></video>
 </div>
 <div class="videodata">
-    <div class="videoblocktitle">
-        <label class="videotitlename">{{#i18n}}Titel{{/i18n}}:</label><input type="text" class="videotitle" value="{{videoTitle}}">
-    </div>
     <div class="videotype-selection">
     <label>{{#i18n}}Video-Typ:{{/i18n}}</label>
     <select class="videotype">
         <option value="webvideo">{{#i18n}}Webvideo (URL){{/i18n}}</option>
-        <option value="youtube">{{#i18n}}Youtube{{/i18n}}</option>
-        <option value="matterhorn">{{#i18n}}openCast{{/i18n}}</option>
         <option value="url">{{#i18n}}eingebettetes Video (iframe){{/i18n}}</option>
     </select>
     </div>
-
+    <div class="videoblocktitle">
+        <label class="videotitlename">{{#i18n}}Überschrift{{/i18n}}: </label>
+        <input type="text" class="videotitle" value="{{videoTitle}}">
+    </div>
+    <label for="videoaspect">{{#i18n}}Seitenverhältnis{{/i18n}}</label>
+    <select name="videoaspect" class="cw-videoblock-aspect">
+        <option value="aspect-169">16:9</option>
+        <option value="aspect-43">4:3</option>
+    </select>
     <div class="videosource videosource-url">
         <input type="hidden" class="videourl" value= "{{url}}">
-        <label class="videosrcname">{{#i18n}}URL{{/i18n}}:</label>
-        <input type="text" class="videosrc">
+        <label class="videosrcname">{{#i18n}}Quelle{{/i18n}}:</label>
+        <input type="text" class="videosrc" value="{{url}}">
     </div>
     <div class="videosource videosource-webvideo">
-        <input type="hidden" class="webvideodata" value="{{webvideo}}">
-        <input type="hidden" class="webvideosettingsdata" value="{{webvideosettings}}">
         <div class="webvideo-description">
             <p>
             {{#i18n}}
@@ -48,18 +54,6 @@
             </select>
         </div>
         <button name="addmediatype" class="addmediatype">{{#i18n}}Quelle hinzufügen{{/i18n}}</button>
-    </div>
-    <h2 class="videosettings-header">{{#i18n}}Einstellungen{{/i18n}}</h2>
-    <div class="videosettings">
-        
-        <div class="videoautostart-wrapper"><label>{{#i18n}}Video automatisch starten{{/i18n}}</label><input type="checkbox" class="videoautostart" ></div>
-        <div class="videocontrols-wrapper"><label>{{#i18n}}Kontrollelemente verstecken{{/i18n}}</label><input type="checkbox" class="videocontrols" ></div>
-        <div class="videoaspect"><label>{{#i18n}}Seitenverhältnis{{/i18n}}</label><input type="radio" class="videoaspect169" name="videoaspect" value="aspect-169" checked>16:9 <input type="radio" class="videoaspect43" name="videoaspect" value="aspect-43">4:3</div>
-        <div class="videotimer">
-            <label class="cw-video-timer-label">{{#i18n}}Start{{/i18n}}</label><input class="videostartmin" type="number" min="0" placeholder="min" ><input class="videostartsec" type="number" step="1" max="59" min="0" placeholder="sek">
-            <label class="cw-video-timer-label cw-video-timer-label-end">{{#i18n}}Ende{{/i18n}}</label><input class="videoendmin" type="number" min="0" placeholder="min"><input class="videoendsec" type="number" step="1" max="59" min="0" placeholder="sek">
-            <button name="videotimereset" class="button cw-video-timer-reset">{{#i18n}}Zeit zurücksetzen{{/i18n}}</button>
-        </div>
     </div>
     <div class="videostatus">
         <span class="status">&nbsp;</span>
