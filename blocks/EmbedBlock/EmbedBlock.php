@@ -27,7 +27,7 @@ class EmbedBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
-
+        $this->setGrade(1.0);
         $json_url = $this->build_request($this->embed_source, $this->embed_url);
         $oembed = json_decode($this->curl_get($json_url));
         switch ($oembed->type) {
