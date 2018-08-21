@@ -1,6 +1,7 @@
 <input type="hidden" class="cw-link-stored-type" value="{{link_type}}">
 <input type="hidden" class="cw-link-stored-target" value="{{link_target}}">
 <input type="hidden" class="cw-link-stored-title" value="{{link_title}}">
+<input type="hidden" class="cw-link-stored-progress" value="{{link_show_progress}}">
 
 <label for="cw-link-type">{{#i18n}}Art des Links{{/i18n}}:</label>
 <select name="cw-link-type" class="cw-link-type">
@@ -35,6 +36,13 @@
     <option value="https://">https://</option>
 </select>
 <input name="cw-link-target" class="cw-link-target" type="text" placeholder="www.studip.de">
+<br>
+
+<label for="cw-link-progress">{{#i18n}}Nutzerfortschritt anzeigen{{/i18n}}:</label>
+<select name="cw-link-progress" class="cw-link-progress">
+    <option value="false">nein</option>
+    <option value="true">ja</option>
+</select>
 <br>
 
 <label for="cw-link-title">{{#i18n}}Bezeichung des Links{{/i18n}}:</label>

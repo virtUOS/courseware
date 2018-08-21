@@ -2,6 +2,14 @@
     {{#link_id}}
         <div class="cw-link internal">
             <a href="{{#plugin_url}}courseware?selected={{link_id}}{{/plugin_url}}">{{link_title}}</a>
+            {{#link_show_progress}}
+                {{#progress}}
+                    <div class="cw-link-progress-true"></div>
+                {{/progress}}
+                {{^progress}}
+                    <div class="cw-link-progress-false"></div>
+                {{/progress}}
+            {{/link_show_progress}}
         </div>
     {{/link_id}}
     

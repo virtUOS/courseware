@@ -7,4 +7,5 @@
     <xsd:attribute name="link_type" type="xsd:string" />
     <xsd:attribute name="link_target" type="xsd:string" />
     <xsd:attribute name="link_title" type="xsd:string" />
+    <xsd:attribute name="link_show_progress" type="xsd:string" />
 </xsd:schema>

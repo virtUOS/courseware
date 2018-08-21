@@ -134,6 +134,20 @@ class Courseware extends Block
         return true;
     }
 
+    public function sectionComplete($sectionblock)
+    {
+        $uid = $this->getCurrentUser()->id;
+        foreach ($sectionblock->children as $block) {
+            $bid = $block->id;
+            $progress = UserProgress::findOneBySQL('block_id = ? AND user_id = ?', array($bid, $uid));
+            if (!$progress || ($progress->grade / $progress->max_grade != 1)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function add_structure_handler($data)
     {
         // only authors may add more structure

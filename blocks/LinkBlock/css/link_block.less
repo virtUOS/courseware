@@ -9,6 +9,25 @@
         background-position: 2em 50%;
         background-repeat: no-repeat;
         background-size: 32px;
+
+        .cw-link-progress-true,
+        .cw-link-progress-false {
+            background-repeat: no-repeat;
+            background-size: 16px;
+            height: 16px;
+            width: 16px;
+            display: inline-block;
+        }
+
+        .cw-link-progress-true {
+            .assets-bg-icon("green/accept.svg");
+            vertical-align: top;
+        }
+
+        .cw-link-progress-false {
+            .assets-bg-icon("red/decline.svg");
+            vertical-align: middle;
+        }
     }
 
     &.external {

@@ -2,6 +2,7 @@
 namespace Mooc\UI\LinkBlock;
 
 use Mooc\UI\Block;
+use Mooc\DB\Block as DBBlock;
 
 class LinkBlock extends Block 
 {
@@ -14,10 +15,12 @@ class LinkBlock extends Block
         $this->defineField('link_type', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('link_target', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('link_title', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('link_show_progress', \Mooc\SCOPE_BLOCK, 'false');
     }
 
     public function student_view()
     {   
+        global $user;
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
@@ -34,8 +37,24 @@ class LinkBlock extends Block
         }
 
         $this->setGrade(1.0);
-
-        return array_merge($this->getAttrArray(), array('link_id' => $link_id, 'link_href' => $link_href));
+        $courseware = $this->container['current_courseware'];
+        $block = DBBlock::find($link_id);
+        switch ($block->type) {
+            case 'Subchapter':
+                $progress = $courseware->subchapterComplete($block);
+                break;
+            case 'Section':
+                $progress = $courseware->sectionComplete($block);
+                break;
+            default:
+                $progress = false;
+        }
+        
+        return array_merge($this->getAttrArray(), array(
+            'link_id' => $link_id, 
+            'link_href' => $link_href,
+            'progress' => $progress
+        ));
     }
 
     public function author_view()
@@ -61,7 +80,8 @@ class LinkBlock extends Block
         return array(
             'link_type'   => $this->link_type,
             'link_target' => $this->link_target,
-            'link_title'  => $this->link_title
+            'link_title'  => $this->link_title,
+            'link_show_progress' => ($this->link_show_progress == 'true') ? true : false
         );
     }
 
@@ -168,6 +188,9 @@ class LinkBlock extends Block
         if (isset ($data['link_title'])) {
             $this->link_title = \STUDIP\Markup::purifyHtml((string) $data['link_title']);
         } 
+        if (isset ($data['link_show_progress'])) {
+            $this->link_show_progress = (string) $data['link_show_progress'];
+        } 
 
         return;
     }
@@ -197,6 +220,9 @@ class LinkBlock extends Block
         }
         if (isset($properties['link_title'])) {
             $this->link_title = $properties['link_title'];
+        }
+        if (isset($properties['link_show_progress'])) {
+            $this->link_show_progress = $properties['link_show_progress'];
         }
 
         $this->save();

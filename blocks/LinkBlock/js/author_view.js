@@ -29,7 +29,12 @@ export default AuthorView.extend({
         this.onSelectType();
         if($view.$('.cw-link-stored-target').val() != '') {
             if ($view.$('.cw-link-type option:selected').val() == 'internal'){
-            $view.$('select.cw-link-target option[value="'+$view.$('.cw-link-stored-target').val()+'"]').prop('selected', true);
+                $view.$('select.cw-link-target option[value="'+$view.$('.cw-link-stored-target').val()+'"]').prop('selected', true);
+                if ($view.$('.cw-link-stored-progress').val() == 1) {
+                    $view.$('select.cw-link-progress option[value="true"]').prop('selected', true);
+                } else {
+                    $view.$('select.cw-link-progress option[value="false"]').prop('selected', true);
+                }
             }
             if ($view.$('.cw-link-type option:selected').val() == 'external') {
                 $view.$('input.cw-link-target').val($view.$('.cw-link-stored-target').val().replace('http://','').replace('https://',''));
@@ -51,12 +56,15 @@ export default AuthorView.extend({
 
         if ($type == 'internal') {
             $view.$('select.cw-link-target').show();
+            $view.$('select.cw-link-progress').show();
             $view.$('input.cw-link-target').hide();
             $view.$('select.cw-link-protocol').hide();
+            
         }
 
         if ($type == 'external') {
             $view.$('select.cw-link-target').hide();
+            $view.$('select.cw-link-progress').hide();
             $view.$('input.cw-link-target').show();
             $view.$('select.cw-link-protocol').show();
         }
@@ -92,6 +100,7 @@ export default AuthorView.extend({
     onSave(event) {
         var $view = this;
         var $linktype = $view.$('.cw-link-type option:selected').val();
+        var $linkprogress = $view.$('select.cw-link-progress option:selected').val();
         if ($linktype == 'internal') {
             var $linktarget = $view.$('select.cw-link-target option:selected').val();
         }
@@ -99,6 +108,7 @@ export default AuthorView.extend({
             var $linkprotocol = $view.$('select.cw-link-protocol option:selected').val();
             var $linktarget = $view.$('input.cw-link-target').val().replace('http://','').replace('https://','');
             $linktarget = $linkprotocol+$linktarget;
+            $linkprogress = false;
         }
         var $linktitle = $view.$('.cw-link-title').val();
         if ($linktitle == '') {
@@ -109,7 +119,8 @@ export default AuthorView.extend({
         .callHandler(this.model.id, 'save', {
               link_type : $linktype,
               link_target: $linktarget,
-              link_title:  $linktitle
+              link_title: $linktitle,
+              link_show_progress: $linkprogress,
         })
         .then(
             // success
