@@ -9,6 +9,7 @@ export default AuthorView.extend({
         'click button[name=cancel]': 'switchBack',
         'click button[name=addcard]': 'addCard',
         'click button[name=removecard]': 'removeCard',
+        'click input.cw-dialogcards-url': 'toggleSource'
     },
 
     initialize() {
@@ -21,6 +22,23 @@ export default AuthorView.extend({
     },
 
     postRender() {
+        var $cards = this.$('.cw-dialogcards-card-content');
+        $.each($cards, function(index) {
+            if ($(this).find('.cw-dialogcards-front-url').prop('checked')) {
+                $(this).find('.cw-dialogcards-front-img').show();
+            } else {
+                $(this).find('.cw-dialogcards-front-img-file').show();
+                let file_id = $(this).find('.cw-dialogcards-front-img-file-stored').val();
+                $(this).find('.cw-dialogcards-front-img-file option[file_id="'+file_id+'"]').prop('selected', true);
+            }
+            if ($(this).find('.cw-dialogcards-back-url').prop('checked')) {
+                $(this).find('.cw-dialogcards-back-img').show();
+            } else {
+                $(this).find('.cw-dialogcards-back-img-file').show();
+                let file_id = $(this).find('.cw-dialogcards-back-img-file-stored').val();
+                $(this).find('.cw-dialogcards-back-img-file option[file_id="'+file_id+'"]').prop('selected', true);
+            }
+        });
         return this;
     },
 
@@ -57,10 +75,27 @@ export default AuthorView.extend({
         var dialogcards_content = [];
         $.each($cards, function(index){
             var card_content = {};
-            card_content.front_img = $(this).find(".cw-dialogcards-front-img").val();
-            card_content.front_text = $(this).find(".cw-dialogcards-front-text").val();
-            card_content.back_img = $(this).find(".cw-dialogcards-back-img").val();
-            card_content.back_text = $(this).find(".cw-dialogcards-back-text").val();
+            if ($(this).find('.cw-dialogcards-front-url').prop('checked')) {
+                card_content.front_img = $(this).find('.cw-dialogcards-front-img').val();
+                card_content.front_external_file = true;
+            } else {
+                card_content.front_img_file_id = $(this).find('.cw-dialogcards-front-img-file option:selected').attr('file_id');
+                card_content.front_img_file_name = $(this).find('.cw-dialogcards-front-img-file option:selected').attr('file_name');
+                card_content.front_img = $(this).find('.cw-dialogcards-front-img-file option:selected').attr('file_url');
+                card_content.front_external_file = false;
+            }
+            card_content.front_text = $(this).find('.cw-dialogcards-front-text').val();
+            
+            if ($(this).find('.cw-dialogcards-back-url').prop('checked')) {
+                card_content.back_img = $(this).find('.cw-dialogcards-back-img').val();
+                card_content.back_external_file = true;
+            } else {
+                card_content.back_img_file_id = $(this).find('.cw-dialogcards-back-img-file option:selected').attr('file_id');
+                card_content.back_img_file_name = $(this).find('.cw-dialogcards-back-img-file option:selected').attr('file_name');
+                card_content.back_img = $(this).find('.cw-dialogcards-back-img-file option:selected').attr('file_url');
+                card_content.back_external_file = false;
+            }
+            card_content.back_text = $(this).find('.cw-dialogcards-back-text').val();
             card_content.index = index;
             dialogcards_content.push(card_content);
         });
@@ -88,9 +123,17 @@ export default AuthorView.extend({
         var $card = $view.$('.cw-dialogcards-card-content-default').clone();
         var index = $view.$('.cw-dialogcards-card-content').length;
         var $last = $view.$('.cw-dialogcards-card-content').last();
+        console.log($last);
         $card.removeClass('cw-dialogcards-card-content-default').addClass('cw-dialogcards-card-content');
-        $card.find('.cw-dialogcards-card-content-legend').html('Karte '+ index);
-        $card.insertAfter($last);
+        if ($last.length == 0) {
+            $card.find('.cw-dialogcards-card-content-legend').html('Karte 0');
+            $card.insertAfter($view.$('.cw-dialogcards-card-content-default'));
+        } else {
+            $card.find('.cw-dialogcards-card-content-legend').html('Karte '+ index);
+            $card.insertAfter($last);
+        }
+        $card.find('.cw-dialogcards-front-img-file').show();
+        $card.find('.cw-dialogcards-back-img-file').show();
     },
 
     removeCard(event) {
@@ -102,5 +145,28 @@ export default AuthorView.extend({
         $.each($datasets, function(i){
             $(this).find('.cw-dialogcards-card-content-legend').text($title+' '+i);
         });
+    },
+
+    toggleSource(event) {
+        var $switch = this.$(event.target).closest('label.cw-dialogcards-switch');
+        var $card = $switch.closest('.cw-dialogcards-card-content');
+        if ($switch.hasClass('cw-dialogcards-front-switch')) {
+            if (this.$(event.target).prop('checked')) {
+                $card.find('.cw-dialogcards-front-img').show();
+                $card.find('.cw-dialogcards-front-img-file').hide();
+            } else {
+                $card.find('.cw-dialogcards-front-img').hide();
+                $card.find('.cw-dialogcards-front-img-file').show();
+            }
+        }
+        if ($switch.hasClass('cw-dialogcards-back-switch')) {
+            if (this.$(event.target).prop('checked')) {
+                $card.find('.cw-dialogcards-back-img').show();
+                $card.find('.cw-dialogcards-back-img-file').hide();
+            } else {
+                $card.find('.cw-dialogcards-back-img').hide();
+                $card.find('.cw-dialogcards-back-img-file').show();
+            }
+        }
     }
 });

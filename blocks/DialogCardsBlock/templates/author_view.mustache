@@ -3,12 +3,32 @@
 <fieldset class="cw-dialogcards-card-content-default">
     <legend class="cw-dialogcards-card-content-legend">{{#i18n}}Karte{{/i18n}}</legend>
     <label for="cw-dialogcards-front-img">{{#i18n}}Vorderseite Bild{{/i18n}}:</label>
-    <input type="text" name="cw-dialogcards-front-img" class="cw-dialogcards-front-img">
+    <input type="text" name="cw-dialogcards-front-img" class="cw-dialogcards-front-img" placeholder="{{#i18n}}https://www.beispiel.de/bild.jpg{{/i18n}}">
+    <select class="cw-dialogcards-front-img-file" name="cw-dialogcards-front-img-file">
+            {{#image_files}}
+                <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+            {{/image_files}}
+    </select>
+    <label class="cw-dialogcards-switch cw-dialogcards-front-switch">
+      <input type="checkbox" class="cw-dialogcards-url cw-dialogcards-front-url">
+      <span class="cw-dialogcards-slider"></span>
+    </label>
+    <br>
     <label for="cw-dialogcards-front-text">{{#i18n}}Vorderseite Text{{/i18n}}:</label>
     <input type="text" name="cw-dialogcards-front-text" class="cw-dialogcards-front-text">
 
     <label for="cw-dialogcards-back-img">{{#i18n}}Rückseite Bild{{/i18n}}:</label>
-    <input type="text" name="cw-dialogcards-back-img" class="cw-dialogcards-back-img">
+    <input type="text" name="cw-dialogcards-back-img" class="cw-dialogcards-back-img" placeholder="{{#i18n}}https://www.beispiel.de/bild.jpg{{/i18n}}">
+    <select class="cw-dialogcards-back-img-file" name="cw-dialogcards-back-img-file">
+            {{#image_files}}
+                <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+            {{/image_files}}
+    </select>
+    <label class="cw-dialogcards-switch cw-dialogcards-back-switch">
+      <input type="checkbox" class="cw-dialogcards-back-url cw-dialogcards-url">
+      <span class="cw-dialogcards-slider"></span>
+    </label>
+    <br>
     <label for="cw-dialogcards-back-text">{{#i18n}}Rückseite Bild{{/i18n}}:</label>
     <input type="text" name="cw-dialogcards-back-text" class="cw-dialogcards-back-text">
     <button name="removecard" class="trash"></button>
@@ -18,11 +38,33 @@
         <legend class="cw-dialogcards-card-content-legend">{{#i18n}}Karte{{/i18n}} {{index}}</legend>
         <label for="cw-dialogcards-front-img">{{#i18n}}Vorderseite Bild{{/i18n}}:</label>
         <input type="text" name="cw-dialogcards-front-img" class="cw-dialogcards-front-img" value="{{front_img}}">
+        <input type="hidden" class="cw-dialogcards-front-img-file-stored" name="cw-dialogcards-front-img-file-stored" value="{{front_img_file_id}}">
+        <select class="cw-dialogcards-front-img-file" name="cw-dialogcards-front-img-file">
+            {{#image_files}}
+                <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+            {{/image_files}}
+        </select>
+        <label class="cw-dialogcards-switch cw-dialogcards-front-switch">
+          <input type="checkbox" class="cw-dialogcards-url cw-dialogcards-front-url" {{#front_external_file}} checked {{/front_external_file}}> 
+          <span class="cw-dialogcards-slider"></span>
+        </label>
+        <br>
         <label for="cw-dialogcards-front-text">{{#i18n}}Vorderseite Text{{/i18n}}:</label>
         <input type="text" name="cw-dialogcards-front-text" class="cw-dialogcards-front-text" value="{{front_text}}">
     
         <label for="cw-dialogcards-back-img">{{#i18n}}Rückseite Bild{{/i18n}}:</label>
         <input type="text" name="cw-dialogcards-back-img" class="cw-dialogcards-back-img" value="{{back_img}}">
+        <input type="hidden" class="cw-dialogcards-back-img-file-stored" name="cw-dialogcards-back-img-file-stored" value="{{back_img_file_id}}">
+        <select class="cw-dialogcards-back-img-file" name="cw-dialogcards-back-img-file">
+            {{#image_files}}
+                <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+            {{/image_files}}
+        </select>
+        <label class="cw-dialogcards-switch cw-dialogcards-back-switch">
+          <input type="checkbox" class="cw-dialogcards-back-url cw-dialogcards-url" {{#back_external_file}} checked {{/back_external_file}}>
+          <span class="cw-dialogcards-slider"></span>
+        </label>
+        <br>
         <label for="cw-dialogcards-back-text">{{#i18n}}Rückseite Bild{{/i18n}}:</label>
         <input type="text" name="cw-dialogcards-back-text" class="cw-dialogcards-back-text" value="{{back_text}}">
         <button name="removecard" class="trash"></button>
@@ -33,3 +75,5 @@
     <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
     <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
 </div>
+
+

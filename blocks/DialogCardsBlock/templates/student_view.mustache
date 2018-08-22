@@ -1,4 +1,4 @@
-<button class="cw-dialogcards-prev cw-dialogcards-navbutton"></button>
+{{#cards}}<button class="cw-dialogcards-prev cw-dialogcards-navbutton"></button>{{/cards}}
 <div class="cw-dialogcards">
 {{#cards}}
         <div class="scene scene--card" data-index="{{index}}">
@@ -15,4 +15,9 @@
         </div>
 {{/cards}}
 </div>
-<button class="cw-dialogcards-next cw-dialogcards-navbutton"></button>
+{{#cards}}<button class="cw-dialogcards-next cw-dialogcards-navbutton"></button>{{/cards}}
+{{^cards}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Es wurden noch keine Karten angelegt{{/i18n}}
+    </div>
+{{/cards}}
