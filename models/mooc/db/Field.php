@@ -24,11 +24,13 @@ class Field extends \SimpleORMap
 
         $config['belongs_to']['block'] = array(
             'class_name' => 'Mooc\\DB\\Block',
-            'foreign_key' => 'block_id', );
+            'foreign_key' => 'block_id'
+        );
 
         $config['belongs_to']['user'] = array(
             'class_name' => '\\User',
-            'foreign_key' => 'user_id', );
+            'foreign_key' => 'user_id'
+        );
 
         // TODO: this may not be named content
         $config['additional_fields']['content'] = array(
@@ -48,6 +50,10 @@ class Field extends \SimpleORMap
             },
         );
 
+        $config['registered_callbacks']['before_store'] = array(
+            'failForNobody'
+        );
+
         parent::configure($config);
     }
 
@@ -61,8 +67,6 @@ class Field extends \SimpleORMap
     public function __construct($id = null)
     {
         parent::__construct($id);
-
-        $this->registerCallback('before_store', 'failForNobody');
     }
 
     // TODO

@@ -29,18 +29,35 @@ class Block extends \SimpleORMap implements \Serializable
 
         $config['belongs_to']['parent'] = array(
             'class_name' => 'Mooc\\DB\\Block',
-            'foreign_key' => 'parent_id', );
+            'foreign_key' => 'parent_id'
+        );
 
         $config['belongs_to']['course'] = array(
             'class_name' => '\\Course',
-            'foreign_key' => 'seminar_id', );
+            'foreign_key' => 'seminar_id'
+        );
 
         $config['has_many']['children'] = array(
             'class_name' => 'Mooc\\DB\\Block',
             'assoc_foreign_key' => 'parent_id',
             'assoc_func' => 'findByParent_id',
             'on_delete' => 'delete',
-            'on_store' => 'store',
+            'on_store' => 'store'
+        );
+
+        $config['registered_callbacks']['before_create'] = array(
+            'ensureSeminarId',
+            'ensurePositionId'
+        );
+
+        $config['registered_callbacks']['before_store'] = array(
+            'validate'
+        );
+
+        $config['registered_callbacks']['after_delete'] = array(
+            'destroyFields',
+            'destroyUserProgress',
+            'updatePositionsAfterDelete'
         );
 
         parent::configure($config);
@@ -55,14 +72,6 @@ class Block extends \SimpleORMap implements \Serializable
      */
     public function __construct($id = null)
     {
-        $this->registerCallback('before_create', 'ensureSeminarId');
-        $this->registerCallback('before_create', 'ensurePositionId');
-        $this->registerCallback('before_store', 'validate');
-
-        $this->registerCallback('after_delete', 'destroyFields');
-        $this->registerCallback('after_delete', 'destroyUserProgress');
-        $this->registerCallback('after_delete', 'updatePositionsAfterDelete');
-
         parent::__construct($id);
     }
 

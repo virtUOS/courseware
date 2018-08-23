@@ -23,7 +23,12 @@ class Post extends \SimpleORMap
 
         $config['belongs_to']['user'] = array(
             'class_name'  => 'User',
-            'foreign_key' => 'user_id');
+            'foreign_key' => 'user_id'
+        );
+
+        $config['registered_callbacks']['before_store'] = array(
+            'denyNobodyPost'
+        );
 
         parent::configure($config);
     }
@@ -31,7 +36,6 @@ class Post extends \SimpleORMap
     public function __construct($id = null)
     {
         parent::__construct($id);
-        $this->registerCallback('before_store', 'denyNobodyPost');
     }
 
     public function getAllThreadIds($cid)
