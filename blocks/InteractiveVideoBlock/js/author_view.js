@@ -602,8 +602,10 @@ export default AuthorView.extend({
     disableItems(event) {
         var $view = this,
             $range = $view.$('.cw-iav-range');
-        $view.$('.active-item').hide().removeClass('active-item');
+        $view.$('.active-item').removeClass('active-item');
         $view.$('.active-list-item').removeClass('active-list-item');
+        $view.$('.cw-iav-overlay-edit-item').hide();
+        $view.$('.cw-iav-stop-edit-item').hide();
         $range.slider('option', 'values', [0, $range.slider('option', 'max')]);
     },
 
