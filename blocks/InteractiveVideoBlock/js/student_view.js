@@ -168,9 +168,7 @@ export default StudentView.extend({
             $playbutton = $view.$('.cw-iav-playbutton'),
             interactionevents = [];
         for (var i in stop_json) {
-            console.log(stop_json[i].solved);
             if (stop_json[i].solved == true) {
-                console.log('has to be true '+stop_json[i].solved);
                 continue;
             }
             if ($time >= stop_json[i].moment){
