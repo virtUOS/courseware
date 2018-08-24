@@ -51,7 +51,12 @@ export default AuthorView.extend({
         var html = "";
 
         $view.$('.cw-iav-author-tabs').tabs();
-        $view.$(".cw-iav-url").val(this.$(".cw-iav-url-stored").val());
+        if ($view.$(".cw-iav-url-stored").val() == '') {
+            $view.$('.cw-iav-wrapper').hide();
+            $view.$('.cw-iav-controls').hide();
+            return ;
+        }
+        $view.$(".cw-iav-url").val($view.$(".cw-iav-url-stored").val());
 
         if (overlay_data != '') {
             var overlay_json = JSON.parse(overlay_data);
@@ -226,6 +231,8 @@ export default AuthorView.extend({
         this.$('.cw-iav-overlay-edit-item').hide().removeClass('active-item');
         $player.find('source').attr('src' , this.$('.cw-iav-url').val());
         $player.get(0).load();
+        this.$('.cw-iav-wrapper').show();
+        this.$('.cw-iav-controls').show();
     },
 
     setupVideo() {
