@@ -1,0 +1,78 @@
+{{^inactive}}
+{{#iav_url}}
+<input type="hidden" class="overlay-json" value="{{iav_overlays}}">
+<input type="hidden" class="stop-json" value="{{iav_stops}}">
+<input type="hidden" class="test-json" value="{{iav_tests}}">
+<div class="cw-iav-wrapper">
+    <video class="cw-iav-player" id="video">
+        <source src="{{iav_url}}" type="video/mp4">
+    </video>
+    <div class="cw-iav-overlay-wrapper">
+        <div class="cw-iav-overlay-content cw-iav-overlay-content-default" >
+            <h2 class="cw-iav-overlay-content-title"></h2>
+            <p class="cw-iav-overlay-content-text"></p>
+        </div>
+    </div>
+    <div class="cw-iav-stop-wrapper">
+        <div class="cw-iav-stop-content cw-iav-stop-content-default" >
+            <h2 class="cw-iav-stop-content-title"></h2>
+            <p class="cw-iav-stop-content-text"></p>
+            <button class="button cw-iav-stop-button-continue">weiter</button>
+        </div>
+    </div>
+    <div class="cw-iav-test-wrapper">
+        {{#exercises}}
+            <div class="cw-iav-test-content" data-testid="{{id}}" style="display: none;">
+                <form class="studip_form">
+                        <input type="hidden" name="action" value="sheets">
+                        <input type="hidden" name="subaction" value="submit_exercise">
+                        <input type="hidden" name="submit_exercise" value="1">
+                        <input type="hidden" name="exercise_id" value="{{id}}">
+                    <h2 class="cw-iav-test-content-title">{{title}}</h2>
+                    <input type="hidden" class="cw-iav-test-content-test-id" value="{{id}}">
+                    {{#has_solution}}
+                        {{#correct}}
+                            <input type="hidden" class="cw-iav-test-correct" value="true">
+                            <div class="messagebox messagebox_success">{{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}</div>
+                            <div class="cw-iav-test-content-question">{{{solution}}}</div>
+                            
+                        {{/correct}}
+                        {{^correct}}
+                            <div class="messagebox messagebox_error">{{#i18n}}Ihre Lösung ist nicht korrekt!{{/i18n}}</div>
+                            <div class="cw-iav-test-content-question">{{{question}}}</div>
+                            <button name="submit-exercise" class="button" style="display: inline-block">{{#i18n}}Abschicken{{/i18n}}</button>
+                        {{/correct}}
+                    {{/has_solution}}
+                    {{^has_solution}}
+                        <div class="cw-iav-test-content-question">{{{question}}}</div>
+                        <button name="submit-exercise" class="button" style="display: inline-block">{{#i18n}}Abschicken{{/i18n}}</button>
+                    {{/has_solution}}
+
+                </form>
+                {{#has_solution}}
+                    {{#correct}}
+                        <button class="button cw-iav-test-button-continue" data-testid="{{id}}">weiter</button>
+                    {{/correct}}
+                {{/has_solution}}
+            </div>
+        {{/exercises}}
+    </div>
+</div>
+<div class="cw-iav-controls">
+    <div class="cw-iav-range" ></div>
+    <span class="cw-iav-time"></span>
+    <button class="cw-iav-playbutton" name="play" ></button> 
+    <button class="cw-iav-stopbutton" name="stop" ></button> 
+</div>
+{{/iav_url}}
+{{^iav_url}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Es wurde noch keine Videodatei ausgewählt.{{/i18n}}
+    </div>
+{{/iav_url}}
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive}}

@@ -1,0 +1,212 @@
+<input type="hidden" class="cw-iav-url-stored" value="{{iav_url}}">
+<input type="hidden" class="cw-iav-assignment-id-stored" value="{{assignment_id}}">
+<input type="hidden" class="overlay-json" value="{{iav_overlays}}">
+<input type="hidden" class="stop-json" value="{{iav_stops}}">
+<input type="hidden" class="test-json" value="{{iav_tests}}">
+
+<div class="cw-iav-wrapper">
+    <video class="cw-iav-player" id="video">
+        <source src="{{iav_url}}" type="video/mp4">
+    </video>
+    <div class="cw-iav-overlay-wrapper">
+        <div class="cw-iav-overlay-content cw-iav-overlay-content-default" data-overlayid="">
+            <h2 class="cw-iav-overlay-content-title"></h2>
+            <p class="cw-iav-overlay-content-text"></p>
+        </div>
+    </div>
+    <div class="cw-iav-stop-wrapper">
+        <div class="cw-iav-stop-content cw-iav-stop-content-default" >
+            <h2 class="cw-iav-stop-content-title"></h2>
+            <p class="cw-iav-stop-content-text"></p>
+            <button class="button cw-iav-stop-button">weiter</button>
+        </div>
+    </div>
+    <div class="cw-iav-test-wrapper">
+        {{#exercises}}
+            <div class="cw-iav-test-content" data-testid="{{id}}">
+                <form class="studip_form">
+                    <h2 class="cw-iav-test-content-title">{{title}}</h2>
+                    <input type="hidden" class="cw-iav-test-content-test-id" value="{{id}}">
+                    <div class="cw-iav-test-content-question">{{{question}}}</div>
+                </form>
+            </div>
+        {{/exercises}}
+
+    </div>
+</div>
+<div class="cw-iav-controls">
+    <div class="cw-iav-range" ></div>
+    <span class="cw-iav-time"></span>
+    <button class="cw-iav-playbutton" name="play" ></button> 
+    <button class="cw-iav-stopbutton" name="stop" ></button> 
+</div>
+<div class="cw-iav-author-tabs">
+  <ul>
+    <li><a href="#tabs-{{block_id}}-1" class="cw-iav-tabs-settings">{{#i18n}}Quelle{{/i18n}}</a></li>
+    <li><a href="#tabs-{{block_id}}-2" class="cw-iav-tabs-overlays">{{#i18n}}Einblendungen{{/i18n}}</a></li>
+    <li><a href="#tabs-{{block_id}}-3" class="cw-iav-tabs-stops">{{#i18n}}Haltepunkte{{/i18n}}</a></li>
+    <li><a href="#tabs-{{block_id}}-4" class="cw-iav-tabs-tests">{{#i18n}}Aufgaben{{/i18n}}</a></li>
+  </ul>
+  <div id="tabs-{{block_id}}-1">
+    <label for="cw-iav-url" >{{#i18n}}URL{{/i18n}}:</label>
+    <input class="cw-iav-url" name="cw-iav-url">
+    <br>
+    <button name="video-preview" class="button">{{#i18n}}Vorschau{{/i18n}}</button>
+  </div>
+  <div id="tabs-{{block_id}}-2">
+        <ul class="cw-iav-overlays-list">
+            <li><button class="button overlay-adder">+</button></li>
+        </ul>
+        <div class="clear"></div>
+        <div class="cw-iav-overlay-edit-wrapper">
+            <div class="cw-iav-overlay-edit-item item-default">
+                <label for="cw-iav-overlay-title" >{{#i18n}}Titel{{/i18n}}:</label>
+                <input type="text" name="cw-iav-overlay-title" class="cw-iav-overlay-title" value="">
+
+                <label for="cw-iav-content" >{{#i18n}}Text{{/i18n}}:</label>
+                <textarea type="text" name="cw-iav-content" class="cw-iav-content" value=""></textarea>
+
+                <div class="input-with-readable-time">
+                    <label for="cw-iav-start" >{{#i18n}}Start{{/i18n}}:</label>
+                    <input type="number" name="cw-iav-start" class="cw-iav-timeinput" value="">
+                    <span class="cw-iav-start-readable"></span>
+                </div>
+
+                <div class="input-with-readable-time">
+                    <label for="cw-iav-end" >{{#i18n}}Ende{{/i18n}}:</label>
+                    <input type="number" name="cw-iav-end" class="cw-iav-timeinput" value="">
+                    <span class="cw-iav-end-readable"></span>
+                </div>
+
+                <label for="cw-iav-position" >{{#i18n}}Position{{/i18n}}:</label>
+                <select name="cw-iav-position">
+                    <option value="cw-iav-v-top cw-iav-h-left">{{#i18n}}oben links{{/i18n}}</option>
+                    <option value="cw-iav-v-top cw-iav-h-center">{{#i18n}}oben mitte{{/i18n}}</option>
+                    <option value="cw-iav-v-top cw-iav-h-right">{{#i18n}}oben rechts{{/i18n}}</option>
+                    <option value="cw-iav-v-center cw-iav-h-left">{{#i18n}}mitte links{{/i18n}}</option>
+                    <option value="cw-iav-v-center cw-iav-h-center">{{#i18n}}mitte mitte{{/i18n}}</option>
+                    <option value="cw-iav-v-center cw-iav-h-right">{{#i18n}}mitte rechts{{/i18n}}</option>
+                    <option value="cw-iav-v-bottom cw-iav-h-left">{{#i18n}}unten links{{/i18n}}</option>
+                    <option value="cw-iav-v-bottom cw-iav-h-center">{{#i18n}}unten mitte{{/i18n}}</option>
+                    <option value="cw-iav-v-bottom cw-iav-h-right">{{#i18n}}unten rechts{{/i18n}}</option>
+                </select>
+
+                <label for="cw-iav-type" >{{#i18n}}Typ{{/i18n}}:</label>
+                <select name="cw-iav-type">
+                    <option value="cw-iav-box">{{#i18n}}Box{{/i18n}}</option>
+                    <option value="cw-iav-wide">{{#i18n}}Breit{{/i18n}}</option>
+                    <option value="cw-iav-high">{{#i18n}}Hoch{{/i18n}}</option>
+                    <option value="cw-iav-full">{{#i18n}}Voll{{/i18n}}</option>
+                </select>
+
+                <label for="cw-iav-color" >{{#i18n}}Farbschema{{/i18n}}:</label>
+                <select name="cw-iav-color">
+                    <option value="cw-iav-black-white">{{#i18n}}Standard{{/i18n}}</option>
+                    <option value="cw-iav-white-black">{{#i18n}}Invertiert{{/i18n}}</option>
+                    <option value="cw-iav-red-white">{{#i18n}}Alarm{{/i18n}}</option>
+                    <option value="cw-iav-blue-white">Stud.IP</option>
+                </select>
+
+                <div class="cw-button-box">
+                    <button name="overlay-remover" class="button overlay-remover">{{#i18n}}Einblendung löschen{{/i18n}}</button>
+                    <button name="overlay-preview" class="button">{{#i18n}}Vorschau{{/i18n}}</button>
+                </div>
+            </div>
+            
+        </div>
+  </div>
+  <div id="tabs-{{block_id}}-3">
+      <ul class="cw-iav-stops-list">
+            <li><button class="button stop-adder">+</button></li>
+        </ul>
+        <div class="clear"></div>
+        <div class="cw-iav-stop-edit-wrapper">
+            <div class="cw-iav-stop-edit-item item-default">
+                <label for="cw-iav-stop-title" >{{#i18n}}Titel{{/i18n}}:</label>
+                <input type="text" name="cw-iav-stop-title" class="cw-iav-stop-title" value="">
+
+                <label for="cw-iav-content" >{{#i18n}}Text{{/i18n}}:</label>
+                <textarea type="text" name="cw-iav-content" class="cw-iav-content" value=""></textarea>
+                <div class="input-with-readable-time">
+                    <label for="cw-iav-moment" >{{#i18n}}Zeitpunkt{{/i18n}}:</label>
+                    <input type="number" name="cw-iav-moment" class="cw-iav-timeinput" value="">
+                    <span class="cw-iav-moment-readable"></span>
+                </div>
+
+                <label for="cw-iav-position" >{{#i18n}}Position{{/i18n}}:</label>
+                <select name="cw-iav-position">
+                    <option value="cw-iav-v-top cw-iav-h-left">{{#i18n}}oben links{{/i18n}}</option>
+                    <option value="cw-iav-v-top cw-iav-h-center">{{#i18n}}oben mitte{{/i18n}}</option>
+                    <option value="cw-iav-v-top cw-iav-h-right">{{#i18n}}oben rechts{{/i18n}}</option>
+                    <option value="cw-iav-v-center cw-iav-h-left">{{#i18n}}mitte links{{/i18n}}</option>
+                    <option value="cw-iav-v-center cw-iav-h-center">{{#i18n}}mitte mitte{{/i18n}}</option>
+                    <option value="cw-iav-v-center cw-iav-h-right">{{#i18n}}mitte rechts{{/i18n}}</option>
+                    <option value="cw-iav-v-bottom cw-iav-h-left">{{#i18n}}unten links{{/i18n}}</option>
+                    <option value="cw-iav-v-bottom cw-iav-h-center">{{#i18n}}unten mitte{{/i18n}}</option>
+                    <option value="cw-iav-v-bottom cw-iav-h-right">{{#i18n}}unten rechts{{/i18n}}</option>
+                </select>
+
+                <label for="cw-iav-type" >{{#i18n}}Typ{{/i18n}}:</label>
+                <select name="cw-iav-type">
+                    <option value="cw-iav-box">{{#i18n}}Box{{/i18n}}</option>
+                    <option value="cw-iav-wide">{{#i18n}}Breit{{/i18n}}</option>
+                    <option value="cw-iav-high">{{#i18n}}Hoch{{/i18n}}</option>
+                    <option value="cw-iav-full">{{#i18n}}Voll{{/i18n}}</option>
+                </select>
+
+                <label for="cw-iav-color" >{{#i18n}}Farbschema{{/i18n}}:</label>
+                <select name="cw-iav-color">
+                    <option value="cw-iav-black-white">{{#i18n}}Standard{{/i18n}}</option>
+                    <option value="cw-iav-white-black">{{#i18n}}invertiert{{/i18n}}</option>
+                    <option value="cw-iav-red-white">{{#i18n}}Alarm{{/i18n}}</option>
+                    <option value="cw-iav-blue-white">Stud.IP</option>
+                </select>
+
+                <div class="cw-button-box">
+                    <button name="stop-remover" class="button stop-remover">{{#i18n}}Haltepunkt löschen{{/i18n}}</button>
+                    <button name="stop-preview" class="button">{{#i18n}}Vorschau{{/i18n}}</button>
+                </div>
+            </div>
+            
+        </div>
+  </div>
+  <div id="tabs-{{block_id}}-4">
+    {{#installed}}{{#active}}{{#version}}{{#has_assignments}}
+    <label for="assignment_id">{{#i18n}}Aufgabenblatt{{/i18n}}:</label>
+    <select name="assignment_id" class="cw-iav-vips-assignment-id">
+        <option value="">{{#i18n}}kein Aufgabenblatt{{/i18n}}</option>
+        {{#assignments}}
+            <option value="{{id}}"{{#current_assignment}} selected="selected"{{/current_assignment}}>
+                {{name}} ({{#created}}{{#i18n}}erstellt am{{/i18n}} {{created}}, {{/created}}{{exercises_count}} {{#i18n}}Fragen{{/i18n}})
+            </option>
+        {{/assignments}}
+    </select>
+    {{/has_assignments}}{{/version}}{{/active}}{{/installed}}
+    <ul class="cw-iav-tests-list">
+    </ul>
+
+    <div class="cw-iav-test-edit-wrapper">
+        <div class="cw-iav-test-edit-item cw-iav-test-edit-item-default">
+                <label for="cw-iav-test-title" >{{#i18n}}Titel{{/i18n}}:</label>
+                <input type="text" name="cw-iav-test-title" class="cw-iav-test-title" value="" disabled>
+
+                <label for="cw-iav-test-id" >{{#i18n}}Test-Id{{/i18n}}:</label>
+                <input type="text" name="cw-iav-test-id" class="cw-iav-test-id" value="" disabled>
+
+                <div class="input-with-readable-time">
+                    <label for="cw-iav-moment" >{{#i18n}}Zeitpunkt{{/i18n}}:</label>
+                    <input type="number" name="cw-iav-moment" class="cw-iav-timeinput" value="">
+                    <span class="cw-iav-moment-readable"></span>
+                </div>
+
+                <label for="cw-iav-test-use" >{{#i18n}}Aufgabe verwenden{{/i18n}}:</label>
+                <input type="checkbox" name="cw-iav-test-use" class="cw-iav-test-use">
+            </div>
+    </div>
+  </div>
+</div>
+
+<div class="cw-button-box">
+    <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
+    <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+</div>

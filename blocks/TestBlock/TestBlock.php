@@ -33,13 +33,14 @@ class TestBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
-        if (!$installed = $this->vipsInstalled()) {
+        $courseware = $this->container['current_courseware'];
+        if (!$installed = $courseware->vipsInstalled()) {
             return compact('installed');
         }
-        if (!$active = $this->vipsActivated()) {
+        if (!$active = $courseware->vipsActivated()) {
             return array('active' => $active, 'installed'=> $installed);
         }
-        if (!$version = $this->vipsVersion()) {
+        if (!$version = $courseware->vipsVersion()) {
             return array('active' => $active, 'version'=> $version, 'installed'=> $installed);
         }
         $this->calcGrades();
@@ -78,22 +79,21 @@ class TestBlock extends Block
         return array_merge($this->getAttrArray(), array(
             'active' => $active,
             'version' => $version,
-            'installed' => $installed,
-            'vips_url' => $this->getVipsURL(),
-            'vips_path' => dirname(\PluginEngine::getURL('vipsplugin'))
+            'installed' => $installed
         ), $this->buildExercises());
     }
 
     public function author_view()
     {
         $this->authorizeUpdate();
-        if (!$installed = $this->vipsInstalled()) {
+        $courseware = $this->container['current_courseware'];
+        if (!$installed = $courseware->vipsInstalled()) {
             return compact('installed');
         }
-        if (!$active = $this->vipsActivated()) {
+        if (!$active = $courseware->vipsActivated()) {
             return array('active' => $active, 'installed'=> $installed);
         }
-        if (!$version = $this->vipsVersion()) {
+        if (!$version = $courseware->vipsVersion()) {
             return array('active' => $active, 'version'=> $version, 'installed'=> $installed);
         }
         $subtype =  $this->_model->sub_type;
@@ -267,48 +267,6 @@ class TestBlock extends Block
 
         return $progress;
      }
-
-    private function vipsActivated() 
-    {
-        if ($this->vipsInstalled()) {
-            $plugin_manager = \PluginManager::getInstance();
-            $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
-
-            return $plugin_manager->isPluginActivated($plugin_info['id'], $this->getModel()->seminar_id);
-        } else {
-            return false;
-        }
-    }
-
-    private function vipsVersion()
-    {
-        if ($this->vipsInstalled()) {
-            $plugin_manager = \PluginManager::getInstance();
-            $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
-
-            return version_compare('1.3',$version) <= 0;
-        } else {
-            return false;
-        }
-    }
-
-    private function vipsInstalled()
-    {
-        $plugin_manager = \PluginManager::getInstance();
-
-        return $plugin_manager->getPlugin('VipsPlugin') != null ? true : false;
-    }
-
-    private function getVipsURL()
-    {
-        if ($this->vipsInstalled()) {
-            $plugin_manager = \PluginManager::getInstance();
-
-            return $plugin_manager->getPlugin('VipsPlugin')->getPluginURL();
-        } else {
-            return false;
-        }
-    }
 
     private function buildExercises()
     {
