@@ -171,17 +171,38 @@
         </div>
   </div>
   <div id="tabs-{{block_id}}-4">
-    {{#installed}}{{#active}}{{#version}}{{#has_assignments}}
-    <label for="assignment_id">{{#i18n}}Aufgabenblatt{{/i18n}}:</label>
-    <select name="assignment_id" class="cw-iav-vips-assignment-id">
-        <option value="">{{#i18n}}kein Aufgabenblatt{{/i18n}}</option>
-        {{#assignments}}
-            <option value="{{id}}"{{#current_assignment}} selected="selected"{{/current_assignment}}>
-                {{name}} ({{#created}}{{#i18n}}erstellt am{{/i18n}} {{created}}, {{/created}}{{exercises_count}} {{#i18n}}Fragen{{/i18n}})
-            </option>
-        {{/assignments}}
-    </select>
-    {{/has_assignments}}{{/version}}{{/active}}{{/installed}}
+    {{#installed}}
+        {{#active}}
+            {{#version}}
+                {{#has_assignments}}
+                    <label for="assignment_id">{{#i18n}}Aufgabenblatt{{/i18n}}:</label>
+                    <select name="assignment_id" class="cw-iav-vips-assignment-id">
+                        <option value="">{{#i18n}}kein Aufgabenblatt{{/i18n}}</option>
+                        {{#assignments}}
+                            <option value="{{id}}"{{#current_assignment}} selected="selected"{{/current_assignment}}>
+                                {{name}} ({{#created}}{{#i18n}}erstellt am{{/i18n}} {{created}}, {{/created}}{{exercises_count}} {{#i18n}}Fragen{{/i18n}})
+                            </option>
+                        {{/assignments}}
+                    </select>
+                {{/has_assignments}}
+            {{/version}}
+            {{^version}}
+                <div class="messagebox messagebox_info">
+                    {{#i18n}}Die installierte Vips Version ist nicht kompatibel.{{/i18n}}
+                </div>
+            {{/version}}
+        {{/active}}
+        {{^active}}
+            <div class="messagebox messagebox_info">
+                {{#i18n}}Vips ist nicht aktiviert.{{/i18n}}
+            </div>
+        {{/active}}
+    {{/installed}}
+    {{^installed}}
+        <div class="messagebox messagebox_info">
+            {{#i18n}}Vips ist nicht installiert.{{/i18n}}
+        </div>
+    {{/installed}}
     <br>
     <ul class="cw-iav-tests-list">
     </ul>
