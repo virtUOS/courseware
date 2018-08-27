@@ -27,7 +27,8 @@ export default AuthorView.extend({
         'keyup input.cw-iav-stop-title':        'updateStopTitle',
         'click .cw-iav-tabs-stops':             'disableItems',
         'click .cw-iav-tabs-overlays':          'disableItems',
-        'change select[name=assignment_id]':    'getVipsTests'
+        'change select[name=assignment_id]':    'getVipsTests',
+        'click input.cw-iav-source':            'toggleSource'
     },
 
     initialize() {
@@ -48,6 +49,7 @@ export default AuthorView.extend({
         var $stop_edit = $view.$('.cw-iav-stop-edit-wrapper');
         var overlay_data =  $view.$('.overlay-json').val();
         var stop_data =  $view.$('.stop-json').val();
+        var source_data =  $view.$('.cw-iav-source-stored').val();
         var html = "";
 
         $view.$('.cw-iav-author-tabs').tabs();
@@ -56,7 +58,16 @@ export default AuthorView.extend({
             $view.$('.cw-iav-controls').hide();
             return ;
         }
-        $view.$(".cw-iav-url").val($view.$(".cw-iav-url-stored").val());
+        //$view.$(".cw-iav-url").val($view.$(".cw-iav-url-stored").val());
+        
+        if (source_data != '') {
+            var source_data = JSON.parse(source_data);
+            if (source_data.external) {
+                this.$('.cw-iav-url').val(source_data.url);
+            } else {
+                this.$('.cw-iav-video-file option[file_id="'+source_data.file_id+'"]').prop('selected', true);
+            }
+        }
 
         if (overlay_data != '') {
             var overlay_json = JSON.parse(overlay_data);
@@ -104,13 +115,14 @@ export default AuthorView.extend({
         }, false);
         $view.$('.cw-iav-overlay-edit-item').hide();
         $view.$('.cw-iav-stop-edit-item').hide();
+        this.toggleSource();
 
         return this;
     },
 
     onSave(event) {
         var $view = this;
-        var $iav_url  = this.$(".cw-iav-url").val();
+
         var $overlay_items = $view.$('.cw-iav-overlay-edit-item');
         var overlay_json = [];
         $overlay_items.each(function(index){
@@ -160,8 +172,20 @@ export default AuthorView.extend({
         });
         tests_json = JSON.stringify(tests_json);
 
+        let iav_source = {};
+        if (this.$('.cw-iav-source').prop('checked')) {
+            iav_source.url = this.$(".cw-iav-url").val();
+            iav_source.external = true;
+        } else {
+            iav_source.url = this.$('.cw-iav-video-file option:selected').attr('file_url');
+            iav_source.file_id = this.$('.cw-iav-video-file option:selected').attr('file_id');
+            iav_source.file_name = this.$('.cw-iav-video-file option:selected').attr('file_name');
+            iav_source.external = false;
+        }
+        iav_source = JSON.stringify(iav_source);
+
         helper
-            .callHandler(this.model.id, "save", {iav_url: $iav_url, iav_overlays: overlay_json, iav_stops: stop_json, iav_tests: tests_json, assignment_id: $assignment_id}) 
+            .callHandler(this.model.id, "save", {iav_source: iav_source, iav_overlays: overlay_json, iav_stops: stop_json, iav_tests: tests_json, assignment_id: $assignment_id}) 
             .then(
                 // success
                 function () {
@@ -229,7 +253,11 @@ export default AuthorView.extend({
     videoPreview() {
         var $player = this.$('.cw-iav-player');
         this.$('.cw-iav-overlay-edit-item').hide().removeClass('active-item');
-        $player.find('source').attr('src' , this.$('.cw-iav-url').val());
+        if (this.$('.cw-iav-source').prop('checked')) {
+            $player.find('source').attr('src' , this.$('.cw-iav-url').val());
+        } else {
+            $player.find('source').attr('src' , this.$('.cw-iav-video-file option:selected').attr('file_url'));
+        }
         $player.get(0).load();
         this.$('.cw-iav-wrapper').show();
         this.$('.cw-iav-controls').show();
@@ -678,6 +706,22 @@ export default AuthorView.extend({
         $item.find('.cw-iav-test-content-title').html("Vips-Test: "+title);
         $item.find('.cw-iav-test-content-test-id').html("Test-Id: "+id);
         $($item).appendTo($test_wrapper);
+    },
+
+    toggleSource() {
+        if (this.$('.cw-iav-source').prop('checked')) {
+            this.$('.cw-iav-video-file').hide();
+            this.$('.cw-iav-video-file-label').hide();
+            this.$('.cw-iav-url-label').show();
+            this.$('.cw-iav-url').show();
+
+        } else {
+            this.$('.cw-iav-url').hide();
+            this.$('.cw-iav-url-label').hide();
+            this.$('.cw-iav-video-file-label').show();
+            this.$('.cw-iav-video-file').show();
+        }
+        
     },
 
     onNavigate(event) {

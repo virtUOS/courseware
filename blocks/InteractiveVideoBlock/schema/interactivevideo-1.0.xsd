@@ -4,9 +4,10 @@
     targetNamespace="http://moocip.de/schema/block/interactivevideo/"
     elementFormDefault="qualified"
 >
-    <xsd:attribute name="iav_url" type="xsd:string" />
+    <xsd:attribute name="iav_source" type="xsd:string" />
     <xsd:attribute name="iav_overlays" type="xsd:string" />
     <xsd:attribute name="iav_stops" type="xsd:string" />
     <xsd:attribute name="iav_tests" type="xsd:string" />
     <xsd:attribute name="assignment_id" type="xsd:string" />
+    <xsd:attribute name="vips_xml" type="xsd:string" />
 </xsd:schema>

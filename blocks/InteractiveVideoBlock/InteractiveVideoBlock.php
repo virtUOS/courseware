@@ -12,7 +12,7 @@ class InteractiveVideoBlock extends Block
 
     public function initialize()
     {
-        $this->defineField('iav_url', \Mooc\SCOPE_BLOCK, "");
+        $this->defineField('iav_source', \Mooc\SCOPE_BLOCK, "");
         $this->defineField('iav_overlays', \Mooc\SCOPE_BLOCK, "");
         $this->defineField('iav_stops', \Mooc\SCOPE_BLOCK, "");
         $this->defineField('assignment_id', \Mooc\SCOPE_BLOCK, '');
@@ -37,28 +37,37 @@ class InteractiveVideoBlock extends Block
             foreach (json_decode($this->iav_tests) as $test) {
                 $testmap[$test->test_id] = $test->use_test;
             }
-            foreach ($selected_assignment->test->exercises as $exercise) {
-                if ($testmap[$exercise->getId()]) {
-                    $solution = \VipsSolution::findOneBySQL('exercise_id = ? AND user_id = ?', array($exercise->id, $user->id));
-                    $has_solution = $solution != null;
-                    $correct = false;
-                    if ($has_solution) {
-                        $evaluation = $exercise->evaluate($solution);
-                        $correct = $evaluation['percent'] == 1;
+            if(!empty($selected_assignment->test->exercises)) {
+                foreach ($selected_assignment->test->exercises as $exercise) {
+                    if ($testmap[$exercise->getId()]) {
+                        $solution = \VipsSolution::findOneBySQL('exercise_id = ? AND user_id = ?', array($exercise->id, $user->id));
+                        $has_solution = $solution != null;
+                        $correct = false;
+                        if ($has_solution) {
+                            $evaluation = $exercise->evaluate($solution);
+                            $correct = $evaluation['percent'] == 1;
+                        }
+                        $exercises[] = array(
+                            'question' => $exercise->getSolveTemplate($solution, $assignment, $user->id)->render(),
+                            'title' => $exercise->title,
+                            'id' => $exercise->getId(),
+                            'correct' => $correct,
+                            'has_solution' => $has_solution,
+                            'solution' => $exercise->getCorrectionTemplate($solution)->render(),
+                        );
                     }
-                    $exercises[] = array(
-                        'question' => $exercise->getSolveTemplate($solution, $assignment, $user->id)->render(),
-                        'title' => $exercise->title,
-                        'id' => $exercise->getId(),
-                        'correct' => $correct,
-                        'has_solution' => $has_solution,
-                        'solution' => $exercise->getCorrectionTemplate($solution)->render(),
-                    );
                 }
             }
         }
+        if ($this->iav_source != '') {
+            $iav_url = json_decode($this->iav_source)->url;
+        } else {
+            $iav_url = '';
+        }
+        
         return array_merge($this->getAttrArray(), array(
-            'exercises'         => $exercises
+            'exercises'         => $exercises,
+            'iav_url'           => $iav_url
         ));
     }
 
@@ -85,7 +94,7 @@ class InteractiveVideoBlock extends Block
             }
             $exercises = array();
             $selected_assignment = \VipsAssignment::find($this->assignment_id);
-            if ($this->assignment_id != '') {
+            if (($this->assignment_id != '') &&(!empty($selected_assignment->test->exercises))) {
                 foreach ($selected_assignment->test->exercises as $exercise) {
                     $exercises[] = array(
                         'question' => $exercise->getSolveTemplate($solution, $assignment, $user->cfg->getUserId())->render(),
@@ -94,6 +103,15 @@ class InteractiveVideoBlock extends Block
                     );
                 }
             }
+        }
+        
+        if ($this->iav_source != '') {
+            $source = json_decode($this->iav_source);
+            $iav_url = $source->url;
+            $external_file = $source->external;
+        } else {
+            $iav_url = '';
+            $external_file = false;
         }
 
         return array_merge($this->getAttrArray(), array(
@@ -104,14 +122,17 @@ class InteractiveVideoBlock extends Block
             'active'            => $active, 
             'version'           => $version,
             'installed'         => $installed,
-            'manage_tests_url'  => \PluginEngine::getURL('vipsplugin', array(), 'sheets')
+            'manage_tests_url'  => \PluginEngine::getURL('vipsplugin', array(), 'sheets'),
+            'iav_url'           => $iav_url,
+            'external_file'     => $external_file,
+            'video_files'       => $this->showFiles()
         ));
     }
 
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        $this->iav_url = $data['iav_url']; // url
+        $this->iav_source = $data['iav_source']; // json
         $this->iav_overlays = $data['iav_overlays']; // json 
         $this->iav_stops = $data['iav_stops']; // json 
         $this->iav_tests = $data['iav_tests']; // json 
@@ -167,28 +188,70 @@ class InteractiveVideoBlock extends Block
     private function getAttrArray()
     {
         return array(
-            'iav_url'       => $this->iav_url,
+            'iav_source'       => $this->iav_source,
             'iav_overlays'  => $this->iav_overlays,
             'iav_stops'     => $this->iav_stops,
             'iav_tests'     => $this->iav_tests,
             'assignment_id' => $this->assignment_id
         );
     }
+    
+    private function showFiles()
+    {
+        $filesarray = array();
+        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        
+        foreach ($folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if ($ref->isVideo())  {
+                    $filesarray[] = $ref;
+                }
+            }
+        }
+
+        return $filesarray;
+    }
     /**
      * {@inheritdoc}
      */
     public function exportProperties()
     {
+        if ($this->assignment_id != "") {
+            $assignment = \VipsAssignment::find($this->assignment_id);
+            $vips_xml = $assignment->exportXML();
+
+            return array_merge($this->getAttrArray(), array('vips_xml' => $vips_xml));
+        }
+
         return $this->getAttrArray();
     }
 
     public function getFiles()
     {
-        //TODO if file from StudIP filesystem
-        return;
+        $source = json_decode($this->iav_source);
+
+        $files = array();
+
+        if (!$source->external) {
+            $file_ref = new \FileRef($source->file_id);
+            $file = new \File($file_ref->file_id);
+
+            array_push( $files, array (
+                'id' => $file_ref->id,
+                'name' => $file_ref->name,
+                'description' => $file_ref->description,
+                'filename' => $file->name,
+                'filesize' => $file->size,
+                'url' => $file->getURL(),
+                'path' => $file->getPath()
+            ));
+        }
+
+        return $files;
     }
 
-    /**
+   /**
      * {@inheritdoc}
      */
     public function getXmlNamespace()
@@ -209,8 +272,8 @@ class InteractiveVideoBlock extends Block
      */
     public function importProperties(array $properties)
     {
-        if (isset($properties['iav_url'])) {
-            $this->iav_url = $properties['iav_url'];
+        if (isset($properties['iav_source'])) {
+            $this->iav_source = $properties['iav_source'];
         }
         if (isset($properties['iav_overlays'])) {
             $this->iav_overlays = $properties['iav_overlays'];
@@ -220,6 +283,23 @@ class InteractiveVideoBlock extends Block
         }
         if (isset($properties['iav_tests'])) {
             $this->iav_tests = $properties['iav_tests'];
+        }
+        if (isset($properties['vips_xml'])) {
+            $xml = $properties['vips_xml'];
+            $result = \VipsAssignment::importXML($xml, $this->container['current_user_id'] , $this->container['cid']);
+            $this->assignment_id = $result->id;
+            $test_id = $result->test_id;
+            $test = \VipsTest::find($test_id);
+            $exercises = $test->getExercises();
+            $iav_tests = json_decode($this->iav_tests);
+            foreach ($exercises as $exercise) {
+                foreach ($iav_tests as &$iav_test) {
+                    if ($exercise->title == $iav_test->title) {
+                        $iav_test->test_id = $exercise->id;
+                    }
+                }
+            }
+            $this->iav_tests = json_encode($iav_tests);
         }
 
         $this->save();
@@ -232,6 +312,17 @@ class InteractiveVideoBlock extends Block
 
     public function importContents($contents, array $files)
     {
-        // TODO if file from StudIP filesystem -> set correct iav_url
+        $source = json_decode($this->iav_source);
+        if (!$source->external) {
+            foreach($files as $file){
+                if ($source->file_name == $file->name) {
+                    $source->file_id = $file->id;
+                    $source->url = $file->getDownloadURL();
+                }
+            }
+        $this->iav_source = json_encode($source);
+        }
+
+        $this->save();
     }
 }
