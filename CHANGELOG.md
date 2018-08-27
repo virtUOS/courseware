@@ -1,5 +1,19 @@
 CHANGELOG
 =========
+4.2.0
+-----
+* fixing HTMLBlock wysiwyg author view for Stud.IP >= 4.2
+* fixing date picker issue for Stud.IP >= 4.1
+* add new block: DialogCardsBlock
+* add new block: EmbedBlock
+* add new block: InteractiveVideoBlock
+* add new block: BeforeAfterBlock
+* add new block: ChartBlock
+* add new block: OpenCastBlock
+* new block adder design
+* modernize models for Stud.IP >= 4.2
+* cleanup VideoBlock
+
 4.1.0
 -----
 * Set seminar title
