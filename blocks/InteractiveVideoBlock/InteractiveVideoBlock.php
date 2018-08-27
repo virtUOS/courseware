@@ -113,6 +113,10 @@ class InteractiveVideoBlock extends Block
             $iav_url = '';
             $external_file = false;
         }
+        $video_files = $this->showFiles();
+        if (empty($video_files)) {
+            $video_files = false;
+        }
 
         return array_merge($this->getAttrArray(), array(
             'block_id'          => $this->_model->id,
@@ -125,7 +129,7 @@ class InteractiveVideoBlock extends Block
             'manage_tests_url'  => \PluginEngine::getURL('vipsplugin', array(), 'sheets'),
             'iav_url'           => $iav_url,
             'external_file'     => $external_file,
-            'video_files'       => $this->showFiles()
+            'video_files'       => $video_files
         ));
     }
 

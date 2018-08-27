@@ -55,6 +55,9 @@
         {{#video_files}}
             <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
         {{/video_files}}
+        {{^video_files}}
+            <option file_id="" file_name="" file_url="" disabled selected>{{#i18n}}Keine Videodatei verfügbar{{/i18n}}</option>
+        {{/video_files}}
     </select>
     <label class="cw-iav-switch">
         <input type="checkbox" class="cw-iav-source" {{#external_file}} checked {{/external_file}}>
