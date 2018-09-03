@@ -2,16 +2,14 @@
 <input type="hidden" class="cw-audioblock-source-stored" value="{{audio_source}}">
 <input type="hidden" class="cw-audioblock-file-stored" value="{{audio_file}}">
 
-<label for="cw-audioblock-description">{{#i18n}}Beschreibung{{/i18n}}:</label>
+<label for="cw-audioblock-description" class="cw-audioblock-description-label">{{#i18n}}Beschreibung{{/i18n}}:</label>
 <input type="text" name="cw-audioblock-description" class="cw-audioblock-description" spellcheck="true">
 <br>
-<label for="cw-audioblock-source">{{#i18n}}Quelle{{/i18n}}:</label>
 <select class="cw-audioblock-source" name="cw-audioblock-source">
-    <option value="cw">{{#i18n}}Dateibereich{{/i18n}}</option>
-    <option value="webaudio">{{#i18n}}webAudio{{/i18n}}</option>
+    <option value="cw">{{#i18n}}Dateibereich{{/i18n}}:</option>
+    <option value="webaudio">{{#i18n}}webAudio (URL){{/i18n}}:</option>
 </select>
-<br>
-<label for="cw-audioblock-file">{{#i18n}}Audiodatei{{/i18n}}: </label>
+
 <select class="cw-audioblock-file" name="cw-audioblock-file">
     {{#audio_files}}
         <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>

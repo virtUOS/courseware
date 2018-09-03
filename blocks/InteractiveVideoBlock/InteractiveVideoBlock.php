@@ -199,7 +199,7 @@ class InteractiveVideoBlock extends Block
             'assignment_id' => $this->assignment_id
         );
     }
-    
+
     private function showFiles()
     {
         $filesarray = array();
@@ -216,6 +216,7 @@ class InteractiveVideoBlock extends Block
 
         return $filesarray;
     }
+
     /**
      * {@inheritdoc}
      */

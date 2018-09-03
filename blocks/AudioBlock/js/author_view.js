@@ -108,11 +108,9 @@ export default AuthorView.extend({
     if ($selection == 'cw') {
       $view.$('input.cw-audioblock-file').hide();
       $view.$('select.cw-audioblock-file').show();
-      $view.$('label[for="cw-audioblock-file"]').html('Audiodatei:');
     } else {
       $view.$('select.cw-audioblock-file').hide();
       $view.$('input.cw-audioblock-file').show();
-      $view.$('label[for="cw-audioblock-file"]').html('URL:');
     }
     return;
   }
