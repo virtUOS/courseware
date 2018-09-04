@@ -38,15 +38,27 @@
             </p>
         </div>
         <div class="webvideo">
-            <label class="webvideosrcname">{{#i18n}}Quelle{{/i18n}}:</label>
-            <input type="text" class="webvideosrc">
-            <label>{{#i18n}}Dateityp{{/i18n}}:</label>
+            <select class="cw-webvideo-source">
+                <option value="url">{{#i18n}}webVideo (URL){{/i18n}}:</option>
+                <option value="file">{{#i18n}}Dateibereich{{/i18n}}:</option>
+            </select>
+            <input type="text" class="cw-webvideo-source-url">
+            <select class="cw-webvideo-source-file">
+                {{#video_files}}
+                    <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                {{/video_files}}
+                {{^video_files}}
+                    <option file_id="" file_name="" file_url="" disabled selected>{{#i18n}}Keine Videodatei verfügbar{{/i18n}}</option>
+                {{/video_files}}
+            </select>
+            <br>
+            <label for="webvideosrc-mediatype" class="cw-webvideo-label">{{#i18n}}Dateityp{{/i18n}}:</label>
             <select class="webvideosrc-mediatype">
                 <option value="mp4">mp4</option>
                 <option value="webm">webm</option>
                 <option value="ogg">ogg</option>
             </select>
-            <label>{{#i18n}}Bildschirm{{/i18n}}:</label>
+            <label for="webvideosrc-mediaquery" class="cw-webvideo-label">{{#i18n}}Bildschirm{{/i18n}}:</label>
             <select class="webvideosrc-mediaquery">
                 <option value="normal">{{#i18n}}für alle Displaygrößen{{/i18n}}</option>
                 <option value="large">{{#i18n}}für große Displays{{/i18n}}</option>

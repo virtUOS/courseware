@@ -47,8 +47,14 @@ class VideoBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
+        $video_files = $this->showFiles();
+        if (empty($video_files)) {
+            $video_files = false;
+        }
 
-        return $this->array_rep();
+        return array_merge($this->array_rep(), array(
+            'video_files' => $video_files
+        ));
     }
 
     public function save_handler($data)
@@ -61,6 +67,23 @@ class VideoBlock extends Block
         $this->aspect = (string) $data['aspect'];
 
         return $this->array_rep();
+    }
+
+    private function showFiles()
+    {
+        $filesarray = array();
+        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        
+        foreach ($folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if ($ref->isVideo())  {
+                    $filesarray[] = $ref;
+                }
+            }
+        }
+
+        return $filesarray;
     }
 
     /**
