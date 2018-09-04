@@ -1,32 +1,27 @@
-<input type="hidden" class="cw-ba-stored-source" value="{{ba_source}}">
-<input type="hidden" class="cw-ba-stored-url" value="{{ba_url}}">
-<input type="hidden" class="cw-ba-stored-files" value="{{ba_files}}">
+<input type="hidden" class="cw-ba-stored-file-id-before" value="{{file_id_before}}">
+<input type="hidden" class="cw-ba-stored-file-id-after" value="{{file_id_after}}">
 
-<label for="cw-ba-source">{{#i18n}}Quelle{{/i18n}}:</label>
-<select class="cw-ba-source" name="cw-ba-source">
-    <option value="url">{{#i18n}}URL{{/i18n}}</option>
-    <option value="cw">{{#i18n}}Dateibereich{{/i18n}}</option>
-</select>
-
-<div class="cw-ba-wrapper cw-ba-wrapper-url">
-    <label for="cw-ba-url-before">{{#i18n}}Bild vorher{{/i18n}}:</label>
-    <input type="text" name="cw-ba-url-before" class="cw-ba-url-before" value="{{beforeafter_img_before}}">
-    <br>
-    <label for="cw-ba-url-after">{{#i18n}}Bild nachher{{/i18n}}:</label>
-    <input type="text" name="cw-ba-url-after" class="cw-ba-url-after" value="{{beforeafter_img_after}}">
-</div>
-
-<div class="cw-ba-wrapper cw-ba-wrapper-files">
-    <label for="cw-ba-file-before">{{#i18n}}Bild vorher{{/i18n}}: </label>
-    <select class="cw-ba-file-before" name="cw-ba-file-before">
+<div class="cw-ba-wrapper">
+    <select class="cw-ba-source-before">
+        <option value="file">{{#i18n}}Bild vorher - Dateibereich{{/i18n}}:</option>
+        <option value="url" {{#img_before_external}} selected {{/img_before_external}}>{{#i18n}}Bild vorher - URL{{/i18n}}:</option>
+    </select>
+    <input type="text" class="cw-ba-source-before-url" value="{{img_before}}">
+    <select class="cw-ba-source-before-file">
         {{#image_files}}
-            <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
+            <option value="" file-url="{{download_url}}" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
         {{/image_files}}
     </select>
-    <label for="cw-ba-file-after">{{#i18n}}Bild nachher{{/i18n}}: </label>
-    <select class="cw-ba-file-after" name="cw-ba-file-after">
+    <br>
+    <br>
+    <select class="cw-ba-source-after">
+        <option value="file">{{#i18n}}Bild nachher - Dateibereich{{/i18n}}:</option>
+        <option value="url" {{#img_after_external}} selected {{/img_after_external}}>{{#i18n}}Bild nachher - URL{{/i18n}}:</option>
+    </select>
+    <input type="text" class="cw-ba-source-after-url" value="{{img_after}}">
+    <select class="cw-ba-source-after-file" name="cw-ba-file-after">
         {{#image_files}}
-            <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
+            <option value="" file-url="{{download_url}}" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
         {{/image_files}}
     </select>
 </div>

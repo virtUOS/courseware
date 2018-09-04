@@ -7,7 +7,8 @@ export default AuthorView.extend({
     events: {
         'click button[name=save]':   'onSave',
         'click button[name=cancel]': 'switchBack',
-        'change select.cw-ba-source': 'selectSource'
+        'change select.cw-ba-source-before': 'selectSource',
+        'change select.cw-ba-source-after': 'selectSource'
     },
 
     initialize() {
@@ -20,25 +21,26 @@ export default AuthorView.extend({
     },
 
     postRender() {
-        var $view = this;
-        var $source = $view.$('.cw-ba-stored-source').val();
-        $view.$('.cw-ba-wrapper').hide();
-        $view.$('select.cw-ba-source option[value="'+$source+'"]').prop('selected', true);
+        if (this.$('.cw-ba-source-before').val() == 'url') {
+            this.$('.cw-ba-source-before-url').show();
+            this.$('.cw-ba-source-before-file').hide();
+        } else {
+            let img_before = this.$('.cw-ba-stored-file-id-before').val();
+            let select_before = this.$('.cw-ba-source-before-file');
+            this.$('.cw-ba-source-before-url').hide();
+            select_before.show();
+            select_before.find('option[file-id="'+img_before+'"]').prop('selected', true);
+        }
 
-        switch ($source) {
-            case 'url':
-            default:
-                $view.$('.cw-ba-wrapper-url').show();
-                break;
-            case 'cw':
-                var $files = $view.$('.cw-ba-stored-files').val();
-                if ($files != ''){
-                    $files = JSON.parse($files);
-                    $view.$('select.cw-ba-file-before option[file-id="'+$files.before.file_id+'"]').prop('selected', true);
-                    $view.$('select.cw-ba-file-after option[file-id="'+$files.after.file_id+'"]').prop('selected', true);
-                }
-                $view.$('.cw-ba-wrapper-files').show();
-                break;
+        if (this.$('.cw-ba-source-after').val() == 'url') {
+            this.$('.cw-ba-source-after-url').show();
+            this.$('.cw-ba-source-after-file').hide();
+        } else {
+            let img_after = this.$('.cw-ba-stored-file-id-after').val();
+            let select_after = this.$('.cw-ba-source-after-file');
+            this.$('.cw-ba-source-after-url').hide();
+            select_after.show();
+            select_after.find('option[file-id="'+img_after+'"]').prop('selected', true);
         }
 
         return this;
@@ -73,35 +75,34 @@ export default AuthorView.extend({
 
     onSave(event) {
         var $view = this;
-        var $ba_source = $view.$('.cw-ba-source').val();
-        var $ba_url = '';
-        var $ba_files = '';
-        switch ($ba_source) {
-            case 'url':
-                $ba_url = {};
-                $ba_url.before = {};
-                $ba_url.after = {};
-                $ba_url.before.url = $view.$('.cw-ba-url-before').val();
-                $ba_url.after.url = $view.$('.cw-ba-url-after').val();
-                $ba_url = JSON.stringify($ba_url);
-                break;
-            case 'cw':
-                $ba_files = {};
-                $ba_files.before = {};
-                $ba_files.after = {};
-                $ba_files.before.file_id = $view.$('.cw-ba-file-before option:selected').attr('file-id');
-                $ba_files.before.file_name = $view.$('.cw-ba-file-before option:selected').attr('filename');
-                $ba_files.after.file_id = $view.$('.cw-ba-file-after option:selected').attr('file-id');
-                $ba_files.after.file_name = $view.$('.cw-ba-file-after option:selected').attr('filename');
-                $ba_files = JSON.stringify($ba_files);
-                break;
+        var $before = {};
+        var $after = {};
+
+        $before.source = this.$('.cw-ba-source-before').val();
+        if ($before.source == 'url') {
+            $before.url = this.$('.cw-ba-source-before-url').val();
+        } else {
+            $before.url = this.$('.cw-ba-source-before-file option:selected').attr('file-url');
+            $before.file_id = this.$('.cw-ba-source-before-file option:selected').attr('file-id');
+            $before.file_name = this.$('.cw-ba-source-before-file option:selected').attr('filename');
         }
+
+        $after.source = this.$('.cw-ba-source-after').val();
+        if ($after.source == 'url') {
+            $after.url = this.$('.cw-ba-source-after-url').val();
+        } else {
+            $after.url = this.$('.cw-ba-source-after-file option:selected').attr('file-url');
+            $after.file_id = this.$('.cw-ba-source-after-file option:selected').attr('file-id');
+            $after.file_name = this.$('.cw-ba-source-after-file option:selected').attr('filename');
+        }
+
+        $before = JSON.stringify($before);
+        $after = JSON.stringify($after);
 
         helper
         .callHandler(this.model.id, 'save', {
-              ba_source : $ba_source,
-              ba_url : $ba_url,
-              ba_files : $ba_files
+              ba_before : $before,
+              ba_after : $after
         })
         .then(
             // success
@@ -117,18 +118,24 @@ export default AuthorView.extend({
         );
     },
 
-    selectSource() {
-        var $view = this;
-        var $selection = $view.$('.cw-ba-source').val();
-        switch($selection) {
-            case 'cw':
-                $view.$('.cw-ba-wrapper').hide();
-                $view.$('.cw-ba-wrapper-files').show();
-                break;
-            case 'url':
-                $view.$('.cw-ba-wrapper').hide();
-                $view.$('.cw-ba-wrapper-url').show();
-                break;
+    selectSource(event) {
+        var type = '';
+        
+        if ($(event.currentTarget).hasClass('cw-ba-source-before')) {
+            type = 'before';
+        }
+        if ($(event.currentTarget).hasClass('cw-ba-source-after')) {
+            type = 'after';
+        }
+
+        if (type == '') { return;}
+        if ($(event.currentTarget).val() == 'url') {
+            this.$('.cw-ba-source-'+type+'-url').show();
+            this.$('.cw-ba-source-'+type+'-file').hide();
+        } 
+        if ($(event.currentTarget).val() == 'file') {
+            this.$('.cw-ba-source-'+type+'-file').show();
+            this.$('.cw-ba-source-'+type+'-url').hide();
         }
 
         return;

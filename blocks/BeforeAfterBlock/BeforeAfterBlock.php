@@ -11,52 +11,45 @@ class BeforeAfterBlock extends Block
 
     public function initialize()
     {
-        $this->defineField('ba_source', \Mooc\SCOPE_BLOCK, '');
-        $this->defineField('ba_url', \Mooc\SCOPE_BLOCK, '');
-        $this->defineField('ba_files', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('ba_before', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('ba_after', \Mooc\SCOPE_BLOCK, '');
     }
 
     public function student_view()
     {   
         $this->setGrade(1.0);
-
-        return array_merge($this->getAttrArray(), array());
+        $ba_img_before = json_decode($this->ba_before)->url;
+        $ba_img_after = json_decode($this->ba_after)->url;
+        return array(
+            'beforeafter_img_before' => $ba_img_before,
+            'beforeafter_img_after' => $ba_img_after
+        );
     }
 
     public function author_view()
     {
         $this->authorizeUpdate();
+        $before = json_decode($this->ba_before);
+        $after = json_decode($this->ba_after);
+        $ba_img_before_external = json_decode($this->ba_before)->source == 'url' ? true : false;
+        $ba_img_after_external = json_decode($this->ba_after)->source == 'url' ? true : false;
 
         return array_merge($this->getAttrArray(), array(
-            'image_files' => $this->showFiles()
+            'image_files' => $this->showFiles(),
+            'img_before' => $before->url,
+            'img_after' => $after->url,
+            'file_id_before' => $before->file_id,
+            'file_id_after' => $after->file_id,
+            'img_before_external' => $ba_img_before_external,
+            'img_after_external' => $ba_img_after_external
         ));
     }
 
     private function getAttrArray() 
     {
-        switch ($this->ba_source) {
-                case 'url':
-                    $url_json = json_decode($this->ba_url);
-                    $ba_img_before = $url_json->before->url;
-                    $ba_img_after = $url_json->after->url;
-                    break;
-                case 'cw':
-                    $file_json = json_decode($this->ba_files);
-                    $file_before = \FileRef::find($file_json->before->file_id);
-                    $file_after = \FileRef::find($file_json->after->file_id);
-                    if (($file_before)&&($file_after)) {
-                        $ba_img_before = $file_before->getDownloadURL();
-                        $ba_img_after = $file_after->getDownloadURL();
-                    }
-                    break;
-        }
-
         return array(
-            'ba_source' => $this->ba_source,
-            'ba_url' => $this->ba_url,
-            'ba_files' => $this->ba_files,
-            'beforeafter_img_before' => $ba_img_before,
-            'beforeafter_img_after' => $ba_img_after
+            'ba_before' => $this->ba_before,
+            'ba_after' => $this->ba_after
         );
     }
 
@@ -64,14 +57,11 @@ class BeforeAfterBlock extends Block
     {
         $this->authorizeUpdate();
 
-        if (isset ($data['ba_source'])) {
-            $this->ba_source = (string) $data['ba_source'];
+        if (isset ($data['ba_before'])) {
+            $this->ba_before = (string) $data['ba_before'];
         } 
-        if (isset ($data['ba_url'])) {
-            $this->ba_url = (string) $data['ba_url'];
-        } 
-        if (isset ($data['ba_files'])) {
-            $this->ba_files = (string) $data['ba_files'];
+        if (isset ($data['ba_after'])) {
+            $this->ba_after = (string) $data['ba_after'];
         } 
 
         return;
@@ -80,25 +70,30 @@ class BeforeAfterBlock extends Block
     public function exportProperties()
     { 
        return array(
-            'ba_source' => $this->ba_source,
-            'ba_url' => $this->ba_url,
-            'ba_files' => $this->ba_files
+            'ba_before' => $this->ba_before,
+            'ba_after' => $this->ba_after
             );
     }
 
     public function getFiles()
     {
-        if ($this->ba_source != 'cw') {
-            return array();
+        $ba_files = [];
+        $before = json_decode($this->ba_before);
+        $after = json_decode($this->ba_after);
+        
+        if ($before->source == 'file') {
+            array_push($ba_files, $before->file_id);
         }
-        $file_json = json_decode($this->ba_files);
+        if ($after->source == 'file') {
+            array_push($ba_files, $after->file_id);
+        }
 
-        foreach ($file_json as $ba_file){
-            $file_ref = new \FileRef($ba_file->file_id);
+        foreach ($ba_files as $ba_file){
+            $file_ref = new \FileRef($ba_file);
             $file = new \File($file_ref->file_id);
 
             $files[] = array(
-                'id' => $ba_file->file_id,
+                'id' => $ba_file,
                 'name' => $file_ref->name,
                 'description' => $file_ref->description,
                 'filename' => $file->name,
@@ -123,14 +118,11 @@ class BeforeAfterBlock extends Block
 
     public function importProperties(array $properties)
     {
-        if (isset($properties['ba_source'])) {
-            $this->ba_source = $properties['ba_source'];
+        if (isset($properties['ba_before'])) {
+            $this->ba_before = $properties['ba_before'];
         }
-        if (isset($properties['ba_url'])) {
-            $this->ba_url = $properties['ba_url'];
-        }
-        if (isset($properties['ba_files'])) {
-            $this->ba_files = $properties['ba_files'];
+        if (isset($properties['ba_after'])) {
+            $this->ba_after = $properties['ba_after'];
         }
 
         $this->save();
@@ -138,17 +130,25 @@ class BeforeAfterBlock extends Block
 
     public function importContents($contents, array $files)
     {
-        $file_json = json_decode($this->ba_files);
+        $ba_before = json_decode($this->ba_before);
+        $ba_after = json_decode($this->ba_after);
 
         foreach($files as $file){
-            if($file_json->after->file_name == $file->name) {
-                $file_json->after->file_id = $file->id;
+            if(($ba_after->file_name == $file->name) && ($ba_after->source == 'file')) {
+                $ba_after->file_id = $file->id;
+                $file_ref_after = new \FileRef($ba_after->file_id);
+                $ba_after->url = $file_ref_after->download_url;
             }
-            if($file_json->before->file_name == $file->name) {
-                $file_json->before->file_id = $file->id;
+            if (($ba_before->file_name == $file->name) && ($ba_before->source == 'file')) {
+                $ba_before->file_id = $file->id;
+                $file_ref_before = new \FileRef($ba_before->file_id);
+                $file_before = new \File($file_ref_before->file_id);
+                $ba_after->url = $file_before->download_url;
             }
         }
-        $this->ba_files = json_encode($file_json);
+
+        $this->ba_before = json_encode($ba_before);
+        $this->ba_after = json_encode($ba_after);
 
         $this->save();
     }

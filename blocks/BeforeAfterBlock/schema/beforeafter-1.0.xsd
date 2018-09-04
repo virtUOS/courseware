@@ -4,7 +4,6 @@
     targetNamespace="http://moocip.de/schema/block/beforeafter/"
     elementFormDefault="qualified"
 >
-    <xsd:attribute name="ba_source" type="xsd:string" />
-    <xsd:attribute name="ba_url" type="xsd:string" />
-    <xsd:attribute name="ba_files" type="xsd:string" />
+    <xsd:attribute name="ba_before" type="xsd:string" />
+    <xsd:attribute name="ba_after" type="xsd:string" />
 </xsd:schema>
