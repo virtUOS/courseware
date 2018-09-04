@@ -1,4 +1,5 @@
 @import '../../../assets/less/variables';
+@import '../../../assets/less/mixins';
 
 section#courseware .block-content:not([data-view="student"]) {
     fieldset.cw-chart-item-dataset {
@@ -22,7 +23,16 @@ section#courseware .block-content:not([data-view="student"]) {
     }
 
     button[name="additem"] {
-        margin-right: 3em;
+        .courseware-btn;
+        width: initial;
+        text-align: left;
+        .assets-bg-icon("blue/add.svg");
+        background-position: 6px center;
+        padding-left: 28px;
+
+        &:hover {
+            .assets-bg-icon("white/add.svg");
+        }
     }
 
     button[name="removeitem"] {
