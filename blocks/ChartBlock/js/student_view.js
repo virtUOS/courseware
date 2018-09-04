@@ -61,6 +61,9 @@ export default StudentView.extend({
                                 beginAtZero:true
                             }
                         }]
+                    },
+                    legend: {
+                        display: false
                     }
                 }
             });
