@@ -9,7 +9,7 @@ export default AuthorView.extend({
         'click button[name=cancel]': 'switchBack',
         'click button[name=addcard]': 'addCard',
         'click button[name=removecard]': 'removeCard',
-        'click input.cw-dialogcards-url': 'toggleSource'
+        'change select.cw-dialogcards-source': 'toggleSource'
     },
 
     initialize() {
@@ -24,14 +24,14 @@ export default AuthorView.extend({
     postRender() {
         var $cards = this.$('.cw-dialogcards-card-content');
         $.each($cards, function(index) {
-            if ($(this).find('.cw-dialogcards-front-url').prop('checked')) {
+            if ($(this).find('.cw-dialogcards-source-front').val() == 'url') {
                 $(this).find('.cw-dialogcards-front-img').show();
             } else {
                 $(this).find('.cw-dialogcards-front-img-file').show();
                 let file_id = $(this).find('.cw-dialogcards-front-img-file-stored').val();
                 $(this).find('.cw-dialogcards-front-img-file option[file_id="'+file_id+'"]').prop('selected', true);
             }
-            if ($(this).find('.cw-dialogcards-back-url').prop('checked')) {
+            if ($(this).find('.cw-dialogcards-source-back').val() == 'url') {
                 $(this).find('.cw-dialogcards-back-img').show();
             } else {
                 $(this).find('.cw-dialogcards-back-img-file').show();
@@ -39,6 +39,9 @@ export default AuthorView.extend({
                 $(this).find('.cw-dialogcards-back-img-file option[file_id="'+file_id+'"]').prop('selected', true);
             }
         });
+        if($cards.length == 0) {
+            this.addCard();
+        }
         return this;
     },
 
@@ -75,7 +78,7 @@ export default AuthorView.extend({
         var dialogcards_content = [];
         $.each($cards, function(index){
             var card_content = {};
-            if ($(this).find('.cw-dialogcards-front-url').prop('checked')) {
+            if ($(this).find('.cw-dialogcards-source-front').val() == 'url') {
                 card_content.front_img = $(this).find('.cw-dialogcards-front-img').val();
                 card_content.front_external_file = true;
             } else {
@@ -85,8 +88,8 @@ export default AuthorView.extend({
                 card_content.front_external_file = false;
             }
             card_content.front_text = $(this).find('.cw-dialogcards-front-text').val();
-            
-            if ($(this).find('.cw-dialogcards-back-url').prop('checked')) {
+
+            if ($(this).find('.cw-dialogcards-source-back').val() == 'url') {
                 card_content.back_img = $(this).find('.cw-dialogcards-back-img').val();
                 card_content.back_external_file = true;
             } else {
@@ -123,7 +126,6 @@ export default AuthorView.extend({
         var $card = $view.$('.cw-dialogcards-card-content-default').clone();
         var index = $view.$('.cw-dialogcards-card-content').length;
         var $last = $view.$('.cw-dialogcards-card-content').last();
-        console.log($last);
         $card.removeClass('cw-dialogcards-card-content-default').addClass('cw-dialogcards-card-content');
         if ($last.length == 0) {
             $card.find('.cw-dialogcards-card-content-legend').html('Karte 0');
@@ -148,10 +150,10 @@ export default AuthorView.extend({
     },
 
     toggleSource(event) {
-        var $switch = this.$(event.target).closest('label.cw-dialogcards-switch');
-        var $card = $switch.closest('.cw-dialogcards-card-content');
-        if ($switch.hasClass('cw-dialogcards-front-switch')) {
-            if (this.$(event.target).prop('checked')) {
+        var select = this.$(event.target);
+        var $card = select.closest('.cw-dialogcards-card-content');
+        if (select.hasClass('cw-dialogcards-source-front')) {
+            if (select.val() == 'url') {
                 $card.find('.cw-dialogcards-front-img').show();
                 $card.find('.cw-dialogcards-front-img-file').hide();
             } else {
@@ -159,8 +161,8 @@ export default AuthorView.extend({
                 $card.find('.cw-dialogcards-front-img-file').show();
             }
         }
-        if ($switch.hasClass('cw-dialogcards-back-switch')) {
-            if (this.$(event.target).prop('checked')) {
+        if (select.hasClass('cw-dialogcards-source-back')) {
+            if (select.val() == 'url') {
                 $card.find('.cw-dialogcards-back-img').show();
                 $card.find('.cw-dialogcards-back-img-file').hide();
             } else {

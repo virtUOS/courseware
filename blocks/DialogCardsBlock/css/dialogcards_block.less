@@ -111,63 +111,6 @@ button[name="removecard"] {
     margin-top: 20px;
 }
 
-
-
-section#courseware .block-content:not([data-view="student"]) label.cw-dialogcards-switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    min-width: 60px;
-    height: 36px;
-    padding: 0;
-    vertical-align: middle;
-    margin-left: 1em;
-    input {
-    display:none;
-    }
-
-    .cw-dialogcards-slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #fff;
-      border: solid thin #ccc;
-      -webkit-transition: .3s;
-      transition: .3s;
-      .assets-bg-icon("grey/group.svg");
-      background-repeat: no-repeat;
-      background-position: 85% 50%;
-      background-size: 16px;
-    }
-
-    .cw-dialogcards-slider:before {
-        .assets-bg-icon("blue/files.svg");
-        background-repeat: no-repeat;
-        position: absolute;
-        content: "";
-        height: 100%;
-        width: 100%;
-        background-position: 15% 50%;
-        background-size: 24px;
-        -webkit-transition: .3s;
-        transition: .2s;
-    }
-
-    input:checked + .cw-dialogcards-slider {
-      .assets-bg-icon("blue/group.svg");
-      background-size: 24px;
-    }
-
-    input:checked + .cw-dialogcards-slider:before {
-      .assets-bg-icon("grey/files.svg");
-      background-size: 16px;
-    }
-
-}
-
 .cw-dialogcards-front-img,
 .cw-dialogcards-front-img-file,
 .cw-dialogcards-back-img,
@@ -175,4 +118,26 @@ section#courseware .block-content:not([data-view="student"]) label.cw-dialogcard
     display: none;
 }
 
+section#courseware .DialogCardsBlock .block-content:not([data-view="student"]) {
+    label {
+        width: 18em;
+        margin-left: 0.75em;
+    }
+    select.cw-dialogcards-source {
+        width: 18em;
+        margin-right: 1.75em;
+    }
+}
 
+section#courseware button.button.cw-dialogcards-addcard {
+    .courseware-btn;
+    width: initial;
+    text-align: left;
+    .assets-bg-icon("blue/add.svg");
+    background-position: 6px center;
+    padding-left: 28px;
+
+    &:hover {
+        .assets-bg-icon("white/add.svg");
+    }
+}
