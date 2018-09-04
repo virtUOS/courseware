@@ -23,7 +23,9 @@ export default AuthorView.extend({
     postRender() {
         if (this.$('.cw-ba-source-before').val() == 'url') {
             this.$('.cw-ba-source-before-url').show();
+            this.$('.cw-ba-source-before-url-info').show();
             this.$('.cw-ba-source-before-file').hide();
+            this.$('.cw-ba-source-before-file-info').hide();
         } else {
             let img_before = this.$('.cw-ba-stored-file-id-before').val();
             let select_before = this.$('.cw-ba-source-before-file');
@@ -34,11 +36,15 @@ export default AuthorView.extend({
 
         if (this.$('.cw-ba-source-after').val() == 'url') {
             this.$('.cw-ba-source-after-url').show();
+            this.$('.cw-ba-source-after-url-info').show();
             this.$('.cw-ba-source-after-file').hide();
+            this.$('.cw-ba-source-after-file-info').hide();
         } else {
             let img_after = this.$('.cw-ba-stored-file-id-after').val();
             let select_after = this.$('.cw-ba-source-after-file');
             this.$('.cw-ba-source-after-url').hide();
+            this.$('.cw-ba-source-after-url-info').hide();
+            this.$('.cw-ba-source-after-file-info').show();
             select_after.show();
             select_after.find('option[file-id="'+img_after+'"]').prop('selected', true);
         }
@@ -131,11 +137,15 @@ export default AuthorView.extend({
         if (type == '') { return;}
         if ($(event.currentTarget).val() == 'url') {
             this.$('.cw-ba-source-'+type+'-url').show();
+            this.$('.cw-ba-source-'+type+'-url-info').show();
             this.$('.cw-ba-source-'+type+'-file').hide();
+            this.$('.cw-ba-source-'+type+'-file-info').hide();
         } 
         if ($(event.currentTarget).val() == 'file') {
             this.$('.cw-ba-source-'+type+'-file').show();
+            this.$('.cw-ba-source-'+type+'-file-info').show();
             this.$('.cw-ba-source-'+type+'-url').hide();
+            this.$('.cw-ba-source-'+type+'-url-info').hide();
         }
 
         return;
