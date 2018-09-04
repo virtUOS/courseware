@@ -28,7 +28,7 @@ export default AuthorView.extend({
         'click .cw-iav-tabs-stops':             'disableItems',
         'click .cw-iav-tabs-overlays':          'disableItems',
         'change select[name=assignment_id]':    'getVipsTests',
-        'click input.cw-iav-source':            'toggleSource'
+        'change select.cw-iav-source':            'toggleSource'
     },
 
     initialize() {
@@ -709,16 +709,12 @@ export default AuthorView.extend({
     },
 
     toggleSource() {
-        if (this.$('.cw-iav-source').prop('checked')) {
+        if (this.$('.cw-iav-source').val() == 'url') {
             this.$('.cw-iav-video-file').hide();
-            this.$('.cw-iav-video-file-label').hide();
-            this.$('.cw-iav-url-label').show();
             this.$('.cw-iav-url').show();
 
         } else {
             this.$('.cw-iav-url').hide();
-            this.$('.cw-iav-url-label').hide();
-            this.$('.cw-iav-video-file-label').show();
             this.$('.cw-iav-video-file').show();
         }
         

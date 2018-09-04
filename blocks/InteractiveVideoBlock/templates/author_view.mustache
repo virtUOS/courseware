@@ -48,9 +48,11 @@
     <li><a href="#tabs-{{block_id}}-4" class="cw-iav-tabs-tests">{{#i18n}}Aufgaben{{/i18n}}</a></li>
   </ul>
   <div id="tabs-{{block_id}}-1">
-    <label for="cw-iav-url" class="cw-iav-url-label">{{#i18n}}URL{{/i18n}}:</label>
+    <select class="cw-iav-source">
+        <option value="file">{{#i18n}}Dateibereich{{/i18n}}:</option>
+        <option value="url" {{#external_file}}selected{{/external_file}}>{{#i18n}}webVideo (URL){{/i18n}}:</option>
+    </select>
     <input class="cw-iav-url" name="cw-iav-url">
-    <label for="cw-iav-video-file" class="cw-iav-video-file-label">{{#i18n}}Datei{{/i18n}}:</label>
     <select class="cw-iav-video-file" name="cw-iav-video-file">
         {{#video_files}}
             <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
@@ -59,15 +61,11 @@
             <option file_id="" file_name="" file_url="" disabled selected>{{#i18n}}Keine Videodatei verfügbar{{/i18n}}</option>
         {{/video_files}}
     </select>
-    <label class="cw-iav-switch">
-        <input type="checkbox" class="cw-iav-source" {{#external_file}} checked {{/external_file}}>
-        <span class="cw-iav-slider"></span>
-    </label>
     <button name="video-preview" class="button">{{#i18n}}Vorschau{{/i18n}}</button>
   </div>
   <div id="tabs-{{block_id}}-2">
         <ul class="cw-iav-overlays-list">
-            <li><button class="button overlay-adder">+</button></li>
+            <li><button class="button overlay-adder">{{#i18n}}Einblendung hinzufügen{{/i18n}}</button></li>
         </ul>
         <div class="clear"></div>
         <div class="cw-iav-overlay-edit-wrapper">
@@ -129,7 +127,7 @@
   </div>
   <div id="tabs-{{block_id}}-3">
       <ul class="cw-iav-stops-list">
-            <li><button class="button stop-adder">+</button></li>
+            <li><button class="button stop-adder">{{#i18n}}Haltepunkt hinzufügen{{/i18n}}</button></li>
         </ul>
         <div class="clear"></div>
         <div class="cw-iav-stop-edit-wrapper">
