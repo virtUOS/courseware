@@ -22,8 +22,6 @@ export default StudentView.extend({
             width = $view.$el.width(),
             iframe = $view.$('iframe'),
             img = $view.$('img.embed-block-image');
-            console.log(width);
-            console.log(Math.round(width/1.65));
 
         if (iframe.length != 0) {
             var iframe_width = iframe.attr('width');

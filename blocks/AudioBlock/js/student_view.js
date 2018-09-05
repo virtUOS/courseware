@@ -78,7 +78,6 @@ export default StudentView.extend({
     }
 
     if ($range.slider('option', 'max') == 0) {
-      console.log('max is null');
       this.postRender();
     }
 
