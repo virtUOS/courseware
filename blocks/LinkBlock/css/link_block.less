@@ -1,9 +1,15 @@
 @import '../../../assets/less/mixins';
 
 .cw-link {
-    padding: 2em 2em 2em 6em;
+    padding: 1em 1em 1em 6em;
     border: solid thin #ccc;
-
+    color:#28497c;
+    &:hover {
+        border: solid thin #28497c;
+        color: #fff;
+        background-color: #28497c;
+    }
+    
     &.internal {
         .assets-bg-icon("blue/link-intern.svg");
         background-position: 2em 50%;
@@ -28,6 +34,10 @@
             .assets-bg-icon("red/decline.svg");
             vertical-align: middle;
         }
+        
+        &:hover {
+            .assets-bg-icon("white/link-intern.svg");
+        }
     }
 
     &.external {
@@ -35,6 +45,9 @@
         background-position: 2em 50%;
         background-repeat: no-repeat;
         background-size: 32px;
+        &:hover {
+            .assets-bg-icon("white/link-extern.svg");
+        }
     }
 
 }
