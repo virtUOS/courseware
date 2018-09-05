@@ -39,6 +39,12 @@ class EmbedBlock extends Block
                 $html = '<img class="embed-block-image" src="'.$oembed->url.'" width="'.$oembed->width.'px" 
                 data-originalwidth="'.$oembed->width.'"  data-originalheight="'.$oembed->height.'" height="'.$oembed
                 ->height.'px" title="'.$oembed->title.'">'; break;
+            case 'link':
+                if($oembed->provider_name == 'DeviantArt') {
+                    $html = '<img class="embed-block-image" src="'.$oembed->fullsize_url.'" width="'.$oembed->width.'px" 
+                    data-originalwidth="'.$oembed->width.'"  data-originalheight="'.$oembed->height.'" height="'.$oembed
+                    ->height.'px" title="'.$oembed->title.'">'; break;
+                }
             default:
                 $html = '';
         }
@@ -99,7 +105,6 @@ class EmbedBlock extends Block
             'codesandbox' => 'https://codesandbox.io/oembed',
             'codepen' => 'https://codepen.io/api/oembed',
             'ethfiddle' => 'https://ethfiddle.com/services/oembed/',
-            'amcharts' => 'https://live.amcharts.com/oembed',
             'slideshare' => 'http://www.slideshare.net/api/oembed/2',
             'speakerdeck' => 'https://speakerdeck.com/oembed.json',
             'audiomack' => 'https://www.audiomack.com/oembed',
@@ -121,7 +126,6 @@ class EmbedBlock extends Block
             case 'codepen':
             case 'codesandbox':
             case 'ethfiddle':
-            case 'amcharts':
             case 'slideshare':
             case 'audiomack':
             case 'kidoju':
@@ -135,7 +139,6 @@ class EmbedBlock extends Block
 
     private function getSources() {
         $sources = array();
-        $sources[] = array('name' => 'amcharts', 'fullname' => 'amCharts', 'url'=> 'https://www.amcharts.com/');
         $sources[] = array('name' => 'audiomack', 'fullname' => 'Audiomack', 'url'=> 'https://audiomack.com/');
         $sources[] = array('name' => 'codepen', 'fullname' => 'CodePen', 'url'=> 'https://codepen.io/');
         $sources[] = array('name' => 'codesandbox', 'fullname' => 'CodeSandbox', 'url'=> 'https://codesandbox.io/');

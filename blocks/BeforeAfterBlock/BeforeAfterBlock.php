@@ -20,9 +20,11 @@ class BeforeAfterBlock extends Block
         $this->setGrade(1.0);
         $ba_img_before = json_decode($this->ba_before)->url;
         $ba_img_after = json_decode($this->ba_after)->url;
+        $ba_enable = (($ba_img_before != '') && ($ba_img_after != '')) ? true : false;
         return array(
             'beforeafter_img_before' => $ba_img_before,
-            'beforeafter_img_after' => $ba_img_after
+            'beforeafter_img_after' => $ba_img_after,
+            'ba_enable' => $ba_enable
         );
     }
 

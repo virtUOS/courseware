@@ -26,15 +26,19 @@ export default AuthorView.extend({
         $.each($cards, function(index) {
             if ($(this).find('.cw-dialogcards-source-front').val() == 'url') {
                 $(this).find('.cw-dialogcards-front-img').show();
+                $(this).find('.cw-dialogcards-front-img-info').show();
             } else {
                 $(this).find('.cw-dialogcards-front-img-file').show();
+                $(this).find('.cw-dialogcards-front-img-file-info').show();
                 let file_id = $(this).find('.cw-dialogcards-front-img-file-stored').val();
                 $(this).find('.cw-dialogcards-front-img-file option[file_id="'+file_id+'"]').prop('selected', true);
             }
             if ($(this).find('.cw-dialogcards-source-back').val() == 'url') {
                 $(this).find('.cw-dialogcards-back-img').show();
+                $(this).find('.cw-dialogcards-back-img-info').show();
             } else {
                 $(this).find('.cw-dialogcards-back-img-file').show();
+                $(this).find('.cw-dialogcards-back-img-file-info').show();
                 let file_id = $(this).find('.cw-dialogcards-back-img-file-stored').val();
                 $(this).find('.cw-dialogcards-back-img-file option[file_id="'+file_id+'"]').prop('selected', true);
             }
@@ -135,7 +139,9 @@ export default AuthorView.extend({
             $card.insertAfter($last);
         }
         $card.find('.cw-dialogcards-front-img-file').show();
+        $card.find('.cw-dialogcards-front-img-file-info').show();
         $card.find('.cw-dialogcards-back-img-file').show();
+        $card.find('.cw-dialogcards-back-img-file-info').show();
     },
 
     removeCard(event) {
@@ -155,19 +161,27 @@ export default AuthorView.extend({
         if (select.hasClass('cw-dialogcards-source-front')) {
             if (select.val() == 'url') {
                 $card.find('.cw-dialogcards-front-img').show();
+                $card.find('.cw-dialogcards-front-img-info').show();
                 $card.find('.cw-dialogcards-front-img-file').hide();
+                $card.find('.cw-dialogcards-front-img-file-info').hide();
             } else {
                 $card.find('.cw-dialogcards-front-img').hide();
+                $card.find('.cw-dialogcards-front-img-info').hide();
                 $card.find('.cw-dialogcards-front-img-file').show();
+                $card.find('.cw-dialogcards-front-img-file-info').show();
             }
         }
         if (select.hasClass('cw-dialogcards-source-back')) {
             if (select.val() == 'url') {
                 $card.find('.cw-dialogcards-back-img').show();
+                $card.find('.cw-dialogcards-back-img-info').show();
                 $card.find('.cw-dialogcards-back-img-file').hide();
+                $card.find('.cw-dialogcards-back-img-file-info').hide();
             } else {
                 $card.find('.cw-dialogcards-back-img').hide();
+                $card.find('.cw-dialogcards-back-img-info').hide();
                 $card.find('.cw-dialogcards-back-img-file').show();
+                $card.find('.cw-dialogcards-back-img-file-info').show();
             }
         }
     }

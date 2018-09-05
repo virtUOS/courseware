@@ -36,7 +36,11 @@
             </div>
         {{/download_access}}
     {{/file}}
-    {{^file}}{{#i18n}}Es wurde keine Datei ausw&auml;hlt{{/i18n}}{{/file}}
+    {{^file}}
+        <div class="messagebox messagebox_info">
+            {{#i18n}}Download: Es wurde keine Datei ausgewählt{{/i18n}}
+        </div>
+    {{/file}}
     <input type="hidden" name="file" value="{{file}}" />
     <input type="hidden" name="file_name" value="{{file_name}}" />
     <input type="hidden" name="file_id" value="{{file_id}}" />
