@@ -7,7 +7,9 @@ export default AuthorView.extend({
     events: {
         'click button[name=save]':   'onSave',
         'click button[name=cancel]': 'switchBack',
-        'change select.cw-embedblock-source': 'selectPlatform'
+        'change select.cw-embedblock-source': 'selectPlatform',
+        'change input.cw-embedblock-url': 'checkURL',
+        'keyup input.cw-embedblock-url': 'checkURL'
     },
 
     initialize() {
@@ -20,10 +22,10 @@ export default AuthorView.extend({
     },
 
     postRender() {
-        var $view = this;
-        var $embed_source = $view.$('.cw-embedblock-source-stored').val();
-        $view.$('.cw-embedblock-source option[value="'+$embed_source+'"]').prop('selected', true);
-        $view.selectPlatform();
+        var $embed_source = this.$('.cw-embedblock-source-stored').val();
+        this.$('.cw-embedblock-source option[value="'+$embed_source+'"]').prop('selected', true);
+        this.selectPlatform();
+        this.checkURL();
     },
 
     onNavigate(event) {
@@ -78,9 +80,28 @@ export default AuthorView.extend({
     },
 
     selectPlatform() {
-        var $view = this;
-        var $embed_source = $view.$('select.cw-embedblock-source option:selected').val();
-        $view.$('.cw-embedblock-link li').hide();
-        $view.$('.cw-embedblock-link li[value="'+$embed_source+'"]').show();
+        var $embed_source = this.$('select.cw-embedblock-source option:selected').val();
+        this.$('.cw-embedblock-link li').hide();
+        this.$('.cw-embedblock-link li[value="'+$embed_source+'"]').show();
+        this.checkURL();
+
+    },
+
+    checkURL() {
+        var url_input = this.$('.cw-embedblock-url');
+        var url = url_input.val();
+        var $embed_source = this.$('select.cw-embedblock-source option:selected').val();
+        if (url != '') {
+            if(url.includes($embed_source)) {
+                url_input.removeClass('cw-embedblock-wrong-plattform');
+                this.$('.cw-embedblock-url-info-wrong-plattform').hide();
+            } else {
+                url_input.addClass('cw-embedblock-wrong-plattform');
+                this.$('.cw-embedblock-url-info-wrong-plattform').show();
+            }
+        } else {
+            url_input.removeClass('cw-embedblock-wrong-plattform');
+            this.$('.cw-embedblock-url-info-wrong-plattform').hide();
+        }
     }
 });
