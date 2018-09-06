@@ -144,8 +144,7 @@ class BeforeAfterBlock extends Block
             if (($ba_before->file_name == $file->name) && ($ba_before->source == 'file')) {
                 $ba_before->file_id = $file->id;
                 $file_ref_before = new \FileRef($ba_before->file_id);
-                $file_before = new \File($file_ref_before->file_id);
-                $ba_after->url = $file_before->download_url;
+                $ba_before->url = $file_ref_before->download_url;
             }
         }
 
