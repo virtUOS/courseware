@@ -109,8 +109,8 @@ class EmbedBlock extends Block
             'speakerdeck' => 'https://speakerdeck.com/oembed.json',
             'audiomack' => 'https://www.audiomack.com/oembed',
             'kidoju' => 'https://www.kidoju.com/api/oembed',
-            'learningapps' => 'http://learningapps.org/oembed.php'
-            
+            'learningapps' => 'http://learningapps.org/oembed.php',
+            'soundcloud' => 'https://soundcloud.com/oembed'
         );
 
         switch($embed_source) {
@@ -132,6 +132,7 @@ class EmbedBlock extends Block
             case 'learningapps':
                 return $endpoints[$embed_source] . '?url=' . rawurlencode($embed_url).'&format=json';
             case 'deviantart':
+            case 'soundcloud':
                 return $endpoints[$embed_source] . '?format=json&url=' . rawurlencode($embed_url);
         }
 
@@ -151,6 +152,7 @@ class EmbedBlock extends Block
         $sources[] = array('name' => 'sway', 'fullname' => 'Microsoft Sway', 'url'=> 'https://sway.com/');
         $sources[] = array('name' => 'sketchfab', 'fullname' => 'Sketchfab', 'url'=> 'https://sketchfab.com/');
         $sources[] = array('name' => 'slideshare', 'fullname' => 'SlideShare', 'url'=> 'https://www.slideshare.net/');
+        $sources[] = array('name' => 'soundcloud', 'fullname' => 'SoundCloud', 'url'=> 'https://www.soundcloud.com/');
         $sources[] = array('name' => 'speakerdeck', 'fullname' => 'Speaker Deck', 'url'=> 'https://speakerdeck.com/');
         $sources[] = array('name' => 'spotify', 'fullname' => 'Spotify', 'url'=> 'https://www.spotify.com/');
         $sources[] = array('name' => 'vimeo', 'fullname' => 'Vimeo', 'url'=> 'https://vimeo.com/');
