@@ -50,20 +50,19 @@ export default AuthorView.extend({
     },
 
     postRender() {
-        var view = this;
-        var url = view.$('.cw-videoblock-stored-url').val();
-        var aspect = view.$('.cw-videoblock-stored-aspect').val();
-        var webvideosrc = view.$('.webvideodata').val();
+        var url = this.$('.cw-videoblock-stored-url').val();
+        var aspect = this.$('.cw-videoblock-stored-aspect').val();
+        var webvideosrc = this.$('.webvideodata').val();
         var videotype = '';
         if (url != '') {
             videotype = 'url';
         } else {
             videotype = 'webvideo';
         }
-        view.$('.videotype option[value=' + videotype + ']').attr('selected', true);
-        view.$('.cw-videoblock-aspect option[value=' + aspect + ']').attr('selected', true);
-        view.selection();
-        view.showPreview();
+        this.$('.videotype option[value=' + videotype + ']').attr('selected', true);
+        this.$('.cw-videoblock-aspect option[value=' + aspect + ']').attr('selected', true);
+        this.selection();
+        this.showPreview();
     },
 
     saveVideo() {
@@ -71,7 +70,7 @@ export default AuthorView.extend({
         var videotype = this.$('.videotype').val();
         var status = this.$('.status');
         var aspect = this.$('select.cw-videoblock-aspect').val();
-        var videoTitle = this.$el.find('.videotitle').val();
+        var videoTitle = this.$('.videotitle').val();
         var url, webvideo, webvideosettings;
 
         if (videotype == 'webvideo') {
@@ -104,12 +103,12 @@ export default AuthorView.extend({
                     webvideo.push({ src, source, type, query, media, attr });
                 }
             });
-            if (view.$el.find('.videoautostart').is(':checked')) {
+            if (view.$('.videoautostart').is(':checked')) {
                 webvideosettings += 'autoplay ';
             }
             webvideo = JSON.stringify(webvideo);
         } else {
-          url = this.$el.find('.videosrc').val()
+          url = this.$('.videosrc').val()
           webvideo = '';
           webvideosettings = '';
         }
@@ -128,22 +127,23 @@ export default AuthorView.extend({
     selection() {
         var videotype = this.$('.videotype').val();
         var videourl = this.$('.videourl').val();
-        this.$el.find('.videosource').hide();
+        this.$('.videosource').hide();
+        this.$('.cw-webvideo-source-file-info').hide();
         switch (videotype) {
             case 'webvideo':
                 var webvideodata = this.$('.webvideodata').val();
-                this.$el.find('.videosource-webvideo').show();
-                this.$el.find('video').show();
-                this.$el.find('iframe').hide();
+                this.$('.videosource-webvideo').show();
+                this.$('video').show();
+                this.$('iframe').hide();
                 if (webvideodata == '') {
                     break;
                 }
                 this.setVideoData();
                 break;
             case 'url':
-                this.$el.find('.videosource-url').show();
-                this.$el.find('iframe').show();
-                this.$el.find('video').hide();
+                this.$('.videosource-url').show();
+                this.$('iframe').show();
+                this.$('video').hide();
                 break;
         }
     },
@@ -164,26 +164,30 @@ export default AuthorView.extend({
         if (source == 'url') {
             $webvideo.find('.cw-webvideo-source-url').show();
             $webvideo.find('.cw-webvideo-source-file').hide();
+            $webvideo.find('.cw-webvideo-source-url-info').show();
+            $webvideo.find('.cw-webvideo-source-file-info').hide();
         } else {
             $webvideo.find('.cw-webvideo-source-file').show();
             $webvideo.find('.cw-webvideo-source-url').hide();
+            $webvideo.find('.cw-webvideo-source-url-info').hide();
+            $webvideo.find('.cw-webvideo-source-file-info').show();
         }
     },
 
     setVideoData() {
         var view = this;
-            var webvideodata = view.$el.find('.webvideodata').val();
-            var webvideosettingsdata = view.$el.find('.webvideosettingsdata').val();
+            var webvideodata = view.$('.webvideodata').val();
+            var webvideosettingsdata = view.$('.webvideosettingsdata').val();
             if (webvideodata != '[]') {
                 webvideodata = $.parseJSON(webvideodata);
-                view.$el.find('video').attr('src', webvideodata[0].src);
+                view.$('video').attr('src', webvideodata[0].src);
                 $.each(webvideodata, function (key, value) {
                     view.addmediatype(null, value.src, value.type, value.query, value.source);
                 });
                 view.$('.videosource-webvideo > .webvideo').first().remove();
             }
             if (webvideosettingsdata.indexOf('autoplay') > -1) {
-                view.$el.find('.videoautostart').prop('checked', true);
+                view.$('.videoautostart').prop('checked', true);
             }
     },
 
@@ -200,15 +204,21 @@ export default AuthorView.extend({
 
     toggleSource(source) {
         var webvideo = source.parents('.webvideo');
+        this.$('.cw-webvideo-source-url-info').hide();
+        this.$('.cw-webvideo-source-file-info').hide();
         var file = webvideo.find('.cw-webvideo-source-file'),
             url = webvideo.find('.cw-webvideo-source-url');
         if (source.val() == 'url') {
             file.hide();
             url.show();
+            this.$('.cw-webvideo-source-url-info').show();
+            this.$('.cw-webvideo-source-file-info').hide();
 
         } else {
             file.show();
             url.hide();
+            this.$('.cw-webvideo-source-url-info').hide();
+            this.$('.cw-webvideo-source-file-info').show();
         }
     }
 });

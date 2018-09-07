@@ -43,6 +43,8 @@
                 <option value="file">{{#i18n}}Dateibereich{{/i18n}}:</option>
             </select>
             <input type="text" class="cw-webvideo-source-url">
+            <button class="cw-webvideo-source-url-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Videodatei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
+
             <select class="cw-webvideo-source-file">
                 {{#video_files}}
                     <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
@@ -51,6 +53,7 @@
                     <option file_id="" file_name="" file_url="" disabled selected>{{#i18n}}Keine Videodatei verfügbar{{/i18n}}</option>
                 {{/video_files}}
             </select>
+            <button class="cw-webvideo-source-file-info cw-info" data-title="{{#i18n}}Hier werden alle Videodateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
             <br>
             <label for="webvideosrc-mediatype" class="cw-webvideo-label">{{#i18n}}Dateityp{{/i18n}}:</label>
             <select class="webvideosrc-mediatype">
