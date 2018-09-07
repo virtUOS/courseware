@@ -5,27 +5,27 @@
 
 <label for="cw-link-type">{{#i18n}}Art des Links{{/i18n}}:</label>
 <select name="cw-link-type" class="cw-link-type">
-    {{#hasinternal}}<option value="internal">interner Link</option>{{/hasinternal}}
-    <option value="external">externer Link</option>
+    {{#hasinternal}}<option value="internal">{{#i18n}}interner Link{{/i18n}}</option>{{/hasinternal}}
+    <option value="external">{{#i18n}}externer Link{{/i18n}}</option>
 </select>
 <br>
 
 <label for="cw-link-target">{{#i18n}}Ziel des Links{{/i18n}}:</label>
 <select name="cw-link-target" class="cw-link-target">
-    <optgroup label="Schnellauswahl">
+    <optgroup label="{{#i18n}}Schnellauswahl{{/i18n}}">
         {{#hasnext}}
-            <option value="next">weiter</option>
+            <option value="next">{{#i18n}}nächster Abschnitt{{/i18n}}</option>
         {{/hasnext}}
         {{#hasprev}}
-            <option value="prev">zur&uuml;ck</option>
+            <option value="prev">{{#i18n}}vorheriger Abschnitt{{/i18n}}</option>
         {{/hasprev}}
     </optgroup>
-    <optgroup label="in diesem Kapitel">
+    <optgroup label="{{#i18n}}in diesem Kapitel{{/i18n}}">
         {{#inthischapter}}
             <option value="{{value}}">{{title}}</option>
         {{/inthischapter}}
     </optgroup>
-    <optgroup label="in anderen Kapiteln">
+    <optgroup label="{{#i18n}}in anderen Kapiteln{{/i18n}}">
         {{#inotherchapters}}
             <option value="{{value}}">{{title}}</option>
         {{/inotherchapters}}
@@ -40,8 +40,8 @@
 
 <label for="cw-link-progress">{{#i18n}}Nutzerfortschritt anzeigen{{/i18n}}:</label>
 <select name="cw-link-progress" class="cw-link-progress">
-    <option value="false">nein</option>
-    <option value="true">ja</option>
+    <option value="false">{{#i18n}}nein{{/i18n}}</option>
+    <option value="true">{{#i18n}}ja{{/i18n}}</option>
 </select>
 <br>
 

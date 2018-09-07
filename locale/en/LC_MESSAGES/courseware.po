@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Courseware\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-0907 11:20+0200\n"
-"PO-Revision-Date: 2018-09-07 12:27+0100\n"
+"PO-Revision-Date: 2018-09-07 14:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: ELAN e.V. <lucke@elan-ev.de>\n"
 "Language: en\n"
@@ -78,7 +78,7 @@ msgid "Anzeigen"
 msgstr "Show"
 
 msgid "Überschrift"
-msgstr "heading"
+msgstr "Heading"
 
 msgid "Art des Links"
 msgstr "Type of link"
@@ -130,7 +130,7 @@ msgstr ""
 "block ID."
 
 msgid "Bezeichnung"
-msgstr "designation"
+msgstr "label"
 
 msgid "Bezeichung des Links"
 msgstr "Designation of the link"
@@ -359,17 +359,20 @@ msgid ""
 "Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen."
 msgstr "There are currently no exercises available."
 
-msgid "Es sind keine Aufgabenblätter des Types \""
-msgstr "There are no task sheets of the type \""
+msgid "Es sind keine Aufgabenblätter des Types"
+msgstr "There are no task sheets of the type"
+
+msgid "vorhanden"
+msgstr "available"
 
 msgid "Es wurde bisher keine Evaluation erstellt!"
 msgstr "No evaluations have been created!"
 
 msgid "Es wurde keine Audiodatei ausgewählt"
-msgstr "No evaluations have been created!"
+msgstr "No audio file was selected yet"
 
 msgid "Es wurde kein OpenCast-Video ausgewählt."
-msgstr "No Opencast video was selected."
+msgstr "No Opencast video was selected yet"
 
 msgid "Es wurden noch keine Karten angelegt"
 msgstr "No cards have been created yet"
@@ -466,7 +469,7 @@ msgid "Haltepunkte"
 msgstr "breakpoint"
 
 msgid "Haltepunkt hinzufügen"
-msgstr "Add halt"
+msgstr "add halt"
 
 msgid "Haltepunkt löschen"
 msgstr "delete halt"
@@ -572,7 +575,7 @@ msgid "Karte hinzufügen"
 msgstr "add card"
 
 msgid "kein Aufgabenblatt"
-msgstr "no worksheets"
+msgstr "no worksheet"
 
 msgid "Keine Abschnitte"
 msgstr "No sections"
@@ -685,7 +688,7 @@ msgid "planen"
 msgstr "schedule"
 
 msgid "Plattform"
-msgstr "platform"
+msgstr "Platform"
 
 msgid "Polar-Area Diagram"
 msgstr "polar area chart"
@@ -779,9 +782,6 @@ msgstr "Name of HTML-Block"
 
 msgid "Titel des Unterkapitels bearbeiten"
 msgstr "Edit title of sub-chapter"
-
-msgid "Title"
-msgstr "title"
 
 msgid "Typ"
 msgstr "type"
@@ -1498,7 +1498,76 @@ msgid "Einbetten von einer Website oder Datei"
 msgstr "Embed from a website or file"
 
 msgid "Für diesen Block muss das Opencast Plugin aktiviert sein"
-msgstr "For this block the Opencast plugin must be activated"
+msgstr "To use this block the Opencast plugin must be activated"
 
 msgid "Für diesen Block muss das Vips Plugin aktiviert sein"
-msgstr "For this block the Vips plugin must be activated"
+msgstr "To use this block the Vips plugin must be activated"
+
+msgid ""
+"Mit diesem Block können Sie Inhalte wie Videos, Bilder, Audiodateien etc. "
+"von diversen Plattformen in Courseware anzeigen lassen. Auf der Seite der "
+"Plattform können Sie die URL direkt aus der Adressleiste Ihres Browsers "
+"kopieren. Die Verwendung eines Embed-Codes ist nicht notwendig."
+msgstr ""
+"With this block, you can display contents such as videos, pictures, audio "
+"files etc. from various platforms in Courseware. On the side of the "
+"platform, you can copy the URL directly from the address bar of your "
+"browser. The use of an embed code is not necessary."
+
+msgid ""
+"Für jede NutzerIn wird ein individueller Wert übergeben mit dem die "
+"Anwendung die NutzerIn wiedererkennen kann. Um Rückschlüssen auf die "
+"Identität zu verhindern, wird die StudIp-Nutzer-Id mit der "
+"Zufallszeichenfolge verschlüsselt. Wählen Sie identische "
+"Zufallszeichenfolgen, wenn an verschiedenen Stellen gleiche Nutzer-Ids "
+"erzeugt werden sollen."
+msgstr ""
+"For each user, an individual value is transferred with which the application "
+"can recognize the user. To prevent identity inference, the StudIP user ID is "
+"encrypted with the random string. Select identical random strings if the "
+"same user IDs are to be created in different places."
+
+msgid "interner Link"
+msgstr "internal link"
+
+msgid "externer Link"
+msgstr "external link"
+
+msgid "nächster Abschnitt"
+msgstr "next section"
+
+msgid "vorheriger Abschnitt"
+msgstr "previous section"
+
+msgid "Schnellauswahl"
+msgstr "Quick selection"
+
+msgid "in diesem Kapitel"
+msgstr "in this chapter"
+
+msgid "in anderen Kapiteln"
+msgstr "in other chapters"
+
+msgid "ja"
+msgstr "yes"
+
+msgid "nein"
+msgstr "no"
+
+msgid "CC Lizenz"
+msgstr "CC license"
+
+msgid "Werk"
+msgstr "Product"
+
+msgid "Autor"
+msgstr "Author"
+
+msgid "Lizenz der Plattform"
+msgstr "License of the platform"
+
+msgid "Sprache"
+msgstr "Language"
+
+msgid "verfügbare Sprachen"
+msgstr "available languages"

@@ -93,7 +93,7 @@
         <input type="hidden" name="thread_id" id="input_thread_id" value="">
         <input type="hidden" name="cid" value="<?= $cid ?>">
         <textarea name="content" placeholder="<?= _cw('Auf Beitrag antworten...') ?>" spellcheck="true"></textarea>
-        <input type="submit" value="senden" class="button">
+        <input type="submit" value="<?= _cw('senden') ?>" class="button">
     </form>
 <? else: ?>
     <div class="post-overview-no-threads"> 
