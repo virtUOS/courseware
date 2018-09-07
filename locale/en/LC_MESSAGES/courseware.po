@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Courseware \n"
+"Project-Id-Version: Courseware\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-19 09:22+0100\n"
-"PO-Revision-Date: 2018-02-19 10:00+0100\n"
+"POT-Creation-Date: 2018-09-0907 11:20+0200\n"
+"PO-Revision-Date: 2018-09-07 12:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: ELAN e.V. <lucke@elan-ev.de>\n"
 "Language: en\n"
@@ -18,29 +18,884 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: Courseware.php:87
-msgid "Letzte Änderungen"
-msgstr "last changes"
+#: views/import/index.php:25
+msgid "Abbrechen"
+msgstr "Quit"
 
-#: Courseware.php:97
-msgid "Einstellungen"
-msgstr "Settings"
+msgid "ablehnen"
+msgstr "reject"
 
-#: Courseware.php:103 Courseware.php:130
-msgid "Fortschrittsübersicht"
-msgstr "Progress"
+msgid "Abschicken"
+msgstr "Submit"
+
+msgid "Abschnitt einfügen"
+msgstr "Add section"
+
+msgid "Abschnitte sortieren"
+msgstr "Sort sections"
+
+msgid "Abschnitt löschen"
+msgstr "Delete section"
+
+msgid "Abschnittstitel bearbeiten"
+msgstr "Edit title of section"
+
+msgid "Absenken"
+msgstr "Downwards"
+
+msgid "absolvieren"
+msgstr "complete"
+
+msgid "Accordion"
+msgstr "Accordion"
+
+msgid "akzeptieren"
+msgstr "accept"
+
+msgid "Alarm"
+msgstr "alert"
+
+msgid ""
+"Alle Bilddateien die sich in diesem Ordner des Dateibereichts befinden "
+"werden in der Galerie angezeigt."
+msgstr ""
+"All image files that are in this folder of the file area are displayed in "
+"the gallery."
+
+msgid "alles zeigen"
+msgstr "show all"
+
+msgid "Anheben"
+msgstr "Upwards"
+
+msgid "Anmerkung zur Lösung"
+msgstr "Note to the solution"
+
+msgid "Antwort zurücksetzen"
+msgstr "Reset answer"
+
+msgid "Anzeigen"
+msgstr "Show"
+
+msgid "Überschrift"
+msgstr "heading"
+
+msgid "Art des Links"
+msgstr "Type of link"
+
+msgid "Aufgaben"
+msgstr " exercises"
+
+msgid "Aufgabenblatt"
+msgstr "Manage worksheets"
+
+msgid "Aufgabenblätter verwalten"
+msgstr "Manage worksheets"
+
+msgid "Aufgabe verwenden"
+msgstr "use exercise"
+
+msgid "ausrufen"
+msgstr "exclaim"
+
+msgid "auswerten"
+msgstr "evaluate"
+
+msgid "Autoplay"
+msgstr "autoplay"
+
+msgid "Autoplay-Timer (in Sekunden)"
+msgstr "autoplay timer (in seconds)"
+
+msgid "Autorenmodus"
+msgstr "Author mode"
+
+msgid "Balkendiagramm"
+msgstr "bar graph"
+
+msgid "Bereits vorhandene Diskussion verwenden"
+msgstr "Use existing discussion"
+
+msgid "Beschreibung"
+msgstr "Name and description"
+
+msgid "betrachten"
+msgstr "view"
+
+msgid ""
+"Bewegen Sie den Cursor über das Informations-Icon des gewünschten Blocks um "
+"die Block-Id zu erfahren."
+msgstr ""
+"Move the cursor over the information icon of the desired block to get the "
+"block ID."
+
+msgid "Bezeichnung"
+msgstr "designation"
+
+msgid "Bezeichung des Links"
+msgstr "Designation of the link"
+
+msgid "Bild nachher - Dateibereich"
+msgstr "Image after - file system"
+
+msgid "Bild nachher - URL"
+msgstr "Image after - URL"
+
+msgid "Bildschirm"
+msgstr "Screen"
+
+msgid "Bildvergleich: Es wurden noch nicht zwei Bilder ausgewählt"
+msgstr "Image Comparison: There are not yet two images selected"
+
+msgid "Bild vorher - Dateibereich"
+msgstr "Image before - file system"
+
+msgid "Bild vorher - URL"
+msgstr "Image before - URL"
+
+msgid ""
+"Bitte beachten Sie das nicht alle Blocktypen in diesen Block eingebunden "
+"werden können."
+msgstr "Please note that not all block types can be included in this block."
+
+msgid "Bitte vergleichen Sie Ihre Lösung mit der Musterlösung."
+msgstr "Please compare your solution with the sample solution."
+
+msgid "blau"
+msgstr "blue"
+
+msgid "Block bearbeiten"
+msgstr "edit block"
+
+msgid "Block entfernen"
+msgstr "delete block"
+
+msgid "Block hinzufügen"
+msgstr "Add block"
+
+msgid "Blubber muss in dieser Veranstaltung aktiviert sein."
+msgstr "Blubber must be activated in this course"
+
+msgid "Box"
+msgstr "box"
+
+msgid "Breit"
+msgstr "wide"
+
+msgid "Breite"
+msgstr "width"
+
+msgid "CC Lizenztyp angeben:"
+msgstr "Specify CC license type:"
+
+msgid "chatten"
+msgstr "chat"
+
+msgid "Danke! Sie haben alle Aufgaben gelöst."
+msgstr "Thank you! You have solved all tasks."
+
+msgid ""
+"Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten "
+"Abschnitt fortfahren."
+msgstr ""
+"Thank you! You have finished all exercises and can proceed to the next "
+"section."
+
+msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
+msgstr "Thank you! You can now proceed to the next section."
+
+msgid ""
+"Das hochladen einer Datei zu dieser Frage ist in Courseware nicht möglich."
+msgstr "Uploading a file to this question is not possible in Courseware."
+
+msgid ""
+"Das Opencast Plugin ist nicht installiert. Bitte wenden Sie sich an Ihren "
+"Administrator."
+msgstr ""
+"The Opencast plugin is not installed. Please contact your administrator."
+
+msgid "Datei aus dem Dateibereich"
+msgstr "File from the file system"
+
+msgid "Dateibereich"
+msgstr "File system"
+
+msgid "Dateityp"
+msgstr "file type"
+
+msgid "Datenbezeichnung"
+msgstr "data description"
+
+msgid "Datensatz"
+msgstr "record"
+
+msgid "Datensatz entfernen"
+msgstr "delete record"
+
+msgid "Datensatz hinzufügen"
+msgstr "add record"
+
+msgid ""
+"Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
+msgstr "The exercise type has changed. Please contact your course lecturer."
+
+msgid "Diagrammtyp"
+msgstr "chart type"
+
+msgid ""
+"Die angegebene URL scheint nicht zu der gewählten Plattform zu gehören. "
+"Bitte überprüfen Sie Ihre Eingabe."
+msgstr ""
+"The specified URL does not seem to belong to the selected platform. Please "
+"check your entry."
+
+msgid "Die Evaluationen müssen im System aktiviert sein."
+msgstr "Evaluations must be activated on your system."
+
+msgid ""
+"Die gewählte Seite kann nur mit einer sicheren Verbindung eingebunden "
+"werden. Bitte geben Sie wenn möglich https in der URL an."
+msgstr ""
+"The selected page can only be integrated with a secure connection. Please "
+"enter https in the URL if possible."
+
+msgid "Die gewählte Seite verbietet eine Einbindung per IFrame!"
+msgstr "The selected site prohibits integration via IFrame!"
+
+msgid ""
+"Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an "
+"Ihren Administrator."
+msgstr ""
+"The installed version of Vips is outdated. Please contact your administrator."
+
+msgid ""
+"Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an "
+"Ihren Dozenten."
+msgstr ""
+"The installed version of Vips is outdated. Please contact your course "
+"lecturer."
+
+msgid "Die installierte Vips Version ist nicht kompatibel."
+msgstr "The installed version of Vips is not compatible."
+
+msgid "Diese Aufgabe wurde bereits korrigiert."
+msgstr "This task has already been corrected."
+
+msgid "Diese Aufgabe wurde noch nicht korrigiert."
+msgstr "This task has not been corrected yet."
+
+msgid ""
+"Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die "
+"vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
+msgstr ""
+"This section will only be available after you have successfully finished the "
+"previous sections."
+
+msgid ""
+"Dieser Block ermöglicht das Suchen innerhalb der Courseware dieser "
+"Veranstaltung."
+msgstr "This block allows searching within the Courseware of this course."
+
+msgid ""
+"Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden "
+"Abschnitte erfolgreich abgeschloßen haben."
+msgstr ""
+"This section will only be available after you have successfully finished the "
+"previous sections."
+
+msgid "Dieser Test ist zurzeit nicht verfügbar."
+msgstr "This exercise is currently not available."
 
 #: Courseware.php:109
 msgid "Diskussionsübersicht"
 msgstr "Discussion Overview"
 
+msgid "Download: Es wurde keine Datei ausgewählt"
+msgstr "Download: No file was selected"
+
+msgid "editieren"
+msgstr "edit"
+
+msgid "Einblendungen"
+msgstr "overlays"
+
+msgid "Einblendung hinzufügen"
+msgstr "add overlay"
+
+msgid "Einblendung löschen"
+msgstr "delete overlay"
+
+msgid "Eine Datei ausw&auml;hlen"
+msgstr "Select a file"
+
+msgid ""
+"Eine Einbindung per IFrame ist nicht möglich. Bitte wenden Sie sich an Ihren "
+"Dozenten."
+msgstr "Integration via IFrame is not possible. Please contact your lecturer."
+
+msgid "Einen Ordner ausw&auml;hlen"
+msgstr "Select a folder"
+
+msgid "eingebettetes Video (iframe)"
+msgstr "embedded video (iframe)"
+
+#: Courseware.php:97
+msgid "Einstellungen"
+msgstr "Settings"
+
+msgid "Ende"
+msgstr "End"
+
+msgid "entfernen"
+msgstr "delete"
+
+msgid "erstellt am"
+msgstr "created on"
+
+msgid "erstellt von"
+msgstr "created by"
+
+msgid ""
+"Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen."
+msgstr "There are currently no exercises available."
+
+msgid "Es sind keine Aufgabenblätter des Types \""
+msgstr "There are no task sheets of the type \""
+
+msgid "Es wurde bisher keine Evaluation erstellt!"
+msgstr "No evaluations have been created!"
+
+msgid "Es wurde keine Audiodatei ausgewählt"
+msgstr "No evaluations have been created!"
+
+msgid "Es wurde kein OpenCast-Video ausgewählt."
+msgstr "No Opencast video was selected."
+
+msgid "Es wurden noch keine Karten angelegt"
+msgstr "No cards have been created yet"
+
+msgid "Es wurde noch keine Videodatei ausgewählt."
+msgstr "No video file has been selected yet."
+
+msgid "Es wurde noch kein Video eingetragen."
+msgstr "No video has been uploaded yet!"
+
 #: Courseware.php:115
 msgid "Export"
 msgstr "Export"
 
+msgid "für alle Displaygrößen"
+msgstr "for all display sizes"
+
+msgid "Für diese Frage haben Sie bereits eine Antwort abgegeben."
+msgstr "You have already submitted an answer to this question."
+
+msgid ""
+"Für diesen Diskussionsblock muss \"Blubber\" in dieser Veranstaltung "
+"eingeschaltet werden.."
+msgstr ""
+"\"Blubber\" must be activated for this course to view this discussion block."
+
+msgid ""
+"Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet "
+"werden..."
+msgstr "Forum must be activated for this course to view this forum block..."
+
+msgid "für große Displays"
+msgstr "for large displays"
+
+msgid "für kleine Displays"
+msgstr "for small displays"
+
+msgid "Farbe"
+msgstr "color"
+
+msgid "Farbschema"
+msgstr "color scheme"
+
+#: Courseware.php:103 Courseware.php:130
+msgid "Fortschrittsübersicht"
+msgstr "Progress"
+
+msgid "Frage"
+msgstr "Question"
+
+msgid "Freigegeben ab:"
+msgstr "Released from:"
+
+msgid ""
+"Geben Sie hier eine URL an die direkt zu einer Bilddatei führt. Die URL "
+"können Sie z.B. aus der Adresszeile Ihres Browsers kopieren."
+msgstr ""
+"Enter here a URL that leads directly to an image file. You can copy the URL "
+"from the address bar of your browser."
+
+msgid ""
+"Geben Sie hier eine URL an die direkt zu einer Datei führt. Die URL können "
+"Sie z.B. aus der Adresszeile Ihres Browsers kopieren."
+msgstr ""
+"Enter here a URL that leads directly to a file. You can copy the URL from "
+"the address bar of your browser."
+
+msgid ""
+"Geben Sie hier eine URL an die direkt zu einer Videodatei führt. Die URL "
+"können Sie z.B. aus der Adresszeile Ihres Browsers kopieren."
+msgstr ""
+"Enter a URL that leads directly to a video file. You can copy the URL from "
+"the address bar of your browser."
+
+msgid "gelb"
+msgstr "yellow"
+
+msgid "Gesamtes Kapitel löschen"
+msgstr "Delete whole chapter"
+
+msgid "Gesamtes Unterkapitel löschen"
+msgstr "Delete whole sub-chapter"
+
+msgid "grün"
+msgstr "green"
+
+msgid "grau"
+msgstr "grey"
+
+msgid "Höhe"
+msgstr "Height"
+
+msgid "Haltepunkte"
+msgstr "breakpoint"
+
+msgid "Haltepunkt hinzufügen"
+msgstr "Add halt"
+
+msgid "Haltepunkt löschen"
+msgstr "delete halt"
+
+msgid "hellgrau"
+msgstr "light grey"
+
+msgid "Herunterladen"
+msgstr "download"
+
+msgid "Hier werden alle Audiodateien aus dem Dateibereich aufgelistet."
+msgstr "All audio files from the file system are listed here."
+
+msgid "Hier werden alle Bilddateien aus dem Dateibereich aufgelistet."
+msgstr "All image files from the file system are listed here."
+
+msgid "Hier werden alle PDF-Dateien aus dem Dateibereich aufgelistet."
+msgstr "All pdf files from the file system are listed here."
+
+msgid "Hier werden alle Videodateien aus dem Dateibereich aufgelistet."
+msgstr "All video files from the file system are listed here."
+
+msgid "hinzufügen"
+msgstr "add"
+
+msgid "Hoch"
+msgstr "up"
+
+msgid "H&ouml;he der Galerie (in Pixeln)"
+msgstr "Height of the gallery (in pixels)"
+
+msgid "https://www.beispiel.de/bild.jpg"
+msgstr "https://www.example.com/image.jpg"
+
+msgid "Icon"
+msgstr "icon"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Ihre Lösung ist korrekt!"
+msgstr "Your solution is correct!"
+
+msgid "Ihre Lösung ist nicht korrekt!"
+msgstr "Your solution is not correct!"
+
+msgid "Ihre Lösung wurde eingetragen."
+msgstr "Your solution has been submitted."
+
+msgid ""
+"Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal."
+msgstr "Your solution was not correct. Please try again."
+
+msgid ""
+"Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
+msgstr ""
+"The current worksheet contains types of exercises that are not supported."
+
 #: Courseware.php:121
 msgid "Import"
 msgstr "Import"
+
+msgid "in Courseware suchen..."
+msgstr "looking in Courseware..."
+
+msgid "In dem ausgew&auml;hlten Ordner befinden sich keine Bilder."
+msgstr "There are no pictures in the selected folder."
+
+msgid "Info"
+msgstr "information"
+
+msgid "Infobox nach Download"
+msgstr "infobox after download"
+
+msgid "Infobox vor Download"
+msgstr "infobox before download"
+
+msgid "informieren"
+msgstr "inform"
+
+msgid "Inhalt"
+msgstr "Content"
+
+msgid "invertiert"
+msgstr "inverted"
+
+msgid "Invertiert"
+msgstr "inverted"
+
+msgid "Kapitel einfügen"
+msgstr "Add chapter"
+
+msgid "Kapitel sortieren"
+msgstr "Sort chapters"
+
+msgid "Kapiteltitel bearbeiten"
+msgstr "Edit title of chapter"
+
+msgid "Karte"
+msgstr "Card"
+
+msgid "Karte hinzufügen"
+msgstr "add card"
+
+msgid "kein Aufgabenblatt"
+msgstr "no worksheets"
+
+msgid "Keine Abschnitte"
+msgstr "No sections"
+
+msgid "Keine Aufgaben."
+msgstr "No exercises"
+
+msgid "Keine Inhaltsblöcke"
+msgstr "No content blocks"
+
+msgid "Keine Kapitel"
+msgstr "No chapters"
+
+msgid "keinen Treffer gefunden"
+msgstr "found no results"
+
+msgid "Keine Unterkapitel"
+msgstr "No sub-chapters"
+
+msgid "Keine Videodatei verfügbar"
+msgstr "No video file available"
+
+msgid "Kein Test verfügbar. Vips muss in dieser Veranstaltung aktiviert sein."
+msgstr "No exercise available. Vips must be activated for this course."
+
+msgid "Kein Test verfügbar. Vips muss installiert sein."
+msgstr "No exercise available. Vips must be installed."
+
+msgid "klicken um Karte umzudrehen"
+msgstr "click to turn over the card"
+
+msgid "Kommentiere dies"
+msgstr "Comment on this"
+
+msgid "kooperieren"
+msgstr "cooperate"
+
+msgid "Kreisdiagramm"
+msgstr "pie chart"
+
+msgid "Letzte Änderungen"
+msgstr "Last changes"
+
+msgid "lila"
+msgstr "purple"
+
+msgid "Liniendiagramm"
+msgstr "line chart"
+
+msgid "Link zur Plattform"
+msgstr "Link to the platform"
+
+msgid "Merksatz"
+msgstr "Key Point"
+
+msgid ""
+"Mit diesem Block fassen Sie mehrere Blöcke dieser Seite zum Durchblättern "
+"zusammen."
+msgstr "This block is used to summarize several blocks of this page."
+
+msgid "mitte links"
+msgstr "middle left"
+
+msgid "mitte mitte"
+msgstr "middle middle"
+
+msgid "mitte rechts"
+msgstr "middle right"
+
+msgid "Musterlösung:"
+msgstr "Solution:"
+
+msgid "nächste Karte"
+msgstr "next card"
+
+msgid "Name des Übergabeparameters"
+msgstr "Title of transfer parameter"
+
+msgid "Navigation verbergen"
+msgstr "hide navigation"
+
+msgid "Nutzerfortschritt anzeigen"
+msgstr "show user progress"
+
+msgid "Nutzer muss Beitrag verfassen um Fortschitt zu erreichen"
+msgstr "User must post to achieve progress"
+
+msgid "Nutzerspezifische ID übergeben"
+msgstr "Pass user-specific id"
+
+msgid "oben links"
+msgstr "top left"
+
+msgid "oben mitte"
+msgstr "top middle"
+
+msgid "oben rechts"
+msgstr "top right"
+
+msgid "Opencast Player verwenden"
+msgstr "use Opencast player"
+
+msgid "Opencast Video"
+msgstr "Opencast video"
+
+msgid "orange"
+msgstr "orange"
+
+msgid "planen"
+msgstr "schedule"
+
+msgid "Plattform"
+msgstr "platform"
+
+msgid "Polar-Area Diagram"
+msgstr "polar area chart"
+
+msgid "Position"
+msgstr "position"
+
+msgid "puz­zeln"
+msgstr "assemble"
+
+msgid "Quelle"
+msgstr "Source"
+
+msgid "Quelle hinzufügen"
+msgstr "Add source"
+
+msgid "Rückseite - Bild aus Dateibereich"
+msgstr "Back side - image from file system"
+
+msgid "Rückseite - Bild von URL"
+msgstr "Back side - image from URL"
+
+msgid "Rückseite - Text"
+msgstr "Back side - text"
+
+msgid "Ringdiagramm"
+msgstr "donut"
+
+msgid "rot"
+msgstr "red"
+
+msgid "Säulendiagramm"
+msgstr "bar chart"
+
+msgid "schwarz"
+msgstr "black"
+
+msgid "Seitenblöcke aktivieren"
+msgstr "Activate side blocks"
+
+msgid "Seitenblöcke entfernen"
+msgstr "remove side blocks"
+
+msgid "Seitenverhältnis"
+msgstr "Aspect ratio"
+
+msgid "senden"
+msgstr "send"
+
+msgid "sichtbar ab:"
+msgstr "visible from:"
+
+msgid "Sidebar für"
+msgstr "Sidebar for"
+
+msgid "Sortieren abschließen"
+msgstr "Complete sorting"
+
+msgid "Speichern"
+msgstr "Save"
+
+msgid "Standard"
+msgstr "default"
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Stellen Sie eine Frage oder kommentieren Sie..."
+msgstr "Ask a question or comment..."
+
+msgid "Studentenmodus"
+msgstr "Student mode"
+
+msgid "suchen"
+msgstr "search"
+
+msgid "türkis"
+msgstr "turquoise"
+
+msgid "Tabs"
+msgstr "tabs"
+
+msgid "Text"
+msgstr "text"
+
+msgid "Titel"
+msgstr "Title"
+
+msgid "Titel des Blocks"
+msgstr "Name of HTML-Block"
+
+msgid "Titel des Unterkapitels bearbeiten"
+msgstr "Edit title of sub-chapter"
+
+msgid "Title"
+msgstr "title"
+
+msgid "Typ"
+msgstr "type"
+
+msgid "unten links"
+msgstr "bottom left"
+
+msgid "unten mitte"
+msgstr "bottom middle"
+
+msgid "unten rechts"
+msgstr "bottom right"
+
+msgid "Unterkapitel einfügen"
+msgstr "Add sub-chapter"
+
+msgid "Unterkapitel sortieren"
+msgstr "Sort sub-chapters"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "veröffentlicht auf"
+msgstr "published on"
+
+msgid "Video-Typ:"
+msgstr "Video-type:"
+
+msgid "Vips ist nicht aktiviert."
+msgstr "Vips is not activated."
+
+msgid "Vips ist nicht installiert."
+msgstr "Vips is not installed."
+
+msgid "Voll"
+msgstr "full"
+
+msgid "Vorderseite - Bild aus Dateibereich"
+msgstr "Front side - image from file system"
+
+msgid "Vorderseite - Bild von URL"
+msgstr "Front Page - Image by URL"
+
+msgid "Vorderseite - Text"
+msgstr "Front Page - text"
+
+msgid "vorherige Karte"
+msgstr "previous card"
+
+msgid "Vorschau"
+msgstr "Preview"
+
+msgid "Wählen Sie hier ein Aufgabenblatt aus dem Vips Plugin aus."
+msgstr "Select a task sheet from the Vips plugin here."
+
+msgid "Was sollen die Lernenden bestätigen?"
+msgstr "What should the learners confirm?"
+
+msgid "webAudio (URL)"
+msgstr "web audio (URL)"
+
+msgid "webVideo (URL)"
+msgstr "web video (URL)"
+
+msgid "Webvideo (URL)"
+msgstr "web video (URL)"
+
+msgid ""
+"Wegen des gewählten Lizenzstatus kann diese PDF-Datei nicht angezeigt werden."
+msgstr ""
+"Because of the selected license status, you can not download this file."
+
+msgid ""
+"Wegen des gewählten Lizenzstatus können Sie diese Audiodatei nicht abspielen."
+msgstr ""
+"Because of the selected license status, you can not play this audio file."
+
+msgid ""
+"Wegen des gewählten Lizenzstatus können Sie diese Datei nicht herunterladen."
+msgstr ""
+"Because of the selected license status, you can not download this file."
+
+msgid "weiter"
+msgstr "continue"
+
+msgid "weniger zeigen"
+msgstr "show less"
+
+msgid "Wert"
+msgstr "value"
+
+msgid "Zeitpunkt"
+msgstr "moment"
+
+msgid "Ziel des Links"
+msgstr "Link target"
+
+msgid "Zufallszeichen für Verschlüsselung"
+msgstr "random symbols for encryption"
+
+msgid "zurück"
+msgstr "back"
+
+msgid "Bestätigung"
+msgstr "Confirmation"
+
+msgid "Diskussion"
+msgstr "Discussion"
+
+msgid "Evaluationen"
+msgstr "Evaluations"
+
+msgid "Freitext"
+msgstr "Free Text"
 
 #: Courseware.php:238
 #, php-format
@@ -101,7 +956,7 @@ msgstr "Hint"
 msgid "Zurück zur Courseware"
 msgstr "Back to courseware"
 
-#: Courseware.php:438 models/mooc/db/CoursewareFactory.php:45
+#: Courseware.php:438 models/mooc/db/CoursewareFactory.php:48
 msgid "Courseware"
 msgstr "Courseware"
 
@@ -125,13 +980,17 @@ msgstr "The import archive does not contain a data.xml file."
 msgid "Die Datendatei data.xml enthält kein valides XML."
 msgstr "The data file data.xml does not contain valid XML."
 
-#: blocks/Courseware/Courseware.php:574
-#: models/mooc/db/CoursewareFactory.php:56
+#: controllers/import.php:98
+msgid "Das Import-Archiv ist beschädigt."
+msgstr "The import archive is damaged."
+
+#: blocks/Courseware/Courseware.php:590
+#: models/mooc/db/CoursewareFactory.php:59
 msgid "Unterkapitel 1"
 msgstr "Sub-chapter 1"
 
-#: blocks/Courseware/Courseware.php:582
-#: models/mooc/db/CoursewareFactory.php:64
+#: blocks/Courseware/Courseware.php:598
+#: models/mooc/db/CoursewareFactory.php:67
 msgid "Abschnitt 1"
 msgstr "Section 1"
 
@@ -143,25 +1002,26 @@ msgstr "in class"
 msgid "in Gruppen"
 msgstr "in groups"
 
-#: blocks/Section/Section.php:83
+#: blocks/InteractiveVideoBlock/InteractiveVideoBlock.php:165
+#: blocks/TestBlock/TestBlock.php:175 blocks/TestBlock/TestBlock.php:217
+msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
+msgstr "The worksheet cannot be edited right now."
+
+#: blocks/Section/Section.php:104
 msgid "Sie sind nicht berechtigt Blöcke anzulegen."
 msgstr "You are not authorized to create blocks."
 
-#: blocks/Section/Section.php:125
+#: blocks/Section/Section.php:147
 msgid "Sie sind nicht berechtigt Blöcke zu löschen."
 msgstr " You are not authorized to delete blocks."
 
-#: blocks/TestBlock/TestBlock.php:24
+#: blocks/TestBlock/TestBlock.php:27
 msgid "Selbsttest"
 msgstr "Self test"
 
-#: blocks/TestBlock/TestBlock.php:25
+#: blocks/TestBlock/TestBlock.php:28
 msgid "Übung"
 msgstr "Exercise"
-
-#: blocks/TestBlock/TestBlock.php:166 blocks/TestBlock/TestBlock.php:208
-msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
-msgstr "The worksheet cannot be edited right now."
 
 #: views/courseware/news.php:2
 msgid "Neue Inhalte"
@@ -313,37 +1173,45 @@ msgstr "Progress overview for lecturers"
 msgid "Nutzung: "
 msgstr "Usage:"
 
-#: views/cpo/index.php:100
+#: views/cpo/index.php:104
 msgid "zuletzt genutzt am: "
 msgstr "last used on:"
 
-#: views/cpo/postoverview.php:19
+#: views/cpo/postoverview.php:33
 msgid "Dieser Thread wird in keinem Block genutzt."
 msgstr "This thread is not used in any block."
 
-#: views/cpo/postoverview.php:25
+#: views/cpo/postoverview.php:39
 msgid "Es gibt keine neuen Beiträge."
 msgstr "There are no new post."
 
-#: views/cpo/postoverview.php:28
+#: views/cpo/postoverview.php:42
 msgid "Es gibt einen neuen Beitrag"
 msgstr "There is a new post"
 
-#: views/cpo/postoverview.php:31
+#: views/cpo/postoverview.php:45
 msgid "Es gibt "
 msgstr "There are "
 
-#: views/cpo/postoverview.php:31
+#: views/cpo/postoverview.php:45
 msgid " neue Beiträge"
 msgstr "new posts"
 
-#: views/cpo/postoverview.php:33
+#: views/cpo/postoverview.php:47
 msgid "Beiträge anzeigen"
 msgstr "Show posts"
 
-#: views/cpo/postoverview.php:63
+#: views/cpo/postoverview.php:59
+msgid "Beitrag ist ausgeblendet!"
+msgstr "Post is hidden!"
+
+#: views/cpo/postoverview.php:95
 msgid "Auf Beitrag antworten..."
 msgstr "Reply to post..."
+
+#: views/cpo/postoverview.php:100
+msgid "Die Courseware in dieser Veranstaltung enthält noch keine Diskussion."
+msgstr "The courseware in this course does not contain a discussion yet."
 
 #: views/import/index.php:1
 msgid "Datei hochladen"
@@ -358,10 +1226,6 @@ msgid ""
 "Laden Sie eine Datei hoch, die Sie zuvor aus einer Courseware exportiert "
 "haben."
 msgstr "Upload a file that has been exported from a Courseware instance."
-
-#: views/import/index.php:25
-msgid "Abbrechen"
-msgstr "Quit"
 
 #: views/import/index.php:31
 msgid "Im Content-Marktplatz suchen"
@@ -403,565 +1267,52 @@ msgstr "Install"
 msgid "Plugin installieren"
 msgstr "Install plugin"
 
-#: models/mooc/db/CoursewareFactory.php:47
-#: models/mooc/db/CoursewareFactory.php:48
+#: models/mooc/db/CoursewareFactory.php:50
+#: models/mooc/db/CoursewareFactory.php:51
 msgid "Kapitel"
 msgstr "Chapter"
 
-#: models/mooc/db/CoursewareFactory.php:65
+#: models/mooc/db/CoursewareFactory.php:68
 msgid "Abschnitt 2"
 msgstr "Section 2"
 
-#: models/mooc/db/CoursewareFactory.php:73
+#: models/mooc/db/CoursewareFactory.php:76
 msgid "Name des HTML-Blocks"
 msgstr "Name of HTML-Block"
 
-#: models/mooc/ui/Block.php:522
+#: models/mooc/ui/Block.php:517
 msgid "Sie sind nicht berechtigt diesen Block zu editieren."
 msgstr "You are not authorized to edit this block."
-
-msgid "ablehnen"
-msgstr "reject"
-
-msgid "Abschicken"
-msgstr "Submit"
-
-msgid "Abschnitt einfügen"
-msgstr "Add section"
-
-msgid "Abschnitte sortieren"
-msgstr "Sort sections"
-
-msgid "Abschnitt löschen"
-msgstr "Delete section"
-
-msgid "Abschnittstitel bearbeiten"
-msgstr "Edit title of section"
-
-msgid "Absenken"
-msgstr "Downwards"
-
-msgid "absolvieren"
-msgstr "complete"
-
-msgid "Accordion"
-msgstr "Accordion"
-
-msgid "akzeptieren"
-msgstr "accept"
-
-msgid "alles zeigen"
-msgstr "show all"
 
 msgid "Ändern"
 msgstr "Change"
 
-msgid "Anheben"
-msgstr "Upwards"
-
-msgid "Antwort zurücksetzen"
-msgstr "Reset answer"
-
-msgid "Anzeigen"
-msgstr "Show"
-
-msgid "Überschrift"
-msgstr "heading"
-
-msgid "Art des Links"
-msgstr "Type of link"
-
 msgid "Audiodatei"
 msgstr "Audio file"
-
-msgid "Aufgabenblatt"
-msgstr "Manage worksheets"
-
-msgid "Aufgabenblätter verwalten"
-msgstr "Manage worksheets"
-
-msgid "ausrufen"
-msgstr "exclaim"
-
-msgid "auswerten"
-msgstr "evaluate"
-
-msgid "Autoplay"
-msgstr "autoplay"
-
-msgid "Autoplay-Timer (in Sekunden)"
-msgstr "autoplay timer (in seconds)"
-
-msgid "Autorenmodus"
-msgstr "Author mode"
 
 msgid "Kommentare & Diskussion"
 msgstr "Comments & Discussion"
 
-msgid "Bereits vorhandene Diskussion verwenden"
-msgstr "Use existing discussion"
-
-msgid "Beschreibung"
-msgstr "Name and description"
-
-msgid "betrachten"
-msgstr "view"
-
-msgid ""
-"Bewegen Sie den Cursor über das Informations-Icon des gewünschten Blocks um "
-"die Block-Id zu erfahren."
-msgstr ""
-"Move the cursor over the information icon of the desired block to get the "
-"block ID."
-
-msgid "Bezeichung des Links"
-msgstr "Designation of the link"
-
-msgid "Bildschirm"
-msgstr "Screen"
-
-msgid ""
-"Bitte beachten Sie das nicht alle Blocktypen in diesen Block eingebunden "
-"werden können."
-msgstr "Please note that not all block types can be included in this block."
-
-msgid "Block hinzufügen"
-msgstr "Add block"
-
-msgid "Blubber muss in dieser Veranstaltung aktiviert sein."
-msgstr "Blubber must be activated in this course"
-
-msgid "Breite"
-msgstr "width"
-
-msgid "CC Lizenztyp angeben:"
-msgstr "Specify CC license type:"
-
-msgid "chatten"
-msgstr "chat"
-
-msgid "Danke! Sie haben alle Aufgaben gelöst."
-msgstr "Thank you! You have solved all tasks."
-
-msgid ""
-"Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten "
-"Abschnitt fortfahren."
-msgstr ""
-"Thank you! You have finished all exercises and can proceed to the next "
-"section."
-
-msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
-msgstr "Thank you! You can now proceed to the next section."
-
-msgid "Datei aus dem Dateibereich"
-msgstr "File from the file space"
-
-msgid "Dateibereich"
-msgstr "File area"
-
-msgid "Dateityp"
-msgstr "file type"
-
-msgid ""
-"Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
-msgstr "The exercise type has changed. Please contact your course lecturer."
-
-msgid "Die Evaluationen müssen im System aktiviert sein."
-msgstr "Evaluations must be activated on your system."
-
-msgid ""
-"Die gewählte Seite kann nur mit einer sicheren Verbindung eingebunden "
-"werden. Bitte geben Sie wenn möglich https in der URL an."
-msgstr ""
-"The selected page can only be integrated with a secure connection. Please "
-"enter https in the URL if possible."
-
-msgid "Die gewählte Seite verbietet eine Einbindung per IFrame!"
-msgstr "The selected site prohibits integration via IFrame!"
-
-msgid ""
-"Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an "
-"Ihren Administrator."
-msgstr ""
-"The installed version of Vips is outdated. Please contact your administrator."
-
-msgid ""
-"Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an "
-"Ihren Dozenten."
-msgstr ""
-"The installed version of Vips is outdated. Please contact your course "
-"lecturer."
-
-msgid "Diese Aufgabe wurde bereits korrigiert."
-msgstr "This task has already been corrected."
-
-msgid "Diese Aufgabe wurde noch nicht korrigiert."
-msgstr "This task has not been corrected yet."
-
-msgid ""
-"Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die "
-"vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
-msgstr ""
-"This section will only be available after you have successfully finished the "
-"previous sections."
-
-msgid ""
-"Dieser Block ermöglicht das Suchen innerhalb der Courseware dieser "
-"Veranstaltung."
-msgstr "This block allows searching within the Courseware of this course."
-
-msgid ""
-"Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden "
-"Abschnitte erfolgreich abgeschloßen haben."
-msgstr ""
-"This section will only be available after you have successfully finished the "
-"previous sections."
-
-msgid "Dieser Test ist zurzeit nicht verfügbar."
-msgstr "This exercise is currently not available."
-
-msgid "editieren"
-msgstr "edit"
-
-msgid "Eine Datei ausw&auml;hlen"
-msgstr "Select a file"
-
-msgid ""
-"Eine Einbindung per IFrame ist nicht möglich. Bitte wenden Sie sich an Ihren "
-"Dozenten."
-msgstr "Integration via IFrame is not possible. Please contact your lecturer."
-
-msgid "Einen Ordner ausw&auml;hlen"
-msgstr "Select a folder"
-
-msgid "eingebettetes Video (iframe)"
-msgstr "embedded video (iframe)"
-
-msgid "Ende"
-msgstr "End"
-
-msgid "entfernen"
-msgstr "delete"
-
 msgid "Entfernen"
 msgstr "Delete"
-
-msgid "erstellt am"
-msgstr "created on"
-
-msgid ""
-"Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen."
-msgstr "There are currently no exercises available."
-
-msgid "Es sind keine Aufgabenblätter des Types \""
-msgstr "There are no task sheets of the type \""
-
-msgid "Es wurde bisher keine Evaluation erstellt!"
-msgstr "No evaluations have been created!"
-
-msgid "Es wurde keine Audiodatei ausgewählt"
-msgstr "No evaluations have been created!"
 
 msgid "Es wurde keine Datei ausw&auml;hlt"
 msgstr "No evaluations have been created!"
 
-msgid "Es wurde noch kein Video eingetragen."
-msgstr "No video has been uploaded yet!"
-
-msgid "für alle Displaygrößen"
-msgstr "for all display sizes"
-
-msgid "Für diese Frage haben Sie bereits eine Antwort abgegeben."
-msgstr "You have already submitted an answer to this question."
-
-msgid ""
-"Für diesen Diskussionsblock muss \"Blubber\" in dieser Veranstaltung "
-"eingeschaltet werden.."
-msgstr ""
-"\"Blubber\" must be activated for this course to view this discussion block."
-
-msgid ""
-"Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet "
-"werden..."
-msgstr "Forum must be activated for this course to view this forum block..."
-
-msgid "für große Displays"
-msgstr "for large displays"
-
-msgid "für kleine Displays"
-msgstr "for small displays"
-
-msgid "Farbe"
-msgstr "color"
-
-msgid "Frage"
-msgstr "Question"
-
-msgid "Freigegeben ab:"
-msgstr "Released from:"
-
-msgid "Gesamtes Kapitel löschen"
-msgstr "Delete whole chapter"
-
-msgid "Gesamtes Unterkapitel löschen"
-msgstr "Delete whole sub-chapter"
-
-msgid "hinzufügen"
-msgstr "add"
-
-msgid "H&ouml;he der Galerie (in Pixeln)"
-msgstr "Height of the gallery (in pixels)"
-
-msgid "Icon"
-msgstr "icon"
-
-msgid "ID"
-msgstr "ID"
-
-msgid "Ihre Lösung ist korrekt!"
-msgstr "Your solution is correct!"
-
-msgid "Ihre Lösung ist nicht korrekt!"
-msgstr "Your solution is not correct!"
-
-msgid "Ihre Lösung wurde eingetragen."
-msgstr "Your solution has been submitted."
-
-msgid ""
-"Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal."
-msgstr "Your solution was not correct. Please try again."
-
-msgid ""
-"Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
-msgstr ""
-"The current worksheet contains types of exercises that are not supported."
-
-msgid "in Courseware suchen..."
-msgstr "looking in Courseware..."
-
-msgid "In dem ausgew&auml;hlten Ordner befinden sich keine Bilder."
-msgstr "There are no pictures in the selected folder."
-
-msgid "Info"
-msgstr "information"
-
-msgid "Infobox nach Download"
-msgstr "infobox after download"
-
-msgid "Infobox vor Download"
-msgstr "infobox before download"
-
-msgid "informieren"
-msgstr "inform"
-
-msgid "Inhalt"
-msgstr "Content"
-
-msgid "Kapitel einfügen"
-msgstr "Add chapter"
-
-msgid "Kapitel sortieren"
-msgstr "Sort chapters"
-
-msgid "Kapiteltitel bearbeiten"
-msgstr "Edit title of chapter"
-
-msgid "Keine Abschnitte"
-msgstr "No sections"
-
-msgid "Keine Aufgaben."
-msgstr "No exercises"
-
-msgid "Keine Inhaltsblöcke"
-msgstr "No content blocks"
-
-msgid "Keine Kapitel"
-msgstr "No chapters"
-
-msgid "keinen Treffer gefunden"
-msgstr "found no results"
-
-msgid "Keine Unterkapitel"
-msgstr "No sub-chapters"
-
-msgid "Kein Test verfügbar. Vips muss in dieser Veranstaltung aktiviert sein."
-msgstr "No exercise available. Vips must be activated for this course."
-
-msgid "Kein Test verfügbar. Vips muss installiert sein."
-msgstr "No exercise available. Vips must be installed."
-
-msgid "Kommentiere dies"
-msgstr "Comment on this"
-
 msgid "Kontrollelemente verstecken"
 msgstr "Hide control elements"
-
-msgid "kooperieren"
-msgstr "cooperate"
-
-msgid "Merksatz"
-msgstr "Key point"
-
-msgid ""
-"Mit diesem Block fassen Sie mehrere Blöcke dieser Seite zum Durchblättern "
-"zusammen."
-msgstr "This block is used to summarize several blocks of this page."
-
-msgid "Musterlösung:"
-msgstr "Solution:"
-
-msgid "Name des Übergabeparameters"
-msgstr "Title of transfer parameter"
-
-msgid "Navigation verbergen"
-msgstr "hide navigation"
-
-msgid "Nutzerspezifische ID Übergeben"
-msgstr "Transfer user ID"
 
 msgid "openCast"
 msgstr "openCast"
 
-msgid "planen"
-msgstr "schedule"
-
-msgid "puz­zeln"
-msgstr "assemble"
-
-msgid "Quelle"
-msgstr "Source"
-
-msgid "Quelle hinzufügen"
-msgstr "Add source"
-
-msgid "Seitenblöcke aktivieren"
-msgstr "Activate side blocks"
-
-msgid "Seitenblöcke entfernen"
-msgstr "remove side blocks"
-
-msgid "Seitenverhältnis"
-msgstr "Aspect ratio"
-
-msgid "senden"
-msgstr "send"
-
-msgid "sichtbar ab:"
-msgstr "visible from:"
-
-msgid "Sidebar für"
-msgstr "Sidebar for"
-
-msgid "Sortieren abschließen"
-msgstr "Complete sorting"
-
-msgid "Speichern"
-msgstr "Save"
-
-msgid "Start"
-msgstr "Start"
-
-msgid "Stellen Sie eine Frage oder kommentieren Sie..."
-msgstr "Ask a question or comment..."
-
-msgid "Studentenmodus"
-msgstr "Student mode"
-
-msgid "suchen"
-msgstr "search"
-
-msgid "Tabs"
-msgstr "tabs"
-
-msgid "Titel"
-msgstr "Title"
-
-msgid "Titel des Blocks"
-msgstr "Name of HTML-Block"
-
-msgid "Titel des Unterkapitels bearbeiten"
-msgstr "Edit title of sub-chapter"
-
-msgid "Title"
-msgstr "title"
-
-msgid "Unterkapitel einfügen"
-msgstr "Add sub-chapter"
-
-msgid "Unterkapitel sortieren"
-msgstr "Sort sub-chapters"
-
-msgid "URL"
-msgstr "URL"
-
 msgid "Video automatisch starten"
 msgstr "Start video automatically"
-
-msgid "Video-Typ:"
-msgstr "Video-type:"
-
-msgid "Vorschau"
-msgstr "Preview"
-
-msgid "Was sollen die Lernenden bestätigen?"
-msgstr "What should the learners confirm?"
-
-msgid "webAudio"
-msgstr "web audio"
-
-msgid "Webvideo (URL)"
-msgstr "Webvideo (URL)"
-
-msgid ""
-"Wegen des gewählten Lizenzstatus kann diese PDF-Datei nicht angezeigt werden."
-msgstr ""
-"Because of the selected license status, you can not download this file."
-
-msgid ""
-"Wegen des gewählten Lizenzstatus können Sie diese Audiodatei nicht abspielen."
-msgstr ""
-"Because of the selected license status, you can not play this audio file."
-
-msgid "weiter"
-msgstr "continue"
-
-msgid "weniger zeigen"
-msgstr "show less"
 
 msgid "Youtube"
 msgstr "Youtube"
 
 msgid "Zeit zurücksetzen"
 msgstr "reset"
-
-msgid "Ziel des Links"
-msgstr "Link target"
-
-msgid "Zufallszeichen für Verschlüsselung"
-msgstr "random symbols for encryption"
-
-msgid "Bestätigung"
-msgstr "Confirmation"
-
-msgid "Diskussion"
-msgstr "Discussion"
-
-msgid "Evaluationen"
-msgstr "Evaluations"
-
-msgid "Freitext"
-msgstr "Free text"
-
-msgid "Höhe"
-msgstr "Height"
-
-msgid ""
-"Wegen des gewählten Lizenzstatus können Sie diese Datei nicht herunterladen."
-msgstr ""
-"Because of the selected license status, you can not download this file."
-
-msgid "zurück"
-msgstr "back"
 
 msgid "Neuer Abschnitt"
 msgstr "New section"
@@ -1037,3 +1388,117 @@ msgstr "Choose a forum section or have a new one created automatically."
 
 msgid "Zeichenwähler öffnen"
 msgstr "open character map"
+
+msgid "Bildvergleich"
+msgstr "Image Comparison"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Diagramm"
+msgstr "Chart"
+
+msgid "Download"
+msgstr "Download"
+
+msgid "Embed"
+msgstr "Embed"
+
+msgid "Forum"
+msgstr "Forum"
+
+msgid "Galerie"
+msgstr "Gallery"
+
+msgid "Gruppieren"
+msgstr "Group"
+
+msgid "Interactive Video"
+msgstr "Interactive Video"
+
+msgid "Lernkarten"
+msgstr "Dialog Cards"
+
+msgid "Quellcode"
+msgstr "Source Code"
+
+msgid "Suche"
+msgstr "Search"
+
+msgid "externer Inhalt (iframe)"
+msgstr "External Content (iframe)"
+
+msgid "Spielt eine Audiodatei aus dem Dateibereich oder von einer URL ab"
+msgstr "Plays an audio file from the file system or from a URL"
+
+msgid "Vom Lernenden bestätigen lassen das der Inhalt betrachtet wurde"
+msgstr "Confirm by the learner that the content was considered"
+
+msgid "Vergleicht zwei Bilder mit einem Schieberegler"
+msgstr "Compares two images with a slider"
+
+msgid "Stellt Datensätze in einem Diagramm dar"
+msgstr "Represents records in a chart"
+
+msgid "Stellt eine Datei aus dem Dateibereich zum Download bereit"
+msgstr "Provides a file from the file system for download"
+
+msgid "Bindet externe Inhalte wie Videos, Grafiken oder Musik ein"
+msgstr "Integrates external content such as videos, graphics or music"
+
+msgid "Zeigt den Inhalt eines Bereichs des Kernforums an"
+msgstr "Displays the contents of a section of the core forum"
+
+msgid "Erstellen von Inhalten mit dem WYSIWYG-Editor"
+msgstr "Creating content using the WYSIWYG editor"
+
+msgid "Bilder aus einem Ordner im Dateibereich zeigen"
+msgstr "Show pictures from a folder in the file system"
+
+msgid "Vereint Blöcke und erzeugt eine zusätzlichen Navigation"
+msgstr "Combines blocks and generates additional navigation"
+
+msgid "Spielt ein mit Interaktionen angereichertes Video ab"
+msgstr "Plays an interaction enriched video"
+
+msgid "Hier kann über die Inhalte gesprochen werden"
+msgstr "Here you can talk about the contents"
+
+msgid ""
+"Karten zum Umdrehen, auf beiden Seiten lässt sich ein Bild und Text "
+"darstellen"
+msgstr ""
+"Cards for turning around, a picture and text can be displayed on both sides"
+
+msgid "Erstellt einen Link innerhalb der Courseware oder auf eine andere Seite"
+msgstr "Create a link within the courseware or on another page"
+
+msgid "Erzeugt einen Merksatz mit Icon und Rahmen"
+msgstr "Generates a key point with icon and frame"
+
+msgid "Bindet Opencast Videos mit Hilfe des OpencastPlugins ein"
+msgstr "Bind Opencast videos using OpencastPlugin"
+
+msgid "Eine PDF-Datei aus dem Dateibereich anzeigen"
+msgstr "Display a PDF file from the file system"
+
+msgid "Quelltext wird seiner Syntax entsprechend farblich hervorgehoben"
+msgstr "Source coude is highlighted according to its syntax"
+
+msgid "Stellt ein Aufgabenblatt aus Vips zur Verfügung"
+msgstr "Provides a worksheet from Vips"
+
+msgid "Stellt eine Suche innerhalb der Courseware zur Verfügung"
+msgstr "Provides a search within the courseware"
+
+msgid "Spielt ein Video aus dem Dateibereich oder von einer URL ab"
+msgstr "Plays a video from the file system or from a URL"
+
+msgid "Einbetten von einer Website oder Datei"
+msgstr "Embed from a website or file"
+
+msgid "Für diesen Block muss das Opencast Plugin aktiviert sein"
+msgstr "For this block the Opencast plugin must be activated"
+
+msgid "Für diesen Block muss das Vips Plugin aktiviert sein"
+msgstr "For this block the Vips plugin must be activated"

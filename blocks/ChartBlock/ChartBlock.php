@@ -7,7 +7,7 @@ class ChartBlock extends Block
 {
     const NAME = 'Diagramm';
     const BLOCK_CLASS = 'multimedia';
-    const DESCRIPTION = 'Stellt einen Datensatz in einem Diagramm dar';
+    const DESCRIPTION = 'Stellt Datensätze in einem Diagramm dar';
 
     public function initialize()
     {

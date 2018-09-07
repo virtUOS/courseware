@@ -8,7 +8,7 @@ class CodeBlock extends Block
 {
     const NAME = 'Quellcode';
     const BLOCK_CLASS = 'layout';
-    const DESCRIPTION = 'Quelltexte werden ihrer Syntax entsprechend farblich dargestellt';
+    const DESCRIPTION = 'Quelltext wird seiner Syntax entsprechend farblich hervorgehoben';
 
     public function initialize()
     {
