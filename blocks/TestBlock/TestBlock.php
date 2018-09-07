@@ -12,6 +12,7 @@ class TestBlock extends Block
     const NAME = 'Quiz';
     const BLOCK_CLASS = 'interaction';
     const DESCRIPTION = 'Stellt ein Aufgabenblatt aus Vips zur Verfügung';
+    const HINT = 'Für diesen Block muss das Vips Plugin aktiviert sein';
 
     function initialize()
     {

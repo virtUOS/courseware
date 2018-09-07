@@ -213,6 +213,7 @@ class Section extends Block
             $nameConstant = $className.'::NAME';
             $blockClassConstant = $className.'::BLOCK_CLASS';
             $descriptionConstant = $className.'::DESCRIPTION';
+            $hintConstant = $className.'::HINT';
 
             if (defined($nameConstant)) {
                 $readableName = _cw(constant($nameConstant));
@@ -230,6 +231,12 @@ class Section extends Block
                 $description = _cw(constant($descriptionConstant));
             } else {
                 $description = '';
+            }
+
+            if (defined($hintConstant)) {
+                $hint = _cw(constant($hintConstant));
+            } else {
+                $hint = '';
             }
 
             if (!class_exists($className)) {
@@ -253,7 +260,8 @@ class Section extends Block
                         'sub_type' => $subType,
                         'name' => $name,
                         'block_class' => $blockClass,
-                        'description' => $description
+                        'description' => $description,
+                        'hint' => $hint
                     );
                 }
             } else {
@@ -264,7 +272,8 @@ class Section extends Block
                         'sub_type' => null,
                         'name' => $name,
                         'block_class' => $blockClass,
-                        'description' => $description
+                        'description' => $description,
+                        'hint' => $hint
                     );
                 }
             }

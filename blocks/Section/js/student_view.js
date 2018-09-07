@@ -72,6 +72,7 @@ export default StudentView.extend({
       }
     });
     tooltip(this.$el, 'button.edit,button.trash');
+    tooltip(this.$el, '.cw-block-adder-item');
     this.$('.cw-block-adder-tab').not('.cw-block-adder-tab[data-blockclass="all"]').hide();
     this.$('.cw-block-adder-selector[data-blockclass="all"]').addClass('cw-active-selector');
   },
