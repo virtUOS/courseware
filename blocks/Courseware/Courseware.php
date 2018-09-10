@@ -104,7 +104,9 @@ class Courseware extends Block
             'sections_as_chapters'  => $this->sections_as_chapters,
             'isSequential'          => $this->progression == 'seq',
             'active_section'        => $active_section, 
-            'cw_title'              => $courseware->title
+            'cw_title'              => $courseware->title,
+            'vips_url'              => $this->getVipsURL(),
+            'vips_path'             => dirname(\PluginEngine::getURL('vipsplugin'))
             )
         );
     }
@@ -656,5 +658,47 @@ class Courseware extends Block
         }
 
         return $files;
+    }
+
+    public function vipsActivated() 
+    {
+        if ($this->vipsInstalled()) {
+            $plugin_manager = \PluginManager::getInstance();
+            $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
+
+            return $plugin_manager->isPluginActivated($plugin_info['id'], $this->getModel()->seminar_id);
+        } else {
+            return false;
+        }
+    }
+
+    public function vipsVersion()
+    {
+        if ($this->vipsInstalled()) {
+            $plugin_manager = \PluginManager::getInstance();
+            $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
+
+            return version_compare('1.3',$version) <= 0;
+        } else {
+            return false;
+        }
+    }
+
+    public function vipsInstalled()
+    {
+        $plugin_manager = \PluginManager::getInstance();
+
+        return $plugin_manager->getPlugin('VipsPlugin') != null ? true : false;
+    }
+
+    public function getVipsURL()
+    {
+        if ($this->vipsInstalled()) {
+            $plugin_manager = \PluginManager::getInstance();
+
+            return $plugin_manager->getPlugin('VipsPlugin')->getPluginURL();
+        } else {
+            return false;
+        }
     }
 }

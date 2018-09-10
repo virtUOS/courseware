@@ -12,16 +12,13 @@
 <div class="iframe-author-view">
     <div class="iframe-description">
         <p>
-            {{#i18n}}Tragen Sie in das Feld URL(Uniform Resource Locator) die Adresse der Seite ein die im iFrame erscheinen soll.<br>
-            Bitte beachten Sie, dass manche Seiten die Darstellung in einem iFrame blockieren.{{/i18n}}
+            {{#i18n}}Tragen Sie in das Feld URL(Uniform Resource Locator) die Adresse der Seite ein die im iFrame erscheinen soll.<br> Bitte beachten Sie, dass manche Seiten die Darstellung in einem iFrame blockieren.{{/i18n}}
         </p>
     </div>
     {{#https}}
         <div class="iframe-description">
         <p><b>
-            {{#i18n}}Bitte beachten Sie das StudIP über eine sichere Verbindung aufgerufen wird. 
-            Es können nur Quellen eingebunden werden die auch über eine sichere Verbindung verfügen. 
-            Nutzen Sie das Protokoll https in der URL!{{/i18n}}
+            {{#i18n}}Bitte beachten Sie das StudIP über eine sichere Verbindung aufgerufen wird. Es können nur Quellen eingebunden werden die auch über eine sichere Verbindung verfügen. Nutzen Sie das Protokoll https in der URL!{{/i18n}}
         </b></p>
     </div>
     {{/https}}
@@ -40,9 +37,7 @@
         </div>
         <div class="iframe-description iframe-submit-user">
             <p>
-                {{#i18n}}Für jede NutzerIn wird ein individueller Wert übergeben mit dem die Anwendung die NutzerIn wiedererkennen kann.
-                Um Rückschlüssen auf die Identität zu verhindern, wird die StudIp-Nutzer-Id mit der Zufallszeichenfolge verschlüsselt.
-                Wählen Sie identische Zufallszeichenfolgen, wenn an verschiedenen Stellen gleiche Nutzer-Ids erzeugt werden sollen.{{/i18n}}
+                {{#i18n}}Für jede NutzerIn wird ein individueller Wert übergeben mit dem die Anwendung die NutzerIn wiedererkennen kann. Um Rückschlüssen auf die Identität zu verhindern, wird die StudIp-Nutzer-Id mit der Zufallszeichenfolge verschlüsselt. Wählen Sie identische Zufallszeichenfolgen, wenn an verschiedenen Stellen gleiche Nutzer-Ids erzeugt werden sollen.{{/i18n}}
             </p>
         </div>
         <br>
@@ -50,7 +45,7 @@
         <input class="iframe-cc-switch" name="iframe-cc-switch" type="checkbox" {{#cc_infos}} checked {{/cc_infos}}>
         <div class="iframe-cc-wrapper">
             <div class="iframe-cc-selector">
-                <label class="iframe-cc-label" for="iframe-cc-license">CC Lizenz</label>
+                <label class="iframe-cc-label" for="iframe-cc-license">{{#i18n}}CC Lizenz{{/i18n}}</label>
                 <select name="iframe-cc-license" class="iframe-cc-license">
                     <option value="by">by</option>
                     <option value="by-sa">by-sa</option>
@@ -62,13 +57,13 @@
                 <span class="iframe-cc-icon" style="vertical-align: middle;"></span>
             </div>
             <div class="iframe-cc-info">
-                <label>Werk:</label> <input type="text" size="32" value="" class="iframe-cc-work-name" name="iframe-cc-work-name" placeholder="Name">
+                <label>{{#i18n}}Werk{{/i18n}}:</label> <input type="text" size="32" value="" class="iframe-cc-work-name" name="iframe-cc-work-name" placeholder="Name">
                                      <input type="text" size="32" value="" class="iframe-cc-work-url" name="iframe-cc-work-url" placeholder="URL">
                 <br>
-                <label>Autor:</label> <input type="text" size="32" value="" class="iframe-cc-author-name" name="iframe-cc-author-name" placeholder="Name">
+                <label>{{#i18n}}Autor{{/i18n}}:</label> <input type="text" size="32" value="" class="iframe-cc-author-name" name="iframe-cc-author-name" placeholder="Name">
                                       <input type="text" size="32" value="" class="iframe-cc-author-url" name="iframe-cc-author-url" placeholder="URL">
                 <br>
-                <label>Lizenz der Plattform:</label> <input type="text" size="32" value="" class="iframe-cc-license-name" name="iframe-cc-license-name" placeholder="Name">
+                <label>{{#i18n}}Lizenz der Plattform{{/i18n}}:</label> <input type="text" size="32" value="" class="iframe-cc-license-name" name="iframe-cc-license-name" placeholder="Name">
                                                      <input type="text" size="32" value="" class="iframe-cc-license-url" name="iframe-cc-license-url" placeholder="URL">
             </div>
         </div>

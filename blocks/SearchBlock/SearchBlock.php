@@ -8,6 +8,8 @@ use Mooc\DB\Field as Field;
 class SearchBlock extends Block
 {
     const NAME = 'Suche';
+    const BLOCK_CLASS = 'function';
+    const DESCRIPTION = 'Stellt eine Suche innerhalb der Courseware zur Verfügung';
 
     public function initialize()
     {

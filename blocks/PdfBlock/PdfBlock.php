@@ -6,6 +6,8 @@ use Mooc\UI\Block;
 class PdfBlock extends Block 
 {
     const NAME = 'PDF mit Vorschau';
+    const BLOCK_CLASS = 'multimedia';
+    const DESCRIPTION = 'Eine PDF-Datei aus dem Dateibereich anzeigen';
 
     public function initialize()
     {

@@ -30,7 +30,7 @@ export default {
   },
 
   navigateTo(id, hash) {
-    const params = queryString.parse(queryString.extract(location.href))
+    const params = queryString.parse(queryString.extract(location.href));
     params.selected = id;
 
     if (typeof hash === 'undefined' || hash === null) {

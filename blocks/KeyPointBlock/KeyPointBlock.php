@@ -6,6 +6,8 @@ use Mooc\UI\Block;
 class KeyPointBlock extends Block 
 {
     const NAME = 'Merksatz';
+    const BLOCK_CLASS = 'layout';
+    const DESCRIPTION = 'Erzeugt einen Merksatz mit Icon und Rahmen';
 
     public function initialize()
     {

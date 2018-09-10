@@ -7,6 +7,8 @@ use Symfony\Component\DomCrawler\Crawler;
 class GalleryBlock extends Block
 {
     const NAME = 'Galerie';
+    const BLOCK_CLASS = 'multimedia';
+    const DESCRIPTION = 'Bilder aus einem Ordner im Dateibereich zeigen';
 
     public function initialize()
     {

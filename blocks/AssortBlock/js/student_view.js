@@ -33,7 +33,7 @@ export default StudentView.extend({
             if(!$id) {return;}
             if(!$name) {$name = $id; }
             var $thisblock = $("#block-"+$id);
-            if ($thisblock.length == 0) {console.log("block "+ $id +" nicht vorhanden"); return; }
+            if ($thisblock.length == 0) { return; }
             $thisblock.hide();
             if ($maxheight < $thisblock.height()) $maxheight = $thisblock.height();
             if ($name == "") {$name = "Block "+$id;}

@@ -7,6 +7,8 @@ use Mooc\UI\Block;
 class ConfirmBlock extends Block
 {
     const NAME = 'Bestätigung';
+    const BLOCK_CLASS = 'function';
+    const DESCRIPTION = 'Vom Lernenden bestätigen lassen das der Inhalt betrachtet wurde';
 
     public function initialize()
     {

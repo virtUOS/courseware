@@ -6,6 +6,8 @@ use Mooc\UI\Block;
 class DownloadBlock extends Block 
 {
     const NAME = 'Download';
+    const BLOCK_CLASS = 'function';
+    const DESCRIPTION = 'Stellt eine Datei aus dem Dateibereich zum Download bereit';
 
     public function initialize()
     {

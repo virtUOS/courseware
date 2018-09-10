@@ -10,6 +10,8 @@ use Mooc\UI\Block;
 class VideoBlock extends Block
 {
     const NAME = 'Video';
+    const BLOCK_CLASS = 'multimedia';
+    const DESCRIPTION = 'Spielt ein Video einer URL oder YouTube ab';
 
     public function initialize()
     {
