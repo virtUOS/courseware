@@ -1,0 +1,17 @@
+<input type="hidden" value="{{opencast_content}}">
+{{#url_isset}}
+    {{#useplayer}}
+        <iframe width="860" height="484" src="{{url_opencast}}"></iframe>
+        <a href="{{url_opencast}}" target="_blank"><button class="button">Video in neuem Fenster anzeigen</button></a>
+    {{/useplayer}}
+    {{^useplayer}}
+        <video width="860" height="484" controls>
+            <source src="{{url_mp4}}" type="video/mp4">
+        </video> 
+    {{/useplayer}}
+{{/url_isset}}
+{{^url_isset}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Es wurde kein OpenCast-Video ausgewählt.{{/i18n}}
+    </div>
+{{/url_isset}}
