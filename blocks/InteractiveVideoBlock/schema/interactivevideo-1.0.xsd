@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/interactivevideo/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/interactivevideo/"
+    elementFormDefault="qualified"
+>
+    <xsd:attribute name="iav_source" type="xsd:string" />
+    <xsd:attribute name="iav_overlays" type="xsd:string" />
+    <xsd:attribute name="iav_stops" type="xsd:string" />
+    <xsd:attribute name="iav_tests" type="xsd:string" />
+    <xsd:attribute name="assignment_id" type="xsd:string" />
+    <xsd:attribute name="vips_xml" type="xsd:string" />
+</xsd:schema>
