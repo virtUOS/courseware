@@ -14,8 +14,11 @@
     "babel-polyfill": "6.26.0",
     "babel-preset-env": "1.6.1",
     "backbone": "1.3.3",
+    "before-after.js": "1.0.1",
+    "chart.js": "2.7.2",
     "css-loader": "0.28.0",
     "dateformat": "3.0.2",
+    "extract-text-webpack-plugin": "3.0.2",
     "highlight.js": "9.12.0",
     "jquery.scrollto": "2.1.2",
     "less": "2.7.3",
@@ -26,8 +29,7 @@
     "slick-carousel": "1.8.1",
     "style-loader": "0.20.1",
     "webpack": "3.10.0",
-    "webpack-dev-server": "2.11.1",
-    "extract-text-webpack-plugin": "3.0.2"
+    "webpack-dev-server": "2.11.1"
   },
   "browserslist": [
     "last 2 versions",
@@ -39,6 +41,6 @@
     "wds": "webpack-dev-server",
     "locales": "php buildLocales.php",
     "prezip": "npm run build:prod && npm run locales",
-    "zip": "zip -r courseware-v$npm_package_version.zip assets blocks controllers cronjobs docs export import locale migrations models vendor views LICENSE Courseware.php CoursewareObserver.php plugin.manifest README.md"
+    "zip": "zip -r courseware-v$npm_package_version.zip assets blocks controllers cronjobs export import locale migrations models vendor views LICENSE Courseware.php CoursewareObserver.php plugin.manifest README.md"
   }
 }

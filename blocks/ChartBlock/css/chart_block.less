@@ -1,0 +1,47 @@
+@import '../../../assets/less/variables';
+@import '../../../assets/less/mixins';
+
+section#courseware .block-content:not([data-view="student"]) {
+    fieldset.cw-chart-item-dataset {
+        border: solid thin #ddd;
+
+        legend.cw-chart-item-title {
+            color: #ccc;
+        }
+
+        label{
+            width: unset;
+            min-width: unset;
+        }
+        input.cw-chart-item-value,
+        select.cw-chart-item-color {
+            width: 10em;
+        }
+        input.cw-chart-item-label {
+            width: 14em;
+        }
+    }
+
+    button[name="additem"] {
+        .courseware-btn;
+        width: initial;
+        text-align: left;
+        .assets-bg-icon("blue/add.svg");
+        background-position: 6px center;
+        padding-left: 28px;
+
+        &:hover {
+            .assets-bg-icon("white/add.svg");
+        }
+    }
+
+    button[name="removeitem"] {
+        width: 20px;
+        height: 20px;
+        color: transparent;
+        border: none;
+        background: url("../@{blocks-icons-dir}/blue/trash.svg") 50% no-repeat;
+        margin-left: 1em;
+        cursor: pointer;
+    }
+}
