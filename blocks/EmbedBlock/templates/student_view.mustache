@@ -1,0 +1,15 @@
+{{^inactive}}
+    {{{html}}}
+    {{#oembed}}
+    <div class="cw-embedblock-info">
+        <span class="cw-embedblock-title">{{title}}</span>
+        {{#author_name}}<span class="cw-embedblock-author-name">{{#i18n}}erstellt von{{/i18n}} {{author_name}}</span>{{/author_name}}
+        <span class="cw-embedblock-source">{{#i18n}}veröffentlicht auf{{/i18n}} {{embed_source}}</span>
+    </div>
+    {{/oembed}}
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive}}
