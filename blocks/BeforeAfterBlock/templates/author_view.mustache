@@ -1,0 +1,36 @@
+<input type="hidden" class="cw-ba-stored-file-id-before" value="{{file_id_before}}">
+<input type="hidden" class="cw-ba-stored-file-id-after" value="{{file_id_after}}">
+
+<div class="cw-ba-wrapper">
+    <select class="cw-ba-source-before">
+        <option value="file">{{#i18n}}Bild vorher - Dateibereich{{/i18n}}:</option>
+        <option value="url" {{#img_before_external}} selected {{/img_before_external}}>{{#i18n}}Bild vorher - URL{{/i18n}}:</option>
+    </select>
+    <input type="text" class="cw-ba-source-before-url" value="{{img_before}}">
+    <button class="cw-ba-source-before-url-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Bilddatei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
+    <select class="cw-ba-source-before-file">
+        {{#image_files}}
+            <option value="" file-url="{{download_url}}" file-id="{{dokument_id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
+        {{/image_files}}
+    </select>
+    <button class="cw-ba-source-before-file-info cw-info" data-title="{{#i18n}}Hier werden alle Bilddateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
+    <br>
+    <br>
+    <select class="cw-ba-source-after">
+        <option value="file">{{#i18n}}Bild nachher - Dateibereich{{/i18n}}:</option>
+        <option value="url" {{#img_after_external}} selected {{/img_after_external}}>{{#i18n}}Bild nachher - URL{{/i18n}}:</option>
+    </select>
+    <input type="text" class="cw-ba-source-after-url" value="{{img_after}}">
+    <button class="cw-ba-source-after-url-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Bilddatei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
+    <select class="cw-ba-source-after-file" name="cw-ba-file-after">
+        {{#image_files}}
+            <option value="" file-url="{{download_url}}" file-id="{{dokument_id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
+        {{/image_files}}
+    </select>
+    <button class="cw-ba-source-after-file-info cw-info" data-title="{{#i18n}}Hier werden alle Bilddateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
+</div>
+
+<div class="cw-button-box">
+    <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
+    <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+</div>

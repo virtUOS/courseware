@@ -1,0 +1,63 @@
+.cw-beforeafter-slider {
+    position: relative;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        display:block;
+    }
+
+    .resize {
+        position: absolute;
+        top:0;
+        left: 0;
+        height: 100%;
+        width: 50%;
+        overflow: hidden;
+    }
+
+    .handle { /* thin line seperator */
+        position: absolute; 
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        margin-left: -2px;
+        background: rgba(0,0,0,0.6);
+        cursor: ew-resize;
+    }
+
+    .handle:after {  /* center icon  */
+        position: absolute;
+        top: 50%;
+        width: 32px;
+        height: 32px;
+        margin: -16px 0 0 -16px;
+        background-image: url("../../assets/images/icons/blue/arr_1slide.svg");
+        background-size: 16px;
+        background-color: rgba(255,255,255,1);
+        background-position: center;
+        background-repeat: no-repeat;
+        content:'';
+    }
+
+    .draggable:after {
+        width: 48px;
+        height: 48px;
+        margin: -24px 0 0 -24px;
+        line-height:48px;
+        font-size:30px;
+    }
+}
+section#courseware .block-content:not([data-view="student"]) select.cw-ba-source-before,
+section#courseware .block-content:not([data-view="student"]) select.cw-ba-source-after {
+    width: 14em;
+    padding-right: 1em;
+}
+
+.cw-ba-source-before-url,
+.cw-ba-source-after-url,
+.cw-ba-source-before-url-info,
+.cw-ba-source-after-url-info {
+    display: none;
+}

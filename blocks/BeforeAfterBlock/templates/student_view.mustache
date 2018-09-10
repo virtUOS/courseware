@@ -1,0 +1,14 @@
+{{#ba_enable}}
+    <div class="cw-beforeafter-slider">
+        <img src="{{beforeafter_img_after}}" alt="">       
+        <div class="resize">
+            <img src="{{beforeafter_img_before}}" alt="">
+        </div>
+        <span class="handle"></span>
+    </div>
+{{/ba_enable}}
+{{^ba_enable}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Bildvergleich: Es wurden noch nicht zwei Bilder ausgewählt{{/i18n}}
+    </div>
+{{/ba_enable}}
