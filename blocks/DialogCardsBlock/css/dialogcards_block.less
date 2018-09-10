@@ -1,0 +1,147 @@
+@import '../../../assets/less/variables';
+@import '../../../assets/less/mixins';
+.cw-dialogcards-card-content {
+    border: solid thin #ccc;
+    margin-bottom: 0.5em;
+}
+
+.cw-dialogcards-card-content-default {
+    display: none;
+}
+
+.cw-dialogcards {
+    .scene {
+        margin: 0 auto;
+        width: 440px;
+        height: 520px;
+        perspective: 880px;
+        &:not(:first-child) {
+            display: none;
+        }
+    }
+    
+    .card {
+        width: 100%;
+        height: 100%;
+        transition: transform 1s;
+        transform-style: preserve-3d;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .card.is-flipped {
+        transform: rotateY(180deg);
+    }
+
+    .card__face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        color: #000;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.2em;
+        backface-visibility: hidden;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.30);
+
+        img {
+            max-width: 380px;
+            max-height: 220px;
+            margin-top: 1em;
+        }
+        p {
+            margin-top: 1em;
+        }
+    }
+
+    .card__face--front {
+        background-color: #fff;
+        .assets-bg-icon("blue/arr_1right.svg");
+      background-repeat: no-repeat;
+      background-position: 95% 95%;
+    }
+
+    .card__face--back {
+        background-color: #fff;
+        .assets-bg-icon("blue/arr_1left.svg");
+      background-repeat: no-repeat;
+      background-position: 5% 95%;
+        transform: rotateY(180deg);
+    }
+
+}
+
+.cw-dialogcards-navbutton {
+    color: transparent;
+    width: 35px;
+    height: 35px;
+    background-color: #bbb;
+    background-size: 20px;
+    border-radius: 2px;
+    background-size: 24px;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-color: #28497c;
+    border: none;
+    outline: none;
+    position: absolute;
+    top: 50%;
+    display: block;
+    z-index: 42;
+    margin-top: -10px;
+    padding: 0;
+    cursor: pointer;
+    &.cw-dialogcards-prev {
+        .assets-bg-icon("white/arr_1left.svg");
+    }
+    &.cw-dialogcards-next {
+        .assets-bg-icon("white/arr_1right.svg");
+        right: 0;
+    }
+}
+
+button[name="removecard"] {
+    width: 20px;
+    height: 20px;
+    color: transparent;
+    border: none;
+    background: url("../@{blocks-icons-dir}/blue/trash.svg") no-repeat;
+    cursor: pointer;
+    float: right;
+    margin-top: 20px;
+}
+
+.cw-dialogcards-front-img,
+.cw-dialogcards-front-img-file,
+.cw-dialogcards-back-img,
+.cw-dialogcards-back-img-file,
+.cw-dialogcards-front-img-info,
+.cw-dialogcards-front-img-file-info,
+.cw-dialogcards-back-img-info,
+.cw-dialogcards-back-img-file-info {
+    display: none;
+}
+
+section#courseware .DialogCardsBlock .block-content:not([data-view="student"]) {
+    label {
+        width: 18em;
+        margin-left: 0.75em;
+    }
+    select.cw-dialogcards-source {
+        width: 18em;
+        margin-right: 1.75em;
+    }
+}
+
+section#courseware button.button.cw-dialogcards-addcard {
+    .courseware-btn;
+    width: initial;
+    text-align: left;
+    .assets-bg-icon("blue/add.svg");
+    background-position: 6px center;
+    padding-left: 28px;
+
+    &:hover {
+        .assets-bg-icon("white/add.svg");
+    }
+}
