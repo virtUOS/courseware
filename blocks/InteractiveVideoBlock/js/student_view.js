@@ -8,7 +8,7 @@ export default StudentView.extend({
         'click button[name=stop]':   'stopVideo',
         'click .cw-iav-stop-button-continue': 'continueVideo',
         'click .cw-iav-test-button-continue': 'continueVideo',
-        'click button[name=submit-exercise]': 'submitExercise',
+        'click button[name=submit-exercise]': 'submitExercise'
     },
 
     initialize() {},

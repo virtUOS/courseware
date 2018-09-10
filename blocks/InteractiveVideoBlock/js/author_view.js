@@ -28,7 +28,7 @@ export default AuthorView.extend({
         'click .cw-iav-tabs-stops':             'disableItems',
         'click .cw-iav-tabs-overlays':          'disableItems',
         'change select[name=assignment_id]':    'getVipsTests',
-        'change select.cw-iav-source':            'toggleSource'
+        'change select.cw-iav-source':          'toggleSource'
     },
 
     initialize() {
@@ -173,7 +173,7 @@ export default AuthorView.extend({
         tests_json = JSON.stringify(tests_json);
 
         let iav_source = {};
-        if (this.$('.cw-iav-source').prop('checked')) {
+        if (this.$('.cw-iav-source').val() == 'url') {
             iav_source.url = this.$(".cw-iav-url").val();
             iav_source.external = true;
         } else {
@@ -253,7 +253,7 @@ export default AuthorView.extend({
     videoPreview() {
         var $player = this.$('.cw-iav-player');
         this.$('.cw-iav-overlay-edit-item').hide().removeClass('active-item');
-        if (this.$('.cw-iav-source').prop('checked')) {
+        if (this.$('.cw-iav-source').val() == 'url') {
             $player.find('source').attr('src' , this.$('.cw-iav-url').val());
         } else {
             $player.find('source').attr('src' , this.$('.cw-iav-video-file option:selected').attr('file_url'));
