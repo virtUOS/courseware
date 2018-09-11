@@ -53,12 +53,12 @@
         <option value="url" {{#external_file}}selected{{/external_file}}>{{#i18n}}webVideo (URL){{/i18n}}:</option>
     </select>
     <input class="cw-iav-url" name="cw-iav-url">
-    <select class="cw-iav-video-file" name="cw-iav-video-file">
+    <select class="cw-iav-video-file" name="cw-iav-video-file" {{^video_files}}disabled{{/video_files}}>
         {{#video_files}}
             <option file_id="{{dokument_id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
         {{/video_files}}
         {{^video_files}}
-            <option file_id="" file_name="" file_url="" disabled selected>{{#i18n}}Keine Videodatei verfügbar{{/i18n}}</option>
+            <option file_id="" file_name="" file_url="" selected>{{#i18n}}Keine Videodatei verfügbar{{/i18n}}</option>
         {{/video_files}}
     </select>
     <button name="video-preview" class="button">{{#i18n}}Vorschau{{/i18n}}</button>
