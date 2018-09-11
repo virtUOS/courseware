@@ -53,7 +53,7 @@ export default AuthorView.extend({
 
     helper
       .callHandler(this.model.id, 'save', { content: $content })
-      .then(function () {
+      .then(function (success) {
         jQuery(event.target).addClass('accept');
         view.switchBack();
       }).catch(function (error) {
