@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import StudentView from 'js/student_view'
 import helper from 'js/url'
+import tooltip from 'js/tooltip'
 
 export default StudentView.extend({
     events: {
@@ -17,6 +18,7 @@ export default StudentView.extend({
 
     postRender() {
         this.$('.scene').first().addClass('is-displayed');
+        tooltip(this.$el, '.card');
         return this;
     },
 
