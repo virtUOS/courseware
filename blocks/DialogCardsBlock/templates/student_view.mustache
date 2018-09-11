@@ -1,8 +1,8 @@
-{{#cards}}<button class="cw-dialogcards-prev cw-dialogcards-navbutton" title="{{#i18n}}vorherige Karte{{/i18n}}"></button>{{/cards}}
+{{#cards}}<button class="cw-dialogcards-prev cw-dialogcards-navbutton" data-title="{{#i18n}}vorherige Karte{{/i18n}}"></button>{{/cards}}
 <div class="cw-dialogcards">
 {{#cards}}
         <div class="scene scene--card" data-index="{{index}}">
-          <div class="card" title="{{#i18n}}klicken um Karte umzudrehen{{/i18n}}">
+          <div class="card" data-title="{{#i18n}}klicken um Karte umzudrehen{{/i18n}}">
             <div class="card__face card__face--front">
               <img src="{{front_img}}">
               <p>{{front_text}}</p>
@@ -15,7 +15,7 @@
         </div>
 {{/cards}}
 </div>
-{{#cards}}<button class="cw-dialogcards-next cw-dialogcards-navbutton" title="{{#i18n}}nächste Karte{{/i18n}}"></button>{{/cards}}
+{{#cards}}<button class="cw-dialogcards-next cw-dialogcards-navbutton" data-title="{{#i18n}}nächste Karte{{/i18n}}"></button>{{/cards}}
 {{^cards}}
     <div class="messagebox messagebox_info">
         {{#i18n}}Es wurden noch keine Karten angelegt{{/i18n}}
