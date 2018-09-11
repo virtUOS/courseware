@@ -143,16 +143,4 @@ export default StudentView.extend({
 
         return time;
     }
-    if (minutes != 0 || time !== '') {
-      minutes = (minutes < 10 && time !== '') ? '0' + minutes : String(minutes);
-      time += minutes + ':';
-    }
-    if (time === '') {
-      time = (seconds < 10) ? '0:0' + seconds : '0:' + seconds;
-    }
-    else {
-      time += (seconds < 10) ? '0' + seconds : String(seconds);
-    }
-    return time;
-  }
 });
