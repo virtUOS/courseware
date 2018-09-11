@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Courseware\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-0907 11:20+0200\n"
-"PO-Revision-Date: 2018-09-07 14:17+0100\n"
+"PO-Revision-Date: 2018-09-11 12:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: ELAN e.V. <lucke@elan-ev.de>\n"
 "Language: en\n"
@@ -595,8 +595,20 @@ msgstr "found no results"
 msgid "Keine Unterkapitel"
 msgstr "No sub-chapters"
 
-msgid "Keine Videodatei verfügbar"
-msgstr "No video file available"
+msgid "keine Audiodatei verfügbar"
+msgstr "no audio file available"
+
+msgid "keine Bilddatei verfügbar"
+msgstr "no image file available"
+
+msgid "keine Videodatei verfügbar"
+msgstr "no video file available"
+
+msgid "keine PDF-Datei verfügbar"
+msgstr "no PDF file available"
+
+msgid "Es wurde keine PDF-Datei ausgewählt."
+msgstr "No PDF file was selected"
 
 msgid "Kein Test verfügbar. Vips muss in dieser Veranstaltung aktiviert sein."
 msgstr "No exercise available. Vips must be activated for this course."
@@ -1425,6 +1437,9 @@ msgstr "Source Code"
 msgid "Suche"
 msgstr "Search"
 
+msgid "PDF mit Vorschau"
+msgstr "PDF preview"
+
 msgid "externer Inhalt (iframe)"
 msgstr "External Content (iframe)"
 
@@ -1571,3 +1586,15 @@ msgstr "Language"
 
 msgid "verfügbare Sprachen"
 msgstr "available languages"
+
+msgid "Alle"
+msgstr "all"
+
+msgid "Interaktion"
+msgstr "interaction"
+
+msgid "Strukturen & Layout"
+msgstr "structures & layout"
+
+msgid "Multimedia"
+msgstr "multimedia"
