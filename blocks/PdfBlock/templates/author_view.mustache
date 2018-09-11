@@ -4,9 +4,12 @@
 
 <label for="cw-pdf-file">{{#i18n}}Datei aus dem Dateibereich{{/i18n}}:</label>
 <input type="hidden" class="cw-pdf-file-stored" value="{{pdf_file}}">
-<select class="cw-pdf-set-file" name="cw-pdf-file">
+<select class="cw-pdf-set-file" name="cw-pdf-file" {{^pdf_files}}disabled{{/pdf_files}}>
     {{#pdf_files}}
         <option file_id="{{id}}" file_name="{{name}}">{{name}}</option>
+    {{/pdf_files}}
+    {{^pdf_files}}
+        <option value="" selected>{{#i18n}}keine PDF-Datei verfügbar{{/i18n}}</option>
     {{/pdf_files}}
 </select>
 <button class="cw-pdf-file-select-info cw-info" data-title="{{#i18n}}Hier werden alle PDF-Dateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>

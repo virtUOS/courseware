@@ -12,6 +12,11 @@
     <canvas class="cw-pdf-canvas" style="border: solid thin #ccc; width: 100%;"></canvas>
     <input type="hidden" class="cw-pdf-file-url" value="{{pdf_file}}">
 </div>
+{{^pdf_file}}
+     <div class="messagebox messagebox_info">
+        {{#i18n}}Es wurde keine PDF-Datei ausgewählt.{{/i18n}}
+    </div>
+{{/pdf_file}}
 {{/access}}
 {{^access}}
      <div class="messagebox messagebox_info">
