@@ -27,14 +27,23 @@ export default AuthorView.extend({
 
     if ($view.$('.cw-audioblock-source-stored').val() == '') {
       $view.$('input.cw-audioblock-file').hide();
+      $view.$('.cw-audioblock-file-input-info').hide();
       $view.$('select.cw-audioblock-file').show();
+      $view.$('.cw-audioblock-file-select-info').show();
       $view.$('.cw-audioblock-source option[value="cw"]').prop('selected', true);
     } else if ($view.$('.cw-audioblock-source-stored').val() == 'cw') {
       $view.$('input.cw-audioblock-file').hide();
+      $view.$('.cw-audioblock-file-input-info').hide();
       $view.$('.cw-audioblock-file option[value="'+$view.$('.cw-audioblock-file-stored').val()+'"]').prop('selected', true);
+      $view.$('.cw-audioblock-source option[value="cw"]').prop('selected', true);
+      $view.$('select.cw-audioblock-file').show();
+      $view.$('.cw-audioblock-file-select-info').show();
     } else {
       $view.$('select.cw-audioblock-file').hide();
+      $view.$('.cw-audioblock-file-select-info').hide();
       $view.$('input.cw-audioblock-file').val($view.$('.cw-audioblock-file-stored').val());
+      $view.$('.cw-audioblock-source option[value="url"]').prop('selected', true);
+      $view.$('.cw-audioblock-file-input-info').show();
     }
   },
 
@@ -107,12 +116,14 @@ export default AuthorView.extend({
     var $selection = $view.$('.cw-audioblock-source').val();
     if ($selection == 'cw') {
       $view.$('input.cw-audioblock-file').hide();
+      $view.$('.cw-audioblock-file-input-info').hide();
       $view.$('select.cw-audioblock-file').show();
-      $view.$('label[for="cw-audioblock-file"]').html('Audiodatei:');
+      $view.$('.cw-audioblock-file-select-info').show();
     } else {
       $view.$('select.cw-audioblock-file').hide();
+      $view.$('.cw-audioblock-file-select-info').hide();
       $view.$('input.cw-audioblock-file').show();
-      $view.$('label[for="cw-audioblock-file"]').html('URL:');
+      $view.$('.cw-audioblock-file-input-info').show();
     }
     return;
   }

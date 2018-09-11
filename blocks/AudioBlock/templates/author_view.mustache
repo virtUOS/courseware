@@ -2,22 +2,25 @@
 <input type="hidden" class="cw-audioblock-source-stored" value="{{audio_source}}">
 <input type="hidden" class="cw-audioblock-file-stored" value="{{audio_file}}">
 
-<label for="cw-audioblock-description">{{#i18n}}Beschreibung{{/i18n}}:</label>
+<label for="cw-audioblock-description" class="cw-audioblock-description-label">{{#i18n}}Beschreibung{{/i18n}}:</label>
 <input type="text" name="cw-audioblock-description" class="cw-audioblock-description" spellcheck="true">
 <br>
-<label for="cw-audioblock-source">{{#i18n}}Quelle{{/i18n}}:</label>
 <select class="cw-audioblock-source" name="cw-audioblock-source">
-    <option value="cw">{{#i18n}}Dateibereich{{/i18n}}</option>
-    <option value="webaudio">{{#i18n}}webAudio{{/i18n}}</option>
+    <option value="cw">{{#i18n}}Dateibereich{{/i18n}}:</option>
+    <option value="webaudio">{{#i18n}}webAudio (URL){{/i18n}}:</option>
 </select>
-<br>
-<label for="cw-audioblock-file">{{#i18n}}Audiodatei{{/i18n}}: </label>
-<select class="cw-audioblock-file" name="cw-audioblock-file">
+
+<select class="cw-audioblock-file" name="cw-audioblock-file" {{^audio_files}}disabled{{/audio_files}}>
     {{#audio_files}}
         <option value="" document-id="{{dokument_id}}" filename="{{filename}}">{{name}}</option>
     {{/audio_files}}
+    {{^audio_files}}
+        <option value="" selected>{{#i18n}}keine Audiodatei verfügbar{{/i18n}}</option>
+    {{/audio_files}}
 </select>
+<button class="cw-audioblock-file-select-info cw-info" data-title="{{#i18n}}Hier werden alle Audiodateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
 <input class="cw-audioblock-file" name="cw-audioblock-file">
+<button class="cw-audioblock-file-input-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Datei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
 <div class="cw-button-box">
     <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
     <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
