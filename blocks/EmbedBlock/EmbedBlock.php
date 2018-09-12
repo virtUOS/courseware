@@ -72,10 +72,10 @@ class EmbedBlock extends Block
     {
         $this->authorizeUpdate();
         if (isset($data['embed_url'])) {
-            $this->embed_url = (string) $data['embed_url'];
+            $this->embed_url = \STUDIP\Markup::purifyHtml((string) $data['embed_url']);
         }
         if (isset($data['embed_source'])) {
-            $this->embed_source = (string) $data['embed_source'];
+            $this->embed_source = \STUDIP\Markup::purifyHtml((string) $data['embed_source']);
         }
 
         return;

@@ -60,13 +60,13 @@ class AudioBlock extends Block
     {
         $this->authorizeUpdate();
         if (isset($data['audio_description'])) {
-            $this->audio_description = (string) $data['audio_description'];
+            $this->audio_description = \STUDIP\Markup::purifyHtml((string) $data['audio_description']);
         }
         if (isset($data['audio_source'])) {
             $this->audio_source = (string) $data['audio_source'];
         }
         if (isset($data['audio_file'])) {
-            $this->audio_file = (string) $data['audio_file'];
+            $this->audio_file = \STUDIP\Markup::purifyHtml((string) $data['audio_file']);
         }
         if (isset($data['audio_file_name'])) {
             $this->audio_file_name = (string) $data['audio_file_name'];

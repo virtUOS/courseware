@@ -61,7 +61,7 @@ class PostBlock extends Block
                                     array($data['thread_id'], $this->container['cid']))->content;
             }
         } else {
-             $this->post_title = (string) $data['post_title'];
+             $this->post_title = \STUDIP\Markup::purifyHtml((string) $data['post_title']);
         }
 
         if (isset($data['has_to_post'])) {
@@ -79,7 +79,7 @@ class PostBlock extends Block
                 'post_id' => 0,
                 'seminar_id' => $this->container['cid'],
                 'user_id' => $this->container['current_user_id'],
-                'content' => $this->post_title,
+                'content' => \STUDIP\Markup::purifyHtml($this->post_title),
                 'mkdate' => (new \DateTime())->format('Y-m-d H:i:s'),
                 'chdate' => (new \DateTime())->format('Y-m-d H:i:s')
             );
@@ -101,7 +101,7 @@ class PostBlock extends Block
                 'post_id' => $post_id,
                 'seminar_id' => $this->container['cid'],
                 'user_id' => $this->container['current_user_id'],
-                'content' => $data["message"],
+                'content' => \STUDIP\Markup::purifyHtml($data["message"]),
                 'mkdate' => (new \DateTime())->format('Y-m-d H:i:s'),
                 'chdate' => (new \DateTime())->format('Y-m-d H:i:s')
             );

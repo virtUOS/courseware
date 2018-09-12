@@ -98,7 +98,7 @@ class PdfBlock extends Block
             $this->pdf_file_id = $data['pdf_file_id'];
         }
         if (isset ($data['pdf_title'])) {
-            $this->pdf_title = $data['pdf_title'];
+            $this->pdf_title = \STUDIP\Markup::purifyHtml($data['pdf_title']);
         }
 
         return;

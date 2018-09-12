@@ -37,7 +37,7 @@ class SearchBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
-        $this->searchtitle = ($data['searchtitle']);
+        $this->searchtitle = \STUDIP\Markup::purifyHtml((string) $data['searchtitle']);
 
         return array('searchtitle' => $this->searchtitle);
     }

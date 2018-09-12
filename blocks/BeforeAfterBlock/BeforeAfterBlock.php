@@ -60,10 +60,10 @@ class BeforeAfterBlock extends Block
         $this->authorizeUpdate();
 
         if (isset ($data['ba_before'])) {
-            $this->ba_before = (string) $data['ba_before'];
+            $this->ba_before = \STUDIP\Markup::purifyHtml((string) $data['ba_before']);
         } 
         if (isset ($data['ba_after'])) {
-            $this->ba_after = (string) $data['ba_after'];
+            $this->ba_after = \STUDIP\Markup::purifyHtml((string) $data['ba_after']);
         } 
 
         return;
