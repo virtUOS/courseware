@@ -94,6 +94,27 @@ class VideoBlock extends Block
         return $this->array_rep();
     }
 
+    public function getFiles()
+    {
+        $sources = json_decode($this->webvideo);
+        foreach ($sources as $source) {
+            if ($source->file_id != '') {
+                $file_ref = new \FileRef($source->file_id);
+                $file = new \File($file_ref->file_id);
+                $files[] = array(
+                    'id' => $file_ref->id,
+                    'name' => $file_ref->name,
+                    'description' => $file_ref->description,
+                    'filename' => $file->name,
+                    'filesize' => $file->size,
+                    'url' => $file->getURL(),
+                    'path' => $file->getPath()
+                );
+            }
+        }
+
+        return $files;
+    }
     /**
      * {@inheritdoc}
      */
@@ -134,6 +155,22 @@ class VideoBlock extends Block
         if (isset($properties['videoTitle'])) {
             $this->videoTitle = $properties['videoTitle'];
         }
+
+        $this->save();
+    }
+
+    public function importContents($contents, array $files)
+    {
+        $webvideo = json_decode($this->webvideo);
+        foreach($files as $file){
+            foreach ($webvideo as &$source) {
+                if(($source->file_name == $file->name) && ($source->file_id != '')) {
+                    $source->file_id = $file->id;
+                    $source->src = $file->getDownloadURL();
+                }
+            }
+        }
+        $this->webvideo = json_encode($webvideo);
 
         $this->save();
     }

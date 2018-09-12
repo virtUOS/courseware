@@ -77,13 +77,17 @@ export default AuthorView.extend({
             url = '';
             webvideosettings = 'controls ';
             webvideo = new Array();
-                this.$('.videosource-webvideo > .webvideo').each(function () {
+            this.$('.videosource-webvideo > .webvideo').each(function () {
                 let source = $(this).find('.cw-webvideo-source').val();
                 let src = '';
+                let file_id = '';
+                let file_name = '';
                 if (source == 'url') {
                     src = $(this).find('.cw-webvideo-source-url').val();
                 } else {
                     src =  $(this).find('.cw-webvideo-source-file option:selected').attr('file_url');
+                    file_id =  $(this).find('.cw-webvideo-source-file option:selected').attr('file_id');
+                    file_name =  $(this).find('.cw-webvideo-source-file option:selected').attr('file_name');
                 }
                 let type = $(this).find('.webvideosrc-mediatype').val();
                 let query = $(this).find('.webvideosrc-mediaquery').val();
@@ -100,7 +104,7 @@ export default AuthorView.extend({
                         break;
                 }
                 if (src != '') {
-                    webvideo.push({ src, source, type, query, media, attr });
+                    webvideo.push({ src, source, type, query, media, attr, file_id, file_name });
                 }
             });
             if (view.$('.videoautostart').is(':checked')) {
@@ -192,8 +196,18 @@ export default AuthorView.extend({
     },
 
     showPreview() {
+        var videotype = this.$('.videotype').val();
+        if (videotype == 'webvideo') {
+            let webvideo = this.$('.webvideo').first();
+            let video_url = '';
+            if (webvideo.find('.cw-webvideo-source').val() == 'url') {
+                video_url = webvideo.find('.cw-webvideo-source-url').val();
+            } else {
+                video_url = webvideo.find('.cw-webvideo-source-file option:selected').attr('file_url');
+            }
+            this.$('video').attr('src', video_url);
+        }
         this.$('iframe').attr('src', this.$('.cw-videoblock-stored-url').val());
-        this.$('video').attr('src', this.$('.webvideosrc').val());
         this.$('.video-wrapper').removeClass('aspect-43').removeClass('aspect-169').addClass(this.$('.cw-videoblock-aspect').val());
     },
 
