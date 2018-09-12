@@ -50,7 +50,7 @@ class ChartBlock extends Block
             $this->chart_type = (string) $data['chart_type'];
         } 
         if (isset ($data['chart_label'])) {
-            $this->chart_label = (string) $data['chart_label'];
+            $this->chart_label = \STUDIP\Markup::purifyHtml((string) $data['chart_label']);
         } 
 
         return;

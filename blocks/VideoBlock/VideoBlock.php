@@ -63,7 +63,7 @@ class VideoBlock extends Block
         $this->url = (string) $data['url'];
         $this->webvideo = (string) $data['webvideo'];
         $this->webvideosettings = (string) $data['webvideosettings'];
-        $this->videoTitle = (string) $data['videoTitle'];
+        $this->videoTitle = \STUDIP\Markup::purifyHtml((string) $data['videoTitle']);
         $this->aspect = (string) $data['aspect'];
 
         return $this->array_rep();

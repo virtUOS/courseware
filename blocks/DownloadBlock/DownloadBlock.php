@@ -59,9 +59,9 @@ class DownloadBlock extends Block
             $this->file_id = (string) $data['file_id'];
             $this->file_name = (string) $data['file_name'];
             $this->folder_id = (string) $data['folder_id'];
-            $this->download_title = (string) $data['download_title'];
-            $this->download_info = (string) $data['download_info'];
-            $this->download_success = (string) $data['download_success'];
+            $this->download_title = \STUDIP\Markup::purifyHtml((string) $data['download_title']);
+            $this->download_info = \STUDIP\Markup::purifyHtml((string) $data['download_info']);
+            $this->download_success = \STUDIP\Markup::purifyHtml((string) $data['download_success']);
         }
 
         return;
