@@ -152,7 +152,7 @@ class CpoController extends CoursewareStudipController
     {
         if ((Request::get('thread_id') != '') && (Request::get('thread_title') != '')) { 
             $thread_id = Request::get('thread_id');
-            $thread_title = Request::get('thread_title');
+            $thread_title = \STUDIP\Markup::purifyHtml(Request::get('thread_title'));
             $cid = $this->plugin->getCourseId();
         } else {
             return $this->redirect('cpo/postoverview?update=false');
