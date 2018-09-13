@@ -10,7 +10,7 @@ class PostBlock extends Block
 {
     const NAME = 'Kommentare & Diskussion';
     const BLOCK_CLASS = 'interaction';
-    const DESCRIPTION = 'Hier kann Ã¼ber die Inhalte gesprochen werden';
+    const DESCRIPTION = 'Hier kann über die Inhalte gesprochen werden';
 
     public function initialize()
     {
