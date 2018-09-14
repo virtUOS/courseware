@@ -1,5 +1,17 @@
 CHANGELOG
 =========
+3.2.0
+-----
+* add new block: DialogCardsBlock
+* add new block: EmbedBlock
+* add new block: InteractiveVideoBlock
+* add new block: BeforeAfterBlock
+* add new block: ChartBlock
+* add new block: OpenCastBlock
+* new block adder design
+* modernize models for Stud.IP >= 4.2
+* cleanup VideoBlock
+
 3.1.0
 -----
 * enhance TestBlock functions
