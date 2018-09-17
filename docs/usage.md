@@ -13,7 +13,15 @@ Mit einem Klick auf das Doctoral-Cap-Icon wird der Autorenmodus aktiviert.
 ![Autorenansicht](img/start_edit.png)
 
 In der Autorenansicht können [Blöcke](blocks.md) und [Strukturelemente](structure.md) 
-hinzugefügt werden. Über den Knopf "Einstellungen" erreicht man die Seite der 
+hinzugefügt werden. Über "Block hinzufügen" erhählt man eine Übersicht der verfügbaren Blöcke.
+
+![Alle Blöcke](img/block_adder.png)
+
+Die Blöcke lassen sich nach ihrer Funktion sortieren.
+
+![Blöcke gefiltert nach interaktion](img/block_adder_interaction.png)
+
+Über den Knopf "Einstellungen" erreicht man die Seite der 
 Courseware-Konfiguration. Hier sind verschiedenste Einstellungen zum Verhalten der 
 Courseware möglich.
 
