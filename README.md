@@ -16,6 +16,7 @@ Anforderungen
 Für die Version 3.x wird 
 * StudIP Version 3.4.x-3.5.x
 * PHP Version >= 5.4
+
 benötigt.
 
 
@@ -23,6 +24,7 @@ Für die Version 4.x wird
 * StudIP Version >= 4.0
 * PHP in Version 5.5-7.0
 * MySQL in Version 5.5
+
 benötigt.
 
 
