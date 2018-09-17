@@ -39,10 +39,10 @@ Bildvergleich
 Der Bildvergleich-Block ermöglicht den direkten Vergleich zwischen zwei Bildern. Mit einem Schieberegler kann ein Bild
 über ein anderes gelegt werden. Die Bilder können von einer URL oder aus dem Dateibereich geladen werden.
 
-![Autorenansicht des Bildvergleich-Blocks](img/beforeAfterBlockBlock_edit.png)
+![Autorenansicht des Bildvergleich-Blocks](img/beforeAfterBlock_edit.png)
 _Autorenansicht des Bildvergleich-Blocks_
 
-![Studentenansicht des Bildvergleich-Blocks](img/beforeAfterBlockBlock.png)
+![Studentenansicht des Bildvergleich-Blocks](img/beforeAfterBlock.png)
 _Studentenansicht des Bildvergleich-Blocks_
 
 
@@ -271,29 +271,3 @@ _Autorenansicht des Video-Blocks_
 
 ![Studentenansicht des Video-Blocks](img/videoBlock.png)
 _Studentenansicht des Video-Blocks_
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
