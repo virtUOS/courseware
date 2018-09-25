@@ -165,6 +165,21 @@ class Courseware extends Block
         return $block->toArray();
     }
 
+    public function add_topics_handler()
+    {
+        $courseware_id = $this->container['current_courseware']->id;
+
+        $topics = \CourseTopic::findBySeminar_id($this->container['cid']);
+        foreach($topics as $topic) {
+            $data['parent'] = $courseware_id;
+            $data['title'] = $topic->title;
+            $parent = $this->requireUpdatableParent($data);
+            $block = $this->createStructure($parent, $data);
+        }
+
+        return;
+    }
+
     public function update_positions_handler($data)
     {
         // only authors may add more structure
@@ -533,7 +548,7 @@ class Courseware extends Block
             // aside section
             else {
                 // find aside's "parent" sub/chapter
-                // TODO: gruseliger Hack, um das Unter/Kapitel zu finden, in dem die Section eingehängt ist.
+                // TODO: gruseliger Hack, um das Unter/Kapitel zu finden, in dem die Section eingehÃ¤ngt ist.
                 $field = current(\Mooc\DB\Field::findBySQL('user_id = "" AND name = "aside_section" AND json_data = ?', array(json_encode($block->id))));
 
                 return $field->block;

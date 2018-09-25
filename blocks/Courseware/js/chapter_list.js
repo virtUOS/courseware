@@ -28,7 +28,9 @@ export default Backbone.View.extend({
     'click .stop-sort-subchapter': 'stopSorting',
 
     'click .activate-aside-section': 'activateAsideSection',
-    'click .deactivate-aside-section': 'deactivateAsideSection'
+    'click .deactivate-aside-section': 'deactivateAsideSection',
+
+    'click .add-topics' : 'addTopics'
   },
 
   initialize() {
@@ -364,5 +366,17 @@ export default Backbone.View.extend({
             }
       });
     }
+  },
+
+  addTopics() {
+    helper
+      .callHandler(this.model.id, 'add_topics', {})
+      .then(function () {
+        helper.reload();
+      }).catch(function (error) {
+        var errorMessage = 'Could not add chapters: ' + $.parseJSON(error.responseText).reason;
+        alert(errorMessage);
+        console.log(error, errorMessage, arguments);
+      });
   }
 });
