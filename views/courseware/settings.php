@@ -93,6 +93,22 @@ if ($flash['success']) {
             </tr>
 
             <tr>
+                <td>
+                    <label for="courseware-scrollytelling">
+                        <?= _cw('Scrollytelling aktivieren') ?><br>
+                        <dfn id="courseware-scrollytelling-description">
+                            <?= _cw('Wenn Sie diesen Schalter aktivieren, wird die Courseware in ein Scrollytelling verwandelt.'); ?>
+                        </dfn>
+                    </label>
+                </td>
+                <td>
+                    <input id="courseware-scrollytelling"
+                           name="courseware[scrollytelling]"
+                           type="checkbox" <?= $courseware_block->getScrollytelling() ? "checked" : "" ?>>
+                </td>
+            </tr>
+
+            <tr>
                 <th colspan="2"><?= _cw('Blockeinstellungen') ?></th>
             </tr>
 

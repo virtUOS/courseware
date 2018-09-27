@@ -44,6 +44,8 @@ class Courseware extends Block
         $this->defineField('show_section_nav', \Mooc\SCOPE_BLOCK, true);
 
         $this->defineField('sections_as_chapters', \Mooc\SCOPE_BLOCK, false);
+        
+        $this->defineField('scrollytelling', \Mooc\SCOPE_BLOCK, false);
     }
 
     public function student_view($context = array())
@@ -102,6 +104,7 @@ class Courseware extends Block
             'active_subchapter'     => $active_subchapter,
             'show_section_nav'      => $this->show_section_nav,
             'sections_as_chapters'  => $this->sections_as_chapters,
+            'scrollytelling'        => $this->scrollytelling,
             'isSequential'          => $this->progression == 'seq',
             'active_section'        => $active_section, 
             'cw_title'              => $courseware->title,
@@ -380,6 +383,16 @@ class Courseware extends Block
     public function getSectionsAsChapters()
     {
         return $this->sections_as_chapters;
+    }
+
+    public function setScrollytelling($state)
+    {
+        $this->scrollytelling = $state;
+    }
+
+    public function getScrollytelling()
+    {
+        return $this->scrollytelling;
     }
 
     ///////////////////////

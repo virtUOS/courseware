@@ -225,6 +225,11 @@ class CoursewareController extends CoursewareStudipController
                 break;
         }
 
+        /////////////////////////
+        //   Scrollytelling   //
+        ////////////////////////
+        $this->storeScrollytelling(isset($courseware_settings['scrollytelling']) ? true : false);
+        
         ////////////////////////
         // EDITING PERMISSION //
         ////////////////////////
@@ -288,6 +293,13 @@ class CoursewareController extends CoursewareStudipController
     private function storeSectionsAsChatpers($active)
     {
         if (!$this->courseware_block->setSectionsAsChapters($active)) {
+            // TODO: send a message back
+        }
+    }
+
+    private function storeScrollytelling($active)
+    {
+        if (!$this->courseware_block->setScrollytelling($active)) {
             // TODO: send a message back
         }
     }
