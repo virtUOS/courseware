@@ -6,4 +6,5 @@
 >
     <xsd:attribute name="embed_url" type="xsd:string" />
     <xsd:attribute name="embed_source" type="xsd:string" />
+    <xsd:attribute name="embed_time" type="xsd:string" />
 </xsd:schema>

@@ -20,6 +20,7 @@ class EmbedBlock extends Block
     {
         $this->defineField('embed_url', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('embed_source', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('embed_time', \Mooc\SCOPE_BLOCK, '');
     }
 
     public function student_view()
@@ -30,10 +31,25 @@ class EmbedBlock extends Block
         $this->setGrade(1.0);
         $json_url = $this->build_request($this->embed_source, $this->embed_url);
         $oembed = json_decode($this->curl_get($json_url));
+        
         switch ($oembed->type) {
             case 'video':
             case 'rich':
                 $html = $oembed->html;
+                if (($oembed->provider_name == 'YouTube') && ($this->embed_time != '')){
+                    $time = json_decode($this->embed_time);
+                    $start = $time->start;
+                    $end = $time->end;
+                    $dom = new \DOMDocument;
+                    $dom->loadHTML($html);
+                    $xpath = new \DOMXPath($dom);
+                    $nodes = $xpath->query("//iframe");
+                    foreach($nodes as $node) {
+                        $src = $node->getAttribute('src');
+                        $node->setAttribute('src', $src.'&start='.$start.'&end='.$end);
+                    }
+                    $html = $dom->saveHTML();
+                }
                 break;
             case 'photo':
                 $html = '<img class="embed-block-image" src="'.$oembed->url.'" width="'.$oembed->width.'px" 
@@ -76,6 +92,9 @@ class EmbedBlock extends Block
         }
         if (isset($data['embed_source'])) {
             $this->embed_source = \STUDIP\Markup::purifyHtml((string) $data['embed_source']);
+        }
+        if (isset($data['embed_time'])) {
+            $this->embed_time =(string) $data['embed_time'];
         }
 
         return;
@@ -165,7 +184,8 @@ class EmbedBlock extends Block
     {
         return array(
             'embed_url' => $this->embed_url,
-            'embed_source' => $this->embed_source
+            'embed_source' => $this->embed_source,
+            'embed_time' => $this->embed_time
         );
     }
 
@@ -200,6 +220,9 @@ class EmbedBlock extends Block
         }
         if (isset($properties['embed_source'])) {
             $this->embed_source = $properties['embed_source'];
+        }
+        if (isset($properties['embed_time'])) {
+            $this->embed_time = $properties['embed_time'];
         }
 
         $this->save();
