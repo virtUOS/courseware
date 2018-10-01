@@ -97,7 +97,7 @@ class InteractiveVideoBlock extends Block
             if (($this->assignment_id != '') &&(!empty($selected_assignment->test->exercises))) {
                 foreach ($selected_assignment->test->exercises as $exercise) {
                     $exercises[] = array(
-                        'question' => $exercise->getSolveTemplate($solution, $assignment, $user->cfg->getUserId())->render(),
+                        'question' => $exercise->getSolveTemplate($solution, $assignment, $user->id)->render(),
                         'title' => $exercise->title,
                         'id' => $exercise->getId()
                     );
