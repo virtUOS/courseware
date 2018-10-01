@@ -10,7 +10,9 @@ export default AuthorView.extend({
         'change select.cw-embedblock-source': 'selectPlatform',
         'change input.cw-embedblock-url': 'checkURL',
         'keyup input.cw-embedblock-url': 'checkURL',
-        'change input.cw-embedblock-time-check': 'toggleTime'
+        'change input.cw-embedblock-time-start-check': 'toggleTime',
+        'change input.cw-embedblock-time-end-check': 'toggleTime',
+        'change .cw-embedblock-time input[type="number"]' : 'timeValidator'
     },
 
     initialize() {
@@ -61,12 +63,12 @@ export default AuthorView.extend({
         var $view = this;
         var $embed_url = $view.$('.cw-embedblock-url').val();
         var $embed_source = $view.$('select.cw-embedblock-source option:selected').val();
-        var use_time = this.$('.cw-embedblock-time-check').prop( "checked" );
+        var use_time = this.$('.cw-embedblock-time-start-check').prop( "checked" );
         if (use_time){
             var $embed_time = {};
             $embed_time.start = parseInt (60 * this.$('.cw-embedblock-time-start-min').val()) + parseInt (this.$('.cw-embedblock-time-start-sec').val());
             $embed_time.end = parseInt(60 * this.$('.cw-embedblock-time-end-min').val()) + parseInt(this.$('.cw-embedblock-time-end-sec').val());
-            if ($embed_time.start >= $embed_time.end) {
+            if (($embed_time.start >= $embed_time.end) || (this.$('.cw-embedblock-time-end-check').prop( "checked" ) == false)){
                 $embed_time.end = '';
             }
             if (!$embed_time.start) {
@@ -131,11 +133,35 @@ export default AuthorView.extend({
     },
     
     toggleTime() {
-        var use_time = this.$('.cw-embedblock-time-check').prop( "checked" );
-        if (use_time){
-            this.$('.cw-embedblock-time input[type="number"]').prop( "disabled", false );
+        var use_start_time = this.$('.cw-embedblock-time-start-check').prop( "checked" );
+        if (use_start_time){
+            this.$('.cw-embedblock-time-start').prop( "disabled", false );
+            this.$('.cw-embedblock-time-end-check').prop( "disabled", false );
+            var use_end_time = this.$('.cw-embedblock-time-end-check').prop( "checked" );
+            if (use_end_time){
+                this.$('.cw-embedblock-time-end').prop( "disabled", false );
+                this.timeValidator();
+            } else {
+                this.$('.cw-embedblock-time-end').prop( "disabled", true );
+            }
         } else {
-            this.$('.cw-embedblock-time input[type="number"]').prop( "disabled", true );
+            this.$('.cw-embedblock-time-start').prop( "disabled", true );
+            this.$('.cw-embedblock-time-end').prop( "disabled", true );
+            this.$('.cw-embedblock-time-end-check').prop( "disabled", true );
+        }
+    },
+
+    timeValidator() {
+        if (this.$('.cw-embedblock-time-end-check').prop( "checked" )) {
+            var start = parseInt (60 * this.$('.cw-embedblock-time-start-min').val()) + parseInt (this.$('.cw-embedblock-time-start-sec').val());
+            var end = parseInt(60 * this.$('.cw-embedblock-time-end-min').val()) + parseInt(this.$('.cw-embedblock-time-end-sec').val());
+            if (end <= start) {
+                this.$('.cw-embedblock-time-end').addClass('cw-embedblock-time-warning');
+                this.$('.cw-embedblock-time-end-exclaim').show();
+            } else {
+                this.$('.cw-embedblock-time-end').removeClass('cw-embedblock-time-warning');
+                this.$('.cw-embedblock-time-end-exclaim').hide();
+            }
         }
     },
 
@@ -147,7 +173,10 @@ export default AuthorView.extend({
             this.$('.cw-embedblock-time-start-sec').val(parseInt(time.start%60));
             this.$('.cw-embedblock-time-end-min').val(parseInt(time.end/60));
             this.$('.cw-embedblock-time-end-sec').val(parseInt(time.end%60));
-            this.$('.cw-embedblock-time-check').prop( "checked", true );
+            this.$('.cw-embedblock-time-start-check').prop( "checked", true );
+            if (time.end) {
+                this.$('.cw-embedblock-time-end-check').prop( "checked", true );
+            }
             this.toggleTime();
         }
     }

@@ -39,7 +39,6 @@
 
     .cw-embedblock-time {
         display: none;
-
         .cw-embedblock-time-start-min,
         .cw-embedblock-time-end-min {
             margin-right: 14px;
@@ -52,11 +51,10 @@
 section#courseware .block-content:not([data-view="student"]) .cw-embedblock-time input[type="number"] {
     width: 4em;
 }
-
+section#courseware .block-content:not([data-view="student"]) input.cw-embedblock-time-warning, 
 section#courseware .block-content:not([data-view="student"]) input.cw-embedblock-wrong-plattform {
         border: solid thick #d60000;
     }
-section#courseware button.cw-embedblock-url-info-wrong-plattform {
-        display: none;
-        .assets-bg-icon("red/exclaim.svg");
-    }
+section#courseware .EmbedBlock button.cw-exclaim {
+    display: none;
+}
