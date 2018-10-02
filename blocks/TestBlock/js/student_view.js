@@ -19,6 +19,7 @@ export default StudentView.extend({
                 }).then(function () {
                     $block.find('.exercise').hide();
                     $block.find('#exercise' + $exercise_index).show();
+                    $(window).trigger('resize');
                 });
             }
 
@@ -43,6 +44,7 @@ export default StudentView.extend({
                 $block.find('.exercise').hide();
                 $block.find('#exercise' + $exercise_index).show();
                 $block.find('.submitinfo').slideDown(250).delay(1500).slideUp(250);
+                $(window).trigger('resize');
             })
             .catch(function () {
                 console.log('failed to store the solution');
