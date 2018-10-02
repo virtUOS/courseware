@@ -19,6 +19,7 @@ export default StudentView.extend({
                 }).then(function () {
                     $block.find('.exercise').hide();
                     $block.find('#exercise' + $exercise_index).show();
+                    $(window).trigger('resize');
                 });
             }
 
@@ -43,6 +44,7 @@ export default StudentView.extend({
                 $block.find('.exercise').hide();
                 $block.find('#exercise' + $exercise_index).show();
                 $block.find('.submitinfo').slideDown(250).delay(1500).slideUp(250);
+                $(window).trigger('resize');
             })
             .catch(function () {
                 console.log('failed to store the solution');
@@ -95,6 +97,23 @@ export default StudentView.extend({
     },
 
     postRender() {
+        // TODO this code from vips.js should be called by vips.js
+        this.$('.rh_list').sortable({
+            axis: 'y',
+            containment: 'parent',
+            item: '> .rh_item',
+            tolerance: 'pointer',
+            update: this.rh_move_choice
+        });
+        
+    },
+
+    // TODO this code from vips.js should be called by vips.js
+    rh_move_choice(event, ui)
+    {
+        jQuery(this).children().each(function(i) {
+            jQuery(this).find('input').val(i);
+        });
     }
 
 });

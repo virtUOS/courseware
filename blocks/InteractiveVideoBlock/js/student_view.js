@@ -20,7 +20,7 @@ export default StudentView.extend({
     postRender() {
         var $view =  this,
         $player_element = $view.$('.cw-iav-player').get(0);
-        
+
         if (typeof $player_element !== 'undefined') {
             if ($player_element.readyState >= 2) {      //if firefox
                 $view.setupVideo();
@@ -29,7 +29,16 @@ export default StudentView.extend({
                     $view.setupVideo();
                 }, false);
             }
+            // TODO this code from vips.js should be called by vips.js
+            this.$('.rh_list').sortable({
+                axis: 'y',
+                containment: 'parent',
+                item: '> .rh_item',
+                tolerance: 'pointer',
+                update: this.rh_move_choice
+            });
         }
+
     },
 
     setupVideo() {
@@ -368,6 +377,14 @@ export default StudentView.extend({
             var errorMessage = 'Could not update the block: ' + $.parseJSON(error.responseText).reason;
             alert(errorMessage);
             console.log(errorMessage, arguments);
+        });
+    },
+
+    // TODO this code from vips.js should be called by vips.js
+    rh_move_choice(event, ui)
+    {
+        jQuery(this).children().each(function(i) {
+            jQuery(this).find('input').val(i);
         });
     }
 
