@@ -1,0 +1,24 @@
+<input type="hidden" class="cw-scrolly-stored-block-style" value="{{scrolly_block_style}}">
+<ul>
+{{#blocks}}
+    <li class="cw-scrolly-blocks" data-blockid="{{blockid}}">
+        <label for="cw-scrolly-block-style">{{blockname}} (Id: {{blockid}}):</label>
+        <select data-blockid="{{blockid}}" name="cw-scrolly-block-style" class="cw-scrolly-block-style">
+            <option value="default">default</option>
+            <option value="full">full</option>
+            <option value="big">big</option>
+            <option value="medium">medium</option>
+            <option value="left-small">left-small</option>
+            <option value="left-big">left-big</option>
+            <option value="left-medium">left-medium</option>
+            <option value="right-small">right-small</option>
+            <option value="right-big">right-big</option>
+            <option value="right-medium">right-medium</option>
+        </select>
+    </li>
+{{/blocks}}
+</ul>
+<div class="cw-button-box">
+    <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
+    <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+</div>

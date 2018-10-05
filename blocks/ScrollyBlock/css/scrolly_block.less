@@ -1,0 +1,75 @@
+@import '../../../assets/less/mixins';
+
+section#courseware.scrollyware {
+    ol.active-subchapter.stuck {
+        position: unset;
+    }
+    section.block.cw-scrolly-full {
+        width: 100%;
+        max-width: 100%;
+
+        &.HtmlBlock {
+            div.content  {
+                width: 100%;
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    section.block.cw-scrolly-big {
+        width: 70%;
+        max-width: 1250px;
+        &.EmbedBlock {
+            iframe {
+                width: 1250px !important;
+            }
+        }
+    }
+
+    section.block.ScrollyBlock, 
+    section.block.cw-scrolly-medium {
+        width: 60%;
+        max-width: 950px;
+        &.EmbedBlock {
+            iframe {
+                width: 950px !important;
+            }
+        }
+    }
+
+    section.block.cw-scrolly-left-big,
+    section.block.cw-scrolly-right-big {
+        max-width: 20%;
+        position: absolute;
+    }
+
+    section.block.cw-scrolly-left-medium,
+    section.block.cw-scrolly-right-medium{
+        max-width: 15%;
+        position: absolute;
+    }
+
+    section.block.cw-scrolly-left-small,
+    section.block.cw-scrolly-right-small {
+        max-width: 10%;
+        position: absolute;
+    }
+
+    section.block.cw-scrolly-left-medium ,
+    section.block.cw-scrolly-left-big ,
+    section.block.cw-scrolly-left-small{
+        left: 2%;
+    }
+
+    section.block.cw-scrolly-right-medium ,
+    section.block.cw-scrolly-right-big ,
+    section.block.cw-scrolly-right-small{
+        right: 2%;
+    }
+    
+    .cw-scrolly-blocks {
+        list-style: none;
+    }
+}
