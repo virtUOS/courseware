@@ -433,7 +433,8 @@ class TestBlock extends Block
     public function exportProperties()
     {
         if ($this->assignment_id == "") {
-            if ( ($this->test_id == "") ||  !($this->vipsVersion()) ){
+            $courseware = $this->container['current_courseware'];
+            if ( ($this->test_id == "") || !($courseware->vipsVersion()) ){
                 return;
             }
             $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
