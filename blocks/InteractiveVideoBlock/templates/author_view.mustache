@@ -26,6 +26,7 @@
             <div class="cw-iav-test-content" data-testid="{{id}}">
                 <form class="studip_form">
                     <h2 class="cw-iav-test-content-title">{{title}}</h2>
+                    <p class="cw-iav-test-content-question-description">{{{question_description}}}</p>
                     <input type="hidden" class="cw-iav-test-content-test-id" value="{{id}}">
                     <div class="cw-iav-test-content-question">{{{question}}}</div>
                 </form>
@@ -53,9 +54,9 @@
         <option value="url" {{#external_file}}selected{{/external_file}}>{{#i18n}}webVideo (URL){{/i18n}}:</option>
     </select>
     <input class="cw-iav-url" name="cw-iav-url">
-    <select class="cw-iav-video-file" name="cw-iav-video-file" {{^video_files}}disabled{{/video_files}}>
+    <select class="cw-iav-video-file" name="cw-iav-video-file" {{^video_files}} disabled {{/video_files}}>
         {{#video_files}}
-            <option file_id="{{dokument_id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+            <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
         {{/video_files}}
         {{^video_files}}
             <option file_id="" file_name="" file_url="" selected>{{#i18n}}Keine Videodatei verfügbar{{/i18n}}</option>
