@@ -9,13 +9,14 @@
         {{#i18n}}Bitte beachten Sie das nicht alle Blocktypen in diesen Block eingebunden werden können.{{/i18n}}
     </p>
 </div>
+{{#blocks}}
 <div class="assorttypeselectors">
     <label>{{#i18n}}Accordion{{/i18n}}
     <input type="radio"  name="assorttype" value="accordion" checked></label>
     <label>{{#i18n}}Tabs{{/i18n}}
     <input type="radio"  name="assorttype" value="tabs"></label>
 </div>
-
+{{/blocks}}
 <ul class="assortblock-list">
 {{#blocks}}
     <li>
@@ -26,6 +27,13 @@
     </li>
 {{/blocks}}
 </ul>
+{{^blocks}}
+<div class="cw-assort-description">
+    <p><b>{{#i18n}}In diesem Abschnitt sind keine Blöcke vorhanden die sich gruppieren lassen.{{/i18n}}</b></p>
+</div>
+{{/blocks}}
 <br>
-<button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
-<button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+<div class="cw-button-box">
+    {{#blocks}}<button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>{{/blocks}}
+    <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+</div>
