@@ -96,6 +96,9 @@ class VideoBlock extends Block
 
     public function getFiles()
     {
+        if ($this->webvideo == '') {
+            return array();
+        }
         $sources = json_decode($this->webvideo);
         foreach ($sources as $source) {
             if ($source->file_id != '') {

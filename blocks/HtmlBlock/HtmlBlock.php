@@ -2,7 +2,6 @@
 namespace Mooc\UI\HtmlBlock;
 
 use Mooc\UI\Block;
-use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * @property string $content
@@ -120,8 +119,9 @@ class HtmlBlock extends Block
         global $user;
 
         $files = array();
-        $crawler = new Crawler($this->content);
         $block = $this;
+        $document = new \DOMDocument();
+        $document->loadHTML('<?xml encoding="utf-8" ?>'.$this->content);
 
         // extract a file id from a URL
         $extractFile = function ($url) use ($user, $block) {
@@ -141,27 +141,31 @@ class HtmlBlock extends Block
                     );
                 }
 
-                return null;
+                return array();
             });
         };
 
-        // filter files referenced in anchor elements
-        $crawler->filterXPath('//a')->each(function (Crawler $node) use ($extractFile, &$files) {
-            $file = $extractFile($node->attr('href'));
-
+        $anchorElements = $document->getElementsByTagName('a');
+        foreach ($anchorElements as $element) {
+            if (!$element instanceof \DOMElement || !$element->hasAttribute('href')) {
+                continue;
+            }
+            $file = $extractFile($element->getAttribute('href'));
             if ($file !== null) {
                 $files[] = $file;
             }
-        });
+        }
 
-        // filter files referenced in image elements
-        $crawler->filterXPath('//img')->each(function (Crawler $node) use ($extractFile, &$files) {
-            $file = $extractFile($node->attr('src'));
-
+        $imageElements = $document->getElementsByTagName('img');
+        foreach ($imageElements as $element) {
+            if (!$element instanceof \DOMElement || !$element->hasAttribute('src')) {
+                continue;
+            }
+            $file = $extractFile($element->getAttribute('src'));
             if ($file !== null) {
                 $files[] = $file;
             }
-        });
+        }
 
         return $files;
     }
