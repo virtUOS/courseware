@@ -49,6 +49,7 @@ class InteractiveVideoBlock extends Block
                         }
                         $exercises[] = array(
                             'question' => $exercise->getSolveTemplate($solution, $assignment, $user->id)->render(),
+                            'question_description'=> formatReady($exercise->description),
                             'title' => $exercise->title,
                             'id' => $exercise->getId(),
                             'correct' => $correct,
@@ -89,6 +90,7 @@ class InteractiveVideoBlock extends Block
                     'name'                  => $assignment->test->title,
                     'created'               => isset($assignment->test->created) ? date('d.m.Y', strtotime($assignment->test->created)) : '',
                     'exercises_count'       => count($assignment->test->exercises),
+                    'question_description'  => formatReady($exercise->description),
                     'current_assignment'    => $this->assignment_id === $assignment->id
                 );
             }
@@ -98,6 +100,7 @@ class InteractiveVideoBlock extends Block
                 foreach ($selected_assignment->test->exercises as $exercise) {
                     $exercises[] = array(
                         'question' => $exercise->getSolveTemplate($solution, $assignment, $user->id)->render(),
+                        'question_description' => formatReady($exercise->description),
                         'title' => $exercise->title,
                         'id' => $exercise->getId()
                     );

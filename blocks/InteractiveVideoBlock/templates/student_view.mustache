@@ -44,6 +44,7 @@
                         {{/correct}}
                     {{/has_solution}}
                     {{^has_solution}}
+                        <p class="cw-iav-test-content-question-description">{{{question_description}}}</p>
                         <div class="cw-iav-test-content-question">{{{question}}}</div>
                         <button name="submit-exercise" class="button" style="display: inline-block">{{#i18n}}Abschicken{{/i18n}}</button>
                     {{/has_solution}}
