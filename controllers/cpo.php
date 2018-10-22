@@ -265,6 +265,9 @@ class CpoController extends CoursewareStudipController
             function ($item) {
                 return $item['publication_date'] <= time();
             });
+        usort($parent['children'], function($a, $b) {
+            return $a['position'] - $b['position'];
+        });
 
         return $parent['children'];
     }
