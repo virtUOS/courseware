@@ -438,11 +438,12 @@ class TestBlock extends Block
                 return;
             }
             $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
-            if ($assignment == null) {
-                return;
-            }
         } else {
             $assignment = \VipsAssignment::find($this->assignment_id);
+        }
+
+        if ($assignment == null) {
+            return;
         }
         $xml = $assignment->exportXML();
 
