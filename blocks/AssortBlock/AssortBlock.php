@@ -57,7 +57,9 @@ class AssortBlock extends Block
         $blocks = array();
         foreach($children as $child)
         {
-            if (!in_array($child["type"], array("AssortBlock", "TestBlock", "AudioBlock", "GalleryBlock", "PdfBlock", "PostBlock", "SearchBlock", "ForumBlock", "BeforeAfterBlock", "ChartBlock"))){
+            if (in_array($child["type"], 
+                array("HtmlBlock", "VideoBlock", "IFrameBlock", "DownloadBlock", "KeyPointBlock", "LinkBlock", "EmbedBlock")
+            )){
                 $className = '\Mooc\UI\\'.$child["type"].'\\'.$child["type"];
                 $blocks[] = array('blockid' =>$child->id, 'blocktype'=> $child->type, 'blockname' => _cw(constant($className.'::NAME')));
             }
@@ -69,7 +71,7 @@ class AssortBlock extends Block
     private function getBlockHash($blockid)
     {
         $block = \Mooc\DB\Block::find($blockid);
-        
+
         switch ($block->type) {
             case "HtmlBlock":
                 $name = 'content';
@@ -98,8 +100,15 @@ class AssortBlock extends Block
             case "LinkBlock":
                 $name = 'link_target';
                 break;
+
+            case "EmbedBlock":
+                $name = 'embed_url';
+                break;
         }
         $field = current(\Mooc\DB\Field::findBySQL('user_id = "" AND name = ? AND block_id = ?', array($name , $block->id)));
+        if (($block->type == "VideoBlock") && ($field == '')) {
+            $field = current(\Mooc\DB\Field::findBySQL('user_id = "" AND name = ? AND block_id = ?', array('webvideo' , $block->id)));
+        }
         $hash = hash('md5', trim(preg_replace('/\\\n/', '', json_decode($field->json_data))));
 
         return $hash;
@@ -143,7 +152,6 @@ class AssortBlock extends Block
                 $s = 0;
                 do {
                     if($modelP){
-                        
                         if ($block->hash == $this->getBlockHash($modelP->id)) {
                             $block->id = $modelP->id;
                             $blockfound = true;
@@ -154,7 +162,7 @@ class AssortBlock extends Block
                     }
                     $s++;
                 } while ((!$blockfound)&&($s != $size));
-                
+
                 if (!$blockfound) {unset($assortblocks[$i]);}
             }
             $this->assortblocks = json_encode($assortblocks); 

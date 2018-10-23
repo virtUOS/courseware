@@ -83,7 +83,14 @@ class HtmlBlock extends Block
         }
 
         $document = new \DOMDocument();
-        $document->loadHTML('<?xml encoding="utf-8" ?>'.$this->content);
+        $encoding = '<?xml encoding="utf-8" ?>';
+        $pos = strrpos($this->content, $encoding);
+        if ($pos === false) {
+            $content = $encoding.$this->content;
+        } else { 
+            $content = $this->content;
+        }
+        $document->loadHTML($content);
 
         $anchorElements = $document->getElementsByTagName('a');
         foreach ($anchorElements as $element) {
@@ -121,7 +128,14 @@ class HtmlBlock extends Block
         $files = array();
         $block = $this;
         $document = new \DOMDocument();
-        $document->loadHTML('<?xml encoding="utf-8" ?>'.$this->content);
+        $encoding = '<?xml encoding="utf-8" ?>';
+        $pos = strrpos($this->content, $encoding);
+        if ($pos === false) {
+            $content = $encoding.$this->content;
+        } else { 
+            $content = $this->content;
+        }
+        $document->loadHTML($content);
 
         // extract a file id from a URL
         $extractFile = function ($url) use ($user, $block) {
@@ -176,7 +190,14 @@ class HtmlBlock extends Block
     public function importContents($contents, array $files)
     {
         $document = new \DOMDocument();
-        $document->loadHTML('<?xml encoding="utf-8" ?>'.$contents);
+        $encoding = '<?xml encoding="utf-8" ?>';
+        $pos = strrpos($contents, $encoding);
+        if ($pos === false) {
+            $content = $encoding.$contents;
+        } else { 
+            $content = $contents;
+        }
+        $document->loadHTML($content);
         $anchorElements = $document->getElementsByTagName('a');
         foreach ($anchorElements as $element) {
             if (!$element instanceof \DOMElement || !$element->hasAttribute('href')) {
