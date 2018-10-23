@@ -29,4 +29,26 @@ $(document).ready(function(){
         $(this).parent().hide();
         $(this).parent().siblings(".thread-title-content").show();
     });
+    $('.show-new-posts-threats').click(function(event){
+        $('.thread').hide();
+        $(this).css('background', '#28497c').css('color', '#fff');
+        $.each($('.post-overview-thread'), function(){
+            if (!$(this).hasClass('post-overview-highlight')) {
+                $(this).hide();
+            }
+        });
+    });
+    $('.hide-unused-threats').click(function(event){
+        $('.thread').hide();
+        $(this).css('background', '#28497c').css('color', '#fff');
+        $.each($('.post-overview-thread'), function(){
+            if (!$(this).children('.post-overview-block-link').length) {
+                $(this).hide();
+            }
+        });
+    });
+    $('.show-all-threats').click(function(event){
+        $('.post-overview-settings button').removeAttr('style');
+        $('.post-overview-thread').show();
+    });
 });
