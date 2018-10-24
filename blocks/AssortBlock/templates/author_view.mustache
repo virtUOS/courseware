@@ -6,17 +6,20 @@
         <br>
         {{#i18n}}Bewegen Sie den Cursor über das Informations-Icon des gewünschten Blocks um die Block-Id zu erfahren.{{/i18n}}
         <br>
-        {{#i18n}}Bitte beachten Sie das nicht alle Blocktypen in diesen Block eingebunden werden können.{{/i18n}}
+        <br>
+        {{#i18n}}Folgende Blocktypen können in diesen Block eingebunden werden:{{/i18n}}
+        <br>
+        {{#i18n}}Freitext, Video, externer Inhalt (iframe), Download, Merksatz, Link, Embed{{/i18n}}
     </p>
 </div>
-{{#blocks}}
+{{#blocks.0}}
 <div class="assorttypeselectors">
     <label>{{#i18n}}Accordion{{/i18n}}
     <input type="radio"  name="assorttype" value="accordion" checked></label>
     <label>{{#i18n}}Tabs{{/i18n}}
     <input type="radio"  name="assorttype" value="tabs"></label>
 </div>
-{{/blocks}}
+{{/blocks.0}}
 <ul class="assortblock-list">
 {{#blocks}}
     <li>
@@ -34,6 +37,6 @@
 {{/blocks}}
 <br>
 <div class="cw-button-box">
-    {{#blocks}}<button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>{{/blocks}}
+    {{#blocks.0}}<button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>{{/blocks.0}}
     <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
 </div>

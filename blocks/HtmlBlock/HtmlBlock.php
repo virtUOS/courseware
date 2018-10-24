@@ -204,7 +204,7 @@ class HtmlBlock extends Block
                 $element->setAttribute('src', $block->buildUrl($GLOBALS['ABSOLUTE_URI_STUDIP'], '/sendfile.php', $components));
             });
         }
-        $this->content = \STUDIP\Markup::purifyHtml($document->saveHTML());
+        $this->content = $document->saveHTML();
 
         $this->save();
     }
