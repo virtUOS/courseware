@@ -1,9 +1,14 @@
 <? if (count($threads) != 0): ?>
+    <div class="post-overview-settings"> 
+        <button class="button show-new-posts-threats"><?= _cw('nur Diskussionen mit neuen Beiträgen anzeigen') ?> </button>
+        <button class="button hide-unused-threats"><?= _cw('nicht verwendete Diskussionen ausblenden') ?> </button>
+        <button class="button show-all-threats"><?= _cw('alle Diskussionen anzeigen') ?> </button>
+    </div>
     <ul class="post-overview">
         <? foreach($threads as $thread): ?>
             <? $counter = 0;
             foreach($thread["thread_posts"]["posts"] as $post){
-                if (object_get_visit($_SESSION['SessionSeminar'], "courseware") < strtotime($post["mkdate"])) {
+                if (object_get_visit($cid, "courseware") < strtotime($post["mkdate"])) {
                     $counter++;
                 }
             }?>
@@ -30,7 +35,7 @@
                         </p>
                     <? endforeach; ?>
                 <? else :?>
-                    <p><?= _cw('Dieser Thread wird in keinem Block genutzt.') ?></p>
+                    <p><?= _cw('Diese Diskussion wird in keinem Block verwendet.') ?></p>
                 <? endif; ?>
                 <div class="clear"></div>
 
@@ -93,7 +98,7 @@
         <input type="hidden" name="thread_id" id="input_thread_id" value="">
         <input type="hidden" name="cid" value="<?= $cid ?>">
         <textarea name="content" placeholder="<?= _cw('Auf Beitrag antworten...') ?>" spellcheck="true"></textarea>
-        <input type="submit" value="senden" class="button">
+        <input type="submit" value="<?= _cw('senden') ?>" class="button">
     </form>
 <? else: ?>
     <div class="post-overview-no-threads"> 
