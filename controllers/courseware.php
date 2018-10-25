@@ -222,6 +222,7 @@ class CoursewareController extends CoursewareStudipController
                 break;
             case "hide":
                 $this->storeShowSectionNav(false);
+                $this->storeSectionsAsChatpers(false);
                 break;
         }
 
