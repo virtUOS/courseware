@@ -10,6 +10,7 @@ export default AuthorView.extend({
         'change select.videotype': 'selection',
         'click button[name=preview]': 'showPreview',
         'click button[name=addmediatype]': 'addmediatype',
+        'click button.removemediatype': 'removemediatype',
         'change select.cw-webvideo-source': 'toggleSourceEvent'
     },
 
@@ -63,6 +64,9 @@ export default AuthorView.extend({
         this.$('.cw-videoblock-aspect option[value=' + aspect + ']').attr('selected', true);
         this.selection();
         this.showPreview();
+        if ($('.removemediatype').length <= 1) {
+            $('.removemediatype').hide();
+        }
     },
 
     saveVideo() {
@@ -175,6 +179,18 @@ export default AuthorView.extend({
             $webvideo.find('.cw-webvideo-source-url').hide();
             $webvideo.find('.cw-webvideo-source-url-info').hide();
             $webvideo.find('.cw-webvideo-source-file-info').show();
+        }
+        $('.removemediatype').show();
+    },
+
+    removemediatype(event) {
+        var $webvideo = $(event.currentTarget).parent('.webvideo');
+
+        if ($webvideo.siblings('.webvideo').length != 0) {
+            $webvideo.remove();
+        }
+        if ($('.removemediatype').length == 1) {
+            $('.removemediatype').hide();
         }
     },
 
