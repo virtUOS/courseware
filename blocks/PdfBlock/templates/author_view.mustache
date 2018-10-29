@@ -6,7 +6,7 @@
 <input type="hidden" class="cw-pdf-file-stored" value="{{pdf_file}}">
 <select class="cw-pdf-set-file" name="cw-pdf-file" {{^pdf_files}}disabled{{/pdf_files}}>
     {{#pdf_files}}
-        <option file_id="{{id}}" file_name="{{name}}">{{name}}</option>
+        <option file_id="{{id}}" file_name="{{name}}" value="{{pdf_file}}">{{name}}</option>
     {{/pdf_files}}
     {{^pdf_files}}
         <option value="" selected>{{#i18n}}keine PDF-Datei verfügbar{{/i18n}}</option>
