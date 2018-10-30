@@ -18,17 +18,15 @@ class PdfBlock extends Block
     }
 
     public function student_view()
-    {   
+    {
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
         $file = \FileRef::find($this->pdf_file_id);
         $access = ($file->terms_of_use->download_condition == 0) ? true : false;
-
         $this->setGrade(1.0);
         $plugin_manager = \PluginManager::getInstance();
         $courseware_path = $plugin_manager->getPlugin('Courseware')->getPluginURL();
-        
 
         return array_merge($this->getAttrArray(), array(
             'access'           => $access,
@@ -58,7 +56,7 @@ class PdfBlock extends Block
     {
         $filesarray = array();
         $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
-        
+
         foreach ($folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
@@ -99,7 +97,6 @@ class PdfBlock extends Block
     {
         $file_ref = new \FileRef($this->pdf_file_id);
         $file = new \File($file_ref->file_id);
-        
         $files[] = array(
             'id' => $this->pdf_file_id,
             'name' => $file_ref->name,
@@ -131,6 +128,7 @@ class PdfBlock extends Block
         if (isset($properties['pdf_filename'])) {
             $this->pdf_filename = $properties['pdf_filename'];
         }
+
         $this->save();
     }
 

@@ -16,7 +16,7 @@ class OpenCastBlock extends Block
     }
 
     public function student_view()
-    {   
+    {
         $this->setGrade(1.0);
         $opencast_content_json = json_decode($this->opencast_content);
         $url_mp4 = $opencast_content_json->url_mp4;

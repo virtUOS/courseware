@@ -48,6 +48,7 @@ class DownloadBlock extends Block
         $this->authorizeUpdate();
         $allfiles = $this->showFiles($this->folder_id);
         $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+
         return array_merge($this->getAttrArray(), array('allfiles' => $allfiles, 'folders' => $folders));
     }
 
@@ -81,6 +82,7 @@ class DownloadBlock extends Block
     public function download_handler($data)
     {
         $this->setGrade(1.0);
+
         return ;
     }
 
@@ -91,6 +93,7 @@ class DownloadBlock extends Block
         foreach ($response as $item) {
             $filesarray[] = array("id" => $item->id, "name" => $item->name);
         }
+
         return $filesarray;
     }
 

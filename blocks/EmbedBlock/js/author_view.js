@@ -131,7 +131,7 @@ export default AuthorView.extend({
             this.$('.cw-embedblock-url-info-wrong-plattform').hide();
         }
     },
-    
+
     toggleTime() {
         var use_start_time = this.$('.cw-embedblock-time-start-check').prop( "checked" );
         if (use_start_time){

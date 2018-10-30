@@ -98,6 +98,7 @@ class GalleryBlock extends Block
                 );
             }
         }
+
         return $filesarray;
     }
 
@@ -185,7 +186,7 @@ class GalleryBlock extends Block
             \FileManager::moveFileRef($file_ref, $gallery_folder, $current_user);
         }
     }
-    
+
     private function setGalleryFiles()
     {
         $files = $this->showFiles($this->gallery_folder_id);

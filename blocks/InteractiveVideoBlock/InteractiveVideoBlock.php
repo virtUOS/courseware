@@ -65,7 +65,7 @@ class InteractiveVideoBlock extends Block
         } else {
             $iav_url = '';
         }
-        
+
         return array_merge($this->getAttrArray(), array(
             'exercises'         => $exercises,
             'iav_url'           => $iav_url
@@ -107,7 +107,7 @@ class InteractiveVideoBlock extends Block
                 }
             }
         }
-        
+
         if ($this->iav_source != '') {
             $source = json_decode($this->iav_source);
             $iav_url = $source->url;
@@ -207,7 +207,7 @@ class InteractiveVideoBlock extends Block
     {
         $filesarray = array();
         $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
-        
+
         foreach ($folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
@@ -238,7 +238,6 @@ class InteractiveVideoBlock extends Block
     public function getFiles()
     {
         $source = json_decode($this->iav_source);
-
         $files = array();
 
         if (!$source->external) {

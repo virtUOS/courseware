@@ -73,7 +73,7 @@ class VideoBlock extends Block
     {
         $filesarray = array();
         $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
-        
+
         foreach ($folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){

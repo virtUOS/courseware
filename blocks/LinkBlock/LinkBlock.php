@@ -19,7 +19,7 @@ class LinkBlock extends Block
     }
 
     public function student_view()
-    {   
+    {
         global $user;
         if (!$this->isAuthorized()) {
             return array('inactive' => true);

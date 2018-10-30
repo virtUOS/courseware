@@ -58,7 +58,6 @@ export default AuthorView.extend({
             $view.$('select.cw-link-progress').show();
             $view.$('input.cw-link-target').hide();
             $view.$('select.cw-link-protocol').hide();
-            
         }
 
         if ($type == 'external') {

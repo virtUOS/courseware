@@ -86,7 +86,6 @@ class PostBlock extends Block
             Post::create($data);
         }
 
-
         return;
     }
 
@@ -176,7 +175,7 @@ class PostBlock extends Block
                 );
                 POST::create($data);
         }
-        
+
         if (isset($properties['has_to_post'])) {
             $this->has_to_post = $properties['has_to_post'];
         }

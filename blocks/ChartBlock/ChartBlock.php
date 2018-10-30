@@ -17,7 +17,7 @@ class ChartBlock extends Block
     }
 
     public function student_view()
-    {   
+    {
         $this->setGrade(1.0);
 
         return array_merge($this->getAttrArray(), array());

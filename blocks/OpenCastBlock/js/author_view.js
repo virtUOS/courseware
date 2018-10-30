@@ -25,6 +25,7 @@ export default AuthorView.extend({
         if ($opencastid != '') {
             $view.$('.cw-opencast-content option[data-opencastid="'+$opencastid+'"]').prop('selected', true);
         }
+
         return this;
     },
 

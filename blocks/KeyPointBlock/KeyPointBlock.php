@@ -17,7 +17,7 @@ class KeyPointBlock extends Block
     }
 
     public function student_view()
-    {   
+    {
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }

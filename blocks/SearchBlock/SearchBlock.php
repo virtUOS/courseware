@@ -126,7 +126,7 @@ class SearchBlock extends Block
             $block = new DBBlock($item['block_id']);
 
             if (($block->belongesToCourse($cid)) && ($block->isPublished())){
-                
+
                 if ($isSequential && !$user->hasPerm($cid, 'dozent') && !$block->parent->hasUserCompleted($uid)) {
                     continue;
                 }
@@ -194,7 +194,6 @@ class SearchBlock extends Block
                     }
                 }
 
-                
                 array_push($answer, array(
                     'html'  =>  $html
                 ));
