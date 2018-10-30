@@ -42,7 +42,7 @@ class AssortBlock extends Block
            $block->hash = $this->getBlockHash($block->id);
         }
         $this->assortblocks = json_encode($assortblocks);
-        
+
         return $this->getAttrArray();
     }
 

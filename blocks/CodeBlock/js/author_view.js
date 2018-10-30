@@ -45,7 +45,7 @@ export default AuthorView.extend({
     postRender() {
         hljs.highlightBlock(this.$('.code-content-preview > pre > code')[0]);
     },
-    
+
     updatePreview() {
         var $code_content = this.escapeHtml(this.$('textarea').val());
         var $code_lang = this.$(".code_lang").val();
@@ -63,7 +63,7 @@ export default AuthorView.extend({
         }
         hljs.highlightBlock($preview_block[0]);
     },
-    
+
     updateLang() {
         var $code_content = this.escapeHtml(this.$('textarea').val());
         var $code_lang = this.$(".code_lang").val();
@@ -92,7 +92,7 @@ export default AuthorView.extend({
             console.log(errorMessage, arguments);
           });
     },
-    
+
     escapeHtml(text) {
       var map = {
         '&': '&amp;',

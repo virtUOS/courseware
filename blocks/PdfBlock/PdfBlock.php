@@ -22,7 +22,7 @@ class PdfBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
-        
+
         $document = \StudipDocument::find($this->pdf_file_id);
         if ($document) {
             $access = $document->checkAccess($this->container['current_user_id']);
@@ -30,7 +30,6 @@ class PdfBlock extends Block
         $this->setGrade(1.0);
         $plugin_manager = \PluginManager::getInstance();
         $courseware_path = $plugin_manager->getPlugin('Courseware')->getPluginURL();
-        
 
         return array_merge($this->getAttrArray(), array(
             'access'           => $access,
@@ -157,6 +156,7 @@ class PdfBlock extends Block
         } else {
             $this->pdf_file = "../../sendfile.php?type=6&file_id=".$document->dokument_id."&file_name=".$file_name;
         }
+
         return;
     }
 

@@ -16,11 +16,12 @@ class BeforeAfterBlock extends Block
     }
 
     public function student_view()
-    {   
+    {
         $this->setGrade(1.0);
         $ba_img_before = json_decode($this->ba_before)->url;
         $ba_img_after = json_decode($this->ba_after)->url;
         $ba_enable = (($ba_img_before != '') && ($ba_img_after != '')) ? true : false;
+
         return array(
             'beforeafter_img_before' => $ba_img_before,
             'beforeafter_img_after' => $ba_img_after,
@@ -70,7 +71,7 @@ class BeforeAfterBlock extends Block
     }
 
     public function exportProperties()
-    { 
+    {
        return array(
             'ba_before' => $this->ba_before,
             'ba_after' => $this->ba_after
@@ -82,7 +83,7 @@ class BeforeAfterBlock extends Block
         $ba_files = [];
         $before = json_decode($this->ba_before);
         $after = json_decode($this->ba_after);
-        
+
         if ($before->source == 'file') {
             array_push($ba_files, $before->file_id);
         }

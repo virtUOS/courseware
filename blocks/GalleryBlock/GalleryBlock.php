@@ -151,7 +151,7 @@ class GalleryBlock extends Block
 
        return array_merge($this->getAttrArray() , array( 'gallery_folder_name' => $folder_name) );
     }
-    
+
     public function getFiles()
     {
         $db = \DBManager::get();

@@ -14,6 +14,7 @@ export default StudentView.extend({
 
     postRender() {
         this.$('.cw-beforeafter-slider').beforeAfter();
+
         return this;
     }
 });

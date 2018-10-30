@@ -46,6 +46,7 @@ export default AuthorView.extend({
         if($cards.length == 0) {
             this.addCard();
         }
+
         return this;
     },
 

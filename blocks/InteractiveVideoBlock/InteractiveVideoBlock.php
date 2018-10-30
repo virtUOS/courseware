@@ -65,7 +65,7 @@ class InteractiveVideoBlock extends Block
         } else {
             $iav_url = '';
         }
-        
+
         return array_merge($this->getAttrArray(), array(
             'exercises'         => $exercises,
             'iav_url'           => $iav_url
@@ -107,7 +107,7 @@ class InteractiveVideoBlock extends Block
                 }
             }
         }
-        
+
         if ($this->iav_source != '') {
             $source = json_decode($this->iav_source);
             $iav_url = $source->url;
@@ -147,7 +147,7 @@ class InteractiveVideoBlock extends Block
 
         return $this->getAttrArray();
     }
-    
+
     public function exercise_submit_handler($data)
     {
         parse_str($data, $requestParams);
@@ -230,6 +230,7 @@ class InteractiveVideoBlock extends Block
 
         return $filesarray;
     }
+
     /**
      * {@inheritdoc}
      */

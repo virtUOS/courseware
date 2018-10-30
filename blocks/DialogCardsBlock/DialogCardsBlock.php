@@ -15,7 +15,7 @@ class DialogCardsBlock extends Block
     }
 
     public function student_view()
-    {   
+    {
         $this->setGrade(1.0);
         $cards = json_decode($this->dialogcards_content);
 
@@ -39,7 +39,7 @@ class DialogCardsBlock extends Block
             'dialogcards_content' => $this->dialogcards_content
         );
     }
-    
+
     private function showFiles()
     {
         $db = \DBManager::get();
@@ -97,7 +97,6 @@ class DialogCardsBlock extends Block
     public function getFiles()
     {
         $cards = json_decode($this->dialogcards_content);
-
         $files = array();
 
         foreach ($cards as $card) {

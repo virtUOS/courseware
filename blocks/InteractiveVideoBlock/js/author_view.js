@@ -58,8 +58,7 @@ export default AuthorView.extend({
             $view.$('.cw-iav-controls').hide();
             return ;
         }
-        //$view.$(".cw-iav-url").val($view.$(".cw-iav-url-stored").val());
-        
+
         if (source_data != '') {
             var source_data = JSON.parse(source_data);
             if (source_data.external) {
@@ -122,7 +121,6 @@ export default AuthorView.extend({
 
     onSave(event) {
         var $view = this;
-
         var $overlay_items = $view.$('.cw-iav-overlay-edit-item');
         var overlay_json = [];
         $overlay_items.each(function(index){
@@ -747,4 +745,3 @@ export default AuthorView.extend({
         Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
     }
 });
-
