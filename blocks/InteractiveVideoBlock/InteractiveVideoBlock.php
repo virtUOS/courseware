@@ -48,13 +48,13 @@ class InteractiveVideoBlock extends Block
                             $correct = $evaluation['percent'] == 1;
                         }
                         $exercises[] = array(
-                            'question' => $exercise->getSolveTemplate($solution, $assignment, $user->id)->render(),
-                            'question_description'=> formatReady($exercise->description),
-                            'title' => $exercise->title,
-                            'id' => $exercise->getId(),
-                            'correct' => $correct,
-                            'has_solution' => $has_solution,
-                            'solution' => $exercise->getCorrectionTemplate($solution)->render(),
+                            'question'              => $exercise->getSolveTemplate($solution, $assignment, $user->id)->render(),
+                            'question_description'  => formatReady($exercise->description),
+                            'title'                 => $exercise->title,
+                            'id'                    => $exercise->getId(),
+                            'correct'               => $correct,
+                            'has_solution'          => $has_solution,
+                            'solution'              => $exercise->getCorrectionTemplate($solution)->render(),
                         );
                     }
                 }
@@ -67,8 +67,9 @@ class InteractiveVideoBlock extends Block
         }
 
         return array_merge($this->getAttrArray(), array(
-            'exercises'         => $exercises,
-            'iav_url'           => $iav_url
+            'exercises'  => $exercises,
+            'iav_url'    => $iav_url,
+            'vips14'     => $courseware->vipsVersion('1.4')
         ));
     }
 

@@ -714,13 +714,13 @@ class Courseware extends Block
         }
     }
 
-    public function vipsVersion()
+    public function vipsVersion($version = '1.3')
     {
         if ($this->vipsInstalled()) {
             $plugin_manager = \PluginManager::getInstance();
-            $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
+            $installed_version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
 
-            return version_compare('1.3',$version) <= 0;
+            return version_compare($version, $installed_version) <= 0;
         } else {
             return false;
         }

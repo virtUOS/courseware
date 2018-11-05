@@ -64,7 +64,8 @@ class TestBlock extends Block
                 'typemismatch'  => false,
                 'active'        => $active, 
                 'version'       => $version,
-                'installed'     => $installed
+                'installed'     => $installed,
+                'vips14'        => $courseware->vipsVersion('1.4')
             );
         }
         if ($type_mismatch) {
@@ -73,14 +74,16 @@ class TestBlock extends Block
                 'typemismatch'  => true,
                 'active'        => $active, 
                 'version'       => $version,
-                'installed'     => $installed
+                'installed'     => $installed,
+                'vips14'        => $courseware->vipsVersion('1.4')
             );
         }
 
         return array_merge($this->getAttrArray(), array(
             'active' => $active,
             'version' => $version,
-            'installed' => $installed
+            'installed' => $installed,
+            'vips14' => $courseware->vipsVersion('1.4')
         ), $this->buildExercises());
     }
 
@@ -359,6 +362,12 @@ class TestBlock extends Block
                 $character_picker = false;
             }
 
+            if ($solution != null) {
+                $rendered_solution = $exercise->getCorrectionTemplate($solution)->render();
+            } else {
+                $rendered_solution = '';
+            }
+
             $entry = array(
                 'exercise_type'       => $exercise->type,
                 'tb_exercise'         => $tb_exercise,
@@ -375,7 +384,7 @@ class TestBlock extends Block
                 'multiple-choice'     => get_class($exercise) == 'mc_exercise',
                 'solver_user_id'      => $user->id,
                 'has_solution'        => $has_solution,
-                'solution'            => $exercise->getCorrectionTemplate($solution)->render(),
+                'solution'            => $rendered_solution,
                 'solving_allowed'     => $solving_allowed,
                 'number_of_exercises' => $numberofex,
                 'exercise_index'      => $exindex++,
