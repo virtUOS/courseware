@@ -393,7 +393,7 @@ class TestBlock extends Block
                 'exercise_hint'       => $exercise->options['hint'],
                 'corrector_comment'   => $corrector_comment, 
                 'sample_solution'     => $sample_solution,
-                'is_corrected'        => $solution['corrected'],
+                'is_corrected'        => $solution['corrected'] && ($assignment->options['released'] == 2),
                 'tries_left'          => $tries_left, 
                 'tries_pl'            => $tries_pl,
                 'character_picker'    => $character_picker,
