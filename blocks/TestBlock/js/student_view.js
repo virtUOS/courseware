@@ -98,14 +98,48 @@ export default StudentView.extend({
 
     postRender() {
         // TODO this code from vips.js should be called by vips.js
-        this.$('.rh_list').sortable({
-            axis: 'y',
-            containment: 'parent',
-            item: '> .rh_item',
-            tolerance: 'pointer',
-            update: this.rh_move_choice
-        });
+        if (this.$('.exercise').hasClass('vips14')) {
+            this.$('.rh_list').sortable({
+                item: '> .rh_item',
+                tolerance: 'pointer',
+                connectWith: '.rh_list',
+                update: function(event, ui) {
+                    if (ui.sender) {
+                        ui.item.find('input').val(jQuery(this).data('group'));
+                    }
+                },
+                over: function(event, ui) {
+                    jQuery(this).addClass('hover');
+                },
+                out: function(event, ui) {
+                    jQuery(this).removeClass('hover');
+                },
+                receive: function(event, ui) {
+                    var sortable = jQuery(this);
+                    var container = sortable.closest('tbody').find('.answer_container');
         
+                    // default answer container can have more items
+                    if (sortable.children().length > 1 && !sortable.is(container)) {
+                        sortable.find('.rh_item').each(function(i) {
+                            if (!ui.item.is(this)) {
+                                jQuery(this).find('input').val(-1);
+                                jQuery(this).detach().appendTo(container)
+                                            .css('opacity', 0).animate({opacity: 1});
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            this.$('.rh_list').sortable({
+                axis: 'y',
+                containment: 'parent',
+                item: '> .rh_item',
+                tolerance: 'pointer',
+                update: this.rh_move_choice
+            });
+        }
+
     },
 
     // TODO this code from vips.js should be called by vips.js

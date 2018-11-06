@@ -67,8 +67,9 @@ class InteractiveVideoBlock extends Block
         }
 
         return array_merge($this->getAttrArray(), array(
-            'exercises'         => $exercises,
-            'iav_url'           => $iav_url
+            'exercises'  => $exercises,
+            'iav_url'    => $iav_url,
+            'vips14'     => $courseware->vipsVersion('1.4')
         ));
     }
 
