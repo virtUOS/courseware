@@ -5,7 +5,20 @@
     height: 100%;
     max-width: unset;
     max-height: unset;
-    
+
+    &.view-author {
+        .active-section {
+            padding-top: 6em;
+        }
+        .block-adder {
+            position: absolute;
+            top: 4em;
+            background-color: #fff;
+            width: 100%;
+            z-index: 23;
+        }
+    }
+
     .cw-sidebar,
     .breadcrumb {
         display: none;
@@ -17,10 +30,11 @@
     }
     .mode-switch {
         position: absolute;
-        top: unset;
-        bottom: 1em;
         right: 1em;
+        top: 8em;
+        z-index: 12;
     }
+
     .active-section {
         max-width: unset;
     }
