@@ -1,6 +1,8 @@
 @import '../../../assets/less/mixins';
+@import '../../../assets/less/variables';
 
 section#courseware.scrollyware {
+
     ol.active-subchapter.stuck {
         position: unset;
     }
@@ -23,9 +25,7 @@ section#courseware.scrollyware {
         width: 70%;
         max-width: 1250px;
         &.EmbedBlock {
-            iframe {
-                width: 1250px !important;
-            }
+            height: 710px;
         }
     }
 
@@ -34,9 +34,7 @@ section#courseware.scrollyware {
         width: 60%;
         max-width: 950px;
         &.EmbedBlock {
-            iframe {
-                width: 950px !important;
-            }
+            height: 560px;
         }
     }
 
@@ -50,12 +48,30 @@ section#courseware.scrollyware {
     section.block.cw-scrolly-right-medium{
         max-width: 15%;
         position: absolute;
+
+        &.HtmlBlock { 
+            font-size: 16px;
+            h2 {
+                font-size: 18px;
+                font-weight: 600;
+                border: none;
+            }
+        }
     }
 
     section.block.cw-scrolly-left-small,
     section.block.cw-scrolly-right-small {
         max-width: 10%;
         position: absolute;
+
+        &.HtmlBlock { 
+            font-size: 12px;
+            h2 {
+                font-size: 16px;
+                font-weight: 600;
+                border: none;
+            }
+        }
     }
 
     section.block.cw-scrolly-left-medium ,
@@ -70,7 +86,66 @@ section#courseware.scrollyware {
         right: 2%;
     }
 
+    section.block.cw-scrolly-left-medium ,
+    section.block.cw-scrolly-left-big ,
+    section.block.cw-scrolly-left-small,
+    section.block.cw-scrolly-right-medium ,
+    section.block.cw-scrolly-right-big ,
+    section.block.cw-scrolly-right-small {
+
+        .block-content:not([data-view="student"]){
+            background-color: #fff;
+            input {
+                max-width: 90%;
+            }
+            select{
+                max-width: 85%;
+            }
+        }
+    }
+    
     .cw-scrolly-blocks {
         list-style: none;
+    }
+}
+
+@media screen and (max-width: @mobile-max-width) {
+
+    section#courseware.scrollyware {
+        section.block,
+        section.block.cw-scrolly-big,
+        section.block.cw-scrolly-medium,
+
+        section.block.cw-scrolly-left-medium ,
+        section.block.cw-scrolly-left-big ,
+        section.block.cw-scrolly-left-small,
+        section.block.cw-scrolly-right-medium ,
+        section.block.cw-scrolly-right-big ,
+        section.block.cw-scrolly-right-small {            
+            width: 100%;
+            max-width: 100%;
+            &.EmbedBlock {
+                height: unset;
+            }
+            &.HtmlBlock {
+                div.content  {
+                    width: 100%;
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        section.block.cw-scrolly-left-medium ,
+        section.block.cw-scrolly-left-big ,
+        section.block.cw-scrolly-left-small,
+        section.block.cw-scrolly-right-medium ,
+        section.block.cw-scrolly-right-big ,
+        section.block.cw-scrolly-right-small {
+            position: unset;
+            left: unset;
+            right: unset;
+        }
     }
 }

@@ -16,7 +16,7 @@ export default StudentView.extend({
     // DOM instead of making a roundtrip to the server
     this.model.set({
       'confirmed': this.$('input[name="confirmed"]').prop('checked'),
-      'title':     this.$('.title').html()
+      'title':     this.$('.confirm-title').html()
     });
   },
 
