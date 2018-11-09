@@ -1,7 +1,11 @@
 <ol class=active-subchapter
   data-blockid={{active_subchapter.id}}
   data-type=Subchapter>
-
+  {{#scrollytelling}}
+     <li class="menu-toggle">
+        <button class="menu-toggle-button">menu</button>
+     </li>
+  {{/scrollytelling}}
   {{#section_nav}}
     {{#prev}}
       <li class="prev">

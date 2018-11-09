@@ -5,7 +5,33 @@
     height: 100%;
     max-width: unset;
     max-height: unset;
-    
+
+    .cw-sidebar {
+        top: 4em;
+        background-color: #fff;
+        padding-right: 8px;
+        z-index: 99;
+        .chapters,
+        .cw-sidebar-image {
+            display: none;
+        }
+    }
+
+    .menu-toggle-button {
+        .btn(hamburger);
+        width: 48px;
+        height: 38px;
+        background-size: 32px;
+        
+        &:hover {
+            .btn(hamburger, white);
+            width: 48px;
+            height: 38px;
+            background-size: 32px;
+            background-color: #28497c;
+        }
+    }
+
     .breadcrumb,
     .mobile-show-nav-button {
         display: none;
@@ -46,7 +72,7 @@
     
     section.block {
         width: 50%;
-        max-width: 650px;
+        max-width: 720px;
         margin-right: auto;
         margin-left: auto;
         
