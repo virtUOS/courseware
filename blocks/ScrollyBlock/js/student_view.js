@@ -38,6 +38,9 @@ export default StudentView.extend({
                         case 'default':
                             break;
                     }
+                    if ((this).bigletter){
+                        $('#block-'+(this).blockid).addClass('cw-scrolly-big-letter');
+                    }
                 });
             } catch (err) {
                 //console.log('no scrolly: ' + err);

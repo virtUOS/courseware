@@ -2,19 +2,26 @@
 <ul>
 {{#blocks}}
     <li class="cw-scrolly-blocks" data-blockid="{{blockid}}">
-        <label for="cw-scrolly-block-style">{{blockname}} (Id: {{blockid}}):</label>
-        <select data-blockid="{{blockid}}" name="cw-scrolly-block-style" class="cw-scrolly-block-style">
-            <option value="default">default</option>
-            <option value="full">full</option>
-            <option value="big">big</option>
-            <option value="medium">medium</option>
-            <option value="left-small">left-small</option>
-            <option value="left-big">left-big</option>
-            <option value="left-medium">left-medium</option>
-            <option value="right-small">right-small</option>
-            <option value="right-big">right-big</option>
-            <option value="right-medium">right-medium</option>
-        </select>
+        <fieldset>
+            <legend>{{blockname}} (Id: {{blockid}})</legend>
+            <label for="cw-scrolly-block-style">{{#i18n}}Layout{{/i18n}}:</label>
+            <select data-blockid="{{blockid}}" name="cw-scrolly-block-style" class="cw-scrolly-block-style">
+                <option value="default">default</option>
+                <option value="full">full</option>
+                <option value="big">big</option>
+                <option value="medium">medium</option>
+                <option value="left-small">left-small</option>
+                <option value="left-big">left-big</option>
+                <option value="left-medium">left-medium</option>
+                <option value="right-small">right-small</option>
+                <option value="right-big">right-big</option>
+                <option value="right-medium">right-medium</option>
+            </select>
+            <br>
+            <label for="cw-scrolly-big-letter">{{#i18n}}Anfangsbuchstabe groß{{/i18n}}:</label>
+            <input data-blockid="{{blockid}}" type="checkbox" name="cw-scrolly-big-letter" class="cw-scrolly-big-letter">
+        </fieldset>
+        
     </li>
 {{/blocks}}
 </ul>

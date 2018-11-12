@@ -33,6 +33,7 @@ import 'ScrollyBlock/js/ScrollyBlock'
 import 'SearchBlock/js/SearchBlock'
 import 'Section/js/Section'
 import 'TestBlock/js/TestBlock'
+import 'TypewriterBlock/js/TypewriterBlock'
 import 'VideoBlock/js/VideoBlock'
 
 $(document).ready(function () {

@@ -7,11 +7,14 @@ section#courseware.scrollyware {
         position: unset;
     }
 
-    section.block.HtmlBlock {
+    section.block.HtmlBlock,
+    section.block.TypewriterBlock {
         font-family: Georgia;
         line-height: 1.5em;
         padding-top: 1.5em;
+    }
 
+    section.block.cw-scrolly-big-letter {
         p::first-letter {
             font-size: 5em;
             line-height: 60px;
@@ -64,7 +67,8 @@ section#courseware.scrollyware {
         max-width: 15%;
         position: absolute;
 
-        &.HtmlBlock { 
+        &.HtmlBlock,
+        &.TypewriterBlock { 
             font-size: 16px;
             h2 {
                 font-size: 18px;
@@ -79,7 +83,8 @@ section#courseware.scrollyware {
         max-width: 10%;
         position: absolute;
 
-        &.HtmlBlock { 
+        &.HtmlBlock,
+        &.TypewriterBlock { 
             font-size: 12px;
             h2 {
                 font-size: 16px;
@@ -142,7 +147,8 @@ section#courseware.scrollyware {
             &.EmbedBlock {
                 height: unset;
             }
-            &.HtmlBlock {
+            &.HtmlBlock,
+            &.TypewriterBlock {
                 div.content  {
                     width: 100%;
                     img {

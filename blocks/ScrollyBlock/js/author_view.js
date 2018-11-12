@@ -26,6 +26,10 @@ export default AuthorView.extend({
             $.each(block_styles, function(){
                 let select = view.$('.cw-scrolly-block-style[data-blockid="'+(this).blockid+'"] option[value="'+(this).style+'"]');
                 select.prop('selected', true);
+                if ((this).bigletter) {
+                    let input = view.$('.cw-scrolly-big-letter[data-blockid="'+(this).blockid+'"]');
+                    input.prop('checked', true);
+                }
             });
         } catch(error) {
             
@@ -67,6 +71,7 @@ export default AuthorView.extend({
             let block_style = {};
             block_style.blockid = $(this).attr('data-blockid');
             block_style.style = $(this).find('.cw-scrolly-block-style').val();
+            block_style.bigletter = $(this).find('.cw-scrolly-big-letter').prop('checked');
             $scrolly_block_style.push(block_style);
         });
         $scrolly_block_style = JSON.stringify($scrolly_block_style);
