@@ -1,0 +1,46 @@
+@import '../../../assets/less/variables';
+@import '../../../assets/less/mixins';
+.cw-date-countdown {
+    display: none;
+
+    .cw-date-countdown-digit {
+        display: inline-block;
+        margin-right: 4px;
+    
+        .cw-date-countdown-number {
+            font-size: 6em;
+            line-height: 1.25em;
+            height: 1.25em;
+            padding: 3px 29px;
+            background: rgba(245,245,245,1);
+            font-weight: 300;
+        }
+    
+        .cw-date-countdown-label-sg,
+        .cw-date-countdown-label-pl {
+            display:none;
+            padding: 5px;
+            font-size: 1.25em;
+            text-align: left;
+            text-transform: uppercase;
+        }
+    }
+
+}
+
+.cw-sidebar {
+    .cw-date-countdown-digit {
+        margin: 0;
+
+        .cw-date-countdown-number {
+            font-size: 1.75em;
+            padding: 0.7em;
+        }
+
+        .cw-date-countdown-label-sg,
+        .cw-date-countdown-label-pl {
+            padding: 2px;
+            font-size: 0.75em;
+        }
+    }
+}
