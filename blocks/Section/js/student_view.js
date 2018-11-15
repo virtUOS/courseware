@@ -35,6 +35,9 @@ export default StudentView.extend({
     'click .cw-block-adder-selector': 'showBlockAdderTab',
     'click .cw-block-adder-header': 'toggleBlockAdder',
     'click .cw-block-adder-item': 'addNewBlock',
+    'click .cw-block-edit-fav': 'editFavs',
+    'click .cw-block-fav-item': 'selectFav',
+    'click .cw-block-store-fav': 'storeFavs',
 
     // child block stuff
 
@@ -74,7 +77,11 @@ export default StudentView.extend({
     tooltip(this.$el, 'button.edit,button.trash');
     tooltip(this.$el, '.cw-block-adder-item');
     this.$('.cw-block-adder-tab').not('.cw-block-adder-tab[data-blockclass="all"]').hide();
-    this.$('.cw-block-adder-selector[data-blockclass="all"]').addClass('cw-active-selector');
+    if (this.$('.cw-block-adder-item-fav').length > 0) {
+        this.$('.cw-block-adder-selector[data-blockclass="favorite"]').trigger('click');
+    } else {
+        this.$('.cw-block-adder-selector[data-blockclass="all"]').trigger('click');
+    }
   },
 
   switchMode(view) {
@@ -211,6 +218,56 @@ export default StudentView.extend({
         console.log(errorMessage, arguments);
         view.toggleBlockAdder();
       });
+  },
+
+  editFavs() {
+      var $view = this;
+      $view.$('.cw-block-edit-fav').toggle();
+      $view.$('.cw-block-add-fav-all-blocks').toggle();
+      $view.$('.cw-block-adder-favs').toggle();
+      $view.$('.cw-block-store-fav').show();
+  },
+
+  selectFav(event) {
+      var $item = $(event.currentTarget);
+      if ($item.hasClass('cw-block-fav-item-selected')){
+          $item.removeClass('cw-block-fav-item-selected');
+      } else {
+          $item.addClass('cw-block-fav-item-selected');
+      }
+  },
+
+  storeFavs(event) {
+      var $view = this;
+      var favs = {};
+      var $selected = $view.$('.cw-block-fav-item-selected');
+      favs.blocktypes = [];
+      $selected.each(function(index){
+          favs.blocktypes.push($(this).data('blocktype'));
+      });
+      favs = JSON.stringify(favs);
+      helper
+      .callHandler(this.model.id, 'add_favorites', {
+        favorites: favs
+      })
+      .then(
+        // success
+        function (success) {
+            $view.editFavs();
+            $view.$('.cw-block-store-fav').hide();
+            $view.$('.cw-block-adder-favs .cw-block-adder-item').removeClass('cw-block-adder-item-fav');
+            $selected.each(function(index){
+                $view.$(".cw-block-adder-favs .cw-block-adder-item[data-blocktype='"+$(this).data('blocktype')+"']").addClass('cw-block-adder-item-fav');
+            });
+
+        },
+
+        // error
+        function (error) {
+          //var errorMessage = 'Could not update the block: '+$.parseJSON(error.responseText).reason;
+          //alert(errorMessage);
+          console.log(error);
+        });
   },
 
   appendBlockStub(model, view_name) {
