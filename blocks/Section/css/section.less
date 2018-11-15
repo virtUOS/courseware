@@ -262,6 +262,46 @@ button.button.cw-active-selector {
 
 .cw-block-adder-wrapper {
     display: none;
+    .cw-block-adder-menu{
+        .cw-block-adder-selector {
+            background-image: none;
+            padding-left: 2em;
+            background-position: 6px center;
+            &[data-blockclass=all] {
+                .assets-bg-icon("blue/span-full.svg");
+            }
+            &[data-blockclass=interaction] {
+                .assets-bg-icon("blue/community.svg");
+            }
+            &[data-blockclass=layout] {
+                .assets-bg-icon("blue/assessment.svg");
+            }
+            &[data-blockclass=multimedia] {
+                .assets-bg-icon("blue/video2.svg");
+            }
+            &[data-blockclass=favorite] {
+                .assets-bg-icon("blue/favorite.svg");
+            }
+            &.cw-active-selector,
+            &:hover {
+                &[data-blockclass=all] {
+                    .assets-bg-icon("white/span-full.svg");
+                }
+                &[data-blockclass=interaction] {
+                    .assets-bg-icon("white/community.svg");
+                }
+                &[data-blockclass=layout] {
+                    .assets-bg-icon("white/assessment.svg");
+                }
+                &[data-blockclass=multimedia] {
+                    .assets-bg-icon("white/video2.svg");
+                }
+                &[data-blockclass=favorite] {
+                    .assets-bg-icon("white/favorite.svg");
+                }
+            }
+        }
+    }
 }
 .cw-block-adder-favs {
     .cw-block-adder-item {
