@@ -20,6 +20,7 @@ class Section extends Block
     const ICON_TASK = 'task';
     const ICON_SEARCH = 'search';
     const ICON_DEFAULT = 'document';
+    const FAVORITES_DATAFIELD = '446e9485d92e1eef776a8ccf99849182';
 
     // definition of precedence of icons
     // larger array index -> higher precedence
@@ -84,6 +85,7 @@ class Section extends Block
         $content_block_types_layout = $block_types['layout_blocks'];
         $content_block_types_multimedia = $block_types['multimedia_blocks'];
         $content_block_types_all = $block_types['all_blocks'];
+        $content_block_types_favorite = $block_types['favorite_blocks'];
 
 
         return compact(
@@ -95,6 +97,7 @@ class Section extends Block
             'content_block_types_layout',
             'content_block_types_multimedia',
             'content_block_types_all',
+            'content_block_types_favorite',
             'icon', 'title', 'visited');
     }
 
@@ -161,6 +164,33 @@ class Section extends Block
         $this->refreshIcon();
 
         return array('status' => 'ok');
+    }
+
+    public function add_favorites_handler($data)
+    {
+        if (!isset($data['favorites'])) {
+            throw new BadRequest('Type required.');
+        }
+        $datafield = \DatafieldEntryModel::findOneBySql("datafield_id = '".self::FAVORITES_DATAFIELD."'", 'range_id ='.$this->container['current_user_id']);
+        if ($datafield == null) {
+            $datafield = new \DatafieldEntryModel();
+            $datafield->datafield_id = self::FAVORITES_DATAFIELD;
+            $datafield->range_id = $this->container['current_user_id'];
+            $datafield->sec_range_id = "";
+        }
+        $datafield->content = $data['favorites'];
+        $datafield->store();
+        return;
+    }
+
+    private function get_favorites()
+    {
+        $datafield =  \DatafieldEntryModel::findOneBySql("datafield_id = '".self::FAVORITES_DATAFIELD."'", 'range_id ='.$this->container['current_user_id']);
+        if ($datafield->content == '') {
+            return false;
+        }
+
+        return json_decode($datafield->content, true)['blocktypes'];
     }
 
     /**
@@ -284,9 +314,18 @@ class Section extends Block
         $layout_blocks = array();
         $multimedia_blocks = array();
         $all_blocks = array();
-        
+        $favorite_blocks = array();
+        $favs = $this->get_favorites();
+ 
         foreach($blockTypes as $key => $value){
             array_push($all_blocks, $value);
+            $value_for_favorite = $value;
+            if (in_array($value['type'], $favs)){
+                $value_for_favorite['selected'] = true;
+            } else {
+                $value_for_favorite['selected'] = false;
+            }
+            array_push($favorite_blocks, $value_for_favorite);
             switch ($value['block_class']) {
                 case 'function':
                     array_push($function_blocks, $value);
@@ -304,13 +343,13 @@ class Section extends Block
             }
         }
 
-
         return array(
             'function_blocks' => $function_blocks,
             'interaction_blocks' => $interaction_blocks,
             'layout_blocks' => $layout_blocks,
             'multimedia_blocks' => $multimedia_blocks,
-            'all_blocks' => $all_blocks
+            'all_blocks' => $all_blocks,
+            'favorite_blocks' => $favorite_blocks,
         );
     }
 

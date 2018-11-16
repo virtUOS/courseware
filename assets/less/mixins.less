@@ -19,9 +19,9 @@
   }
 }
 
-.btn(@img) {
+.btn(@img, @color: blue) {
   .btn-base();
-  background: url("@{blocks-icons-dir}/blue/@{img}.svg") center center no-repeat;
+  background: url("@{blocks-icons-dir}/@{color}/@{img}.svg") center center no-repeat;
 }
 
 .bgImg(@icon, @color, @size: 16) {

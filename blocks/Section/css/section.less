@@ -253,12 +253,67 @@ button.button.cw-active-selector {
         .assets-bg-icon("blue/arr_1down.svg");
     }
 }
+.cw-block-adder-tab {
+    .cw-button-box {
+        text-align: right;
+        padding: 1em;
+    }
+}
 
 .cw-block-adder-wrapper {
     display: none;
+    .cw-block-adder-menu{
+        .cw-block-adder-selector {
+            background-image: none;
+            padding-left: 2em;
+            background-position: 6px center;
+            &[data-blockclass=all] {
+                .assets-bg-icon("blue/span-full.svg");
+            }
+            &[data-blockclass=interaction] {
+                .assets-bg-icon("blue/community.svg");
+            }
+            &[data-blockclass=layout] {
+                .assets-bg-icon("blue/assessment.svg");
+            }
+            &[data-blockclass=multimedia] {
+                .assets-bg-icon("blue/video2.svg");
+            }
+            &[data-blockclass=favorite] {
+                .assets-bg-icon("blue/favorite.svg");
+            }
+            &.cw-active-selector,
+            &:hover {
+                &[data-blockclass=all] {
+                    .assets-bg-icon("white/span-full.svg");
+                }
+                &[data-blockclass=interaction] {
+                    .assets-bg-icon("white/community.svg");
+                }
+                &[data-blockclass=layout] {
+                    .assets-bg-icon("white/assessment.svg");
+                }
+                &[data-blockclass=multimedia] {
+                    .assets-bg-icon("white/video2.svg");
+                }
+                &[data-blockclass=favorite] {
+                    .assets-bg-icon("white/favorite.svg");
+                }
+            }
+        }
+    }
+}
+.cw-block-adder-favs {
+    .cw-block-adder-item {
+        display: none;
+        &.cw-block-adder-item-fav{
+            display: unset;
+        }
+    }
 }
 
-.cw-block-adder-item {
+.cw-block-adder-item,
+.cw-block-fav-item {
     list-style: none;
     float: left;
     padding: 1em 2em;
@@ -269,84 +324,184 @@ button.button.cw-active-selector {
     text-align: center;
     cursor: pointer;
     &:hover {
-        border: solid thin #28497c;    
+        border: solid thin #28497c;
     }
+    &.cw-block-fav-item-selected {
+        background-color: #28497c;
+        color: #fff;
+        .cw-block-fav-item-icon,
+        .cw-block-adder-item-icon { 
+            .assets-bg-icon("white/plugin.svg");
+            &.cw-block-fav-item-icon-AudioBlock {
+                .assets-bg-icon("white/play.svg");
+            }
+            &.cw-block-fav-item-icon-ConfirmBlock {
+                .assets-bg-icon("white/accept.svg");
+            }
+            &.cw-block-fav-item-icon-DownloadBlock {
+                .assets-bg-icon("white/download.svg");
+            }
+            &.cw-block-fav-item-icon-EvaluationBlock {
+                .assets-bg-icon("white/evaluation.svg");
+            }
+            &.cw-block-fav-item-icon-ForumBlock {
+                .assets-bg-icon("white/forum.svg");
+            }
+            &.cw-block-fav-item-icon-HtmlBlock {
+                .assets-bg-icon("white/edit.svg");
+            }
+            &.cw-block-fav-item-icon-BeforeAfterBlock,
+            &.cw-block-fav-item-icon-GalleryBlock {
+                background-image: url("../images/icons/white/picture.svg");
+            }
+            &.cw-block-fav-item-icon-DialogCardsBlock {
+                background-image: url("../images/icons/white/dialog-cards.svg");
+            }
+            &.cw-block-fav-item-icon-AssortBlock {
+                .assets-bg-icon("white/hamburger.svg");
+            }
+            &.cw-block-fav-item-icon-PostBlock {
+                .assets-bg-icon("white/chat.svg");
+            }
+            &.cw-block-fav-item-icon-LinkBlock {
+                .assets-bg-icon("white/link-extern.svg");
+            }
+            &.cw-block-fav-item-icon-KeyPointBlock {
+                .assets-bg-icon("white/exclaim-circle.svg");
+            }
+            &.cw-block-fav-item-icon-PdfBlock {
+                .assets-bg-icon("white/file-pdf.svg");
+            }
+            &.cw-block-fav-item-icon-CodeBlock {
+                .assets-bg-icon("white/computer.svg");
+            }
+            &.cw-block-fav-item-icon-EmbedBlock {
+                .assets-bg-icon("white/code.svg");
+            }
+            &.cw-block-fav-item-icon-TestBlock {
+                .assets-bg-icon("white/question-circle.svg");
+            }
+            &.cw-block-fav-item-icon-SearchBlock {
+                .assets-bg-icon("white/search.svg");
+            }
+            &.cw-block-fav-item-icon-VideoBlock,
+            &.cw-block-fav-item-icon-InteractiveVideoBlock,
+            &.cw-block-fav-item-icon-OpenCastBlock {
+                .assets-bg-icon("white/video.svg");
+            }
+            &.cw-block-fav-item-icon-IFrameBlock {
+                .assets-bg-icon("white/door-enter.svg");
+            }
+            &.cw-block-fav-item-icon-ChartBlock {
+                .assets-bg-icon("white/vote.svg");
+            }
+        }
+        .cw-block-fav-item-description {
+            color: white;
+        }
+    }
+    .cw-block-fav-item-name, 
     .cw-block-adder-item-name {
         margin: 0;
         padding: 0.5em;
 
     }
 
+    .cw-block-fav-item-description,
     .cw-block-adder-item-description {
         margin: 0;
         color: #888;
         max-width: 12em;
     }
 
+    .cw-block-fav-item-icon,
     .cw-block-adder-item-icon {
         height: 32px;
         .assets-bg-icon("blue/plugin.svg");
 
+        &.cw-block-fav-item-icon-AudioBlock,
         &.cw-block-adder-item-icon-AudioBlock {
             .assets-bg-icon("blue/play.svg");
         }
+        &.cw-block-fav-item-icon-ConfirmBlock,
         &.cw-block-adder-item-icon-ConfirmBlock {
             .assets-bg-icon("blue/accept.svg");
         }
+        &.cw-block-fav-item-icon-DownloadBlock,
         &.cw-block-adder-item-icon-DownloadBlock {
             .assets-bg-icon("blue/download.svg");
         }
+        &.cw-block-fav-item-icon-EvaluationBlock,
         &.cw-block-adder-item-icon-EvaluationBlock {
             .assets-bg-icon("blue/evaluation.svg");
         }
+        &.cw-block-fav-item-icon-ForumBlock,
         &.cw-block-adder-item-icon-ForumBlock {
             .assets-bg-icon("blue/forum.svg");
         }
+        &.cw-block-fav-item-icon-HtmlBlock,
         &.cw-block-adder-item-icon-HtmlBlock {
             .assets-bg-icon("blue/edit.svg");
         }
+        &.cw-block-fav-item-icon-BeforeAfterBlock,
+        &.cw-block-fav-item-icon-GalleryBlock,
         &.cw-block-adder-item-icon-BeforeAfterBlock,
         &.cw-block-adder-item-icon-GalleryBlock {
             background-image: url("../images/icons/blue/picture.svg");
         }
+        &.cw-block-fav-item-icon-DialogCardsBlock,
         &.cw-block-adder-item-icon-DialogCardsBlock {
             background-image: url("../images/icons/blue/dialog-cards.svg");
         }
+        &.cw-block-fav-item-icon-AssortBlock,
         &.cw-block-adder-item-icon-AssortBlock {
             .assets-bg-icon("blue/hamburger.svg");
         }
+        &.cw-block-fav-item-icon-PostBlock,
         &.cw-block-adder-item-icon-PostBlock {
             .assets-bg-icon("blue/chat.svg");
         }
+        &.cw-block-fav-item-icon-LinkBlock,
         &.cw-block-adder-item-icon-LinkBlock {
             .assets-bg-icon("blue/link-extern.svg");
         }
+        &.cw-block-fav-item-icon-KeyPointBlock,
         &.cw-block-adder-item-icon-KeyPointBlock {
             .assets-bg-icon("blue/exclaim-circle.svg");
         }
+        &.cw-block-fav-item-icon-PdfBlock,
         &.cw-block-adder-item-icon-PdfBlock {
             .assets-bg-icon("blue/file-pdf.svg");
         }
+        &.cw-block-fav-item-icon-CodeBlock,
         &.cw-block-adder-item-icon-CodeBlock {
             .assets-bg-icon("blue/computer.svg");
         }
+        &.cw-block-fav-item-icon-EmbedBlock,
         &.cw-block-adder-item-icon-EmbedBlock {
             .assets-bg-icon("blue/code.svg");
         }
+        &.cw-block-fav-item-icon-TestBlock,
         &.cw-block-adder-item-icon-TestBlock {
             .assets-bg-icon("blue/question-circle.svg");
         }
+        &.cw-block-fav-item-icon-SearchBlock,
         &.cw-block-adder-item-icon-SearchBlock {
             .assets-bg-icon("blue/search.svg");
         }
+        &.cw-block-fav-item-icon-VideoBlock,
+        &.cw-block-fav-item-icon-InteractiveVideoBlock,
+        &.cw-block-fav-item-icon-OpenCastBlock,
         &.cw-block-adder-item-icon-VideoBlock,
         &.cw-block-adder-item-icon-InteractiveVideoBlock,
         &.cw-block-adder-item-icon-OpenCastBlock {
             .assets-bg-icon("blue/video.svg");
         }
+        &.cw-block-fav-item-icon-IFrameBlock,
         &.cw-block-adder-item-icon-IFrameBlock {
             .assets-bg-icon("blue/door-enter.svg");
         }
+        &.cw-block-fav-item-icon-ChartBlock,
         &.cw-block-adder-item-icon-ChartBlock {
             .assets-bg-icon("blue/vote.svg");
         }
@@ -355,8 +510,13 @@ button.button.cw-active-selector {
         background-repeat: no-repeat;
         background-position: center; 
     }
-    
 }
+.cw-block-store-fav,
+.cw-block-add-fav-all-blocks {
+    display: none;
+}
+
+
 //////////////////
 // ASIDE STYLES //
 //////////////////
