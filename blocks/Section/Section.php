@@ -20,6 +20,7 @@ class Section extends Block
     const ICON_TASK = 'task';
     const ICON_SEARCH = 'search';
     const ICON_DEFAULT = 'document';
+    const FAVORITES_DATAFIELD = '446e9485d92e1eef776a8ccf99849182';
 
     // definition of precedence of icons
     // larger array index -> higher precedence
@@ -167,23 +168,24 @@ class Section extends Block
 
     public function add_favorites_handler($data)
     {
-        $uid = $this->container['current_user_id'];
-        $datafield_id = "'ce73a10d07b3bb13c0132d363549ef42'";
-
         if (!isset($data['favorites'])) {
             throw new BadRequest('Type required.');
         }
-        $datafield = \DatafieldEntryModel::findOneBySql('datafield_id = '.$datafield_id , 'range_id ='.$uid);
+        $datafield = \DatafieldEntryModel::findOneBySql("datafield_id = '".self::FAVORITES_DATAFIELD."'", 'range_id ='.$this->container['current_user_id']);
+        if ($datafield == null) {
+            $datafield = new \DatafieldEntryModel();
+            $datafield->datafield_id = self::FAVORITES_DATAFIELD;
+            $datafield->range_id = $this->container['current_user_id'];
+            $datafield->sec_range_id = "";
+        }
         $datafield->content = $data['favorites'];
         $datafield->store();
-        return $this->student_view();
+        return;
     }
 
     private function get_favorites()
     {
-        $uid = $this->container['current_user_id'];
-        $datafield_id = "'ce73a10d07b3bb13c0132d363549ef42'";
-        $datafield =  \DatafieldEntryModel::findOneBySql('datafield_id = '.$datafield_id , 'range_id ='.$uid);
+        $datafield =  \DatafieldEntryModel::findOneBySql("datafield_id = '".self::FAVORITES_DATAFIELD."'", 'range_id ='.$this->container['current_user_id']);
         if ($datafield->content == '') {
             return false;
         }
