@@ -20,7 +20,14 @@ export default AuthorView.extend({
 
     postRender() {
         var $view = this;
-
+        var content = $view.$('.cw-date-stored-content').val();
+        if (content == "") {
+            return this;
+        }
+        content = JSON.parse(content);
+        $view.$('.cw-date-type option[value="'+content.type+'"]').prop('selected', true);
+        $view.$('.cw-date-date').val(content.date);
+        $view.$('.cw-date-time').val(content.time);
 
         return this;
     },
@@ -55,10 +62,14 @@ export default AuthorView.extend({
     onSave(event) {
         var $view = this;
         var content = {};
-        var date = $view.$('.cw-date-countdown-date').val();
-        var time = $view.$('.cw-date-countdown-time').val();
-        
-        content.type = "countdown";
+        var date = $view.$('.cw-date-date').val();
+        var time = $view.$('.cw-date-time').val();
+        var type = $view.$('.cw-date-type option:selected').val();
+        if ((time == "")||(date == "")) {
+            return;
+        }
+        event.preventDefault();
+        content.type = type;
         content.date = date;
         content.time = time;
         

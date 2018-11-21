@@ -1,10 +1,21 @@
-<label for="cw-date-countdown-date">{{#i18n}}Datum{{/i18n}}:</label>
-<input type="date" class="cw-date-countdown-date" name="cw-date-countdown-date" value="{{countdown-date}}">
+<form>
+    <input type="hidden" class="cw-date-stored-content" value="{{date_content}}">
 
-<br>
-<label for="cw-date-countdown-time">{{#i18n}}Uhrzeit{{/i18n}}:</label>
-<input type="time" class="cw-date-countdown-time" name="cw-date-countdown-time" value="{{countdown-time}}">
-<div class="cw-button-box">
-    <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
-    <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
-</div>
+    <label for="cw-date-date">{{#i18n}}Datum{{/i18n}}:</label>
+    <input type="date" class="cw-date-date" name="cw-date-date" required>
+
+    <br>
+    <label for="cw-date-time">{{#i18n}}Uhrzeit{{/i18n}}:</label>
+    <input type="time" class="cw-date-time" name="cw-date-time" required>
+
+    <br>
+    <label for="cw-date-type">{{#i18n}}Typ{{/i18n}}:</label>
+    <select class="cw-date-type" name="cw-date-type">
+        <option value="countdown">{{#i18n}}Countdown{{/i18n}}</option>
+        <option value="date">{{#i18n}}Datum{{/i18n}}</option>
+    </select>
+    <div class="cw-button-box">
+        <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
+        <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+    </div>
+</form>
