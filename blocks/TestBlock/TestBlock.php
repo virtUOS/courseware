@@ -356,7 +356,7 @@ class TestBlock extends Block
                 $tries_left = false;
             }
 
-            if (in_array($exercise->type, array('lt_exercise', 'tb_exercise', 'cloze_exercise'))) {
+            if (in_array($exercise->type, array('lt_exercise', 'tb_exercise', 'cloze_exercise')) && ($exercise->options['lang'] != null)) {
                 $character_picker = true;
             } else {
                 $character_picker = false;
