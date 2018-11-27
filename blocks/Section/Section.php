@@ -177,6 +177,7 @@ class Section extends Block
             $datafield->datafield_id = self::FAVORITES_DATAFIELD;
             $datafield->range_id = $this->container['current_user_id'];
             $datafield->sec_range_id = "";
+            $datafield->lang = "";
         }
         $datafield->content = $data['favorites'];
         $datafield->store();
