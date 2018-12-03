@@ -6,9 +6,9 @@ use Mooc\UI\Block;
 
 class ScrollyBlock extends Block
 {
-    const NAME = 'Scrolly';
+    const NAME = 'Scrollytelling';
     const BLOCK_CLASS = 'scrolly';
-    const DESCRIPTION = 'lorem ipsum dolor askimet';
+    const DESCRIPTION = 'Formatiert die Blöcke auf einer Scrollytelling-Seite';
 
     public function initialize()
     {
