@@ -5,9 +5,9 @@ use Mooc\UI\Block;
 
 class TypewriterBlock extends Block 
 {
-    const NAME = 'Typewriter';
+    const NAME = 'Schreibmaschine';
     const BLOCK_CLASS = 'layout';
-    const DESCRIPTION = 'Typewriter';
+    const DESCRIPTION = 'Der Text erscheint Zeichen für Zeichen';
 
     public function initialize()
     {
