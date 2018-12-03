@@ -7,7 +7,7 @@ class DateBlock extends Block
 {
     const NAME = 'DateBlock';
     const BLOCK_CLASS = 'layout';
-    const DESCRIPTION = 'DateBlock';
+    const DESCRIPTION = 'Zeigt einen Termin oder Countdown an';
 
     public function initialize()
     {

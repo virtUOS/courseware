@@ -3,6 +3,7 @@
 .cw-date-wrapper {
     display: table;
     margin: 0 auto;
+    cursor: pointer;
     .cw-date-countdown {
         display: none;
 
@@ -46,7 +47,7 @@
                 font-size: 5em;
                 line-height: 1.25em;
                 height: 1.25em;
-                padding: 3px 0;
+                padding: 0.25em;
                 background: rgba(245,245,245,1);
                 font-weight: 300;
             }
@@ -58,7 +59,7 @@
     .cw-date-countdown {
         .cw-date-countdown-digit {
             margin: 0;
-
+    
             .cw-date-countdown-number {
                 font-size: 1.75em;
                 padding: 0.7em;
@@ -68,6 +69,19 @@
             .cw-date-countdown-label-pl {
                 padding: 2px;
                 font-size: 0.75em;
+            }
+        }
+    }
+
+    .cw-date-date {
+        .cw-date-date-space {
+            width: 0.5em;
+        }
+
+        .cw-date-date-digits{
+            .cw-date-date-number {
+                font-size: 2em;
+                padding: 4px 10px;
             }
         }
     }

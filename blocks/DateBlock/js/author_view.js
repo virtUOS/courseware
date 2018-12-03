@@ -28,6 +28,9 @@ export default AuthorView.extend({
         $view.$('.cw-date-type option[value="'+content.type+'"]').prop('selected', true);
         $view.$('.cw-date-date').val(content.date);
         $view.$('.cw-date-time').val(content.time);
+        $view.$('.cw-date-title').val(content.title);
+        $view.$('.cw-date-description').val(content.description);
+        $view.$('.cw-date-location').val(content.location);
 
         return this;
     },
@@ -69,10 +72,16 @@ export default AuthorView.extend({
             return;
         }
         event.preventDefault();
+        var title = $view.$('.cw-date-title').val();
+        var description = $view.$('.cw-date-description').val();
+        var location = $view.$('.cw-date-location').val();
         content.type = type;
         content.date = date;
         content.time = time;
-        
+        content.title = title;
+        content.description = description;
+        content.location = location;
+
         content = JSON.stringify(content);
 
         helper
