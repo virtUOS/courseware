@@ -123,9 +123,27 @@ section#courseware.scrollyware {
             }
         }
     }
-    
-    .cw-scrolly-blocks {
-        list-style: none;
+
+    section.block.ScrollyBlock {
+        ul {
+            padding: 0;
+            .cw-scrolly-blocks {
+                list-style: none;
+                fieldset {
+                    border: solid thin #ccc;
+                    margin-bottom: 1em;
+                    
+                    .cw-scrolly-big-letter,
+                    .cw-scrolly-big-letter-label {
+                        display: none;
+                        &[data-blocktype="TypewriterBlock"],
+                        &[data-blocktype="HtmlBlock"]{
+                            display: inline-block;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -170,3 +188,4 @@ section#courseware.scrollyware {
         }
     }
 }
+
