@@ -41,7 +41,7 @@ class DateBlock extends Block
 
     public function exportProperties()
     {
-       return $this->getAttrArray();
+       return array('date_content' => $this->date_content);
     }
 
     public function getXmlNamespace()

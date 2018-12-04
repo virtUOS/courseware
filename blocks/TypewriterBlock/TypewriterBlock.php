@@ -41,7 +41,7 @@ class TypewriterBlock extends Block
 
     public function exportProperties()
     {
-       return $this->getAttrArray();
+       return array('typewriter_content' => $this->typewriter_content);
     }
 
     public function getXmlNamespace()
