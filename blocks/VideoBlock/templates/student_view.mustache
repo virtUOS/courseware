@@ -7,14 +7,18 @@
         <iframe src="{{.}}" scrolling="no" allowfullscreen></iframe>
     {{/url}}
     {{^url}}
+    {{#webvideo}}
         <video width="100%" {{webvideosettings}}>
             {{#webvideo}}
                 <source src="{{src}}" type="video/{{type}}" media="{{media}}" >
             {{/webvideo}}
         </video>
-        {{^webvideo}}
+    {{/webvideo}}
+    {{^webvideo}}
+        <div class="messagebox messagebox_info">
             {{#i18n}}Es wurde noch kein Video eingetragen.{{/i18n}}
-        {{/webvideo}}
+        </div>
+    {{/webvideo}}
     {{/url}}
     </div>
 {{/inactive}}
