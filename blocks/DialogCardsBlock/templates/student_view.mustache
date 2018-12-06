@@ -4,11 +4,13 @@
         <div class="scene scene--card" data-index="{{index}}">
           <div class="card" data-title="{{#i18n}}klicken um Karte umzudrehen{{/i18n}}">
             <div class="card__face card__face--front">
-              <img src="{{front_img}}">
+              {{#front_img}}<img src="{{front_img}}">{{/front_img}}
+              {{^front_img}}<div class="cw-dialogcards-front-no-image"></div>{{/front_img}}
               <p>{{front_text}}</p>
             </div>
             <div class="card__face card__face--back">
-            <img src="{{back_img}}">
+            {{#back_img}}<img src="{{back_img}}">{{/back_img}}
+            {{^back_img}}<div class="cw-dialogcards-back-no-image"></div>{{/back_img}}
               <p>{{back_text}}</p>
             </div>
           </div>
