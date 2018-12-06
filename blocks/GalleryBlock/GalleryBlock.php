@@ -117,6 +117,9 @@ class GalleryBlock extends Block
         $files = array();
 
         foreach ($file_ids as $file_id) {
+            if ($file_id == '') {
+                continue;
+            }
             $file_ref = new \FileRef($file_id);
             $file = new \File($file_ref->file_id);
 
@@ -129,6 +132,9 @@ class GalleryBlock extends Block
                 'url' => $file->getURL(),
                 'path' => $file->getPath()
             ));
+        }
+        if (empty($files)) {
+            return;
         }
 
         return $files;
@@ -205,6 +211,9 @@ class GalleryBlock extends Block
         $file_ids = array();
         $file_names = array_map('current', json_decode($this->gallery_file_names));
         foreach($files as $file){
+            if ($file->name == '') {
+                continue;
+            }
             if(in_array($file->name, $file_names)) {
                 array_push($file_ids , array($file->id));
             }

@@ -91,7 +91,7 @@ class AudioBlock extends Block
         foreach ($folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if ($ref->isAudio())  {
+                if (($ref->isAudio()) && (!$ref->isLink())) {
                     $filesarray[] = $ref;
                 }
             }
@@ -122,7 +122,10 @@ class AudioBlock extends Block
     {
         
         if ($this->audio_source != 'cw') {
-            return array();
+            return;
+        }
+        if ($this->audio_id == '') {
+            return;
         }
         $file_ref = new \FileRef($this->audio_id);
         $file = new \File($file_ref->file_id);
@@ -180,6 +183,9 @@ class AudioBlock extends Block
     public function importContents($contents, array $files)
     {
         foreach($files as $file){
+            if ($file->name == '') {
+                continue;
+            }
             if($this->audio_file_name == $file->name) {
                 $this->audio_id = $file->id;
                 if ($this->audio_source == 'cw') {

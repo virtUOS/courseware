@@ -60,7 +60,7 @@ class PdfBlock extends Block
         foreach ($folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if ($ref->mime_type == "application/pdf")  {
+                if (($ref->mime_type == "application/pdf")&& (!$ref->isLink()))  {
                     $filesarray[] = $ref;
                 }
             }
@@ -95,6 +95,9 @@ class PdfBlock extends Block
 
     public function getFiles()
     {
+        if (empty($this->pdf_file_id)) {
+            return array();
+        }
         $file_ref = new \FileRef($this->pdf_file_id);
         $file = new \File($file_ref->file_id);
         $files[] = array(
@@ -135,6 +138,9 @@ class PdfBlock extends Block
     public function importContents($contents, array $files)
     {
         foreach($files as $file){
+            if($file->name == "") {
+                continue;
+            }
             if($this->pdf_filename == $file->name) {
                 $this->pdf_file_id = $file->id;
                 $this->pdf_file = $file->getDownloadURL();

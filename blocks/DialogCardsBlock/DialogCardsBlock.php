@@ -80,7 +80,7 @@ class DialogCardsBlock extends Block
         $files = array();
 
         foreach ($cards as $card) {
-            if (!$card->front_external_file) {
+            if ((!$card->front_external_file) && (!empty($card->front_img_file_id))) {
                 $file_ref = new \FileRef($card->front_img_file_id);
                 $file = new \File($file_ref->file_id);
 
@@ -94,7 +94,7 @@ class DialogCardsBlock extends Block
                     'path' => $file->getPath()
                 ));
             }
-            if (!$card->back_external_file) {
+            if ((!$card->back_external_file) && (!empty($card->back_img_file_id))) {
                 $file_ref = new \FileRef($card->back_img_file_id);
                 $file = new \File($file_ref->file_id);
 
@@ -137,6 +137,9 @@ class DialogCardsBlock extends Block
         $cards = json_decode($this->dialogcards_content);
         foreach ($cards as $key => $card) {
             foreach($files as $file){
+                if($file->name == '') {
+                    continue;
+                }
                 if ($card->front_img_file_name == $file->name) {
                     $card->front_img_file_id = $file->id;
                     $card->front_img = $file->getDownloadURL();

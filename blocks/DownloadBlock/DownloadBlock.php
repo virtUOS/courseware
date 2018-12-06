@@ -125,6 +125,9 @@ class DownloadBlock extends Block
 
     public function getFiles()
     {
+        if ($this->file_id == '') {
+            return;
+        }
         $file_ref = new \FileRef($this->file_id);
         $file = new \File($file_ref->file_id);
         
@@ -188,6 +191,9 @@ class DownloadBlock extends Block
     public function importContents($contents, array $files)
     {
         foreach($files as $file){
+            if ($file->name == '') {
+                continue;
+            }
             if($this->file_name == $file->name) {
                 $this->file_id = $file->id;
                 $this->save();
