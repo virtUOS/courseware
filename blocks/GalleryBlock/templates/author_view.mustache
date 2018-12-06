@@ -4,9 +4,16 @@
 
 <label for="gallery-folder">{{#i18n}}Einen Ordner ausw&auml;hlen{{/i18n}}:</label>
 <select type="text" class="gallery-folder" name="folder">
-    {{#folders}}
-        <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
-    {{/folders}}
+    <optgroup label="{{#i18n}}Ornder dieser Veranstaltung{{/i18n}}">
+        {{#folders}}
+            <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
+        {{/folders}}
+    </optgroup>
+    <optgroup label="Ordner im eigenen Dateibereich">
+        {{#user_folders}}
+            <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
+        {{/user_folders}}
+    </optgroup>
 </select>
 <button class="cw-gallery-folder-select-info cw-info" data-title="{{#i18n}}Alle Bilddateien die sich in diesem Ordner des Dateibereichts befinden werden in der Galerie angezeigt.{{/i18n}}"></button>
 <br>

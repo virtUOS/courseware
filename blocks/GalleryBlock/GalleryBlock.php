@@ -39,8 +39,9 @@ class GalleryBlock extends Block
     {
         $this->authorizeUpdate();
         $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
 
-        return array_merge($this->getAttrArray(), array("folders" => $folders));
+        return array_merge($this->getAttrArray(), array("folders" => $folders, "user_folders" => $user_folders));
     }
 
     private function getAttrArray() 

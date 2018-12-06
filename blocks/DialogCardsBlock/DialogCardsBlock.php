@@ -44,7 +44,9 @@ class DialogCardsBlock extends Block
     {
         $filesarray = array();
         $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
-        
+        $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
+        $folders = array_merge($folders, $user_folders);
+
         foreach ($folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
