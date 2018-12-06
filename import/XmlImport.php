@@ -11,6 +11,7 @@ use Mooc\UI\Section\Section;
  * Courseware XML import.
  *
  * @author Christian Flothmann <christian.flothmann@uos.de>
+ * @author Ron Lucke <lucke@elan-ev.de>
  */
 class XmlImport implements ImportInterface
 {
@@ -226,7 +227,6 @@ class XmlImport implements ImportInterface
         $aside_field->content = $section->id;
         $aside_field->store();
 
-
         /** @var \Mooc\UI\Section\Section $uiSection */
         $uiSection = $this->blockFactory->makeBlock($section);
 
@@ -251,7 +251,6 @@ class XmlImport implements ImportInterface
      */
     private function processBlockNode(\DOMElement $node, Section $section, $files)
     {
-
         $block = $this->createBlock(
             array(
                 'type'       => $node->getAttribute('type'),
@@ -270,7 +269,8 @@ class XmlImport implements ImportInterface
         $uiBlock = $this->blockFactory->makeBlock($block);
 
         if (gettype($uiBlock) != 'object') { 
-            //throw new \Exception($node->getAttribute('type'));
+            $block->delete();
+
             return false;
         }
         $properties = array();

@@ -8,6 +8,7 @@ use Mooc\Import\XmlImport;
  * Controller to import a courseware block tree.
  *
  * @author Christian Flothmann <christian.flothmann@uos.de>
+ * @author Ron Lucke <lucke@elan-ev.de>
  */
 class ImportController extends CoursewareStudipController
 {
@@ -24,6 +25,7 @@ class ImportController extends CoursewareStudipController
     public function index_action()
     {
         $this->errors = array();
+        $this->warnings = array();
 
         // upload filed
         if (Request::method() == 'POST' && Request::option('subcmd')=='upload') {
@@ -62,7 +64,7 @@ class ImportController extends CoursewareStudipController
      *
      * @return bool True if the import archive is valid, false otherwise
      */
-    private function validateUploadFile($tempDir, array &$errors)
+    private function validateUploadFile($tempDir, array &$errors, array &$warnings)
     {
         $dataFile = $tempDir.'/data.xml';
 
@@ -76,13 +78,18 @@ class ImportController extends CoursewareStudipController
         $validationErrors = $validator->validate(file_get_contents($dataFile));
 
         if (count($validationErrors) > 0) {
-            $errors[] = _cw('Die Datendatei data.xml enthält kein valides XML.');
-
             foreach ($validationErrors as $validationError) {
-                $errors[] = $validationError;
+                if ($validationError->code == 1878){
+                    $warnings[] = $validationError->message;
+                } else {
+                    $errors[] = $validationError->message;
+                }
             }
+            if (!empty($errors)){
+                array_unshift($errors, _cw('Die Datendatei data.xml enthält kein valides XML.'));
 
-            return false;
+                return false;
+            }
         }
 
         return true;
@@ -110,7 +117,7 @@ class ImportController extends CoursewareStudipController
 
         $install_folder = FileManager::getTypedFolder($courseware_folder->id);
 
-        if ($this->validateUploadFile($tempDir, $this->errors)) {
+        if ($this->validateUploadFile($tempDir, $this->errors, $this->warnings)) {
             $courseware = $this->container['current_courseware'];
             $importer = new XmlImport($this->plugin->getBlockFactory());
             $redirect = true;
@@ -118,6 +125,9 @@ class ImportController extends CoursewareStudipController
                 $importer->import($tempDir, $courseware, $install_folder);
             } catch (Exception $e){
                 $this->errors[] = $e;
+                $redirect = false;
+            }
+            if (!empty($this->warnings)) {
                 $redirect = false;
             }
             if($redirect){

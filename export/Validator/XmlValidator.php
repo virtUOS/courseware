@@ -9,6 +9,7 @@ use Mooc\UI\BlockFactory;
  * Validate an XML import file.
  *
  * @author Christian Flothmann <christian.flothmann@uos.de>
+ * @author Ron Lucke <lucke@elan-ev.de>
  */
 class XmlValidator implements ValidatorInterface
 {
@@ -37,7 +38,7 @@ class XmlValidator implements ValidatorInterface
         $errors = array();
 
         foreach (libxml_get_errors() as $error) {
-            $errors[] = $error->message;
+            $errors[] = $error;
         }
 
         return $errors;
