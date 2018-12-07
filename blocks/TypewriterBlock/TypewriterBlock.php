@@ -11,29 +11,29 @@ class TypewriterBlock extends Block
 
     public function initialize()
     {
-        $this->defineField('typewriter_content', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('typewriter_json', \Mooc\SCOPE_BLOCK, '');
     }
 
     public function student_view()
     {
         $this->setGrade(1.0);
 
-        return array('typewriter_content' => \STUDIP\Markup::purifyHtml($this->typewriter_content));
+        return array('typewriter_json' => \STUDIP\Markup::purifyHtml($this->typewriter_json));
     }
 
     public function author_view()
     {
         $this->authorizeUpdate();
 
-        return array('typewriter_content' => $this->typewriter_content);
+        return array('typewriter_json' => $this->typewriter_json);
     }
 
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
 
-        if (isset ($data['typewriter_content'])) {
-            $this->typewriter_content = (string) $data['typewriter_content'];
+        if (isset ($data['typewriter_json'])) {
+            $this->typewriter_json = (string) $data['typewriter_json'];
         } 
 
         return;
@@ -41,7 +41,7 @@ class TypewriterBlock extends Block
 
     public function exportProperties()
     {
-       return array('typewriter_content' => $this->typewriter_content);
+       return array('typewriter_json' => $this->typewriter_json);
     }
 
     public function getXmlNamespace()
@@ -56,8 +56,8 @@ class TypewriterBlock extends Block
 
     public function importProperties(array $properties)
     {
-        if (isset($properties['typewriter_content'])) {
-            $this->typewriter_content = $properties['typewriter_content'];
+        if (isset($properties['typewriter_json'])) {
+            $this->typewriter_json = $properties['typewriter_json'];
         }
 
         $this->save();

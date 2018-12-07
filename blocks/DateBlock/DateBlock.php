@@ -5,7 +5,7 @@ use Mooc\UI\Block;
 
 class DateBlock extends Block 
 {
-    const NAME = 'DateBlock';
+    const NAME = 'Termin';
     const BLOCK_CLASS = 'layout';
     const DESCRIPTION = 'Zeigt einen Termin oder Countdown an';
 

@@ -4,5 +4,5 @@
     targetNamespace="http://moocip.de/schema/block/typewriter/"
     elementFormDefault="qualified"
 >
-    <xsd:attribute name="typewriter_content" type="xsd:string" />
+    <xsd:attribute name="typewriter_json" type="xsd:string" />
 </xsd:schema>

@@ -1,9 +1,9 @@
 <input type="hidden" value="{{folder_id}}" folder-name="{{folder_name}}" class="download-stored-folder">
 <input type="hidden" value="{{file_id}}" file-name="{{file_name}}" class="download-stored-file">
 
-<label for="download-folder">{{#i18n}}Einen Ordner ausw&auml;hlen{{/i18n}}:</label>
+<label for="download-folder">{{#i18n}}Einen Ordner auswählen{{/i18n}}:</label>
 <select type="text" class="download-folder" name="folder">
-    <optgroup label="{{#i18n}}Ornder dieser Veranstaltung{{/i18n}}">
+    <optgroup label="{{#i18n}}Ordner dieser Veranstaltung{{/i18n}}">
     {{#folders}}
         <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
     {{/folders}}
@@ -16,7 +16,7 @@
 </select>
 <br>
 
-<label for="download-file">{{#i18n}}Eine Datei ausw&auml;hlen{{/i18n}}:</label>
+<label for="download-file">{{#i18n}}Eine Datei auswählen{{/i18n}}:</label>
 <select type="text" class="download-file" name="file">
     {{#allfiles}}
         <option value="{{name}}" file_id="{{id}}">{{name}}</option>

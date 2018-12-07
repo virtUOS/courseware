@@ -19,8 +19,13 @@ export default AuthorView.extend({
     },
 
     postRender() {
-        var $view = this;
-
+        var typewriter  = this.$('.cw-typewriter-stored-json').val();
+        if (typewriter == '') {
+            return;
+        }
+        typewriter = JSON.parse(typewriter);
+        this.$('.cw-typewriter-content').val(typewriter.content);
+        this.$('.cw-typewriter-speed').find('option[value="'+typewriter.speed+'"]').prop('selected', true);
 
         return this;
     },
@@ -54,11 +59,14 @@ export default AuthorView.extend({
 
     onSave(event) {
         var $view = this;
-        var content = $view.$('.cw-typewriter-content').val();
+        var typewriter = {};
+        typewriter.content = $view.$('.cw-typewriter-content').val();
+        typewriter.speed = $view.$('.cw-typewriter-speed').val();
+        typewriter = JSON.stringify(typewriter);
 
         helper
         .callHandler(this.model.id, 'save', {
-            'typewriter_content' : content,
+            'typewriter_json' : typewriter,
         })
         .then(
             // success

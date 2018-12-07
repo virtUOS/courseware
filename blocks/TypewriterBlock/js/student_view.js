@@ -31,15 +31,20 @@ export default StudentView.extend({
     },
 
     type() {
-        var txt  = this.$('.cw-typewriter-stored-content').val();
-        var spans = '<span>' + txt.split('').join('</span><span>') + '</span>';
+        var typewriter  = this.$('.cw-typewriter-stored-json').val();
+        if (typewriter == '') {
+            return;
+        }
+        typewriter = JSON.parse(typewriter);
+        var spans = '<span>' + typewriter.content.split('').join('</span><span>') + '</span>';
+        var speed = [200,100,50,25];
         $(spans).hide().appendTo(this.$('.cw-typewriter')).each(function (i) {
-            $(this).delay(100 * i).css({
+            $(this).delay(speed[typewriter.speed] * i).css({
                 display: 'inline',
                 opacity: 0
             }).animate({
                 opacity: 1
-            }, 100);
+            }, speed[typewriter.speed]);
         });
     },
 

@@ -2,9 +2,9 @@
 <input type="hidden" value="{{gallery_autoplay}}" class="gallery-stored-autoplay">
 <input type="hidden" value="{{gallery_hidenav}}" class="gallery-stored-hidenav">
 
-<label for="gallery-folder">{{#i18n}}Einen Ordner ausw&auml;hlen{{/i18n}}:</label>
+<label for="gallery-folder">{{#i18n}}Einen Ordner auswählen{{/i18n}}:</label>
 <select type="text" class="gallery-folder" name="folder">
-    <optgroup label="{{#i18n}}Ornder dieser Veranstaltung{{/i18n}}">
+    <optgroup label="{{#i18n}}Ordner dieser Veranstaltung{{/i18n}}">
         {{#folders}}
             <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
         {{/folders}}
@@ -17,7 +17,7 @@
 </select>
 <button class="cw-gallery-folder-select-info cw-info" data-title="{{#i18n}}Alle Bilddateien die sich in diesem Ordner des Dateibereichts befinden werden in der Galerie angezeigt.{{/i18n}}"></button>
 <br>
-<label for="gallery-height">{{#i18n}}H&ouml;he der Galerie (in Pixeln){{/i18n}}:</label>
+<label for="gallery-height">{{#i18n}}Höhe der Galerie (in Pixeln){{/i18n}}:</label>
 <input name="gallery-height" type="number" min=1 max=2000 step=1 value={{gallery_height}}>
 <br>
 <label for="gallery-autoplay">{{#i18n}}Autoplay{{/i18n}}:</label>
