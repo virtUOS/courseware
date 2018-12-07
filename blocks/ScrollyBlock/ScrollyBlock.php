@@ -20,6 +20,7 @@ class ScrollyBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
+        $this->setGrade(1.0);
 
         return array_merge($this->getAttrArray(), array());
     }
