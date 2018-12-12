@@ -7,7 +7,7 @@
  */
 
 
-class CreateFavoriteBlocksDatafield extends DBMigration
+class CreateFavoriteBlocksDatafield extends Migration
 {
     public function description()
     {
