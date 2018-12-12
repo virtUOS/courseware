@@ -278,7 +278,8 @@ class XmlImport implements ImportInterface
         $uiBlock = $this->blockFactory->makeBlock($block);
 
         if (gettype($uiBlock) != 'object') { 
-            //throw new \Exception($node->getAttribute('type'));
+            $block->delete();
+
             return false;
         }
         $properties = array();
