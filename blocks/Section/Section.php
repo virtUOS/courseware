@@ -171,7 +171,7 @@ class Section extends Block
         if (!isset($data['favorites'])) {
             throw new BadRequest('Type required.');
         }
-        $datafield = \DatafieldEntryModel::findOneBySql("datafield_id = '".self::FAVORITES_DATAFIELD."'", 'range_id ='.$this->container['current_user_id']);
+        $datafield = \DatafieldEntryModel::findOneBySql("datafield_id = ? AND range_id = ?" , array(self::FAVORITES_DATAFIELD, $this->container['current_user_id']));
         if ($datafield == null) {
             $datafield = new \DatafieldEntryModel();
             $datafield->datafield_id = self::FAVORITES_DATAFIELD;
@@ -185,7 +185,7 @@ class Section extends Block
 
     private function get_favorites()
     {
-        $datafield =  \DatafieldEntryModel::findOneBySql("datafield_id = '".self::FAVORITES_DATAFIELD."'", 'range_id ='.$this->container['current_user_id']);
+        $datafield =  \DatafieldEntryModel::findOneBySql("datafield_id = ? AND range_id = ?" , array(self::FAVORITES_DATAFIELD, $this->container['current_user_id']));
         if ($datafield->content == '') {
             return false;
         }
@@ -316,7 +316,9 @@ class Section extends Block
         $all_blocks = array();
         $favorite_blocks = array();
         $favs = $this->get_favorites();
- 
+        if (empty($favs)) {
+            $favs = array();
+        }
         foreach($blockTypes as $key => $value){
             array_push($all_blocks, $value);
             $value_for_favorite = $value;
