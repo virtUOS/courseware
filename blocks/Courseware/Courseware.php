@@ -136,6 +136,20 @@ class Courseware extends Block
         return true;
     }
 
+    public function sectionComplete($sectionblock)
+    {
+        $uid = $this->getCurrentUser()->id;
+        foreach ($sectionblock->children as $block) {
+            $bid = $block->id;
+            $progress = UserProgress::findOneBySQL('block_id = ? AND user_id = ?', array($bid, $uid));
+            if (!$progress || ($progress->grade / $progress->max_grade != 1)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function add_structure_handler($data)
     {
         // only authors may add more structure
@@ -149,6 +163,21 @@ class Courseware extends Block
         $block = $this->createStructure($parent, $data);
 
         return $block->toArray();
+    }
+
+    public function add_topics_handler()
+    {
+        $courseware_id = $this->container['current_courseware']->id;
+
+        $topics = \CourseTopic::findBySeminar_id($this->container['cid']);
+        foreach($topics as $topic) {
+            $data['parent'] = $courseware_id;
+            $data['title'] = $topic->title;
+            $parent = $this->requireUpdatableParent($data);
+            $block = $this->createStructure($parent, $data);
+        }
+
+        return;
     }
 
     public function update_positions_handler($data)
