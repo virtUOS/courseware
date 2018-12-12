@@ -30,7 +30,7 @@ export default {
   },
 
   navigateTo(id, hash) {
-    const params = queryString.parse(queryString.extract(location.href));
+    const params = queryString.parse(queryString.extract(location.href.split("#")[0]));
     params.selected = id;
 
     if (typeof hash === 'undefined' || hash === null) {
@@ -39,15 +39,15 @@ export default {
     if (hash[0] === '#') {
       hash = hash.substr(1);
     }
+    params.cid = params.cid.split('#')[0];
     var oldLocation = (new URL(document.location.pathname +
                                document.location.search +
                                document.location.hash, true)).toString();
 
     const newLocationURL = new URL(location.href, true)
     newLocationURL.set('query', params)
-    newLocationURL.set('hash', `#${hash}`)
-
-    let newLocation = newLocationURL.toString()
+    newLocationURL.set('hash', '#'+hash)
+    let newLocation = newLocationURL.toString();
 
     if (newLocation.substr(-1) === '#') {
       newLocation = newLocation.substr(0, newLocation.length - 1);
