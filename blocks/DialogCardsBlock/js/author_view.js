@@ -24,23 +24,35 @@ export default AuthorView.extend({
     postRender() {
         var $cards = this.$('.cw-dialogcards-card-content');
         $.each($cards, function(index) {
-            if ($(this).find('.cw-dialogcards-source-front').val() == 'url') {
-                $(this).find('.cw-dialogcards-front-img').show();
-                $(this).find('.cw-dialogcards-front-img-info').show();
-            } else {
-                $(this).find('.cw-dialogcards-front-img-file').show();
-                $(this).find('.cw-dialogcards-front-img-file-info').show();
-                let file_id = $(this).find('.cw-dialogcards-front-img-file-stored').val();
-                $(this).find('.cw-dialogcards-front-img-file option[file_id="'+file_id+'"]').prop('selected', true);
+            switch ($(this).find('.cw-dialogcards-source-front').val()) {
+                case 'url':
+                    $(this).find('.cw-dialogcards-front-img').show();
+                    $(this).find('.cw-dialogcards-front-img-info').show();
+                    break;
+                case 'file':
+                    $(this).find('.cw-dialogcards-front-img-file').show();
+                    $(this).find('.cw-dialogcards-front-img-file-info').show();
+                    let file_id = $(this).find('.cw-dialogcards-front-img-file-stored').val();
+                    $(this).find('.cw-dialogcards-front-img-file option[file_id="'+file_id+'"]').prop('selected', true);
+                    break;
+                case 'none':
+                    
+                    break;
             }
-            if ($(this).find('.cw-dialogcards-source-back').val() == 'url') {
-                $(this).find('.cw-dialogcards-back-img').show();
-                $(this).find('.cw-dialogcards-back-img-info').show();
-            } else {
-                $(this).find('.cw-dialogcards-back-img-file').show();
-                $(this).find('.cw-dialogcards-back-img-file-info').show();
-                let file_id = $(this).find('.cw-dialogcards-back-img-file-stored').val();
-                $(this).find('.cw-dialogcards-back-img-file option[file_id="'+file_id+'"]').prop('selected', true);
+            switch ($(this).find('.cw-dialogcards-source-back').val()) {
+                case 'url':
+                    $(this).find('.cw-dialogcards-back-img').show();
+                    $(this).find('.cw-dialogcards-back-img-info').show();
+                    break;
+                case 'file':
+                    $(this).find('.cw-dialogcards-back-img-file').show();
+                    $(this).find('.cw-dialogcards-back-img-file-info').show();
+                    let file_id = $(this).find('.cw-dialogcards-back-img-file-stored').val();
+                    $(this).find('.cw-dialogcards-back-img-file option[file_id="'+file_id+'"]').prop('selected', true);
+                    break;
+                case 'none':
+                    
+                    break;
             }
         });
         if($cards.length == 0) {
@@ -83,25 +95,38 @@ export default AuthorView.extend({
         var dialogcards_content = [];
         $.each($cards, function(index){
             var card_content = {};
-            if ($(this).find('.cw-dialogcards-source-front').val() == 'url') {
-                card_content.front_img = $(this).find('.cw-dialogcards-front-img').val();
-                card_content.front_external_file = true;
-            } else {
-                card_content.front_img_file_id = $(this).find('.cw-dialogcards-front-img-file option:selected').attr('file_id');
-                card_content.front_img_file_name = $(this).find('.cw-dialogcards-front-img-file option:selected').attr('file_name');
-                card_content.front_img = $(this).find('.cw-dialogcards-front-img-file option:selected').attr('file_url');
-                card_content.front_external_file = false;
+            switch ($(this).find('.cw-dialogcards-source-front').val()) {
+                case 'url': 
+                    card_content.front_img = $(this).find('.cw-dialogcards-front-img').val();
+                    card_content.front_external_file = true;
+                    break;
+                case 'file':
+                    card_content.front_img_file_id = $(this).find('.cw-dialogcards-front-img-file option:selected').attr('file_id');
+                    card_content.front_img_file_name = $(this).find('.cw-dialogcards-front-img-file option:selected').attr('file_name');
+                    card_content.front_img = $(this).find('.cw-dialogcards-front-img-file option:selected').attr('file_url');
+                    card_content.front_external_file = false;
+                    break;
+                case 'none':
+                    card_content.front_external_file = false;
+                    card_content.front_img = false;
+                    break;
             }
             card_content.front_text = $(this).find('.cw-dialogcards-front-text').val();
 
-            if ($(this).find('.cw-dialogcards-source-back').val() == 'url') {
-                card_content.back_img = $(this).find('.cw-dialogcards-back-img').val();
-                card_content.back_external_file = true;
-            } else {
-                card_content.back_img_file_id = $(this).find('.cw-dialogcards-back-img-file option:selected').attr('file_id');
-                card_content.back_img_file_name = $(this).find('.cw-dialogcards-back-img-file option:selected').attr('file_name');
-                card_content.back_img = $(this).find('.cw-dialogcards-back-img-file option:selected').attr('file_url');
-                card_content.back_external_file = false;
+            switch ($(this).find('.cw-dialogcards-source-back').val()) {
+                case 'url':
+                    card_content.back_img = $(this).find('.cw-dialogcards-back-img').val();
+                    card_content.back_external_file = true;
+                    break;
+                case 'file':
+                    card_content.back_img_file_id = $(this).find('.cw-dialogcards-back-img-file option:selected').attr('file_id');
+                    card_content.back_img_file_name = $(this).find('.cw-dialogcards-back-img-file option:selected').attr('file_name');
+                    card_content.back_img = $(this).find('.cw-dialogcards-back-img-file option:selected').attr('file_url');
+                    card_content.back_external_file = false;
+                    break;
+                case 'none':
+                    card_content.back_external_file = false;
+                    card_content.back_img = false;
             }
             card_content.back_text = $(this).find('.cw-dialogcards-back-text').val();
             card_content.index = index;
@@ -160,29 +185,47 @@ export default AuthorView.extend({
         var select = this.$(event.target);
         var $card = select.closest('.cw-dialogcards-card-content');
         if (select.hasClass('cw-dialogcards-source-front')) {
-            if (select.val() == 'url') {
-                $card.find('.cw-dialogcards-front-img').show();
-                $card.find('.cw-dialogcards-front-img-info').show();
-                $card.find('.cw-dialogcards-front-img-file').hide();
-                $card.find('.cw-dialogcards-front-img-file-info').hide();
-            } else {
-                $card.find('.cw-dialogcards-front-img').hide();
-                $card.find('.cw-dialogcards-front-img-info').hide();
-                $card.find('.cw-dialogcards-front-img-file').show();
-                $card.find('.cw-dialogcards-front-img-file-info').show();
+            switch (select.val()) {
+                case 'url':
+                    $card.find('.cw-dialogcards-front-img').show();
+                    $card.find('.cw-dialogcards-front-img-info').show();
+                    $card.find('.cw-dialogcards-front-img-file').hide();
+                    $card.find('.cw-dialogcards-front-img-file-info').hide();
+                    break;
+                case 'file':
+                    $card.find('.cw-dialogcards-front-img').hide();
+                    $card.find('.cw-dialogcards-front-img-info').hide();
+                    $card.find('.cw-dialogcards-front-img-file').show();
+                    $card.find('.cw-dialogcards-front-img-file-info').show();
+                    break;
+                case 'none':
+                    $card.find('.cw-dialogcards-front-img-file').hide();
+                    $card.find('.cw-dialogcards-front-img-file-info').hide();
+                    $card.find('.cw-dialogcards-front-img').hide();
+                    $card.find('.cw-dialogcards-front-img-info').hide();
+                    break;
             }
         }
         if (select.hasClass('cw-dialogcards-source-back')) {
-            if (select.val() == 'url') {
-                $card.find('.cw-dialogcards-back-img').show();
-                $card.find('.cw-dialogcards-back-img-info').show();
-                $card.find('.cw-dialogcards-back-img-file').hide();
-                $card.find('.cw-dialogcards-back-img-file-info').hide();
-            } else {
-                $card.find('.cw-dialogcards-back-img').hide();
-                $card.find('.cw-dialogcards-back-img-info').hide();
-                $card.find('.cw-dialogcards-back-img-file').show();
-                $card.find('.cw-dialogcards-back-img-file-info').show();
+            switch (select.val()) {
+                case 'url':
+                    $card.find('.cw-dialogcards-back-img').show();
+                    $card.find('.cw-dialogcards-back-img-info').show();
+                    $card.find('.cw-dialogcards-back-img-file').hide();
+                    $card.find('.cw-dialogcards-back-img-file-info').hide();
+                    break;
+                case 'file':
+                    $card.find('.cw-dialogcards-back-img').hide();
+                    $card.find('.cw-dialogcards-back-img-info').hide();
+                    $card.find('.cw-dialogcards-back-img-file').show();
+                    $card.find('.cw-dialogcards-back-img-file-info').show();
+                    break;
+                case 'none':
+                    $card.find('.cw-dialogcards-back-img').hide();
+                    $card.find('.cw-dialogcards-back-img-info').hide();
+                    $card.find('.cw-dialogcards-back-img-file').hide();
+                    $card.find('.cw-dialogcards-back-img-file-info').hide();
+                    break;
             }
         }
     }
