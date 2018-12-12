@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-0215 12:14+0200\n"
-"PO-Revision-Date: 2018-09-12 09:34+0100\n"
+"POT-Creation-Date: 2018-12-1210 13:40+0200\n"
+"PO-Revision-Date: 2018-12-11 12:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: ELAN e.V. <lucke@elan-ev.de>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-SourceCharset: windows-1252\n"
 
-#: views/import/index.php:25
+#: views/import/index.php:38
 msgid "Abbrechen"
 msgstr "Quit"
 
@@ -55,6 +55,9 @@ msgstr "accept"
 msgid "Alarm"
 msgstr "alert"
 
+msgid "Alle"
+msgstr "all"
+
 msgid ""
 "Alle Bilddateien die sich in diesem Ordner des Dateibereichts befinden "
 "werden in der Galerie angezeigt."
@@ -71,14 +74,14 @@ msgstr "Upwards"
 msgid "Anmerkung zur Lösung"
 msgstr "Note to the solution"
 
+msgid "Anpassen abschließen"
+msgstr "Complete customization"
+
 msgid "Antwort zurücksetzen"
 msgstr "Reset answer"
 
 msgid "Anzeigen"
 msgstr "Show"
-
-msgid "Überschrift"
-msgstr "Heading"
 
 msgid "Art des Links"
 msgstr "Type of link"
@@ -106,6 +109,9 @@ msgstr "autoplay"
 
 msgid "Autoplay-Timer (in Sekunden)"
 msgstr "autoplay timer (in seconds)"
+
+msgid "Autor"
+msgstr "Author"
 
 msgid "Autorenmodus"
 msgstr "Author mode"
@@ -154,9 +160,13 @@ msgid "Bild vorher - URL"
 msgstr "Image before - URL"
 
 msgid ""
-"Bitte beachten Sie das nicht alle Blocktypen in diesen Block eingebunden "
-"werden können."
-msgstr "Please note that not all block types can be included in this block."
+"Bitte beachten Sie das StudIP über eine sichere Verbindung aufgerufen wird. "
+"Es können nur Quellen eingebunden werden die auch über eine sichere "
+"Verbindung verfügen. Nutzen Sie das Protokoll https in der URL!"
+msgstr ""
+"Please note that StudIP is called via a secure connection. Only sources that "
+"also have a secure connection can be included. Use the https protocol in the "
+"URL!"
 
 msgid "Bitte vergleichen Sie Ihre Lösung mit der Musterlösung."
 msgstr "Please compare your solution with the sample solution."
@@ -184,6 +194,9 @@ msgstr "wide"
 
 msgid "Breite"
 msgstr "width"
+
+msgid "CC Lizenz"
+msgstr "CC license"
 
 msgid "CC Lizenztyp angeben:"
 msgstr "Specify CC license type:"
@@ -362,14 +375,19 @@ msgstr "There are currently no exercises available."
 msgid "Es sind keine Aufgabenblätter des Types"
 msgstr "There are no task sheets of the type"
 
-msgid "vorhanden"
-msgstr "available"
+msgid ""
+"Es wird nur ein Endzeitpunkt gesetzt wenn der Endzeitpunkt größer als der "
+"Startzeitpunkt ist"
+msgstr "Only an end time is set if the end time is greater than the start time"
 
 msgid "Es wurde bisher keine Evaluation erstellt!"
 msgstr "No evaluations have been created!"
 
 msgid "Es wurde keine Audiodatei ausgewählt"
 msgstr "No audio file was selected yet"
+
+msgid "Es wurde keine PDF-Datei ausgewählt."
+msgstr "No PDF file was selected"
 
 msgid "Es wurde kein OpenCast-Video ausgewählt."
 msgstr "No Opencast video was selected yet"
@@ -386,6 +404,39 @@ msgstr "No video has been uploaded yet!"
 #: Courseware.php:115
 msgid "Export"
 msgstr "Export"
+
+msgid "externer Link"
+msgstr "external link"
+
+msgid "Farbe"
+msgstr "color"
+
+msgid "Farbschema"
+msgstr "color scheme"
+
+msgid "Favoriten"
+msgstr "favorites"
+
+msgid "Favoriten anpassen"
+msgstr "edit favorites"
+
+msgid "Folgende Blocktypen können in diesen Block eingebunden werden:"
+msgstr "The following block types can be included in this block:"
+
+#: Courseware.php:103 Courseware.php:130
+msgid "Fortschrittsübersicht"
+msgstr "Progress"
+
+msgid "Frage"
+msgstr "Question"
+
+msgid "Freigegeben ab:"
+msgstr "Released from:"
+
+msgid ""
+"Freitext, Video, externer Inhalt (iframe), Download, Merksatz, Link, Embed"
+msgstr ""
+"Free text, video, external content (iframe), download, link, link, embed"
 
 msgid "für alle Displaygrößen"
 msgstr "for all display sizes"
@@ -407,24 +458,33 @@ msgstr "Forum must be activated for this course to view this forum block..."
 msgid "für große Displays"
 msgstr "for large displays"
 
+msgid ""
+"Für jede NutzerIn wird ein individueller Wert übergeben mit dem die "
+"Anwendung die NutzerIn wiedererkennen kann. Um Rückschlüssen auf die "
+"Identität zu verhindern, wird die StudIp-Nutzer-Id mit der "
+"Zufallszeichenfolge verschlüsselt. Wählen Sie identische "
+"Zufallszeichenfolgen, wenn an verschiedenen Stellen gleiche Nutzer-Ids "
+"erzeugt werden sollen."
+msgstr ""
+"For each user, an individual value is transferred with which the application "
+"can recognize the user. To prevent identity inference, the StudIP user ID is "
+"encrypted with the random string. Select identical random strings if the "
+"same user IDs are to be created in different places."
+
+msgid ""
+"Für jedes Thema aus dem Ablaufplan dieser Veranstaltung wird ein Kapitel "
+"angelegt"
+msgstr ""
+"For each topic from the schedule of this course, a chapter will be created"
+
 msgid "für kleine Displays"
 msgstr "for small displays"
 
-msgid "Farbe"
-msgstr "color"
-
-msgid "Farbschema"
-msgstr "color scheme"
-
-#: Courseware.php:103 Courseware.php:130
-msgid "Fortschrittsübersicht"
-msgstr "Progress"
-
-msgid "Frage"
-msgstr "Question"
-
-msgid "Freigegeben ab:"
-msgstr "Released from:"
+msgid ""
+"Für Videos von Plattformen wie YouTube oder vimeo nutzen Sie bitte den Embed-"
+"Block"
+msgstr ""
+"For videos from platforms like YouTube or vimeo, please use the embed block"
 
 msgid ""
 "Geben Sie hier eine URL an die direkt zu einer Bilddatei führt. Die URL "
@@ -456,14 +516,11 @@ msgstr "Delete whole chapter"
 msgid "Gesamtes Unterkapitel löschen"
 msgstr "Delete whole sub-chapter"
 
-msgid "grün"
-msgstr "green"
-
 msgid "grau"
 msgstr "grey"
 
-msgid "Höhe"
-msgstr "Height"
+msgid "grün"
+msgstr "green"
 
 msgid "Haltepunkte"
 msgstr "breakpoint"
@@ -476,9 +533,6 @@ msgstr "delete halt"
 
 msgid "hellgrau"
 msgstr "light grey"
-
-msgid "Herunterladen"
-msgstr "download"
 
 msgid "Hier werden alle Audiodateien aus dem Dateibereich aufgelistet."
 msgstr "All audio files from the file system are listed here."
@@ -497,6 +551,9 @@ msgstr "add"
 
 msgid "Hoch"
 msgstr "up"
+
+msgid "Höhe"
+msgstr "Height"
 
 msgid "H&ouml;he der Galerie (in Pixeln)"
 msgstr "Height of the gallery (in pixels)"
@@ -532,14 +589,21 @@ msgstr ""
 msgid "Import"
 msgstr "Import"
 
+msgid "in anderen Kapiteln"
+msgstr "in other chapters"
+
 msgid "in Courseware suchen..."
 msgstr "looking in Courseware..."
 
 msgid "In dem ausgew&auml;hlten Ordner befinden sich keine Bilder."
 msgstr "There are no pictures in the selected folder."
 
-msgid "Info"
-msgstr "information"
+msgid ""
+"In diesem Abschnitt sind keine Blöcke vorhanden die sich gruppieren lassen."
+msgstr "There are no blocks in this section that can be grouped."
+
+msgid "in diesem Kapitel"
+msgstr "in this chapter"
 
 msgid "Infobox nach Download"
 msgstr "infobox after download"
@@ -553,11 +617,20 @@ msgstr "inform"
 msgid "Inhalt"
 msgstr "Content"
 
+msgid "Interaktion"
+msgstr "interaction"
+
+msgid "interner Link"
+msgstr "internal link"
+
 msgid "invertiert"
 msgstr "inverted"
 
 msgid "Invertiert"
 msgstr "inverted"
+
+msgid "ja"
+msgstr "yes"
 
 msgid "Kapitel einfügen"
 msgstr "Add chapter"
@@ -577,11 +650,20 @@ msgstr "add card"
 msgid "kein Aufgabenblatt"
 msgstr "no worksheet"
 
+msgid "kein Bild"
+msgstr "no image"
+
 msgid "Keine Abschnitte"
 msgstr "No sections"
 
+msgid "keine Audiodatei verfügbar"
+msgstr "no audio file available"
+
 msgid "Keine Aufgaben."
 msgstr "No exercises"
+
+msgid "keine Bilddatei verfügbar"
+msgstr "no image file available"
 
 msgid "Keine Inhaltsblöcke"
 msgstr "No content blocks"
@@ -592,23 +674,17 @@ msgstr "No chapters"
 msgid "keinen Treffer gefunden"
 msgstr "found no results"
 
+msgid "keine PDF-Datei verfügbar"
+msgstr "no PDF file available"
+
 msgid "Keine Unterkapitel"
 msgstr "No sub-chapters"
-
-msgid "keine Audiodatei verfügbar"
-msgstr "no audio file available"
-
-msgid "keine Bilddatei verfügbar"
-msgstr "no image file available"
 
 msgid "keine Videodatei verfügbar"
 msgstr "no video file available"
 
-msgid "keine PDF-Datei verfügbar"
-msgstr "no PDF file available"
-
-msgid "Es wurde keine PDF-Datei ausgewählt."
-msgstr "No PDF file was selected"
+msgid "Keine Videodatei verfügbar"
+msgstr "no video file available"
 
 msgid "Kein Test verfügbar. Vips muss in dieser Veranstaltung aktiviert sein."
 msgstr "No exercise available. Vips must be activated for this course."
@@ -628,6 +704,7 @@ msgstr "cooperate"
 msgid "Kreisdiagramm"
 msgstr "pie chart"
 
+#: Courseware.php:87
 msgid "Letzte Änderungen"
 msgstr "Last changes"
 
@@ -640,6 +717,9 @@ msgstr "line chart"
 msgid "Link zur Plattform"
 msgstr "Link to the platform"
 
+msgid "Lizenz der Plattform"
+msgstr "License of the platform"
+
 msgid "Merksatz"
 msgstr "Key Point"
 
@@ -647,6 +727,17 @@ msgid ""
 "Mit diesem Block fassen Sie mehrere Blöcke dieser Seite zum Durchblättern "
 "zusammen."
 msgstr "This block is used to summarize several blocks of this page."
+
+msgid ""
+"Mit diesem Block können Sie Inhalte wie Videos, Bilder, Audiodateien etc. "
+"von diversen Plattformen in Courseware anzeigen lassen. Auf der Seite der "
+"Plattform können Sie die URL direkt aus der Adressleiste Ihres Browsers "
+"kopieren. Die Verwendung eines Embed-Codes ist nicht notwendig."
+msgstr ""
+"With this block, you can display contents such as videos, pictures, audio "
+"files etc. from various platforms in Courseware. On the side of the "
+"platform, you can copy the URL directly from the address bar of your "
+"browser. The use of an embed code is not necessary."
 
 msgid "mitte links"
 msgstr "middle left"
@@ -657,17 +748,26 @@ msgstr "middle middle"
 msgid "mitte rechts"
 msgstr "middle right"
 
+msgid "Multimedia"
+msgstr "multimedia"
+
 msgid "Musterlösung:"
 msgstr "Solution:"
 
 msgid "nächste Karte"
 msgstr "next card"
 
+msgid "nächster Abschnitt"
+msgstr "next section"
+
 msgid "Name des Übergabeparameters"
 msgstr "Title of transfer parameter"
 
 msgid "Navigation verbergen"
 msgstr "hide navigation"
+
+msgid "nein"
+msgstr "no"
 
 msgid "Nutzerfortschritt anzeigen"
 msgstr "show user progress"
@@ -711,11 +811,23 @@ msgstr "position"
 msgid "puz­zeln"
 msgstr "assemble"
 
+msgid "Quellcode"
+msgstr "Source Code"
+
 msgid "Quelle"
 msgstr "Source"
 
+msgid "Quelle entfernen"
+msgstr "remove source"
+
 msgid "Quelle hinzufügen"
 msgstr "Add source"
+
+msgid "Ringdiagramm"
+msgstr "donut"
+
+msgid "rot"
+msgstr "red"
 
 msgid "Rückseite - Bild aus Dateibereich"
 msgstr "Back side - image from file system"
@@ -726,14 +838,11 @@ msgstr "Back side - image from URL"
 msgid "Rückseite - Text"
 msgstr "Back side - text"
 
-msgid "Ringdiagramm"
-msgstr "donut"
-
-msgid "rot"
-msgstr "red"
-
 msgid "Säulendiagramm"
 msgstr "bar chart"
+
+msgid "Schnellauswahl"
+msgstr "Quick selection"
 
 msgid "schwarz"
 msgstr "black"
@@ -747,6 +856,7 @@ msgstr "remove side blocks"
 msgid "Seitenverhältnis"
 msgstr "Aspect ratio"
 
+#: views/cpo/postoverview.php:101
 msgid "senden"
 msgstr "send"
 
@@ -756,11 +866,22 @@ msgstr "visible from:"
 msgid "Sidebar für"
 msgstr "Sidebar for"
 
+msgid ""
+"Sie können mehrere Quellen pro Video angeben. Neben unterschiedlichen "
+"Formaten sind auch Videos für kleine Displays (&le;800px) und große Displays "
+"(>800px) möglich."
+msgstr ""
+"You can list several sources for a video. In addition to different formats, "
+"you may also use videos for small (&le;800px) and large (>800px) displays."
+
 msgid "Sortieren abschließen"
 msgstr "Complete sorting"
 
 msgid "Speichern"
 msgstr "Save"
+
+msgid "Sprache"
+msgstr "Language"
 
 msgid "Standard"
 msgstr "default"
@@ -771,14 +892,14 @@ msgstr "Start"
 msgid "Stellen Sie eine Frage oder kommentieren Sie..."
 msgstr "Ask a question or comment..."
 
+msgid "Strukturen & Layout"
+msgstr "structures & layout"
+
 msgid "Studentenmodus"
 msgstr "Student mode"
 
 msgid "suchen"
 msgstr "search"
-
-msgid "türkis"
-msgstr "turquoise"
 
 msgid "Tabs"
 msgstr "tabs"
@@ -795,8 +916,23 @@ msgstr "Name of HTML-Block"
 msgid "Titel des Unterkapitels bearbeiten"
 msgstr "Edit title of sub-chapter"
 
+msgid ""
+"Tragen Sie in das Feld URL(Uniform Resource Locator) die Adresse der Seite "
+"ein die im iFrame erscheinen soll.<br> Bitte beachten Sie, dass manche "
+"Seiten die Darstellung in einem iFrame blockieren."
+msgstr ""
+"Enter the address of the website which is to appear in the iFrame into the "
+"URL(Uniform Resource Locator) field. Please consider that some sites do not "
+"allow an integration into an iFrame"
+
+msgid "türkis"
+msgstr "turquoise"
+
 msgid "Typ"
 msgstr "type"
+
+msgid "Überschrift"
+msgstr "Heading"
 
 msgid "unten links"
 msgstr "bottom left"
@@ -815,6 +951,9 @@ msgstr "Sort sub-chapters"
 
 msgid "URL"
 msgstr "URL"
+
+msgid "verfügbare Sprachen"
+msgstr "available languages"
 
 msgid "veröffentlicht auf"
 msgstr "published on"
@@ -842,6 +981,9 @@ msgstr "Front Page - text"
 
 msgid "vorherige Karte"
 msgstr "previous card"
+
+msgid "vorheriger Abschnitt"
+msgstr "previous section"
 
 msgid "Vorschau"
 msgstr "Preview"
@@ -881,6 +1023,9 @@ msgstr "continue"
 
 msgid "weniger zeigen"
 msgstr "show less"
+
+msgid "Werk"
+msgstr "Product"
 
 msgid "Wert"
 msgstr "value"
@@ -976,64 +1121,146 @@ msgstr "Courseware"
 msgid "Die Einstellungen wurden gespeichert."
 msgstr "Settings saved."
 
-#: controllers/courseware.php:305
+#: controllers/courseware.php:306
 msgid "Tutoren können diese Einstellung nicht speichern."
 msgstr "Tutors cannot save this setting."
 
-#: controllers/import.php:47
+#: controllers/import.php:49
 msgid "Das Herunterladen des Moduls ist fehlgeschlagen."
 msgstr "Module download failed."
 
-#: controllers/import.php:70
+#: controllers/import.php:72
 msgid "Import-Archiv enthält keine Datendatei data.xml."
 msgstr "The import archive does not contain a data.xml file."
 
-#: controllers/import.php:79
+#: controllers/import.php:89
 msgid "Die Datendatei data.xml enthält kein valides XML."
 msgstr "The data file data.xml does not contain valid XML."
 
-#: controllers/import.php:98
-msgid "Das Import-Archiv ist beschädigt."
-msgstr "The import archive is damaged."
+#: views/cpo/index.php:11
+msgid "Fortschrittsübersicht für Lehrende"
+msgstr "Progress overview for lecturers"
 
-#: blocks/Courseware/Courseware.php:590
-#: models/mooc/db/CoursewareFactory.php:59
-msgid "Unterkapitel 1"
-msgstr "Sub-chapter 1"
+#: views/cpo/index.php:38
+msgid "Nutzung: "
+msgstr "Usage:"
 
-#: blocks/Courseware/Courseware.php:598
-#: models/mooc/db/CoursewareFactory.php:67
-msgid "Abschnitt 1"
-msgstr "Section 1"
+#: views/cpo/index.php:104
+msgid "zuletzt genutzt am: "
+msgstr "last used on:"
 
-#: blocks/DiscussionBlock/DiscussionBlock.php:70
-msgid "gemeinsam"
-msgstr "in class"
+#: views/cpo/postoverview.php:3
+msgid "nur Diskussionen mit neuen Beiträgen anzeigen"
+msgstr "only show discussions with new posts"
 
-#: blocks/DiscussionBlock/DiscussionBlock.php:71
-msgid "in Gruppen"
-msgstr "in groups"
+#: views/cpo/postoverview.php:4
+msgid "nicht verwendete Diskussionen ausblenden"
+msgstr "Hide unused discussions"
 
-#: blocks/InteractiveVideoBlock/InteractiveVideoBlock.php:165
-#: blocks/TestBlock/TestBlock.php:175 blocks/TestBlock/TestBlock.php:217
-msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
-msgstr "The worksheet cannot be edited right now."
+#: views/cpo/postoverview.php:5
+msgid "alle Diskussionen anzeigen"
+msgstr "show all discussions"
 
-#: blocks/Section/Section.php:104
-msgid "Sie sind nicht berechtigt Blöcke anzulegen."
-msgstr "You are not authorized to create blocks."
+#: views/cpo/postoverview.php:38
+msgid "Diese Diskussion wird in keinem Block verwendet."
+msgstr "This thread is not used in any block."
 
-#: blocks/Section/Section.php:147
-msgid "Sie sind nicht berechtigt Blöcke zu löschen."
-msgstr " You are not authorized to delete blocks."
+#: views/cpo/postoverview.php:44
+msgid "Es gibt keine neuen Beiträge."
+msgstr "There are no new post."
 
-#: blocks/TestBlock/TestBlock.php:27
-msgid "Selbsttest"
-msgstr "Self test"
+#: views/cpo/postoverview.php:47
+msgid "Es gibt einen neuen Beitrag"
+msgstr "There is a new post"
 
-#: blocks/TestBlock/TestBlock.php:28
-msgid "Übung"
-msgstr "Exercise"
+#: views/cpo/postoverview.php:50
+msgid "Es gibt "
+msgstr "There are "
+
+#: views/cpo/postoverview.php:50
+msgid " neue Beiträge"
+msgstr "new posts"
+
+#: views/cpo/postoverview.php:52
+msgid "Beiträge anzeigen"
+msgstr "Show posts"
+
+#: views/cpo/postoverview.php:64
+msgid "Beitrag ist ausgeblendet!"
+msgstr "Post is hidden!"
+
+#: views/cpo/postoverview.php:100
+msgid "Auf Beitrag antworten..."
+msgstr "Reply to post..."
+
+#: views/cpo/postoverview.php:105
+msgid "Die Courseware in dieser Veranstaltung enthält noch keine Diskussion."
+msgstr "The courseware in this course does not contain a discussion yet."
+
+#: views/import/index.php:1
+msgid "Datei hochladen"
+msgstr "Upload file"
+
+#: views/import/index.php:7
+msgid "Es sind Fehler aufgetreten:"
+msgstr "Errors occurred:"
+
+#: views/import/index.php:17
+msgid "Warnung! Es konnten nicht alle Blöcke importiert werden."
+msgstr "Warning! Not all blocks could be imported."
+
+#: views/import/index.php:23
+msgid ""
+"Bitte überprüfen Sie den Inhalt Ihrer Courseware und den Daten in Ihrer "
+"Importdatei."
+msgstr ""
+"Please check the content of your courseware and the data in your import file."
+
+#: views/import/index.php:28
+msgid ""
+"Laden Sie eine Datei hoch, die Sie zuvor aus einer Courseware exportiert "
+"haben."
+msgstr "Upload a file that has been exported from a Courseware instance."
+
+#: views/import/index.php:45
+msgid "Im Content-Marktplatz suchen"
+msgstr "Search content marketplace"
+
+#: views/import/index.php:49
+msgid "Stichwortsuche: "
+msgstr "Keyword search: "
+
+#: views/import/index.php:59
+msgid "Es wurden keine Plugins gefunden."
+msgstr "No plugins found."
+
+#: views/import/index.php:61
+msgid "Suchtreffer:"
+msgstr "Search hits:"
+
+#: views/import/index.php:64
+msgid "Bild"
+msgstr "Image"
+
+#: views/import/index.php:65
+msgid "Name und Beschreibung"
+msgstr "Name and description"
+
+#: views/import/index.php:66
+msgid "Version"
+msgstr "Version"
+
+#: views/import/index.php:67
+msgid "Bewertung"
+msgstr "Rating"
+
+#: views/import/index.php:68
+msgid "Installieren"
+msgstr "Install"
+
+#: views/import/index.php:108
+msgid "Plugin installieren"
+msgstr "Install plugin"
 
 #: views/courseware/news.php:2
 msgid "Neue Inhalte"
@@ -1177,107 +1404,42 @@ msgstr "Apply"
 msgid "Änderungen übernehmen"
 msgstr "Apply changes"
 
-#: views/cpo/index.php:11
-msgid "Fortschrittsübersicht für Lehrende"
-msgstr "Progress overview for lecturers"
+#: blocks/InteractiveVideoBlock/InteractiveVideoBlock.php:169
+#: blocks/TestBlock/TestBlock.php:178 blocks/TestBlock/TestBlock.php:220
+msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
+msgstr "The worksheet cannot be edited right now."
 
-#: views/cpo/index.php:38
-msgid "Nutzung: "
-msgstr "Usage:"
+#: blocks/Courseware/Courseware.php:605 models/mooc/db/CoursewareFactory.php:59
+msgid "Unterkapitel 1"
+msgstr "Sub-chapter 1"
 
-#: views/cpo/index.php:104
-msgid "zuletzt genutzt am: "
-msgstr "last used on:"
+#: blocks/Courseware/Courseware.php:613 models/mooc/db/CoursewareFactory.php:67
+msgid "Abschnitt 1"
+msgstr "Section 1"
 
-#: views/cpo/postoverview.php:33
-msgid "Dieser Thread wird in keinem Block genutzt."
-msgstr "This thread is not used in any block."
+#: blocks/Section/Section.php:107
+msgid "Sie sind nicht berechtigt Blöcke anzulegen."
+msgstr "You are not authorized to create blocks."
 
-#: views/cpo/postoverview.php:39
-msgid "Es gibt keine neuen Beiträge."
-msgstr "There are no new post."
+#: blocks/Section/Section.php:150
+msgid "Sie sind nicht berechtigt Blöcke zu löschen."
+msgstr " You are not authorized to delete blocks."
 
-#: views/cpo/postoverview.php:42
-msgid "Es gibt einen neuen Beitrag"
-msgstr "There is a new post"
+#: blocks/DiscussionBlock/DiscussionBlock.php:70
+msgid "gemeinsam"
+msgstr "in class"
 
-#: views/cpo/postoverview.php:45
-msgid "Es gibt "
-msgstr "There are "
+#: blocks/DiscussionBlock/DiscussionBlock.php:71
+msgid "in Gruppen"
+msgstr "in groups"
 
-#: views/cpo/postoverview.php:45
-msgid " neue Beiträge"
-msgstr "new posts"
+#: blocks/TestBlock/TestBlock.php:27
+msgid "Selbsttest"
+msgstr "Self test"
 
-#: views/cpo/postoverview.php:47
-msgid "Beiträge anzeigen"
-msgstr "Show posts"
-
-#: views/cpo/postoverview.php:59
-msgid "Beitrag ist ausgeblendet!"
-msgstr "Post is hidden!"
-
-#: views/cpo/postoverview.php:95
-msgid "Auf Beitrag antworten..."
-msgstr "Reply to post..."
-
-#: views/cpo/postoverview.php:100
-msgid "Die Courseware in dieser Veranstaltung enthält noch keine Diskussion."
-msgstr "The courseware in this course does not contain a discussion yet."
-
-#: views/import/index.php:1
-msgid "Datei hochladen"
-msgstr "Upload file"
-
-#: views/import/index.php:6
-msgid "Es sind Fehler aufgetreten:"
-msgstr "Errors occurred:"
-
-#: views/import/index.php:15
-msgid ""
-"Laden Sie eine Datei hoch, die Sie zuvor aus einer Courseware exportiert "
-"haben."
-msgstr "Upload a file that has been exported from a Courseware instance."
-
-#: views/import/index.php:31
-msgid "Im Content-Marktplatz suchen"
-msgstr "Search content marketplace"
-
-#: views/import/index.php:35
-msgid "Stichwortsuche: "
-msgstr "Keyword search: "
-
-#: views/import/index.php:45
-msgid "Es wurden keine Plugins gefunden."
-msgstr "No plugins found."
-
-#: views/import/index.php:47
-msgid "Suchtreffer:"
-msgstr "Search hits:"
-
-#: views/import/index.php:50
-msgid "Bild"
-msgstr "Image"
-
-#: views/import/index.php:51
-msgid "Name und Beschreibung"
-msgstr "Name and description"
-
-#: views/import/index.php:52
-msgid "Version"
-msgstr "Version"
-
-#: views/import/index.php:53
-msgid "Bewertung"
-msgstr "Rating"
-
-#: views/import/index.php:54
-msgid "Installieren"
-msgstr "Install"
-
-#: views/import/index.php:94
-msgid "Plugin installieren"
-msgstr "Install plugin"
+#: blocks/TestBlock/TestBlock.php:28
+msgid "Übung"
+msgstr "Exercise"
 
 #: models/mooc/db/CoursewareFactory.php:50
 #: models/mooc/db/CoursewareFactory.php:51
@@ -1295,6 +1457,18 @@ msgstr "Name of HTML-Block"
 #: models/mooc/ui/Block.php:517
 msgid "Sie sind nicht berechtigt diesen Block zu editieren."
 msgstr "You are not authorized to edit this block."
+
+msgid "vorhanden"
+msgstr "available"
+
+msgid "Herunterladen"
+msgstr "download"
+
+msgid "Info"
+msgstr "information"
+
+msgid "Das Import-Archiv ist beschädigt."
+msgstr "The import archive is damaged."
 
 msgid "Ändern"
 msgstr "Change"
@@ -1371,27 +1545,10 @@ msgid "Momentan verknüpft mit"
 msgstr "Currently linked to"
 
 msgid ""
-"Sie können mehrere Quellen pro Video angeben. Neben unterschiedlichen "
-"Formaten sind auch Videos für kleine Displays (&le;800px) und große Displays "
-"(>800px) möglich."
-msgstr ""
-"You can list several sources for a video. In addition to different formats, "
-"you may also use videos for small (&le;800px) and large (>800px) displays."
-
-msgid ""
 "Sie wurden noch keiner Gruppe zugeordnet. Bitte wenden Sie sich an Ihren "
 "Dozenten."
 msgstr ""
 "You have not been added to a group yet. Please contact your course lecturer."
-
-msgid ""
-"Tragen Sie in das Feld URL(Uniform Resource Locator) die Adresse der Seite "
-"ein die im iFrame erscheinen soll.<br> Bitte beachten Sie, dass manche "
-"Seiten die Darstellung in einem iFrame blockieren."
-msgstr ""
-"Enter the address of the website which is to appear in the iFrame into the "
-"URL(Uniform Resource Locator) field. Please consider that some sites do not "
-"allow an integration into an iFrame"
 
 msgid ""
 "Wählen Sie hier einen vorhandenen Forenbereich aus oder lassen Sie "
@@ -1430,9 +1587,6 @@ msgstr "Interactive Video"
 
 msgid "Lernkarten"
 msgstr "Dialog Cards"
-
-msgid "Quellcode"
-msgstr "Source Code"
 
 msgid "Suche"
 msgstr "Search"
@@ -1517,87 +1671,6 @@ msgstr "To use this block the Opencast plugin must be activated"
 
 msgid "Für diesen Block muss das Vips Plugin aktiviert sein"
 msgstr "To use this block the Vips plugin must be activated"
-
-msgid ""
-"Mit diesem Block können Sie Inhalte wie Videos, Bilder, Audiodateien etc. "
-"von diversen Plattformen in Courseware anzeigen lassen. Auf der Seite der "
-"Plattform können Sie die URL direkt aus der Adressleiste Ihres Browsers "
-"kopieren. Die Verwendung eines Embed-Codes ist nicht notwendig."
-msgstr ""
-"With this block, you can display contents such as videos, pictures, audio "
-"files etc. from various platforms in Courseware. On the side of the "
-"platform, you can copy the URL directly from the address bar of your "
-"browser. The use of an embed code is not necessary."
-
-msgid ""
-"Für jede NutzerIn wird ein individueller Wert übergeben mit dem die "
-"Anwendung die NutzerIn wiedererkennen kann. Um Rückschlüssen auf die "
-"Identität zu verhindern, wird die StudIp-Nutzer-Id mit der "
-"Zufallszeichenfolge verschlüsselt. Wählen Sie identische "
-"Zufallszeichenfolgen, wenn an verschiedenen Stellen gleiche Nutzer-Ids "
-"erzeugt werden sollen."
-msgstr ""
-"For each user, an individual value is transferred with which the application "
-"can recognize the user. To prevent identity inference, the StudIP user ID is "
-"encrypted with the random string. Select identical random strings if the "
-"same user IDs are to be created in different places."
-
-msgid "interner Link"
-msgstr "internal link"
-
-msgid "externer Link"
-msgstr "external link"
-
-msgid "nächster Abschnitt"
-msgstr "next section"
-
-msgid "vorheriger Abschnitt"
-msgstr "previous section"
-
-msgid "Schnellauswahl"
-msgstr "Quick selection"
-
-msgid "in diesem Kapitel"
-msgstr "in this chapter"
-
-msgid "in anderen Kapiteln"
-msgstr "in other chapters"
-
-msgid "ja"
-msgstr "yes"
-
-msgid "nein"
-msgstr "no"
-
-msgid "CC Lizenz"
-msgstr "CC license"
-
-msgid "Werk"
-msgstr "Product"
-
-msgid "Autor"
-msgstr "Author"
-
-msgid "Lizenz der Plattform"
-msgstr "License of the platform"
-
-msgid "Sprache"
-msgstr "Language"
-
-msgid "verfügbare Sprachen"
-msgstr "available languages"
-
-msgid "Alle"
-msgstr "all"
-
-msgid "Interaktion"
-msgstr "interaction"
-
-msgid "Strukturen & Layout"
-msgstr "structures & layout"
-
-msgid "Multimedia"
-msgstr "multimedia"
 
 msgid "Fragen"
 msgstr "exercises"
