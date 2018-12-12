@@ -148,6 +148,10 @@ class DownloadBlock extends Block
 
     public function getFiles()
     {
+        if ($this->file_id == '') {
+            return;
+        }
+
         $document = new \StudipDocument($this->file_id);
         $files[] = array (
             'id' => $this->file_id,
@@ -221,6 +225,9 @@ class DownloadBlock extends Block
 
     public function importContents($contents, array $files)
     {
+        if ($file->name == '') {
+            return;
+        }
         $file = reset($files);
         if ($file->id == $this->file_id) {
             $this->save();

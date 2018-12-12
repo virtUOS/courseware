@@ -110,6 +110,9 @@ class PdfBlock extends Block
 
     public function getFiles()
     {
+        if (empty($this->pdf_file_id)) {
+            return array();
+        }
         $document = new \StudipDocument($this->pdf_file_id);
         $files[] = array(
             'id'            => $this->pdf_file_id,

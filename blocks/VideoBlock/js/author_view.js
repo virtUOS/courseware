@@ -143,7 +143,7 @@ export default AuthorView.extend({
                 this.$('.videosource-webvideo').show();
                 this.$('video').show();
                 this.$('iframe').hide();
-                if (webvideodata == '') {
+                if ((webvideodata == '') || (webvideodata == 'null')|| (webvideodata == null)){
                     break;
                 }
                 this.setVideoData();

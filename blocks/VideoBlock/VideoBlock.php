@@ -176,6 +176,9 @@ class VideoBlock extends Block
     {
         $webvideo = json_decode($this->webvideo);
         foreach($files as $file){
+            if ($file->name == '') {
+                continue;
+            }
             foreach ($webvideo as &$source) {
                 if(($source->file_name == $file->name) && ($source->file_id != '')) {
                     $source->file_id = $file->id;
