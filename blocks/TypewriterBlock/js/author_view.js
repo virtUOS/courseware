@@ -26,6 +26,8 @@ export default AuthorView.extend({
         typewriter = JSON.parse(typewriter);
         this.$('.cw-typewriter-content').val(typewriter.content);
         this.$('.cw-typewriter-speed').find('option[value="'+typewriter.speed+'"]').prop('selected', true);
+        this.$('.cw-typewriter-font').find('option[value="'+typewriter.font+'"]').prop('selected', true);
+        this.$('.cw-typewriter-font').find('option[value="'+typewriter.size+'"]').prop('selected', true);
 
         return this;
     },
@@ -62,6 +64,8 @@ export default AuthorView.extend({
         var typewriter = {};
         typewriter.content = $view.$('.cw-typewriter-content').val();
         typewriter.speed = $view.$('.cw-typewriter-speed').val();
+        typewriter.font = $view.$('.cw-typewriter-font').val();
+        typewriter.size = $view.$('.cw-typewriter-size').val();
         typewriter = JSON.stringify(typewriter);
 
         helper
