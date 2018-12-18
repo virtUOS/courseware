@@ -25,7 +25,13 @@ class Section extends Block
     // definition of precedence of icons
     // larger array index -> higher precedence
     // thus ICON_VIDEO has the highest precedence
-    private static $icon_precedences = array(self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO, self::ICON_AUDIO, self::ICON_CODE, self::ICON_SEARCH, self::ICON_GALLERY);
+    private static $icon_precedences = array(self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO, 
+    self::ICON_AUDIO, self::ICON_CODE, self::ICON_SEARCH, self::ICON_GALLERY
+    );
+    private static $custom_icons =  array('doctoral_cap', 'community', 'edit', 'plugin', 'graph', 'admin', 'billboard', 
+    'category', 'cloud2', 'date', 'exclaim', 'file', 'folder-empty2', 'group2', 'home', 'key', 'literature', 'news', 
+    'notification2', 'print', 'refresh', 'star', 'staple', 'tag', 'wizard', 'youtube'
+    );
 
     // mapping of block types to icons
     private static $map_blocks_to_icons = array(
@@ -47,6 +53,7 @@ class Section extends Block
     {
         $this->defineField('visited', \Mooc\SCOPE_USER, false);
         $this->defineField('icon', \Mooc\SCOPE_BLOCK, self::ICON_DEFAULT);
+        $this->defineField('custom_icon', \Mooc\SCOPE_BLOCK, false);
     }
 
     public function student_view($context = array())
@@ -134,7 +141,9 @@ class Section extends Block
 
         $block->store();
 
-        $this->updateIconWithBlock($block);
+        if (!$this->custom_icon) {
+            $this->updateIconWithBlock($block);
+        }
 
         /** @var \Mooc\UI\Block $uiBlock */
         $uiBlock = $this->getBlockFactory()->makeBlock($block);
@@ -161,7 +170,9 @@ class Section extends Block
 
         $child->delete();
 
-        $this->refreshIcon();
+        if (!$this->custom_icon) {
+            $this->refreshIcon();
+         }
 
         return array('status' => 'ok');
     }
@@ -182,6 +193,18 @@ class Section extends Block
         $datafield->content = $data['favorites'];
         $datafield->store();
         return;
+    }
+
+    public function set_icon_handler($data)
+    {
+        $this->custom_icon = true;
+        if (in_array($data['icon'], array_merge(self::$icon_precedences , self::$custom_icons))) {
+            $this->icon = $data['icon'];
+        } else {
+            $this->icon = self::ICON_DEFAULT;
+        }
+
+        return true;
     }
 
     private function get_favorites()

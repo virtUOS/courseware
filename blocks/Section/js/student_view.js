@@ -45,7 +45,12 @@ export default StudentView.extend({
     'click .block .raise':    'raiseBlock',
 
     'click .block .author':   'switchToAuthorView',
-    'click .block .trash':    'destroyView'
+    'click .block .trash':    'destroyView',
+    
+    
+    'click .edit-icon': 'showSelectIcon',
+    'click button[name=icon-save]': 'saveSelectIcon',
+    'click button[name=icon-cancel]': 'cancelSelectIcon'
   },
 
   initialize() {
@@ -82,6 +87,8 @@ export default StudentView.extend({
     } else {
         this.$('.cw-block-adder-selector[data-blockclass="all"]').trigger('click');
     }
+
+    this.$('.cw-section-icon-selection[value="'+$('.section.selected .navigate').attr('data-icon')+'"]').attr('checked', 'checked');
   },
 
   switchMode(view) {
@@ -471,5 +478,40 @@ export default StudentView.extend({
     var section = block_types.findByName('Section');
     var blockTypesStub = section.createView('block_types', options);
     blockTypesStub.renderServerSide();
+  },
+
+    showSelectIcon() {
+    this.$('.title .controls').hide();
+    this.$('.add-icon').show();
+  },
+
+  saveSelectIcon() {
+      var $view = this;
+      var block_id = this.$el.attr('data-blockid');
+      var icon_name = $view.$('.cw-section-icon-selection:checked').val();
+      helper
+      .callHandler(this.model.id, 'set_icon', {
+        block_id: block_id,
+        icon: icon_name
+      })
+      .then(
+        // success
+        function () {
+        $('.section.selected .navigate').attr('data-icon', icon_name);
+          $view.cancelSelectIcon();
+        },
+
+        // error
+        function (error) {
+          var errorMessage = 'Could not update the block: '+$.parseJSON(error.responseText).reason;
+          alert(errorMessage);
+          console.log(errorMessage, arguments);
+          $view.cancelSelectIcon();
+        });
+  },
+
+  cancelSelectIcon() {
+    this.$('.title .controls').show();
+    this.$('.add-icon').hide();
   }
 });

@@ -1,3 +1,9 @@
+@red: #cb1800;
+@blue: #24437c;
+@lightblue: #abb7ce;
+@green: #00962d;
+@grey: #6e6e6e;
+@yellow: #ffad00;
 @import '../../../assets/less/variables';
 @import '../../../assets/less/mixins';
 
@@ -22,10 +28,11 @@ section#courseware {
 
   // ***** Title *****
   & > .title {
+    margin-bottom: 30px;
     h1 {
       .section-title();
       border-bottom: none;
-
+      margin-bottom: 0;
       .controls {
         display: inline-block;
         font-size: unset;
@@ -33,6 +40,7 @@ section#courseware {
             overflow: hidden;
             &.edit  { .btn(edit); }
             &.trash { .btn(trash); }
+            &.edit-icon { .btn(settings); vertical-align: top;}
         }
       }
     }
@@ -42,6 +50,15 @@ section#courseware {
       background: center left no-repeat;
       padding-left: 20px;
     }
+
+    .add-icon {
+        display: none;
+    }
+
+    .cw-section-icon-selection-wrapper {
+        padding: 1em;
+        border: solid thin #ccc;
+    }
   }
 
   // ***** Blocks *****
@@ -50,7 +67,7 @@ section#courseware {
     min-height: 1em;
     line-height: 20px;
     display: block;
-    margin-bottom: 1.5em;
+    margin-bottom: 3em;
 
     &::before {
       color: #ccc;
@@ -475,7 +492,7 @@ section#courseware {
   }
 
 
-
+  .add-icon,
   .edit-section {
     input {
       .section-title();
@@ -484,7 +501,249 @@ section#courseware {
             border: solid thin #009eff;
         }
     }
+    /* */
+    .cw-section-icon-selection-label {
+        width: 4em !important;
+        min-width: 4em !important;
+        padding: 0.5em !important;
+        display: inline-block;
+        
+        > .cw-section-icon-selection {
+            visibility: hidden; 
+            position: absolute;
+        }
 
+        > .cw-section-icon-selection + div{ 
+            cursor:pointer;
+            border:2px solid transparent;
+            background-size: 24px 24px;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 3em;
+            line-height: 5em;
+            text-align: center;
+            font-size: 0.9em;
+            color: @lightblue;
+        }
+
+        > .cw-section-icon-selection:checked + div{ /* (RADIO CHECKED) IMAGE STYLES */
+            font-weight: 600;
+            background-color: #28497c;
+        }
+
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-document {
+            .assets-bg-icon("white/info-small.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-video {
+            .assets-bg-icon("white/video.svg");
+        }
+         > .cw-section-icon-selection:checked +.cw-section-icon-selection-chat {
+            .assets-bg-icon("white/chat.svg");
+        }
+         > .cw-section-icon-selection:checked +.cw-section-icon-selection-code {
+            .assets-bg-icon("white/computer.svg");
+        }
+         > .cw-section-icon-selection:checked +.cw-section-icon-selection-audio {
+            .assets-bg-icon("white/play.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-gallery {
+            background-image: url("../images/icons/white/picture.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-task {
+            .assets-bg-icon("white/question.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-search {
+            .assets-bg-icon("white/search.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-doctoral_cap {
+            .assets-bg-icon("white/doctoral_cap.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-community {
+            .assets-bg-icon("white/community.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-action {
+            .assets-bg-icon("white/action.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-plugin {
+            .assets-bg-icon("white/plugin.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-graph {
+            .assets-bg-icon("white/graph.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-admin {
+            .assets-bg-icon("white/admin.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-billboard {
+            .assets-bg-icon("white/billboard.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-category {
+            .assets-bg-icon("white/category.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-cloud2 {
+            .assets-bg-icon("white/cloud2.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-date {
+            .assets-bg-icon("white/date.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-exclaim {
+            .assets-bg-icon("white/exclaim.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-file {
+            .assets-bg-icon("white/file.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-folder-empty2 {
+            .assets-bg-icon("white/folder-empty2.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-group2 {
+            .assets-bg-icon("white/group2.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-home {
+            .assets-bg-icon("white/home.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-key {
+            .assets-bg-icon("white/key.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-literature {
+            .assets-bg-icon("white/literature.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-license {
+            .assets-bg-icon("white/license.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-news {
+            .assets-bg-icon("white/news.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-notification2 {
+            .assets-bg-icon("white/notification2.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-print {
+            .assets-bg-icon("white/print.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-refresh {
+            .assets-bg-icon("white/refresh.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-star {
+            .assets-bg-icon("white/star.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-staple {
+            .assets-bg-icon("white/staple.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-tag {
+            .assets-bg-icon("white/tag.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-wizard {
+            .assets-bg-icon("white/wizard.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-youtube {
+            .assets-bg-icon("white/youtube.svg");
+        }
+
+        .cw-section-icon-selection-document {
+            .assets-bg-icon("blue/info-small.svg");
+        }
+        .cw-section-icon-selection-video {
+            .assets-bg-icon("blue/video.svg");
+        }
+        .cw-section-icon-selection-chat {
+            .assets-bg-icon("blue/chat.svg");
+        }
+        .cw-section-icon-selection-code {
+            .assets-bg-icon("blue/computer.svg");
+        }
+        .cw-section-icon-selection-audio {
+            .assets-bg-icon("blue/play.svg");
+        }
+        .cw-section-icon-selection-gallery {
+            background-image: url("../images/icons/blue/picture.svg");
+        }
+        .cw-section-icon-selection-task {
+            .assets-bg-icon("blue/question.svg");
+        }
+        .cw-section-icon-selection-search {
+            .assets-bg-icon("blue/search.svg");
+        }
+        .cw-section-icon-selection-doctoral_cap {
+            .assets-bg-icon("blue/doctoral_cap.svg");
+        }
+        .cw-section-icon-selection-community {
+            .assets-bg-icon("blue/community.svg");
+        }
+        .cw-section-icon-selection-action {
+            .assets-bg-icon("blue/action.svg");
+        }
+        .cw-section-icon-selection-plugin {
+            .assets-bg-icon("blue/plugin.svg");
+        }
+        .cw-section-icon-selection-graph {
+            .assets-bg-icon("blue/graph.svg");
+        }
+        .cw-section-icon-selection-admin {
+            .assets-bg-icon("blue/admin.svg");
+        }
+        .cw-section-icon-selection-billboard {
+            .assets-bg-icon("blue/billboard.svg");
+        }
+        .cw-section-icon-selection-category {
+            .assets-bg-icon("blue/category.svg");
+        }
+        .cw-section-icon-selection-cloud2 {
+            .assets-bg-icon("blue/cloud2.svg");
+        }
+        .cw-section-icon-selection-date {
+            .assets-bg-icon("blue/date.svg");
+        }
+        .cw-section-icon-selection-exclaim {
+            .assets-bg-icon("blue/exclaim.svg");
+        }
+        .cw-section-icon-selection-file {
+            .assets-bg-icon("blue/file.svg");
+        }
+        .cw-section-icon-selection-folder-empty2 {
+            .assets-bg-icon("blue/folder-empty2.svg");
+        }
+        .cw-section-icon-selection-group2 {
+            .assets-bg-icon("blue/group2.svg");
+        }
+        .cw-section-icon-selection-home {
+            .assets-bg-icon("blue/home.svg");
+        }
+        .cw-section-icon-selection-key {
+            .assets-bg-icon("blue/key.svg");
+        }
+        .cw-section-icon-selection-literature {
+            .assets-bg-icon("blue/literature.svg");
+        }
+        .cw-section-icon-selection-license {
+            .assets-bg-icon("blue/license.svg");
+        }
+        .cw-section-icon-selection-news {
+            .assets-bg-icon("blue/news.svg");
+        }
+        .cw-section-icon-selection-notification2 {
+            .assets-bg-icon("blue/notification2.svg");
+        }
+        .cw-section-icon-selection-print {
+            .assets-bg-icon("blue/print.svg");
+        }
+        .cw-section-icon-selection-refresh {
+            .assets-bg-icon("blue/refresh.svg");
+        }
+        .cw-section-icon-selection-star {
+            .assets-bg-icon("blue/star.svg");
+        }
+        .cw-section-icon-selection-staple {
+            .assets-bg-icon("blue/staple.svg");
+        }
+        .cw-section-icon-selection-tag {
+            .assets-bg-icon("blue/tag.svg");
+        }
+        .cw-section-icon-selection-wizard {
+            .assets-bg-icon("blue/wizard.svg");
+        }
+        .cw-section-icon-selection-youtube {
+            .assets-bg-icon("blue/youtube.svg");
+        }
+    }
+    /* */
     button {
       .btn-base();
       background-position: center center;
@@ -499,6 +758,9 @@ section#courseware {
       &.ok {
         .assets-bg-icon("grey/accept.svg");
       }
+    }
+    .cw-section-icon-selection-button-wrapper {
+        text-align: right;
     }
   }
 }
