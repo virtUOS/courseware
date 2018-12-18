@@ -27,6 +27,7 @@ class LinkBlock extends Block
 
         if ($this->link_type == "internal") {
             $link_id = $this->getTargetId($this->link_target);
+            $open_graph = false;
         }
 
         if ($this->link_type == "external") {
@@ -34,6 +35,7 @@ class LinkBlock extends Block
             if (strrpos($link_href, "http") === false) {
                 $link_href = "http://".$link_href;
             }
+            $open_graph = $this->getOpenGraph($link_href);
         }
 
         $this->setGrade(1.0);
@@ -53,7 +55,8 @@ class LinkBlock extends Block
         return array_merge($this->getAttrArray(), array(
             'link_id' => $link_id, 
             'link_href' => $link_href,
-            'progress' => $progress
+            'progress' => $progress,
+            'open_graph' => $open_graph
         ));
     }
 
@@ -173,6 +176,83 @@ class LinkBlock extends Block
         }
 
         return $inotherchapters;
+    }
+
+    private function getOpenGraph($URL)
+    {
+        $curl = curl_init($URL);
+
+        curl_setopt($curl, CURLOPT_FAILONERROR, true);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 15);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        if (!empty($response)) {
+            return self::_parse($response);
+        } else {
+            return false;
+        }
+    }
+
+    static private function _parse($HTML) {
+        $doc = new \DOMDocument();
+        $doc->loadHTML($HTML);
+
+        $tags = $doc->getElementsByTagName('meta');
+        if (!$tags || $tags->length === 0) {
+            return false;
+        }
+        $og = array();
+        $nonOgDescription = null;
+        
+        foreach ($tags AS $tag) {
+            if ($tag->hasAttribute('property') &&
+                strpos($tag->getAttribute('property'), 'og:') === 0) {
+                $key = strtr(substr($tag->getAttribute('property'), 3), '-', '_');
+                $og[$key] = $tag->getAttribute('content');
+            }
+
+            if ($tag ->hasAttribute('value') && $tag->hasAttribute('property') &&
+                strpos($tag->getAttribute('property'), 'og:') === 0) {
+                $key = strtr(substr($tag->getAttribute('property'), 3), '-', '_');
+                $og[$key] = $tag->getAttribute('value');
+            }
+
+            if ($tag->hasAttribute('name') && $tag->getAttribute('name') === 'description') {
+                $nonOgDescription = $tag->getAttribute('content');
+            }
+            
+        }
+
+        if (!isset($og['title'])) {
+            $titles = $doc->getElementsByTagName('title');
+            if ($titles->length > 0) {
+                $og['title'] = $titles->item(0)->textContent;
+            }
+        }
+        if (!isset($og->_values['description']) && $nonOgDescription) {
+            $og->_values['description'] = $nonOgDescription;
+        }
+
+        if (!isset($og['image'])) {
+            $domxpath = new \DOMXPath($doc);
+            $elements = $domxpath->query("//link[@rel='image_src']");
+            if ($elements->length > 0) {
+                $domattr = $elements->item(0)->attributes->getNamedItem('href');
+                if ($domattr) {
+                    $og['image'] = $domattr->value;
+                    $og['image_src'] = $domattr->value;
+                }
+            }
+        }
+        if (empty($og)) { return false; }
+        
+        return $og;
     }
 
     public function save_handler(array $data)
