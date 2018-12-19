@@ -29,8 +29,8 @@ class Section extends Block
     self::ICON_AUDIO, self::ICON_CODE, self::ICON_SEARCH, self::ICON_GALLERY
     );
     private static $custom_icons =  array('doctoral_cap', 'community', 'edit', 'plugin', 'graph', 'admin', 'billboard', 
-    'category', 'cloud2', 'date', 'exclaim', 'file', 'folder-empty2', 'group2', 'home', 'key', 'literature', 'news', 
-    'notification2', 'print', 'refresh', 'star', 'staple', 'tag', 'wizard', 'youtube'
+    'category', 'cloud2', 'comment','date', 'edit-small', 'exclaim', 'favorite', 'file', 'folder-empty2', 'group2', 'guestbook', 'home', 'key', 'literature', 'news', 
+    'notification2', 'place', 'print', 'ranking', 'refresh', 'resources', 'staple', 'star', 'stat', 'studygroup', 'tag', 'wizard', 'youtube'
     );
 
     // mapping of block types to icons
