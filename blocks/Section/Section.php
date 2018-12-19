@@ -25,12 +25,21 @@ class Section extends Block
     // definition of precedence of icons
     // larger array index -> higher precedence
     // thus ICON_VIDEO has the highest precedence
-    private static $icon_precedences = array(self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO, 
-    self::ICON_AUDIO, self::ICON_CODE, self::ICON_SEARCH, self::ICON_GALLERY
+    private static $icon_precedences = array(
+        self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO,
+        self::ICON_AUDIO, self::ICON_CODE, self::ICON_SEARCH, self::ICON_GALLERY
     );
-    private static $custom_icons =  array('doctoral_cap', 'community', 'edit', 'plugin', 'graph', 'admin', 'billboard', 
-    'category', 'cloud2', 'comment','date', 'edit-small', 'exclaim', 'favorite', 'file', 'folder-empty2', 'group2', 'guestbook', 'home', 'key', 'literature', 'news', 
-    'notification2', 'place', 'print', 'ranking', 'refresh', 'resources', 'staple', 'star', 'stat', 'studygroup', 'tag', 'wizard', 'youtube'
+
+    private static $custom_icons =  array(
+        'doctoral_cap', 'community', 'edit', 'plugin',
+        'graph', 'admin', 'billboard', 'category',
+        'cloud2', 'comment', 'date', 'edit-small',
+        'exclaim', 'favorite', 'file', 'folder-empty2',
+        'group2', 'guestbook', 'home', 'key',
+        'literature', 'news', 'notification2', 'place',
+        'print', 'ranking', 'refresh', 'resources',
+        'staple', 'star', 'stat', 'studygroup',
+        'tag', 'wizard', 'youtube'
     );
 
     // mapping of block types to icons
@@ -84,9 +93,6 @@ class Section extends Block
         }
         // block adder
         $block_types = $this->getBlockTypes();
-        $content_block_types_basic = $block_types['basic_blocks'];
-        $content_block_types_advanced = $block_types['advanced_blocks'];
-
         $content_block_types_function = $block_types['function_blocks'];
         $content_block_types_interaction = $block_types['interaction_blocks'];
         $content_block_types_layout = $block_types['layout_blocks'];
@@ -94,18 +100,18 @@ class Section extends Block
         $content_block_types_all = $block_types['all_blocks'];
         $content_block_types_favorite = $block_types['favorite_blocks'];
 
-
         return compact(
             'blocks', 
-            'content_block_types_basic',
-            'content_block_types_advanced',
             'content_block_types_function',
             'content_block_types_interaction',
             'content_block_types_layout',
             'content_block_types_multimedia',
             'content_block_types_all',
             'content_block_types_favorite',
-            'icon', 'title', 'visited');
+            'icon',
+            'title', 
+            'visited'
+        );
     }
 
     public function add_content_block_handler($data)
@@ -192,6 +198,7 @@ class Section extends Block
         }
         $datafield->content = $data['favorites'];
         $datafield->store();
+
         return;
     }
 

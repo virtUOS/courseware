@@ -46,8 +46,8 @@ export default StudentView.extend({
 
     'click .block .author':   'switchToAuthorView',
     'click .block .trash':    'destroyView',
-    
-    
+
+    // icon selection
     'click .edit-icon': 'showSelectIcon',
     'click button[name=icon-save]': 'saveSelectIcon',
     'click button[name=icon-cancel]': 'cancelSelectIcon'
@@ -166,29 +166,29 @@ export default StudentView.extend({
       $block_wrapper.removeClass('loading');
     });
   },
-  
-   toggleBlockAdder() {
-        var $view = this,
-            $header = $view.$('.cw-block-adder-header'),
-            $wrapper = $view.$('.cw-block-adder-wrapper');
-        if ($header.hasClass('cw-block-adder-open')) {
-                $wrapper.hide();
-                $header.removeClass('cw-block-adder-open');
-        } else {
-            $wrapper.show();
-            $header.addClass('cw-block-adder-open');
-        }
-    },
-    
-    showBlockAdderTab(event) {
-        var $view = this,
-            $button = $(event.target),
-            $block_class = $button.attr('data-blockclass');
-        $view.$('.cw-block-adder-tab').hide();
-        $view.$('.cw-block-adder-selector').removeClass('cw-active-selector');
-        $button.addClass('cw-active-selector');
-        $view.$('.cw-block-adder-tab[data-blockclass="'+$block_class+'"]').show();
-    },
+
+  toggleBlockAdder() {
+    var $view = this,
+    $header = $view.$('.cw-block-adder-header'),
+    $wrapper = $view.$('.cw-block-adder-wrapper');
+    if ($header.hasClass('cw-block-adder-open')) {
+      $wrapper.hide();
+      $header.removeClass('cw-block-adder-open');
+    } else {
+      $wrapper.show();
+      $header.addClass('cw-block-adder-open');
+    }
+  },
+
+  showBlockAdderTab(event) {
+    var $view = this,
+        $button = $(event.target),
+        $block_class = $button.attr('data-blockclass');
+    $view.$('.cw-block-adder-tab').hide();
+    $view.$('.cw-block-adder-selector').removeClass('cw-active-selector');
+    $button.addClass('cw-active-selector');
+    $view.$('.cw-block-adder-tab[data-blockclass="'+$block_class+'"]').show();
+  },
 
   addNewBlock(event) {
     var view = this,
@@ -228,53 +228,49 @@ export default StudentView.extend({
   },
 
   editFavs() {
-      var $view = this;
-      $view.$('.cw-block-edit-fav').toggle();
-      $view.$('.cw-block-add-fav-all-blocks').toggle();
-      $view.$('.cw-block-adder-favs').toggle();
-      $view.$('.cw-block-store-fav').show();
+    var $view = this;
+    $view.$('.cw-block-edit-fav').toggle();
+    $view.$('.cw-block-add-fav-all-blocks').toggle();
+    $view.$('.cw-block-adder-favs').toggle();
+    $view.$('.cw-block-store-fav').show();
   },
 
   selectFav(event) {
-      var $item = $(event.currentTarget);
-      if ($item.hasClass('cw-block-fav-item-selected')){
-          $item.removeClass('cw-block-fav-item-selected');
-      } else {
-          $item.addClass('cw-block-fav-item-selected');
-      }
+    var $item = $(event.currentTarget);
+    if ($item.hasClass('cw-block-fav-item-selected')) {
+      $item.removeClass('cw-block-fav-item-selected');
+    } else {
+      $item.addClass('cw-block-fav-item-selected');
+    }
   },
 
   storeFavs(event) {
-      var $view = this;
-      var favs = {};
-      var $selected = $view.$('.cw-block-fav-item-selected');
-      favs.blocktypes = [];
-      $selected.each(function(index){
-          favs.blocktypes.push($(this).data('blocktype'));
-      });
-      favs = JSON.stringify(favs);
-      helper
-      .callHandler(this.model.id, 'add_favorites', {
-        favorites: favs
-      })
-      .then(
-        // success
-        function (success) {
-            $view.editFavs();
-            $view.$('.cw-block-store-fav').hide();
-            $view.$('.cw-block-adder-favs .cw-block-adder-item').removeClass('cw-block-adder-item-fav');
-            $selected.each(function(index){
-                $view.$(".cw-block-adder-favs .cw-block-adder-item[data-blocktype='"+$(this).data('blocktype')+"']").addClass('cw-block-adder-item-fav');
-            });
-
-        },
-
-        // error
-        function (error) {
-          //var errorMessage = 'Could not update the block: '+$.parseJSON(error.responseText).reason;
-          //alert(errorMessage);
-          console.log(error);
+    var $view = this;
+    var favs = {};
+    var $selected = $view.$('.cw-block-fav-item-selected');
+    favs.blocktypes = [];
+    $selected.each(function(index){
+      favs.blocktypes.push($(this).data('blocktype'));
+    });
+    favs = JSON.stringify(favs);
+    helper
+    .callHandler(this.model.id, 'add_favorites', {
+      favorites: favs
+    })
+    .then(
+      // success
+      function (success) {
+        $view.editFavs();
+        $view.$('.cw-block-store-fav').hide();
+        $view.$('.cw-block-adder-favs .cw-block-adder-item').removeClass('cw-block-adder-item-fav');
+        $selected.each(function(index){
+          $view.$(".cw-block-adder-favs .cw-block-adder-item[data-blocktype='"+$(this).data('blocktype')+"']").addClass('cw-block-adder-item-fav');
         });
+      },
+      // error
+      function (error) {
+        console.log(error);
+      });
   },
 
   appendBlockStub(model, view_name) {
@@ -318,6 +314,7 @@ export default StudentView.extend({
         updateSectionTitle = function (model) {
           var new_title = templates('Section', 'title', model.toJSON());
           $title.replaceWith(new_title);
+
           return self.$('> .title');
         };
 
@@ -329,6 +326,7 @@ export default StudentView.extend({
       .then(function (model) {
         if (model.hasChanged()) {
           $title = updateSectionTitle(model).addClass('loading');
+
           return model.save();
         }
 
@@ -486,28 +484,27 @@ export default StudentView.extend({
   },
 
   saveSelectIcon() {
-      var $view = this;
-      var block_id = this.$el.attr('data-blockid');
-      var icon_name = $view.$('.cw-section-icon-selection:checked').val();
-      helper
-      .callHandler(this.model.id, 'set_icon', {
-        block_id: block_id,
-        icon: icon_name
-      })
-      .then(
-        // success
-        function () {
+    var $view = this;
+    var block_id = this.$el.attr('data-blockid');
+    var icon_name = $view.$('.cw-section-icon-selection:checked').val();
+    helper
+    .callHandler(this.model.id, 'set_icon', {
+      block_id: block_id,
+      icon: icon_name
+    })
+    .then(
+      // success
+      function () {
         $('.section.selected .navigate').attr('data-icon', icon_name);
           $view.cancelSelectIcon();
-        },
-
-        // error
-        function (error) {
-          var errorMessage = 'Could not update the block: '+$.parseJSON(error.responseText).reason;
-          alert(errorMessage);
-          console.log(errorMessage, arguments);
-          $view.cancelSelectIcon();
-        });
+      },
+      // error
+      function (error) {
+        var errorMessage = 'Could not update the block: '+$.parseJSON(error.responseText).reason;
+        alert(errorMessage);
+        console.log(errorMessage, arguments);
+        $view.cancelSelectIcon();
+    });
   },
 
   cancelSelectIcon() {
