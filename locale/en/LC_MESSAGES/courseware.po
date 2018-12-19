@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Courseware\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-1207 11:27+0200\n"
-"PO-Revision-Date: 2018-12-07 12:21+0100\n"
+"PO-Revision-Date: 2018-12-19 15:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: ELAN e.V. <lucke@elan-ev.de>\n"
 "Language: en\n"
@@ -1792,3 +1792,9 @@ msgstr "Displays an appointment or countdown"
 
 msgid "Ablaufplan importieren"
 msgstr "Import schedule"
+
+msgid "Wählen Sie ein Icon für diesen Abschnitt aus"
+msgstr "Select an icon for this section"
+
+msgid "Abschnitt Icon auswählen"
+msgstr "Select an icon for this section"
