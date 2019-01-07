@@ -194,11 +194,9 @@ class Section extends Block
             $datafield->datafield_id = self::FAVORITES_DATAFIELD;
             $datafield->range_id = $this->container['current_user_id'];
             $datafield->sec_range_id = "";
-            // StudIP 4.0.x does not have $datafield->lang
-            try {
-                $datafield->lang = "";
-            } catch (Exception $e) {
-                unset($e);
+            $sorm_fields = $datafield->getTableMetadata()['fields'];
+            if (array_key_exists('lang', $sorm_fields)) {
+                $datafield->lang = '';
             }
         }
         $datafield->content = $data['favorites'];
