@@ -485,6 +485,7 @@ section#courseware {
     }
 
     .cw-block-adder-favs .cw-block-adder-item.cw-block-adder-item-fav[data-blocktype="ScrollyBlock"],
+    .cw-block-add-fav-all-blocks .cw-block-fav-item[data-blocktype="ScrollyBlock"],
     .cw-block-adder-item[data-blocktype="ScrollyBlock"] {
         display: none;
     }
@@ -820,9 +821,17 @@ section#courseware {
 
 &.scrollyware {
     .active-section .block-adder .cw-block-adder-favs .cw-block-adder-item.cw-block-adder-item-fav[data-blocktype="ScrollyBlock"],
+    .active-section .block-adder .cw-block-add-fav-all-blocks .cw-block-fav-item[data-blocktype="ScrollyBlock"],
     .active-section .block-adder .cw-block-adder-item[data-blocktype="ScrollyBlock"] {
             display: unset;
     }
+    .active-section .block-adder .cw-block-adder-tab[data-blockclass="favorite"] .cw-block-adder-item[data-blocktype="ScrollyBlock"] {
+        display: none;
+        &.cw-block-adder-item-fav {
+            display: unset;
+        }
+    }
+    
 }
 
 &.view-author .aside-section section.block,
