@@ -237,7 +237,9 @@ class Section extends Block
         foreach ($this->_model->children as $child) {
             /** @var \Mooc\UI\Block $block */
             $block = $this->getBlockFactory()->makeBlock($child);
-            $files = array_merge($files, $block->getFiles());
+            if ($block != null) {
+                $files = array_merge($files, $block->getFiles());
+            }
         }
 
         return $files;

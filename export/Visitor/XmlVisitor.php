@@ -163,8 +163,10 @@ class XmlVisitor extends AbstractVisitor
 
         foreach ($section->getModel()->children as $block) {
             $uiBlock = $this->blockFactory->makeBlock($block);
-            $this->startVisitingBlock($uiBlock);
-            $this->endVisitingBlock($uiBlock);
+            if ($uiBlock != null) {
+                $this->startVisitingBlock($uiBlock);
+                $this->endVisitingBlock($uiBlock);
+            }
         }
     }
 
@@ -187,8 +189,10 @@ class XmlVisitor extends AbstractVisitor
 
         foreach ($section->getModel()->children as $block) {
             $uiBlock = $this->blockFactory->makeBlock($block);
-            $this->startVisitingBlock($uiBlock);
-            $this->endVisitingBlock($uiBlock);
+            if ($uiBlock != null) {
+                $this->startVisitingBlock($uiBlock);
+                $this->endVisitingBlock($uiBlock);
+            }
         }
     }
 
