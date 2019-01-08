@@ -29,7 +29,7 @@
     "slick-carousel": "1.8.1",
     "style-loader": "0.23.1",
     "webpack": "3.12.0",
-    "webpack-dev-server": "3.1.10"
+    "webpack-dev-server": "3.1.14"
   },
   "browserslist": [
     "last 2 versions",
