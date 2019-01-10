@@ -22,7 +22,7 @@
                 <span class="cw-link-title">{{link_title}}</span>
                 {{/open_graph}}
                 {{#open_graph}}
-                    <img src={{image}} class="cw-link-og-image">
+                    {{#image}}<img src={{image}} class="cw-link-og-image">{{/image}}
                     <div class="cw-link-og-textwrapper">
                         <p class="cw-link-og-site">{{site_name}}</p>
                         <p class="cw-link-og-title">{{title}}</p>
