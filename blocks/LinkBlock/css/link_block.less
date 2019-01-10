@@ -48,8 +48,31 @@
         &:hover {
             .assets-bg-icon("white/link-extern.svg");
         }
-    }
 
+        .cw-link-og-image {
+            display: inline-block;
+            max-width: 40%;
+            vertical-align: top;
+            margin-right: 2em;
+        }
+        .cw-link-og-textwrapper {
+            display: inline-block;
+            max-width: 50%;
+            p {
+                margin: 0;
+            }
+            .cw-link-og-site {
+                font-size: 1.25em;
+            }
+            .cw-link-og-title {
+                font-weight: 600;
+            }
+            .cw-link-og-description {
+                color:#687fa3;
+                text-align: justify;
+            }
+        }
+    }
 }
 
 section#courseware .block-content:not([data-view="student"]) select.cw-link-protocol {

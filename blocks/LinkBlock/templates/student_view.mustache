@@ -18,7 +18,17 @@
     {{#link_href}}
         <a href="{{link_href}}" target="_blank">
             <div class="cw-link external">
+                {{^open_graph}}
                 <span class="cw-link-title">{{link_title}}</span>
+                {{/open_graph}}
+                {{#open_graph}}
+                    {{#image}}<img src={{image}} class="cw-link-og-image">{{/image}}
+                    <div class="cw-link-og-textwrapper">
+                        <p class="cw-link-og-site">{{site_name}}</p>
+                        <p class="cw-link-og-title">{{title}}</p>
+                        <p class="cw-link-og-description">{{description}}</p>
+                    </div>
+                {{/open_graph}}
             </div>
         </a>
     {{/link_href}}

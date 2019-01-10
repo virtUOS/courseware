@@ -27,12 +27,20 @@ class LinkBlock extends Block
 
         if ($this->link_type == "internal") {
             $link_id = $this->getTargetId($this->link_target);
+            $open_graph = false;
         }
 
         if ($this->link_type == "external") {
             $link_href = $this->link_target;
             if (strrpos($link_href, "http") === false) {
                 $link_href = "http://".$link_href;
+            }
+            $og_url = \OpenGraphURL::fromURL($link_href);
+            if ($og_url) {
+                $og_url->store();
+            }
+            if ($og_url->is_opengraph == 1) {
+                $open_graph = $og_url->toArray(['image', 'site_name', 'title', 'description']);
             }
         }
 
@@ -53,7 +61,8 @@ class LinkBlock extends Block
         return array_merge($this->getAttrArray(), array(
             'link_id' => $link_id, 
             'link_href' => $link_href,
-            'progress' => $progress
+            'progress' => $progress,
+            'open_graph' => $open_graph
         ));
     }
 
