@@ -171,26 +171,22 @@ class Section extends Block
         if (!isset($data['favorites'])) {
             throw new BadRequest('Type required.');
         }
-        $datafield = \DatafieldEntryModel::findOneBySql("datafield_id = ? AND range_id = ?" , array(self::FAVORITES_DATAFIELD, $this->container['current_user_id']));
-        if ($datafield == null) {
-            $datafield = new \DatafieldEntryModel();
-            $datafield->datafield_id = self::FAVORITES_DATAFIELD;
-            $datafield->range_id = $this->container['current_user_id'];
-            $datafield->sec_range_id = "";
-        }
-        $datafield->content = $data['favorites'];
-        $datafield->store();
+
+        $user_id = $this->container['current_user_id'];
+        \UserConfig::get($user_id)->store('COURSEWARE_FAVORITE_BLOCKS', $data['favorites']);
+
         return;
     }
 
     private function get_favorites()
     {
-        $datafield =  \DatafieldEntryModel::findOneBySql("datafield_id = ? AND range_id = ?" , array(self::FAVORITES_DATAFIELD, $this->container['current_user_id']));
-        if ($datafield->content == '') {
+        $user_id = $this->container['current_user_id'];
+        $favs = \UserConfig::get($user_id)->COURSEWARE_FAVORITE_BLOCKS;        
+        if (!$favs) {
             return false;
         }
 
-        return json_decode($datafield->content, true)['blocktypes'];
+        return $favs['blocktypes'];
     }
 
     /**
