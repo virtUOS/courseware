@@ -210,10 +210,11 @@ class Section extends Block
     private function get_favorites()
     {
         $user_id = $this->container['current_user_id'];
-        $favs = \UserConfig::get($user_id)->COURSEWARE_FAVORITE_BLOCKS;        
+        $favs = \UserConfig::get($user_id)->COURSEWARE_FAVORITE_BLOCKS;
         if (!$favs) {
             return false;
         }
+        $favs = json_decode($favs[0], true);
 
         return $favs['blocktypes'];
     }
