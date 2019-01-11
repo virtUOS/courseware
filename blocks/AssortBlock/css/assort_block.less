@@ -1,4 +1,20 @@
 @import '../../../assets/less/mixins';
+
+section#courseware .active-section section.block.block-is-assorted,
+section#courseware .aside-section section.block.block-is-assorted {
+    display: none;
+}
+
+section#courseware.view-author .active-section section.block.block-is-assorted,
+section#courseware.view-author .aside-section section.block.block-is-assorted {
+    display: block;
+    border: dashed thin #ccc;
+    &:hover {
+        border: dashed thin #000;
+    }
+}
+
+
 /* author mode */
 .AssortBlock {
     .cw-assort-description {
