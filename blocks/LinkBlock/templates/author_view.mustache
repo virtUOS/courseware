@@ -38,15 +38,15 @@
 <input name="cw-link-target" class="cw-link-target" type="text" placeholder="www.studip.de">
 <br>
 
-<label for="cw-link-progress">{{#i18n}}Nutzerfortschritt anzeigen{{/i18n}}:</label>
+<label for="cw-link-title">{{#i18n}}Bezeichung des Links{{/i18n}}:</label>
+<input type="text" name="cw-link-title" class="cw-link-title" spellcheck="true">
+<br>
+
+<label for="cw-link-progress" class="cw-link-progress-label">{{#i18n}}Nutzerfortschritt anzeigen{{/i18n}}:</label>
 <select name="cw-link-progress" class="cw-link-progress">
     <option value="false">{{#i18n}}nein{{/i18n}}</option>
     <option value="true">{{#i18n}}ja{{/i18n}}</option>
 </select>
-<br>
-
-<label for="cw-link-title">{{#i18n}}Bezeichung des Links{{/i18n}}:</label>
-<input type="text" name="cw-link-title" class="cw-link-title" spellcheck="true">
 
 <div class="cw-button-box">
     <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>

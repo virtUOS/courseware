@@ -56,6 +56,7 @@ export default AuthorView.extend({
         if ($type == 'internal') {
             $view.$('select.cw-link-target').show();
             $view.$('select.cw-link-progress').show();
+            $view.$('label.cw-link-progress-label').show();
             $view.$('input.cw-link-target').hide();
             $view.$('select.cw-link-protocol').hide();
         }
@@ -63,6 +64,7 @@ export default AuthorView.extend({
         if ($type == 'external') {
             $view.$('select.cw-link-target').hide();
             $view.$('select.cw-link-progress').hide();
+            $view.$('label.cw-link-progress-label').hide();
             $view.$('input.cw-link-target').show();
             $view.$('select.cw-link-protocol').show();
         }
