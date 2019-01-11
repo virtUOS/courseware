@@ -185,6 +185,7 @@ class Section extends Block
         if (!$favs) {
             return false;
         }
+        $favs = json_decode($favs[0], true);
 
         return $favs['blocktypes'];
     }
