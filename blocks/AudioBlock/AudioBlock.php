@@ -63,14 +63,18 @@ class AudioBlock extends Block
         if (isset($data['audio_source'])) {
             $this->audio_source = (string) $data['audio_source'];
         }
-        if (isset($data['audio_file'])) {
-            $this->audio_file = \STUDIP\Markup::purifyHtml((string) $data['audio_file']);
-        }
         if (isset($data['audio_file_name'])) {
             $this->audio_file_name = (string) $data['audio_file_name'];
         }
         if (isset($data['audio_id'])) {
             $this->audio_id = (string) $data['audio_id'];
+        }
+        if (isset($data['audio_file'])) {
+            if ($this->audio_source == 'recorder') {
+                $this->store_recording($data['audio_file']);
+        } else {
+                $this->audio_file = \STUDIP\Markup::purifyHtml((string) $data['audio_file']);
+            }
         }
 
         return;
@@ -81,6 +85,56 @@ class AudioBlock extends Block
         $this->setGrade(1.0);
 
         return array();
+    }
+
+    private function store_recording($audio) 
+    {
+        global $user;
+
+        $audio = explode(',', $audio)[1];
+        $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
+        mkdir($tempDir);
+        //create file in temp dir
+        if ($this->audio_description == '') {
+            $filename = 'Courseware-Aufnahme-'.date("d.m.Y-H:i", time());
+        } else {
+            $filename = trim($this->audio_description).'-'.date("d.m.Y-H:i", time());
+        }
+        file_put_contents($tempDir.'/'.$filename, base64_decode($audio));
+        // get personal root folder
+        $root_folder = \Folder::findTopFolder($user->id);
+        $parent_folder = \FileManager::getTypedFolder($root_folder->id);
+        $subfolders = $parent_folder->getSubfolders();
+        $cw_folder = null;
+        // search courseware upload folder
+        foreach($subfolders as $subfolder) {
+            if ($subfolder->name == 'Courseware-Upload') {
+                $cw_folder = $subfolder;
+            }
+        }
+        // create courseware upload folder
+        if ($cw_folder == null) {
+            $request = array('name' => 'Courseware-Upload', 'description' => 'folder for courseware content');
+            $new_folder = new \PublicFolder();
+            $new_folder->setDataFromEditTemplate($request);
+            $new_folder->user_id = $user->id;
+            $cw_folder = $parent_folder->createSubfolder($new_folder);
+        }
+        $folder = \FileManager::getTypedFolder($cw_folder->id);
+        // create studip file
+        $audio_file = [
+                'name'     => $filename,
+                'type'     => 'audio/mpeg',
+                'tmp_name' => $tempDir.'/'.$filename,
+                'size'     => filesize($tempDir.'/'.$filename),
+                'user_id'  => $user->id
+            ];
+        
+        $new_reference = $folder->createFile($audio_file);
+
+        $this->audio_source = 'cw';
+        $this->audio_id = $new_reference->id;
+        $this->audio_file_name = $new_reference->name;
     }
 
     private function showFiles()

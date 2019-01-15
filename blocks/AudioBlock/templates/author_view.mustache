@@ -1,6 +1,15 @@
 <input type="hidden" class="cw-audioblock-description-stored" value="{{audio_description}}">
 <input type="hidden" class="cw-audioblock-source-stored" value="{{audio_source}}">
 <input type="hidden" class="cw-audioblock-file-stored" value="{{audio_file}}">
+<input type="hidden" class="cw-audioblock-id-stored" value="{{audio_id}}">
+
+<div class="messagebox messagebox_error cw-audioblock-recorder-warning">
+    {{#i18n}}Speichern nicht möglich. Die Aufnahme wurde noch nicht beendet.{{/i18n}}
+</div>
+
+<div class="messagebox messagebox_error cw-audioblock-blob-warning">
+    {{#i18n}}Speichern nicht möglich. Bitte wählen Sie eine Datei oder machen Sie eine Aufnahme.{{/i18n}}
+</div>
 
 <label for="cw-audioblock-description" class="cw-audioblock-description-label">{{#i18n}}Beschreibung{{/i18n}}:</label>
 <input type="text" name="cw-audioblock-description" class="cw-audioblock-description" spellcheck="true">
@@ -8,6 +17,7 @@
 <select class="cw-audioblock-source" name="cw-audioblock-source">
     <option value="cw">{{#i18n}}Dateibereich{{/i18n}}:</option>
     <option value="webaudio">{{#i18n}}webAudio (URL){{/i18n}}:</option>
+    <option value="recorder">{{#i18n}}Aufnahme{{/i18n}}:</option>
 </select>
 
 <select class="cw-audioblock-file" name="cw-audioblock-file" {{^audio_files}}disabled{{/audio_files}}>
@@ -19,8 +29,23 @@
     {{/audio_files}}
 </select>
 <button class="cw-audioblock-file-select-info cw-info" data-title="{{#i18n}}Hier werden alle Audiodateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
+
 <input class="cw-audioblock-file" name="cw-audioblock-file">
 <button class="cw-audioblock-file-input-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Datei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
+
+
+<div class="cw-audioblock-recorder-wrapper"> 
+        <span class="cw-audioblock-recorder-enable-info">
+            {{#i18n}}Mikrofon freigeben um etwas aufzunehmen{{/i18n}}
+        </span>
+        <span class="cw-audioblock-recorder-buttons">
+          <button class="button cw-audioblock-recorder-start">Aufnahme starten</button>
+          <button class="button cw-audioblock-recorder-stop">Aufnahme beenden</button>
+        </span>
+        <span class="cw-audioblock-recorder-player">
+        </span>
+        <span><button class="cw-audioblock-recorder-reset" data-title="{{#i18n}}Aufnahme löschen{{/i18n}}"></button></span>
+</div>
 <div class="cw-button-box">
     <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
     <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
