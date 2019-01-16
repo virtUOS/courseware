@@ -210,7 +210,7 @@ export default AuthorView.extend({
   makeBlob(){
       var $view = this;
       var player = $view.$('.cw-audioblock-recorder-player')[0];
-      this.blob = new Blob($view.chunks, {type: 'audio/mp3' })
+      this.blob = new Blob($view.chunks, {type: 'audio/ogg' })
       let url = URL.createObjectURL(this.blob),
            audio = document.createElement('audio');
       audio.controls = true;

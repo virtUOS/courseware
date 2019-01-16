@@ -14,12 +14,32 @@ export default StudentView.extend({
     return this;
   },
 
-  postRender() {
-    if (this.$('.cw-audio-controls').length == 0) {
-      return;
-    }
+  waitForReadyState(music) {
+    var $view =  this;
+    setTimeout(
+        function () {
+            if (music.readyState >= 3) {
+                let player = $view.$('.cw-audio-player')[0];
+                // chrome workaround
+                if (player.duration != Infinity) {
+                    player.currentTime = 1;
+                    player.currentTime = 0; // force current time
+                    $view.setPlayer();
+                    return;
+                } else {
+                    player.currentTime = 1e101;
+                    $view.waitForReadyState(music);
+                }
 
-    var $view =  this,
+            } else {
+                $view.waitForReadyState(music);
+            }
+
+        }, 5);
+  },
+
+  setPlayer(){
+        var $view =  this,
         $player = $view.$('.cw-audio-player'),
         $duration = parseInt($player.prop('duration')),
         $playbutton = $view.$('.cw-audio-playbutton'),
@@ -30,7 +50,7 @@ export default StudentView.extend({
     if (isNaN($duration)) {
       $duration = 0;
     }
-
+ $player.trigger('timeupdate');
     $time.html($view.displayTimer(0, $duration));
 
     $range.slider({
@@ -65,6 +85,15 @@ export default StudentView.extend({
       $playbutton.removeClass('cw-audio-playbutton-playing');
       $player.prop('currentTime', 0);
     }, false);
+      
+  }, 
+
+  postRender() {
+    if (this.$('.cw-audio-controls').length == 0) {
+      return;
+    }
+    this.waitForReadyState(this.$('.cw-audio-player')[0]);
+
   },
 
   playAudioFile() {
@@ -75,10 +104,6 @@ export default StudentView.extend({
 
     if (isNaN(parseInt($player.prop('duration')))) {
       return;
-    }
-
-    if ($range.slider('option', 'max') == 0) {
-      this.postRender();
     }
 
     if (!$playbutton.hasClass('cw-audio-playbutton-playing')) {

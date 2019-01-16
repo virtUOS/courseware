@@ -96,9 +96,9 @@ class AudioBlock extends Block
         mkdir($tempDir);
         //create file in temp dir
         if ($this->audio_description == '') {
-            $filename = 'Courseware-Aufnahme-'.date("d.m.Y-H:i", time());
+            $filename = 'Courseware-Aufnahme-'.date("d.m.Y-H:i", time()).'.ogg';
         } else {
-            $filename = trim($this->audio_description).'-'.date("d.m.Y-H:i", time());
+            $filename = trim($this->audio_description).'-'.date("d.m.Y-H:i", time()).'.ogg';
         }
         file_put_contents($tempDir.'/'.$filename, base64_decode($audio));
         // get personal root folder
@@ -124,7 +124,7 @@ class AudioBlock extends Block
         // create studip file
         $audio_file = [
                 'name'     => $filename,
-                'type'     => 'audio/mpeg',
+                'type'     => 'audio/ogg',
                 'tmp_name' => $tempDir.'/'.$filename,
                 'size'     => filesize($tempDir.'/'.$filename),
                 'user_id'  => $user->id
