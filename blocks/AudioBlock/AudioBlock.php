@@ -102,7 +102,7 @@ class AudioBlock extends Block
         }
         file_put_contents($tempDir.'/'.$filename, base64_decode($audio));
         // get personal root folder
-        $root_folder = \Folder::findTopFolder($user->id);
+        $root_folder = \Folder::findTopFolder($GLOBALS['SessionSeminar']);
         $parent_folder = \FileManager::getTypedFolder($root_folder->id);
         $subfolders = $parent_folder->getSubfolders();
         $cw_folder = null;
@@ -115,7 +115,7 @@ class AudioBlock extends Block
         // create courseware upload folder
         if ($cw_folder == null) {
             $request = array('name' => 'Courseware-Upload', 'description' => 'folder for courseware content');
-            $new_folder = new \PublicFolder();
+            $new_folder = new \CoursePublicFolder();
             $new_folder->setDataFromEditTemplate($request);
             $new_folder->user_id = $user->id;
             $cw_folder = $parent_folder->createSubfolder($new_folder);
