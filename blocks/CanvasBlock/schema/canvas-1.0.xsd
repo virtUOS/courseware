@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/canvas/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/canvas/"
+    elementFormDefault="qualified"
+>
+    <xsd:attribute name="canvas_content" type="xsd:string" />
+    <xsd:attribute name="canvas_mode" type="xsd:string" />
+</xsd:schema>

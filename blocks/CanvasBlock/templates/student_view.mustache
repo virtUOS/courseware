@@ -1,0 +1,29 @@
+{{^inactive}}
+<input type="hidden" class="cw-canvasblock-bgimage" value="{{bgimage}}">
+<button class="cw-canvasblock-clear">clean</button>
+<br>
+<br>
+<button class="cw-canvasblock-color" value="blue">blue</button>
+<button class="cw-canvasblock-color" value="green">green</button>
+<button class="cw-canvasblock-color" value="purple">purple</button>
+<button class="cw-canvasblock-color" value="red">red</button>
+<button class="cw-canvasblock-color" value="orange">orange</button>
+<button class="cw-canvasblock-color" value="yellow">yellow</button>
+<button class="cw-canvasblock-color" value="grey">grey</button>
+<button class="cw-canvasblock-color" value="darkgrey">darkgrey</button>
+<br>
+<br>
+<button class="cw-canvasblock-size" value="small">small</button>
+<button class="cw-canvasblock-size" value="normal">normal</button>
+<button class="cw-canvasblock-size" value="large">large</button>
+<button class="cw-canvasblock-size" value="huge">huge</button>
+<br>
+<br>
+<canvas class="cw-canvasblock-canvas" style=" border: solid thin #ccc;"></canvas>
+
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive}}
