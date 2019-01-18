@@ -7,6 +7,8 @@ export default StudentView.extend({
         'mousedown .cw-canvasblock-canvas' :'mouseDown',
         'mousemove .cw-canvasblock-canvas': 'mouseMove',
         'mouseup .cw-canvasblock-canvas' :'mouseUp',
+        'mouseout .cw-canvasblock-canvas' :'mouseUp',
+        'mouseleave .cw-canvasblock-canvas' :'mouseUp',
         'click .cw-canvasblock-clear': 'clear',
         'click .cw-canvasblock-color': 'changeColor',
         'click .cw-canvasblock-size': 'changeSize'
