@@ -179,6 +179,7 @@ class TestBlock extends Block
         }
         $solution = $exercise->getSolutionFromRequest($requestParams);
         if ($this->container['current_user']->isNobody()) {
+            if ($assignment->type == "selftest") {
                 $assignment->correctSolution($solution);
                 return array(
                     'is_nobody'      => true, 
@@ -187,6 +188,15 @@ class TestBlock extends Block
                     'exercise_index' => $exercise_index,
                     'title'          => $exercise->title
                 );
+            } else {
+                return array(
+                    'is_nobody'      => true, 
+                    'hasSolution'    => true, 
+                    'solution'       => _cw('Diese Aufgabe können nur eingeloggte Nutzer abgeben.'),
+                    'exercise_index' => $exercise_index,
+                    'title'          => $exercise->title
+                );
+            }
         }
         $assignment->storeSolution($solution);
         $progress = $this->calcGrades();
