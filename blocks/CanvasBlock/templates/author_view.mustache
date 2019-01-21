@@ -1,8 +1,28 @@
 <input type="hidden" class="cw-canvasblock-content-stored" value="{{canvas_content}}">
-<input type="hidden" class="cw-canvasblock-mode-stored" value="{{canvas_mode}}">
 
-<label for="cw-canvasblock-bgimage">Bild</label>
-<input name="cw-canvasblock-bgimage" class="cw-canvasblock-bgimage" type="text">
+<label for="cw-canvasblock-description" class="cw-canvasblock-description-label">{{#i18n}}Beschreibung{{/i18n}}:</label>
+<input type="text" name="cw-canvasblock-description" class="cw-canvasblock-description" spellcheck="true">
+<br>
+
+<select class="cw-canvasblock-source" name="cw-canvasblock-source">
+    <option value="cw">{{#i18n}}Dateibereich{{/i18n}}:</option>
+    <option value="web">{{#i18n}}URL{{/i18n}}:</option>
+</select>
+
+<select class="cw-canvasblock-file" name="cw-canvasblock-file" {{^image_files}}disabled{{/image_files}}>
+    {{#image_files}}
+        <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
+    {{/image_files}}
+    {{^image_files}}
+        <option value="" selected>{{#i18n}}keine Audiodatei verfügbar{{/i18n}}</option>
+    {{/image_files}}
+</select>
+<button class="cw-canvasblock-file-select-info cw-info" data-title="{{#i18n}}Hier werden alle Audiodateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
+
+<input class="cw-canvasblock-file" name="cw-canvasblock-file">
+<button class="cw-canvasblock-file-input-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Datei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
+
+
 
 <div class="cw-button-box">
     <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>

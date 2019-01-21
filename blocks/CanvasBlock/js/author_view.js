@@ -8,6 +8,7 @@ export default AuthorView.extend({
   events: {
     'click button[name=save]':   'onSave',
     'click button[name=cancel]': 'switchBack',
+    'change select.cw-canvasblock-source': 'selectSource'
   },
 
   initialize() {
@@ -21,6 +22,35 @@ export default AuthorView.extend({
 
   postRender() {
     var $view = this;
+    var stored_content = this.$('.cw-canvasblock-content-stored').val();
+    if (stored_content == '') {
+        return;
+    }
+    content = JSON.parse(stored_content);
+
+    switch (content.source) {
+        case 'cw':
+            $view.$('input.cw-canvasblock-file').hide();
+            $view.$('.cw-canvasblock-file-input-info').hide();
+            $view.$('.cw-canvasblock-file option[file-id="'+content.image_id+'"]').prop('selected', true);
+            $view.$('.cw-canvasblock-source option[value="cw"]').prop('selected', true);
+            $view.$('select.cw-canvasblock-file').show();
+            $view.$('.cw-canvasblock-file-select-info').show();
+            break;
+        case 'web':
+            $view.$('select.cw-canvasblock-file').hide();
+            $view.$('.cw-canvasblock-file-select-info').hide();
+            $view.$('input.cw-canvasblock-file').val(content.image_url);
+            $view.$('.cw-canvasblock-source option[value="web"]').prop('selected', true);
+            $view.$('.cw-canvasblock-file-input-info').show();
+            break;
+        default:
+            $view.$('input.cw-canvasblock-file').hide();
+            $view.$('.cw-canvasblock-file-input-info').hide();
+            $view.$('select.cw-canvasblock-file').show();
+            $view.$('.cw-canvasblock-file-select-info').show();
+            $view.$('.cw-canvasblock-source option[value="cw"]').prop('selected', true);
+    }
   },
 
   onNavigate(event) {
@@ -53,7 +83,20 @@ export default AuthorView.extend({
   onSave(event) {
     var $view = this;
     var content = {};
-    content.image = $view.$('.cw-canvasblock-bgimage').val();
+
+    content.source = this.$('.cw-canvasblock-source').val();
+    switch (content.source){
+        case 'web':
+            content.image_url = $view.$('.cw-canvasblock-bgimage').val();
+            break;
+        case 'cw':
+            content.image_url = '';
+            content.image_id = $view.$('select.cw-canvasblock-file option:selected').attr('file-id');
+            content.image_name = $view.$('select.cw-canvasblock-file option:selected').attr('filename');
+            break;
+    }
+    content.description = $view.$('.cw-canvasblock-description').val();
+
     content = JSON.stringify(content);
     helper
       .callHandler(this.model.id, 'save', {
@@ -72,6 +115,28 @@ export default AuthorView.extend({
           alert(errorMessage);
           console.log(errorMessage, arguments);
         });
+  },
+  
+  selectSource() {
+    var $view = this;
+    var $selection = $view.$('.cw-canvasblock-source').val();
+    $view.$('input.cw-canvasblock-file').hide();
+    $view.$('.cw-canvasblock-file-input-info').hide();
+    $view.$('select.cw-canvasblock-file').hide();
+    $view.$('.cw-canvasblock-file-select-info').hide();
+
+    switch ($selection) {
+        case 'cw':
+            $view.$('select.cw-canvasblock-file').show();
+            $view.$('.cw-canvasblock-file-select-info').show();
+            break;
+        case 'web':
+            $view.$('input.cw-canvasblock-file').show();
+            $view.$('.cw-canvasblock-file-input-info').show();
+            break;
+    }
+
+    return;
   }
 
 });

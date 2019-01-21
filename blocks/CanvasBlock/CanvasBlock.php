@@ -13,7 +13,6 @@ class CanvasBlock extends Block
     public function initialize()
     {
         $this->defineField('canvas_content', \Mooc\SCOPE_BLOCK, '');
-        $this->defineField('canvas_mode', \Mooc\SCOPE_BLOCK, '');
     }
 
     public function student_view()
@@ -22,20 +21,34 @@ class CanvasBlock extends Block
             return array('inactive' => true);
         }
         $content = json_decode($this->canvas_content);
+        if ($content->source == "cw") {
+            $file = \FileRef::find($content->image_id);
+            if ($file) {
+                $image_url = $file->getDownloadURL();
+                $access = ($file->terms_of_use->download_condition == 0) ? true : false;
+            }
+
+        } else {
+            $image_url = $content->image_url;
+            $access = true;
+        }
+
+
 
         return array_merge(
             $this->getAttrArray(),
-            array('bgimage'=> $content->image)
+            array('image_url'=> $image_url)
         );
     }
 
     public function author_view()
     {
         $this->authorizeUpdate();
+        $content = json_decode($this->canvas_content);
 
         return array_merge(
             $this->getAttrArray(), 
-            array()
+            array('image_url'=> $content->image_url, 'image_files' => $this->showFiles())
         );
     }
 
@@ -44,9 +57,6 @@ class CanvasBlock extends Block
         $this->authorizeUpdate();
         if (isset($data['canvas_content'])) {
             $this->canvas_content = $data['canvas_content'];
-        }
-        if (isset($data['canvas_mode'])) {
-            $this->canvas_mode = $data['canvas_mode'];
         }
 
         return;
@@ -74,8 +84,7 @@ class CanvasBlock extends Block
     private function getAttrArray()
     {
         return array(
-            'canvas_content' => $this->canvas_content,
-            'canvas_mode' => $this->canvas_mode,
+            'canvas_content' => $this->canvas_content
         );
     }
 
@@ -135,9 +144,6 @@ class CanvasBlock extends Block
     {
         if (isset($properties['canvas_content'])) {
             $this->canvas_content = $properties['canvas_content'];
-        }
-        if (isset($properties['canvas_mode'])) {
-            $this->canvas_mode = $properties['canvas_mode'];
         }
 
         $this->save();

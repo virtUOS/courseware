@@ -5,5 +5,4 @@
     elementFormDefault="qualified"
 >
     <xsd:attribute name="canvas_content" type="xsd:string" />
-    <xsd:attribute name="canvas_mode" type="xsd:string" />
 </xsd:schema>

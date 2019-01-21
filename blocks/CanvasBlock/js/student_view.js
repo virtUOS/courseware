@@ -136,12 +136,14 @@ export default StudentView.extend({
             }
             if (this.clickTool[i] == 'text') {
                 context.font = this.clickSize[i]*6+"px Arial";
-            console.log(context.font);
                 context.fillStyle = this.clickColor[i];
                 context.fillText(this.Text[i], clickX[i], clickY[i]); 
                 
             }
         }
+        this.image = this.context.canvas.toDataURL();
+        this.$('a.cw-canvasblock-download')[0].href = this.image;
+        this.$('a.cw-canvasblock-download')[0].download = "cw-img.png";
     },
 
     clear() {
