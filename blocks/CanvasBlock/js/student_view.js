@@ -12,7 +12,8 @@ export default StudentView.extend({
         'click .cw-canvasblock-clear': 'clear',
         'click .cw-canvasblock-color': 'changeColor',
         'click .cw-canvasblock-size': 'changeSize',
-        'click .cw-canvasblock-tool': 'changeTool'
+        'click .cw-canvasblock-tool': 'changeTool', 
+        'click .cw-canvasblock-download' : 'downloadImage'
     },
 
     initialize() { },
@@ -24,10 +25,18 @@ export default StudentView.extend({
     postRender() {
         var $view = this;
         var $original_img = $view.$('.cw-canvasblock-original-img');
-        if ($original_img.length < 1) {
-            return;
-        }
-        var canvas = $view.$('.cw-canvasblock-canvas')[0];
+        $view.buildCanvas($original_img);
+
+        $original_img.on('load', function(){
+            $view.buildCanvas($original_img);
+        });
+    },
+
+    buildCanvas($original_img) {
+        var $view = this;
+        var $canvas = $view.$('.cw-canvasblock-canvas');
+        var img = $original_img[0];
+        var canvas = $canvas[0];
         canvas.width = 860;
         canvas.height = Math.round((canvas.width / $original_img[0].width) * $original_img[0].height);
         $original_img.hide();
@@ -61,6 +70,8 @@ export default StudentView.extend({
         this.currentTool = this.tools['pen'];
 
         this.Text = new Array();
+
+        $canvas.addClass('cw-canvasblock-tool-'+this.currentTool);
 
         this.redraw();
     },
@@ -114,7 +125,7 @@ export default StudentView.extend({
         var clickDrag = this.clickDrag;
 
         var outlineImage = new Image();
-        outlineImage.src = this.$('.cw-canvasblock-bgimage').val();
+        outlineImage.src = this.$('.cw-canvasblock-original-img').attr('src');
 
         context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
         context.drawImage(outlineImage, 0, 0, context.canvas.width, context.canvas.height);
@@ -135,15 +146,13 @@ export default StudentView.extend({
                  context.stroke();
             }
             if (this.clickTool[i] == 'text') {
-                context.font = this.clickSize[i]*6+"px Arial";
+                let fontsize = this.clickSize[i]*6;
+                context.font = fontsize+"px Arial";
                 context.fillStyle = this.clickColor[i];
-                context.fillText(this.Text[i], clickX[i], clickY[i]); 
+                context.fillText(this.Text[i], clickX[i], clickY[i]+fontsize); 
                 
             }
         }
-        this.image = this.context.canvas.toDataURL();
-        this.$('a.cw-canvasblock-download')[0].href = this.image;
-        this.$('a.cw-canvasblock-download')[0].download = "cw-img.png";
     },
 
     clear() {
@@ -154,6 +163,9 @@ export default StudentView.extend({
         this.clickSize.length = 0;
         this.clickTool.length = 0;
         this.Text.length = 0;
+        this.$('input.cw-canvasblock-text-input').remove();
+        this.paint = false;
+        this.write = false;
         this.redraw();
     },
 
@@ -169,14 +181,20 @@ export default StudentView.extend({
 
     changeTool(e) {
         var tool = e.target.value;
+        var $canvas = this.$('.cw-canvasblock-canvas');
         this.currentTool = this.tools[tool];
+        $canvas.removeClass('cw-canvasblock-tool-pen').removeClass('cw-canvasblock-tool-text');
+        $canvas.addClass('cw-canvasblock-tool-'+this.currentTool);
     },
 
     enableTextInput(x, y) {
         var $view = this;
         this.$('input.cw-canvasblock-text-input').remove();
-        this.$el.append('<input class="cw-canvasblock-text-input">');
+        $view.$('.cw-canvasblock-canvas').before('<input class="cw-canvasblock-text-input">');
         var $input = this.$('input.cw-canvasblock-text-input');
+        $input.ready(function(){
+            $input.focus();
+        });
         $input.css('position', 'absolute');
         $input.css('top',  (this.$('canvas')[0].offsetTop + y) + 'px');
         $input.css('left',  x +'px');
@@ -191,5 +209,20 @@ export default StudentView.extend({
             }
         }, false);
 
+    },
+
+    downloadImage() {
+        var image = this.context.canvas.toDataURL();
+        $("<a/>", {
+            "class": "cw-canvasblock-download-link",
+            "text": 'download',
+            "title": 'download',
+            "href": image,
+            "download" : "cw-img.png"
+        }).appendTo(this.$el);
+
+        var link = this.$('.cw-canvasblock-download-link');
+        link[0].click();
+        link.remove();
     }
 });

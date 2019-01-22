@@ -24,6 +24,12 @@ export default AuthorView.extend({
     var $view = this;
     var stored_content = this.$('.cw-canvasblock-content-stored').val();
     if (stored_content == '') {
+        $view.$('input.cw-canvasblock-file').hide();
+        $view.$('.cw-canvasblock-file-input-info').hide();
+        $view.$('select.cw-canvasblock-file').show();
+        $view.$('.cw-canvasblock-file-select-info').show();
+        $view.$('.cw-canvasblock-source option[value="cw"]').prop('selected', true);
+
         return;
     }
     content = JSON.parse(stored_content);
@@ -44,12 +50,6 @@ export default AuthorView.extend({
             $view.$('.cw-canvasblock-source option[value="web"]').prop('selected', true);
             $view.$('.cw-canvasblock-file-input-info').show();
             break;
-        default:
-            $view.$('input.cw-canvasblock-file').hide();
-            $view.$('.cw-canvasblock-file-input-info').hide();
-            $view.$('select.cw-canvasblock-file').show();
-            $view.$('.cw-canvasblock-file-select-info').show();
-            $view.$('.cw-canvasblock-source option[value="cw"]').prop('selected', true);
     }
   },
 
