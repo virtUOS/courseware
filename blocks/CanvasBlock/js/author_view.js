@@ -50,6 +50,13 @@ export default AuthorView.extend({
             $view.$('.cw-canvasblock-source option[value="web"]').prop('selected', true);
             $view.$('.cw-canvasblock-file-input-info').show();
             break;
+        case 'none':
+            $view.$('input.cw-canvasblock-file').hide();
+            $view.$('.cw-canvasblock-file-input-info').hide();
+            $view.$('select.cw-canvasblock-file').hide();
+            $view.$('.cw-canvasblock-file-select-info').hide();
+            $view.$('.cw-canvasblock-source option[value="none"]').prop('selected', true);
+            break;
     }
   },
 
@@ -87,12 +94,16 @@ export default AuthorView.extend({
     content.source = this.$('.cw-canvasblock-source').val();
     switch (content.source){
         case 'web':
-            content.image_url = $view.$('.cw-canvasblock-bgimage').val();
+            content.image_url = $view.$('input.cw-canvasblock-file').val();
             break;
         case 'cw':
             content.image_url = '';
             content.image_id = $view.$('select.cw-canvasblock-file option:selected').attr('file-id');
             content.image_name = $view.$('select.cw-canvasblock-file option:selected').attr('filename');
+            break;
+        case 'none':
+            content.image_url = '';
+            content.no_image = true;
             break;
     }
     content.description = $view.$('.cw-canvasblock-description').val();

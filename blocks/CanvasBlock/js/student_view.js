@@ -38,7 +38,11 @@ export default StudentView.extend({
         var img = $original_img[0];
         var canvas = $canvas[0];
         canvas.width = 860;
-        canvas.height = Math.round((canvas.width / $original_img[0].width) * $original_img[0].height);
+        if ($original_img[0].height > 0) {
+            canvas.height = Math.round((canvas.width / $original_img[0].width) * $original_img[0].height);
+        } else {
+            canvas.height = 484;
+        }
         $original_img.hide();
         this.context = canvas.getContext( '2d' );
         this.paint = false;
@@ -128,6 +132,8 @@ export default StudentView.extend({
         outlineImage.src = this.$('.cw-canvasblock-original-img').attr('src');
 
         context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, context.canvas.width, context.canvas.height); // set background
         context.drawImage(outlineImage, 0, 0, context.canvas.width, context.canvas.height);
         context.lineJoin = "round";
 

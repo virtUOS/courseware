@@ -7,6 +7,7 @@
 <select class="cw-canvasblock-source" name="cw-canvasblock-source">
     <option value="cw">{{#i18n}}Dateibereich{{/i18n}}:</option>
     <option value="web">{{#i18n}}URL{{/i18n}}:</option>
+    <option value="none">{{#i18n}}kein Bild{{/i18n}}:</option>
 </select>
 
 <select class="cw-canvasblock-file" name="cw-canvasblock-file" {{^image_files}}disabled{{/image_files}}>
@@ -14,10 +15,10 @@
         <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
     {{/image_files}}
     {{^image_files}}
-        <option value="" selected>{{#i18n}}keine Audiodatei verfügbar{{/i18n}}</option>
+        <option value="" selected>{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
     {{/image_files}}
 </select>
-<button class="cw-canvasblock-file-select-info cw-info" data-title="{{#i18n}}Hier werden alle Audiodateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
+<button class="cw-canvasblock-file-select-info cw-info" data-title="{{#i18n}}Hier werden alle Bilddateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
 
 <input class="cw-canvasblock-file" name="cw-canvasblock-file">
 <button class="cw-canvasblock-file-input-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Datei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
