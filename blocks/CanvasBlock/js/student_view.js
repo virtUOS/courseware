@@ -13,7 +13,8 @@ export default StudentView.extend({
         'click .cw-canvasblock-color': 'changeColor',
         'click .cw-canvasblock-size': 'changeSize',
         'click .cw-canvasblock-tool': 'changeTool', 
-        'click .cw-canvasblock-download' : 'downloadImage'
+        'click .cw-canvasblock-download' : 'downloadImage',
+        'click .cw-canvasblock-undo': 'undoDraw'
     },
 
     initialize() { },
@@ -88,12 +89,12 @@ export default StudentView.extend({
         var mouseY = e.offsetY;
         if(this.currentTool == 'pen') {
             this.paint = true;        
-            this.addClick(e.offsetX, e.offsetY);
+            this.addClick(e.offsetX, e.offsetY, false);
             this.redraw();
         }
         if(this.currentTool == 'text') {
             this.write = true;
-            this.addClick(e.offsetX, e.offsetY);
+            this.addClick(e.offsetX, e.offsetY, false);
         }
     },
 
@@ -196,22 +197,39 @@ export default StudentView.extend({
     enableTextInput(x, y) {
         var $view = this;
         this.$('input.cw-canvasblock-text-input').remove();
+        let fontsize = this.currentSize*6;
         $view.$('.cw-canvasblock-canvas').before('<input class="cw-canvasblock-text-input">');
         var $input = this.$('input.cw-canvasblock-text-input');
         $input.ready(function(){
             $input.focus();
         });
         $input.css('position', 'absolute');
-        $input.css('top',  (this.$('canvas')[0].offsetTop + y) + 'px');
-        $input.css('left',  x +'px');
+        $input.css('top', (this.$('canvas')[0].offsetTop + y) + 'px');
+        $input.css('left', x +'px');
+        $input.css('line-height', fontsize +'px');
+        $input.css('font-size', fontsize +'px');
+        $input.css('max-width', '300px');
 
-        $input[0].addEventListener('keypress', function(e){
-            var key = e.which || e.keyCode;
-            if (key === 13) { // 13 is enter
+        $input[0].addEventListener('keyup', function(e){
+            if (e.defaultPrevented) {
+                return;
+            }
+            var key = e.key || e.keyCode;
+            if (key === 'Enter' || key === 13) { 
                 $view.Text.push($input.val());
                 $view.$('input.cw-canvasblock-text-input').remove();
                 $view.write = false;
                 $view.redraw();
+            }
+            if (key === 'Escape' || key === 'Esc' || key === 27) { 
+                $view.clickX.pop();
+                $view.clickY.pop();
+                $view.clickDrag.pop();
+                $view.clickColor.pop();
+                $view.clickSize.pop();
+                $view.clickTool.pop();
+                $view.$('input.cw-canvasblock-text-input').remove();
+                $view.write = false;
             }
         }, false);
 
@@ -230,5 +248,23 @@ export default StudentView.extend({
         var link = this.$('.cw-canvasblock-download-link');
         link[0].click();
         link.remove();
+    },
+
+    undoDraw() {
+        var dragging = this.clickDrag[this.clickDrag.length -1];
+        
+        this.clickX.pop();
+        this.clickY.pop();
+        this.clickDrag.pop();
+        this.clickColor.pop();
+        this.clickSize.pop();
+        this.clickTool.pop();
+        this.Text.pop('');
+
+        if (dragging){
+            this.undoDraw();
+        }
+
+        this.redraw();
     }
 });
