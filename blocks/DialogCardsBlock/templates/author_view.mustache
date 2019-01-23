@@ -49,7 +49,7 @@
         <select class="cw-dialogcards-source cw-dialogcards-source-front">
             <option value="file">{{#i18n}}Vorderseite - Bild aus Dateibereich{{/i18n}}:</option>
             <option value="url" {{#front_external_file}} selected {{/front_external_file}}>{{#i18n}}Vorderseite - Bild von URL{{/i18n}}:</option>
-            <option value="none">{{#i18n}}kein Bild{{/i18n}}:</option>
+            <option value="none" {{^front_img}}{{^front_external_file}} selected {{/front_external_file}}{{/front_img}}>{{#i18n}}kein Bild{{/i18n}}:</option>
         </select>
         <input type="text" name="cw-dialogcards-front-img" class="cw-dialogcards-front-img" value="{{front_img}}">
         <button class="cw-dialogcards-front-img-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Bilddatei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
@@ -71,7 +71,7 @@
         <select class="cw-dialogcards-source cw-dialogcards-source-back">
             <option value="file">{{#i18n}}Rückseite - Bild aus Dateibereich{{/i18n}}:</option>
             <option value="url" {{#back_external_file}} selected {{/back_external_file}}>{{#i18n}}Rückseite - Bild von URL{{/i18n}}:</option>
-            <option value="none">{{#i18n}}kein Bild{{/i18n}}:</option>
+            <option value="none" {{^front_img}}{{^front_external_file}} selected {{/front_external_file}}{{/front_img}}>{{#i18n}}kein Bild{{/i18n}}:</option>
         </select>
         <input type="text" name="cw-dialogcards-back-img" class="cw-dialogcards-back-img" value="{{back_img}}">
         <button class="cw-dialogcards-back-img-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Bilddatei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
