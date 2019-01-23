@@ -27,13 +27,10 @@ class CanvasBlock extends Block
                 $image_url = $file->getDownloadURL();
                 $access = ($file->terms_of_use->download_condition == 0) ? true : false;
             }
-
         } else {
             $image_url = $content->image_url;
             $access = true;
         }
-
-
 
         return array_merge(
             $this->getAttrArray(),
@@ -98,27 +95,29 @@ class CanvasBlock extends Block
 
     public function getFiles()
     {
-        
-        //if ($this->audio_source != 'cw') {
-            //return;
-        //}
-        //if ($this->audio_id == '') {
-            //return;
-        //}
-        //$file_ref = new \FileRef($this->audio_id);
-        //$file = new \File($file_ref->file_id);
-        
-        //$files[] = array(
-            //'id' => $this->audio_id,
-            //'name' => $file_ref->name,
-            //'description' => $file_ref->description,
-            //'filename' => $file->name,
-            //'filesize' => $file->size,
-            //'url' => $file->getURL(),
-            //'path' => $file->getPath()
-        //);
+        $content = json_decode($this->canvas_content);
 
-        //return $files;
+        if ($content->source != 'cw') {
+            return;
+        }
+
+        if ($content->image_id == '') {
+            return;
+        }
+        $file_ref = new \FileRef($content->image_id);
+        $file = new \File($file_ref->file_id);
+        
+        $files[] = array(
+            'id' => $content->image_id,
+            'name' => $file_ref->name,
+            'description' => $file_ref->description,
+            'filename' => $file->name,
+            'filesize' => $file->size,
+            'url' => $file->getURL(),
+            'path' => $file->getPath()
+        );
+
+        return $files;
     }
 
     /**
@@ -151,17 +150,20 @@ class CanvasBlock extends Block
 
     public function importContents($contents, array $files)
     {
-        //foreach($files as $file){
-            //if ($file->name == '') {
-                //continue;
-            //}
-            //if($this->audio_file_name == $file->name) {
-                //$this->audio_id = $file->id;
-                //if ($this->audio_source == 'cw') {
-                    //$this->audio_file = $file->getDownloadURL();
-                    //$this->save();
-                //}
-            //}
-        //}
+        $content = json_decode($this->canvas_content);
+
+        if ($content->source != 'cw') {
+            return;
+        }
+
+        foreach($files as $file){
+            if ($file->name == '') {
+                continue;
+            }
+            if($content->image_name == $file->name) {
+                $content->image_id = $file->id;
+                $this->save();
+            }
+        }
     }
 }

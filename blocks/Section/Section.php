@@ -54,6 +54,7 @@ class Section extends Block
         'TestBlock' => self::ICON_TASK,
         'SearchBlock' => self::ICON_SEARCH,
         'CodeBlock' => self::ICON_CODE,
+        'CanvasBlock' => self::ICON_GALLERY,
         'GalleryBlock' => self::ICON_GALLERY,
         'BeforeAfterBlock' => self::ICON_GALLERY,
     );
