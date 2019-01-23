@@ -32,7 +32,7 @@ export default AuthorView.extend({
 
         return;
     }
-    content = JSON.parse(stored_content);
+    var content = JSON.parse(stored_content);
 
     switch (content.source) {
         case 'cw':

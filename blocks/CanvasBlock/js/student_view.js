@@ -132,6 +132,7 @@ export default StudentView.extend({
     },
 
     redraw() {
+        var $view = this;
         var context = this.context;
         var clickX = this.clickX;
         var clickY = this.clickY;
@@ -140,34 +141,35 @@ export default StudentView.extend({
         var outlineImage = new Image();
         outlineImage.src = this.$('.cw-canvasblock-original-img').attr('src');
 
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-        context.fillStyle = "#ffffff";
-        context.fillRect(0, 0, context.canvas.width, context.canvas.height); // set background
-        context.drawImage(outlineImage, 0, 0, context.canvas.width, context.canvas.height);
-        context.lineJoin = "round";
+        $(outlineImage).on('load', function(){// chrome needs this!
+            context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+            context.fillStyle = "#ffffff";
+            context.fillRect(0, 0, context.canvas.width, context.canvas.height); // set background
+            context.drawImage(outlineImage, 0, 0, context.canvas.width, context.canvas.height);
+            context.lineJoin = "round";
 
-        for(var i=0; i < clickX.length; i++) {
-            if (this.clickTool[i] == 'pen') {
-                context.beginPath();
-                if(clickDrag[i] && i) {
-                    context.moveTo(clickX[i-1], clickY[i-1]);
-                 } else {
-                     context.moveTo(clickX[i]-1, clickY[i]);
-                 }
-                 context.lineTo(clickX[i], clickY[i]);
-                 context.closePath();
-                 context.strokeStyle = this.clickColor[i];
-                 context.lineWidth = this.clickSize[i];
-                 context.stroke();
+            for(var i=0; i < clickX.length; i++) {
+                if ($view.clickTool[i] == 'pen') {
+                    context.beginPath();
+                    if(clickDrag[i] && i) {
+                        context.moveTo(clickX[i-1], clickY[i-1]);
+                     } else {
+                         context.moveTo(clickX[i]-1, clickY[i]);
+                     }
+                     context.lineTo(clickX[i], clickY[i]);
+                     context.closePath();
+                     context.strokeStyle = $view.clickColor[i];
+                     context.lineWidth = $view.clickSize[i];
+                     context.stroke();
+                }
+                if ($view.clickTool[i] == 'text') {
+                    let fontsize = $view.clickSize[i]*6;
+                    context.font = fontsize+"px Arial";
+                    context.fillStyle = $view.clickColor[i];
+                    context.fillText($view.Text[i], clickX[i], clickY[i]+fontsize); 
+                }
             }
-            if (this.clickTool[i] == 'text') {
-                let fontsize = this.clickSize[i]*6;
-                context.font = fontsize+"px Arial";
-                context.fillStyle = this.clickColor[i];
-                context.fillText(this.Text[i], clickX[i], clickY[i]+fontsize); 
-                
-            }
-        }
+        });
     },
 
     reset() {
