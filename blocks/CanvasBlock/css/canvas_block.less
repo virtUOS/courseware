@@ -5,17 +5,91 @@
         display: none;
     }
 
-    button {
-        cursor: pointer;
-    }
-
-    .cw-canvasblock-tool-pen {
+    .cw-canvasblock-tool-selected-pen {
         cursor: url("../../assets/images/cursor/pencil.png") 0 32, auto;
     }
 
-    .cw-canvasblock-tool-text {
+    .cw-canvasblock-tool-selected-text {
         cursor: text;
     }
+
+    .cw-canvasblock-toolbar {
+        margin-bottom: 5px;
+    }
+
+    .cw-canvasblock-buttonset {
+        display: inline-block;
+        border: solid thin #ccc;
+        padding: 5px;
+        margin-right: 0.5em;
+    }
+
+    button {
+        cursor: pointer;
+        border: solid thin #ccc;
+        height: 32px;
+        width: 32px;
+        background-color: white;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 24px 24px;
+
+        &.cw-canvasblock-color {
+            &.selected-color {
+                border: solid 2px #000;
+            }
+        }
+
+        &.cw-canvasblock-reset {
+            .assets-bg-icon("blue/refresh.svg");
+        }
+
+        &.cw-canvasblock-size {
+            .assets-bg-icon("blue/stop.svg");
+            
+            &.cw-canvasblock-size-small {
+                background-size: 8px 7px;
+            }
+            &.cw-canvasblock-size-normal {
+                background-size: 16px 14px;
+            }
+            &.cw-canvasblock-size-large {
+                background-size: 22px 20px;
+            }
+            &.cw-canvasblock-size-huge {
+                background-size: 26px 24px;
+            }
+            &.selected-size {
+                border: solid 2px #000;
+            }
+        }
+
+        &.cw-canvasblock-tool {
+            &.cw-canvasblock-tool-pen {
+                .assets-bg-icon("blue/comment.svg");
+            }
+
+            &.cw-canvasblock-tool-text {
+                vertical-align: bottom;
+                font-size: 22px;
+                color: #28497c;
+                font-weight: 600;
+            }
+
+            &.selected-tool {
+                border: solid 2px #000;
+            }
+        }
+
+        &.cw-canvasblock-undo {
+            .assets-bg-icon("blue/arr_2left.svg");
+        }
+
+        &.cw-canvasblock-download {
+            .assets-bg-icon("blue/download.svg");
+        }
+    }
+
 }
 
 section#courseware .block-content:not([data-view="student"]) select.cw-canvasblock-source {

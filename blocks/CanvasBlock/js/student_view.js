@@ -9,7 +9,7 @@ export default StudentView.extend({
         'mouseup .cw-canvasblock-canvas' :'mouseUp',
         'mouseout .cw-canvasblock-canvas' :'mouseUp',
         'mouseleave .cw-canvasblock-canvas' :'mouseUp',
-        'click .cw-canvasblock-clear': 'clear',
+        'click .cw-canvasblock-reset': 'reset',
         'click .cw-canvasblock-color': 'changeColor',
         'click .cw-canvasblock-size': 'changeSize',
         'click .cw-canvasblock-tool': 'changeTool', 
@@ -63,20 +63,28 @@ export default StudentView.extend({
                 'grey': 'rgba(149,165,166,1)',
                 'darkgrey': 'rgba(52,73,94,1)'
         };
+        this.$('.cw-canvasblock-color').each(function(index){
+            let color = $(this).val();
+            $(this).css('background-color', $view.colors[color]);
+        });
+        
         this.clickColor = new Array();
         this.currentColor = this.colors['blue'];
+        this.$('.cw-canvasblock-color[value="blue"]').addClass('selected-color');
 
         this.sizes = {'small': 2, 'normal': 5, 'large': 8, 'huge': 12};
         this.clickSize = new Array();
         this.currentSize = this.sizes['normal'];
+        this.$('.cw-canvasblock-size-normal').addClass('selected-size');
 
         this.tools = {'pen': 'pen', 'text': 'text'}
         this.clickTool = new Array();
         this.currentTool = this.tools['pen'];
+        this.$('.cw-canvasblock-tool-pen').addClass('selected-tool');
 
         this.Text = new Array();
 
-        $canvas.addClass('cw-canvasblock-tool-'+this.currentTool);
+        $canvas.addClass('cw-canvasblock-tool-selected-'+this.currentTool);
 
         this.redraw();
     },
@@ -162,7 +170,7 @@ export default StudentView.extend({
         }
     },
 
-    clear() {
+    reset() {
         this.clickX.length = 0;
         this.clickY.length = 0;
         this.clickDrag.length = 0;
@@ -178,20 +186,26 @@ export default StudentView.extend({
 
     changeColor(e) {
         var color = e.target.value;
+        this.$('.cw-canvasblock-color').removeClass('selected-color');
+        $(e.target).addClass('selected-color');
         this.currentColor = this.colors[color];
     },
 
     changeSize(e) {
         var size = e.target.value;
+        this.$('.cw-canvasblock-size').removeClass('selected-size');
+        $(e.target).addClass('selected-size');
         this.currentSize = this.sizes[size];
     },
 
     changeTool(e) {
         var tool = e.target.value;
+        this.$('.cw-canvasblock-tool').removeClass('selected-tool');
+        $(e.target).addClass('selected-tool');
         var $canvas = this.$('.cw-canvasblock-canvas');
         this.currentTool = this.tools[tool];
-        $canvas.removeClass('cw-canvasblock-tool-pen').removeClass('cw-canvasblock-tool-text');
-        $canvas.addClass('cw-canvasblock-tool-'+this.currentTool);
+        $canvas.removeClass('cw-canvasblock-tool-selected-pen').removeClass('cw-canvasblock-tool-selected-text');
+        $canvas.addClass('cw-canvasblock-tool-selected-'+this.currentTool);
     },
 
     enableTextInput(x, y) {

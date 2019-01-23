@@ -1,32 +1,33 @@
 {{^inactive}}
 <input type="hidden" class="cw-canvasblock-bgimage" value="{{image_url}}">
-<button class="cw-canvasblock-clear">clean</button>
-<br>
-<br>
-<button class="cw-canvasblock-color" value="white">white</button>
-<button class="cw-canvasblock-color" value="blue">blue</button>
-<button class="cw-canvasblock-color" value="green">green</button>
-<button class="cw-canvasblock-color" value="purple">purple</button>
-<button class="cw-canvasblock-color" value="red">red</button>
-<button class="cw-canvasblock-color" value="orange">orange</button>
-<button class="cw-canvasblock-color" value="yellow">yellow</button>
-<button class="cw-canvasblock-color" value="grey">grey</button>
-<button class="cw-canvasblock-color" value="darkgrey">darkgrey</button>
-<br>
-<br>
-<button class="cw-canvasblock-size" value="small">small</button>
-<button class="cw-canvasblock-size" value="normal">normal</button>
-<button class="cw-canvasblock-size" value="large">large</button>
-<button class="cw-canvasblock-size" value="huge">huge</button>
-<br>
-<br>
-<button class="cw-canvasblock-tool" value="pen">pen</button>
-<button class="cw-canvasblock-tool" value="text">text</button>
-<br>
-<br>
-<button class="cw-canvasblock-download">download</button>
-<br>
-<br>
+<div class="cw-canvasblock-toolbar">
+    <div class="cw-canvasblock-buttonset">
+    <button class="cw-canvasblock-reset" data-title="{{#i18n}}Zurücksetzen{{/i18n}}"></button>
+    <button class="cw-canvasblock-undo" data-title="{{#i18n}}Rückgängig{{/i18n}}"></button>
+    <button class="cw-canvasblock-download" data-title="{{#i18n}}Download{{/i18n}}"></button>
+    </div>
+    <div class="cw-canvasblock-buttonset">
+        <button class="cw-canvasblock-color" value="white"></button>
+        <button class="cw-canvasblock-color" value="blue"></button>
+        <button class="cw-canvasblock-color" value="green"></button>
+        <button class="cw-canvasblock-color" value="purple"></button>
+        <button class="cw-canvasblock-color" value="red"></button>
+        <button class="cw-canvasblock-color" value="orange"></button>
+        <button class="cw-canvasblock-color" value="yellow"></button>
+        <button class="cw-canvasblock-color" value="grey"></button>
+        <button class="cw-canvasblock-color" value="darkgrey"></button>
+    </div>
+    <div class="cw-canvasblock-buttonset">
+    <button class="cw-canvasblock-size cw-canvasblock-size-small" value="small"></button>
+    <button class="cw-canvasblock-size cw-canvasblock-size-normal" value="normal"></button>
+    <button class="cw-canvasblock-size cw-canvasblock-size-large" value="large"></button>
+    <button class="cw-canvasblock-size cw-canvasblock-size-huge" value="huge"></button>
+    </div>
+    <div class="cw-canvasblock-buttonset">
+    <button class="cw-canvasblock-tool cw-canvasblock-tool-pen" value="pen"></button>
+    <button class="cw-canvasblock-tool cw-canvasblock-tool-text" value="text">T</button>
+    </div>
+</div>
 <img src="{{image_url}}" class="cw-canvasblock-original-img">
 <canvas class="cw-canvasblock-canvas" style=" border: solid thin #ccc;"></canvas>
 
