@@ -100,11 +100,15 @@ export default StudentView.extend({
         }
 
         $(document).keypress( function(e) {
-            if(e.keyCode == 37) {
-                nextPage();
+            if (e.defaultPrevented) {
+                return;
             }
-            if(e.keyCode == 39) {
+            var key = e.key || e.keyCode;
+            if(key === 'ArrowRight' || key === 37) { 
                 prevPage();
+            }
+            if(key === 'ArrowLeft' || key === 38) {
+                nextPage();
             }
         });
 
