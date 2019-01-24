@@ -167,13 +167,16 @@ export default AuthorView.extend({
             break;
         case 'recorder':
             $view.$('.cw-audioblock-recorder-wrapper').show();
+            $view.$('.cw-canvasblock-recording-info').hide();
             $view.$('.cw-audioblock-recorder-start').hide();
             $view.$('.cw-audioblock-recorder-stop').hide();
             navigator.mediaDevices.getUserMedia({audio: true}).then(_stream => {
                 let stream = _stream;
+
                 $view.$('.cw-audioblock-recorder-start').show();
                 $view.$('.cw-audioblock-recorder-enable-info').hide();
                 $view.recorder = new MediaRecorder(stream);
+
                 $view.recorder.ondataavailable = e => {
                   $view.chunks.push(e.data);
                   if($view.recorder.state == 'inactive')  $view.makeBlob();
@@ -186,14 +189,19 @@ export default AuthorView.extend({
   },
 
   startRecording() {
+      var $view = this;
       this.chunks = [];
       this.recorder.start();
+      this.$('.cw-canvasblock-recording-info').show();
+      this.setTimer(0);
+
       this.$('.cw-audioblock-recorder-start').hide();
       this.$('.cw-audioblock-recorder-stop').show();
   },
 
   stopRecording() {
       this.recorder.stop();
+      this.$('.cw-canvasblock-recording-info').hide();
       this.$('.cw-audioblock-recorder-stop').hide();
   },
 
@@ -223,5 +231,37 @@ export default AuthorView.extend({
       reader.onloadend = function() {
          $view.blob.base64data = reader.result.toString();                
      }
+  }, 
+
+  setTimer(i) {
+      var $view = this;
+      if (this.recorder.state == 'recording') {
+          this.$('.cw-canvasblock-recording-timer').text(this.seconds2time(i));
+          i++;
+          setTimeout(function(){ $view.setTimer(i); }, 1000);
+      }
+   },
+
+  seconds2time(seconds) {
+    var hours   = Math.floor(seconds / 3600),
+        minutes = Math.floor((seconds - (hours * 3600)) / 60),
+        time = '';
+
+    seconds = seconds - (hours * 3600) - (minutes * 60);
+
+    if (hours != 0) {
+      time = hours + ':';
+    }
+    if (minutes != 0 || time !== '') {
+      minutes = (minutes < 10 && time !== '') ? '0' + minutes : String(minutes);
+      time += minutes + ':';
+    }
+    if (time === '') {
+      time = (seconds < 10) ? '0:0' + seconds : '0:' + seconds;
+    }
+    else {
+      time += (seconds < 10) ? '0' + seconds : String(seconds);
+    }
+    return time;
   }
 });
