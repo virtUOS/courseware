@@ -61,7 +61,8 @@ export default StudentView.extend({
                 'yellow': 'rgba(254,211,48,1)',
                 'orange': 'rgba(243,156,18,1)',
                 'grey': 'rgba(149,165,166,1)',
-                'darkgrey': 'rgba(52,73,94,1)'
+                'darkgrey': 'rgba(52,73,94,1)',
+                'black': 'rgba(0,0,0,1)'
         };
         this.$('.cw-canvasblock-color').each(function(index){
             let color = $(this).val();
@@ -235,6 +236,9 @@ export default StudentView.extend({
     },
 
     changeColor(e) {
+        if (this.write) {
+            return;
+        }
         var color = e.target.value;
         this.$('.cw-canvasblock-color').removeClass('selected-color');
         $(e.target).addClass('selected-color');
@@ -242,6 +246,9 @@ export default StudentView.extend({
     },
 
     changeSize(e) {
+        if (this.write) {
+            return;
+        }
         var size = e.target.value;
         this.$('.cw-canvasblock-size').removeClass('selected-size');
         $(e.target).addClass('selected-size');
@@ -250,6 +257,16 @@ export default StudentView.extend({
 
     changeTool(e) {
         var tool = e.target.value;
+        if (this.write) {
+            this.clickX.pop();
+            this.clickY.pop();
+            this.clickDrag.pop();
+            this.clickColor.pop();
+            this.clickSize.pop();
+            this.clickTool.pop();
+            this.$('input.cw-canvasblock-text-input').remove();
+            this.write = false;
+        }
         this.$('.cw-canvasblock-tool').removeClass('selected-tool');
         $(e.target).addClass('selected-tool');
         var $canvas = this.$('.cw-canvasblock-canvas');
@@ -316,14 +333,19 @@ export default StudentView.extend({
 
     undoDraw() {
         var dragging = this.clickDrag[this.clickDrag.length -1];
-        
+
         this.clickX.pop();
         this.clickY.pop();
         this.clickDrag.pop();
         this.clickColor.pop();
         this.clickSize.pop();
         this.clickTool.pop();
-        this.Text.pop('');
+        if (this.write) {
+            this.$('input.cw-canvasblock-text-input').remove();
+            this.write = false;
+        } else {
+            this.Text.pop('');
+        }
 
         if (dragging){
             this.undoDraw();
