@@ -86,6 +86,7 @@ export default StudentView.extend({
 
         $canvas.addClass('cw-canvasblock-tool-selected-'+this.currentTool);
 
+        this.loadStoredData();
         this.redraw();
     },
 
@@ -131,6 +132,21 @@ export default StudentView.extend({
         }
     },
 
+    loadStoredData() {
+        var draw = this.$('.cw-canvasblock-stored-draw').val();
+        if ( draw == '') {
+            return;
+        }
+        draw = JSON.parse(draw);
+        this.clickX =  JSON.parse(draw.clickX);
+        this.clickY =  JSON.parse(draw.clickY);
+        this.clickDrag =  JSON.parse(draw.clickDrag);
+        this.clickColor =  JSON.parse(draw.clickColor);
+        this.clickSize =  JSON.parse(draw.clickSize);
+        this.clickTool =  JSON.parse(draw.clickTool);
+        this.Text =  JSON.parse(draw.Text);
+    },
+
     redraw() {
         var $view = this;
         var context = this.context;
@@ -169,6 +185,38 @@ export default StudentView.extend({
                     context.fillText($view.Text[i], clickX[i], clickY[i]+fontsize); 
                 }
             }
+        });
+        this.store();
+    },
+    
+    store(){
+      var $view = this;
+      var draw = {};
+
+      draw.clickX = JSON.stringify(this.clickX);
+      draw.clickY = JSON.stringify(this.clickY);
+      draw.clickDrag = JSON.stringify(this.clickDrag);
+      draw.clickColor = JSON.stringify(this.clickColor);
+      draw.clickSize = JSON.stringify(this.clickSize);
+      draw.clickTool = JSON.stringify(this.clickTool);
+      draw.Text = JSON.stringify(this.Text);
+
+      draw = JSON.stringify(draw);
+
+      helper
+      .callHandler(this.model.id, 'store_draw', {
+          canvas_draw: draw
+      })
+      .then(
+        // success
+        function () {
+        },
+
+        // error
+        function (error) {
+          var errorMessage = 'Could not store drawing: '+$.parseJSON(error.responseText).reason;
+          alert(errorMessage);
+          console.log(errorMessage, arguments);
         });
     },
 

@@ -13,6 +13,7 @@ class CanvasBlock extends Block
     public function initialize()
     {
         $this->defineField('canvas_content', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('canvas_draw', \Mooc\SCOPE_USER, '');
     }
 
     public function student_view()
@@ -59,6 +60,15 @@ class CanvasBlock extends Block
         return;
     }
 
+    public function store_draw_handler(array $data)
+    {
+        if (isset($data['canvas_draw'])) {
+            $this->canvas_draw = $data['canvas_draw'];
+        }
+
+        return;
+    }
+
     private function showFiles()
     {
         $filesarray = array();
@@ -81,16 +91,14 @@ class CanvasBlock extends Block
     private function getAttrArray()
     {
         return array(
-            'canvas_content' => $this->canvas_content
+            'canvas_content' => $this->canvas_content,
+            'canvas_draw' => $this->canvas_draw
         );
     }
 
     public function exportProperties()
     {
-       return array_merge(
-            $this->getAttrArray(),
-            array()
-        );
+       return array('canvas_content' => $this->canvas_content);
     }
 
     public function getFiles()
