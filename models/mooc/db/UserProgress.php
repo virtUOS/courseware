@@ -12,6 +12,7 @@ namespace Mooc\DB;
  * @property \User  $user
  * @property float  $grade
  * @property float  $max_grade
+ * @property float  $mkdate
  * @property float  $chdate
  */
 class UserProgress extends \SimpleORMap
@@ -43,6 +44,7 @@ class UserProgress extends \SimpleORMap
         if ($this->isNew()) {
             $this->grade = 0;
             $this->max_grade = 1;
+            $this->mkdate = (new \DateTime())->format('Y-m-d H:i:s');
             $this->chdate = (new \DateTime())->format('Y-m-d H:i:s');
         }
     }
