@@ -22,6 +22,7 @@ class CanvasBlock extends Block
             return array('inactive' => true);
         }
         $content = json_decode($this->canvas_content);
+        $bg_image = $content->image ? 1 : 0;
         if ($content->source == "cw") {
             $file = \FileRef::find($content->image_id);
             if ($file) {
@@ -35,7 +36,7 @@ class CanvasBlock extends Block
 
         return array_merge(
             $this->getAttrArray(),
-            array('image_url'=> $image_url)
+            array('image_url'=> $image_url, 'bg_image' => $bg_image)
         );
     }
 

@@ -4,15 +4,20 @@ import helper from 'js/url'
 
 export default StudentView.extend({
     events: {
+        'touchstart .cw-canvasblock-canvas' :'touchStart',
+        'touchmove .cw-canvasblock-canvas': 'touchMove',
+        'touchend .cw-canvasblock-canvas' :'touchEnd',
+
         'mousedown .cw-canvasblock-canvas' :'mouseDown',
         'mousemove .cw-canvasblock-canvas': 'mouseMove',
         'mouseup .cw-canvasblock-canvas' :'mouseUp',
         'mouseout .cw-canvasblock-canvas' :'mouseUp',
         'mouseleave .cw-canvasblock-canvas' :'mouseUp',
+
         'click .cw-canvasblock-reset': 'reset',
         'click .cw-canvasblock-color': 'changeColor',
         'click .cw-canvasblock-size': 'changeSize',
-        'click .cw-canvasblock-tool': 'changeTool', 
+        'click .cw-canvasblock-tool': 'changeTool',
         'click .cw-canvasblock-download' : 'downloadImage',
         'click .cw-canvasblock-undo': 'undoDraw'
     },
@@ -68,9 +73,10 @@ export default StudentView.extend({
             let color = $(this).val();
             $(this).css('background-color', $view.colors[color]);
         });
-        
+
         this.clickColor = new Array();
         this.currentColor = this.colors['blue'];
+
         this.$('.cw-canvasblock-color[value="blue"]').addClass('selected-color');
 
         this.sizes = {'small': 2, 'normal': 5, 'large': 8, 'huge': 12};
@@ -98,7 +104,7 @@ export default StudentView.extend({
         var mouseX = e.offsetX;
         var mouseY = e.offsetY;
         if(this.currentTool == 'pen') {
-            this.paint = true;        
+            this.paint = true;
             this.addClick(e.offsetX, e.offsetY, false);
             this.redraw();
         }
@@ -117,6 +123,54 @@ export default StudentView.extend({
 
     mouseUp(e) {
         this.paint = false;
+    },
+
+    touchStart(e) {
+        e.preventDefault();
+        if (this.write) {
+            return;
+        }
+        var canvas = this.$('.cw-canvasblock-canvas')[0];
+        var mousePos = this.getTouchPos(canvas, e);
+        if(this.currentTool == 'pen') {
+            this.paint = true;
+            this.addClick(mousePos.x, mousePos.y, false);
+            this.redraw();
+        }
+        if(this.currentTool == 'text') {
+            this.write = true;
+            this.addClick(mousePos.x, mousePos.y, false);
+        }
+    },
+
+    touchMove(e) {
+        e.preventDefault();
+
+        var canvas = this.$('.cw-canvasblock-canvas')[0];
+        var mousePos = this.getTouchPos(canvas, e);
+        if(this.paint){
+            this.addClick(mousePos.x, mousePos.y, true);
+            this.redraw();
+        }
+    },
+
+    touchEnd(e) {
+        this.paint = false;
+    },
+
+    getTouchPos(canvasDom, touchEvent) {
+        var rect = canvasDom.getBoundingClientRect();
+        return {
+            x: touchEvent.touches[0].clientX - rect.left,
+            y: touchEvent.touches[0].clientY - rect.top
+        };
+    },
+
+    preventScrollOnCanvas(e) {
+        var canvas = this.$('.cw-canvasblock-canvas')[0];
+        if (e.target == canvas) {
+            e.preventDefault();
+        }
     },
 
     addClick(x, y, dragging) {
@@ -157,12 +211,15 @@ export default StudentView.extend({
 
         var outlineImage = new Image();
         outlineImage.src = this.$('.cw-canvasblock-original-img').attr('src');
+        var bg = this.$('.cw-canvasblock-bgimage').val();
 
         $(outlineImage).on('load', function(){// chrome needs this!
             context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
             context.fillStyle = "#ffffff";
             context.fillRect(0, 0, context.canvas.width, context.canvas.height); // set background
-            context.drawImage(outlineImage, 0, 0, context.canvas.width, context.canvas.height);
+            if (bg == 1) { 
+                context.drawImage(outlineImage, 0, 0, context.canvas.width, context.canvas.height);
+            }
             context.lineJoin = "round";
 
             for(var i=0; i < clickX.length; i++) {
@@ -183,13 +240,17 @@ export default StudentView.extend({
                     let fontsize = $view.clickSize[i]*6;
                     context.font = fontsize+"px Arial";
                     context.fillStyle = $view.clickColor[i];
-                    context.fillText($view.Text[i], clickX[i], clickY[i]+fontsize); 
+                    context.fillText($view.Text[i], clickX[i], clickY[i]+fontsize);
                 }
             }
         });
+        
+        if (bg == 0) {
+            $(outlineImage).trigger('load');
+        }
         this.store();
     },
-    
+
     store(){
       var $view = this;
       var draw = {};
@@ -271,6 +332,7 @@ export default StudentView.extend({
         $(e.target).addClass('selected-tool');
         var $canvas = this.$('.cw-canvasblock-canvas');
         this.currentTool = this.tools[tool];
+
         $canvas.removeClass('cw-canvasblock-tool-selected-pen').removeClass('cw-canvasblock-tool-selected-text');
         $canvas.addClass('cw-canvasblock-tool-selected-'+this.currentTool);
     },
@@ -296,13 +358,13 @@ export default StudentView.extend({
                 return;
             }
             var key = e.key || e.keyCode;
-            if (key === 'Enter' || key === 13) { 
+            if (key === 'Enter' || key === 13) {
                 $view.Text.push($input.val());
                 $view.$('input.cw-canvasblock-text-input').remove();
                 $view.write = false;
                 $view.redraw();
             }
-            if (key === 'Escape' || key === 'Esc' || key === 27) { 
+            if (key === 'Escape' || key === 'Esc' || key === 27) {
                 $view.clickX.pop();
                 $view.clickY.pop();
                 $view.clickDrag.pop();

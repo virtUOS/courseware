@@ -95,15 +95,17 @@ export default AuthorView.extend({
     switch (content.source){
         case 'web':
             content.image_url = $view.$('input.cw-canvasblock-file').val();
+            content.image = true;
             break;
         case 'cw':
             content.image_url = '';
             content.image_id = $view.$('select.cw-canvasblock-file option:selected').attr('file-id');
             content.image_name = $view.$('select.cw-canvasblock-file option:selected').attr('filename');
+            content.image = true;
             break;
         case 'none':
             content.image_url = '';
-            content.no_image = true;
+            content.image = false;
             break;
     }
     content.description = $view.$('.cw-canvasblock-description').val();
