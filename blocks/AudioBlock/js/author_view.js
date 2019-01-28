@@ -168,8 +168,15 @@ export default AuthorView.extend({
         case 'recorder':
             $view.$('.cw-audioblock-recorder-wrapper').show();
             $view.$('.cw-canvasblock-recording-info').hide();
+            $view.$('.cw-audioblock-recorder-browser-info').hide();
             $view.$('.cw-audioblock-recorder-start').hide();
             $view.$('.cw-audioblock-recorder-stop').hide();
+            if (!window.MediaRecorder) {
+                $view.$('.cw-audioblock-recorder-enable-info').hide();
+                $view.$('.cw-audioblock-recorder-browser-info').show();
+                break;
+            }
+
             navigator.mediaDevices.getUserMedia({audio: true}).then(_stream => {
                 let stream = _stream;
 
