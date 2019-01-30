@@ -167,7 +167,7 @@ export default AuthorView.extend({
             break;
         case 'recorder':
             $view.$('.cw-audioblock-recorder-wrapper').show();
-            $view.$('.cw-canvasblock-recording-info').hide();
+            $view.$('.cw-audioblock-recording-info').hide();
             $view.$('.cw-audioblock-recorder-browser-info').hide();
             $view.$('.cw-audioblock-recorder-start').hide();
             $view.$('.cw-audioblock-recorder-stop').hide();
@@ -199,7 +199,7 @@ export default AuthorView.extend({
       var $view = this;
       this.chunks = [];
       this.recorder.start();
-      this.$('.cw-canvasblock-recording-info').show();
+      this.$('.cw-audioblock-recording-info').show();
       this.setTimer(0);
 
       this.$('.cw-audioblock-recorder-start').hide();
@@ -208,7 +208,7 @@ export default AuthorView.extend({
 
   stopRecording() {
       this.recorder.stop();
-      this.$('.cw-canvasblock-recording-info').hide();
+      this.$('.cw-audioblock-recording-info').hide();
       this.$('.cw-audioblock-recorder-stop').hide();
   },
 
@@ -243,7 +243,7 @@ export default AuthorView.extend({
   setTimer(i) {
       var $view = this;
       if (this.recorder.state == 'recording') {
-          this.$('.cw-canvasblock-recording-timer').text(this.seconds2time(i));
+          this.$('.cw-audioblock-recording-timer').text(this.seconds2time(i));
           i++;
           setTimeout(function(){ $view.setTimer(i); }, 1000);
       }
