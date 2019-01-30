@@ -1,0 +1,116 @@
+@import '../../../assets/less/mixins';
+
+section#courseware button.button {
+    &.cw-audio-gallery-record-button-start {
+        .assets-bg-icon("blue/span-full.svg");
+        margin-left: 1em;
+        background-position: 6px center;
+        padding-left: 2em;
+        &:hover {
+            .assets-bg-icon("white/span-full.svg");
+        }
+    }
+
+    &.cw-audio-gallery-recording-info {
+        .assets-bg-icon("red/span-full.svg");
+        color: #d60000;
+        border-color: #d60000;
+        background-position: 6px center;
+        padding-left: 2em;
+        cursor: progress;
+        &:hover {
+            background-color: #fff;
+            color: #d60000;
+        }
+    }
+
+    &.cw-audio-gallery-record-button-stop {
+        .assets-bg-icon("blue/stop.svg");
+        background-position: 6px center;
+        padding-left: 2em;
+        &:hover {
+            .assets-bg-icon("white/stop.svg");
+        }
+    }
+}
+
+.AudioGalleryBlock .block-content {
+
+    border: solid thin #ccc;
+    .cw-audio-gallery-carousel-for{
+        margin: auto 40px;
+        height: 310px;
+        
+        div.cw-audio-gallery-content-slide {
+            div.cw-audio-gallery-content-slide-control {
+            text-align: center;
+
+                img {
+                    margin: auto;
+                    height: 250px;
+                    border: solid thin #ccc;
+                }
+
+                audio {
+                    margin: auto;
+                    width: 50%;
+                    display: inline-block;
+                    vertical-align: top;
+                }
+            }
+        }
+    }
+    .cw-audio-gallery-carousel-nav {
+        margin: auto 40px;
+
+        .slick-prev {
+            left: -36px;
+        }
+
+        .slick-next {
+            right: -36px;
+        }
+
+        .slick-slide {
+            cursor: pointer;
+            div.cw-audio-gallery-nav-slide {
+                background: #fff;
+                border: solid thin #28497c;
+                color: #28497c;
+                font-size: 1em;
+                margin: 10px;
+                padding: 2%;
+                position: relative;
+                text-align: left;
+                
+                img {
+                    min-height: 60px;
+                    display: inline-block;
+                    border: solid thin #ccc;
+                    max-width: 30%;
+                }
+                p {
+                    display: inline-block;
+                    margin-left: 5%;
+                    vertical-align: top;
+                    margin-right: 5%;
+                    width: 50%;
+                    min-height: 60px;
+                    word-wrap: break-word;
+                }
+            }
+        }
+
+
+
+        .slick-current div.cw-audio-gallery-nav-slide{
+            background-color: #28497c;
+            color: #fff;
+            font-weight: 600;
+            padding: 10px;
+            margin: 5px;
+        }
+    }
+}
+
+

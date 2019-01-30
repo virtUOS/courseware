@@ -1,0 +1,52 @@
+{{^inactive}}
+    <div class="cw-audio-gallery-carousel-for">
+        {{#user_record}}
+        <div class="cw-audio-gallery-content-slide user-record">
+            <div class="cw-audio-gallery-content-slide-control">
+                <img src="{{user_avatar}}">
+                {{#file_url}}
+                <audio class="cw-audio-gallery-player" controls>
+                    <source  src="{{file_url}}">
+                </audio>
+                {{/file_url}}
+                <button class="button cw-audio-gallery-record-button-start">Aufnahme starten</button>
+                <button class="button cw-audio-gallery-recording-info">
+                    {{#i18n}}Aufnahme läuft{{/i18n}}:
+                    <span class="cw-audio-gallery-recording-timer"></span>
+                </button>
+                <button class="button cw-audio-gallery-record-button-stop">Aufnahme beenden</button>
+            </div>
+        </div>
+        {{/user_record}}
+        {{#audio_records}}
+        <div class="cw-audio-gallery-content-slide">
+            <div class="cw-audio-gallery-content-slide-control">
+                <img src="{{user_avatar}}">
+                <audio class="cw-audio-gallery-player" controls>
+                    <source  src="{{file_url}}">
+                </audio>
+            </div>
+        </div>
+        {{/audio_records}}
+    </div>
+    <div class="cw-audio-gallery-carousel-nav">
+        {{#user_record}}
+        <div class="cw-audio-gallery-nav-slide">
+            <img src="{{user_avatar}}">
+            <p>{{user_name}}</p>
+        </div>
+        {{/user_record}}
+        {{#audio_records}}
+        <div class="cw-audio-gallery-nav-slide">
+            <img src="{{user_avatar}}">
+            <p>{{user_name}}</p>
+        </div>
+        {{/audio_records}}
+    </div>
+
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive}}
