@@ -37,7 +37,7 @@ export default Backbone.View.extend({
 
     jQuery(window).scroll(function () {
       // if we scrolled a bit and are not an author! the scrollbar should be stuck to the window
-      if (jQuery(this).scrollTop() -52 > nav_offset.top && (window.location.href.indexOf('author') == -1)) {
+      if (jQuery(this).scrollTop() -128 > nav_offset.top && (window.location.href.indexOf('author') == -1)) {
         var activeSection = jQuery('section.active-section');
         nav.addClass('stuck');
         nav.css({ left: activeSection.offset().left });
