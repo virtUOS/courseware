@@ -60,12 +60,17 @@ class AudioGalleryBlock extends Block
         $audio_records = array();
         $fields = Field::findBySQL('block_id = ? AND name = ?', array($this->id, 'audio_gallery_user_recording'));
         foreach($fields as $field){
+            $json_data = json_decode($field['json_data'], true);
+            $json_data['user_avatar'] = \Avatar::getAvatar($field['user_id'])->getUrl(\Avatar::NORMAL);
             if ($field['user_id'] == $user->id) {
-                array_push($user_record, json_decode($field['json_data']));
+                array_push($user_record, $json_data);
             } else {
-                array_push($audio_records, json_decode($field['json_data']));
+                array_push($audio_records, $json_data);
             }
         }
+
+        usort($audio_records, function ($a,$b) {return ($a['mkdate'] <= $b['mkdate']) ? -1 : 1;});
+
         if(empty($user_record)) {
             array_push($user_record, array(
                 'file_ref_id' => false,
@@ -73,26 +78,22 @@ class AudioGalleryBlock extends Block
                 'file_url' => false,
                 'user_id' => $user->id,
                 'user_name' => $user->vorname.' '.$user->nachname,
-                'user_avatar' => \Avatar::getAvatar($user->id)->getCustomAvatarUrl('normal', $ext = 'png')
+                'user_avatar' => \Avatar::getAvatar($user->id)->getUrl(\Avatar::NORMAL)
             ));
         }
 
         return array('user_record' => $user_record, 'audio_records' => $audio_records);
     }
 
-    private function store_recording($audio) 
+    public function store_recording_handler(array $data) 
     {
         global $user;
-
+        $audio = $data['audio_file'];
         $audio = explode(',', $audio)[1];
         $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
         mkdir($tempDir);
         //create file in temp dir
-        if ($this->audio_description == '') {
-            $filename = 'Courseware-Aufnahme-'.date("d.m.Y-H:i", time()).'.ogg';
-        } else {
-            $filename = trim($this->audio_description).'-'.date("d.m.Y-H:i", time()).'.ogg';
-        }
+        $filename = 'Courseware-Aufnahme-'.date("d.m.Y-H:i", time()).'.ogg';
         file_put_contents($tempDir.'/'.$filename, base64_decode($audio));
         // get personal root folder
         
@@ -131,9 +132,10 @@ class AudioGalleryBlock extends Block
             'file_ref_id' => $new_reference->id,
             'file_name' => $new_reference->name,
             'file_url' => $new_reference->getDownloadURL(),
+            'audio_length' => $data['audio_length'],
             'user_id' => $user->id,
             'user_name' => $user->vorname.' '.$user->nachname,
-            'user_avatar' => \Avatar::getAvatar($user->id)->getCustomAvatarUrl('normal', $ext = 'png')
+            'mkdate' => time()
         );
 
     }

@@ -33,13 +33,17 @@
         {{#user_record}}
         <div class="cw-audio-gallery-nav-slide">
             <img src="{{user_avatar}}">
-            <p>{{user_name}}</p>
+            <p>{{user_name}}
+                {{#file_url}}<br><span>{{audio_length}}</span>{{/file_url}}
+            </p>
         </div>
         {{/user_record}}
         {{#audio_records}}
         <div class="cw-audio-gallery-nav-slide">
             <img src="{{user_avatar}}">
-            <p>{{user_name}}</p>
+            <p>{{user_name}}
+                <br><span>{{audio_length}}</span>
+            </p>
         </div>
         {{/audio_records}}
     </div>

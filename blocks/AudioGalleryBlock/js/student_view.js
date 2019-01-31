@@ -40,14 +40,15 @@ export default StudentView.extend({
       var width = $('.cw-audio-gallery-carousel-nav .slick-slide')[0].offsetWidth - 20;
       this.$('.slick-slide').find('.cw-audio-gallery-nav-slide').css('width', width+'px');
 
+      // hide all buttons 
       this.$('.cw-audio-gallery-recording-info').hide();
       this.$('.cw-audio-gallery-record-button-stop').hide();
- 
+      this.$('.cw-audio-gallery-record-button-start').hide();
+
       navigator.mediaDevices.getUserMedia({audio: true}).then(_stream => {
         let stream = _stream;
-
         $view.recorder = new MediaRecorder(stream);
-
+        $view.$('.cw-audio-gallery-record-button-start').show();
         $view.recorder.ondataavailable = e => {
           $view.chunks.push(e.data);
           if($view.recorder.state == 'inactive')  $view.makeBlob();
@@ -66,7 +67,8 @@ export default StudentView.extend({
       this.$('.cw-audio-gallery-record-button-stop').show();
       this.$('.cw-audio-gallery-recording-info').show();
       this.$('.user-record .cw-audio-gallery-player').remove();
-      this.setTimer(0);
+      this.timer = 0;
+      this.setTimer();
 
   },
 
@@ -75,6 +77,7 @@ export default StudentView.extend({
       this.$('.cw-audio-gallery-record-button-start').show();
       this.$('.cw-audio-gallery-record-button-stop').hide();
       this.recorder.stop();
+      
   },
 
   resetRecorder() {
@@ -98,16 +101,19 @@ export default StudentView.extend({
       var reader = new FileReader();
       reader.readAsDataURL($view.blob);
       reader.onloadend = function() {
-         $view.blob.base64data = reader.result.toString();                
+         $view.blob.base64data = reader.result.toString();
+         $view.storeRecording();
      }
+
+     
   }, 
 
-  setTimer(i) {
+  setTimer() {
       var $view = this;
       if (this.recorder.state == 'recording') {
-          this.$('.cw-audio-gallery-recording-timer').text(this.seconds2time(i));
-          i++;
-          setTimeout(function(){ $view.setTimer(i); }, 1000);
+          this.$('.cw-audio-gallery-recording-timer').text(this.seconds2time(this.timer));
+          this.timer++;
+          setTimeout(function(){ $view.setTimer(); }, 1000);
       }
    },
 
@@ -132,5 +138,26 @@ export default StudentView.extend({
       time += (seconds < 10) ? '0' + seconds : String(seconds);
     }
     return time;
-  }
+  },
+  
+  storeRecording() {
+    var $view = this;
+
+    helper
+      .callHandler(this.model.id, 'store_recording', {
+        audio_file: $view.blob.base64data,
+        audio_length : $view.seconds2time($view.timer)
+      })
+      .then(
+        // success
+        function () {
+        },
+
+        // error
+        function (error) {
+          var errorMessage = 'Could not update the block: '+$.parseJSON(error.responseText).reason;
+          alert(errorMessage);
+          console.log(errorMessage, arguments);
+        });
+  },
 });
