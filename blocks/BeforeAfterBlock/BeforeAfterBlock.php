@@ -37,8 +37,34 @@ class BeforeAfterBlock extends Block
         $ba_img_before_external = json_decode($this->ba_before)->source == 'url' ? true : false;
         $ba_img_after_external = json_decode($this->ba_after)->source == 'url' ? true : false;
 
+        $files_arr = $this->showFiles($before->file_id, $after->file_id);
+
+        $no_files = 
+            empty($files_arr['userfilesarray']) && 
+            empty($files_arr['coursefilesarray']) && 
+            ($files_arr['before_file_id_found'] == false) && 
+            ($files_arr['after_file_id_found'] == false) &&
+            empty($before->file_id) &&
+            empty($after->file_id);
+
+        if((!$files_arr['before_file_id_found']) && (!empty($before->file_id)) ){
+            $before_other_user_file = array('id' => $before->file_id, 'name' => $before->file_name, 'download_url' => $before->url);
+        } else {
+            $before_other_user_file = false;
+        }
+
+        if((!$files_arr['after_file_id_found']) && (!empty($after->file_id))) {
+            $after_other_user_file = array('id' => $after->file_id, 'name' => $after->file_name, 'download_url' => $after->url);
+        } else {
+            $after_other_user_file = false;
+        }
+
         return array_merge($this->getAttrArray(), array(
-            'image_files' => $this->showFiles(),
+            'image_files_user' => $files_arr['userfilesarray'],
+            'image_files_course' => $files_arr['coursefilesarray'],
+            'before_other_user_file' => $before_other_user_file,
+            'after_other_user_file' => $after_other_user_file,
+            'no_files' => $no_files,
             'img_before' => $before->url,
             'img_after' => $after->url,
             'file_id_before' => $before->file_id,
@@ -155,22 +181,49 @@ class BeforeAfterBlock extends Block
         $this->save();
     }
 
-    private function showFiles()
+    private function showFiles($before_file_id, $after_file_id)
     {
-        $filesarray = array();
-        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $coursefilesarray = array();
+        $userfilesarray = array();
+        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
-        $folders = array_merge($folders, $user_folders);
+        $before_file_id_found = false;
+        $after_file_id_found = false;
 
-        foreach ($folders as $folder) {
+        foreach ($course_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if ($ref->isImage())  {
-                    $filesarray[] = $ref;
+                if (($ref->isImage()) && (!$ref->isLink())) {
+                    $coursefilesarray[] = $ref;
+                }
+                if($ref->id == $before_file_id){
+                    $before_file_id_found = true;
+                }
+                if($ref->id == $after_file_id){
+                    $after_file_id_found = true;
                 }
             }
         }
 
-        return $filesarray;
+        foreach ($user_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isImage()) && (!$ref->isLink())) {
+                    $userfilesarray[] = $ref;
+                }
+                if($ref->id == $before_file_id){
+                    $before_file_id_found = true;
+                }
+                if($ref->id == $after_file_id){
+                    $after_file_id_found = true;
+                }
+            }
+        }
+
+        return array(
+            'coursefilesarray' => $coursefilesarray,
+            'userfilesarray' => $userfilesarray,
+            'before_file_id_found' => $before_file_id_found,
+            'after_file_id_found' => $after_file_id_found);
     }
 }

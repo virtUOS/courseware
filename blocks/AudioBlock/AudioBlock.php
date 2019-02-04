@@ -51,7 +51,25 @@ class AudioBlock extends Block
     {
         $this->authorizeUpdate();
 
-        return array_merge($this->getAttrArray(), array('audio_files' => $this->showFiles(), 'audio_file' => $this->audio_file));
+        $files_arr = $this->showFiles();
+        $id = $this->audio_id;
+        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['audio_id_found'] == false) && empty($id);
+        if((!$files_arr['audio_id_found']) && (!empty($id))){
+            $other_user_file = array('id' => $this->audio_id, 'name' => $this->audio_file);
+        } else {
+            $other_user_file = false;
+        }
+
+        return array_merge(
+            $this->getAttrArray(), 
+            array(
+                'audio_files_user' => $files_arr['userfilesarray'], 
+                'audio_files_course' => $files_arr['coursefilesarray'], 
+                'no_audio_files' => $no_files, 
+                'other_user_file' => $other_user_file, 
+                'audio_file' => $this->audio_file
+            )
+        );
     }
 
     public function save_handler(array $data)
@@ -139,21 +157,37 @@ class AudioBlock extends Block
 
     private function showFiles()
     {
-        $filesarray = array();
-        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $coursefilesarray = array();
+        $userfilesarray = array();
+        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
-        $folders = array_merge($folders, $user_folders);
+        $audio_id_found = false;
 
-        foreach ($folders as $folder) {
+        foreach ($course_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
                 if (($ref->isAudio()) && (!$ref->isLink())) {
-                    $filesarray[] = $ref;
+                    $coursefilesarray[] = $ref;
+                }
+                if($ref->id == $this->audio_id) {
+                    $audio_id_found = true;
                 }
             }
         }
 
-        return $filesarray;
+        foreach ($user_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isAudio()) && (!$ref->isLink())) {
+                    $userfilesarray[] = $ref;
+                }
+                if($ref->id == $this->audio_id) {
+                    $audio_id_found = true;
+                }
+            }
+        }
+
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'audio_id_found' => $audio_id_found);
     }
 
     private function getAttrArray()

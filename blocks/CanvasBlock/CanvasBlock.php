@@ -45,9 +45,25 @@ class CanvasBlock extends Block
         $this->authorizeUpdate();
         $content = json_decode($this->canvas_content);
 
+        $files_arr = $this->showFiles($content->image_id);
+        
+        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['image_id_found'] == false) && empty($content->image_id);
+        
+        if((!$files_arr['image_id_found']) && (!empty($content->image_id))){
+            $other_user_file = array('id' => $content->image_id, 'name' => $content->image_name);
+        } else {
+            $other_user_file = false;
+        }
+
         return array_merge(
             $this->getAttrArray(), 
-            array('image_url'=> $content->image_url, 'image_files' => $this->showFiles())
+            array(
+                'image_url'=> $content->image_url, 
+                'image_files_user' => $files_arr['userfilesarray'], 
+                'image_files_course' => $files_arr['coursefilesarray'], 
+                'no_image_files' => $no_files, 
+                'other_user_file' => $other_user_file
+            )
         );
     }
 
@@ -70,23 +86,39 @@ class CanvasBlock extends Block
         return;
     }
 
-    private function showFiles()
+    private function showFiles($file_id)
     {
-        $filesarray = array();
-        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $coursefilesarray = array();
+        $userfilesarray = array();
+        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
-        $folders = array_merge($folders, $user_folders);
+        $image_id_found = false;
 
-        foreach ($folders as $folder) {
+        foreach ($course_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
                 if (($ref->isImage()) && (!$ref->isLink())) {
-                    $filesarray[] = $ref;
+                    $coursefilesarray[] = $ref;
+                }
+                if($ref->id == $file_id) {
+                    $image_id_found = true;
                 }
             }
         }
 
-        return $filesarray;
+        foreach ($user_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isImage()) && (!$ref->isLink())) {
+                    $userfilesarray[] = $ref;
+                }
+                if($ref->id == $file_id) {
+                    $image_id_found = true;
+                }
+            }
+        }
+
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'image_id_found' => $image_id_found);
     }
 
     private function getAttrArray()
