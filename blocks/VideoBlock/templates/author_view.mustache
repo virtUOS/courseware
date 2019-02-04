@@ -44,13 +44,38 @@
             <input type="text" class="cw-webvideo-source-url">
             <button class="cw-webvideo-source-url-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Videodatei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
 
-            <select class="cw-webvideo-source-file" {{^video_files}}disabled{{/video_files}}>
-                {{#video_files}}
+            <select class="cw-webvideo-source-file" {{#no_files}}disabled{{/no_files}}>
+                {{^no_files}}
                     <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
-                {{/video_files}}
-                {{^video_files}}
+
+                    <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
+                        {{#video_files_course}}
+                            <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                        {{/video_files_course}}
+                        {{^video_files_course}}
+                            <option file_id="" file_name="" file_url="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
+                        {{/video_files_course}}
+                    </optgroup>
+                    <optgroup label="Dateien im eigenen Dateibereich">
+                        {{#video_files_user}}
+                            <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                        {{/video_files_user}}
+                        {{^video_files_user}}
+                            <option file_id="" file_name="" file_url="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
+                        {{/video_files_user}}
+                    </optgroup>
+                    <optgroup label="Dateien im Dateibereich anderer Nutzer">
+                        {{#video_files_other}}
+                            <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                        {{/video_files_other}}
+                        {{^video_files_other}}
+                            <option file_id="" file_name="" file_url="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
+                        {{/video_files_other}}
+                    </optgroup>
+                {{/no_files}}
+                {{#no_files}}
                     <option file_id="" file_name="" file_url="" selected>{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
-                {{/video_files}}
+                {{/no_files}}
             </select>
             <button class="cw-webvideo-source-file-info cw-info" data-title="{{#i18n}}Hier werden alle Videodateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
             <br>

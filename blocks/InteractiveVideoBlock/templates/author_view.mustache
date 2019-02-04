@@ -38,8 +38,8 @@
 <div class="cw-iav-controls">
     <div class="cw-iav-range" ></div>
     <span class="cw-iav-time"></span>
-    <button class="cw-iav-playbutton" name="play" ></button> 
-    <button class="cw-iav-stopbutton" name="stop" ></button> 
+    <button class="cw-iav-playbutton" name="play" ></button>
+    <button class="cw-iav-stopbutton" name="stop" ></button>
 </div>
 <div class="cw-iav-author-tabs">
   <ul>
@@ -54,13 +54,33 @@
         <option value="url" {{#external_file}}selected{{/external_file}}>{{#i18n}}webVideo (URL){{/i18n}}:</option>
     </select>
     <input class="cw-iav-url" name="cw-iav-url">
-    <select class="cw-iav-video-file" name="cw-iav-video-file" {{^video_files}} disabled {{/video_files}}>
-        {{#video_files}}
-            <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
-        {{/video_files}}
-        {{^video_files}}
-            <option file_id="" file_name="" file_url="" selected>{{#i18n}}Keine Videodatei verfügbar{{/i18n}}</option>
-        {{/video_files}}
+    <select class="cw-iav-video-file" name="cw-iav-video-file" {{#no_video_files}} disabled {{/no_video_files}}>
+        {{^no_video_files}}
+            <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
+                {{#course_video_files}}
+                    <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                {{/course_video_files}}
+                {{^course_video_files}}
+                    <option value="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
+                {{/course_video_files}}
+            </optgroup>
+            <optgroup label="Dateien im eigenen Dateibereich">
+                {{#user_video_files}}
+                    <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                {{/user_video_files}}
+                {{^user_video_files}}
+                    <option value="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
+                {{/user_video_files}}
+            </optgroup>
+            {{#other_user_file}}
+                <optgroup label="Datei im Dateibereich eines anderen Nutzers">
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                </optgroup>
+            {{/other_user_file}}
+        {{/no_video_files}}
+        {{#no_video_files}}
+            <option file_id="" file_name="" file_url="" selected>{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
+        {{/no_video_files}}
     </select>
     <button name="video-preview" class="button">{{#i18n}}Vorschau{{/i18n}}</button>
   </div>
@@ -123,7 +143,7 @@
                     <button name="overlay-preview" class="button">{{#i18n}}Vorschau{{/i18n}}</button>
                 </div>
             </div>
-            
+
         </div>
   </div>
   <div id="tabs-{{block_id}}-3">
@@ -178,7 +198,7 @@
                     <button name="stop-preview" class="button">{{#i18n}}Vorschau{{/i18n}}</button>
                 </div>
             </div>
-            
+
         </div>
   </div>
   <div id="tabs-{{block_id}}-4">

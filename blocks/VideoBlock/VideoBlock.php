@@ -25,8 +25,8 @@ class VideoBlock extends Block
     private function array_rep() {
         return array(
             'url'               => $this->url,
-            'webvideo'          => $this->webvideo, 
-            'webvideosettings'  => $this->webvideosettings, 
+            'webvideo'          => $this->webvideo,
+            'webvideosettings'  => $this->webvideosettings,
             'videoTitle'        => $this->videoTitle,
             'aspect'            => $this->aspect
         );
@@ -47,13 +47,22 @@ class VideoBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-        $video_files = $this->showFiles();
-        if (empty($video_files)) {
-            $video_files = false;
+        $webvideos = json_decode($this->webvideo);
+        $file_ids = array();
+        foreach ($webvideos as $webvideo) {
+            if (!empty($webvideo->file_id)) {
+                array_push($file_ids, $webvideo->file_id);
+            }
         }
+        $files_arr = $this->showFiles($file_ids);
+
+        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['video_ids_found'] == false) && empty($file_ids);
 
         return array_merge($this->array_rep(), array(
-            'video_files' => $video_files
+            'no_files' => $no_files,
+            'video_files_other' => $files_arr['other_user_files']),
+            'video_files_user' => $files_arr['userfilesarray'],
+            'video_files_course' => $files_arr['coursefilesarray']
         ));
     }
 
@@ -69,23 +78,50 @@ class VideoBlock extends Block
         return $this->array_rep();
     }
 
-    private function showFiles()
+    private function showFiles($file_ids)
     {
-        $filesarray = array();
-        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $coursefilesarray = array();
+        $userfilesarray = array();
+        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
-        $folders = array_merge($folders, $user_folders);
+        $video_id_found = false;
+        $other_user_files = array();
 
-        foreach ($folders as $folder) {
+        foreach ($course_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if ($ref->isVideo())  {
-                    $filesarray[] = $ref;
+                if (($ref->isVideo()) && (!$ref->isLink())) {
+                    $coursefilesarray[] = $ref;
+                }
+                $key = array_search($ref->id, $file_ids);
+                if($key > -1) {
+                    unset ($file_ids[$key]);
                 }
             }
         }
 
-        return $filesarray;
+        foreach ($user_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isVideo()) && (!$ref->isLink())) {
+                    $userfilesarray[] = $ref;
+                }
+                if(in_array($ref->id, $file_ids)) {
+                    unset ($file_ids[$key]);
+                }
+            }
+        }
+
+        if (empty($file_ids)) {
+            $other_user_files = false;
+        } else {
+            foreach ($file_ids as $id) {
+                $file_ref = new \FileRef($source->file_id);
+                array_push($other_user_files, $file_ref);
+            }
+        }
+
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'video_id_found' => $video_id_found, 'other_user_files' => $other_user_files);
     }
 
     /**
@@ -144,11 +180,11 @@ class VideoBlock extends Block
         if (isset($properties['url'])) {
             $this->url = $properties['url'];
         }
-        
+
         if (isset($properties['webvideo'])) {
             $this->webvideo = $properties['webvideo'];
         }
-        
+
         if (isset($properties['webvideosettings'])) {
             $this->webvideosettings = $properties['webvideosettings'];
         }
@@ -156,7 +192,7 @@ class VideoBlock extends Block
         if (isset($properties['aspect'])) {
             $this->aspect = $properties['aspect'];
         }
-        
+
         if (isset($properties['videoTitle'])) {
             $this->videoTitle = $properties['videoTitle'];
         }

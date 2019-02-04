@@ -3,7 +3,7 @@ namespace Mooc\UI\PdfBlock;
 
 use Mooc\UI\Block;
 
-class PdfBlock extends Block 
+class PdfBlock extends Block
 {
     const NAME = 'PDF mit Vorschau';
     const BLOCK_CLASS = 'multimedia';
@@ -31,18 +31,36 @@ class PdfBlock extends Block
         return array_merge($this->getAttrArray(), array(
             'access'           => $access,
             'courseware_path'  => $courseware_path
-            
+
         ));
     }
 
     public function author_view()
     {
         $this->authorizeUpdate();
+        $file_id = $this->pdf_file_id;
+        $files_arr = $this->showFiles($file_id);
 
-        return array_merge($this->getAttrArray(), array('pdf_files' => $this->showFiles()));
+        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['pdf_id_found'] == false) && empty($file_id);
+
+        if((!$files_arr['pdf_id_found']) && (!empty($file_id))){
+            $other_user_file = array('id' => $file_id, 'name' => $this->pdf_filename, 'pdf_file' => $this->pdf_file);
+        } else {
+            $other_user_file = false;
+        }
+
+        return array_merge(
+            $this->getAttrArray(),
+            array(
+                'user_pdf_files' => $files_arr['userfilesarray'],
+                'course_pdf_files' => $files_arr['coursefilesarray'],
+                'no_pdf_files' => $no_files,
+                'other_user_file' => $other_user_file
+            )
+        );
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'pdf_file'      => $this->pdf_file,
@@ -52,23 +70,39 @@ class PdfBlock extends Block
         );
     }
 
-    private function showFiles()
+    private function showFiles($file_id)
     {
-        $filesarray = array();
-        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $coursefilesarray = array();
+        $userfilesarray = array();
+        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
-        $folders = array_merge($folders, $user_folders);
+        $pdf_id_found = false;
 
-        foreach ($folders as $folder) {
+        foreach ($course_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if (($ref->mime_type == "application/pdf")&& (!$ref->isLink()))  {
-                    $filesarray[] = $ref;
+                if ((($ref->mime_type == "application/pdf") && (!$ref->isLink())) {
+                    $coursefilesarray[] = $ref;
+                }
+                if($ref->id == $file_id) {
+                    $pdf_id_found = true;
                 }
             }
         }
 
-        return $filesarray;
+        foreach ($user_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if ((($ref->mime_type == "application/pdf") && (!$ref->isLink())) {
+                    $userfilesarray[] = $ref;
+                }
+                if($ref->id == $file_id) {
+                    $pdf_id_found = true;
+                }
+            }
+        }
+
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, '$pdf_id_found' => $pdf_id_found);
     }
 
     public function save_handler(array $data)

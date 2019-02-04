@@ -112,28 +112,38 @@ class InteractiveVideoBlock extends Block
         if ($this->iav_source != '') {
             $source = json_decode($this->iav_source);
             $iav_url = $source->url;
+            $iav_file_id = $source->file_id;
+            $iav_file_name = $source->file_name;
             $external_file = $source->external;
         } else {
             $iav_url = '';
             $external_file = false;
+            $iav_file_id = '';
+            $iav_file_name = '';
         }
-        $video_files = $this->showFiles();
-        if (empty($video_files)) {
-            $video_files = false;
-        }
+        $files_arr = $this->showFiles($iav_file_id);
+        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['video_id_found'] == false) && empty($iav_file_id);
 
+        if((!$files_arr['video_id_found']) && (!empty($iav_file_id))){
+            $other_user_file = array('id' => $iav_file_id, 'name' => $iav_file_name, 'url' => $iav_url);
+        } else {
+            $other_user_file = false;
+        }
         return array_merge($this->getAttrArray(), array(
-            'block_id'          => $this->_model->id,
-            'has_assignments'   => !empty($assignments),
-            'assignments'       => $assignments, 
-            'exercises'         => $exercises, 
-            'active'            => $active, 
-            'version'           => $version,
-            'installed'         => $installed,
-            'manage_tests_url'  => \PluginEngine::getURL('vipsplugin', array(), 'sheets'),
-            'iav_url'           => $iav_url,
-            'external_file'     => $external_file,
-            'video_files'       => $video_files
+            'block_id'           => $this->_model->id,
+            'has_assignments'    => !empty($assignments),
+            'assignments'        => $assignments,
+            'exercises'          => $exercises,
+            'active'             => $active,
+            'version'            => $version,
+            'installed'          => $installed,
+            'manage_tests_url'   => \PluginEngine::getURL('vipsplugin', array(), 'sheets'),
+            'iav_url'            => $iav_url,
+            'external_file'      => $external_file,
+            'user_video_files'   => $video_files['userfilesarray'],
+            'course_video_files' => $_video_files['coursefilesarray'],
+            'no_video_files'     => $no_files,
+            'other_user_file'    => $other_user_file
         ));
     }
 
@@ -141,14 +151,14 @@ class InteractiveVideoBlock extends Block
     {
         $this->authorizeUpdate();
         $this->iav_source = $data['iav_source']; // json
-        $this->iav_overlays = $data['iav_overlays']; // json 
-        $this->iav_stops = $data['iav_stops']; // json 
-        $this->iav_tests = $data['iav_tests']; // json 
+        $this->iav_overlays = $data['iav_overlays']; // json
+        $this->iav_stops = $data['iav_stops']; // json
+        $this->iav_tests = $data['iav_tests']; // json
         $this->assignment_id = $data['assignment_id'];
 
         return $this->getAttrArray();
     }
-    
+
     public function exercise_submit_handler($data)
     {
         parse_str($data, $requestParams);
@@ -204,21 +214,39 @@ class InteractiveVideoBlock extends Block
         );
     }
 
-    private function showFiles()
+    private function showFiles($file_id)
     {
-        $filesarray = array();
-        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $coursefilesarray = array();
+        $userfilesarray = array();
+        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
+        $video_id_found = false;
 
-        foreach ($folders as $folder) {
+        foreach ($course_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if ($ref->isVideo())  {
-                    $filesarray[] = $ref;
+                if (($ref->isVideo()) && (!$ref->isLink())) {
+                    $coursefilesarray[] = $ref;
+                }
+                if($ref->id == $file_id) {
+                    $video_id_found = true;
                 }
             }
         }
 
-        return $filesarray;
+        foreach ($user_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isVideo()) && (!$ref->isLink())) {
+                    $userfilesarray[] = $ref;
+                }
+                if($ref->id == $file_id) {
+                    $video_id_found = true;
+                }
+            }
+        }
+
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'video_id_found' => $video_id_found);
     }
 
     /**
