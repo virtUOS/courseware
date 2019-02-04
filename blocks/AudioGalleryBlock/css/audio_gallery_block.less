@@ -1,6 +1,16 @@
 @import '../../../assets/less/mixins';
 
 section#courseware button.button {
+    &.cw-audio-gallery-record-button-delete {
+        .assets-bg-icon("blue/trash.svg");
+        margin-left: 1em;
+        background-position: 6px center;
+        padding-left: 2em;
+        &:hover {
+            .assets-bg-icon("white/trash.svg");
+        }
+    }
+
     &.cw-audio-gallery-record-button-start {
         .assets-bg-icon("blue/span-full.svg");
         margin-left: 1em;

@@ -9,12 +9,15 @@
                     <source  src="{{file_url}}">
                 </audio>
                 {{/file_url}}
-                <button class="button cw-audio-gallery-record-button-start">Aufnahme starten</button>
+                <button class="button cw-audio-gallery-record-button-delete user-record-delete" data-uid={{user_id}}>{{#i18n}}Aufnahme löschen{{/i18n}}</button>
+                <button class="button cw-audio-gallery-record-button-start">{{#i18n}}Aufnahme starten{{/i18n}}</button>
+                
                 <button class="button cw-audio-gallery-recording-info">
                     {{#i18n}}Aufnahme läuft{{/i18n}}:
                     <span class="cw-audio-gallery-recording-timer"></span>
                 </button>
-                <button class="button cw-audio-gallery-record-button-stop">Aufnahme beenden</button>
+                <button class="button cw-audio-gallery-record-button-stop">{{#i18n}}Aufnahme beenden{{/i18n}}</button>
+                <p class="cw-audio-gallery-record-usermedia-info">{{#i18n}}Geben Sie das Mikrofon frei um eine Aufnahme zu ermöglichen{{/i18n}}.</p>
             </div>
         </div>
         {{/user_record}}
@@ -25,6 +28,9 @@
                 <audio class="cw-audio-gallery-player" controls>
                     <source  src="{{file_url}}">
                 </audio>
+                {{#isTeacher}}
+                <button class="button cw-audio-gallery-record-button-delete" data-uid={{user_id}}>{{#i18n}}Aufnahme löschen{{/i18n}}</button>
+                {{/isTeacher}}
             </div>
         </div>
         {{/audio_records}}

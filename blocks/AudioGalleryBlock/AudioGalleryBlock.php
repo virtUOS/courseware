@@ -28,7 +28,8 @@ class AudioGalleryBlock extends Block
             $this->getAttrArray(),
             array(
                 'audio_records' => $this->get_records()['audio_records'],
-                'user_record' => $this->get_records()['user_record']
+                'user_record' => $this->get_records()['user_record'],
+                'isTeacher' => $this->container['current_user']->canUpdate($this)
             )
         );
     }
@@ -140,6 +141,18 @@ class AudioGalleryBlock extends Block
 
     }
 
+    public function delete_record_handler(array $data) 
+    {
+        $uid = $data['uid'];
+
+        if (($this->container['current_user']->id != $uid)&&(!$this->container['current_user']->canUpdate($this))) {
+            throw new \InvalidArgumentException(_cw("Sie sind nicht berechtigt diese Aufnahme zu löschen."));
+        } else { 
+            $field = Field::findOneBySQL('block_id = ? AND user_id = ?AND name = ?', array($this->id, $uid, 'audio_gallery_user_recording'));
+
+            return $field->delete();
+        }
+    }
 
     private function getAttrArray()
     {

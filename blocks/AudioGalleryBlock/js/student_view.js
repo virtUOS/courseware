@@ -7,7 +7,8 @@ import helper from 'js/url'
 export default StudentView.extend({
   events: {
         'click .cw-audio-gallery-record-button-start' : 'startRecording',
-        'click .cw-audio-gallery-record-button-stop' :   'stopRecording'
+        'click .cw-audio-gallery-record-button-stop' : 'stopRecording', 
+        'click .cw-audio-gallery-record-button-delete' : 'deleteRecord'
       },
 
   initialize() {
@@ -20,20 +21,20 @@ export default StudentView.extend({
   postRender() {
       var $view = this;
       this.$('.cw-audio-gallery-carousel-for').slick({
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          arrows: false,
-          fade: true,
-          asNavFor: $view.$('.cw-audio-gallery-carousel-nav')
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        asNavFor: $view.$('.cw-audio-gallery-carousel-nav')
       });
 
       this.$('.cw-audio-gallery-carousel-nav').slick({
-            centerMode: true,
-            focusOnSelect: true,
-            centerPadding: '42px',
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            asNavFor: $view.$('.cw-audio-gallery-carousel-for')
+        centerMode: true,
+        focusOnSelect: true,
+        centerPadding: '42px',
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        asNavFor: $view.$('.cw-audio-gallery-carousel-for')
       });
 
       // fix slick-carousel element width from 100% to width - margin
@@ -44,16 +45,22 @@ export default StudentView.extend({
       this.$('.cw-audio-gallery-recording-info').hide();
       this.$('.cw-audio-gallery-record-button-stop').hide();
       this.$('.cw-audio-gallery-record-button-start').hide();
+      this.$('.cw-audio-gallery-record-button-delete.user-record-delete').hide();
 
       navigator.mediaDevices.getUserMedia({audio: true}).then(_stream => {
         let stream = _stream;
         $view.recorder = new MediaRecorder(stream);
         $view.$('.cw-audio-gallery-record-button-start').show();
+        $view.$('.cw-audio-gallery-record-usermedia-info').hide();
         $view.recorder.ondataavailable = e => {
           $view.chunks.push(e.data);
           if($view.recorder.state == 'inactive')  $view.makeBlob();
         };
       });
+
+      if (this.$('.cw-audio-gallery-record-button-delete.user-record-delete').siblings('.cw-audio-gallery-player').length > 0) {
+          this.$('.cw-audio-gallery-record-button-delete.user-record-delete').show();
+      }
   },
 
   startRecording() {
@@ -63,21 +70,21 @@ export default StudentView.extend({
       }
       this.chunks = [];
       this.recorder.start();
+      this.$('.cw-audio-gallery-record-button-delete').hide();
       this.$('.cw-audio-gallery-record-button-start').hide();
       this.$('.cw-audio-gallery-record-button-stop').show();
       this.$('.cw-audio-gallery-recording-info').show();
       this.$('.user-record .cw-audio-gallery-player').remove();
       this.timer = 0;
       this.setTimer();
-
   },
 
   stopRecording() {
       this.$('.cw-audio-gallery-recording-info').hide();
       this.$('.cw-audio-gallery-record-button-start').show();
+      this.$('.cw-audio-gallery-record-button-delete').show();
       this.$('.cw-audio-gallery-record-button-stop').hide();
       this.recorder.stop();
-      
   },
 
   resetRecorder() {
@@ -96,7 +103,7 @@ export default StudentView.extend({
       audio.src = url;
       audio.classList.add('cw-audio-gallery-player');
       
-      $(audio).insertBefore(this.$('.cw-audio-gallery-record-button-start'));
+      $(audio).insertBefore(this.$('.cw-audio-gallery-record-button-delete.user-record-delete'));
 
       var reader = new FileReader();
       reader.readAsDataURL($view.blob);
@@ -105,7 +112,6 @@ export default StudentView.extend({
          $view.storeRecording();
      }
 
-     
   }, 
 
   setTimer() {
@@ -160,4 +166,31 @@ export default StudentView.extend({
           console.log(errorMessage, arguments);
         });
   },
+
+  deleteRecord(event) {
+    var $view = this;
+    var $del_button = $(event.currentTarget);
+    var $uid = $del_button.data('uid');
+    helper
+      .callHandler(this.model.id, 'delete_record', {
+        uid: $uid
+      })
+      .then(
+        // success
+        function () {
+            $del_button.siblings('.cw-audio-gallery-player').remove();
+            $del_button.hide();
+            if (!$del_button.hasClass('user-record-delete')){
+                $('<p>Aufnahme wurde gelöscht.</p>').insertBefore($del_button);
+            }
+        },
+
+        // error
+        function (error) {
+          var errorMessage = 'Error: '+$.parseJSON(error.responseText).reason;
+          alert(errorMessage);
+          console.log(errorMessage, arguments);
+        });
+  }
+
 });
