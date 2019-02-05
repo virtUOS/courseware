@@ -81,7 +81,7 @@ class PdfBlock extends Block
         foreach ($course_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if ((($ref->mime_type == "application/pdf") && (!$ref->isLink())) {
+                if ( ($ref->mime_type == "application/pdf") && (!$ref->isLink()) ) {
                     $coursefilesarray[] = $ref;
                 }
                 if($ref->id == $file_id) {
@@ -93,7 +93,7 @@ class PdfBlock extends Block
         foreach ($user_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if ((($ref->mime_type == "application/pdf") && (!$ref->isLink())) {
+                if (($ref->mime_type == "application/pdf") && (!$ref->isLink())) {
                     $userfilesarray[] = $ref;
                 }
                 if($ref->id == $file_id) {
@@ -102,7 +102,7 @@ class PdfBlock extends Block
             }
         }
 
-        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, '$pdf_id_found' => $pdf_id_found);
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'pdf_id_found' => $pdf_id_found);
     }
 
     public function save_handler(array $data)

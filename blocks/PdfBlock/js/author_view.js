@@ -7,7 +7,7 @@ export default AuthorView.extend({
 
     events: {
         'click button[name=save]':   'onSave',
-        'click button[name=cancel]': 'switchBack',
+        'click button[name=cancel]': 'onCancel',
     },
 
     initialize() {
@@ -21,7 +21,10 @@ export default AuthorView.extend({
 
     postRender() {
         var $view = this;
-        $view.$('.cw-pdf-set-file option[value="'+$view.$('.cw-pdf-file-stored').val()+'"]').prop('selected', true);
+        if ($view.$('.cw-pdf-file-stored').val() != '') {
+            $view.$('.cw-pdf-set-file option[value="'+$view.$('.cw-pdf-file-stored').val()+'"]').prop('selected', true);
+        }
+
         return this;
     },
 
@@ -80,5 +83,10 @@ export default AuthorView.extend({
                   console.log(errorMessage, arguments);
                 }
             );
+      },
+
+      onCancel() {
+        this.switchBack();
+        helper.reload();
       }
 });
