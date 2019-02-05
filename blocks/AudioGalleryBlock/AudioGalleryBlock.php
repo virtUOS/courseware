@@ -138,7 +138,7 @@ class AudioGalleryBlock extends Block
             'user_name' => $user->vorname.' '.$user->nachname,
             'mkdate' => time()
         );
-
+        $this->setGrade(1.0);
     }
 
     public function delete_record_handler(array $data) 
@@ -149,8 +149,13 @@ class AudioGalleryBlock extends Block
             throw new \InvalidArgumentException(_cw("Sie sind nicht berechtigt diese Aufnahme zu löschen."));
         } else { 
             $field = Field::findOneBySQL('block_id = ? AND user_id = ?AND name = ?', array($this->id, $uid, 'audio_gallery_user_recording'));
+            if ($field->delete()) {
+                $this->setGrade(0.0);
+            } else {
+                throw new \InvalidArgumentException(_cw("Aufnahme konnte nicht gelöscht werden."));
+            }
 
-            return $field->delete();
+            return ;
         }
     }
 
