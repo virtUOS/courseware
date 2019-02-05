@@ -60,7 +60,7 @@ class VideoBlock extends Block
 
         return array_merge($this->array_rep(), array(
             'no_files' => $no_files,
-            'video_files_other' => $files_arr['other_user_files']),
+            'video_files_other' => $files_arr['other_user_files'],
             'video_files_user' => $files_arr['userfilesarray'],
             'video_files_course' => $files_arr['coursefilesarray']
         ));
@@ -116,7 +116,7 @@ class VideoBlock extends Block
             $other_user_files = false;
         } else {
             foreach ($file_ids as $id) {
-                $file_ref = new \FileRef($source->file_id);
+                $file_ref = \FileRef::find($id);
                 array_push($other_user_files, $file_ref);
             }
         }

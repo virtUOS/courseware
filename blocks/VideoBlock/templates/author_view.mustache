@@ -46,8 +46,6 @@
 
             <select class="cw-webvideo-source-file" {{#no_files}}disabled{{/no_files}}>
                 {{^no_files}}
-                    <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
-
                     <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
                         {{#video_files_course}}
                             <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
