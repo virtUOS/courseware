@@ -140,8 +140,8 @@ class InteractiveVideoBlock extends Block
             'manage_tests_url'   => \PluginEngine::getURL('vipsplugin', array(), 'sheets'),
             'iav_url'            => $iav_url,
             'external_file'      => $external_file,
-            'user_video_files'   => $video_files['userfilesarray'],
-            'course_video_files' => $_video_files['coursefilesarray'],
+            'user_video_files'   => $files_arr['userfilesarray'],
+            'course_video_files' => $files_arr['coursefilesarray'],
             'no_video_files'     => $no_files,
             'other_user_file'    => $other_user_file
         ));
