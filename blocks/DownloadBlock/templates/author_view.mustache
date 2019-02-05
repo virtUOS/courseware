@@ -13,6 +13,11 @@
             <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
         {{/user_folders}}
     </optgroup>
+    {{#other_user_folder}}
+    <optgroup label="Ordner im Dateibereich eines anderen Nutzers">
+        <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
+    </optgroup>
+    {{/other_user_folder}}
 </select>
 <br>
 

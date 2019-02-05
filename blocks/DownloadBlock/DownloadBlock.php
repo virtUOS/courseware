@@ -45,12 +45,32 @@ class DownloadBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
+        $folder_id = $this->folder_id;
+        
         $this->authorizeUpdate();
-        $allfiles = $this->showFiles($this->folder_id);
-        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $allfiles = $this->showFiles($folder_id);
+        $folders =  \Folder::findBySQL('range_id = ? AND folder_type != ?', array($this->container['cid'], 'RootFolder'));
+        $root_folder = \Folder::findOneBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'RootFolder'));
+        $root_folder->name = 'Hauptordner';
+        array_unshift($folders, $root_folder);
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
+        $other_user_folder = false;
 
-        return array_merge($this->getAttrArray(), array('allfiles' => $allfiles, 'folders' => $folders, 'user_folders' => $user_folders));
+        if(!empty($folder_id)) {
+            $all_folders = array_merge($folders, $user_folders);
+            $folder_found = false;
+            foreach($all_folders as $folder) {
+                if ($folder->id == $folder_id) {
+                    $folder_found = true;
+                    break;
+                }
+            }
+            if(!$folder_found) {
+                $other_user_folder[] = \Folder::find($folder_id);
+            }
+        }
+
+        return array_merge($this->getAttrArray(), array('allfiles' => $allfiles, 'folders' => $folders, 'user_folders' => $user_folders, 'other_user_folder' => $other_user_folder));
     }
 
     public function save_handler(array $data)
