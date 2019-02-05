@@ -7,6 +7,12 @@ $progress = function ($block, $format = "") {
 
 $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>"Jul", 8=>"Aug", 9=>"Sep", 10=>"Okt",11=>"Nov", 12=>"Dez");
 ?>
+<a href="<?= $controller->url_for('progress/reset/') ?>"
+   title="<?=  _cw('Fortschritt zurücksetzen') ?>"
+   onclick="return STUDIP.Dialog.confirmAsPost('<?= _cw('Soll der Fortschritt wirklich gelöscht werden?') ?>', this.href);"
+>
+    <button class="button cw-reset-progress-button"><?= _cw('Fortschritt zurücksetzen')?></button>
+</a>
 
 <ul id="overview-chapter-nav">
     <li class="overview-chapter-nav-arrow" id="overview-chapter-nav-left"></li>

@@ -47,6 +47,17 @@ class ProgressController extends CoursewareStudipController
         $this->buildTree($grouped, $progress, $this->courseware);
     }
 
+    public function reset_action()
+    {
+        $uid = $this->plugin->getCurrentUserId();
+        $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId()));
+        $bids = array_map(function ($block) { return (int) $block->id; }, $blocks);
+
+        Mooc\DB\UserProgress::deleteBySQL('block_id IN (?) AND user_id = ?', array($bids, $uid));
+
+        return $this->redirect('progress?cid='.$this->plugin->getCourseId());
+    }
+
     private function buildTree($grouped, $progress, &$root)
     {
         $this->addChildren($grouped, $root);
