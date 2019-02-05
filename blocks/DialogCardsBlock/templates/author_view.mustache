@@ -9,13 +9,36 @@
     </select>
     <input type="text" name="cw-dialogcards-front-img" class="cw-dialogcards-front-img" placeholder="{{#i18n}}https://www.beispiel.de/bild.jpg{{/i18n}}">
     <button class="cw-dialogcards-front-img-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Bilddatei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
-    <select class="cw-dialogcards-front-img-file" name="cw-dialogcards-front-img-file" {{^image_files}}disabled{{/image_files}}>
-            {{#image_files}}
-                <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
-            {{/image_files}}
-            {{^image_files}}
+    <select class="cw-dialogcards-front-img-file" name="cw-dialogcards-front-img-file" {{#no_files}}disabled{{/no_files}}>
+            {{^no_files}}
+                <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
+                    {{#image_files_course}}
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    {{/image_files_course}}
+                    {{^image_files_course}}
+                        <option file_id="" file_name="" file_url="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                    {{/image_files_course}}
+                </optgroup>
+                <optgroup label="Dateien im eigenen Dateibereich">
+                    {{#image_files_user}}
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    {{/image_files_user}}
+                    {{^image_files_user}}
+                        <option file_id="" file_name="" file_url="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                    {{/image_files_user}}
+                </optgroup>
+                <optgroup label="Dateien im Dateibereich anderer Nutzer">
+                    {{#image_files_other}}
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    {{/image_files_other}}
+                    {{^image_files_other}}
+                        <option file_id="" file_name="" file_url="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                    {{/image_files_other}}
+                </optgroup>
+            {{/no_files}}
+            {{#no_files}}
                 <option value="" selected>{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
-            {{/image_files}}
+            {{/no_files}}
     </select>
     <button class="cw-dialogcards-front-img-file-info cw-info" data-title="{{#i18n}}Hier werden alle Bilddateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
     <br>
@@ -29,13 +52,36 @@
     </select>
     <input type="text" name="cw-dialogcards-back-img" class="cw-dialogcards-back-img" placeholder="{{#i18n}}https://www.beispiel.de/bild.jpg{{/i18n}}">
     <button class="cw-dialogcards-back-img-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Bilddatei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
-    <select class="cw-dialogcards-back-img-file" name="cw-dialogcards-back-img-file" {{^image_files}}disabled{{/image_files}}>
-            {{#image_files}}
-                <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
-            {{/image_files}}
-            {{^image_files}}
+    <select class="cw-dialogcards-back-img-file" name="cw-dialogcards-back-img-file" {{#no_files}}disabled{{/no_files}}>
+            {{^no_files}}
+                <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
+                    {{#image_files_course}}
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    {{/image_files_course}}
+                    {{^image_files_course}}
+                        <option file_id="" file_name="" file_url="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                    {{/image_files_course}}
+                </optgroup>
+                <optgroup label="Dateien im eigenen Dateibereich">
+                    {{#image_files_user}}
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    {{/image_files_user}}
+                    {{^image_files_user}}
+                        <option file_id="" file_name="" file_url="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                    {{/image_files_user}}
+                </optgroup>
+                <optgroup label="Dateien im Dateibereich anderer Nutzer">
+                    {{#image_files_other}}
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    {{/image_files_other}}
+                    {{^image_files_other}}
+                        <option file_id="" file_name="" file_url="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                    {{/image_files_other}}
+                </optgroup>
+            {{/no_files}}
+            {{#no_files}}
                 <option value="" selected>{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
-            {{/image_files}}
+            {{/no_files}}
     </select>
     <button class="cw-dialogcards-back-img-file-info cw-info" data-title="{{#i18n}}Hier werden alle Bilddateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
     <br>
@@ -54,13 +100,36 @@
         <input type="text" name="cw-dialogcards-front-img" class="cw-dialogcards-front-img" value="{{front_img}}">
         <button class="cw-dialogcards-front-img-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Bilddatei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
         <input type="hidden" class="cw-dialogcards-front-img-file-stored" name="cw-dialogcards-front-img-file-stored" value="{{front_img_file_id}}">
-        <select class="cw-dialogcards-front-img-file" name="cw-dialogcards-front-img-file" {{^image_files}}disabled{{/image_files}}>
-            {{#image_files}}
-                <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
-            {{/image_files}}
-            {{^image_files}}
+        <select class="cw-dialogcards-front-img-file" name="cw-dialogcards-front-img-file" {{#no_files}}disabled{{/no_files}}>
+            {{^no_files}}
+                <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
+                    {{#image_files_course}}
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    {{/image_files_course}}
+                    {{^image_files_course}}
+                        <option file_id="" file_name="" file_url="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                    {{/image_files_course}}
+                </optgroup>
+                <optgroup label="Dateien im eigenen Dateibereich">
+                    {{#image_files_user}}
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    {{/image_files_user}}
+                    {{^image_files_user}}
+                        <option file_id="" file_name="" file_url="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                    {{/image_files_user}}
+                </optgroup>
+                <optgroup label="Dateien im Dateibereich anderer Nutzer">
+                    {{#image_files_other}}
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    {{/image_files_other}}
+                    {{^image_files_other}}
+                        <option file_id="" file_name="" file_url="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                    {{/image_files_other}}
+                </optgroup>
+            {{/no_files}}
+            {{#no_files}}
                 <option value="" selected>{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
-            {{/image_files}}
+            {{/no_files}}
         </select>
         <button class="cw-dialogcards-front-img-file-info cw-info" data-title="{{#i18n}}Hier werden alle Bilddateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
 
@@ -76,13 +145,36 @@
         <input type="text" name="cw-dialogcards-back-img" class="cw-dialogcards-back-img" value="{{back_img}}">
         <button class="cw-dialogcards-back-img-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Bilddatei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
         <input type="hidden" class="cw-dialogcards-back-img-file-stored" name="cw-dialogcards-back-img-file-stored" value="{{back_img_file_id}}">
-        <select class="cw-dialogcards-back-img-file" name="cw-dialogcards-back-img-file" {{^image_files}}disabled{{/image_files}}>
-            {{#image_files}}
-                <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
-            {{/image_files}}
-            {{^image_files}}
+        <select class="cw-dialogcards-back-img-file" name="cw-dialogcards-back-img-file" {{#no_files}}disabled{{/no_files}}>
+            {{^no_files}}
+                <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
+                    {{#image_files_course}}
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    {{/image_files_course}}
+                    {{^image_files_course}}
+                        <option file_id="" file_name="" file_url="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                    {{/image_files_course}}
+                </optgroup>
+                <optgroup label="Dateien im eigenen Dateibereich">
+                    {{#image_files_user}}
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    {{/image_files_user}}
+                    {{^image_files_user}}
+                        <option file_id="" file_name="" file_url="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                    {{/image_files_user}}
+                </optgroup>
+                <optgroup label="Dateien im Dateibereich anderer Nutzer">
+                    {{#image_files_other}}
+                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    {{/image_files_other}}
+                    {{^image_files_other}}
+                        <option file_id="" file_name="" file_url="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                    {{/image_files_other}}
+                </optgroup>
+            {{/no_files}}
+            {{#no_files}}
                 <option value="" selected>{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
-            {{/image_files}}
+            {{/no_files}}
         </select>
         <button class="cw-dialogcards-back-img-file-info cw-info" data-title="{{#i18n}}Hier werden alle Bilddateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
 

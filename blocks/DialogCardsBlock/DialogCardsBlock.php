@@ -27,9 +27,29 @@ class DialogCardsBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
+        
+        $cards = json_decode($this->dialogcards_content);
+
+        $file_ids = array();
+        foreach ($cards as $card) {
+            if (!empty($card->front_img_file_id)) {
+                array_push($file_ids, $card->front_img_file_id);
+            }
+            if (!empty($card->back_img_file_id)) {
+                array_push($file_ids, $card->back_img_file_id);
+            }
+        }
+
+        $files_arr = $this->showFiles($file_ids);
+
+        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['video_ids_found'] == false) && empty($file_ids);
+
         return array_merge($this->getAttrArray(), array(
-            'cards' => json_decode($this->dialogcards_content),
-            'image_files' => $this->showFiles()
+            'cards' => $cards,
+            'no_files' => $no_files,
+            'image_files_other' => $files_arr['other_user_files'],
+            'image_files_user' => $files_arr['userfilesarray'],
+            'image_files_course' => $files_arr['coursefilesarray']
         ));
     }
 
@@ -40,23 +60,50 @@ class DialogCardsBlock extends Block
         );
     }
 
-    private function showFiles()
+    private function showFiles($file_ids)
     {
-        $filesarray = array();
-        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $coursefilesarray = array();
+        $userfilesarray = array();
+        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
-        $folders = array_merge($folders, $user_folders);
+        $image_id_found = false;
+        $other_user_files = array();
 
-        foreach ($folders as $folder) {
+        foreach ($course_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if ($ref->isImage())  {
-                    $filesarray[] = $ref;
+                if (($ref->isImage()) && (!$ref->isLink())) {
+                    $coursefilesarray[] = $ref;
+                }
+                $key = array_search($ref->id, $file_ids);
+                if($key > -1) {
+                    unset ($file_ids[$key]);
                 }
             }
         }
 
-        return $filesarray;
+        foreach ($user_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isImage()) && (!$ref->isLink())) {
+                    $userfilesarray[] = $ref;
+                }
+                if(in_array($ref->id, $file_ids)) {
+                    unset ($file_ids[$key]);
+                }
+            }
+        }
+
+        if (empty($file_ids)) {
+            $other_user_files = false;
+        } else {
+            foreach ($file_ids as $id) {
+                $file_ref = \FileRef::find($id);
+                array_push($other_user_files, $file_ref);
+            }
+        }
+
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'image_id_found' => $image_id_found, 'other_user_files' => $other_user_files);
     }
 
     public function save_handler(array $data)
