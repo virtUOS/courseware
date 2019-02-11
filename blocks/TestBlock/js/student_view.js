@@ -1,6 +1,8 @@
 import $ from 'jquery'
 import StudentView from 'js/student_view'
 import helper from 'js/url'
+import ajax from 'js/url'
+import Config from 'js/courseware-config'
 
 export default StudentView.extend({
     events: {
@@ -28,27 +30,55 @@ export default StudentView.extend({
 
         'click button[name=submit-exercise]': function (event) {
             var $form = this.$(event.target).closest('form'),
-            view = this,
-            $exercise_index = $form.find('input[name="exercise_index"]').val(),
-            $block = this.$el.parent();
+                view = this,
+                $exercise_index = $form.find('input[name="exercise_index"]').val(),
+                $block = this.$el.parent();
 
-            helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
-            .then(function (resp) {
-                if(resp.is_nobody) {
-                    var $ex =view.$("#exercise"+resp.exercise_index);
-                    $ex.find(".cw-test-content").first().html('<form class="studip_form"><fieldset><legend>'+resp.title+'</legend>'+resp.solution+'</fieldset></form>');
-                } else {
-                    return view.renderServerSide();
-                }
-            }).then(function () {
-                $block.find('.exercise').hide();
-                $block.find('#exercise' + $exercise_index).show();
-                $block.find('.submitinfo').slideDown(250).delay(1500).slideUp(250);
-                $(window).trigger('resize');
-            })
-            .catch(function () {
-                console.log('failed to store the solution');
-            });
+            var file = this.$('input[name="upload"]')[0].files[0]; //Files[0] = 1st file
+
+            if (file != undefined) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                  reader.onloadend = function() {
+                     let file_str = "&file="+reader.result+"&filename="+file.name+"&filesize="+file.size+"&filetype="+file.type;
+                     helper.callHandler(view.model.id, 'exercise_submit', $form.serialize()+file_str)
+                    .then(function (resp) {
+                        if(resp.is_nobody) {
+                            var $ex =view.$("#exercise"+resp.exercise_index);
+                            $ex.find(".cw-test-content").first().html('<form class="studip_form"><fieldset><legend>'+resp.title+'</legend>'+resp.solution+'</fieldset></form>');
+                        } else {
+                            return view.renderServerSide();
+                        }
+                    }).then(function () {
+                        $block.find('.exercise').hide();
+                        $block.find('#exercise' + $exercise_index).show();
+                        $block.find('.submitinfo').slideDown(250).delay(1500).slideUp(250);
+                        $(window).trigger('resize');
+                    })
+                    .catch(function () {
+                        console.log('failed to store the solution');
+                    });
+                 }
+            } else {
+                //helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
+                helper.callHandler(this.model.id, 'exercise_submit', fd)
+                .then(function (resp) {
+                    if(resp.is_nobody) {
+                        var $ex =view.$("#exercise"+resp.exercise_index);
+                        $ex.find(".cw-test-content").first().html('<form class="studip_form"><fieldset><legend>'+resp.title+'</legend>'+resp.solution+'</fieldset></form>');
+                    } else {
+                        return view.renderServerSide();
+                    }
+                }).then(function () {
+                    $block.find('.exercise').hide();
+                    $block.find('#exercise' + $exercise_index).show();
+                    $block.find('.submitinfo').slideDown(250).delay(1500).slideUp(250);
+                    $(window).trigger('resize');
+                })
+                .catch(function () {
+                    console.log('failed to store the solution');
+                });
+            }
 
             return false;
         },
