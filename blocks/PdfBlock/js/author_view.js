@@ -22,7 +22,7 @@ export default AuthorView.extend({
     postRender() {
         var $view = this;
         if ($view.$('.cw-pdf-file-stored').val() != '') {
-            $view.$('.cw-pdf-set-file option[value="'+$view.$('.cw-pdf-file-stored').val()+'"]').prop('selected', true);
+            $view.$('.cw-pdf-set-file option[file_id="'+$view.$('.cw-pdf-file-id-stored').val()+'"]').prop('selected', true);
         }
 
         return this;
