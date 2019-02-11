@@ -60,7 +60,7 @@ class User extends \User
                 $perm = $this->hasPerm($model->seminar_id, 'user');
             }
 
-            return $model->isPublished() && $perm;
+            return $model->isPublished() && $model->isVisible() && $perm;
         }
 
         throw new \RuntimeException('not implemented: '.__METHOD__);

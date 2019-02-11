@@ -43,6 +43,9 @@ export default StudentView.extend({
 
     'click .block .lower':    'lowerBlock',
     'click .block .raise':    'raiseBlock',
+    
+    'click .block .set-invisible': 'hideBlock',
+    'click .block .set-visible':   'showBlock',
 
     'click .block .author':   'switchToAuthorView',
     'click .block .trash':    'destroyView',
@@ -468,6 +471,47 @@ export default StudentView.extend({
         antagonist.before(protagonist);
         protagonist.toggle('blind');
       });
+  },
+
+  hideBlock(event) {
+    var block_id = findBlockIDForEvent(event);
+    var $block = findBlockForEvent(event);
+
+    helper
+      .callHandler(this.model.id, 'visibility', {block_id: block_id, visible: false  })
+      .then(
+        function(resp) {
+            let $button = '<button class=set-visible data-title="Block zeigen">sichtbar</button>';
+            $block.find('button.author').after($button);
+            $block.find('button.set-invisible').remove();
+            let $info = '<span class="not-visible-info">(für Studierende nicht sichtbar)</span>';
+            $block.find('span.type').append($info);
+            $block.removeClass('not-visible');
+        },
+        function (error) {
+            console.log(error);
+        }
+      );
+  },
+
+  showBlock(event) {
+    var block_id = findBlockIDForEvent(event);
+    var $block = findBlockForEvent(event);
+
+    helper
+      .callHandler(this.model.id, 'visibility', {block_id: block_id, visible: true })
+      .then(
+        function(resp) {
+            let $button = '<button class=set-invisible data-title="Block verstecken">unsichtbar</button>';
+            $block.find('button.author').after($button);
+            $block.find('button.set-visible').remove();
+            $block.find('.not-visible-info').remove();
+            $block.removeClass('not-visible');
+        },
+        function (error) {
+            console.log(error);
+        }
+      );
   },
 
   refreshBlockTypes(sectionId, container) {

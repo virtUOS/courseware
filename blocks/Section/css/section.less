@@ -40,6 +40,8 @@ section#courseware {
             overflow: hidden;
             &.edit  { .btn(edit); }
             &.trash { .btn(trash); }
+            &.set-visible { .btn(visibility-invisible); }
+            &.set-invisible { .btn(visibility-visible); }
             &.edit-icon { .btn(settings); vertical-align: top;}
         }
       }
@@ -97,6 +99,10 @@ section#courseware {
       span.type {
         margin-left: 5px;
         float: left;
+
+        .not-visible-info {
+            font-weight: 600;
+        }
       }
 
       button {
@@ -109,6 +115,8 @@ section#courseware {
       button.lower  { .bgImg(arr_2down, yellow, 20); }
       button.author { .bgImg(edit, blue, 20); }
       button.trash  { .bgImg(trash, blue, 20); }
+      button.set-visible   { .bgImg(visibility-invisible, blue, 20); }
+      button.set-invisible { .bgImg(visibility-visible, blue, 20); }
       button.info   { .bgImg(info, blue, 20); cursor: help;}
     }
 

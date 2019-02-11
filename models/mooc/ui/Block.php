@@ -240,7 +240,10 @@ abstract class Block {
         foreach ($this->_model->getContentChildren() as $child_model) {
             $child = $this->getBlockFactory()->makeBlock($child_model);
             if ($child) {
-                $results[] = $callback($child, $this->container);
+                $result = $callback($child, $this->container);
+                if ($result != null) {
+                    $results[] = $result;
+                }
             }
         }
 

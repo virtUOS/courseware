@@ -82,9 +82,18 @@ class Section extends Block
 
         $blocks = $this->traverseChildren(
             function (Block $child) use ($context) {
+                if (!$this->getCurrentUser()->canRead($child)) {
+                    return null;
+                }
                 $json = $child->toJSON();
                 $json['block_content'] = $child->render('student', $context);
                 $json['view_name'] = 'student';
+                
+                if (!$child->getModel()->isVisible()) {
+                    $json['invisible'] = true;
+                } else  {
+                    $json['invisible'] = false;
+                }
 
                 return $json;
             }
@@ -206,6 +215,14 @@ class Section extends Block
         }
 
         return true;
+    }
+
+    public function visibility_handler($data)
+    {
+        $child = $this->_model->children->findOneBy('id', (int) $data['block_id']); //Mooc\DB\Block
+
+        $child->visible = $data['visible'];
+        return $child->store();
     }
 
     private function get_favorites()

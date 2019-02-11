@@ -1,14 +1,16 @@
 <section
   id=block-{{id}}
-  class="block {{type}}"
+  class="block {{type}} {{#invisible}}not-visible{{/invisible}}"
   data-blockid="{{id}}"
   data-blocktype="{{type}}">
 
   <div class="controls{{#editable}} editable{{/editable}}{{^editable}} not-editable{{/editable}}">
-    <span class="type">{{readable_name}}</span>
+    <span class="type">{{readable_name}} {{#invisible}}<span class="not-visible-info">{{#i18n}}(für Studierende nicht sichtbar){{/i18n}}</span>{{/invisible}}</span> 
     <button class=lower>{{#i18n}}Absenken{{/i18n}}</button>
     <button class=raise>{{#i18n}}Anheben{{/i18n}}</button>
     <button class=author data-title="{{#i18n}}Block bearbeiten{{/i18n}}">{{#i18n}}Ändern{{/i18n}}</button>
+    {{^invisible}}<button class=set-invisible data-title="{{#i18n}}Block verstecken{{/i18n}}">{{#i18n}}unsichtbar{{/i18n}}</button>{{/invisible}}
+    {{#invisible}}<button class=set-visible data-title="{{#i18n}}Block zeigen{{/i18n}}">{{#i18n}}sichtbar{{/i18n}}</button>{{/invisible}}
     <button class=trash data-title="{{#i18n}}Block entfernen{{/i18n}}">{{#i18n}}Entfernen{{/i18n}}</button>
     <button class=info data-title="Id: {{id}}, {{#i18n}}erstellt am{{/i18n}}: {{make_date}}, Blocktyp: {{type}}">{{#i18n}}Info{{/i18n}}</button>
   </div>
