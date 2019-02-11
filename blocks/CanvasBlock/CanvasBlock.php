@@ -81,6 +81,7 @@ class CanvasBlock extends Block
     {
         if (isset($data['canvas_draw'])) {
             $this->canvas_draw = $data['canvas_draw'];
+            $this->setGrade(1.0);
         }
 
         return;
