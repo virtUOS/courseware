@@ -120,6 +120,11 @@ class Courseware extends StudIPPlugin implements StandardPlugin
                 'import',
                 new Navigation(_cw('Import'), $importUrl)
             );
+            $importUrl = PluginEngine::getURL($this, compact('cid'), 'block_manager', true);
+            $navigation->addSubnavigation(
+                'block_manager',
+                new Navigation(_cw('block_manager'), $importUrl)
+            );
 
         //NavigationForStudents
         } else {

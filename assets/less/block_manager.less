@@ -1,0 +1,169 @@
+@import 'mixins';
+@import 'variables';
+
+.assets-bg-icon(@img) {
+    background-image: url("../@{blocks-icons-dir}/@{img}");
+}
+
+#courseware-blockmanager {
+    h1 {
+        border: none;
+    }
+
+    .section-list{
+        clear: both;
+    }
+
+    .chapter-list,
+    .subchapter-list,
+    .section-list,
+    .block-list {
+        min-height: 2em;
+        overflow: hidden;
+        padding: 0;
+        margin: 1em;
+        background-color: #fff;
+
+        p.chapter-description,
+        p.subchapter-description,
+        p.section-description {
+            margin: 1em;
+            color: #fff;
+            font-weight: 600;
+            cursor: default;
+            background-image: url("../@{blocks-icons-dir}/white/arr_1right.svg");
+            background-size: 16px;
+            background-position: 6px center;
+            background-repeat: no-repeat;
+            background-color: #28497c;
+            padding: 1em 1em 1em 2em;
+            &.unfolded {
+                background-image: url("../@{blocks-icons-dir}/white/arr_1down.svg");
+            }
+
+            span {
+                font-weight: normal;
+                color: #7E91B0;
+                float: right;
+            }
+        }
+    }
+
+    .chapter-item,
+    .subchapter-item,
+    .section-item,
+    .block-item {
+        background-color: #fff;
+        border: solid thin #28497c;
+        list-style: none;
+        margin-bottom: 1em;
+        color: #28497c;
+    }
+
+    .section-item {
+        float: left;
+        margin: 0.25em;
+        min-width: 240px;
+        color: #28497c;
+    }
+
+    .section-list > li.ui-sortable-placeholder {
+        width: 240px;
+        float: left;
+        list-style: none;
+        height: 240px;
+    }
+
+    .highlight {
+        border: 2px solid #28497c;
+        font-weight: bold;
+        font-size: 45px;
+        background-color: #fff;
+    }
+
+    .block-item {
+        margin: 0.25em;
+        padding: 0.5em 0.5em 0.5em 2em;
+        color: #28497c;
+        cursor: default;
+        .assets-bg-icon("blue/plugin.svg");
+
+            &.cw-block-icon-AudioBlock {
+                .assets-bg-icon("blue/play.svg");
+            }
+            &.cw-block-icon-ConfirmBlock {
+                .assets-bg-icon("blue/accept.svg");
+            }
+            &.cw-block-icon-DownloadBlock {
+                .assets-bg-icon("blue/download.svg");
+            }
+            &.cw-block-icon-EvaluationBlock {
+                .assets-bg-icon("blue/evaluation.svg");
+            }
+            &.cw-block-icon-ForumBlock {
+                .assets-bg-icon("blue/forum.svg");
+            }
+            &.cw-block-icon-HtmlBlock {
+                .assets-bg-icon("blue/edit.svg");
+            }
+            &.cw-block-icon-CanvasBlock,
+            &.cw-block-icon-BeforeAfterBlock,
+            &.cw-block-icon-GalleryBlock {
+                background-image: url("../images/icons/blue/picture.svg");
+            }
+            &.cw-block-icon-DialogCardsBlock {
+                background-image: url("../images/icons/blue/dialog-cards.svg");
+            }
+            &.cw-block-icon-AssortBlock {
+                .assets-bg-icon("blue/hamburger.svg");
+            }
+            &.cw-block-icon-PostBlock {
+                .assets-bg-icon("blue/chat.svg");
+            }
+            &.cw-block-icon-LinkBlock {
+                .assets-bg-icon("blue/link-extern.svg");
+            }
+            &.cw-block-icon-KeyPointBlock {
+                .assets-bg-icon("blue/exclaim-circle.svg");
+            }
+            &.cw-block-icon-PdfBlock {
+                .assets-bg-icon("blue/file-pdf.svg");
+            }
+            &.cw-block-icon-CodeBlock {
+                .assets-bg-icon("blue/computer.svg");
+            }
+            &.cw-block-icon-EmbedBlock {
+                .assets-bg-icon("blue/code.svg");
+            }
+            &.cw-block-icon-TestBlock {
+                .assets-bg-icon("blue/question-circle.svg");
+            }
+            &.cw-block-icon-SearchBlock {
+                .assets-bg-icon("blue/search.svg");
+            }
+            &.cw-block-icon-VideoBlock,
+            &.cw-block-icon-InteractiveVideoBlock,
+            &.cw-block-icon-OpenCastBlock {
+                .assets-bg-icon("blue/video.svg");
+            }
+            &.cw-block-icon-IFrameBlock {
+                .assets-bg-icon("blue/door-enter.svg");
+            }
+            &.cw-block-icon-ChartBlock {
+                .assets-bg-icon("blue/vote.svg");
+            }
+            &.cw-block-icon-DateBlock {
+                .assets-bg-icon("blue/date.svg");
+            }
+            &.cw-block-icon-TypewriterBlock {
+                .assets-bg-icon("blue/wizard.svg");
+            }
+            &.cw-block-icon-ScrollyBlock {
+                .assets-bg-icon("blue/literature.svg");
+            }
+
+            background-size: 16px 16px;
+            background-repeat: no-repeat;
+            background-position: 4px center; 
+    }
+}
