@@ -1,8 +1,6 @@
 <?php
 
 use Mooc\DB\Block;
-use Mooc\Export\Validator\XmlValidator;
-use Mooc\Import\XmlImport;
 
 /**
  * Controller to manage Courseware Blocks
@@ -67,6 +65,7 @@ class BlockManagerController extends CoursewareStudipController
         $subchapterList = json_decode(Request::get('subchapterList'), true);
         $sectionList = json_decode(Request::get('sectionList'), true);
         $blockList = json_decode(Request::get('blockList'), true);
+
         foreach(array($subchapterList, $sectionList, $blockList) as $list) {
             foreach($list as $key => $value) {
                 $parent = \Mooc\DB\Block::find($key);

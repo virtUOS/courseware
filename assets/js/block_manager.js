@@ -6,9 +6,7 @@ $(document).ready(function(){
         sectionList = {},
         blockList = {};
 
-    $('p').siblings('ul').hide();
-
-    $('p')
+    $('.chapter-description, .subchapter-description, .section-description, .block-description')
     .mousedown(function(){
         isDragging = false;
     })
@@ -26,7 +24,8 @@ $(document).ready(function(){
                 $(this).removeClass('unfolded');
             }
         }
-    });
+    })
+    .siblings('ul').hide();
 
     $('.chapter-list').sortable({
         placeholder: 'highlight',
@@ -34,13 +33,13 @@ $(document).ready(function(){
             ui.placeholder.height(ui.item.height());
         },
         update: function(event, ui) {
-            var chapterList = [];
             $('.chapter-item').each(function(key, value){
                 chapterList.push($(value).data('id'));
             });
             $('#chapterList').val(JSON.stringify(chapterList));
         }
     }).disableSelection();
+
     $('.subchapter-list').sortable({
         connectWith:'.subchapter-list', 
         placeholder: 'highlight',
@@ -64,6 +63,7 @@ $(document).ready(function(){
             $('#subchapterList').val(JSON.stringify(subchapterList));
         }
     }).disableSelection();
+
     $('.section-list').sortable({
         connectWith:'.section-list', 
         placeholder: 'highlight',
@@ -87,14 +87,12 @@ $(document).ready(function(){
             $('#sectionList').val(JSON.stringify(sectionList));
         }
     }).disableSelection();
+
     $('.block-list').sortable({
             connectWith:'.block-list', 
             placeholder: "highlight",
             start: function( event, ui ) {
                 ui.placeholder.height(ui.item.height()+20);
-            },
-            stop: function(event, ui) {
-
             },
             update: function(event, ui) {
                 $parent = $(ui.item).parents('.section-item').first();
@@ -113,25 +111,5 @@ $(document).ready(function(){
                 $('#blockList').val(JSON.stringify(blockList));
             }
     }).disableSelection();
-
-    $('#sendchanges').click(function(){
-        
-        $.ajax({
-            url : 'http://voicebunny.comeze.com/index.php',
-            type : 'GET',
-            data : {
-                'numberOfWords' : 10
-            },
-            dataType:'json',
-            success : function(data) {              
-                alert('Data: '+data);
-            },
-            error : function(request,error)
-            {
-                alert("Request: "+JSON.stringify(request));
-            }
-        });
-        
-    });
 
 });
