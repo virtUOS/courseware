@@ -27,7 +27,7 @@
         p.chapter-description,
         p.subchapter-description,
         p.section-description {
-            margin: 1em;
+            margin: 0;
             color: #fff;
             font-weight: 600;
             cursor: default;
@@ -48,6 +48,18 @@
             }
         }
     }
+    
+    .highlight {
+        border: 1px dashed #28497c;
+        background-color: #fff;
+        margin-bottom: 1em;
+    }
+
+    .section-list > li.ui-sortable-placeholder {
+        width: 240px;
+        float: left;
+        list-style: none;
+    }
 
     .chapter-item,
     .subchapter-item,
@@ -65,20 +77,6 @@
         margin: 0.25em;
         min-width: 240px;
         color: #28497c;
-    }
-
-    .section-list > li.ui-sortable-placeholder {
-        width: 240px;
-        float: left;
-        list-style: none;
-        height: 240px;
-    }
-
-    .highlight {
-        border: 2px solid #28497c;
-        font-weight: bold;
-        font-size: 45px;
-        background-color: #fff;
     }
 
     .block-item {

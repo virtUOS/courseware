@@ -18,11 +18,13 @@ class BlockManagerController extends CoursewareStudipController
         }
 
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
+        PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/block_manager.js');
 
         if (Navigation::hasItem('/course/mooc_courseware/block_manager')) {
             Navigation::activateItem('/course/mooc_courseware/block_manager');
         }
-        
+
+        $this->cid = Request::get('cid');
         $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId()));
         
         $grouped = array_reduce(
@@ -56,6 +58,33 @@ class BlockManagerController extends CoursewareStudipController
         });
 
         return $parent['children'];
+    }
+    
+    public function store_changes_action()
+    {
+        $cid = Request::get('cid');
+        $chapterList = json_decode(Request::get('chapterList'), true);
+        $subchapterList = json_decode(Request::get('subchapterList'), true);
+        $sectionList = json_decode(Request::get('sectionList'), true);
+        $blockList = json_decode(Request::get('blockList'), true);
+        foreach(array($subchapterList, $sectionList, $blockList) as $list) {
+            foreach($list as $key => $value) {
+                $parent = \Mooc\DB\Block::find($key);
+                foreach($value as $bid) {
+                    $block = \Mooc\DB\Block::find($bid);
+                    if ($parent->id != $block->parent_id) {
+                        $block->parent_id = $parent->id;
+                        $block->store();
+                    }
+                }
+                $parent->updateChildPositions($value);
+            }
+        }
+
+        $courseware = \Mooc\DB\Block::findCourseware($cid);
+        $courseware->updateChildPositions($chapterList);
+
+        return $this->redirect('block_manager?cid='.$cid.'&stored=true');
     }
 
 }

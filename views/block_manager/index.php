@@ -1,21 +1,4 @@
 <? $body_id = 'courseware-blockmanager'; ?>
-  <script>
-  $( function() {
-    $('.chapter-list').sortable().disableSelection();
-    $('.subchapter-list').sortable({connectWith:'.subchapter-list'}).disableSelection();
-    $('.section-list').sortable({connectWith:'.section-list', placeholder: "highlight"}).disableSelection();
-    $('.block-list').sortable({connectWith:'.block-list', placeholder: "highlight"}).disableSelection();
-    $('p').siblings('ul').hide();
-    $('p').click(function(e){
-        $(this).siblings('ul').toggle();
-        if(!$(this).hasClass('unfolded')) {
-            $(this).addClass('unfolded');
-        } else {
-            $(this).removeClass('unfolded');
-        }
-    });
-  } );
-  </script>
 <h1><?= _cw('Block Manager') ?></h1>
 <div class="clear"></div>
 <ul class="chapter-list">
@@ -44,3 +27,13 @@
         </li>
     <? endforeach?>
 </ul>
+
+
+<form class="" action="block_manager/store_changes" method="get">
+    <input type="hidden" name="chapterList" id="chapterList" value="">
+    <input type="hidden" name="subchapterList" id="subchapterList" value="">
+    <input type="hidden" name="sectionList" id="sectionList" value="">
+    <input type="hidden" name="blockList" id="blockList" value="">
+    <input type="hidden" name="cid" value="<?= $cid ?>">
+    <input type="submit" value="Änderungen speichern" class="button">
+</form>
