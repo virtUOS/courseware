@@ -147,6 +147,12 @@ class InteractiveVideoBlock extends Block
         ));
     }
 
+    public function preview_view()
+    {
+
+        return array('url' => json_decode($this->iav_source)->url);
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();

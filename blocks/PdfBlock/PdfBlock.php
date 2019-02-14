@@ -60,6 +60,12 @@ class PdfBlock extends Block
         );
     }
 
+    public function preview_view()
+    {
+
+        return array('pdf_filename' => $this->pdf_filename);
+    }
+
     private function getAttrArray()
     {
         return array(

@@ -34,6 +34,12 @@ class SearchBlock extends Block
         return array('searchtitle' => $this->searchtitle);
     }
 
+    public function preview_view()
+    {
+
+        return array('searchtitle' => $this->searchtitle);
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();

@@ -45,6 +45,12 @@ class PostBlock extends Block
         return array_merge($this->getAttrArray(), array('post_ids' => $post_ids, 'has_to_post' => $this->has_to_post));
     }
 
+    public function preview_view()
+    {
+
+        return array('post_title' => $this->post_title);
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();

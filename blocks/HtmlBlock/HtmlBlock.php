@@ -42,6 +42,18 @@ class HtmlBlock extends Block
         return compact('content');
     }
 
+    public function preview_view()
+    {
+        $content = $this->content;
+        if (strpos($content, "<!DOCTYPE html") == 0 ) {
+            $content = \STUDIP\Markup::markAsHtml($content);
+        }
+
+        $content = substr(formatReady($content), 0, 240).'…';
+
+        return array('content' => $content);
+    }
+
     /**
      * Updates the block's contents.
      *

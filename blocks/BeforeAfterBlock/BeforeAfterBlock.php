@@ -74,6 +74,13 @@ class BeforeAfterBlock extends Block
         ));
     }
 
+    public function preview_view()
+    {
+        $ba_img_before = json_decode($this->ba_before)->url;
+
+        return array('before_img' => $ba_img_before);
+    }
+
     private function getAttrArray() 
     {
         return array(

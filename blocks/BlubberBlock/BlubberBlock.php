@@ -54,6 +54,12 @@ class BlubberBlock extends Block
         return compact('active');
     }
 
+    public function preview_view()
+    {
+
+        return;
+    }
+
     /**
      * {@inheritDoc}
      */

@@ -28,6 +28,16 @@ class DateBlock extends Block
         return array('date_content' => $this->date_content);
     }
 
+    public function preview_view()
+    {
+        $date_content =  json_decode($this->date_content, true);
+        return array(
+            'date_title' => $date_content['title'],
+            'date_date' => $date_content['date'],
+            'date_time' => $date_content['time']
+        );
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();

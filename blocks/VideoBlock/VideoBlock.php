@@ -66,6 +66,12 @@ class VideoBlock extends Block
         ));
     }
 
+    public function preview_view()
+    {
+
+        return array('videoTitle' => $this->videoTitle);
+    }
+
     public function save_handler($data)
     {
         $this->authorizeUpdate();

@@ -38,6 +38,12 @@ class ConfirmBlock extends Block
         );
     }
 
+    public function preview_view()
+    {
+
+        return;
+    }
+
     // this is called when any user checks the checkbox
     // set the grade to 100%
     public function confirm_handler($data)

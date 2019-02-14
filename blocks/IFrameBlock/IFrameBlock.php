@@ -68,6 +68,12 @@ class IFrameBlock extends Block
         return array_merge($this->array_rep(), array('https' => $https, 'loading_denyed' => $this->isLoadingDenyed(), 'wrong_protocol' => $wrong_protocol));
     }
 
+    public function preview_view()
+    {
+
+        return array('url' => $this->url);
+    }
+
     /**
      * Updates the block's data.
      *

@@ -36,6 +36,17 @@ class EmbedBlock extends Block
             case 'video':
             case 'rich':
                 $html = $oembed->html;
+                $dom = new \DOMDocument;
+                $dom->loadHTML($html);
+                $xpath = new \DOMXPath($dom);
+                $nodes = $xpath->query("//iframe");
+                foreach($nodes as $node) {
+                    $src = $node->getAttribute('src');
+                    $src = preg_replace("/^http:/i", "https:", $src);
+                    $node->setAttribute('src', $src);
+                }
+                $html = $dom->saveHTML();
+
                 if (($oembed->provider_name == 'YouTube') && ($this->embed_time != '')){
                     $time = json_decode($this->embed_time);
                     $start = $time->start;
@@ -50,6 +61,7 @@ class EmbedBlock extends Block
                     }
                     $html = $dom->saveHTML();
                 }
+
                 break;
             case 'photo':
                 $html = '<img class="embed-block-image" src="'.$oembed->url.'" width="'.$oembed->width.'px" 
@@ -84,6 +96,12 @@ class EmbedBlock extends Block
         ));
     }
 
+    public function preview_view()
+    {
+
+        return array('embed_source' => $this->embed_source);
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
@@ -113,7 +131,7 @@ class EmbedBlock extends Block
 
     private function build_request($embed_source, $embed_url) {
         $endpoints = array(
-            'vimeo' => 'http://vimeo.com/api/oembed.json',
+            'vimeo' => 'https://vimeo.com/api/oembed.json',
             'youtube' => 'https://www.youtube.com/oembed',
             'giphy' => 'https://giphy.com/services/oembed',
             'flickr' => 'https://www.flickr.com/services/oembed/',

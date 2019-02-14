@@ -28,6 +28,13 @@ class TypewriterBlock extends Block
         return array('typewriter_json' => $this->typewriter_json);
     }
 
+    public function preview_view()
+    {
+        $content = json_decode($this->typewriter_json, true)['content'];
+
+        return array('content' => substr($content, 0, 160));
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();

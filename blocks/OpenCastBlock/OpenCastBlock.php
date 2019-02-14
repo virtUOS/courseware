@@ -76,6 +76,12 @@ class OpenCastBlock extends Block
         ));
     }
 
+    public function preview_view()
+    {
+
+        return;
+    }
+
     private function getAttrArray() 
     {
         return array(

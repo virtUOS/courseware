@@ -125,6 +125,13 @@ class TestBlock extends Block
             ));
     }
 
+    public function preview_view()
+    {
+        $assignment = \VipsAssignment::find($this->assignment_id);
+
+        return array('name' => $assignment->test->title);
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();

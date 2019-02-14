@@ -53,6 +53,11 @@ class DialogCardsBlock extends Block
         ));
     }
 
+    public function preview_view()
+    {
+        return array('first_card' => json_decode($this->dialogcards_content, true)[0]);
+    }
+
     private function getAttrArray() 
     {
         return array(

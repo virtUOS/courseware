@@ -59,6 +59,11 @@ class KeyPointBlock extends Block
         return;
     }
 
+    public function preview_view()
+    {
+        return array('keypoint_content' => substr($this->keypoint_content, 0, 160));
+    }
+
     public function exportProperties()
     {
        return $this->getAttrArray();

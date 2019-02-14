@@ -73,6 +73,12 @@ class DownloadBlock extends Block
         return array_merge($this->getAttrArray(), array('allfiles' => $allfiles, 'folders' => $folders, 'user_folders' => $user_folders, 'other_user_folder' => $other_user_folder));
     }
 
+    public function preview_view()
+    {
+
+        return array('file' => $this->file);
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();

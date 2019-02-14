@@ -32,6 +32,12 @@ class AssortBlock extends Block
         return array_merge($this->getBlocksInSection(), $this->getAttrArray());
     }
 
+    public function preview_view()
+    {
+
+        return;
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();

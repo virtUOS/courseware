@@ -23,15 +23,19 @@ class BlockManagerController extends CoursewareStudipController
         }
 
         $this->cid = Request::get('cid');
-        $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId()));
-        
         $grouped = array_reduce(
             \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId())),
             function($memo, $item) {
-                $memo[$item->parent_id][] = $item->toArray();
+                $arr = $item->toArray();
+                if (!$item->isStructuralBlock()) {
+                    $arr['isBlock'] = true;
+                    $arr['ui_block'] = $this->plugin->getBlockFactory()->makeBlock($item);
+                }
+                $memo[$item->parent_id][] = $arr;
                 return $memo;
             },
             array());
+            
         $this->courseware = current($grouped['']);
         $this->buildTree($grouped, $this->courseware);
     }

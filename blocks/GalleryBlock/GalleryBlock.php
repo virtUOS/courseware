@@ -44,6 +44,11 @@ class GalleryBlock extends Block
         return array_merge($this->getAttrArray(), array("folders" => $folders, "user_folders" => $user_folders));
     }
 
+    public function preview_view()
+    {
+        return array('img' => $this->showFiles($this->gallery_folder_id)[0]['url']);
+    }
+
     private function getAttrArray() 
     {
         return array(

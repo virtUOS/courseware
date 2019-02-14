@@ -23,7 +23,18 @@
                                     <p class="section-description"><?= $section['title']?> <span>Abschnitt</span></p>
                                     <ul class="block-list">
                                     <? foreach($section['children'] as $block):?>
-                                        <li class="block-item cw-block-icon-<?=$block['type']?>" data-id="<?= $block['id']?>"><?= $block['type'] ?></li>
+                                        <? $ui_block = $block['ui_block']?>
+                                        <li class="block-item" data-id="<?= $block['id']?>">
+                                            <p class="block-description cw-block-icon-<?=$block['type']?>">
+                                                <?= $ui_block::NAME ?><? if(!$block['visible']):?><span class="block-not-visible"></span><? endif?>
+                                            </p>
+                                            <ul class="block-preview">
+                                                <li class="block-id">ID: <?=$block['id']?></li>
+                                                <? if(method_exists($ui_block, 'preview_view')): ?>
+                                                    <li class="block-content-preview"><?=$ui_block->render('preview', array())?></li>
+                                                <? endif ?>
+                                            </ul>
+                                        </li>
                                     <? endforeach?>
                                     </ul>
                                 </li>

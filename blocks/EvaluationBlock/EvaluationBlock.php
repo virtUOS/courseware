@@ -36,6 +36,12 @@ class EvaluationBlock extends Block
         return array('active' => true, 'content' => $content);
     }
 
+    public function preview_view()
+    {
+
+        return;
+    }
+
     /**
      * {@inheritDoc}
      */

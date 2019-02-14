@@ -67,6 +67,23 @@ class CanvasBlock extends Block
         );
     }
 
+    public function preview_view()
+    {
+        $content = json_decode($this->canvas_content);
+        if ($content->source == "cw") {
+            $file = \FileRef::find($content->image_id);
+            if ($file) {
+                $image_url = $file->getDownloadURL();
+                $access = ($file->terms_of_use->download_condition == 0) ? true : false;
+            }
+        } else {
+            $image_url = $content->image_url;
+            $access = true;
+        }
+
+        return array('bg_img' => $image_url);
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();

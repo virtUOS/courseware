@@ -49,6 +49,11 @@ class DiscussionBlock extends Block
         return array();
     }
 
+    public function preview_view()
+    {
+
+        return;
+    }
 
     /**
      * {@inheritDoc}

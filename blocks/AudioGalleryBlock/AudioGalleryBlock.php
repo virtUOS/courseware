@@ -44,6 +44,12 @@ class AudioGalleryBlock extends Block
         );
     }
 
+    public function preview_view()
+    {
+
+        return;
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();

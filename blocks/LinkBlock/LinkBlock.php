@@ -84,6 +84,12 @@ class LinkBlock extends Block
         ));
     }
 
+    public function preview_view()
+    {
+
+        return array('link_title' => $this->link_title);
+    }
+
     private function getAttrArray() 
     {
         return array(

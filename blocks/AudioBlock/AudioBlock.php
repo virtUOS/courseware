@@ -72,6 +72,12 @@ class AudioBlock extends Block
         );
     }
 
+    public function preview_view()
+    {
+
+        return array('audio_file' => $this->audio_file);
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
