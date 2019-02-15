@@ -12,11 +12,31 @@
 <ul class="chapter-list">
     <? foreach($courseware['children'] as $chapter): ?>
         <li class="chapter-item" data-id="<?= $chapter['id']?>">
-            <p class="chapter-description"><?= $chapter['title']?> <span>Kapitel</span></p>
+            <p class="chapter-description"><?= $chapter['title']?> 
+                <span>
+                    Kapitel
+                    <? if($chapter['publication_date'] != null):?>
+                        | publication: <?=$chapter['publication_date']?>
+                    <? endif ?>
+                    <? if($chapter['withdraw_date'] != null):?>
+                        | withdraw: <?=$chapter['withdraw_date']?>
+                    <? endif ?>
+                </span>
+            </p>
             <ul class="subchapter-list">
                 <? foreach($chapter['children'] as $subchapter): ?>
                     <li class="subchapter-item" data-id="<?= $subchapter['id']?>">
-                        <p class="subchapter-description"><?= $subchapter['title'] ?> <span>Unterkapitel</span></p>
+                        <p class="subchapter-description"><?= $subchapter['title'] ?>
+                            <span>
+                                Unterkapitel
+                                <? if($subchapter['publication_date'] != null):?>
+                                    | publication: <?=$subchapter['publication_date']?>
+                                <? endif ?>
+                                <? if($subchapter['withdraw_date'] != null):?>
+                                    | withdraw: <?=$subchapter['withdraw_date']?>
+                                <? endif ?>
+                            </span>
+                        </p>
                         <ul class="section-list">
                             <? foreach($subchapter['children'] as $section):?>
                                 <li class="section-item" data-id="<?= $section['id']?>">

@@ -122,7 +122,8 @@ export default Backbone.View.extend({
         var data = {
           parent: parent_id,
           title:  model.get('title'),
-          publication_date: model.get('publication_date')
+          publication_date: model.get('publication_date'),
+          withdraw_date: model.get('withdraw_date')
         };
     } else if (model.attributes.type =='section') {
         var data = {
@@ -137,7 +138,6 @@ export default Backbone.View.extend({
     var $parent = jQuery(event.target).closest('[data-blockid]'),
         model = this._modelFromElement($parent),
         $title_el, orig_model, view, updateListItem;
-
     if (model.isNew()) {
       return;
     }
@@ -162,15 +162,15 @@ export default Backbone.View.extend({
 
       // keep this synced
       $parent.data('title', model.get('title'));
+      $parent.removeClass('unpublished');
+      var date = new Date().getTime();
 
       if (model.get('publication_date') != null && !isNaN(model.get('publication_date'))) {
-        var date = new Date(model.get('publication_date') * 1000);
+        var publication_date = new Date(model.get('publication_date') * 1000);
 
-        // add class 'unpbulsihed' if publication_date is in the future
-        if (new Date().getTime() < date.getTime()) {
+        // add class 'unpublished' if publication_date is in the future
+        if (date < publication_date.getTime()) {
           $parent.addClass('unpublished');
-        } else {
-          $parent.removeClass('unpublished');
         }
 
         $parent.attr('data-publication', model.get('publication_date'));
@@ -178,10 +178,18 @@ export default Backbone.View.extend({
         $parent.attr('data-publication', '');
       }
 
-      if ($parent.attr('data-publication') != '') {
-        $parent.attr('title', 'Freigegeben ab: '+dateformat(new Date($parent.attr('data-publication') * 1000), 'dd.mm.yyyy'));
+      if (model.get('withdraw_date') != null && !isNaN(model.get('withdraw_date'))) {
+        var withdraw_date = new Date(model.get('withdraw_date') * 1000);
+
+        // add class 'unpublished' if withdraw_date is in the past
+        if (date > withdraw_date.getTime()) {
+            console.log('add class');
+          $parent.addClass('unpublished');
+        }
+
+        $parent.attr('data-withdraw', model.get('withdraw_date'));
       } else {
-        $parent.attr('title', '');
+        $parent.attr('data-withdraw', '');
       }
     };
 
@@ -221,7 +229,8 @@ export default Backbone.View.extend({
       id: element.data('blockid'),
       title: element.data('title'),
       type: element.data('type'),
-      publication_date: parseInt(element.data('publication'), 10)
+      publication_date: parseInt(element.attr('data-publication'), 10),
+      withdraw_date: parseInt(element.attr('data-withdraw'), 10)
     };
 
     return new BlockModel(values);

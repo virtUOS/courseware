@@ -1,8 +1,16 @@
 <form>
   <input name=title value="{{title}}" required>
-  {{#chapter}}
-  <input type="date" name="publication_date" value="{{publication_date}}" placeholder="{{#i18n}}sichtbar ab:{{/i18n}}" title="{{#i18n}}sichtbar ab:{{/i18n}}">
-  {{/chapter}}
   <button type="submit" class="ok">ok</button>
   <button type="button" class="cancel">cancel</button>
+  {{#chapter}}
+  <br>
+  <label for="publication_date">{{#i18n}}sichtbar ab:{{/i18n}}</label>
+  <input type="date" name="publication_date" value="{{publication_date}}">
+  <br>
+  <label for="withdraw_date">{{#i18n}}unsichtbar ab:{{/i18n}}</label>
+  <input type="date" name="withdraw_date" value="{{withdraw_date}}">
+  <br>
+  <span class="date-info">{{#i18n}}Enddatum liegt vor Startdatum!{{/i18n}}</span>
+  {{/chapter}}
+
 </form>

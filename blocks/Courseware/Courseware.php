@@ -491,7 +491,7 @@ class Courseware extends Block
             $json['unpublished'] = true;
         }
 
-        $json['dom_title'] = $child->publication_date ? date('d.m.Y', $child->publication_date) : '';
+
         $json['selected'] = $selected == $child->id;
 
         return $json;
@@ -643,6 +643,7 @@ class Courseware extends Block
             'type' => $type,
             'title' => $data['title'],
             'publication_date' => $data['publication_date'],
+            'withdraw_date' => $data['withdraw_date'],
             'position' => $block->getNewPosition($parent_id)
         ));
 

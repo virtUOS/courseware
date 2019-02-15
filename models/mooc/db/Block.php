@@ -283,7 +283,7 @@ class Block extends \SimpleORMap implements \Serializable
         }
 
         // check if block is published
-        return $this->publication_date <= $timestamp;
+        return (($this->publication_date <= $timestamp || $this->publication_date == null) && ($this->withdraw_date >= $timestamp || $this->withdraw_date == null));
     }
 
     /**
