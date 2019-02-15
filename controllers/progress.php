@@ -103,7 +103,7 @@ class ProgressController extends CoursewareStudipController
         $parent['children'] = array_filter(
             isset($grouped[$parent['id']]) ? $grouped[$parent['id']] : array(),
             function ($item) {
-                return ($item['publication_date'] <= time()) && ($item['visible'] == 1);
+                return ($item['publication_date'] <= time()) && ($item['visible'] == 1) && ($item['withdraw_date'] >= time() || $item['withdraw_date'] == null);
             });
 
         return $parent['children'];

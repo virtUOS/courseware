@@ -21,6 +21,7 @@
                     <? if($chapter['withdraw_date'] != null):?>
                         | withdraw: <?=$chapter['withdraw_date']?>
                     <? endif ?>
+                    <? if(!$chapter['isPublished']):?><span class="structure-not-visible"></span><? endif?>
                 </span>
             </p>
             <ul class="subchapter-list">
@@ -35,6 +36,7 @@
                                 <? if($subchapter['withdraw_date'] != null):?>
                                     | withdraw: <?=$subchapter['withdraw_date']?>
                                 <? endif ?>
+                                <? if(!$subchapter['isPublished']):?><span class="structure-not-visible"></span><? endif?>
                             </span>
                         </p>
                         <ul class="section-list">
