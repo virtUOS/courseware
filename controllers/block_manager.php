@@ -92,7 +92,9 @@ class BlockManagerController extends CoursewareStudipController
         }
 
         $courseware = \Mooc\DB\Block::findCourseware($cid);
-        $courseware->updateChildPositions($chapterList);
+        if ($chapterList != null) {
+            $courseware->updateChildPositions($chapterList);
+        }
 
         return $this->redirect('block_manager?cid='.$cid.'&stored=true');
     }

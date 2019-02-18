@@ -33,6 +33,7 @@ $(document).ready(function(){
             ui.placeholder.height(ui.item.height());
         },
         update: function(event, ui) {
+            chapterList = [];
             $('.chapter-item').each(function(key, value){
                 chapterList.push($(value).data('id'));
             });
