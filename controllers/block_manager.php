@@ -17,6 +17,7 @@ class BlockManagerController extends CoursewareStudipController
 
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
         PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/block_manager.js');
+        PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/ziploader/zip-loader.min.js');
 
         if (Navigation::hasItem('/course/mooc_courseware/block_manager')) {
             Navigation::activateItem('/course/mooc_courseware/block_manager');

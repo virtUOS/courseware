@@ -6,6 +6,14 @@ $(document).ready(function(){
         sectionList = {},
         blockList = {};
 
+    $('.chapter-description, .subchapter-description, .section-description, .block-description').siblings('ul').hide();
+    startMouseListeners();
+    createSortables();
+    setImport();
+
+});
+
+function startMouseListeners() {
     $('.chapter-description, .subchapter-description, .section-description, .block-description')
     .mousedown(function(){
         isDragging = false;
@@ -24,17 +32,23 @@ $(document).ready(function(){
                 $(this).removeClass('unfolded');
             }
         }
-    })
-    .siblings('ul').hide();
+    });
+}
 
+function stopMouseListeners() {
+    $('.chapter-description, .subchapter-description, .section-description, .block-description').unbind();
+}
+
+function createSortables() {
     $('.chapter-list').sortable({
+        connectWith:'.chapter-list:not(.chapter-list-import)', 
         placeholder: 'highlight',
         start: function( event, ui ) {
             ui.placeholder.height(ui.item.height());
         },
         update: function(event, ui) {
             chapterList = [];
-            $('.chapter-item').each(function(key, value){
+            $('.chapter-list:not(.chapter-list-import) .chapter-item').each(function(key, value){
                 chapterList.push($(value).data('id'));
             });
             $('#chapterList').val(JSON.stringify(chapterList));
@@ -42,7 +56,7 @@ $(document).ready(function(){
     }).disableSelection();
 
     $('.subchapter-list').sortable({
-        connectWith:'.subchapter-list', 
+        connectWith:'.subchapter-list:not(.subchapter-list-import)', 
         placeholder: 'highlight',
         start: function( event, ui ) {
             ui.placeholder.height(ui.item.height());
@@ -66,7 +80,7 @@ $(document).ready(function(){
     }).disableSelection();
 
     $('.section-list').sortable({
-        connectWith:'.section-list', 
+        connectWith:'.section-list:not(.section-list-import)', 
         placeholder: 'highlight',
         start: function( event, ui ) {
             ui.placeholder.height(ui.item.height());
@@ -90,7 +104,7 @@ $(document).ready(function(){
     }).disableSelection();
 
     $('.block-list').sortable({
-            connectWith:'.block-list', 
+            connectWith:'.block-list:not(.block-list-import)', 
             placeholder: "highlight",
             start: function( event, ui ) {
                 ui.placeholder.height(ui.item.height()+20);
@@ -112,5 +126,111 @@ $(document).ready(function(){
                 $('#blockList').val(JSON.stringify(blockList));
             }
     }).disableSelection();
+}
 
-});
+function createSortablesForImport() {
+    $('.chapter-list-import').sortable({
+        connectWith:'.chapter-list', 
+        placeholder: 'highlight',
+        start: function( event, ui ) {
+            ui.placeholder.height(ui.item.height());
+        },
+        update: function(event, ui) {
+        }
+    }).disableSelection();
+
+    $('.subchapter-list-import').sortable({
+        connectWith:'.subchapter-list', 
+        placeholder: 'highlight',
+        start: function( event, ui ) {
+            ui.placeholder.height(ui.item.height());
+        },
+        update: function(event, ui) {
+        }
+    }).disableSelection();
+
+    $('.section-list-import').sortable({
+        connectWith:'.section-list', 
+        placeholder: 'highlight',
+        start: function( event, ui ) {
+            ui.placeholder.height(ui.item.height());
+        },
+        update: function(event, ui) {
+        }
+    }).disableSelection();
+
+    $('.block-list-import').sortable({
+            connectWith:'.block-list', 
+            placeholder: "highlight",
+            start: function( event, ui ) {
+                ui.placeholder.height(ui.item.height()+20);
+            },
+            update: function(event, ui) {
+            }
+    }).disableSelection();
+}
+
+function setImport() {
+    $('#cw-file-upload-import').on('change', function (event) {
+    
+        const file0 = event.target.files[0];
+    console.log(file0);
+        ZipLoader.unzip(file0).then( function ( unziped ) {
+            var text, parser, xmlDoc;
+    
+            text = unziped.extractAsText( 'data.xml' );
+            parser = new DOMParser();
+            xmlDoc = parser.parseFromString(text,"text/xml");
+    
+            var $this_chapter_list = $('<ul class="chapter-list chapter-list-import"></ul>').appendTo('#cw-import-lists');
+            var chapter_counter = 0, subchapter_counter = 0, section_counter = 0;
+            $.each(xmlDoc.documentElement.children, function(key, node) {
+                if(node.nodeName == 'chapter') {
+                    chapter_counter++;
+                    //build chapter
+                    var $this_chapter = $('<li class="chapter-item chapter-item-import" data-id="import-chapter-'+chapter_counter+'"></li>').appendTo($this_chapter_list);
+                    $('<p class="chapter-description">'+node.getAttribute('title')+'<span>'+node.nodeName+'</span></p>').appendTo($this_chapter);
+                    var $this_subchapter_list = $('<ul class="subchapter-list subchapter-list-import"></ul>').appendTo($this_chapter);
+    
+                    $.each(node.children, function(key, node) {
+                        if (node.nodeName == 'subchapter'){
+                            subchapter_counter++;
+                            // build subchapter
+                            var $this_subchapter = $('<li class="subchapter-item subchapter-item-import"  data-id="import-subchapter-'+subchapter_counter+'"></li>').appendTo($this_subchapter_list);
+                            $('<p class="subchapter-description">'+node.getAttribute('title')+'<span>'+node.nodeName+'</span></p>').appendTo($this_subchapter);
+                            var $this_section_list = $('<ul class="section-list section-list-import"></ul>').appendTo($this_subchapter);
+    
+                            $.each(node.children, function(key, node) {
+                                if (node.nodeName == 'section') {
+                                    section_counter++;
+                                    //build section
+                                    var $this_section = $('<li class="section-item section-item-import" data-id="import-section-'+section_counter+'"></li>').appendTo($this_section_list);
+                                    $('<p class="section-description">'+node.getAttribute('title')+'<span>'+node.nodeName+'</span></p>').appendTo($this_section);
+                                    var $this_block_list = $('<ul class="block-list block-list-import"></ul>').appendTo($this_section);
+    
+                                    $.each(node.children, function(key, node) {
+                                        if (node.nodeName == 'block') {
+                                            //build block
+                                            var $this_block = $('<li class="block-item block-item-import" data-id="import-'+node.getAttribute('uuid')+'"></li>').appendTo($this_block_list);
+                                            $('<p class="block-description cw-block-icon-'+node.getAttribute('type')+'">'+node.getAttribute('type')+'</p>').appendTo($this_block);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            } );
+
+        }).then(function() {
+            createSortablesForImport();
+            stopMouseListeners();
+            startMouseListeners();
+            $('.subchapter-list-import, .section-list-import, .block-list-import').hide();
+            $('#cw-import-selection').hide();
+            $('#cw-import-lists').show();
+            $('#cw-import-title').html($('#cw-import-title').html()+' - '+file0.name+ ' ('+(file0.size/1048576).toFixed(2)+'MB)');
+        });
+    
+    });
+}
