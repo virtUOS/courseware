@@ -51,6 +51,9 @@ function createSortables() {
             $('.chapter-list:not(.chapter-list-import) .chapter-item').each(function(key, value){
                 chapterList.push($(value).data('id'));
             });
+            if($(ui.item).hasClass('chapter-item-import')) {
+                $('#import').val(true);
+            }
             $('#chapterList').val(JSON.stringify(chapterList));
         }
     }).disableSelection();
@@ -75,6 +78,9 @@ function createSortables() {
                     delete subchapterList[chapter_id];
                 }
             });
+            if($(ui.item).hasClass('subchapter-item-import')) {
+                $('#import').val(true);
+            }
             $('#subchapterList').val(JSON.stringify(subchapterList));
         }
     }).disableSelection();
@@ -99,6 +105,9 @@ function createSortables() {
                     delete sectionList[subchapter_id];
                 }
             });
+            if($(ui.item).hasClass('section-item-import')) {
+                $('#import').val(true);
+            }
             $('#sectionList').val(JSON.stringify(sectionList));
         }
     }).disableSelection();
@@ -123,6 +132,9 @@ function createSortables() {
                         delete blockList[section_id];
                     }
                 });
+                if($(ui.item).hasClass('block-item-import')) {
+                    $('#import').val(true);
+                }
                 $('#blockList').val(JSON.stringify(blockList));
             }
     }).disableSelection();
@@ -135,8 +147,7 @@ function createSortablesForImport() {
         start: function( event, ui ) {
             ui.placeholder.height(ui.item.height());
         },
-        update: function(event, ui) {
-        }
+        update: function(event, ui) {}
     }).disableSelection();
 
     $('.subchapter-list-import').sortable({
@@ -145,8 +156,7 @@ function createSortablesForImport() {
         start: function( event, ui ) {
             ui.placeholder.height(ui.item.height());
         },
-        update: function(event, ui) {
-        }
+        update: function(event, ui) {}
     }).disableSelection();
 
     $('.section-list-import').sortable({
@@ -155,18 +165,16 @@ function createSortablesForImport() {
         start: function( event, ui ) {
             ui.placeholder.height(ui.item.height());
         },
-        update: function(event, ui) {
-        }
+        update: function(event, ui) {}
     }).disableSelection();
 
     $('.block-list-import').sortable({
-            connectWith:'.block-list', 
-            placeholder: "highlight",
-            start: function( event, ui ) {
-                ui.placeholder.height(ui.item.height()+20);
-            },
-            update: function(event, ui) {
-            }
+        connectWith:'.block-list', 
+        placeholder: "highlight",
+        start: function( event, ui ) {
+            ui.placeholder.height(ui.item.height()+20);
+        },
+        update: function(event, ui) {},
     }).disableSelection();
 }
 
@@ -174,7 +182,7 @@ function setImport() {
     $('#cw-file-upload-import').on('change', function (event) {
     
         const file0 = event.target.files[0];
-    console.log(file0);
+
         ZipLoader.unzip(file0).then( function ( unziped ) {
             var text, parser, xmlDoc;
     
@@ -187,24 +195,24 @@ function setImport() {
             $.each(xmlDoc.documentElement.children, function(key, node) {
                 if(node.nodeName == 'chapter') {
                     chapter_counter++;
-                    //build chapter
-                    var $this_chapter = $('<li class="chapter-item chapter-item-import" data-id="import-chapter-'+chapter_counter+'"></li>').appendTo($this_chapter_list);
+                    node.setAttribute('temp-id' , chapter_counter);
+                    var $this_chapter = $('<li class="chapter-item chapter-item-import" data-id="import-'+chapter_counter+'"></li>').appendTo($this_chapter_list);
                     $('<p class="chapter-description">'+node.getAttribute('title')+'<span>'+node.nodeName+'</span></p>').appendTo($this_chapter);
                     var $this_subchapter_list = $('<ul class="subchapter-list subchapter-list-import"></ul>').appendTo($this_chapter);
     
                     $.each(node.children, function(key, node) {
                         if (node.nodeName == 'subchapter'){
                             subchapter_counter++;
-                            // build subchapter
-                            var $this_subchapter = $('<li class="subchapter-item subchapter-item-import"  data-id="import-subchapter-'+subchapter_counter+'"></li>').appendTo($this_subchapter_list);
+                            node.setAttribute('temp-id' , subchapter_counter);
+                            var $this_subchapter = $('<li class="subchapter-item subchapter-item-import"  data-id="import-'+subchapter_counter+'"></li>').appendTo($this_subchapter_list);
                             $('<p class="subchapter-description">'+node.getAttribute('title')+'<span>'+node.nodeName+'</span></p>').appendTo($this_subchapter);
                             var $this_section_list = $('<ul class="section-list section-list-import"></ul>').appendTo($this_subchapter);
     
                             $.each(node.children, function(key, node) {
                                 if (node.nodeName == 'section') {
                                     section_counter++;
-                                    //build section
-                                    var $this_section = $('<li class="section-item section-item-import" data-id="import-section-'+section_counter+'"></li>').appendTo($this_section_list);
+                                    node.setAttribute('temp-id' , section_counter);
+                                    var $this_section = $('<li class="section-item section-item-import" data-id="import-'+section_counter+'"></li>').appendTo($this_section_list);
                                     $('<p class="section-description">'+node.getAttribute('title')+'<span>'+node.nodeName+'</span></p>').appendTo($this_section);
                                     var $this_block_list = $('<ul class="block-list block-list-import"></ul>').appendTo($this_section);
     
@@ -221,7 +229,8 @@ function setImport() {
                     });
                 }
             } );
-
+            let oSerializer = new XMLSerializer();
+            $('#importXML').val(oSerializer.serializeToString(xmlDoc));
         }).then(function() {
             createSortablesForImport();
             stopMouseListeners();

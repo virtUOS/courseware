@@ -2,13 +2,15 @@
 <div class="cw-blockmanager-wrapper" style="border: solid thin #28497c;">
     <div class="cw-blockmanager-title">
         <p><?= _cw('Block Manager') ?></p>
-        <form class="blockmanager-form" action="block_manager/store_changes" method="get">
+        <form class="blockmanager-form" action="block_manager/store_changes" method="post">
             <input type="hidden" name="chapterList" id="chapterList" value="">
             <input type="hidden" name="subchapterList" id="subchapterList" value="">
             <input type="hidden" name="sectionList" id="sectionList" value="">
             <input type="hidden" name="blockList" id="blockList" value="">
             <input type="hidden" name="cid" value="<?= $cid ?>">
-            <input type="file"   name="cw-file-upload-import" id="cw-file-upload-import"  accept=".zip" style="display: none;">
+            <input type="hidden" name="importXML" id="importXML" value="">
+            <input type="hidden" name="import" id="import" value=false>
+            <input type="file" name="cw-file-upload-import" id="cw-file-upload-import" accept=".zip">
             <button type="submit" class="button">Änderungen speichern</button>
         </form>
         <div class="clear"></div>

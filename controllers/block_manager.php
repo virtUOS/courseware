@@ -73,31 +73,139 @@ class BlockManagerController extends CoursewareStudipController
     public function store_changes_action()
     {
         $cid = Request::get('cid');
-        $chapterList = json_decode(Request::get('chapterList'), true);
-        $subchapterList = json_decode(Request::get('subchapterList'), true);
-        $sectionList = json_decode(Request::get('sectionList'), true);
-        $blockList = json_decode(Request::get('blockList'), true);
+        $import = Request::get('import');
+        $import_xml = Request::get('importXML');
+        $chapter_list = json_decode(Request::get('chapterList'), true);
+        $subchapter_list = json_decode(Request::get('subchapterList'), true);
+        $section_list = json_decode(Request::get('sectionList'), true);
+        $block_list = json_decode(Request::get('blockList'), true);
 
-        foreach(array($subchapterList, $sectionList, $blockList) as $list) {
-            foreach($list as $key => $value) {
-                $parent = \Mooc\DB\Block::find($key);
-                foreach($value as $bid) {
-                    $block = \Mooc\DB\Block::find($bid);
-                    if ($parent->id != $block->parent_id) {
-                        $block->parent_id = $parent->id;
-                        $block->store();
+        $courseware = $this->container['current_courseware'];
+
+        if ($import == 'false') {
+            foreach(array($subchapter_list, $section_list, $block_list) as $list) {
+                foreach($list as $key => $value) {
+                    $parent = \Mooc\DB\Block::find($key);
+                    foreach($value as $bid) {
+                        $block = \Mooc\DB\Block::find($bid);
+                        if ($parent->id != $block->parent_id) {
+                            $block->parent_id = $parent->id;
+                            $block->store();
+                        }
+                    }
+                    $parent->updateChildPositions($value);
+                }
+            }
+    
+            $courseware = \Mooc\DB\Block::findCourseware($cid);
+            if ($chapter_list != null) {
+                $courseware->updateChildPositions($chapter_list);
+            }
+            return $this->redirect('block_manager?cid='.$cid.'&stored=true');
+        } else {
+            if ($import_xml == '') {
+                return $this->redirect('block_manager?cid='.$cid.'&error=emptyxml');
+            }
+
+            // get relevant Blocks from Lists
+            // find them in XML
+            // create Blocks and change ids in Lists
+            // update positions
+
+            $xml = DOMDocument::loadXML($import_xml);
+
+            foreach($chapter_list as &$chapter_id){
+                if(strpos($chapter_id, 'import') > -1) {
+                    $chapter_tempid = str_replace('import-', '', $chapter_id);
+                    $chapter_title = '';
+                    foreach($xml->getElementsByTagName('chapter') as $xml_chapter) {
+                        if ($xml_chapter->getAttribute('temp-id') == $chapter_tempid) {
+                            $chapter_title = $xml_chapter->getAttribute('title');
+                        }
+                    }
+                    $data = array('title' => $chapter_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
+                    $block = $this->createAnyBlock($courseware->id, 'Chapter', $data);
+                    $this->updateListKey($subchapter_list, $chapter_id, $block->id);
+                    $chapter_id = $block->id;
+                }
+            }
+
+            foreach($subchapter_list as $key => &$value) {
+                $parent_id = $key;
+                foreach($value as &$subchapter_id) {
+                    if(strpos($subchapter_id, 'import') > -1) {
+                        $subchapter_tempid = str_replace('import-', '', $subchapter_id);
+                        $subchapter_title = '';
+                        foreach($xml->getElementsByTagName('subchapter') as $xml_subchapter) {
+                            if ($xml_subchapter->getAttribute('temp-id') == $subchapter_tempid) {
+                                $subchapter_title = $xml_subchapter->getAttribute('title');
+                            }
+                        }
+                        $data = array('title' => $subchapter_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
+                        $block = $this->createAnyBlock($parent_id, 'Subchapter', $data);
+                        $this->updateListKey($section_list, $subchapter_id, $block->id);
+                        $subchapter_id = $block->id;
                     }
                 }
-                $parent->updateChildPositions($value);
+            }
+
+            foreach($section_list as $key => &$value) {
+                $parent_id = $key;
+                foreach($value as &$section_id) {
+                    if(strpos($section_id, 'import') > -1) {
+                        echo 'import:';
+                        $section_tempid = str_replace('import-', '', $section_id);
+                        $section_title = '';
+                        foreach($xml->getElementsByTagName('section') as $xml_section) {
+                            if ($xml_section->getAttribute('temp-id') == $section_tempid) {
+                                $section_title = $xml_section->getAttribute('title');
+                            }
+                        }
+                        $data = array('title' => $section_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
+                        $block = $this->createAnyBlock($parent_id, 'Section', $data);
+                        $this->updateListKey($block_list, $section_id, $block->id);
+                        $section_id = $block->id;
+                    }
+                }
+            }
+
+
+            return $this->redirect('block_manager?cid='.$cid.'&import=true&stored=true');
+        }
+    }
+
+    private function createAnyBlock($parent, $type, $data)
+    {
+        $block = new \Mooc\DB\Block();
+        $parent_id = is_object($parent) ? $parent->id : $parent;
+        $block->setData(array(
+            'seminar_id' => $data['cid'],
+            'parent_id' => $parent_id,
+            'type' => $type,
+            'title' => $data['title'],
+            'publication_date' => $data['publication_date'],
+            'withdraw_date' => $data['withdraw_date'],
+            'position' => $block->getNewPosition($parent_id)
+        ));
+
+        $block->store();
+
+        return $block;
+    }
+
+    private function updateListKey(&$list, $oldkey, $newkey)
+    {
+        foreach($list as $key => $value) {
+            if ($key == $oldkey) {
+                $list[$newkey] = $list[$oldkey];
+                unset($list[$oldkey]);
+
+                return true;
             }
         }
 
-        $courseware = \Mooc\DB\Block::findCourseware($cid);
-        if ($chapterList != null) {
-            $courseware->updateChildPositions($chapterList);
-        }
-
-        return $this->redirect('block_manager?cid='.$cid.'&stored=true');
+        return false;
     }
 
 }
+
