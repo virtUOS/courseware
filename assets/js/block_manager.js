@@ -52,6 +52,8 @@ function createSortables() {
                 chapterList.push($(value).data('id'));
             });
             if($(ui.item).hasClass('chapter-item-import')) {
+                removeImportClasses($(ui.item));
+                importSubchapters($(ui.item));
                 $('#import').val(true);
             }
             $('#chapterList').val(JSON.stringify(chapterList));
@@ -79,6 +81,8 @@ function createSortables() {
                 }
             });
             if($(ui.item).hasClass('subchapter-item-import')) {
+                removeImportClasses($(ui.item));
+                importSections($(ui.item));
                 $('#import').val(true);
             }
             $('#subchapterList').val(JSON.stringify(subchapterList));
@@ -106,6 +110,8 @@ function createSortables() {
                 }
             });
             if($(ui.item).hasClass('section-item-import')) {
+                removeImportClasses($(ui.item));
+                importBlocks($(ui.item));
                 $('#import').val(true);
             }
             $('#sectionList').val(JSON.stringify(sectionList));
@@ -133,11 +139,59 @@ function createSortables() {
                     }
                 });
                 if($(ui.item).hasClass('block-item-import')) {
+                    removeImportClasses($(ui.item));
                     $('#import').val(true);
                 }
                 $('#blockList').val(JSON.stringify(blockList));
             }
     }).disableSelection();
+}
+
+function removeImportClasses($item) {
+    var classes = 'chapter-item-import chapter-list-import subchapter-item-import subchapter-list-import section-item-import section-list-import block-item-import block-list-import';
+    $item.removeClass(classes);
+    $item.find('.chapter-item-import, .chapter-list-import, .subchapter-item-import, .subchapter-list-import, .section-item-import, .section-list-import, .block-item-import, .block-list-import').removeClass(classes);
+}
+
+function importBlocks($item) {
+    var parent_id = $item.attr('data-id');
+    var $blocks = $item.find('.block-item');
+    var entry = [];
+    $.each($blocks, function(index){
+        entry.push($(this).attr('data-id'));
+    });
+    if (entry.length > 0){
+        blockList[parent_id] = entry;
+        $('#blockList').val(JSON.stringify(blockList));
+    }
+}
+
+function importSections($item) {
+    var parent_id = $item.attr('data-id');
+    var $sections = $item.find('.section-item');
+    var entry = [];
+    $.each($sections, function(index){
+        entry.push($(this).attr('data-id'));
+        importBlocks($(this));
+    });
+    if (entry.length > 0){
+        sectionList[parent_id] = entry;
+        $('#sectionList').val(JSON.stringify(sectionList));
+    }
+}
+
+function importSubchapters($item) {
+    var parent_id = $item.attr('data-id');
+    var $subchapters = $item.find('.subchapter-item');
+    var entry = [];
+    $.each($subchapters, function(index){
+        entry.push($(this).attr('data-id'));
+        importSections($(this));
+    });
+    if (entry.length > 0){
+        subchapterList[parent_id] = entry;
+        $('#subchapterList').val(JSON.stringify(subchapterList));
+    }
 }
 
 function createSortablesForImport() {
@@ -147,7 +201,11 @@ function createSortablesForImport() {
         start: function( event, ui ) {
             ui.placeholder.height(ui.item.height());
         },
-        update: function(event, ui) {}
+        beforeStop: function(event, ui) {
+            if(ui.item.parent().hasClass('chapter-list-import')){
+                $(this).sortable("cancel");
+            }
+        }
     }).disableSelection();
 
     $('.subchapter-list-import').sortable({
@@ -156,7 +214,11 @@ function createSortablesForImport() {
         start: function( event, ui ) {
             ui.placeholder.height(ui.item.height());
         },
-        update: function(event, ui) {}
+        beforeStop: function(event, ui) {
+            if(ui.item.parent().hasClass('subchapter-list-import')){
+                $(this).sortable("cancel");
+            }
+        }
     }).disableSelection();
 
     $('.section-list-import').sortable({
@@ -165,7 +227,11 @@ function createSortablesForImport() {
         start: function( event, ui ) {
             ui.placeholder.height(ui.item.height());
         },
-        update: function(event, ui) {}
+        beforeStop: function(event, ui) {
+            if(ui.item.parent().hasClass('section-list-import')){
+                $(this).sortable("cancel");
+            }
+        }
     }).disableSelection();
 
     $('.block-list-import').sortable({
@@ -174,7 +240,11 @@ function createSortablesForImport() {
         start: function( event, ui ) {
             ui.placeholder.height(ui.item.height()+20);
         },
-        update: function(event, ui) {},
+        beforeStop: function(event, ui) {
+            if(ui.item.parent().hasClass('block-list-import')){
+                $(this).sortable("cancel");
+            }
+        }
     }).disableSelection();
 }
 
