@@ -2,6 +2,7 @@
 
 use Mooc\DB\Block;
 
+
 /**
  * Controller to manage Courseware Blocks
  *
@@ -153,7 +154,6 @@ class BlockManagerController extends CoursewareStudipController
                 $parent_id = $key;
                 foreach($value as &$section_id) {
                     if(strpos($section_id, 'import') > -1) {
-                        echo 'import:';
                         $section_tempid = str_replace('import-', '', $section_id);
                         $section_title = '';
                         foreach($xml->getElementsByTagName('section') as $xml_section) {
@@ -169,6 +169,57 @@ class BlockManagerController extends CoursewareStudipController
                 }
             }
 
+            foreach($block_list as $key => &$value) {
+                $parent_id = $key;
+                foreach($value as &$block_id) {
+                    if(strpos($block_id, 'import') > -1) {
+                        $block_uuid = str_replace('import-', '', $block_id);
+                        $block_title = '';
+                        $block_node = '';
+                        $block_type = '';
+                        foreach($xml->getElementsByTagName('block') as $xml_block) {
+                            if ($xml_block->getAttribute('uuid') == $block_uuid) {
+                                $block_title = $xml_block->getAttribute('title');
+                                $block_type = $xml_block->getAttribute('type');
+                                $block_node = $xml_block;
+                            }
+                        }
+                        //var_dump($block_node); echo '<br>';
+                        $data = array('title' => $block_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
+                        $block = $this->createAnyBlock($parent_id, $block_type, $data);
+                        $this->updateListKey($block_list, $block_id, $block->id);
+                        $block_id = $block->id;
+                        $uiBlock = $this->plugin->getBlockFactory()->makeBlock($block);
+                        if (gettype($uiBlock) != 'object') { 
+                            $block->delete();
+                            unset($block_list[$block_id]);
+                            //TODO create error or message
+
+                            return $this->redirect('block_manager?cid='.$cid.'&import=false&stored=true');
+                        }
+                        
+                        $properties = array();
+
+                        foreach ($block_node->attributes as $attribute) {
+                           
+                            if (!$attribute instanceof \DOMAttr) {
+                                continue;
+                            }
+                            echo $attribute->name." : ".$attribute->value;
+                            if ($attribute->namespaceURI !== null) {
+                                $properties[$attribute->name] = $attribute->value;
+                            }
+                        }
+                        if (count($properties) > 0) {
+                            $uiBlock->importProperties($properties);
+                        }
+                        //TODO: import files
+                        $files = array();
+
+                        $uiBlock->importContents(trim($block_node->textContent), $files);
+                    }
+                }
+            }
 
             return $this->redirect('block_manager?cid='.$cid.'&import=true&stored=true');
         }
@@ -208,4 +259,3 @@ class BlockManagerController extends CoursewareStudipController
     }
 
 }
-
