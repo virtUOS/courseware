@@ -93,7 +93,7 @@ class GalleryBlock extends Block
         $response = \FileRef::findBySQL('folder_id = ?', array($folder_id));
         $filesarray = array();
         foreach ($response as $item) {
-            if ($item->terms_of_use->download_condition != 0) {
+            if (!$item->terms_of_use->fileIsDownloadable($item, false)) {
                 continue;
             }
             if ($item->isImage()) {

@@ -29,7 +29,7 @@ class AudioBlock extends Block
             $file = \FileRef::find($this->audio_id);
             if ($file) {
                 $audio_file = $file->getDownloadURL();
-                $access = ($file->terms_of_use->download_condition == 0) ? true : false;
+                $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
             }
 
         } else {

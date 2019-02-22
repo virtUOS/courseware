@@ -27,7 +27,7 @@ class CanvasBlock extends Block
             $file = \FileRef::find($content->image_id);
             if ($file) {
                 $image_url = $file->getDownloadURL();
-                $access = ($file->terms_of_use->download_condition == 0) ? true : false;
+                $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
             }
         } else {
             $image_url = $content->image_url;

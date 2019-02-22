@@ -25,7 +25,7 @@ class DownloadBlock extends Block
         $file = \FileRef::find($this->file_id);
         if ($file) { 
             $url = $file->getDownloadURL('force');
-            $access = ($file->terms_of_use->download_condition == 0) ? true : false;
+            $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
         } else { 
             $url = "";
             $access = true;

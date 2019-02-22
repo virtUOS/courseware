@@ -23,7 +23,7 @@ class PdfBlock extends Block
             return array('inactive' => true);
         }
         $file = \FileRef::find($this->pdf_file_id);
-        $access = ($file->terms_of_use->download_condition == 0) ? true : false;
+        $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
         $this->setGrade(1.0);
         $plugin_manager = \PluginManager::getInstance();
         $courseware_path = $plugin_manager->getPlugin('Courseware')->getPluginURL();
