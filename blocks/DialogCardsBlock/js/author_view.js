@@ -97,13 +97,14 @@ export default AuthorView.extend({
             var card_content = {};
             switch ($(this).find('.cw-dialogcards-source-front').val()) {
                 case 'url': 
-                    card_content.front_img = $(this).find('.cw-dialogcards-front-img').val();
+                    let url = $(this).find('.cw-dialogcards-front-img').val();
+                    card_content.front_img = (url != '') ? url : false;
                     card_content.front_external_file = true;
                     break;
                 case 'file':
                     card_content.front_img_file_id = $(this).find('.cw-dialogcards-front-img-file option:selected').attr('file_id');
                     card_content.front_img_file_name = $(this).find('.cw-dialogcards-front-img-file option:selected').attr('file_name');
-                    card_content.front_img = $(this).find('.cw-dialogcards-front-img-file option:selected').attr('file_url');
+                    card_content.front_img = true;
                     card_content.front_external_file = false;
                     break;
                 case 'none':
@@ -115,13 +116,14 @@ export default AuthorView.extend({
 
             switch ($(this).find('.cw-dialogcards-source-back').val()) {
                 case 'url':
-                    card_content.back_img = $(this).find('.cw-dialogcards-back-img').val();
+                    let url = $(this).find('.cw-dialogcards-back-img').val();
+                    card_content.back_img = (url != '') ? url : false;
                     card_content.back_external_file = true;
                     break;
                 case 'file':
                     card_content.back_img_file_id = $(this).find('.cw-dialogcards-back-img-file option:selected').attr('file_id');
                     card_content.back_img_file_name = $(this).find('.cw-dialogcards-back-img-file option:selected').attr('file_name');
-                    card_content.back_img = $(this).find('.cw-dialogcards-back-img-file option:selected').attr('file_url');
+                    card_content.back_img = true;
                     card_content.back_external_file = false;
                     break;
                 case 'none':

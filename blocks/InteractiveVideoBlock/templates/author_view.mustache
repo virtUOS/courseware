@@ -72,11 +72,14 @@
                     <option value="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
                 {{/user_video_files}}
             </optgroup>
-            {{#other_user_file}}
-                <optgroup label="Datei im Dateibereich eines anderen Nutzers">
-                        <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
-                </optgroup>
-            {{/other_user_file}}
+            <optgroup label="Dateien im Dateibereich anderer Nutzer">
+                {{#other_user_files}}
+                    <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                {{/other_user_files}}
+                {{^other_user_files}}
+                    <option file_id="" file_name="" file_url="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
+                {{/other_user_files}}
+            </optgroup>
         {{/no_video_files}}
         {{#no_video_files}}
             <option file_id="" file_name="" file_url="" selected>{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>

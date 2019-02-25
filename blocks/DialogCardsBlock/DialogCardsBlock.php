@@ -17,10 +17,20 @@ class DialogCardsBlock extends Block
     public function student_view()
     {
         $this->setGrade(1.0);
-        $cards = json_decode($this->dialogcards_content);
+        $cards = json_decode($this->dialogcards_content, true);
+        foreach($cards as &$card) {
+            if ($card['front_img_file_id']) {
+                $file_front = \FileRef::find($card['front_img_file_id']);
+                $card['front_img'] = ($file_front->terms_of_use->fileIsDownloadable($file_front, false)) ? $file_front->getDownloadURL() : '';
+            }
+            if ($card['back_img_file_id']) {
+                $file_back = \FileRef::find($card['back_img_file_id']);
+                $card['back_img'] = ($file_back->terms_of_use->fileIsDownloadable($file_back, false)) ? $file_back->getDownloadURL() : '';
+            }
+        }
 
         return array_merge($this->getAttrArray(), array(
-            'cards' => json_decode($this->dialogcards_content)
+            'cards' => $cards
         ));
     }
 
@@ -42,7 +52,7 @@ class DialogCardsBlock extends Block
 
         $files_arr = $this->showFiles($file_ids);
 
-        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['video_ids_found'] == false) && empty($file_ids);
+        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && empty($files_arr['other_user_files']) && empty($file_ids);
 
         return array_merge($this->getAttrArray(), array(
             'cards' => $cards,
@@ -71,7 +81,6 @@ class DialogCardsBlock extends Block
         $userfilesarray = array();
         $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
-        $image_id_found = false;
         $other_user_files = array();
 
         foreach ($course_folders as $folder) {
@@ -108,7 +117,7 @@ class DialogCardsBlock extends Block
             }
         }
 
-        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'image_id_found' => $image_id_found, 'other_user_files' => $other_user_files);
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray,  'other_user_files' => $other_user_files);
     }
 
     public function save_handler(array $data)

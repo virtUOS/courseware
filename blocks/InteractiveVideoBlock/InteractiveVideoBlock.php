@@ -61,7 +61,13 @@ class InteractiveVideoBlock extends Block
             }
         }
         if ($this->iav_source != '') {
-            $iav_url = json_decode($this->iav_source)->url;
+            $iav_source = json_decode($this->iav_source, true);
+            if (!$iav_source['external']) {
+                $file = \FileRef::find($iav_source['file_id']);
+                $iav_url= ($file->terms_of_use->fileIsDownloadable($file, false)) ? $file->getDownloadURL() : '';
+            } else {
+                $iav_url = $iav_source['url'];
+            }
         } else {
             $iav_url = '';
         }
@@ -121,14 +127,10 @@ class InteractiveVideoBlock extends Block
             $iav_file_id = '';
             $iav_file_name = '';
         }
-        $files_arr = $this->showFiles($iav_file_id);
-        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['video_id_found'] == false) && empty($iav_file_id);
+        $files_arr = $this->showFiles(array($iav_file_id));
+        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && empty($files_arr['other_user_files']) && empty($iav_file_id);
 
-        if((!$files_arr['video_id_found']) && (!empty($iav_file_id))){
-            $other_user_file = array('id' => $iav_file_id, 'name' => $iav_file_name, 'url' => $iav_url);
-        } else {
-            $other_user_file = false;
-        }
+
         return array_merge($this->getAttrArray(), array(
             'block_id'           => $this->_model->id,
             'has_assignments'    => !empty($assignments),
@@ -143,7 +145,7 @@ class InteractiveVideoBlock extends Block
             'user_video_files'   => $files_arr['userfilesarray'],
             'course_video_files' => $files_arr['coursefilesarray'],
             'no_video_files'     => $no_files,
-            'other_user_file'    => $other_user_file
+            'other_user_files'    => $files_arr['other_user_files']
         ));
     }
 
@@ -212,7 +214,7 @@ class InteractiveVideoBlock extends Block
     private function getAttrArray()
     {
         return array(
-            'iav_source'       => $this->iav_source,
+            'iav_source'    => $this->iav_source,
             'iav_overlays'  => $this->iav_overlays,
             'iav_stops'     => $this->iav_stops,
             'iav_tests'     => $this->iav_tests,
@@ -220,13 +222,13 @@ class InteractiveVideoBlock extends Block
         );
     }
 
-    private function showFiles($file_id)
+    private function showFiles($file_ids)
     {
         $coursefilesarray = array();
         $userfilesarray = array();
         $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
-        $video_id_found = false;
+        $other_user_files = array();
 
         foreach ($course_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
@@ -234,8 +236,9 @@ class InteractiveVideoBlock extends Block
                 if (($ref->isVideo()) && (!$ref->isLink())) {
                     $coursefilesarray[] = $ref;
                 }
-                if($ref->id == $file_id) {
-                    $video_id_found = true;
+                $key = array_search($ref->id, $file_ids);
+                if($key > -1) {
+                    unset ($file_ids[$key]);
                 }
             }
         }
@@ -246,13 +249,23 @@ class InteractiveVideoBlock extends Block
                 if (($ref->isVideo()) && (!$ref->isLink())) {
                     $userfilesarray[] = $ref;
                 }
-                if($ref->id == $file_id) {
-                    $video_id_found = true;
+                if(in_array($ref->id, $file_ids)) {
+                    unset ($file_ids[$key]);
                 }
             }
         }
 
-        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'video_id_found' => $video_id_found);
+        if (empty($file_ids)) {
+            $other_user_files = false;
+        } else {
+            foreach ($file_ids as $id) {
+                var_dump($id);
+                $file_ref = \FileRef::find($id);
+                array_push($other_user_files, $file_ref);
+            }
+        }
+
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'other_user_files' => $other_user_files);
     }
 
     /**

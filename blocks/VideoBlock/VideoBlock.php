@@ -39,7 +39,16 @@ class VideoBlock extends Block
         }
         $this->setGrade(1.0);
         $array = $this->array_rep();
-        $array['webvideo'] = json_decode($array['webvideo']);
+
+        if ($array['webvideo'] != '') {
+            $array['webvideo'] = json_decode($array['webvideo'], true);
+            foreach($array['webvideo'] as &$webvideo) {
+                if($webvideo['source'] == 'file') {
+                    $file = \FileRef::find($webvideo['file_id']);
+                    $webvideo['src'] = ($file->terms_of_use->fileIsDownloadable($file, false)) ? $file->getDownloadURL() : '';
+                }
+            }
+        }
 
         return $array;
     }
@@ -56,7 +65,7 @@ class VideoBlock extends Block
         }
         $files_arr = $this->showFiles($file_ids);
 
-        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['video_ids_found'] == false) && empty($file_ids);
+        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && empty($files_arr['other_user_files']) && empty($file_ids);
 
         return array_merge($this->array_rep(), array(
             'no_files' => $no_files,
@@ -90,7 +99,6 @@ class VideoBlock extends Block
         $userfilesarray = array();
         $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
-        $video_id_found = false;
         $other_user_files = array();
 
         foreach ($course_folders as $folder) {
@@ -127,7 +135,7 @@ class VideoBlock extends Block
             }
         }
 
-        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'video_id_found' => $video_id_found, 'other_user_files' => $other_user_files);
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'other_user_files' => $other_user_files);
     }
 
     /**
