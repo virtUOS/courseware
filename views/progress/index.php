@@ -57,7 +57,7 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>
                 <td>
                   <ol class=sections>
                     <? foreach ($subchapter['children'] as $section) : ?>
-                      <li>
+                      <li <? if (sizeof($section['children']) == 0):?>class="no-children" title="<?= _cw('Dieser Abschnitt enthält keine Blöcke');?>" <?endif?>>
                         <a href="<?= $controller->url_for('courseware', array('selected' => $section['id'])) ?>"
                            data-progress="<?= $progress($section) ?>"><span class="progress-section-title">
                                 <?  $title = htmlReady($section['title']);
