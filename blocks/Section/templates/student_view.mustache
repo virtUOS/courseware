@@ -8,10 +8,11 @@
   <div class=no-content>
     <p>{{#i18n}}Keine Inhaltsblöcke{{/i18n}}</p>
   </div>
-
+  {{#can_update}}
   <section class="block-adder" style="border: solid thin #ccc; padding: 0; margin:0;">
     {{> block_types_view}}
   </section>
+  {{/can_update}}
 {{/inactive}}
 
 {{#inactive}}

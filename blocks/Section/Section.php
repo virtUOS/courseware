@@ -79,6 +79,7 @@ class Section extends Block
         $icon = $this->icon;
         $title = $this->title;
         $visited = $this->visited;
+        $can_update = $this->container['current_user']->canUpdate($this);
 
         $blocks = $this->traverseChildren(
             function (Block $child) use ($context) {
@@ -120,7 +121,8 @@ class Section extends Block
             'content_block_types_favorite',
             'icon',
             'title', 
-            'visited'
+            'visited',
+            'can_update'
         );
     }
 
@@ -195,6 +197,9 @@ class Section extends Block
 
     public function add_favorites_handler($data)
     {
+        if (!$this->container['current_user']->canUpdate($this)) {
+            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
+        }
         if (!isset($data['favorites'])) {
             throw new BadRequest('Type required.');
         }
@@ -207,6 +212,9 @@ class Section extends Block
 
     public function set_icon_handler($data)
     {
+        if (!$this->container['current_user']->canUpdate($this)) {
+            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
+        }
         $this->custom_icon = true;
         if (in_array($data['icon'], array_merge(self::$icon_precedences , self::$custom_icons))) {
             $this->icon = $data['icon'];
@@ -219,6 +227,9 @@ class Section extends Block
 
     public function visibility_handler($data)
     {
+        if (!$this->container['current_user']->canUpdate($this)) {
+            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
+        }
         $child = $this->_model->children->findOneBy('id', (int) $data['block_id']); //Mooc\DB\Block
 
         $child->visible = $data['visible'];
