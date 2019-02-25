@@ -259,7 +259,6 @@ class InteractiveVideoBlock extends Block
             $other_user_files = false;
         } else {
             foreach ($file_ids as $id) {
-                var_dump($id);
                 $file_ref = \FileRef::find($id);
                 array_push($other_user_files, $file_ref);
             }
