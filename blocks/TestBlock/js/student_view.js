@@ -60,8 +60,7 @@ export default StudentView.extend({
                     });
                  }
             } else {
-                //helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
-                helper.callHandler(this.model.id, 'exercise_submit', fd)
+                helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
                 .then(function (resp) {
                     if(resp.is_nobody) {
                         var $ex =view.$("#exercise"+resp.exercise_index);
