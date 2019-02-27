@@ -201,6 +201,7 @@ class HtmlBlock extends Block
      */
     public function importContents($contents, array $files)
     {
+        $used_files = array();
         $document = new \DOMDocument();
         $encoding = '<?xml encoding="utf-8" ?>';
         $pos = strrpos($contents, $encoding);
@@ -219,6 +220,7 @@ class HtmlBlock extends Block
             $this->applyCallbackOnInternalUrl($element->getAttribute('href'), function ($components) use ($block, $element, $files) {
                 parse_str($components['query'], $queryParams);
                 $queryParams['file_id'] = $files[$queryParams['file_id']]->id;
+                array_push($used_files, $queryParams['file_id']);
                 $components['query'] = http_build_query($queryParams);
                 $element->setAttribute('href', $block->buildUrl($GLOBALS['ABSOLUTE_URI_STUDIP'], '/sendfile.php', $components));
             });
@@ -233,6 +235,7 @@ class HtmlBlock extends Block
             $this->applyCallbackOnInternalUrl($element->getAttribute('src'), function ($components) use ($block, $element, $files) {
                 parse_str($components['query'], $queryParams);
                 $queryParams['file_id'] = $files[$queryParams['file_id']]->id;
+                array_push($used_files, $queryParams['file_id']);
                 $components['query'] = http_build_query($queryParams);
                 $element->setAttribute('src', $block->buildUrl($GLOBALS['ABSOLUTE_URI_STUDIP'], '/sendfile.php', $components));
             });
@@ -240,6 +243,7 @@ class HtmlBlock extends Block
         $this->content = \STUDIP\Markup::purifyHtml($document->saveHTML());
 
         $this->save();
+        return $used_files;
     }
 
     /**

@@ -168,17 +168,20 @@ class BeforeAfterBlock extends Block
     {
         $ba_before = json_decode($this->ba_before);
         $ba_after = json_decode($this->ba_after);
+        $used_files = array();
 
         foreach($files as $file){
             if(($ba_after->file_name == $file->name) && ($ba_after->source == 'file')) {
                 $ba_after->file_id = $file->id;
                 $file_ref_after = new \FileRef($ba_after->file_id);
                 $ba_after->url = $file_ref_after->download_url;
+                array_push($used_files, $file->id);
             }
             if (($ba_before->file_name == $file->name) && ($ba_before->source == 'file')) {
                 $ba_before->file_id = $file->id;
                 $file_ref_before = new \FileRef($ba_before->file_id);
                 $ba_before->url = $file_ref_before->download_url;
+                array_push($used_files, $file->id);
             }
         }
 
@@ -186,6 +189,7 @@ class BeforeAfterBlock extends Block
         $this->ba_after = json_encode($ba_after);
 
         $this->save();
+        return $used_files;
     }
 
     private function showFiles($before_file_id, $after_file_id)

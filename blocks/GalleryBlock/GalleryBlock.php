@@ -216,17 +216,22 @@ class GalleryBlock extends Block
     {
         $file_ids = array();
         $file_names = array_map('current', json_decode($this->gallery_file_names));
+        $used_files = array();
+
         foreach($files as $file){
             if ($file->name == '') {
                 continue;
             }
             if(in_array($file->name, $file_names)) {
                 array_push($file_ids , array($file->id));
+                array_push($used_files , $file->id);
             }
         }
         $this->gallery_file_ids = json_encode($file_ids);
         $this->moveFiles();
+
         $this->save();
+        return $used_files;
     }
 
     public function getXmlNamespace()

@@ -70,7 +70,7 @@ class BlockManagerController extends CoursewareStudipController
 
         return $parent['children'];
     }
-    
+
     public function store_changes_action()
     {
         $cid = Request::get('cid');
@@ -80,7 +80,6 @@ class BlockManagerController extends CoursewareStudipController
         $subchapter_list = json_decode(Request::get('subchapterList'), true);
         $section_list = json_decode(Request::get('sectionList'), true);
         $block_list = json_decode(Request::get('blockList'), true);
-
         $courseware = $this->container['current_courseware'];
 
         if ($import == 'false') {
@@ -108,12 +107,47 @@ class BlockManagerController extends CoursewareStudipController
                 return $this->redirect('block_manager?cid='.$cid.'&error=emptyxml');
             }
 
+            $xml = DOMDocument::loadXML($import_xml);
+
+            // load files into temp folder
+            $upload_file = $_FILES['cw-file-upload-import']['tmp_name'];
+            $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
+            mkdir($tempDir);
+            $extracted = Studip\ZipArchive::extractToPath($upload_file, $tempDir);
+            if (!$extracted) {
+                $this->errors[] = _cw('Das Import-Archiv ist beschädigt.');
+                return false;
+            }
+
+            // build courseware import folder
+            $root_folder = Folder::findTopFolder($GLOBALS['SessionSeminar']);
+            $parent_folder = FileManager::getTypedFolder($root_folder->id);
+            // create new folder for import
+            $request = array('name' => 'Courseware-Import '.date("d.m.Y", time()), 'description' => 'folder for imported courseware content');
+            $new_folder = new StandardFolder();
+            $new_folder->setDataFromEditTemplate($request);
+            $new_folder->user_id = User::findCurrent()->id;
+            $courseware_folder = $parent_folder->createSubfolder($new_folder);
+
+            $install_folder = FileManager::getTypedFolder($courseware_folder->id);
+
+            // store files
+            $files = array();
+            $coursewareNode = $xml->documentElement;
+            foreach ($coursewareNode->childNodes as $child) {
+                if ($child instanceof DOMElement) {
+                    if  ($child->tagName === 'file') {
+                        $this->processFile($child, $tempDir, $files, $install_folder);
+                    }
+                }
+            }
+            // clean up temp directory
+            $this->deleteRecursively($tempDir);
+
             // get relevant Blocks from Lists
             // find them in XML
             // create Blocks and change ids in Lists
             // update positions
-
-            $xml = DOMDocument::loadXML($import_xml);
 
             foreach($chapter_list as &$chapter_id){
                 if(strpos($chapter_id, 'import') > -1) {
@@ -169,6 +203,7 @@ class BlockManagerController extends CoursewareStudipController
                 }
             }
 
+            $used_files = array();
             foreach($block_list as $key => &$value) {
                 $parent_id = $key;
                 foreach($value as &$block_id) {
@@ -184,7 +219,7 @@ class BlockManagerController extends CoursewareStudipController
                                 $block_node = $xml_block;
                             }
                         }
-                        //var_dump($block_node); echo '<br>';
+
                         $data = array('title' => $block_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                         $block = $this->createAnyBlock($parent_id, $block_type, $data);
                         $this->updateListKey($block_list, $block_id, $block->id);
@@ -197,12 +232,11 @@ class BlockManagerController extends CoursewareStudipController
 
                             return $this->redirect('block_manager?cid='.$cid.'&import=false&stored=true');
                         }
-                        
-                        $properties = array();
 
+                        $properties = array();
                         foreach ($block_node->attributes as $attribute) {
                            
-                            if (!$attribute instanceof \DOMAttr) {
+                            if (!$attribute instanceof DOMAttr) {
                                 continue;
                             }
                             echo $attribute->name." : ".$attribute->value;
@@ -213,13 +247,22 @@ class BlockManagerController extends CoursewareStudipController
                         if (count($properties) > 0) {
                             $uiBlock->importProperties($properties);
                         }
-                        //TODO: import files
-                        $files = array();
 
-                        $uiBlock->importContents(trim($block_node->textContent), $files);
+                        $used_files = array_merge($used_files, $uiBlock->importContents(trim($block_node->textContent), $files));
                     }
                 }
             }
+
+            // delete unused files
+                foreach($files as $file) {
+                    if (!in_array($file->id , $used_files)) {
+                        $install_folder->deleteFile($file->id);
+                    }
+                }
+
+                if(empty($install_folder->getFiles())) {
+                    $install_folder->delete();
+                }
 
             return $this->redirect('block_manager?cid='.$cid.'&import=true&stored=true');
         }
@@ -256,6 +299,61 @@ class BlockManagerController extends CoursewareStudipController
         }
 
         return false;
+    }
+
+    private function deleteRecursively($path)
+    {
+        if (is_dir($path)) {
+            $files = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($path),
+                RecursiveIteratorIterator::CHILD_FIRST
+            );
+
+            foreach ($files as $file) {
+                /** @var SplFileInfo $file */
+                if (in_array($file->getBasename(), array('.', '..'))) {
+                    continue;
+                }
+
+                if ($file->isFile() || $file->isLink()) {
+                    unlink($file->getRealPath());
+                } else if ($file->isDir()) {
+                    rmdir($file->getRealPath());
+                }
+            }
+
+            rmdir($path);
+        } else if (is_file($path) || is_link($path)) {
+            unlink($path);
+        }
+    }
+
+    private function processFile(DOMElement $node, $path, &$files, $folder)
+    {
+        /** @var \Seminar_User $user */
+        global $user;
+        $originId = $node->getAttribute('id');
+        $filename = $node->getAttribute('filename');
+
+        // is this file already stored
+        $stored_file = FileRef::findOneBySQL('name = ? AND folder_id = ?', array($node->getAttribute('name'), $folder->id));
+        if(!$stored_file) {
+            $file = [
+                        'name'     => $filename,
+                        'type'     => mime_content_type($path.'/'.$originId.'/'.$filename),
+                        'tmp_name' => $path.'/'.$originId.'/'.$filename,
+                        'url'      => $node->getAttribute('url'),
+                        'size'     => $node->getAttribute('filesize'),
+                        'user_id'  => $user->id,
+                        'error'    => ""
+                    ];
+            $new_reference = $folder->createFile($file);
+
+        } else {
+            $new_reference = $stored_file;
+        }
+
+        $files[$originId] = $new_reference;
     }
 
 }

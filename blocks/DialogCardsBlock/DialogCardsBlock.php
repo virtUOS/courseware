@@ -198,6 +198,8 @@ class DialogCardsBlock extends Block
     public function importContents($contents, array $files)
     {
         $cards = json_decode($this->dialogcards_content);
+        $used_files = array();
+
         foreach ($cards as $key => $card) {
             foreach($files as $file){
                 if($file->name == '') {
@@ -206,10 +208,12 @@ class DialogCardsBlock extends Block
                 if ($card->front_img_file_name == $file->name) {
                     $card->front_img_file_id = $file->id;
                     $card->front_img = $file->getDownloadURL();
+                    array_push($used_files, $file->id);
                 }
                 if ($card->back_img_file_name == $file->name) {
                     $card->back_img_file_id = $file->id;
                     $card->back_img = $file->getDownloadURL();
+                    array_push($used_files, $file->id);
                 }
             }
             $cards[$key] = $card;
@@ -217,5 +221,6 @@ class DialogCardsBlock extends Block
         $this->dialogcards_content = json_encode($cards);
 
         $this->save();
+        return $used_files;
     }
 }

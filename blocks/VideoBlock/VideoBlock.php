@@ -45,7 +45,11 @@ class VideoBlock extends Block
             foreach($array['webvideo'] as &$webvideo) {
                 if($webvideo['source'] == 'file') {
                     $file = \FileRef::find($webvideo['file_id']);
-                    $webvideo['src'] = ($file->terms_of_use->fileIsDownloadable($file, false)) ? $file->getDownloadURL() : '';
+                    if($file) {
+                        $webvideo['src'] = ($file->terms_of_use->fileIsDownloadable($file, false)) ? $file->getDownloadURL() : '';
+                    } else {
+                        $webvideo['src'] = '';
+                    }
                 }
             }
         }
@@ -225,11 +229,13 @@ class VideoBlock extends Block
                 if(($source->file_name == $file->name) && ($source->file_id != '')) {
                     $source->file_id = $file->id;
                     $source->src = $file->getDownloadURL();
+                    $this->webvideo = json_encode($webvideo);
+
+                    $this->save();
+                    return array($file->id);
                 }
             }
         }
-        $this->webvideo = json_encode($webvideo);
 
-        $this->save();
     }
 }

@@ -222,6 +222,8 @@ class CanvasBlock extends Block
             if($content->image_name == $file->name) {
                 $content->image_id = $file->id;
                 $this->save();
+
+                return array($file->id);
             }
         }
     }

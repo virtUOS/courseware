@@ -186,7 +186,9 @@ class PdfBlock extends Block
             if($this->pdf_filename == $file->name) {
                 $this->pdf_file_id = $file->id;
                 $this->pdf_file = $file->getDownloadURL();
+
                 $this->save();
+                return array($file->id);
             }
         }
     }

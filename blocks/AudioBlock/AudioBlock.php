@@ -287,6 +287,8 @@ class AudioBlock extends Block
                 if ($this->audio_source == 'cw') {
                     $this->audio_file = $file->getDownloadURL();
                     $this->save();
+
+                    return array($file->id);
                 }
             }
         }

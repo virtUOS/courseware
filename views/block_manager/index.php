@@ -2,7 +2,7 @@
 <div class="cw-blockmanager-wrapper" style="border: solid thin #28497c;">
     <div class="cw-blockmanager-title">
         <p><?= _cw('Block Manager') ?></p>
-        <form class="blockmanager-form" action="block_manager/store_changes" method="post">
+        <form class="blockmanager-form" action="block_manager/store_changes" method="post" enctype="multipart/form-data">
             <input type="hidden" name="chapterList" id="chapterList" value="">
             <input type="hidden" name="subchapterList" id="subchapterList" value="">
             <input type="hidden" name="sectionList" id="sectionList" value="">

@@ -64,7 +64,11 @@ class InteractiveVideoBlock extends Block
             $iav_source = json_decode($this->iav_source, true);
             if (!$iav_source['external']) {
                 $file = \FileRef::find($iav_source['file_id']);
-                $iav_url= ($file->terms_of_use->fileIsDownloadable($file, false)) ? $file->getDownloadURL() : '';
+                if ($file) { 
+                    $iav_url = ($file->terms_of_use->fileIsDownloadable($file, false)) ? $file->getDownloadURL() : '';
+                } else {
+                    $iav_url = '';
+                }
             } else {
                 $iav_url = $iav_source['url'];
             }
@@ -372,11 +376,12 @@ class InteractiveVideoBlock extends Block
                 if ($source->file_name == $file->name) {
                     $source->file_id = $file->id;
                     $source->url = $file->getDownloadURL();
+                    $this->iav_source = json_encode($source);
+
+                    $this->save();
+                    return array($file->id);
                 }
             }
-        $this->iav_source = json_encode($source);
         }
-
-        $this->save();
     }
 }

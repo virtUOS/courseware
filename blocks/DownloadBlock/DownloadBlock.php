@@ -223,7 +223,9 @@ class DownloadBlock extends Block
             }
             if($this->file_name == $file->name) {
                 $this->file_id = $file->id;
+
                 $this->save();
+                return array($file->id);
             }
         }
 
