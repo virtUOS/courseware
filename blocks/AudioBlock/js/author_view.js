@@ -126,7 +126,7 @@ export default AuthorView.extend({
     helper
       .callHandler(this.model.id, 'save', {
         audio_file: $audiofile,
-        audio_file_name: $audio_file_name,
+        audio_file_name: $audiofile,
         audio_id: $audioid,
         audio_description: $audiodescription,
         audio_source: $audiosource
