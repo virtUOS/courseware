@@ -197,6 +197,12 @@ class BlockManagerController extends CoursewareStudipController
                         }
                         $data = array('title' => $section_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                         $block = $this->createAnyBlock($parent_id, 'Section', $data);
+                        $icon = $xml_section->getAttribute('icon');
+                        $uiSection = $this->plugin->getBlockFactory()->makeBlock($block);
+                        if (in_array($icon, $uiSection->allowed_icons())) {
+                            $uiSection->icon = $icon;
+                        }
+                        $uiSection->save();
                         $this->updateListKey($block_list, $section_id, $block->id);
                         $section_id = $block->id;
                     }

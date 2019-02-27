@@ -216,13 +216,18 @@ class Section extends Block
             throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
         }
         $this->custom_icon = true;
-        if (in_array($data['icon'], array_merge(self::$icon_precedences , self::$custom_icons))) {
+        if (in_array($data['icon'], $this->allowed_icons())) {
             $this->icon = $data['icon'];
         } else {
             $this->icon = self::ICON_DEFAULT;
         }
 
         return true;
+    }
+
+    public function allowed_icons()
+    {
+        return array_merge(self::$icon_precedences , self::$custom_icons);
     }
 
     public function visibility_handler($data)
