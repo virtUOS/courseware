@@ -217,7 +217,7 @@ class HtmlBlock extends Block
                 continue;
             }
             $block = $this;
-            $this->applyCallbackOnInternalUrl($element->getAttribute('href'), function ($components) use ($block, $element, $files) {
+            $this->applyCallbackOnInternalUrl($element->getAttribute('href'), function ($components) use ($block, $element, $files, &$used_files) {
                 parse_str($components['query'], $queryParams);
                 $queryParams['file_id'] = $files[$queryParams['file_id']]->id;
                 array_push($used_files, $queryParams['file_id']);
@@ -232,7 +232,7 @@ class HtmlBlock extends Block
                 continue;
             }
             $block = $this;
-            $this->applyCallbackOnInternalUrl($element->getAttribute('src'), function ($components) use ($block, $element, $files) {
+            $this->applyCallbackOnInternalUrl($element->getAttribute('src'), function ($components) use ($block, $element, $files, &$used_files) {
                 parse_str($components['query'], $queryParams);
                 $queryParams['file_id'] = $files[$queryParams['file_id']]->id;
                 array_push($used_files, $queryParams['file_id']);
