@@ -310,7 +310,9 @@ function setImport() {
             $('.subchapter-list-import, .section-list-import, .block-list-import').hide();
             $('#cw-import-selection').hide();
             $('#cw-import-lists').show();
-            $('#cw-import-title').html($('#cw-import-title').html()+' - '+file0.name+ ' ('+(file0.size/1048576).toFixed(2)+'MB)');
+            $('#cw-import-title p').html($('#cw-import-title p').html()+' - '+file0.name+ ' ('+(file0.size/1048576).toFixed(2)+'MB)');
+
+            $file_input_clone.appendTo('#cw-blockmanager-form-full-import');
         });
     
     });

@@ -1,5 +1,5 @@
 <? $body_id = 'courseware-blockmanager'; ?>
-<div class="cw-blockmanager-wrapper" style="border: solid thin #28497c;">
+<div class="cw-blockmanager-wrapper">
     <div class="cw-blockmanager-title">
         <p><?= _cw('Block Manager') ?></p>
         <form class="blockmanager-form" action="block_manager/store_changes" method="post" enctype="multipart/form-data">
@@ -10,7 +10,7 @@
             <input type="hidden" name="cid" value="<?= $cid ?>">
             <input type="hidden" name="importXML" id="importXML" value="">
             <input type="hidden" name="import" id="import" value=false>
-            <input type="file" name="cw-file-upload-import" id="cw-file-upload-import" accept=".zip">
+            <input type="file" name="cw-file-upload-import" class="cw-file-upload-import" id="cw-file-upload-import" accept=".zip">
             <button type="submit" class="button">Änderungen speichern</button>
         </form>
         <div class="clear"></div>
@@ -79,7 +79,14 @@
 </div>
 <br>
 <div id="cw-import-wrapper">
-    <p id="cw-import-title">Import</p>
+    <div id="cw-import-title">
+        <p>Import</p>
+        <form class="blockmanager-form" id="cw-blockmanager-form-full-import" action="block_manager/full_import"  method="post" enctype="multipart/form-data">
+            <input type="hidden" name="cid" value="<?= $cid ?>">
+            <button type="submit" class="button">Komplettes Archiv importieren</button>
+        </form>
+    </div>
+
     <div id="cw-import-lists">
     </div>
 
