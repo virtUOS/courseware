@@ -204,8 +204,9 @@ export default StudentView.extend({
 
       .then(function (data) {
         var model = new BlockModel(data),
-            view_name = model.get('editable') ? 'author' : 'student',
-            block_stub = view.appendBlockStub(model, view_name),
+            view_name = model.get('editable') ? 'author' : 'student';
+            model.set('can_update', true);
+        var block_stub = view.appendBlockStub(model, view_name),
             $el = block_stub.$el.closest('section.block'),
             block_name = $item.attr('data-blockname');
 
