@@ -252,6 +252,8 @@ function setImport() {
     $('#cw-file-upload-import').on('change', function (event) {
     
         const file0 = event.target.files[0];
+        var $file_input = $(this), $file_input_clone = $file_input.clone();
+        $file_input_clone.attr('id', 'cw-file-upload-full-import');
 
         ZipLoader.unzip(file0).then( function ( unziped ) {
             var text, parser, xmlDoc;
