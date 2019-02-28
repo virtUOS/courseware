@@ -6,21 +6,49 @@
 }
 
 #courseware-blockmanager {
-    .cw-blockmanager-title {
-        border-bottom: solid thin #28497c;
-        color: #28497c;
-        font-weight: 600;
+    #cw-import-wrapper,
+    .cw-blockmanager-wrapper {
+        border: solid thin #28497c;
 
-        p {
-            display: inline-block;
-            padding: 1em;
-            vertical-align: text-top;
+        #cw-import-title,
+        .cw-blockmanager-title {
+            border-bottom: solid thin #28497c;
+            color: #28497c;
+            font-weight: 600;
+
+            p {
+                display: inline-block;
+                padding: 1em;
+                vertical-align: text-top;
+            }
+            form{
+                display: inline-block;
+                float: right;
+                .cw-file-upload-import {
+                    display: none;
+                }
+            }
         }
-        form{
-            display: inline-block;
-            float: right;
-            #cw-file-upload-import {
-                display: none;
+        #cw-import-lists{
+            display: none;
+        }
+        #cw-import-selection{
+            #cw-file-upload-import-label {
+                .assets-bg-icon("blue/arr_eol-up.svg");
+                background-size: 64px 64px;
+                background-repeat: no-repeat;
+                background-position: center 32px; 
+                border: 1px solid #28497c;
+                display: inline-block;
+                cursor: pointer;
+                height: 128px;  
+                width: 128px;
+                margin: 1em;
+                padding: 1em;
+                p {
+                    text-align: center;
+                    margin-top: 96px;
+                }
             }
         }
     }
@@ -213,40 +241,6 @@
                     img {
                         width: 196px;
                     }
-                }
-            }
-        }
-    }
-
-    #cw-import-wrapper {
-        border: solid thin #28497c;
-
-        #cw-import-title{
-            background-color: #fff;
-            color: #28497c;
-            padding: 1em;
-            font-weight: 600;
-            border-bottom: solid thin #28497c; 
-        }
-        #cw-import-lists{
-            display: none;
-        }
-        #cw-import-selection{
-            #cw-file-upload-import-label {
-                .assets-bg-icon("blue/arr_eol-up.svg");
-                background-size: 64px 64px;
-                background-repeat: no-repeat;
-                background-position: center 32px; 
-                border: 1px solid #28497c;
-                display: inline-block;
-                cursor: pointer;
-                height: 128px;  
-                width: 128px;
-                margin: 1em;
-                padding: 1em;
-                p {
-                    text-align: center;
-                    margin-top: 96px;
                 }
             }
         }
