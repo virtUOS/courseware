@@ -18,8 +18,14 @@ class BeforeAfterBlock extends Block
     public function student_view()
     {
         $this->setGrade(1.0);
-        $ba_img_before = json_decode($this->ba_before)->url;
-        $ba_img_after = json_decode($this->ba_after)->url;
+        $before_file = \FileRef::find(json_decode($this->ba_before)->file_id);
+        if ($before_file) {
+            $ba_img_before = $before_file->getDownloadURL();
+        }
+        $after_file = \FileRef::find(json_decode($this->ba_after)->file_id);
+        if ($after_file) {
+            $ba_img_after = $after_file->getDownloadURL();
+        }
         $ba_enable = (($ba_img_before != '') && ($ba_img_after != '')) ? true : false;
 
         return array(
