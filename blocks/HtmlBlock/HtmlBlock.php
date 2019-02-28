@@ -49,7 +49,7 @@ class HtmlBlock extends Block
             $content = \STUDIP\Markup::markAsHtml($content);
         }
 
-        $content = substr(formatReady($content), 0, 240).'…';
+        $content = substr(strip_tags(formatReady($content)), 0, 240).'…';
 
         return array('content' => $content);
     }
