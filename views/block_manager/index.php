@@ -1,8 +1,38 @@
 <? $body_id = 'courseware-blockmanager'; ?>
+<?
+if (count($errors) > 0) {
+    echo"<p><b>"._cw("Es sind Fehler aufgetreten:")."</b></p>";
+    echo '<ul>';
+    foreach ($errors as $error):
+        echo '<li>'.htmlReady($error).'</li>';
+    endforeach;
+    echo '</ul>';
+}
+
+if (count($warnings) > 0) {
+    echo"<p><b>"._cw("Warnung! Es konnten nicht alle Blöcke importiert werden.")."</b></p>";
+    echo '<ul>';
+    foreach ($warnings as $warning):
+        echo '<li>'.htmlReady($warning).'</li>';
+    endforeach;
+    echo '</ul><br><br>';
+    echo"<p><b>"._cw("Bitte überprüfen Sie den Inhalt Ihrer Courseware und den Daten in Ihrer Importdatei.")."</b></p>";
+}
+
+if (count($successes) > 0) {
+    echo"<p><b>"._cw("nice one!")."</b></p>";
+    echo '<ul>';
+    foreach ($successes as $success):
+        echo '<li>'.htmlReady($success).'</li>';
+    endforeach;
+    echo '</ul><br><br>';
+}
+?>
 <div class="cw-blockmanager-wrapper">
     <div class="cw-blockmanager-title">
         <p><?= _cw('Block Manager') ?></p>
-        <form class="blockmanager-form" action="block_manager/store_changes" method="post" enctype="multipart/form-data">
+        <form class="blockmanager-form" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="subcmd" value="store_changes">
             <input type="hidden" name="chapterList" id="chapterList" value="">
             <input type="hidden" name="subchapterList" id="subchapterList" value="">
             <input type="hidden" name="sectionList" id="sectionList" value="">
@@ -81,8 +111,9 @@
 <div id="cw-import-wrapper">
     <div id="cw-import-title">
         <p>Import</p>
-        <form class="blockmanager-form" id="cw-blockmanager-form-full-import" action="block_manager/full_import"  method="post" enctype="multipart/form-data">
+        <form class="blockmanager-form" id="cw-blockmanager-form-full-import" method="post" enctype="multipart/form-data">
             <input type="hidden" name="cid" value="<?= $cid ?>">
+            <input type="hidden" name="subcmd" value="fullimport">
             <button type="submit" class="button">Komplettes Archiv importieren</button>
         </form>
     </div>

@@ -11,18 +11,33 @@ use Mooc\Export\Validator\XmlValidator;
  */
 class BlockManagerController extends CoursewareStudipController
 {
-    public function index_action()
+    public function before_filter(&$action, &$args)
     {
-        if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->plugin->getCourseId())) {
+        parent::before_filter($action, $args);
+
+        if (!$this->container['current_user']->canCreate($this->container['current_courseware'])) {
             throw new Trails_Exception(401);
         }
-
+        if (Navigation::hasItem('/course/mooc_courseware/block_manager')) {
+            Navigation::activateItem('/course/mooc_courseware/block_manager');
+        }
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
         PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/block_manager.js');
         PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/ziploader/zip-loader.min.js');
+    }
 
-        if (Navigation::hasItem('/course/mooc_courseware/block_manager')) {
-            Navigation::activateItem('/course/mooc_courseware/block_manager');
+    public function index_action()
+    {
+        $this->errors = [];
+        $this->warnings = [];
+        $this->successes = [];
+
+        if (Request::method() == 'POST' && Request::option('subcmd')=='fullimport') {
+            $this->full_import();
+        }
+
+        if (Request::method() == 'POST' && Request::option('subcmd')=='store_changes') {
+            $this->store_changes();
         }
 
         $this->cid = Request::get('cid');
@@ -72,11 +87,9 @@ class BlockManagerController extends CoursewareStudipController
         return $parent['children'];
     }
 
-    public function full_import_action()
+    public function full_import()
     {
-        $this->errors = array();
-        $this->warnings = array();
-        
+        $cid = Request::get('cid');
         $filename = $_FILES['cw-file-upload-import']['tmp_name'];
         // create a temporary directory
         $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
@@ -84,9 +97,37 @@ class BlockManagerController extends CoursewareStudipController
         $extracted = Studip\ZipArchive::extractToPath($filename, $tempDir);
         if (!$extracted) {
             $this->errors[] = _cw('Das Import-Archiv ist beschädigt.');
-            return false;
+
+            return $this->redirect('block_manager?cid='.$cid.'&errors=true');
         }
 
+        $xml_file = $tempDir.'/data.xml';
+        if (!is_file($xml_file)) {
+            $this->errors[] = _cw('Import-Archiv enthält keine Datendatei data.xml.');
+
+            return $this->redirect('block_manager?cid='.$cid.'&errors=true');
+        }
+        $xml = file_get_contents($xml_file);
+
+        if ($this->validateUploadFile($xml)) {
+            $import_folder = $this->createImportFolder();
+            $courseware = $this->container['current_courseware'];
+            $importer = new XmlImport($this->plugin->getBlockFactory());
+            try {
+                $importer->import($tempDir, $courseware, $import_folder);
+            } catch (Exception $e){
+                $this->errors[] = $e;
+            }
+            if ((count($this->errors) == 0) &&(count($this->warnings) == 0)) {
+                $this->successes[] = _cw('success on full import');
+            }
+        }
+
+        $this->deleteRecursively($tempDir);
+    }
+
+    private function createImportFolder()
+    {
         $root_folder = Folder::findTopFolder($GLOBALS['SessionSeminar']);
         $parent_folder = FileManager::getTypedFolder($root_folder->id);
         // create new folder for import
@@ -96,51 +137,38 @@ class BlockManagerController extends CoursewareStudipController
         $new_folder->user_id = User::findCurrent()->id;
         $courseware_folder = $parent_folder->createSubfolder($new_folder);
 
-        $install_folder = FileManager::getTypedFolder($courseware_folder->id);
-
-        if ($this->validateUploadFile($tempDir, $this->errors, $this->warnings)) {
-            $courseware = $this->container['current_courseware'];
-            $importer = new XmlImport($this->plugin->getBlockFactory());
-            $redirect = true;
-            try {
-                $importer->import($tempDir, $courseware, $install_folder);
-            } catch (Exception $e){
-                $this->errors[] = $e;
-                $redirect = false;
-            }
-            if (!empty($this->warnings)) {
-                //$redirect = false;
-            }
-            if($redirect){
-                $this->redirect(PluginEngine::getURL($this->plugin, array(), 'courseware'));
-            }
-        }
-
-        $this->deleteRecursively($tempDir);
+        return FileManager::getTypedFolder($courseware_folder->id);
     }
 
-    private function validateUploadFile($tempDir, array &$errors, array &$warnings)
+    private function validateUploadFile($xml)
     {
-        $dataFile = $tempDir.'/data.xml';
-
-        if (!is_file($dataFile)) {
-            $errors[] = _cw('Import-Archiv enthält keine Datendatei data.xml.');
-
-            return false;
-        }
-
         $validator = new XmlValidator($this->plugin->getBlockFactory());
-        $validationErrors = $validator->validate(file_get_contents($dataFile));
+        $validationErrors = $validator->validate($xml);
 
         if (count($validationErrors) > 0) {
             foreach ($validationErrors as $validationError) {
-                if ($validationError->code == 1878){
-                    $warnings[] = $validationError->message;
-                } else {
-                    $errors[] = $validationError->message;
+                switch ($validationError->code){
+                    case 1866: // attr temp-id is allowed
+                        if(strpos($validationError->message, 'temp-id') < 0){
+                            $this->errors[] = $validationError->message;
+                        }
+                        break;
+                    case 1878: // handle unknown blocks
+                        $this->warnings[] = $validationError->message;
+                        break;
+                    case 1824: // invalid filesize - no int value
+                    case 1831: // empty filename
+                        if (strpos($validationError->message, 'file') > -1) {
+                            $this->warnings[] = $validationError->message;
+                        } else {
+                            $this->errors[] = $validationError->message;
+                        }
+                        break;
+                    default:
+                        $this->errors[] = $validationError->message;
                 }
             }
-            if (!empty($errors)){
+            if (!empty($this->errors)){
                 array_unshift($errors, _cw('Die Datendatei data.xml enthält kein valides XML.'));
 
                 return false;
@@ -150,7 +178,7 @@ class BlockManagerController extends CoursewareStudipController
         return true;
     }
 
-    public function store_changes_action()
+    public function store_changes()
     {
         $cid = Request::get('cid');
         $import = Request::get('import');
@@ -180,13 +208,18 @@ class BlockManagerController extends CoursewareStudipController
             if ($chapter_list != null) {
                 $courseware->updateChildPositions($chapter_list);
             }
-            return $this->redirect('block_manager?cid='.$cid.'&stored=true');
+            $this->successes[] = _cw('Änderungen wurden gespeichert.');
+
+            return true;
         } else {
             if ($import_xml == '') {
-                return $this->redirect('block_manager?cid='.$cid.'&error=emptyxml');
+                $this->errors[] = _cw('Das Import-Archiv enthält keine data.xml.');
             }
 
             $xml = DOMDocument::loadXML($import_xml);
+            if (!$this->validateUploadFile($import_xml)){
+                return false;
+            }
 
             // load files into temp folder
             $upload_file = $_FILES['cw-file-upload-import']['tmp_name'];
@@ -198,17 +231,7 @@ class BlockManagerController extends CoursewareStudipController
                 return false;
             }
 
-            // build courseware import folder
-            $root_folder = Folder::findTopFolder($GLOBALS['SessionSeminar']);
-            $parent_folder = FileManager::getTypedFolder($root_folder->id);
-            // create new folder for import
-            $request = array('name' => 'Courseware-Import '.date("d.m.Y", time()), 'description' => 'folder for imported courseware content');
-            $new_folder = new StandardFolder();
-            $new_folder->setDataFromEditTemplate($request);
-            $new_folder->user_id = User::findCurrent()->id;
-            $courseware_folder = $parent_folder->createSubfolder($new_folder);
-
-            $install_folder = FileManager::getTypedFolder($courseware_folder->id);
+            $import_folder = $this->createImportFolder();
 
             // store files
             $files = array();
@@ -216,7 +239,7 @@ class BlockManagerController extends CoursewareStudipController
             foreach ($coursewareNode->childNodes as $child) {
                 if ($child instanceof DOMElement) {
                     if  ($child->tagName === 'file') {
-                        $this->processFile($child, $tempDir, $files, $install_folder);
+                        $this->processFile($child, $tempDir, $files, $import_folder);
                     }
                 }
             }
@@ -313,9 +336,10 @@ class BlockManagerController extends CoursewareStudipController
                         if (gettype($uiBlock) != 'object') { 
                             $block->delete();
                             unset($block_list[$block_id]);
-                            //TODO create error or message
+                            $this->errors[] = _cw('Daten wurden nicht importiert.');
+                            $this->successes[] = _cw('Änderungen wurden gespeichert.');
 
-                            return $this->redirect('block_manager?cid='.$cid.'&import=false&stored=true');
+                            return;
                         }
 
                         $properties = array();
@@ -339,17 +363,20 @@ class BlockManagerController extends CoursewareStudipController
             }
 
             // delete unused files
-                foreach($files as $file) {
-                    if (!in_array($file->id , $used_files)) {
-                        $install_folder->deleteFile($file->id);
-                    }
+            foreach($files as $file) {
+                if (!in_array($file->id , $used_files)) {
+                    $import_folder->deleteFile($file->id);
                 }
+            }
 
-                if(empty($install_folder->getFiles())) {
-                    $install_folder->delete();
-                }
+            if(empty($import_folder->getFiles())) {
+                $import_folder->delete();
+            }
 
-            return $this->redirect('block_manager?cid='.$cid.'&import=true&stored=true');
+            $this->successes[] = _cw('Änderungen wurden gespeichert.');
+            $this->successes[] = _cw('Daten wurden erfolgreich importiert');
+
+            return true;
         }
     }
 
