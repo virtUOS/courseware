@@ -1,8 +1,9 @@
 <? $body_id = 'courseware-blockmanager'; ?>
+<div class="cw-blockmanager-wrapper cw-blockmanager-info" id="cw-blockmanager-info">
 <?
 if (count($errors) > 0) {
-    echo"<p><b>"._cw("Es sind Fehler aufgetreten:")."</b></p>";
-    echo '<ul>';
+    echo'<div class="cw-blockmanager-title"><p>'._cw('Es sind Fehler aufgetreten').'</p></div>';
+    echo '<ul class="cw-blockmanager-info-content">';
     foreach ($errors as $error):
         echo '<li>'.htmlReady($error).'</li>';
     endforeach;
@@ -10,24 +11,25 @@ if (count($errors) > 0) {
 }
 
 if (count($warnings) > 0) {
-    echo"<p><b>"._cw("Warnung! Es konnten nicht alle Blöcke importiert werden.")."</b></p>";
-    echo '<ul>';
+    echo'<div class="cw-blockmanager-title"><p>'._cw('Warnung! Es konnten nicht alle Blöcke importiert werden.').'</p></div>';
+    echo '<ul class="cw-blockmanager-info-content">';
     foreach ($warnings as $warning):
         echo '<li>'.htmlReady($warning).'</li>';
     endforeach;
-    echo '</ul><br><br>';
+    echo '</ul>';
     echo"<p><b>"._cw("Bitte überprüfen Sie den Inhalt Ihrer Courseware und den Daten in Ihrer Importdatei.")."</b></p>";
 }
 
 if (count($successes) > 0) {
-    echo"<p><b>"._cw("nice one!")."</b></p>";
-    echo '<ul>';
+    echo'<div class="cw-blockmanager-title"><p>'._cw('Erfolg').'</p></div>';
+    echo '<ul class="cw-blockmanager-info-content">';
     foreach ($successes as $success):
         echo '<li>'.htmlReady($success).'</li>';
     endforeach;
-    echo '</ul><br><br>';
+    echo '</ul>';
 }
 ?>
+</div>
 <div class="cw-blockmanager-wrapper">
     <div class="cw-blockmanager-title">
         <p><?= _cw('Block Manager') ?></p>
@@ -44,9 +46,9 @@ if (count($successes) > 0) {
             <button type="submit" class="button">Änderungen speichern</button>
         </form>
         <div class="clear"></div>
-    
+
     </div>
-    
+
     <ul class="chapter-list">
         <? foreach($courseware['children'] as $chapter): ?>
             <li class="chapter-item" data-id="<?= $chapter['id']?>">

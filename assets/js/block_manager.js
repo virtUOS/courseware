@@ -10,7 +10,10 @@ $(document).ready(function(){
     startMouseListeners();
     createSortables();
     setImport();
-
+    
+    if($('#cw-blockmanager-info').children().length > 0) {
+        $('#cw-blockmanager-info').show();
+    }
 });
 
 function startMouseListeners() {
