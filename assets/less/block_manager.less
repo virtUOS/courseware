@@ -6,27 +6,34 @@
 }
 
 #courseware-blockmanager {
-    #cw-import-wrapper,
+    
     .cw-blockmanager-wrapper {
         border: solid thin #28497c;
+        margin-bottom: 2em;
 
-        #cw-import-title,
+        
         .cw-blockmanager-title {
             border-bottom: solid thin #28497c;
             color: #28497c;
             font-weight: 600;
 
             p {
+                margin: 0;
                 display: inline-block;
                 padding: 1em;
                 vertical-align: text-top;
             }
+
             form{
                 display: inline-block;
                 float: right;
                 .cw-file-upload-import {
                     display: none;
                 }
+            }
+
+            &#cw-export-title {
+                border-bottom: none;
             }
         }
         #cw-import-lists{

@@ -2,6 +2,7 @@
 
 use Mooc\DB\Block;
 use Mooc\Import\XmlImport;
+use Mooc\Export\XmlExport;
 use Mooc\Export\Validator\XmlValidator;
 
 /**
@@ -89,23 +90,16 @@ class BlockManagerController extends CoursewareStudipController
 
     public function full_import()
     {
-        $cid = Request::get('cid');
-        $filename = $_FILES['cw-file-upload-import']['tmp_name'];
-        // create a temporary directory
-        $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
-        mkdir($tempDir);
-        $extracted = Studip\ZipArchive::extractToPath($filename, $tempDir);
-        if (!$extracted) {
-            $this->errors[] = _cw('Das Import-Archiv ist beschädigt.');
-
-            return $this->redirect('block_manager?cid='.$cid.'&errors=true');
+        $tempDir = $this->extractArchive($_FILES['cw-file-upload-import']['tmp_name']);
+        if (!$tempDir) {
+            return;
         }
 
         $xml_file = $tempDir.'/data.xml';
         if (!is_file($xml_file)) {
-            $this->errors[] = _cw('Import-Archiv enthält keine Datendatei data.xml.');
+            $this->errors[] = _cw('Import-Archiv enthält keine Datendatei data.xml');
 
-            return $this->redirect('block_manager?cid='.$cid.'&errors=true');
+            return ;
         }
         $xml = file_get_contents($xml_file);
 
@@ -119,11 +113,30 @@ class BlockManagerController extends CoursewareStudipController
                 $this->errors[] = $e;
             }
             if ((count($this->errors) == 0) &&(count($this->warnings) == 0)) {
-                $this->successes[] = _cw('success on full import');
+                $this->successes[] = _cw('Das Archiv wurde erfolgreich importiert');
             }
         }
 
         $this->deleteRecursively($tempDir);
+    }
+
+    private function extractArchive($filename) {
+        if(!$filename) {
+            $this->errors[] = _cw('Es wurde kein Import-Archiv hochgeladen');
+
+            return false;
+        }
+        // create a temporary directory
+        $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
+        mkdir($tempDir);
+        $extracted = Studip\ZipArchive::extractToPath($filename, $tempDir);
+        if (!$extracted) {
+            $this->errors[] = _cw('Das Import-Archiv ist beschädigt');
+
+            return false;
+        }
+        
+        return $tempDir;
     }
 
     private function createImportFolder()
@@ -169,7 +182,7 @@ class BlockManagerController extends CoursewareStudipController
                 }
             }
             if (!empty($this->errors)){
-                array_unshift($errors, _cw('Die Datendatei data.xml enthält kein valides XML.'));
+                array_unshift($errors, _cw('Die Datendatei data.xml enthält kein valides XML'));
 
                 return false;
             }
@@ -208,12 +221,12 @@ class BlockManagerController extends CoursewareStudipController
             if ($chapter_list != null) {
                 $courseware->updateChildPositions($chapter_list);
             }
-            $this->successes[] = _cw('Änderungen wurden gespeichert.');
+            $this->successes[] = _cw('Änderungen wurden gespeichert');
 
             return true;
         } else {
             if ($import_xml == '') {
-                $this->errors[] = _cw('Das Import-Archiv enthält keine data.xml.');
+                $this->errors[] = _cw('Das Import-Archiv enthält keine data.xml');
             }
 
             $xml = DOMDocument::loadXML($import_xml);
@@ -221,13 +234,8 @@ class BlockManagerController extends CoursewareStudipController
                 return false;
             }
 
-            // load files into temp folder
-            $upload_file = $_FILES['cw-file-upload-import']['tmp_name'];
-            $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
-            mkdir($tempDir);
-            $extracted = Studip\ZipArchive::extractToPath($upload_file, $tempDir);
-            if (!$extracted) {
-                $this->errors[] = _cw('Das Import-Archiv ist beschädigt.');
+            $tempDir = $this->extractArchive($_FILES['cw-file-upload-import']['tmp_name']);
+            if (!$tempDir) {
                 return false;
             }
 
@@ -336,19 +344,19 @@ class BlockManagerController extends CoursewareStudipController
                         if (gettype($uiBlock) != 'object') { 
                             $block->delete();
                             unset($block_list[$block_id]);
-                            $this->errors[] = _cw('Daten wurden nicht importiert.');
-                            $this->successes[] = _cw('Änderungen wurden gespeichert.');
+                            $this->errors[] = _cw('Daten wurden nicht importiert');
+                            $this->successes[] = _cw('Änderungen wurden gespeichert');
 
                             return;
                         }
 
                         $properties = array();
                         foreach ($block_node->attributes as $attribute) {
-                           
+
                             if (!$attribute instanceof DOMAttr) {
                                 continue;
                             }
-                            echo $attribute->name." : ".$attribute->value;
+
                             if ($attribute->namespaceURI !== null) {
                                 $properties[$attribute->name] = $attribute->value;
                             }
@@ -373,10 +381,9 @@ class BlockManagerController extends CoursewareStudipController
                 $import_folder->delete();
             }
 
-            $this->successes[] = _cw('Änderungen wurden gespeichert.');
-            $this->successes[] = _cw('Daten wurden erfolgreich importiert');
+            $this->successes[] = _cw('Änderungen wurden gespeichert');
+            $this->successes[] = _cw('Daten wurden importiert');
 
-            return true;
         }
     }
 
@@ -472,6 +479,50 @@ class BlockManagerController extends CoursewareStudipController
         }
 
         $files[$originId] = $new_reference;
+    }
+
+    public function export_action()
+    {
+        // create a temporary directory
+        $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
+        mkdir($tempDir);
+
+        // dump the XML to the filesystem
+        $export = new XmlExport($this->plugin->getBlockFactory());
+        $courseware = $this->container['current_courseware'];
+        
+        foreach ($courseware->getFiles() as $file) {
+            if (trim($file['url']) !== '') {
+                continue;
+            }
+
+            $destination = $tempDir . '/' . $file['id'];
+            mkdir($destination);
+            copy($file['path'], $destination.'/'.$file['filename']);
+        }
+        
+        if (Request::submitted('plaintext')) {
+            $this->response->add_header('Content-Type', 'text/xml;charset=utf-8');
+            $this->render_text($export->export($courseware));
+            return;
+        }
+        file_put_contents($tempDir.'/data.xml', $export->export($courseware));
+
+        $zipFile = $GLOBALS['TMP_PATH'].'/'.uniqid().'.zip';
+        FileArchiveManager::createArchiveFromPhysicalFolder($tempDir, $zipFile);
+        $this->set_layout(null);
+        header('Content-Type: application/zip');
+        header('Content-Disposition: attachment; filename=courseware.zip');
+
+        while (ob_get_level()) {
+            ob_end_flush();
+        }
+        readfile($zipFile);
+
+        $this->deleteRecursively($tempDir);
+        $this->deleteRecursively($zipFile);
+
+        exit;
     }
 
 }

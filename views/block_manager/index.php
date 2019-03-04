@@ -2,7 +2,11 @@
 <div class="cw-blockmanager-wrapper cw-blockmanager-info" id="cw-blockmanager-info">
 <?
 if (count($errors) > 0) {
-    echo'<div class="cw-blockmanager-title"><p>'._cw('Es sind Fehler aufgetreten').'</p></div>';
+    if (count($errors) == 1) {
+        echo'<div class="cw-blockmanager-title"><p>'._cw('Es ist ein Fehler aufgetreten').'</p></div>';
+    } else {
+        echo'<div class="cw-blockmanager-title"><p>'._cw('Es sind Fehler aufgetreten').'</p></div>';
+    }
     echo '<ul class="cw-blockmanager-info-content">';
     foreach ($errors as $error):
         echo '<li>'.htmlReady($error).'</li>';
@@ -109,9 +113,9 @@ if (count($successes) > 0) {
         <? endforeach?>
     </ul>
 </div>
-<br>
-<div id="cw-import-wrapper">
-    <div id="cw-import-title">
+
+<div id="cw-import-wrapper" class="cw-blockmanager-wrapper">
+    <div id="cw-import-title" class="cw-blockmanager-title">
         <p>Import</p>
         <form class="blockmanager-form" id="cw-blockmanager-form-full-import" method="post" enctype="multipart/form-data">
             <input type="hidden" name="cid" value="<?= $cid ?>">
@@ -127,5 +131,16 @@ if (count($successes) > 0) {
         <label for="cw-file-upload-import" id="cw-file-upload-import-label">
             <p>Datei für den Import wählen</p>
         </label>
+    </div>
+</div>
+
+<div class="cw-blockmanager-wrapper">
+    <div class="cw-blockmanager-title" id="cw-export-title">
+        <p>Export</p>
+        <form class="blockmanager-form" id="cw-blockmanager-form-export" action="block_manager/export" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="cid" value="<?= $cid ?>">
+            <input type="hidden" name="subcmd" value="fullimport">
+            <button type="submit" class="button">Komplettes Archiv exportieren</button>
+        </form>
     </div>
 </div>
