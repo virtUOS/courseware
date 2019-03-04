@@ -19,10 +19,10 @@
             <br>
         {{/download_info}}
     {{/confirmed}}
-    {{#file}}
+    {{#file_available}}
         {{#download_access}}
             <div class="download-file">
-                <div class="cw-download-info" > &nbsp; {{file}} </div>
+                <div class="cw-download-info cw-fileicon-{{icon}}" > &nbsp; {{file}} </div>
                  <div class="cw-download-button-wrapper">
                     <a href="{{url}}"> 
                         <button name="download" class="cw-download-button" style="display: inline-block;">{{#i18n}}Herunterladen{{/i18n}}</button>
@@ -35,12 +35,12 @@
                 {{#i18n}}Wegen des gewählten Lizenzstatus können Sie diese Datei nicht herunterladen.{{/i18n}}
             </div>
         {{/download_access}}
-    {{/file}}
-    {{^file}}
+    {{/file_available}}
+    {{^file_available}}
         <div class="messagebox messagebox_info">
             {{#i18n}}Download: Es wurde keine Datei ausgewählt{{/i18n}}
         </div>
-    {{/file}}
+    {{/file_available}}
     <input type="hidden" name="file" value="{{file}}" />
     <input type="hidden" name="file_name" value="{{file_name}}" />
     <input type="hidden" name="file_id" value="{{file_id}}" />

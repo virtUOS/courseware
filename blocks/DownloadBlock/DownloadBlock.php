@@ -26,8 +26,27 @@ class DownloadBlock extends Block
         if ($file) { 
             $url = $file->getDownloadURL('force');
             $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
+            
+            if ($file->isAudio()) {
+                $icon = 'audio';
+            } else if ($file->isImage()) {
+                $icon = 'pic';
+            } else if ($file->isVideo()) {
+                $icon = 'video';
+            } else if (mb_strpos($file->mime_type, 'pdf') > -1) {
+                $icon = 'pdf';
+            } else if (mb_strpos($file->mime_type, 'zip') > -1) {
+                $icon = 'archive';
+            } else if ((mb_strpos($file->mime_type, 'txt') > -1) || (mb_strpos($file->mime_type, 'document') > -1) || (mb_strpos($file->mime_type, 'msword') > -1) || (mb_strpos($file->mime_type, 'text') > -1)){
+                $icon = 'text';
+            } else if ((mb_strpos($file->mime_type, 'powerpoint') > -1) || (mb_strpos($file->mime_type, 'presentation') > -1) ){
+                $icon = 'ppt';
+            }
+            $file_available = true;
         } else { 
-            $url = "";
+            $url = '';
+            $icon = '';
+            $file_available = false;
             $access = true;
         }
 
@@ -35,7 +54,9 @@ class DownloadBlock extends Block
             $this->getAttrArray(), 
             array('confirmed' => !! $this->getProgress()->grade, 
                   'url' => $url,
-                  'download_access' => $access
+                  'icon' => $icon,
+                  'download_access' => $access,
+                  'file_available'=> $file_available
             )
         );
     }
