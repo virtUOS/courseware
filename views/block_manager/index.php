@@ -36,7 +36,7 @@ if (count($successes) > 0) {
 </div>
 <div class="cw-blockmanager-wrapper">
     <div class="cw-blockmanager-title">
-        <p><?= _cw('Block Manager') ?></p>
+        <p><?= _cw('Struktur bearbeiten') ?></p>
         <form class="blockmanager-form" method="post" enctype="multipart/form-data">
             <input type="hidden" name="subcmd" value="store_changes">
             <input type="hidden" name="chapterList" id="chapterList" value="">

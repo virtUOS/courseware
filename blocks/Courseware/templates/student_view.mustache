@@ -25,14 +25,19 @@
                     {{cw_title}}
                 </li>
             </a>
-            <a class="cw-navigation-news" href="{{#plugin_url}}courseware/news{{/plugin_url}}">
+            <a class="cw-navigation-blockmanager" href="{{#plugin_url}}block_manager{{/plugin_url}}">
                 <li>
-                    {{#i18n}}Letzte Änderungen{{/i18n}}
+                    {{#i18n}}Bearbeiten{{/i18n}}
                 </li>
             </a>
             <a class="cw-navigation-settings" href="{{#plugin_url}}courseware/settings{{/plugin_url}}">
                 <li>
                     {{#i18n}}Einstellungen{{/i18n}}
+                </li>
+            </a>
+            <a class="cw-navigation-news" href="{{#plugin_url}}courseware/news{{/plugin_url}}">
+                <li>
+                    {{#i18n}}Letzte Änderungen{{/i18n}}
                 </li>
             </a>
             <a class="cw-navigation-progressoverview" href="{{#plugin_url}}cpo{{/plugin_url}}">
@@ -45,21 +50,7 @@
                     {{#i18n}}Diskussionsübersicht{{/i18n}}
                 </li>
             </a>
-            <a class="cw-navigation-export" href="{{#plugin_url}}export{{/plugin_url}}">
-                <li>
-                    {{#i18n}}Export{{/i18n}}
-                </li>
-            </a>
-            <a class="cw-navigation-import" href="{{#plugin_url}}import{{/plugin_url}}">
-                <li>
-                    {{#i18n}}Import{{/i18n}}
-                </li>
-            </a>
-            <a class="cw-navigation-blockmanager" href="{{#plugin_url}}block_manager{{/plugin_url}}">
-                <li>
-                    {{#i18n}}block_manager{{/i18n}}
-                </li>
-            </a>
+
           </ul>
         {{/user_is_teacher}}
         {{^user_is_teacher}}

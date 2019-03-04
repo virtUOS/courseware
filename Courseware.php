@@ -81,22 +81,26 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         $navigation->addSubnavigation('index', clone $navigation);
 
-        $navigation->addSubnavigation(
-            'news',
-            new Navigation(
-                _cw('Letzte Änderungen'),
-                PluginEngine::getURL($this, compact('cid'), 'courseware/news', true)
-            )
-        );
 
         //NavigationForLecturers
         if ($this->container['current_user']->hasPerm($courseId, 'tutor')) {
+            $managerUrl = PluginEngine::getURL($this, compact('cid'), 'block_manager', true);
+            $navigation->addSubnavigation(
+                'block_manager',
+                new Navigation(_cw('Bearbeiten'), $managerUrl)
+            );
             $settingsUrl = PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true);
             $navigation->addSubnavigation(
                 'settings', 
                 new Navigation(_cw('Einstellungen'), $settingsUrl)
             );
-
+            $navigation->addSubnavigation(
+                'news',
+                new Navigation(
+                    _cw('Letzte Änderungen'),
+                    PluginEngine::getURL($this, compact('cid'), 'courseware/news', true)
+                )
+            );
             $cpoUrl = PluginEngine::getURL($this, compact('cid'), 'cpo', true);
             $navigation->addSubnavigation(
                 'progressoverview',
@@ -109,26 +113,16 @@ class Courseware extends StudIPPlugin implements StandardPlugin
                 new Navigation(_cw('Diskussionsübersicht'), $postoverviewUrl)
             );
 
-            $exportUrl = PluginEngine::getURL($this, compact('cid'), 'export', true);
-            $navigation->addSubnavigation(
-                'export',
-                new Navigation(_cw('Export'), $exportUrl)
-            );
-
-            $importUrl = PluginEngine::getURL($this, compact('cid'), 'import', true);
-            $navigation->addSubnavigation(
-                'import',
-                new Navigation(_cw('Import'), $importUrl)
-            );
-            $importUrl = PluginEngine::getURL($this, compact('cid'), 'block_manager', true);
-            $navigation->addSubnavigation(
-                'block_manager',
-                new Navigation(_cw('block_manager'), $importUrl)
-            );
-
         //NavigationForStudents
         } else {
             if (!$this->container['current_user']->isNobody()) {
+                $navigation->addSubnavigation(
+                    'news',
+                    new Navigation(
+                        _cw('Letzte Änderungen'),
+                        PluginEngine::getURL($this, compact('cid'), 'courseware/news', true)
+                    )
+                );
                 $progressUrl = PluginEngine::getURL($this, compact('cid'), 'progress', true);
                 $navigation->addSubnavigation(
                     'progress',
