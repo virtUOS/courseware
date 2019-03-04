@@ -8,7 +8,7 @@ class CanvasBlock extends Block
 {
     const NAME = 'Canvas';
     const BLOCK_CLASS = 'interaction';
-    const DESCRIPTION = 'Draw something awesome';
+    const DESCRIPTION = 'Zeichnen und Schreiben auf einem Bild';
 
     public function initialize()
     {

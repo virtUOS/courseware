@@ -8,8 +8,8 @@ use Mooc\DB\Field;
 class AudioGalleryBlock extends Block
 {
     const NAME = 'Audio Gallery';
-    const BLOCK_CLASS = 'multimedia';
-    const DESCRIPTION = 'AudioGalleryBlock';
+    const BLOCK_CLASS = 'interaction';
+    const DESCRIPTION = 'Teilnehmer können Audiodateien aufnehmen und mit anderen teilen';
 
     public function initialize()
     {
