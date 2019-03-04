@@ -91,8 +91,7 @@ if (count($successes) > 0) {
                                         <? foreach($section['children'] as $block):?>
                                             <? $ui_block = $block['ui_block']?>
                                             <li class="block-item" data-id="<?= $block['id']?>">
-                                                <p class="block-description cw-block-icon-<?=$block['type']?>">
-                                                    <?= $ui_block::NAME ?><? if(!$block['visible']):?><span class="block-not-visible"></span><? endif?>
+                                                <p class="block-description"><span class="block-icon cw-block-icon-<?=$block['type']?>"></span><?= $ui_block::NAME ?><? if(!$block['visible']):?><span class="block-not-visible"></span><? endif?>
                                                 </p>
                                                 <ul class="block-preview">
                                                     <li class="block-id">ID: <?=$block['id']?></li>
