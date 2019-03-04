@@ -30,6 +30,9 @@ class EmbedBlock extends Block
         }
         $this->setGrade(1.0);
         $json_url = $this->build_request($this->embed_source, $this->embed_url);
+        if(!function_exists('curl_init')) {
+            return array('no_curl' => true);
+        }
         $oembed = json_decode($this->curl_get($json_url));
         
         switch ($oembed->type) {
@@ -92,7 +95,8 @@ class EmbedBlock extends Block
         $this->authorizeUpdate();
 
         return array_merge($this->getAttrArray(), array(
-            'embed_sources' => $this->getSources()
+            'embed_sources' => $this->getSources(),
+            'no_curl' => !function_exists('curl_init')
         ));
     }
 
