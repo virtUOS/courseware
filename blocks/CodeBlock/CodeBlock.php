@@ -36,7 +36,7 @@ class CodeBlock extends Block
     public function preview_view()
     {
         return array(
-            'code_content' => substr($this->code_content, 0, 160).'…',
+            'code_content' => substr(\STUDIP\Markup::purifyHtml($this->code_content), 0, 160).'…',
             'code_lang' => $this->code_lang
         );
     }
