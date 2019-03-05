@@ -33,6 +33,8 @@ class BlockManagerController extends CoursewareStudipController
         $this->warnings = [];
         $this->successes = [];
 
+        $this->block_map = json_encode($this->buildBlockMap());
+
         if (Request::method() == 'POST' && Request::option('subcmd')=='fullimport') {
             $this->full_import();
         }
@@ -64,6 +66,27 @@ class BlockManagerController extends CoursewareStudipController
             
         $this->courseware = current($grouped['']);
         $this->buildTree($grouped, $this->courseware);
+    }
+
+    private function buildBlockMap()
+    {
+        $block_map = [];
+
+        foreach($this->plugin->getBlockFactory()->getContentBlockClasses() as $type) {
+            $className = '\Mooc\UI\\'.$type.'\\'.$type;
+            $nameConstant = $className.'::NAME';
+             if (defined($nameConstant)) {
+                $block_map[$type] = _cw(constant($nameConstant));
+            } else {
+                $block_map[$type] = $type;
+            }
+        }
+
+        $block_map['chapter'] = 'Kapitel';
+        $block_map['subchapter'] = 'Unterkapitel';
+        $block_map['section'] = 'Abschnitt';
+
+        return $block_map;
     }
 
     private function buildTree($grouped, &$root)

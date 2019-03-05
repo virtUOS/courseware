@@ -21,7 +21,7 @@ if (count($warnings) > 0) {
         echo '<li>'.htmlReady($warning).'</li>';
     endforeach;
     echo '</ul>';
-    echo"<p><b>"._cw("Bitte überprüfen Sie den Inhalt Ihrer Courseware und den Daten in Ihrer Importdatei.")."</b></p>";
+    echo'<p>'._cw('Bitte überprüfen Sie den Inhalt Ihrer Courseware und den Daten in Ihrer Importdatei.').'</p>';
 }
 
 if (count($successes) > 0) {
@@ -47,7 +47,7 @@ if (count($successes) > 0) {
             <input type="hidden" name="importXML" id="importXML" value="">
             <input type="hidden" name="import" id="import" value=false>
             <input type="file" name="cw-file-upload-import" class="cw-file-upload-import" id="cw-file-upload-import" accept=".zip">
-            <button type="submit" class="button">Änderungen speichern</button>
+            <button type="submit" class="button"><?= _cw('Änderungen speichern')?></button>
         </form>
         <div class="clear"></div>
 
@@ -58,12 +58,12 @@ if (count($successes) > 0) {
             <li class="chapter-item" data-id="<?= $chapter['id']?>">
                 <p class="chapter-description"><?= $chapter['title']?> 
                     <span>
-                        Kapitel
+                        <?= _cw('Kapitel') ?>
                         <? if($chapter['publication_date'] != null):?>
-                            | publication: <?=$chapter['publication_date']?>
+                            | <?= _cw('veröffentlichen') ?>: <?=$chapter['publication_date']?>
                         <? endif ?>
                         <? if($chapter['withdraw_date'] != null):?>
-                            | withdraw: <?=$chapter['withdraw_date']?>
+                            | <?= _cw('widerrufen') ?>: <?=$chapter['withdraw_date']?>
                         <? endif ?>
                         <? if(!$chapter['isPublished']):?><span class="structure-not-visible"></span><? endif?>
                     </span>
@@ -73,12 +73,12 @@ if (count($successes) > 0) {
                         <li class="subchapter-item" data-id="<?= $subchapter['id']?>">
                             <p class="subchapter-description"><?= $subchapter['title'] ?>
                                 <span>
-                                    Unterkapitel
+                                    <?= _cw('Unterkapitel') ?>
                                     <? if($subchapter['publication_date'] != null):?>
-                                        | publication: <?=$subchapter['publication_date']?>
+                                        | <?= _cw('veröffentlichen') ?>: <?=$subchapter['publication_date']?>
                                     <? endif ?>
                                     <? if($subchapter['withdraw_date'] != null):?>
-                                        | withdraw: <?=$subchapter['withdraw_date']?>
+                                        | <?= _cw('widerrufen') ?>: <?=$subchapter['withdraw_date']?>
                                     <? endif ?>
                                     <? if(!$subchapter['isPublished']):?><span class="structure-not-visible"></span><? endif?>
                                 </span>
@@ -86,7 +86,7 @@ if (count($successes) > 0) {
                             <ul class="section-list">
                                 <? foreach($subchapter['children'] as $section):?>
                                     <li class="section-item" data-id="<?= $section['id']?>">
-                                        <p class="section-description"><?= $section['title']?> <span>Abschnitt</span></p>
+                                        <p class="section-description"><?= $section['title']?> <span><?= _cw('Abschnitt') ?></span></p>
                                         <ul class="block-list">
                                         <? foreach($section['children'] as $block):?>
                                             <? $ui_block = $block['ui_block']?>
@@ -114,12 +114,13 @@ if (count($successes) > 0) {
 </div>
 
 <div id="cw-import-wrapper" class="cw-blockmanager-wrapper">
+    <input type="hidden" id="block_map" value='<?= $block_map?>'>
     <div id="cw-import-title" class="cw-blockmanager-title">
-        <p>Import</p>
+        <p><?= _cw('Import') ?></p>
         <form class="blockmanager-form" id="cw-blockmanager-form-full-import" method="post" enctype="multipart/form-data">
             <input type="hidden" name="cid" value="<?= $cid ?>">
             <input type="hidden" name="subcmd" value="fullimport">
-            <button type="submit" class="button">Komplettes Archiv importieren</button>
+            <button type="submit" class="button"><?= _cw('Komplettes Archiv importieren') ?></button>
         </form>
     </div>
 
@@ -128,18 +129,18 @@ if (count($successes) > 0) {
 
     <div id="cw-import-selection">
         <label for="cw-file-upload-import" id="cw-file-upload-import-label">
-            <p>Datei für den Import wählen</p>
+            <p><?= _cw('Datei für den Import wählen') ?></p>
         </label>
     </div>
 </div>
 
 <div class="cw-blockmanager-wrapper">
     <div class="cw-blockmanager-title" id="cw-export-title">
-        <p>Export</p>
+        <p><?= _cw('Export') ?></p>
         <form class="blockmanager-form" id="cw-blockmanager-form-export" action="block_manager/export" method="post" enctype="multipart/form-data">
             <input type="hidden" name="cid" value="<?= $cid ?>">
             <input type="hidden" name="subcmd" value="fullimport">
-            <button type="submit" class="button">Komplettes Archiv exportieren</button>
+            <button type="submit" class="button"><?= _cw('Komplettes Archiv exportieren') ?></button>
         </form>
     </div>
 </div>

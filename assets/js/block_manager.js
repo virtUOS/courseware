@@ -258,6 +258,8 @@ function setImport() {
         var $file_input = $(this), $file_input_clone = $file_input.clone();
         $file_input_clone.attr('id', 'cw-file-upload-full-import');
 
+        var block_map = JSON.parse($('#block_map').val());
+
         ZipLoader.unzip(file0).then( function ( unziped ) {
             var text, parser, xmlDoc;
     
@@ -272,7 +274,7 @@ function setImport() {
                     chapter_counter++;
                     node.setAttribute('temp-id' , chapter_counter);
                     var $this_chapter = $('<li class="chapter-item chapter-item-import" data-id="import-'+chapter_counter+'"></li>').appendTo($this_chapter_list);
-                    $('<p class="chapter-description">'+node.getAttribute('title')+'<span>'+node.nodeName+'</span></p>').appendTo($this_chapter);
+                    $('<p class="chapter-description">'+node.getAttribute('title')+'<span>'+block_map[node.nodeName]+'</span></p>').appendTo($this_chapter);
                     var $this_subchapter_list = $('<ul class="subchapter-list subchapter-list-import"></ul>').appendTo($this_chapter);
     
                     $.each(node.children, function(key, node) {
@@ -280,7 +282,7 @@ function setImport() {
                             subchapter_counter++;
                             node.setAttribute('temp-id' , subchapter_counter);
                             var $this_subchapter = $('<li class="subchapter-item subchapter-item-import"  data-id="import-'+subchapter_counter+'"></li>').appendTo($this_subchapter_list);
-                            $('<p class="subchapter-description">'+node.getAttribute('title')+'<span>'+node.nodeName+'</span></p>').appendTo($this_subchapter);
+                            $('<p class="subchapter-description">'+node.getAttribute('title')+'<span>'+block_map[node.nodeName]+'</span></p>').appendTo($this_subchapter);
                             var $this_section_list = $('<ul class="section-list section-list-import"></ul>').appendTo($this_subchapter);
     
                             $.each(node.children, function(key, node) {
@@ -288,14 +290,14 @@ function setImport() {
                                     section_counter++;
                                     node.setAttribute('temp-id' , section_counter);
                                     var $this_section = $('<li class="section-item section-item-import" data-id="import-'+section_counter+'"></li>').appendTo($this_section_list);
-                                    $('<p class="section-description">'+node.getAttribute('title')+'<span>'+node.nodeName+'</span></p>').appendTo($this_section);
+                                    $('<p class="section-description">'+node.getAttribute('title')+'<span>'+block_map[node.nodeName]+'</span></p>').appendTo($this_section);
                                     var $this_block_list = $('<ul class="block-list block-list-import"></ul>').appendTo($this_section);
     
                                     $.each(node.children, function(key, node) {
                                         if (node.nodeName == 'block') {
                                             //build block
                                             var $this_block = $('<li class="block-item block-item-import" data-id="import-'+node.getAttribute('uuid')+'"></li>').appendTo($this_block_list);
-                                            $('<p class="block-description cw-block-icon-'+node.getAttribute('type')+'">'+node.getAttribute('type')+'</p>').appendTo($this_block);
+                                            $('<p class="block-description cw-block-icon-'+node.getAttribute('type')+'">'+block_map[node.getAttribute('type')]+'</p>').appendTo($this_block);
                                         }
                                     });
                                 }
