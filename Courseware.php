@@ -87,7 +87,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
             $managerUrl = PluginEngine::getURL($this, compact('cid'), 'block_manager', true);
             $navigation->addSubnavigation(
                 'block_manager',
-                new Navigation(_cw('Bearbeiten'), $managerUrl)
+                new Navigation(_cw('Struktur bearbeiten'), $managerUrl)
             );
             $settingsUrl = PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true);
             $navigation->addSubnavigation(
@@ -111,6 +111,16 @@ class Courseware extends StudIPPlugin implements StandardPlugin
             $navigation->addSubnavigation(
                 'postoverview',
                 new Navigation(_cw('Diskussionsübersicht'), $postoverviewUrl)
+            );
+            $exportUrl = PluginEngine::getURL($this, compact('cid'), 'export', true);
+            $navigation->addSubnavigation(
+                'export',
+                new Navigation(_cw('Export'), $exportUrl)
+            );
+            $importUrl = PluginEngine::getURL($this, compact('cid'), 'import', true);
+            $navigation->addSubnavigation(
+                'import',
+                new Navigation(_cw('Import'), $importUrl)
             );
 
         //NavigationForStudents

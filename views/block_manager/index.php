@@ -46,6 +46,7 @@ if (count($successes) > 0) {
             <input type="hidden" name="cid" value="<?= $cid ?>">
             <input type="hidden" name="importXML" id="importXML" value="">
             <input type="hidden" name="import" id="import" value=false>
+            <input type="hidden" name="remote" id="remote" value=false>
             <input type="file" name="cw-file-upload-import" class="cw-file-upload-import" id="cw-file-upload-import" accept=".zip">
             <button type="submit" class="button"><?= _cw('Änderungen speichern')?></button>
         </form>
@@ -113,10 +114,10 @@ if (count($successes) > 0) {
     </ul>
 </div>
 
-<div id="cw-import-wrapper" class="cw-blockmanager-wrapper">
+<div id="cw-import-wrapper" class="cw-blockmanager-wrapper <? if ($show_another_courseware):?> cw-blockmanager-another-courseware<? endif?>">
     <input type="hidden" id="block_map" value='<?= $block_map?>'>
     <div id="cw-import-title" class="cw-blockmanager-title">
-        <p><?= _cw('Import') ?></p>
+        <p><?= _cw('Import') ?><? if ($show_another_courseware) echo ' - '.$course_name?></p>
         <form class="blockmanager-form" id="cw-blockmanager-form-full-import" method="post" enctype="multipart/form-data">
             <input type="hidden" name="cid" value="<?= $cid ?>">
             <input type="hidden" name="subcmd" value="fullimport">
@@ -126,21 +127,96 @@ if (count($successes) > 0) {
 
     <div id="cw-import-lists">
     </div>
-
-    <div id="cw-import-selection">
-        <label for="cw-file-upload-import" id="cw-file-upload-import-label">
-            <p><?= _cw('Datei für den Import wählen') ?></p>
-        </label>
+    <? if ($show_another_courseware):?>
+        <div id="another-courseware-list">
+            <ul class="chapter-list chapter-list-import">
+                <? foreach($another_courseware['children'] as $chapter): ?>
+                    <li class="chapter-item chapter-item-import chapter-item-remote" data-id="remote-<?= $chapter['id']?>">
+                        <p class="chapter-description"><?= $chapter['title']?> 
+                            <span>
+                                <?= _cw('Kapitel') ?>
+                                <? if($chapter['publication_date'] != null):?>
+                                    | <?= _cw('veröffentlichen') ?>: <?=$chapter['publication_date']?>
+                                <? endif ?>
+                                <? if($chapter['withdraw_date'] != null):?>
+                                    | <?= _cw('widerrufen') ?>: <?=$chapter['withdraw_date']?>
+                                <? endif ?>
+                                <? if(!$chapter['isPublished']):?><span class="structure-not-visible"></span><? endif?>
+                            </span>
+                        </p>
+                        <ul class="subchapter-list subchapter-list-import">
+                            <? foreach($chapter['children'] as $subchapter): ?>
+                                <li class="subchapter-item subchapter-item-import subchapter-item-remote" data-id="remote-<?= $subchapter['id']?>">
+                                    <p class="subchapter-description"><?= $subchapter['title'] ?>
+                                        <span>
+                                            <?= _cw('Unterkapitel') ?>
+                                            <? if($subchapter['publication_date'] != null):?>
+                                                | <?= _cw('veröffentlichen') ?>: <?=$subchapter['publication_date']?>
+                                            <? endif ?>
+                                            <? if($subchapter['withdraw_date'] != null):?>
+                                                | <?= _cw('widerrufen') ?>: <?=$subchapter['withdraw_date']?>
+                                            <? endif ?>
+                                            <? if(!$subchapter['isPublished']):?><span class="structure-not-visible"></span><? endif?>
+                                        </span>
+                                    </p>
+                                    <ul class="section-list section-list-import">
+                                        <? foreach($subchapter['children'] as $section):?>
+                                            <li class="section-item section-item-import section-item-remote" data-id="remote-<?= $section['id']?>">
+                                                <p class="section-description"><?= $section['title']?> <span><?= _cw('Abschnitt') ?></span></p>
+                                                <ul class="block-list block-list-import">
+                                                <? foreach($section['children'] as $block):?>
+                                                    <? $ui_block = $block['ui_block']?>
+                                                    <li class="block-item block-item-import block-item-remote" data-id="remote-<?= $block['id']?>">
+                                                        <p class="block-description"><span class="block-icon cw-block-icon-<?=$block['type']?>"></span><?= $ui_block::NAME ?><? if(!$block['visible']):?><span class="block-not-visible"></span><? endif?>
+                                                        </p>
+                                                        <ul class="block-preview">
+                                                            <li class="block-id">ID: <?=$block['id']?></li>
+                                                            <? if(method_exists($ui_block, 'preview_view')): ?>
+                                                                <li class="block-content-preview"><?=$ui_block->render('preview', array())?></li>
+                                                            <? endif ?>
+                                                        </ul>
+                                                    </li>
+                                                <? endforeach?>
+                                                </ul>
+                                            </li>
+                                        <? endforeach?>
+                                    </ul>
+                                </li>
+                            <? endforeach?>
+                        </ul>
+                    </li>
+                <? endforeach?>
+            </ul>
+        </div>
+    <? endif?>
+    <div id="user-course-list">
+        <ul>
+            <? foreach ($courses as $key => $value): ?>
+                <li id="<?=$key?>">
+                    <form class="blockmanager-form" method="post">
+                        <input type="hidden" name="subcmd" value="showAnotherCourseware">
+                        <input type="hidden" name="another_course_id" value="<?= $key ?>">
+                        <button type="submit" class="blockmanager-course-item"><?= $value ?></button>
+                    </form>
+                </li>
+            <? endforeach; ?>
+        </ul>
     </div>
-</div>
+    <ul id="cw-import-selection">
+        <li>
+            <label for="cw-file-upload-import" id="cw-file-upload-import-label">
+                <p><?= _cw('Import-Archiv hochladen') ?></p>
+            </label>
+        </li>
 
-<div class="cw-blockmanager-wrapper">
-    <div class="cw-blockmanager-title" id="cw-export-title">
-        <p><?= _cw('Export') ?></p>
-        <form class="blockmanager-form" id="cw-blockmanager-form-export" action="block_manager/export" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="cid" value="<?= $cid ?>">
-            <input type="hidden" name="subcmd" value="fullimport">
-            <button type="submit" class="button"><?= _cw('Komplettes Archiv exportieren') ?></button>
-        </form>
-    </div>
+        <li>
+            <div id="cw-import-from-course">
+                <p><?= _cw('Aus Veranstaltung importieren') ?></p>
+            </div>
+        </li>
+
+    </ul>
+
+    <div style="clear: both;"></div>
+
 </div>

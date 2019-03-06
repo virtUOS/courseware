@@ -29,9 +29,17 @@ class BlockManagerController extends CoursewareStudipController
 
     public function index_action()
     {
+        $this->cid = Request::get('cid');
         $this->errors = [];
         $this->warnings = [];
         $this->successes = [];
+
+        $this->courses = [];
+        foreach(CourseMember::findBySQL('user_id = ? AND status = ?', array($this->container['current_user']['user_id'], 'dozent')) as $seminar_user_obj) {
+            if ($this->cid != $seminar_user_obj->Seminar_id) {
+                $this->courses[$seminar_user_obj->Seminar_id] = Course::find($seminar_user_obj->Seminar_id)->getFullname();
+            }
+        }
 
         $this->block_map = json_encode($this->buildBlockMap());
 
@@ -43,9 +51,22 @@ class BlockManagerController extends CoursewareStudipController
             $this->store_changes();
         }
 
-        $this->cid = Request::get('cid');
+        if (Request::method() == 'POST' && Request::option('subcmd')=='showAnotherCourseware') {
+            $this->show_another_courseware = true;
+            $this->course_name = $this->courses[Request::get('another_course_id')];
+            $this->another_courseware = $this->getAnotherCourseware(Request::get('another_course_id'));
+        }
+
+        $grouped = $this->getGrouped($this->cid);
+
+        $this->courseware = current($grouped['']);
+        $this->buildTree($grouped, $this->courseware);
+    }
+
+    private function getGrouped($cid)
+    {
         $grouped = array_reduce(
-            \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId())),
+            \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($cid)),
             function($memo, $item) {
                 $arr = $item->toArray();
                 if (!$item->isStructuralBlock()) {
@@ -63,10 +84,20 @@ class BlockManagerController extends CoursewareStudipController
                 return $memo;
             },
             array());
-            
-        $this->courseware = current($grouped['']);
-        $this->buildTree($grouped, $this->courseware);
+        
+        return $grouped;
     }
+    
+    private function getAnotherCourseware($cid)
+    {
+        $grouped = $this->getGrouped($cid);
+
+        $another_courseware = current($grouped['']);
+        $this->buildTree($grouped, $another_courseware);
+
+        return $another_courseware;
+    }
+
 
     private function buildBlockMap()
     {
@@ -218,6 +249,7 @@ class BlockManagerController extends CoursewareStudipController
     {
         $cid = Request::get('cid');
         $import = Request::get('import');
+        $remote = Request::get('remote');
         $import_xml = Request::get('importXML');
         $chapter_list = json_decode(Request::get('chapterList'), true);
         $subchapter_list = json_decode(Request::get('subchapterList'), true);
@@ -248,165 +280,258 @@ class BlockManagerController extends CoursewareStudipController
 
             return true;
         } else {
-            if ($import_xml == '') {
-                $this->errors[] = _cw('Das Import-Archiv enthält keine data.xml');
-            }
+            if ($remote == 'true') {
 
-            $xml = DOMDocument::loadXML($import_xml);
-            if (!$this->validateUploadFile($import_xml)){
-                return false;
-            }
-
-            $tempDir = $this->extractArchive($_FILES['cw-file-upload-import']['tmp_name']);
-            if (!$tempDir) {
-                return false;
-            }
-
-            $import_folder = $this->createImportFolder();
-
-            // store files
-            $files = array();
-            $coursewareNode = $xml->documentElement;
-            foreach ($coursewareNode->childNodes as $child) {
-                if ($child instanceof DOMElement) {
-                    if  ($child->tagName === 'file') {
-                        $this->processFile($child, $tempDir, $files, $import_folder);
+                foreach($chapter_list as &$chapter_id){
+                    if(strpos($chapter_id, 'remote') > -1) {
+                        $original_block_id = str_replace('remote-', '', $chapter_id);
+                        $db_block = \Mooc\DB\Block::find($original_block_id);
+                        $data = array('title' => $db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
+                        $block = $this->createAnyBlock($courseware->id, 'Chapter', $data);
+                        $this->updateListKey($subchapter_list, $chapter_id, $block->id);
+                        $chapter_id = $block->id;
                     }
                 }
-            }
-            // clean up temp directory
-            $this->deleteRecursively($tempDir);
 
-            // get relevant Blocks from Lists
-            // find them in XML
-            // create Blocks and change ids in Lists
-            // update positions
-
-            foreach($chapter_list as &$chapter_id){
-                if(strpos($chapter_id, 'import') > -1) {
-                    $chapter_tempid = str_replace('import-', '', $chapter_id);
-                    $chapter_title = '';
-                    foreach($xml->getElementsByTagName('chapter') as $xml_chapter) {
-                        if ($xml_chapter->getAttribute('temp-id') == $chapter_tempid) {
-                            $chapter_title = $xml_chapter->getAttribute('title');
+                foreach($subchapter_list as $key => &$value) {
+                    $parent_id = $key;
+                    foreach($value as &$subchapter_id) {
+                        if(strpos($subchapter_id, 'remote') > -1) {
+                            $original_block_id = str_replace('remote-', '', $subchapter_id);
+                            $db_block = \Mooc\DB\Block::find($original_block_id);
+                            $data = array('title' => $db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
+                            $block = $this->createAnyBlock($parent_id, 'Subchapter', $data);
+                            $this->updateListKey($section_list, $subchapter_id, $block->id);
+                            $subchapter_id = $block->id;
                         }
                     }
-                    $data = array('title' => $chapter_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
-                    $block = $this->createAnyBlock($courseware->id, 'Chapter', $data);
-                    $this->updateListKey($subchapter_list, $chapter_id, $block->id);
-                    $chapter_id = $block->id;
                 }
-            }
 
-            foreach($subchapter_list as $key => &$value) {
-                $parent_id = $key;
-                foreach($value as &$subchapter_id) {
-                    if(strpos($subchapter_id, 'import') > -1) {
-                        $subchapter_tempid = str_replace('import-', '', $subchapter_id);
-                        $subchapter_title = '';
-                        foreach($xml->getElementsByTagName('subchapter') as $xml_subchapter) {
-                            if ($xml_subchapter->getAttribute('temp-id') == $subchapter_tempid) {
-                                $subchapter_title = $xml_subchapter->getAttribute('title');
+                foreach($section_list as $key => &$value) {
+                    $parent_id = $key;
+                    foreach($value as &$section_id) {
+                        if(strpos($section_id, 'remote') > -1) {
+                            $remote_block_id = str_replace('remote-', '', $section_id);
+                            $remote_db_block = \Mooc\DB\Block::find($remote_block_id);
+                            $data = array('title' => $remote_db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
+                            $new_block = $this->createAnyBlock($parent_id, 'Section', $data);
+                            $remote_ui_block = $this->plugin->getBlockFactory()->makeBlock($remote_db_block);
+                            $new_ui_block = $this->plugin->getBlockFactory()->makeBlock($new_block);
+                            if (in_array($remote_ui_block->icon, $new_ui_block->allowed_icons())) {
+                                $new_ui_block->icon = $remote_ui_block->icon;
                             }
+                            $new_ui_block->save();
+                            $this->updateListKey($block_list, $section_id, $new_block->id);
+                            $section_id = $new_block->id;
                         }
-                        $data = array('title' => $subchapter_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
-                        $block = $this->createAnyBlock($parent_id, 'Subchapter', $data);
-                        $this->updateListKey($section_list, $subchapter_id, $block->id);
-                        $subchapter_id = $block->id;
                     }
                 }
-            }
 
-            foreach($section_list as $key => &$value) {
-                $parent_id = $key;
-                foreach($value as &$section_id) {
-                    if(strpos($section_id, 'import') > -1) {
-                        $section_tempid = str_replace('import-', '', $section_id);
-                        $section_title = '';
-                        foreach($xml->getElementsByTagName('section') as $xml_section) {
-                            if ($xml_section->getAttribute('temp-id') == $section_tempid) {
-                                $section_title = $xml_section->getAttribute('title');
+                //create import folder
+                $import_folder = $this->createImportFolder();
+
+                foreach($block_list as $key => &$value) {
+                    $parent_id = $key;
+                    foreach($value as &$block_id) {
+                        if(strpos($block_id, 'remote') > -1) {
+                            $remote_block_id = str_replace('remote-', '', $block_id);
+                            $remote_db_block = \Mooc\DB\Block::find($remote_block_id);
+                            $remote_ui_block = $this->plugin->getBlockFactory()->makeBlock($remote_db_block);
+    
+                            $data = array('title' => $remote_db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
+                            $new_block = $this->createAnyBlock($parent_id, $remote_db_block->type, $data);
+                            $this->updateListKey($block_list, $block_id, $block->id);
+                            $block_id = $new_block->id;
+
+                            $new_ui_block = $this->plugin->getBlockFactory()->makeBlock($new_block);
+                            if (gettype($new_ui_block) != 'object') { 
+                                $new_block->delete();
+                                unset($block_list[$block_id]);
+                                $this->errors[] = _cw('Daten wurden nicht importiert');
+                                $this->successes[] = _cw('Änderungen wurden gespeichert');
+    
+                                return;
                             }
+                            $files = $remote_ui_block->getFiles();
+                            foreach($files as &$file) {
+                                $remote_file = FileRef::find($file['id']);
+                                $file = FileManager::copyFileRef($remote_file, $import_folder, \User::findCurrent());
+                            }
+                            $new_ui_block->importProperties($remote_ui_block->exportProperties());
+                            $new_ui_block->importContents($remote_ui_block->exportContents(), $files);
+
                         }
-                        $data = array('title' => $section_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
-                        $block = $this->createAnyBlock($parent_id, 'Section', $data);
-                        $icon = $xml_section->getAttribute('icon');
-                        $uiSection = $this->plugin->getBlockFactory()->makeBlock($block);
-                        if (in_array($icon, $uiSection->allowed_icons())) {
-                            $uiSection->icon = $icon;
-                        }
-                        $uiSection->save();
-                        $this->updateListKey($block_list, $section_id, $block->id);
-                        $section_id = $block->id;
                     }
                 }
-            }
 
-            $used_files = array();
-            foreach($block_list as $key => &$value) {
-                $parent_id = $key;
-                foreach($value as &$block_id) {
-                    if(strpos($block_id, 'import') > -1) {
-                        $block_uuid = str_replace('import-', '', $block_id);
-                        $block_title = '';
-                        $block_node = '';
-                        $block_type = '';
-                        foreach($xml->getElementsByTagName('block') as $xml_block) {
-                            if ($xml_block->getAttribute('uuid') == $block_uuid) {
-                                $block_title = $xml_block->getAttribute('title');
-                                $block_type = $xml_block->getAttribute('type');
-                                $block_node = $xml_block;
-                            }
+                //remove import folder if it is empty
+                if(empty($import_folder->getFiles())) {
+                    $import_folder->delete();
+                }
+
+                $this->successes[] = _cw('Änderungen wurden gespeichert');
+                $this->successes[] = _cw('Daten wurden aus Veranstaltung importiert');
+
+            } else {
+                if ($import_xml == '') {
+                    $this->errors[] = _cw('Das Import-Archiv enthält keine data.xml');
+                }
+    
+                $xml = DOMDocument::loadXML($import_xml);
+                if (!$this->validateUploadFile($import_xml)){
+                    return false;
+                }
+    
+                $tempDir = $this->extractArchive($_FILES['cw-file-upload-import']['tmp_name']);
+                if (!$tempDir) {
+                    return false;
+                }
+    
+                $import_folder = $this->createImportFolder();
+    
+                // store files
+                $files = array();
+                $coursewareNode = $xml->documentElement;
+                foreach ($coursewareNode->childNodes as $child) {
+                    if ($child instanceof DOMElement) {
+                        if  ($child->tagName === 'file') {
+                            $this->processFile($child, $tempDir, $files, $import_folder);
                         }
-
-                        $data = array('title' => $block_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
-                        $block = $this->createAnyBlock($parent_id, $block_type, $data);
-                        $this->updateListKey($block_list, $block_id, $block->id);
-                        $block_id = $block->id;
-                        $uiBlock = $this->plugin->getBlockFactory()->makeBlock($block);
-                        if (gettype($uiBlock) != 'object') { 
-                            $block->delete();
-                            unset($block_list[$block_id]);
-                            $this->errors[] = _cw('Daten wurden nicht importiert');
-                            $this->successes[] = _cw('Änderungen wurden gespeichert');
-
-                            return;
-                        }
-
-                        $properties = array();
-                        foreach ($block_node->attributes as $attribute) {
-
-                            if (!$attribute instanceof DOMAttr) {
-                                continue;
-                            }
-
-                            if ($attribute->namespaceURI !== null) {
-                                $properties[$attribute->name] = $attribute->value;
-                            }
-                        }
-                        if (count($properties) > 0) {
-                            $uiBlock->importProperties($properties);
-                        }
-
-                        $used_files = array_merge($used_files, $uiBlock->importContents(trim($block_node->textContent), $files));
                     }
                 }
-            }
-
-            // delete unused files
-            foreach($files as $file) {
-                if (!in_array($file->id , $used_files)) {
-                    $import_folder->deleteFile($file->id);
+                // clean up temp directory
+                $this->deleteRecursively($tempDir);
+    
+                 //get relevant Blocks from Lists
+                 //find them in XML
+                 //create Blocks and change ids in Lists
+                 //update positions
+    
+                foreach($chapter_list as &$chapter_id){
+                    if(strpos($chapter_id, 'import') > -1) {
+                        $chapter_tempid = str_replace('import-', '', $chapter_id);
+                        $chapter_title = '';
+                        foreach($xml->getElementsByTagName('chapter') as $xml_chapter) {
+                            if ($xml_chapter->getAttribute('temp-id') == $chapter_tempid) {
+                                $chapter_title = $xml_chapter->getAttribute('title');
+                            }
+                        }
+                        $data = array('title' => $chapter_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
+                        $block = $this->createAnyBlock($courseware->id, 'Chapter', $data);
+                        $this->updateListKey($subchapter_list, $chapter_id, $block->id);
+                        $chapter_id = $block->id;
+                    }
                 }
+    
+                foreach($subchapter_list as $key => &$value) {
+                    $parent_id = $key;
+                    foreach($value as &$subchapter_id) {
+                        if(strpos($subchapter_id, 'import') > -1) {
+                            $subchapter_tempid = str_replace('import-', '', $subchapter_id);
+                            $subchapter_title = '';
+                            foreach($xml->getElementsByTagName('subchapter') as $xml_subchapter) {
+                                if ($xml_subchapter->getAttribute('temp-id') == $subchapter_tempid) {
+                                    $subchapter_title = $xml_subchapter->getAttribute('title');
+                                }
+                            }
+                            $data = array('title' => $subchapter_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
+                            $block = $this->createAnyBlock($parent_id, 'Subchapter', $data);
+                            $this->updateListKey($section_list, $subchapter_id, $block->id);
+                            $subchapter_id = $block->id;
+                        }
+                    }
+                }
+    
+                foreach($section_list as $key => &$value) {
+                    $parent_id = $key;
+                    foreach($value as &$section_id) {
+                        if(strpos($section_id, 'import') > -1) {
+                            $section_tempid = str_replace('import-', '', $section_id);
+                            $section_title = '';
+                            foreach($xml->getElementsByTagName('section') as $xml_section) {
+                                if ($xml_section->getAttribute('temp-id') == $section_tempid) {
+                                    $section_title = $xml_section->getAttribute('title');
+                                }
+                            }
+                            $data = array('title' => $section_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
+                            $block = $this->createAnyBlock($parent_id, 'Section', $data);
+                            $icon = $xml_section->getAttribute('icon');
+                            $uiSection = $this->plugin->getBlockFactory()->makeBlock($block);
+                            if (in_array($icon, $uiSection->allowed_icons())) {
+                                $uiSection->icon = $icon;
+                            }
+                            $uiSection->save();
+                            $this->updateListKey($block_list, $section_id, $block->id);
+                            $section_id = $block->id;
+                        }
+                    }
+                }
+    
+                $used_files = array();
+                foreach($block_list as $key => &$value) {
+                    $parent_id = $key;
+                    foreach($value as &$block_id) {
+                        if(strpos($block_id, 'import') > -1) {
+                            $block_uuid = str_replace('import-', '', $block_id);
+                            $block_title = '';
+                            $block_node = '';
+                            $block_type = '';
+                            foreach($xml->getElementsByTagName('block') as $xml_block) {
+                                if ($xml_block->getAttribute('uuid') == $block_uuid) {
+                                    $block_title = $xml_block->getAttribute('title');
+                                    $block_type = $xml_block->getAttribute('type');
+                                    $block_node = $xml_block;
+                                }
+                            }
+    
+                            $data = array('title' => $block_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
+                            $block = $this->createAnyBlock($parent_id, $block_type, $data);
+                            $this->updateListKey($block_list, $block_id, $block->id);
+                            $block_id = $block->id;
+                            $uiBlock = $this->plugin->getBlockFactory()->makeBlock($block);
+                            if (gettype($uiBlock) != 'object') { 
+                                $block->delete();
+                                unset($block_list[$block_id]);
+                                $this->errors[] = _cw('Daten wurden nicht importiert');
+                                $this->successes[] = _cw('Änderungen wurden gespeichert');
+    
+                                return;
+                            }
+    
+                            $properties = array();
+                            foreach ($block_node->attributes as $attribute) {
+    
+                                if (!$attribute instanceof DOMAttr) {
+                                    continue;
+                                }
+    
+                                if ($attribute->namespaceURI !== null) {
+                                    $properties[$attribute->name] = $attribute->value;
+                                }
+                            }
+                            if (count($properties) > 0) {
+                                $uiBlock->importProperties($properties);
+                            }
+    
+                            $used_files = array_merge($used_files, $uiBlock->importContents(trim($block_node->textContent), $files));
+                        }
+                    }
+                }
+    
+                 //delete unused files
+                foreach($files as $file) {
+                    if (!in_array($file->id , $used_files)) {
+                        $import_folder->deleteFile($file->id);
+                    }
+                }
+    
+                if(empty($import_folder->getFiles())) {
+                    $import_folder->delete();
+                }
+    
+                $this->successes[] = _cw('Änderungen wurden gespeichert');
+                $this->successes[] = _cw('Daten wurden importiert');
             }
-
-            if(empty($import_folder->getFiles())) {
-                $import_folder->delete();
-            }
-
-            $this->successes[] = _cw('Änderungen wurden gespeichert');
-            $this->successes[] = _cw('Daten wurden importiert');
-
         }
     }
 

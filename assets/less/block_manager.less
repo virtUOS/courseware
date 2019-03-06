@@ -6,13 +6,14 @@
 }
 
 #courseware-blockmanager {
-    
+
     .cw-blockmanager-wrapper {
         border: solid thin #28497c;
+        border-top: none;
         margin-bottom: 2em;
 
-        
         .cw-blockmanager-title {
+            border-top: solid thin #28497c;
             border-bottom: solid thin #28497c;
             color: #28497c;
             font-weight: 600;
@@ -24,10 +25,13 @@
                 vertical-align: text-top;
             }
 
-            form{
+            form {
                 display: inline-block;
                 float: right;
                 .cw-file-upload-import {
+                    display: none;
+                }
+                &#cw-blockmanager-form-full-import {
                     display: none;
                 }
             }
@@ -36,29 +40,71 @@
                 border-bottom: none;
             }
         }
+
+        #user-course-list,
         #cw-import-lists{
             display: none;
         }
-        #cw-import-selection{
-            #cw-file-upload-import-label {
-                .assets-bg-icon("blue/arr_eol-up.svg");
-                background-size: 64px 64px;
-                background-repeat: no-repeat;
-                background-position: center 32px; 
-                border: 1px solid #28497c;
-                display: inline-block;
-                cursor: pointer;
-                height: 128px;  
-                width: 128px;
-                margin: 1em;
-                padding: 1em;
-                p {
-                    text-align: center;
-                    margin-top: 96px;
+
+        #user-course-list {
+            ul {
+                list-style: none;
+                padding: 0;
+                
+                li {
+                    margin: 1em;
+
+                    .blockmanager-course-item {
+                        padding: 1em 1em 1em 2.5em;
+                        background-color: #28497c;
+                        background-image: url("../@{blocks-icons-dir}/white/seminar.svg");
+                        background-size: 16px;
+                        background-position: 10px center;
+                        background-repeat: no-repeat;
+                        color: #fff;
+                        font-weight: 600;
+                        border: none;
+                        cursor: pointer;
+                        display: inline-block;
+                        width: 100%;
+                        text-align: left;
+                    }
                 }
             }
         }
-        
+
+        ul#cw-import-selection{
+            list-style: none;
+            li {
+                float: left;
+
+                #cw-import-from-course {
+                    .assets-bg-icon("blue/seminar.svg");
+                }
+                #cw-file-upload-import-label {
+                    .assets-bg-icon("blue/arr_eol-up.svg");
+                }
+            
+                #cw-import-from-course,
+                #cw-file-upload-import-label {
+                    background-size: 64px 64px;
+                    background-repeat: no-repeat;
+                    background-position: center 24px; 
+                    border: 1px solid #28497c;
+                    display: inline-block;
+                    cursor: pointer;
+                    height: 128px;  
+                    width: 128px;
+                    margin: 1em;
+                    padding: 1em;
+                    p {
+                        text-align: center;
+                        margin-top: 86px;
+                    }
+                }
+            }
+        }
+
         &.cw-blockmanager-info {
             margin-bottom: 2em;
             display: none;
@@ -149,115 +195,114 @@
     }
 
     .block-item {
-
-    
         .block-description {
-                background-image: url("../@{blocks-icons-dir}/blue/arr_1right.svg");
-        background-size: 16px;
-        background-position: 6px center;
-        background-repeat: no-repeat;
-        &.unfolded {
-            background-image: url("../@{blocks-icons-dir}/blue/arr_1down.svg");
-        }
+            background-image: url("../@{blocks-icons-dir}/blue/arr_1right.svg");
+            background-size: 16px;
+            background-position: 6px center;
+            background-repeat: no-repeat;
+            &.unfolded {
+                background-image: url("../@{blocks-icons-dir}/blue/arr_1down.svg");
+            }
             margin: 0.25em;
             padding: 0.5em 0.5em 0.5em 2em;
             color: #28497c;
             cursor: pointer;
 
-                .block-icon {
-                    .assets-bg-icon("blue/plugin.svg");
+            .block-icon {
+                .assets-bg-icon("blue/plugin.svg");
 
-                    &.cw-block-icon-AudioBlock {
-                        .assets-bg-icon("blue/play.svg");
-                    }
-                    &.cw-block-icon-ConfirmBlock {
-                        .assets-bg-icon("blue/accept.svg");
-                    }
-                    &.cw-block-icon-DownloadBlock {
-                        .assets-bg-icon("blue/download.svg");
-                    }
-                    &.cw-block-icon-EvaluationBlock {
-                        .assets-bg-icon("blue/evaluation.svg");
-                    }
-                    &.cw-block-icon-ForumBlock {
-                        .assets-bg-icon("blue/forum.svg");
-                    }
-                    &.cw-block-icon-HtmlBlock {
-                        .assets-bg-icon("blue/edit.svg");
-                    }
-                    &.cw-block-icon-CanvasBlock,
-                    &.cw-block-icon-BeforeAfterBlock,
-                    &.cw-block-icon-GalleryBlock {
-                        background-image: url("../images/icons/blue/picture.svg");
-                    }
-                    &.cw-block-icon-DialogCardsBlock {
-                        background-image: url("../images/icons/blue/dialog-cards.svg");
-                    }
-                    &.cw-block-icon-AssortBlock {
-                        .assets-bg-icon("blue/hamburger.svg");
-                    }
-                    &.cw-block-icon-PostBlock {
-                        .assets-bg-icon("blue/chat.svg");
-                    }
-                    &.cw-block-icon-LinkBlock {
-                        .assets-bg-icon("blue/link-extern.svg");
-                    }
-                    &.cw-block-icon-KeyPointBlock {
-                        .assets-bg-icon("blue/exclaim-circle.svg");
-                    }
-                    &.cw-block-icon-PdfBlock {
-                        .assets-bg-icon("blue/file-pdf.svg");
-                    }
-                    &.cw-block-icon-CodeBlock {
-                        .assets-bg-icon("blue/computer.svg");
-                    }
-                    &.cw-block-icon-EmbedBlock {
-                        .assets-bg-icon("blue/code.svg");
-                    }
-                    &.cw-block-icon-TestBlock {
-                        .assets-bg-icon("blue/question-circle.svg");
-                    }
-                    &.cw-block-icon-SearchBlock {
-                        .assets-bg-icon("blue/search.svg");
-                    }
-                    &.cw-block-icon-VideoBlock,
-                    &.cw-block-icon-InteractiveVideoBlock,
-                    &.cw-block-icon-OpenCastBlock {
-                        .assets-bg-icon("blue/video.svg");
-                    }
-                    &.cw-block-icon-IFrameBlock {
-                        .assets-bg-icon("blue/door-enter.svg");
-                    }
-                    &.cw-block-icon-ChartBlock {
-                        .assets-bg-icon("blue/vote.svg");
-                    }
-                    &.cw-block-icon-DateBlock {
-                        .assets-bg-icon("blue/date.svg");
-                    }
-                    &.cw-block-icon-TypewriterBlock {
-                        .assets-bg-icon("blue/wizard.svg");
-                    }
-                    &.cw-block-icon-ScrollyBlock {
-                        .assets-bg-icon("blue/literature.svg");
-                    }
+                &.cw-block-icon-AudioBlock {
+                    .assets-bg-icon("blue/play.svg");
+                }
+                &.cw-block-icon-ConfirmBlock {
+                    .assets-bg-icon("blue/accept.svg");
+                }
+                &.cw-block-icon-DownloadBlock {
+                    .assets-bg-icon("blue/download.svg");
+                }
+                &.cw-block-icon-EvaluationBlock {
+                    .assets-bg-icon("blue/evaluation.svg");
+                }
+                &.cw-block-icon-ForumBlock {
+                    .assets-bg-icon("blue/forum.svg");
+                }
+                &.cw-block-icon-HtmlBlock {
+                    .assets-bg-icon("blue/edit.svg");
+                }
+                &.cw-block-icon-CanvasBlock,
+                &.cw-block-icon-BeforeAfterBlock,
+                &.cw-block-icon-GalleryBlock {
+                    background-image: url("../images/icons/blue/picture.svg");
+                }
+                &.cw-block-icon-DialogCardsBlock {
+                    background-image: url("../images/icons/blue/dialog-cards.svg");
+                }
+                &.cw-block-icon-AssortBlock {
+                    .assets-bg-icon("blue/hamburger.svg");
+                }
+                &.cw-block-icon-PostBlock {
+                    .assets-bg-icon("blue/chat.svg");
+                }
+                &.cw-block-icon-LinkBlock {
+                    .assets-bg-icon("blue/link-extern.svg");
+                }
+                &.cw-block-icon-KeyPointBlock {
+                    .assets-bg-icon("blue/exclaim-circle.svg");
+                }
+                &.cw-block-icon-PdfBlock {
+                    .assets-bg-icon("blue/file-pdf.svg");
+                }
+                &.cw-block-icon-CodeBlock {
+                    .assets-bg-icon("blue/computer.svg");
+                }
+                &.cw-block-icon-EmbedBlock {
+                    .assets-bg-icon("blue/code.svg");
+                }
+                &.cw-block-icon-TestBlock {
+                    .assets-bg-icon("blue/question-circle.svg");
+                }
+                &.cw-block-icon-SearchBlock {
+                    .assets-bg-icon("blue/search.svg");
+                }
+                &.cw-block-icon-VideoBlock,
+                &.cw-block-icon-InteractiveVideoBlock,
+                &.cw-block-icon-OpenCastBlock {
+                    .assets-bg-icon("blue/video.svg");
+                }
+                &.cw-block-icon-IFrameBlock {
+                    .assets-bg-icon("blue/door-enter.svg");
+                }
+                &.cw-block-icon-ChartBlock {
+                    .assets-bg-icon("blue/vote.svg");
+                }
+                &.cw-block-icon-DateBlock {
+                    .assets-bg-icon("blue/date.svg");
+                }
+                &.cw-block-icon-TypewriterBlock {
+                    .assets-bg-icon("blue/wizard.svg");
+                }
+                &.cw-block-icon-ScrollyBlock {
+                    .assets-bg-icon("blue/literature.svg");
+                }
 
-                    background-size: 16px 16px;
-                    background-repeat: no-repeat;
-                    width: 16px;
-                    height: 16px;
-                    display: inline-block;
-                    vertical-align: text-bottom;
-                    margin-right: 0.5em;
-                }
-                .block-not-visible {
-                    .assets-bg-icon("blue/visibility-invisible.svg");
-                    background-size: 16px 16px;
-                    background-repeat: no-repeat;
-                    background-position: 0 center; 
-                    width: 16px;
-                    height: 16px;
-                    float: right;
-                }
+                background-size: 16px 16px;
+                background-repeat: no-repeat;
+                width: 16px;
+                height: 16px;
+                display: inline-block;
+                vertical-align: text-bottom;
+                margin-right: 0.5em;
+            }
+
+            .block-not-visible {
+                .assets-bg-icon("blue/visibility-invisible.svg");
+                background-size: 16px 16px;
+                background-repeat: no-repeat;
+                background-position: 0 center; 
+                width: 16px;
+                height: 16px;
+                float: right;
+            }
         }
 
         ul.block-preview {

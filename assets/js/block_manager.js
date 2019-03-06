@@ -10,9 +10,22 @@ $(document).ready(function(){
     startMouseListeners();
     createSortables();
     setImport();
-    
+
     if($('#cw-blockmanager-info').children().length > 0) {
         $('#cw-blockmanager-info').show();
+    }
+    
+    $('#cw-import-from-course').click(function(){
+        $('#cw-import-selection').hide();
+        $('#user-course-list').show();
+    });
+    
+    if ($('#cw-import-wrapper').hasClass('cw-blockmanager-another-courseware')) {
+        createSortablesForImport();
+        stopMouseListeners();
+        startMouseListeners();
+        $('#cw-import-selection').hide();
+        $('#user-course-list').hide();
     }
 });
 
@@ -59,6 +72,9 @@ function createSortables() {
                 importSubchapters($(ui.item));
                 $('#import').val(true);
             }
+            if($(ui.item).hasClass('chapter-item-remote')) {
+                $('#remote').val(true);
+            }
             $('#chapterList').val(JSON.stringify(chapterList));
         }
     }).disableSelection();
@@ -87,6 +103,9 @@ function createSortables() {
                 removeImportClasses($(ui.item));
                 importSections($(ui.item));
                 $('#import').val(true);
+            }
+            if($(ui.item).hasClass('subchapter-item-remote')) {
+                $('#remote').val(true);
             }
             $('#subchapterList').val(JSON.stringify(subchapterList));
         }
@@ -117,6 +136,9 @@ function createSortables() {
                 importBlocks($(ui.item));
                 $('#import').val(true);
             }
+            if($(ui.item).hasClass('section-item-remote')) {
+                $('#remote').val(true);
+            }
             $('#sectionList').val(JSON.stringify(sectionList));
         }
     }).disableSelection();
@@ -145,6 +167,9 @@ function createSortables() {
                     removeImportClasses($(ui.item));
                     $('#import').val(true);
                 }
+                if($(ui.item).hasClass('block-item-remote')) {
+                $('#remote').val(true);
+            }
                 $('#blockList').val(JSON.stringify(blockList));
             }
     }).disableSelection();
@@ -253,20 +278,21 @@ function createSortablesForImport() {
 
 function setImport() {
     $('#cw-file-upload-import').on('change', function (event) {
-    
+
         const file0 = event.target.files[0];
         var $file_input = $(this), $file_input_clone = $file_input.clone();
         $file_input_clone.attr('id', 'cw-file-upload-full-import');
 
         var block_map = JSON.parse($('#block_map').val());
+        $('#cw-blockmanager-form-full-import').css('display', 'inline-block');
 
         ZipLoader.unzip(file0).then( function ( unziped ) {
             var text, parser, xmlDoc;
-    
+
             text = unziped.extractAsText( 'data.xml' );
             parser = new DOMParser();
             xmlDoc = parser.parseFromString(text,"text/xml");
-    
+
             var $this_chapter_list = $('<ul class="chapter-list chapter-list-import"></ul>').appendTo('#cw-import-lists');
             var chapter_counter = 0, subchapter_counter = 0, section_counter = 0;
             $.each(xmlDoc.documentElement.children, function(key, node) {
@@ -276,7 +302,7 @@ function setImport() {
                     var $this_chapter = $('<li class="chapter-item chapter-item-import" data-id="import-'+chapter_counter+'"></li>').appendTo($this_chapter_list);
                     $('<p class="chapter-description">'+node.getAttribute('title')+'<span>'+block_map[node.nodeName]+'</span></p>').appendTo($this_chapter);
                     var $this_subchapter_list = $('<ul class="subchapter-list subchapter-list-import"></ul>').appendTo($this_chapter);
-    
+
                     $.each(node.children, function(key, node) {
                         if (node.nodeName == 'subchapter'){
                             subchapter_counter++;
@@ -284,7 +310,7 @@ function setImport() {
                             var $this_subchapter = $('<li class="subchapter-item subchapter-item-import"  data-id="import-'+subchapter_counter+'"></li>').appendTo($this_subchapter_list);
                             $('<p class="subchapter-description">'+node.getAttribute('title')+'<span>'+block_map[node.nodeName]+'</span></p>').appendTo($this_subchapter);
                             var $this_section_list = $('<ul class="section-list section-list-import"></ul>').appendTo($this_subchapter);
-    
+
                             $.each(node.children, function(key, node) {
                                 if (node.nodeName == 'section') {
                                     section_counter++;
@@ -292,12 +318,12 @@ function setImport() {
                                     var $this_section = $('<li class="section-item section-item-import" data-id="import-'+section_counter+'"></li>').appendTo($this_section_list);
                                     $('<p class="section-description">'+node.getAttribute('title')+'<span>'+block_map[node.nodeName]+'</span></p>').appendTo($this_section);
                                     var $this_block_list = $('<ul class="block-list block-list-import"></ul>').appendTo($this_section);
-    
+
                                     $.each(node.children, function(key, node) {
                                         if (node.nodeName == 'block') {
                                             //build block
                                             var $this_block = $('<li class="block-item block-item-import" data-id="import-'+node.getAttribute('uuid')+'"></li>').appendTo($this_block_list);
-                                            $('<p class="block-description cw-block-icon-'+node.getAttribute('type')+'">'+block_map[node.getAttribute('type')]+'</p>').appendTo($this_block);
+                                            $('<p class="block-description"><span class="block-icon cw-block-icon-'+node.getAttribute('type')+'"></span>'+block_map[node.getAttribute('type')]+'</p>').appendTo($this_block);
                                         }
                                     });
                                 }
@@ -319,6 +345,6 @@ function setImport() {
 
             $file_input_clone.appendTo('#cw-blockmanager-form-full-import');
         });
-    
+
     });
 }

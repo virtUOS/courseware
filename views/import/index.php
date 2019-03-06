@@ -30,7 +30,7 @@ if (count($warnings) > 0) {
     <p>&nbsp;</p>
     <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="subcmd" value="upload">
-        <input type="file" name="import_file">
+        <input type="file" name="import_file" accept=".zip">
 
         <div>
             <?php
