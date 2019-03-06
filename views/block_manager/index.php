@@ -15,13 +15,12 @@ if (count($errors) > 0) {
 }
 
 if (count($warnings) > 0) {
-    echo'<div class="cw-blockmanager-title"><p>'._cw('Warnung! Es konnten nicht alle Blöcke importiert werden.').'</p></div>';
+    echo'<div class="cw-blockmanager-title"><p>'._cw('Warnung').'</p></div>';
     echo '<ul class="cw-blockmanager-info-content">';
     foreach ($warnings as $warning):
         echo '<li>'.htmlReady($warning).'</li>';
     endforeach;
     echo '</ul>';
-    echo'<p>'._cw('Bitte überprüfen Sie den Inhalt Ihrer Courseware und den Daten in Ihrer Importdatei.').'</p>';
 }
 
 if (count($successes) > 0) {

@@ -235,8 +235,11 @@ class BlockManagerController extends CoursewareStudipController
                         $this->errors[] = $validationError->message;
                 }
             }
+            if (!empty($this->warnings)){
+                array_unshift($this->warnings, _cw('Es konnten möglicherweise nicht alle Blöcke importiert werden'));
+            }
             if (!empty($this->errors)){
-                array_unshift($errors, _cw('Die Datendatei data.xml enthält kein valides XML'));
+                array_unshift($this->errors, _cw('Die Datendatei data.xml enthält kein valides XML'));
 
                 return false;
             }
@@ -256,6 +259,7 @@ class BlockManagerController extends CoursewareStudipController
         $section_list = json_decode(Request::get('sectionList'), true);
         $block_list = json_decode(Request::get('blockList'), true);
         $courseware = $this->container['current_courseware'];
+        $changes = false;
 
         if ($import == 'false') {
             foreach(array($subchapter_list, $section_list, $block_list) as $list) {
@@ -269,14 +273,20 @@ class BlockManagerController extends CoursewareStudipController
                         }
                     }
                     $parent->updateChildPositions($value);
+                    $changes = true;
                 }
             }
-    
+
             $courseware = \Mooc\DB\Block::findCourseware($cid);
             if ($chapter_list != null) {
                 $courseware->updateChildPositions($chapter_list);
+                $changes = true;
             }
-            $this->successes[] = _cw('Änderungen wurden gespeichert');
+            if ($changes) {
+                $this->successes[] = _cw('Änderungen wurden gespeichert');
+            } else {
+                $this->warnings[] = _cw('Es wurden keine Änderungen vorgenommen');
+            }
 
             return true;
         } else {
