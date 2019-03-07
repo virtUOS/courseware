@@ -64,7 +64,6 @@ export default AuthorView.extend({
           $(event.target).addClass('accept');
           $view.switchBack();
         },
-
         // error
         function (error) {
           var errorMessage = 'Could not update the block: '+$.parseJSON(error.responseText).reason;

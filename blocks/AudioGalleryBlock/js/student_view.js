@@ -102,7 +102,7 @@ export default StudentView.extend({
       audio.controls = true;
       audio.src = url;
       audio.classList.add('cw-audio-gallery-player');
-      
+
       $(audio).insertBefore(this.$('.cw-audio-gallery-record-button-delete.user-record-delete'));
 
       var reader = new FileReader();
@@ -145,7 +145,7 @@ export default StudentView.extend({
     }
     return time;
   },
-  
+
   storeRecording() {
     var $view = this;
 
@@ -184,7 +184,6 @@ export default StudentView.extend({
                 $('<p>Aufnahme wurde gelöscht.</p>').insertBefore($del_button);
             }
         },
-
         // error
         function (error) {
           var errorMessage = 'Error: '+$.parseJSON(error.responseText).reason;
