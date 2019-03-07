@@ -1,7 +1,6 @@
 $(document).ready(function(){
-    var isDragging = false;
-
-    var chapterList = [],
+    var isDragging = false,
+        chapterList = [],
         subchapterList = {},
         sectionList = {},
         blockList = {};
@@ -14,12 +13,12 @@ $(document).ready(function(){
     if($('#cw-blockmanager-info').children().length > 0) {
         $('#cw-blockmanager-info').show();
     }
-    
+
     $('#cw-import-from-course').click(function(){
         $('#cw-import-selection').hide();
         $('#user-course-list').show();
     });
-    
+
     if ($('#cw-import-wrapper').hasClass('cw-blockmanager-remote-courseware')) {
         createSortablesForImport();
         stopMouseListeners();

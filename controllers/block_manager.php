@@ -84,7 +84,7 @@ class BlockManagerController extends CoursewareStudipController
                 return $memo;
             },
             array());
-        
+
         return $grouped;
     }
     
@@ -189,7 +189,7 @@ class BlockManagerController extends CoursewareStudipController
 
             return false;
         }
-        
+
         return $tempDir;
     }
 
@@ -360,7 +360,7 @@ class BlockManagerController extends CoursewareStudipController
                                 unset($block_list[$block_id]);
                                 $this->errors[] = _cw('Daten wurden nicht importiert');
                                 $this->successes[] = _cw('Änderungen wurden gespeichert');
-    
+
                                 return;
                             }
                             $files = $remote_ui_block->getFiles();
@@ -370,7 +370,6 @@ class BlockManagerController extends CoursewareStudipController
                             }
                             $new_ui_block->importProperties($remote_ui_block->exportProperties());
                             $new_ui_block->importContents($remote_ui_block->exportContents(), $files);
-
                         }
                     }
                 }
@@ -391,14 +390,14 @@ class BlockManagerController extends CoursewareStudipController
                 if (!$this->validateUploadFile($import_xml)){
                     return false;
                 }
-    
+
                 $tempDir = $this->extractArchive($_FILES['cw-file-upload-import']['tmp_name']);
                 if (!$tempDir) {
                     return false;
                 }
 
                 $import_folder = $this->createImportFolder();
-    
+
                 // store files
                 $files = array();
                 $coursewareNode = $xml->documentElement;
@@ -411,12 +410,7 @@ class BlockManagerController extends CoursewareStudipController
                 }
                 // clean up temp directory
                 $this->deleteRecursively($tempDir);
-    
-                 //get relevant Blocks from Lists
-                 //find them in XML
-                 //create Blocks and change ids in Lists
-                 //update positions
-    
+
                 foreach($chapter_list as &$chapter_id){
                     if(strpos($chapter_id, 'import') > -1) {
                         $chapter_tempid = str_replace('import-', '', $chapter_id);
@@ -432,7 +426,7 @@ class BlockManagerController extends CoursewareStudipController
                         $chapter_id = $block->id;
                     }
                 }
-    
+
                 foreach($subchapter_list as $key => &$value) {
                     $parent_id = $key;
                     foreach($value as &$subchapter_id) {
@@ -451,7 +445,7 @@ class BlockManagerController extends CoursewareStudipController
                         }
                     }
                 }
-    
+
                 foreach($section_list as $key => &$value) {
                     $parent_id = $key;
                     foreach($value as &$section_id) {
@@ -476,7 +470,7 @@ class BlockManagerController extends CoursewareStudipController
                         }
                     }
                 }
-    
+
                 $used_files = array();
                 foreach($block_list as $key => &$value) {
                     $parent_id = $key;
@@ -493,7 +487,7 @@ class BlockManagerController extends CoursewareStudipController
                                     $block_node = $xml_block;
                                 }
                             }
-    
+
                             $data = array('title' => $block_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $block = $this->createAnyBlock($parent_id, $block_type, $data);
                             $this->updateListKey($block_list, $block_id, $block->id);
@@ -507,7 +501,7 @@ class BlockManagerController extends CoursewareStudipController
     
                                 return;
                             }
-    
+
                             $properties = array();
                             foreach ($block_node->attributes as $attribute) {
     
@@ -522,23 +516,23 @@ class BlockManagerController extends CoursewareStudipController
                             if (count($properties) > 0) {
                                 $uiBlock->importProperties($properties);
                             }
-    
+
                             $used_files = array_merge($used_files, $uiBlock->importContents(trim($block_node->textContent), $files));
                         }
                     }
                 }
-    
+
                  //delete unused files
                 foreach($files as $file) {
                     if (!in_array($file->id , $used_files)) {
                         $import_folder->deleteFile($file->id);
                     }
                 }
-    
+
                 if(empty($import_folder->getFiles())) {
                     $import_folder->delete();
                 }
-    
+
                 $this->successes[] = _cw('Daten wurden importiert');
             }
 
