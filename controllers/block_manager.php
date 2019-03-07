@@ -331,8 +331,8 @@ class BlockManagerController extends CoursewareStudipController
                                 $new_ui_block->icon = $remote_ui_block->icon;
                             }
                             $new_ui_block->save();
-                            $this->updateListKey($block_list, $section_id, $new_block->id);
-                            $section_id = $new_block->id;
+                            $this->updateListKey($block_list, $section_id, intval($new_block->id));
+                            $section_id = intval($new_block->id);
                         }
                     }
                 }
@@ -350,8 +350,8 @@ class BlockManagerController extends CoursewareStudipController
     
                             $data = array('title' => $remote_db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $new_block = $this->createAnyBlock($parent_id, $remote_db_block->type, $data);
-                            $this->updateListKey($block_list, $block_id, $block->id);
-                            $block_id = $new_block->id;
+                            $this->updateListKey($block_list, $block_id, intval($new_block->id));
+                            $block_id = intval($new_block->id);
 
                             $new_ui_block = $this->plugin->getBlockFactory()->makeBlock($new_block);
                             if (gettype($new_ui_block) != 'object') { 
@@ -379,7 +379,6 @@ class BlockManagerController extends CoursewareStudipController
                     $import_folder->delete();
                 }
 
-                $this->successes[] = _cw('Änderungen wurden gespeichert');
                 $this->successes[] = _cw('Daten wurden aus Veranstaltung importiert');
 
             } else {
@@ -539,9 +538,23 @@ class BlockManagerController extends CoursewareStudipController
                     $import_folder->delete();
                 }
     
-                $this->successes[] = _cw('Änderungen wurden gespeichert');
                 $this->successes[] = _cw('Daten wurden importiert');
             }
+
+            $courseware = \Mooc\DB\Block::findCourseware($this->cid);
+            if ($chapter_list != null) {
+                $courseware->updateChildPositions($chapter_list);
+                $changes = true;
+            }
+
+            foreach(array($subchapter_list, $section_list, $block_list) as $list) {
+                foreach($list as $key => $value) {
+                    $parent = \Mooc\DB\Block::find($key);
+                    $parent->updateChildPositions($value);
+                }
+            }
+
+            $this->successes[] = _cw('Änderungen wurden gespeichert');
         }
     }
 
