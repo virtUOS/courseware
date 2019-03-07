@@ -29,14 +29,20 @@ export default StudentView.extend({
         },
 
         'click button[name=submit-exercise]': function (event) {
+            //console.log('prevent default');
+            //return false;
+            
             var $form = this.$(event.target).closest('form'),
                 view = this,
                 $exercise_index = $form.find('input[name="exercise_index"]').val(),
                 $block = this.$el.parent();
 
-            var file = this.$('input[name="upload"]')[0].files[0]; //Files[0] = 1st file
+            var file = false;
+            if (this.$('input[name="upload"]').length > 0) {
+             file = this.$('input[name="upload"]')[0].files[0]; //Files[0] = 1st file
+            }
 
-            if (file != undefined) {
+            if (file) {
                 var reader = new FileReader();
                 reader.readAsDataURL(file);
                   reader.onloadend = function() {
