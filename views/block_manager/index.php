@@ -168,19 +168,21 @@ if (count($successes) > 0) {
                                             <li class="section-item section-item-import section-item-remote" data-id="remote-<?= $section['id']?>">
                                                 <p class="section-description"><?= $section['title']?> <span><?= _cw('Abschnitt') ?></span></p>
                                                 <ul class="block-list block-list-import">
-                                                <? foreach($section['children'] as $block):?>
-                                                    <? $ui_block = $block['ui_block']?>
-                                                    <li class="block-item block-item-import block-item-remote" data-id="remote-<?= $block['id']?>">
-                                                        <p class="block-description"><span class="block-icon cw-block-icon-<?=$block['type']?>"></span><?= $ui_block::NAME ?><? if(!$block['visible']):?><span class="block-not-visible"></span><? endif?>
-                                                        </p>
-                                                        <ul class="block-preview">
-                                                            <li class="block-id">ID: <?=$block['id']?></li>
-                                                            <? if(method_exists($ui_block, 'preview_view')): ?>
-                                                                <li class="block-content-preview"><?=$ui_block->render('preview', array())?></li>
-                                                            <? endif ?>
-                                                        </ul>
-                                                    </li>
-                                                <? endforeach?>
+                                                    <? if($section['children'] != null):?>
+                                                    <? foreach($section['children'] as $block):?>
+                                                        <? $ui_block = $block['ui_block']?>
+                                                        <li class="block-item block-item-import block-item-remote" data-id="remote-<?= $block['id']?>">
+                                                            <p class="block-description"><span class="block-icon cw-block-icon-<?=$block['type']?>"></span><?= $ui_block::NAME ?><? if(!$block['visible']):?><span class="block-not-visible"></span><? endif?>
+                                                            </p>
+                                                            <ul class="block-preview">
+                                                                <li class="block-id">ID: <?=$block['id']?></li>
+                                                                <? if(method_exists($ui_block, 'preview_view')): ?>
+                                                                    <li class="block-content-preview"><?=$ui_block->render('preview', array())?></li>
+                                                                <? endif ?>
+                                                            </ul>
+                                                        </li>
+                                                    <? endforeach?>
+                                                    <? endif ?>
                                                 </ul>
                                             </li>
                                         <? endforeach?>
@@ -195,15 +197,19 @@ if (count($successes) > 0) {
     <? endif?>
     <div id="user-course-list">
         <ul>
-            <? foreach ($remote_courses as $key => $value): ?>
-                <li id="<?=$key?>">
-                    <form class="blockmanager-form" method="post">
-                        <input type="hidden" name="subcmd" value="showRemoteCourseware">
-                        <input type="hidden" name="remote_course_id" value="<?= $key ?>">
-                        <button type="submit" class="blockmanager-course-item"><?= $value ?></button>
-                    </form>
-                </li>
-            <? endforeach; ?>
+            <? if(!empty($remote_courses)):?>
+                <? foreach ($remote_courses as $key => $value): ?>
+                    <li id="<?=$key?>">
+                        <form class="blockmanager-form" method="post">
+                            <input type="hidden" name="subcmd" value="showRemoteCourseware">
+                            <input type="hidden" name="remote_course_id" value="<?= $key ?>">
+                            <button type="submit" class="blockmanager-course-item"><?= $value ?></button>
+                        </form>
+                    </li>
+                <? endforeach; ?>
+            <? else: ?>
+                <li><?= _cw('Es wurden keine weitere Veranstaltung gefunden in der Courseware aktiv ist.')?></li>
+            <? endif ?>
         </ul>
     </div>
     <ul id="cw-import-selection">
