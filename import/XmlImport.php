@@ -80,7 +80,13 @@ class XmlImport implements ImportInterface
         global $user;
         $originId = $node->getAttribute('id');
         $filename = $node->getAttribute('filename');
-        
+        $filesize = $node->getAttribute('filesize');
+
+        if (!($originId && $filename && $filesize)) {
+
+            return;
+        }
+
         // is this file already stored
         $stored_file = \FileRef::findOneBySQL('name = ? AND folder_id = ?', array($node->getAttribute('name'), $folder->id));
         if(!$stored_file) {
