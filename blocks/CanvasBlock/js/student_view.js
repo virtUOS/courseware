@@ -244,7 +244,7 @@ export default StudentView.extend({
                 }
             }
         });
-        
+
         if (bg == 0) {
             $(outlineImage).trigger('load');
         }

@@ -46,7 +46,7 @@ class CanvasBlock extends Block
         $content = json_decode($this->canvas_content);
 
         $files_arr = $this->showFiles($content->image_id);
-        
+
         $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['image_id_found'] == false) && empty($content->image_id);
         
         if((!$files_arr['image_id_found']) && (!empty($content->image_id))){
@@ -165,7 +165,7 @@ class CanvasBlock extends Block
         }
         $file_ref = new \FileRef($content->image_id);
         $file = new \File($file_ref->file_id);
-        
+
         $files[] = array(
             'id' => $content->image_id,
             'name' => $file_ref->name,

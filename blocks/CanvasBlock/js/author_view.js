@@ -129,7 +129,7 @@ export default AuthorView.extend({
           console.log(errorMessage, arguments);
         });
   },
-  
+
   selectSource() {
     var $view = this;
     var $selection = $view.$('.cw-canvasblock-source').val();
