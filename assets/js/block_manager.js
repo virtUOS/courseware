@@ -20,7 +20,7 @@ $(document).ready(function(){
         $('#user-course-list').show();
     });
     
-    if ($('#cw-import-wrapper').hasClass('cw-blockmanager-another-courseware')) {
+    if ($('#cw-import-wrapper').hasClass('cw-blockmanager-remote-courseware')) {
         createSortablesForImport();
         stopMouseListeners();
         startMouseListeners();

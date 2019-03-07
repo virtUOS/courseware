@@ -1,6 +1,6 @@
 <?php
 
-use Mooc\DB\Block;
+use Mooc\DB\Block as dbBlock;
 use Mooc\Import\XmlImport;
 use Mooc\Export\XmlExport;
 use Mooc\Export\Validator\XmlValidator;
@@ -34,10 +34,10 @@ class BlockManagerController extends CoursewareStudipController
         $this->warnings = [];
         $this->successes = [];
 
-        $this->courses = [];
+        $this->remote_courses = [];
         foreach(CourseMember::findBySQL('user_id = ? AND status = ?', array($this->container['current_user']['user_id'], 'dozent')) as $seminar_user_obj) {
             if ($this->cid != $seminar_user_obj->Seminar_id) {
-                $this->courses[$seminar_user_obj->Seminar_id] = Course::find($seminar_user_obj->Seminar_id)->getFullname();
+                $this->remote_courses[$seminar_user_obj->Seminar_id] = Course::find($seminar_user_obj->Seminar_id)->getFullname();
             }
         }
 
@@ -51,10 +51,10 @@ class BlockManagerController extends CoursewareStudipController
             $this->store_changes();
         }
 
-        if (Request::method() == 'POST' && Request::option('subcmd')=='showAnotherCourseware') {
-            $this->show_another_courseware = true;
-            $this->course_name = $this->courses[Request::get('another_course_id')];
-            $this->another_courseware = $this->getAnotherCourseware(Request::get('another_course_id'));
+        if (Request::method() == 'POST' && Request::option('subcmd')=='showRemoteCourseware') {
+            $this->show_remote_courseware = true;
+            $this->remote_course_name = $this->remote_courses[Request::get('remote_course_id')];
+            $this->remote_courseware = $this->getRemoteCourseware(Request::get('remote_course_id'));
         }
 
         $grouped = $this->getGrouped($this->cid);
@@ -66,7 +66,7 @@ class BlockManagerController extends CoursewareStudipController
     private function getGrouped($cid)
     {
         $grouped = array_reduce(
-            \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($cid)),
+            dbBlock::findBySQL('seminar_id = ? ORDER BY id, position', array($cid)),
             function($memo, $item) {
                 $arr = $item->toArray();
                 if (!$item->isStructuralBlock()) {
@@ -88,14 +88,14 @@ class BlockManagerController extends CoursewareStudipController
         return $grouped;
     }
     
-    private function getAnotherCourseware($cid)
+    private function getRemoteCourseware($cid)
     {
         $grouped = $this->getGrouped($cid);
 
-        $another_courseware = current($grouped['']);
-        $this->buildTree($grouped, $another_courseware);
+        $remote_courseware = current($grouped['']);
+        $this->buildTree($grouped, $remote_courseware);
 
-        return $another_courseware;
+        return $remote_courseware;
     }
 
 
@@ -254,6 +254,7 @@ class BlockManagerController extends CoursewareStudipController
         $import = Request::get('import');
         $remote = Request::get('remote');
         $import_xml = Request::get('importXML');
+        $remote_course_name = Request::get('remote_course_name');
         $chapter_list = json_decode(Request::get('chapterList'), true);
         $subchapter_list = json_decode(Request::get('subchapterList'), true);
         $section_list = json_decode(Request::get('sectionList'), true);
@@ -264,9 +265,9 @@ class BlockManagerController extends CoursewareStudipController
         if ($import == 'false') {
             foreach(array($subchapter_list, $section_list, $block_list) as $list) {
                 foreach($list as $key => $value) {
-                    $parent = \Mooc\DB\Block::find($key);
+                    $parent = dbBlock::find($key);
                     foreach($value as $bid) {
-                        $block = \Mooc\DB\Block::find($bid);
+                        $block = dbBlock::find($bid);
                         if ($parent->id != $block->parent_id) {
                             $block->parent_id = $parent->id;
                             $block->store();
@@ -277,7 +278,7 @@ class BlockManagerController extends CoursewareStudipController
                 }
             }
 
-            $courseware = \Mooc\DB\Block::findCourseware($cid);
+            $courseware = dbBlock::findCourseware($cid);
             if ($chapter_list != null) {
                 $courseware->updateChildPositions($chapter_list);
                 $changes = true;
@@ -295,7 +296,7 @@ class BlockManagerController extends CoursewareStudipController
                 foreach($chapter_list as &$chapter_id){
                     if(strpos($chapter_id, 'remote') > -1) {
                         $original_block_id = str_replace('remote-', '', $chapter_id);
-                        $db_block = \Mooc\DB\Block::find($original_block_id);
+                        $db_block = dbBlock::find($original_block_id);
                         $data = array('title' => $db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                         $block = $this->createAnyBlock($courseware->id, 'Chapter', $data);
                         $this->updateListKey($subchapter_list, $chapter_id, $block->id);
@@ -308,7 +309,7 @@ class BlockManagerController extends CoursewareStudipController
                     foreach($value as &$subchapter_id) {
                         if(strpos($subchapter_id, 'remote') > -1) {
                             $original_block_id = str_replace('remote-', '', $subchapter_id);
-                            $db_block = \Mooc\DB\Block::find($original_block_id);
+                            $db_block = dbBlock::find($original_block_id);
                             $data = array('title' => $db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $block = $this->createAnyBlock($parent_id, 'Subchapter', $data);
                             $this->updateListKey($section_list, $subchapter_id, $block->id);
@@ -322,7 +323,7 @@ class BlockManagerController extends CoursewareStudipController
                     foreach($value as &$section_id) {
                         if(strpos($section_id, 'remote') > -1) {
                             $remote_block_id = str_replace('remote-', '', $section_id);
-                            $remote_db_block = \Mooc\DB\Block::find($remote_block_id);
+                            $remote_db_block = dbBlock::find($remote_block_id);
                             $data = array('title' => $remote_db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $new_block = $this->createAnyBlock($parent_id, 'Section', $data);
                             $remote_ui_block = $this->plugin->getBlockFactory()->makeBlock($remote_db_block);
@@ -345,7 +346,7 @@ class BlockManagerController extends CoursewareStudipController
                     foreach($value as &$block_id) {
                         if(strpos($block_id, 'remote') > -1) {
                             $remote_block_id = str_replace('remote-', '', $block_id);
-                            $remote_db_block = \Mooc\DB\Block::find($remote_block_id);
+                            $remote_db_block = dbBlock::find($remote_block_id);
                             $remote_ui_block = $this->plugin->getBlockFactory()->makeBlock($remote_db_block);
     
                             $data = array('title' => $remote_db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
@@ -379,13 +380,13 @@ class BlockManagerController extends CoursewareStudipController
                     $import_folder->delete();
                 }
 
-                $this->successes[] = _cw('Daten wurden aus Veranstaltung importiert');
+                $this->successes[] = _cw('Daten wurden aus "'.$remote_course_name.'" importiert');
 
             } else {
                 if ($import_xml == '') {
                     $this->errors[] = _cw('Das Import-Archiv enthält keine data.xml');
                 }
-    
+
                 $xml = DOMDocument::loadXML($import_xml);
                 if (!$this->validateUploadFile($import_xml)){
                     return false;
@@ -395,7 +396,7 @@ class BlockManagerController extends CoursewareStudipController
                 if (!$tempDir) {
                     return false;
                 }
-    
+
                 $import_folder = $this->createImportFolder();
     
                 // store files
@@ -541,7 +542,7 @@ class BlockManagerController extends CoursewareStudipController
                 $this->successes[] = _cw('Daten wurden importiert');
             }
 
-            $courseware = \Mooc\DB\Block::findCourseware($this->cid);
+            $courseware = dbBlock::findCourseware($this->cid);
             if ($chapter_list != null) {
                 $courseware->updateChildPositions($chapter_list);
                 $changes = true;
@@ -549,7 +550,7 @@ class BlockManagerController extends CoursewareStudipController
 
             foreach(array($subchapter_list, $section_list, $block_list) as $list) {
                 foreach($list as $key => $value) {
-                    $parent = \Mooc\DB\Block::find($key);
+                    $parent = dbBlock::find($key);
                     $parent->updateChildPositions($value);
                 }
             }
@@ -560,7 +561,7 @@ class BlockManagerController extends CoursewareStudipController
 
     private function createAnyBlock($parent, $type, $data)
     {
-        $block = new \Mooc\DB\Block();
+        $block = new dbBlock();
         $parent_id = is_object($parent) ? $parent->id : $parent;
         $block->setData(array(
             'seminar_id' => $data['cid'],

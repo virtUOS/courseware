@@ -46,6 +46,9 @@ if (count($successes) > 0) {
             <input type="hidden" name="importXML" id="importXML" value="">
             <input type="hidden" name="import" id="import" value=false>
             <input type="hidden" name="remote" id="remote" value=false>
+            <? if ($show_remote_courseware): ?>
+                <input type="hidden" name="remote_course_name" id="remote_course_name" value="<?= $remote_course_name?>">
+            <? endif ?>
             <input type="file" name="cw-file-upload-import" class="cw-file-upload-import" id="cw-file-upload-import" accept=".zip">
             <button type="submit" class="button"><?= _cw('Änderungen speichern')?></button>
         </form>
@@ -113,10 +116,10 @@ if (count($successes) > 0) {
     </ul>
 </div>
 
-<div id="cw-import-wrapper" class="cw-blockmanager-wrapper <? if ($show_another_courseware):?> cw-blockmanager-another-courseware<? endif?>">
+<div id="cw-import-wrapper" class="cw-blockmanager-wrapper <? if ($show_remote_courseware):?> cw-blockmanager-remote-courseware<? endif?>">
     <input type="hidden" id="block_map" value='<?= $block_map?>'>
     <div id="cw-import-title" class="cw-blockmanager-title">
-        <p><?= _cw('Import') ?><? if ($show_another_courseware) echo ' - '.$course_name?></p>
+        <p><?= _cw('Import') ?><? if ($show_remote_courseware) echo ' - '.$remote_course_name?></p>
         <form class="blockmanager-form" id="cw-blockmanager-form-full-import" method="post" enctype="multipart/form-data">
             <input type="hidden" name="cid" value="<?= $cid ?>">
             <input type="hidden" name="subcmd" value="fullimport">
@@ -126,10 +129,10 @@ if (count($successes) > 0) {
 
     <div id="cw-import-lists">
     </div>
-    <? if ($show_another_courseware):?>
-        <div id="another-courseware-list">
+    <? if ($show_remote_courseware):?>
+        <div id="remote-courseware-list">
             <ul class="chapter-list chapter-list-import">
-                <? foreach($another_courseware['children'] as $chapter): ?>
+                <? foreach($remote_courseware['children'] as $chapter): ?>
                     <li class="chapter-item chapter-item-import chapter-item-remote" data-id="remote-<?= $chapter['id']?>">
                         <p class="chapter-description"><?= $chapter['title']?> 
                             <span>
@@ -190,11 +193,11 @@ if (count($successes) > 0) {
     <? endif?>
     <div id="user-course-list">
         <ul>
-            <? foreach ($courses as $key => $value): ?>
+            <? foreach ($remote_courses as $key => $value): ?>
                 <li id="<?=$key?>">
                     <form class="blockmanager-form" method="post">
-                        <input type="hidden" name="subcmd" value="showAnotherCourseware">
-                        <input type="hidden" name="another_course_id" value="<?= $key ?>">
+                        <input type="hidden" name="subcmd" value="showRemoteCourseware">
+                        <input type="hidden" name="remote_course_id" value="<?= $key ?>">
                         <button type="submit" class="blockmanager-course-item"><?= $value ?></button>
                     </form>
                 </li>
