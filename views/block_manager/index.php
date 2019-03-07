@@ -91,19 +91,21 @@ if (count($successes) > 0) {
                                     <li class="section-item" data-id="<?= $section['id']?>">
                                         <p class="section-description"><?= $section['title']?> <span><?= _cw('Abschnitt') ?></span></p>
                                         <ul class="block-list">
-                                        <? foreach($section['children'] as $block):?>
-                                            <? $ui_block = $block['ui_block']?>
-                                            <li class="block-item" data-id="<?= $block['id']?>">
-                                                <p class="block-description"><span class="block-icon cw-block-icon-<?=$block['type']?>"></span><?= $ui_block::NAME ?><? if(!$block['visible']):?><span class="block-not-visible"></span><? endif?>
-                                                </p>
-                                                <ul class="block-preview">
-                                                    <li class="block-id">ID: <?=$block['id']?></li>
-                                                    <? if(method_exists($ui_block, 'preview_view')): ?>
-                                                        <li class="block-content-preview"><?=$ui_block->render('preview', array())?></li>
-                                                    <? endif ?>
-                                                </ul>
-                                            </li>
-                                        <? endforeach?>
+                                        <? if($section['children'] != null):?>
+                                            <? foreach($section['children'] as $block):?>
+                                                <? $ui_block = $block['ui_block']?>
+                                                <li class="block-item" data-id="<?= $block['id']?>">
+                                                    <p class="block-description"><span class="block-icon cw-block-icon-<?=$block['type']?>"></span><?= $ui_block::NAME ?><? if(!$block['visible']):?><span class="block-not-visible"></span><? endif?>
+                                                    </p>
+                                                    <ul class="block-preview">
+                                                        <li class="block-id">ID: <?=$block['id']?></li>
+                                                        <? if(method_exists($ui_block, 'preview_view')): ?>
+                                                            <li class="block-content-preview"><?=$ui_block->render('preview', array())?></li>
+                                                        <? endif ?>
+                                                    </ul>
+                                                </li>
+                                            <? endforeach?>
+                                        <? endif ?>
                                         </ul>
                                     </li>
                                 <? endforeach?>

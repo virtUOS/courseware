@@ -135,9 +135,11 @@ class BlockManagerController extends CoursewareStudipController
     private function addChildren($grouped, &$parent)
     {
         $parent['children'] = $grouped[$parent['id']];
-        usort($parent['children'], function($a, $b) {
-            return $a['position'] - $b['position'];
-        });
+        if ($parent['children'] != null) {
+            usort($parent['children'], function($a, $b) {
+                return $a['position'] - $b['position'];
+            });
+        }
 
         return $parent['children'];
     }
