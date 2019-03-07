@@ -206,13 +206,13 @@ if (count($successes) > 0) {
     </div>
     <ul id="cw-import-selection">
         <li>
-            <label for="cw-file-upload-import" id="cw-file-upload-import-label">
+            <label for="cw-file-upload-import" id="cw-file-upload-import-label" title="<?= _cw('Laden Sie eine Datei hoch, die Sie zuvor aus einer Courseware exportiert haben') ?>">
                 <p><?= _cw('Import-Archiv hochladen') ?></p>
             </label>
         </li>
 
         <li>
-            <div id="cw-import-from-course">
+            <div id="cw-import-from-course"  title="<?= _cw('Importieren Sie Inhalte aus einer anderen Veranstaltung in der Sie Dozent sind')?>">
                 <p><?= _cw('Aus Veranstaltung importieren') ?></p>
             </div>
         </li>
