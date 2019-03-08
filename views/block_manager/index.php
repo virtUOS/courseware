@@ -224,7 +224,6 @@ if (count($successes) > 0) {
                 <p><?= _cw('Aus Veranstaltung importieren') ?></p>
             </div>
         </li>
-
     </ul>
 
     <div style="clear: both;"></div>
