@@ -273,19 +273,17 @@ class BlockManagerController extends CoursewareStudipController
 
         if ($import == 'false') {
             foreach(array($subchapter_list, $section_list, $block_list) as $list) {
-                if(!empty($list)) {
-                    foreach($list as $key => $value) {
-                        $parent = dbBlock::find($key);
-                        foreach($value as $bid) {
-                            $block = dbBlock::find($bid);
-                            if ($parent->id != $block->parent_id) {
-                                $block->parent_id = $parent->id;
-                                $block->store();
-                            }
+                foreach((array)$list as $key => $value) {
+                    $parent = dbBlock::find($key);
+                    foreach($value as $bid) {
+                        $block = dbBlock::find($bid);
+                        if ($parent->id != $block->parent_id) {
+                            $block->parent_id = $parent->id;
+                            $block->store();
                         }
-                        $parent->updateChildPositions($value);
-                        $changes = true;
                     }
+                    $parent->updateChildPositions($value);
+                    $changes = true;
                 }
             }
 
@@ -304,7 +302,7 @@ class BlockManagerController extends CoursewareStudipController
         } else {
             if ($remote == 'true') {
 
-                foreach($chapter_list as &$chapter_id){
+                foreach((array)$chapter_list as &$chapter_id){
                     if(strpos($chapter_id, 'remote') > -1) {
                         $original_block_id = str_replace('remote-', '', $chapter_id);
                         $db_block = dbBlock::find($original_block_id);
@@ -315,7 +313,7 @@ class BlockManagerController extends CoursewareStudipController
                     }
                 }
 
-                foreach($subchapter_list as $key => &$value) {
+                foreach((array)$subchapter_list as $key => &$value) {
                     $parent_id = $key;
                     foreach($value as &$subchapter_id) {
                         if(strpos($subchapter_id, 'remote') > -1) {
@@ -329,7 +327,7 @@ class BlockManagerController extends CoursewareStudipController
                     }
                 }
 
-                foreach($section_list as $key => &$value) {
+                foreach((array)$section_list as $key => &$value) {
                     $parent_id = $key;
                     foreach($value as &$section_id) {
                         if(strpos($section_id, 'remote') > -1) {
@@ -352,7 +350,7 @@ class BlockManagerController extends CoursewareStudipController
                 //create import folder
                 $import_folder = $this->createImportFolder();
 
-                foreach($block_list as $key => &$value) {
+                foreach((array)$block_list as $key => &$value) {
                     $parent_id = $key;
                     foreach($value as &$block_id) {
                         if(strpos($block_id, 'remote') > -1) {
@@ -422,7 +420,7 @@ class BlockManagerController extends CoursewareStudipController
                 // clean up temp directory
                 $this->deleteRecursively($tempDir);
 
-                foreach($chapter_list as &$chapter_id){
+                foreach((array)$chapter_list as &$chapter_id){
                     if(strpos($chapter_id, 'import') > -1) {
                         $chapter_tempid = str_replace('import-', '', $chapter_id);
                         $chapter_title = '';
@@ -438,7 +436,7 @@ class BlockManagerController extends CoursewareStudipController
                     }
                 }
 
-                foreach($subchapter_list as $key => &$value) {
+                foreach((array)$subchapter_list as $key => &$value) {
                     $parent_id = $key;
                     foreach($value as &$subchapter_id) {
                         if(strpos($subchapter_id, 'import') > -1) {
@@ -457,7 +455,7 @@ class BlockManagerController extends CoursewareStudipController
                     }
                 }
 
-                foreach($section_list as $key => &$value) {
+                foreach((array)$section_list as $key => &$value) {
                     $parent_id = $key;
                     foreach($value as &$section_id) {
                         if(strpos($section_id, 'import') > -1) {
@@ -483,7 +481,7 @@ class BlockManagerController extends CoursewareStudipController
                 }
 
                 $used_files = array();
-                foreach($block_list as $key => &$value) {
+                foreach((array)$block_list as $key => &$value) {
                     $parent_id = $key;
                     foreach($value as &$block_id) {
                         if(strpos($block_id, 'import') > -1) {
@@ -554,7 +552,7 @@ class BlockManagerController extends CoursewareStudipController
             }
 
             foreach(array($subchapter_list, $section_list, $block_list) as $list) {
-                foreach($list as $key => $value) {
+                foreach((array)$list as $key => $value) {
                     $parent = dbBlock::find($key);
                     $parent->updateChildPositions($value);
                 }
