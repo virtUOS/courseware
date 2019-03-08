@@ -8,8 +8,8 @@ export default AuthorView.extend({
         'click button[name=save]':   'onSave',
         'click button[name=cancel]': 'switchBack',
         'change select.cw-embedblock-source': 'selectPlatform',
-        'change input.cw-embedblock-url': 'checkURL',
-        'keyup input.cw-embedblock-url': 'checkURL',
+        'change input.cw-embedblock-url': 'selectCorrectPlatform',
+        'keyup input.cw-embedblock-url': 'selectCorrectPlatform',
         'change input.cw-embedblock-time-start-check': 'toggleTime',
         'change input.cw-embedblock-time-end-check': 'toggleTime',
         'change .cw-embedblock-time input[type="number"]' : 'timeValidator'
@@ -130,6 +130,40 @@ export default AuthorView.extend({
             url_input.removeClass('cw-embedblock-wrong-plattform');
             this.$('.cw-embedblock-url-info-wrong-plattform').hide();
         }
+    },
+
+    selectCorrectPlatform() {
+        var view = this;
+        var url = view.$('.cw-embedblock-url').val();
+        var platforms = [
+            'vimeo',
+            'youtube',
+            'giphy',
+            'flickr',
+            'sway',
+            'spotify',
+            'deviantart',
+            'sketchfab',
+            'codesandbox',
+            'codepen',
+            'ethfiddle',
+            'slideshare',
+            'speakerdeck',
+            'audiomack',
+            'kidoju',
+            'learningapps',
+            'soundcloud'
+        ];
+        $.each(platforms, function(key, platform){
+            if(url.includes(platform)) {
+                view.$('select.cw-embedblock-source option[value="'+platform+'"]').prop('selected', true);
+            }
+        });
+        if(url.includes('youtu.be')) {
+            view.$('select.cw-embedblock-source option[value="youtube"]').prop('selected', true);
+        }
+        view.selectPlatform();
+        view.checkURL();
     },
 
     toggleTime() {
