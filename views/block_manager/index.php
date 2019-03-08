@@ -36,24 +36,6 @@ if (count($successes) > 0) {
 <div class="cw-blockmanager-wrapper">
     <div class="cw-blockmanager-title">
         <p><?= _cw('Struktur bearbeiten') ?></p>
-        <form class="blockmanager-form" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="subcmd" value="store_changes">
-            <input type="hidden" name="chapterList" id="chapterList" value="">
-            <input type="hidden" name="subchapterList" id="subchapterList" value="">
-            <input type="hidden" name="sectionList" id="sectionList" value="">
-            <input type="hidden" name="blockList" id="blockList" value="">
-            <input type="hidden" name="cid" value="<?= $cid ?>">
-            <input type="hidden" name="importXML" id="importXML" value="">
-            <input type="hidden" name="import" id="import" value=false>
-            <input type="hidden" name="remote" id="remote" value=false>
-            <? if ($show_remote_courseware): ?>
-                <input type="hidden" name="remote_course_name" id="remote_course_name" value="<?= $remote_course_name?>">
-            <? endif ?>
-            <input type="file" name="cw-file-upload-import" class="cw-file-upload-import" id="cw-file-upload-import" accept=".zip">
-            <button type="submit" class="button"><?= _cw('Änderungen speichern')?></button>
-        </form>
-        <div class="clear"></div>
-
     </div>
 
     <ul class="chapter-list">
@@ -98,7 +80,6 @@ if (count($successes) > 0) {
                                                     <p class="block-description"><span class="block-icon cw-block-icon-<?=$block['type']?>"></span><?= $ui_block::NAME ?><? if(!$block['visible']):?><span class="block-not-visible"></span><? endif?>
                                                     </p>
                                                     <ul class="block-preview">
-                                                        <li class="block-id">ID: <?=$block['id']?></li>
                                                         <? if(method_exists($ui_block, 'preview_view')): ?>
                                                             <li class="block-content-preview"><?=$ui_block->render('preview', array())?></li>
                                                         <? endif ?>
@@ -116,21 +97,38 @@ if (count($successes) > 0) {
             </li>
         <? endforeach?>
     </ul>
+    <form class="blockmanager-form" id="blockmanager-store-changes" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="subcmd" value="store_changes">
+        <input type="hidden" name="chapterList" id="chapterList" value="">
+        <input type="hidden" name="subchapterList" id="subchapterList" value="">
+        <input type="hidden" name="sectionList" id="sectionList" value="">
+        <input type="hidden" name="blockList" id="blockList" value="">
+        <input type="hidden" name="cid" value="<?= $cid ?>">
+        <input type="hidden" name="importXML" id="importXML" value="">
+        <input type="hidden" name="import" id="import" value=false>
+        <input type="hidden" name="remote" id="remote" value=false>
+        <? if ($show_remote_courseware): ?>
+            <input type="hidden" name="remote_course_name" id="remote_course_name" value="<?= $remote_course_name?>">
+        <? endif ?>
+        <input type="file" name="cw-file-upload-import" class="cw-file-upload-import" id="cw-file-upload-import" accept=".zip">
+        <button type="submit" class="button"><?= _cw('Änderungen speichern')?></button>
+    </form>
+    <div class="clear"></div>
 </div>
 
 <div id="cw-import-wrapper" class="cw-blockmanager-wrapper <? if ($show_remote_courseware):?> cw-blockmanager-remote-courseware<? endif?>">
     <input type="hidden" id="block_map" value='<?= $block_map?>'>
     <div id="cw-import-title" class="cw-blockmanager-title">
         <p><?= _cw('Import') ?><? if ($show_remote_courseware) echo ' - '.$remote_course_name?></p>
-        <form class="blockmanager-form" id="cw-blockmanager-form-full-import" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="cid" value="<?= $cid ?>">
-            <input type="hidden" name="subcmd" value="fullimport">
-            <button type="submit" class="button"><?= _cw('Komplettes Archiv importieren') ?></button>
-        </form>
     </div>
 
     <div id="cw-import-lists">
     </div>
+    <form class="blockmanager-form" id="cw-blockmanager-form-full-import" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="cid" value="<?= $cid ?>">
+        <input type="hidden" name="subcmd" value="fullimport">
+        <button type="submit" class="button"><?= _cw('Komplettes Archiv importieren') ?></button>
+    </form>
     <? if ($show_remote_courseware):?>
         <div id="remote-courseware-list">
             <ul class="chapter-list chapter-list-import">
@@ -175,7 +173,6 @@ if (count($successes) > 0) {
                                                             <p class="block-description"><span class="block-icon cw-block-icon-<?=$block['type']?>"></span><?= $ui_block::NAME ?><? if(!$block['visible']):?><span class="block-not-visible"></span><? endif?>
                                                             </p>
                                                             <ul class="block-preview">
-                                                                <li class="block-id">ID: <?=$block['id']?></li>
                                                                 <? if(method_exists($ui_block, 'preview_view')): ?>
                                                                     <li class="block-content-preview"><?=$ui_block->render('preview', array())?></li>
                                                                 <? endif ?>

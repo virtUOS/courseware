@@ -25,19 +25,30 @@
                 vertical-align: text-top;
             }
 
-            form {
-                display: inline-block;
-                float: right;
-                .cw-file-upload-import {
-                    display: none;
-                }
-                &#cw-blockmanager-form-full-import {
-                    display: none;
-                }
-            }
-
             &#cw-export-title {
                 border-bottom: none;
+            }
+        }
+
+        #cw-blockmanager-form-full-import {
+            float: right;
+            display: none;
+            .cw-file-upload-import {
+                display: none;
+            }
+            .button {
+                margin-right: 1em;
+            }
+        }
+
+        #blockmanager-store-changes {
+            display: inline-block;
+            float: right;
+            .cw-file-upload-import {
+                display: none;
+            }
+            .button {
+                margin-right: 1em;
             }
         }
 
@@ -86,9 +97,9 @@
                     }
                 }
                 #cw-file-upload-import-label {
-                    .assets-bg-icon("blue/arr_eol-up.svg");
+                    .assets-bg-icon("blue/file.svg");
                     &:hover {
-                        .assets-bg-icon("white/arr_eol-up.svg");
+                        .assets-bg-icon("white/file.svg");
                     }
                 }
 
@@ -162,7 +173,7 @@
 
             span {
                 font-weight: normal;
-                color: #7E91B0;
+                color: #adb9cd;
                 float: right;
                 .structure-not-visible {
                     .assets-bg-icon("grey/visibility-invisible.svg");
@@ -322,10 +333,6 @@
             padding: 0.5em;
             li {
                 list-style: none;
-                &.block-id {
-                    color: #7E91B0;
-                    text-align: right;
-                }
                 &.block-content-preview {
                     color: #000;
                     img {
