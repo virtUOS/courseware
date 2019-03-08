@@ -273,17 +273,19 @@ class BlockManagerController extends CoursewareStudipController
 
         if ($import == 'false') {
             foreach(array($subchapter_list, $section_list, $block_list) as $list) {
-                foreach($list as $key => $value) {
-                    $parent = dbBlock::find($key);
-                    foreach($value as $bid) {
-                        $block = dbBlock::find($bid);
-                        if ($parent->id != $block->parent_id) {
-                            $block->parent_id = $parent->id;
-                            $block->store();
+                if(!empty($list)) {
+                    foreach($list as $key => $value) {
+                        $parent = dbBlock::find($key);
+                        foreach($value as $bid) {
+                            $block = dbBlock::find($bid);
+                            if ($parent->id != $block->parent_id) {
+                                $block->parent_id = $parent->id;
+                                $block->store();
+                            }
                         }
+                        $parent->updateChildPositions($value);
+                        $changes = true;
                     }
-                    $parent->updateChildPositions($value);
-                    $changes = true;
                 }
             }
 
