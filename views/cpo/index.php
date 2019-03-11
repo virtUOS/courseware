@@ -103,7 +103,7 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>
                 </td>
                 <td>
                     <? if($subchapter['date'] != ''):?>
-                    <div class="overview-date" title="<?= _cw('Wurde von einem Teilnehmer zuletzt am ') . date('d.m.Y', strtotime($subchapter['date']))._cw(' genutzt')?>">
+                    <div class="overview-date" title="<?= htmlReady($subchapter['title'])._cw(' wurde von einem Teilnehmer zuletzt am ') . date('d.m.Y', strtotime($subchapter['date']))._cw(' bearbeitet')?>">
                         <p class="overview-date-month"><?= $monate[date('n', strtotime($subchapter['date']))]?></p>
                         <p class="overview-date-day"><?= date('d', strtotime($subchapter['date']))?></p>
                         <p class="overview-date-time"><?= date('H:i', strtotime($subchapter['date']))?></p>
