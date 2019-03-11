@@ -9,6 +9,7 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>
 
 ?>
 <h1 style="float: left"><?= _cw('Fortschrittsübersicht für Lehrende') ?></h1>
+<!--
 <div id="overview-usage">
     <ul>
         <li class="day-name">
@@ -41,6 +42,7 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>
         <? endfor; ?>
     </ul>
 </div>
+-->
 <div class="clear"></div>
 <ul id="overview-chapter-nav">
     <li class="overview-chapter-nav-arrow" id="overview-chapter-nav-left"></li>
@@ -101,7 +103,7 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>
                 </td>
                 <td>
                     <? if($subchapter['date'] != ''):?>
-                    <div class="overview-date" title="<?= _cw('zuletzt genutzt am: ') . date('d.m.Y H:i', strtotime($subchapter['date']))?> Uhr">
+                    <div class="overview-date" title="<?= _cw('Wurde von einem Teilnehmer zuletzt am ') . date('d.m.Y', strtotime($subchapter['date']))._cw(' genutzt')?>">
                         <p class="overview-date-month"><?= $monate[date('n', strtotime($subchapter['date']))]?></p>
                         <p class="overview-date-day"><?= date('d', strtotime($subchapter['date']))?></p>
                         <p class="overview-date-time"><?= date('H:i', strtotime($subchapter['date']))?></p>
