@@ -205,7 +205,7 @@ if (count($successes) > 0) {
                     </li>
                 <? endforeach; ?>
             <? else: ?>
-                <li><?= _cw('Es wurden keine weitere Veranstaltung gefunden in der Courseware aktiv ist.')?></li>
+                <li><?= _cw('Es wurden keine weitere Veranstaltung gefunden in der Courseware aktiv ist')?>.</li>
             <? endif ?>
         </ul>
     </div>
