@@ -360,7 +360,7 @@ class BlockManagerController extends CoursewareStudipController
     
                             $data = array('title' => $remote_db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $new_block = $this->createAnyBlock($parent_id, $remote_db_block->type, $data);
-                            $this->updateListKey($block_list, $block_id, intval($new_block->id));
+                            $this->updateBlockId($block_list, $block_id, $new_block->id);
                             $block_id = intval($new_block->id);
 
                             $new_ui_block = $this->plugin->getBlockFactory()->makeBlock($new_block);
@@ -499,7 +499,7 @@ class BlockManagerController extends CoursewareStudipController
 
                             $data = array('title' => $block_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $block = $this->createAnyBlock($parent_id, $block_type, $data);
-                            $this->updateListKey($block_list, $block_id, $block->id);
+                            $this->updateBlockId($block_list, $block_id, $block->id);
                             $block_id = $block->id;
                             $uiBlock = $this->plugin->getBlockFactory()->makeBlock($block);
                             if (gettype($uiBlock) != 'object') { 
@@ -589,6 +589,19 @@ class BlockManagerController extends CoursewareStudipController
                 unset($list[$oldkey]);
 
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function updateBlockId(&$block_list, $old_id, $new_id){
+        foreach($block_list as &$list){
+            foreach($list as &$block_id) {
+                if ($block_id == $old_id){
+                    $block_id = $new_id;
+                    return true;
+                }
             }
         }
 
