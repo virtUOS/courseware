@@ -21,11 +21,19 @@ class DialogCardsBlock extends Block
         foreach($cards as &$card) {
             if ($card['front_img_file_id']) {
                 $file_front = \FileRef::find($card['front_img_file_id']);
-                $card['front_img'] = ($file_front->terms_of_use->fileIsDownloadable($file_front, false)) ? $file_front->getDownloadURL() : '';
+                if ($file_front) {
+                    $card['front_img'] = ($file_front->terms_of_use->fileIsDownloadable($file_front, false)) ? $file_front->getDownloadURL() : '';
+                } else {
+                    $card['front_img'] = '';
+                }
             }
             if ($card['back_img_file_id']) {
                 $file_back = \FileRef::find($card['back_img_file_id']);
-                $card['back_img'] = ($file_back->terms_of_use->fileIsDownloadable($file_back, false)) ? $file_back->getDownloadURL() : '';
+                if ($file_back) {
+                    $card['back_img'] = ($file_back->terms_of_use->fileIsDownloadable($file_back, false)) ? $file_back->getDownloadURL() : '';
+                } else {
+                    $card['back_img'] = '';
+                }
             }
         }
 
