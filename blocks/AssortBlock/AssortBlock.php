@@ -21,8 +21,9 @@ class AssortBlock extends Block
             return array('inactive' => true);
         }
         $this->setGrade(1.0);
+        
 
-        return $this->getAttrArray();
+        return array('assortblocks' => $this->sortByBlockOrder(), 'assorttype' => $this->assorttype);
     }
 
     function author_view()
@@ -55,6 +56,26 @@ class AssortBlock extends Block
     private function getAttrArray() 
     {
         return array('assortblocks' => $this->assortblocks, 'assorttype' => $this->assorttype);
+    }
+
+    private function sortByBlockOrder()
+    {
+        $assortblocks = [];
+        foreach ( json_decode($this->assortblocks, false) as $assortblock) {
+            $block = json_decode(json_encode($assortblock), true);
+            $assortblocks[$block['id']] = $assortblock;
+        }
+
+        $ordered_array = [];
+        foreach($this->getBlocksInSection()["blocks"] as $block_in_section) {
+            $block_id = $block_in_section['blockid'];
+            if(array_key_exists($block_id, $assortblocks)){
+                array_push($ordered_array, $assortblocks[$block_id]);
+                unset($assortblocks[$block_id]);
+            }
+        }
+
+        return json_encode($ordered_array+$assortblocks);
     }
 
     private function getBlocksInSection()
