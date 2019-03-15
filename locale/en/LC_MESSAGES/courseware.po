@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Courseware\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-0314 08:47+0200\n"
-"PO-Revision-Date: 2019-03-14 09:31+0100\n"
+"PO-Revision-Date: 2019-03-15 15:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: ELAN e.V. <lucke@elan-ev.de>\n"
 "Language: en\n"
@@ -1720,6 +1720,12 @@ msgstr "Search"
 msgid "PDF mit Vorschau"
 msgstr "PDF preview"
 
+msgid "Audio Galerie"
+msgstr "Audio Gallery"
+
+msgid "Leinwand"
+msgstr "Canvas"
+
 msgid "externer Inhalt (iframe)"
 msgstr "External Content (iframe)"
 
@@ -1788,6 +1794,12 @@ msgstr "Plays a video from the file system or from a URL"
 
 msgid "Einbetten von einer Website oder Datei"
 msgstr "Embed from a website or file"
+
+msgid "Zeichnen und Schreiben auf einem Bild"
+msgstr "Drawing and writing on a picture"
+
+msgid "Teilnehmer können Audiodateien aufnehmen und mit anderen teilen"
+msgstr "Participants can record and share audio files"
 
 msgid "Für diesen Block muss das Vips Plugin aktiviert sein"
 msgstr "To use this block the Vips plugin must be activated"

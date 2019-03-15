@@ -6,7 +6,7 @@ use Mooc\UI\Block;
 
 class CanvasBlock extends Block
 {
-    const NAME = 'Canvas';
+    const NAME = 'Leinwand';
     const BLOCK_CLASS = 'interaction';
     const DESCRIPTION = 'Zeichnen und Schreiben auf einem Bild';
 
