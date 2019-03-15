@@ -49,7 +49,7 @@ class DialogCardsBlock extends Block
         $cards = json_decode($this->dialogcards_content);
 
         $file_ids = array();
-        foreach ($cards as $card) {
+        foreach ((array)$cards as $card) {
             if (!empty($card->front_img_file_id)) {
                 array_push($file_ids, $card->front_img_file_id);
             }
