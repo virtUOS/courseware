@@ -47,11 +47,18 @@ export default StudentView.extend({
       this.$('.cw-audio-gallery-record-button-start').hide();
       this.$('.cw-audio-gallery-record-button-delete.user-record-delete').hide();
 
+      if (!window.MediaRecorder) {
+        $view.$('.cw-audio-gallery-record-browser-info').show();
+        $view.$('.cw-audio-gallery-record-usermedia-info').hide();
+        return;
+      }
+
       navigator.mediaDevices.getUserMedia({audio: true}).then(_stream => {
         let stream = _stream;
         $view.recorder = new MediaRecorder(stream);
         $view.$('.cw-audio-gallery-record-button-start').show();
         $view.$('.cw-audio-gallery-record-usermedia-info').hide();
+
         $view.recorder.ondataavailable = e => {
           $view.chunks.push(e.data);
           if($view.recorder.state == 'inactive')  $view.makeBlob();
