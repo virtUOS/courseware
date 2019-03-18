@@ -316,7 +316,9 @@ export default StudentView.extend({
         $wrapped = $title.wrapInner('<div/>').children().first(),
         self = this,
         updateSectionTitle = function (model) {
-          var new_title = templates('Section', 'title', model.toJSON());
+          var json = model.toJSON();
+          json.can_update = true;
+          var new_title = templates('Section', 'title', json);
           $title.replaceWith(new_title);
 
           return self.$('> .title');
