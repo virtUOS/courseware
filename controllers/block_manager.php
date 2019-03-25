@@ -36,13 +36,15 @@ class BlockManagerController extends CoursewareStudipController
 
         $this->remote_courses = [];
         $plugin_manager = PluginManager::getInstance();
+
         foreach(CourseMember::findBySQL('user_id = ? AND status = ?', array($this->container['current_user']['user_id'], 'dozent')) as $seminar_user_obj) {
             if ($this->cid != $seminar_user_obj->Seminar_id) {
                 $remote_course = Course::find($seminar_user_obj->Seminar_id);
                 if($remote_course != null) {
                     $plugin_info = $plugin_manager->getPluginInfo('Courseware');
                     if ($plugin_manager->isPluginActivated($plugin_info['id'], $seminar_user_obj->Seminar_id)) {
-                        $this->remote_courses[$seminar_user_obj->Seminar_id] = $remote_course->getFullname();
+                        $semester = Semester::findOneBySQL('beginn = ?', array($remote_course->start_time));
+                        $this->remote_courses[$semester->name][$seminar_user_obj->Seminar_id] = $remote_course->getFullname();
                     }
                 }
             }
@@ -60,7 +62,7 @@ class BlockManagerController extends CoursewareStudipController
 
         if (Request::method() == 'POST' && Request::option('subcmd')=='showRemoteCourseware') {
             $this->show_remote_courseware = true;
-            $this->remote_course_name = $this->remote_courses[Request::get('remote_course_id')];
+            $this->remote_course_name = Course::find(Request::get('remote_course_id'))->getFullname();
             $this->remote_courseware = $this->getRemoteCourseware(Request::get('remote_course_id'));
         }
 

@@ -71,7 +71,7 @@ if (count($successes) > 0) {
                             <ul class="section-list">
                                 <? foreach($subchapter['children'] as $section):?>
                                     <li class="section-item" data-id="<?= $section['id']?>">
-                                        <p class="section-description"><?= $section['title']?> <span><?= _cw('Abschnitt') ?></span></p>
+                                        <p class="section-description" <? if(strlen($section['title'])>24): ?>title="<?= $section['title'] ?>"<?endif?>><?= substr($section['title'], 0, 24)?><? if(strlen($section['title'])>24): ?>…<?endif?> <span><?= _cw('Abschnitt') ?></span></p>
                                         <ul class="block-list">
                                         <? if($section['children'] != null):?>
                                             <? foreach($section['children'] as $block):?>
@@ -164,7 +164,7 @@ if (count($successes) > 0) {
                                     <ul class="section-list section-list-import">
                                         <? foreach($subchapter['children'] as $section):?>
                                             <li class="section-item section-item-import section-item-remote" data-id="remote-<?= $section['id']?>">
-                                                <p class="section-description"><?= $section['title']?> <span><?= _cw('Abschnitt') ?></span></p>
+                                                <p class="section-description" <? if(strlen($section['title'])>24): ?>title="<?= $section['title'] ?>"<?endif?>><?= substr($section['title'], 0, 24)?><? if(strlen($section['title'])>24): ?>…<?endif?> <span><?= _cw('Abschnitt') ?></span></p>
                                                 <ul class="block-list block-list-import">
                                                     <? if($section['children'] != null):?>
                                                     <? foreach($section['children'] as $block):?>
@@ -193,15 +193,22 @@ if (count($successes) > 0) {
         </div>
     <? endif?>
     <div id="user-course-list">
-        <ul>
+        <ul class="semester-list">
             <? if(!empty($remote_courses)):?>
-                <? foreach ($remote_courses as $key => $value): ?>
-                    <li id="<?=$key?>">
-                        <form class="blockmanager-form" method="post">
-                            <input type="hidden" name="subcmd" value="showRemoteCourseware">
-                            <input type="hidden" name="remote_course_id" value="<?= $key ?>">
-                            <button type="submit" class="blockmanager-course-item"><?= $value ?></button>
-                        </form>
+                <? foreach ($remote_courses as $start_time => $sem_courses): ?>
+                    <li class="semester-item">
+                        <p class="semester-description"><?=  $start_time?></h1>
+                        <ul class="course-list">
+                            <? foreach ($sem_courses as $key => $value): ?>
+                                <li id="<?=$key?>" class="course-item">
+                                    <form class="blockmanager-form" method="post">
+                                        <input type="hidden" name="subcmd" value="showRemoteCourseware">
+                                        <input type="hidden" name="remote_course_id" value="<?= $key ?>">
+                                        <button type="submit" class="blockmanager-course-item"><?= $value ?></button>
+                                    </form>
+                                </li>
+                            <? endforeach; ?>
+                        </ul>
                     </li>
                 <? endforeach; ?>
             <? else: ?>

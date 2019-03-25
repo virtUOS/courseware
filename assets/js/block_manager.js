@@ -17,6 +17,16 @@ $(document).ready(function(){
     $('#cw-import-from-course').click(function(){
         $('#cw-import-selection').hide();
         $('#user-course-list').show();
+        $('.semester-description').siblings('ul').hide();
+    });
+
+    $('.semester-description').click(function(){
+        $(this).siblings('ul').toggle();
+        if(!$(this).hasClass('unfolded')) {
+            $(this).addClass('unfolded');
+        } else {
+            $(this).removeClass('unfolded');
+        }
     });
 
     if ($('#cw-import-wrapper').hasClass('cw-blockmanager-remote-courseware')) {
@@ -315,7 +325,11 @@ function setImport() {
                                     section_counter++;
                                     node.setAttribute('temp-id' , section_counter);
                                     var $this_section = $('<li class="section-item section-item-import" data-id="import-'+section_counter+'"></li>').appendTo($this_section_list);
-                                    $('<p class="section-description">'+node.getAttribute('title')+'<span>'+block_map[node.nodeName]+'</span></p>').appendTo($this_section);
+                                    if (node.getAttribute('title').length > 24) {
+                                        $('<p class="section-description" title="'+node.getAttribute('title')+'">'+node.getAttribute('title').slice(0,24)+'… <span>'+block_map[node.nodeName]+'</span></p>').appendTo($this_section);
+                                    } else {
+                                        $('<p class="section-description">'+node.getAttribute('title')+'<span>'+block_map[node.nodeName]+'</span></p>').appendTo($this_section);
+                                    }
                                     var $this_block_list = $('<ul class="block-list block-list-import"></ul>').appendTo($this_section);
 
                                     $.each(node.children, function(key, node) {

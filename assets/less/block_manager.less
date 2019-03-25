@@ -61,7 +61,30 @@
             ul {
                 list-style: none;
                 padding: 0;
-                
+
+                &.semester-list {
+                    min-height: 2em;
+                    overflow: hidden;
+                    padding: 0;
+                    background-color: #fff;
+                    
+                    p.semester-description {
+                        margin: 0;
+                        color: #fff;
+                        font-weight: 600;
+                        cursor: default;
+                        background-image: url("../@{blocks-icons-dir}/white/arr_1right.svg");
+                        background-size: 16px;
+                        background-position: 6px center;
+                        background-repeat: no-repeat;
+                        background-color: #28497c;
+                        padding: 1em 1em 1em 2em;
+                        &.unfolded {
+                            background-image: url("../@{blocks-icons-dir}/white/arr_1down.svg");
+                        }
+                    }
+                }
+
                 li {
                     margin: 1em;
 
@@ -79,6 +102,14 @@
                         display: inline-block;
                         width: 100%;
                         text-align: left;
+                    }
+                    
+                    &.semester-item {
+                        background-color: #fff;
+                        border: solid thin #28497c;
+                        list-style: none;
+                        margin-bottom: 1em;
+                        color: #28497c;
                     }
                 }
             }
@@ -214,7 +245,7 @@
     .section-item {
         float: left;
         margin: 0.25em;
-        width: 240px;
+        width: 20em;
         color: #28497c;
     }
 
