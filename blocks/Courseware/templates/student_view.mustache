@@ -146,13 +146,10 @@
       {{/aside_section}}
     {{/active_subchapter}}
   </aside>
-<button class="mobile-show-nav-button"></button>  
-  {{#show_section_nav}}
-    {{^sections_as_chapters}}
-      {{> active_subchapter}}
-    {{/sections_as_chapters}}
-  {{/show_section_nav}}
-  
+  <button class="mobile-show-nav-button"></button>  
+
+  {{> active_subchapter}}
+
   {{#user_is_teacher}}
     <div class=mode-switch>
       <button class="student" data-title="{{#i18n}}Studentenmodus{{/i18n}}"></button>
