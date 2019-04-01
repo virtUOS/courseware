@@ -36,7 +36,7 @@ class CanvasBlock extends Block
 
         return array_merge(
             $this->getAttrArray(),
-            array('image_url'=> $image_url, 'bg_image' => $bg_image)
+            array('image_url'=> $image_url, 'bg_image' => $bg_image, 'description' => $content->description)
         );
     }
 

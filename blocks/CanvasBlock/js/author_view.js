@@ -58,6 +58,8 @@ export default AuthorView.extend({
             $view.$('.cw-canvasblock-source option[value="none"]').prop('selected', true);
             break;
     }
+
+    this.$('.cw-canvasblock-description').val(content.description);
   },
 
   onNavigate(event) {
