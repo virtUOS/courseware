@@ -133,8 +133,10 @@ class BlockManagerController extends CoursewareStudipController
     {
         $this->addChildren($grouped, $root);
         if ($root['type'] !== 'Section') {
-            foreach($root['children'] as &$child) {
-                $this->buildTree($grouped, $child);
+            if (!empty($root['children'])) {
+                foreach($root['children'] as &$child) {
+                    $this->buildTree($grouped, $child);
+                }
             }
         } else {
             $root['children'] = $this->addChildren($grouped, $root);

@@ -39,7 +39,7 @@ if (count($successes) > 0) {
     </div>
 
     <ul class="chapter-list">
-        <? foreach($courseware['children'] as $chapter): ?>
+        <? foreach((array)$courseware['children'] as $chapter): ?>
             <li class="chapter-item" data-id="<?= $chapter['id']?>">
                 <p class="chapter-description"><?= $chapter['title']?> 
                     <span>
@@ -54,7 +54,7 @@ if (count($successes) > 0) {
                     </span>
                 </p>
                 <ul class="subchapter-list">
-                    <? foreach($chapter['children'] as $subchapter): ?>
+                    <? foreach((array)$chapter['children'] as $subchapter): ?>
                         <li class="subchapter-item" data-id="<?= $subchapter['id']?>">
                             <p class="subchapter-description"><?= $subchapter['title'] ?>
                                 <span>
@@ -69,12 +69,12 @@ if (count($successes) > 0) {
                                 </span>
                             </p>
                             <ul class="section-list">
-                                <? foreach($subchapter['children'] as $section):?>
+                                <? foreach((array)$subchapter['children'] as $section):?>
                                     <li class="section-item" data-id="<?= $section['id']?>">
                                         <p class="section-description" <? if(strlen($section['title'])>24): ?>title="<?= $section['title'] ?>"<?endif?>><?= substr($section['title'], 0, 24)?><? if(strlen($section['title'])>24): ?>…<?endif?> <span><?= _cw('Abschnitt') ?></span></p>
                                         <ul class="block-list">
                                         <? if($section['children'] != null):?>
-                                            <? foreach($section['children'] as $block):?>
+                                            <? foreach((array)$section['children'] as $block):?>
                                                 <? $ui_block = $block['ui_block']?>
                                                 <li class="block-item" data-id="<?= $block['id']?>">
                                                     <p class="block-description"><span class="block-icon cw-block-icon-<?=$block['type']?>"></span><?= $ui_block::NAME ?><? if(!$block['visible']):?><span class="block-not-visible"></span><? endif?>

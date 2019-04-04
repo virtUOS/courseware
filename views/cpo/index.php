@@ -9,40 +9,6 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>
 
 ?>
 <h1 style="float: left"><?= _cw('Fortschrittsübersicht für Lehrende') ?></h1>
-<!--
-<div id="overview-usage">
-    <ul>
-        <li class="day-name">
-            <p>Mo</p>
-        </li>
-        <li class="day-name">
-            <p>Di</p>
-        </li>
-        <li class="day-name">
-            <p>Mi</p>
-        </li>
-        <li class="day-name">
-            <p>Do</p>
-        </li>
-        <li class="day-name">
-            <p>Fr</p>
-        </li>
-        <li class="day-name">
-            <p>Sa</p>
-        </li>
-        <li class="day-name">
-            <p>So</p>
-        </li>
-    </ul>
-    <ul>
-        <? for($i = 1; $i<8; $i++) : //usage[0] is total, usage[1-7] for each day ?>
-            <li class="day-usage" title="<?= _cw('Nutzung: ') . number_format($usage[$i]/$usage[0]*100, 0, ',', ' '); ?>%">
-                <div class="usage" style="height: <?= 100-($usage[$i]/$usage[0]*100); ?>%;"></div>
-            </li>
-        <? endfor; ?>
-    </ul>
-</div>
--->
 <div class="clear"></div>
 <ul id="overview-chapter-nav">
     <li class="overview-chapter-nav-arrow" id="overview-chapter-nav-left"></li>
