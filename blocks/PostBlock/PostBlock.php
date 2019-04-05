@@ -10,7 +10,7 @@ class PostBlock extends Block
 {
     const NAME = 'Kommentare & Diskussion';
     const BLOCK_CLASS = 'interaction';
-    const DESCRIPTION = 'Hier kann über die Inhalte gesprochen werden';
+    const DESCRIPTION = 'Hier kann Ã¼ber die Inhalte gesprochen werden';
 
     public function initialize()
     {
@@ -30,7 +30,6 @@ class PostBlock extends Block
         if(!$this->has_to_post){
             $this->setGrade(1.0);
         }
-
         return array_merge(
             $this->getAttrArray(),
             Post::findPosts($this->thread_id, $this->container['cid'], $this->container['current_user_id']),
@@ -44,6 +43,12 @@ class PostBlock extends Block
         $post_ids = Post::getThreadIds($this->container['cid']);
 
         return array_merge($this->getAttrArray(), array('post_ids' => $post_ids, 'has_to_post' => $this->has_to_post));
+    }
+
+    public function preview_view()
+    {
+
+        return array('post_title' => $this->post_title);
     }
 
     public function save_handler(array $data)
@@ -176,7 +181,7 @@ class PostBlock extends Block
                 );
                 POST::create($data);
         }
-        
+
         if (isset($properties['has_to_post'])) {
             $this->has_to_post = $properties['has_to_post'];
         }

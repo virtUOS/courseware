@@ -1,6 +1,6 @@
 <? if (count($threads) != 0): ?>
     <div class="post-overview-settings"> 
-        <button class="button show-new-posts-threats"><?= _cw('nur Diskussionen mit neuen Beitr‰gen anzeigen') ?> </button>
+        <button class="button show-new-posts-threats"><?= _cw('nur Diskussionen mit neuen Beitr√§gen anzeigen') ?> </button>
         <button class="button hide-unused-threats"><?= _cw('nicht verwendete Diskussionen ausblenden') ?> </button>
         <button class="button show-all-threats"><?= _cw('alle Diskussionen anzeigen') ?> </button>
     </div>
@@ -41,15 +41,15 @@
 
                 <? switch ($counter) {
                     case 0:
-                        echo '<p>' . _cw('Es gibt keine neuen Beitr‰ge.') . '</p>';
+                        echo '<p>' . _cw('Es gibt keine neuen Beitr√§ge.') . '</p>';
                         break;
                     case 1:
                         echo '<p><b>' . _cw('Es gibt einen neuen Beitrag') . '</b></p>';
                         break;
                     default:
-                        echo '<p><b>' . _cw('Es gibt ') . $counter . _cw(' neue Beitr‰ge') . '</b></p>';
+                        echo '<p><b>' . _cw('Es gibt ') . $counter . _cw(' neue Beitr√§ge') . '</b></p>';
                 }?>
-                <button class="button show-thread-button" name="show_thread_<?= $thread['thread_id']?>" data-showthread="<?= $thread['thread_id']?>"><?= _cw('Beitr‰ge anzeigen') ?></button>
+                <button class="button show-thread-button" name="show_thread_<?= $thread['thread_id']?>" data-showthread="<?= $thread['thread_id']?>"><?= _cw('Beitr√§ge anzeigen') ?></button>
             </li>
         <? endforeach;?>
     </ul>
@@ -102,6 +102,6 @@
     </form>
 <? else: ?>
     <div class="post-overview-no-threads"> 
-        <div class="messagebox messagebox_info"><?= _cw('Die Courseware in dieser Veranstaltung enth‰lt noch keine Diskussion.') ?></div>
+        <div class="messagebox messagebox_info"><?= _cw('Die Courseware in dieser Veranstaltung enth√§lt noch keine Diskussion.') ?></div>
     </div>
 <? endif ?>

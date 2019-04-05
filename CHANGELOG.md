@@ -1,5 +1,88 @@
 CHANGELOG
 =========
+4.2.0
+-----
+* fixing HTMLBlock wysiwyg author view for Stud.IP >= 4.2
+* fixing date picker issue for Stud.IP >= 4.1
+* add new block: DialogCardsBlock
+* add new block: EmbedBlock
+* add new block: InteractiveVideoBlock
+* add new block: BeforeAfterBlock
+* add new block: ChartBlock
+* add new block: OpenCastBlock
+* new block adder design
+* modernize models for Stud.IP >= 4.2
+* cleanup VideoBlock
+
+4.1.0
+-----
+* Set seminar title
+* enhance TestBlock functions
+* better usability for postoverview
+* fixing wrong change date
+* SearchBlock: fix encoding issue 
+* GalleryBlock: fix import
+* fix cid in news controller
+* fix progress calculation in cpo
+* fix some old layout issues
+* add functions for DatenschutzPlugin 
+
+4.0.7
+-----
+* modernized look and feel
+* enhance discussion overview and PostBlock - post can now be hidden
+* improve DownloadBlock author view
+* improve TestBlock - use vips.js, embed character picker, ready for vips 1.4
+* remove Metrics
+* fix file import
+* some little layout and bug fixes
+
+4.0.6
+-----
+* fixing user progress
+* fixing progress overview layout
+* fixing webvideodata in VideoBlock
+* remove Metrics
+
+4.0.5
+-----
+* fixing TestBlock layout issues
+* fix HTMLBlock links and handle wysiwyg content
+* fix migration 1 for studip 4.0
+* fixing mark as html issue
+
+4.0.4
+-----
+* fix post overview redirect
+* set chdate on block save
+* fix migration sql statement
+
+4.0.3 RC
+-----
+* same features as 3.0.3
+
+4.0.0
+-----
+* change from requirejs to webpack
+* add new block: AssortBlock
+* add new block: CodeBlock
+* add new block: DownloadBlock
+* add new block: GalleryBlock
+* add new block: KeyPointBlock
+* add new block: LinkBlock
+* add new block: SearchBlock
+* add new block: PdfBlock
+* add new block: PostBlock (Courseware discussions)
+* imporved iFrameBlock with CC informations
+* modernized TestBlock compatible with vips 1.3
+* ability to switch off horizontal navigation
+* embed horizontal navigation in sidebar navigation (optional)
+* comprehensive progress overview for teachers
+* discussion overview for teachers
+* overview of new contents in the courseware
+* responsive layout to fit mobile devices
+* courseware can be used in public courses
+
 3.2.0
 -----
 * add new block: DialogCardsBlock

@@ -147,7 +147,6 @@ export default AuthorView.extend({
             link.val(link.val().replace('https://',''));
             $view.$('select.cw-link-protocol option[value="https://"]').prop('selected', true);
         }
-
     }
 });
     

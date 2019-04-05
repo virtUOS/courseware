@@ -5,42 +5,10 @@ $progress = function ($block, $format = "") {
     return ceil($block['progress'] * 100) . $format;
 };
 
-$monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>"Jul", 8=>"Aug", 9=>"Sep", 10=>"Okt",11=>"Nov", 12=>"Dez");
+$monate = array(1=>"Jan", 2=>"Feb", 3=>"MÃ¤r", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>"Jul", 8=>"Aug", 9=>"Sep", 10=>"Okt",11=>"Nov", 12=>"Dez");
 
 ?>
-<h1 style="float: left"><?= _cw('Fortschrittsübersicht für Lehrende') ?></h1>
-<div id="overview-usage">
-    <ul>
-        <li class="day-name">
-            <p>Mo</p>
-        </li>
-        <li class="day-name">
-            <p>Di</p>
-        </li>
-        <li class="day-name">
-            <p>Mi</p>
-        </li>
-        <li class="day-name">
-            <p>Do</p>
-        </li>
-        <li class="day-name">
-            <p>Fr</p>
-        </li>
-        <li class="day-name">
-            <p>Sa</p>
-        </li>
-        <li class="day-name">
-            <p>So</p>
-        </li>
-    </ul>
-    <ul>
-        <? for($i = 1; $i<8; $i++) : //usage[0] is total, usage[1-7] for each day ?>
-            <li class="day-usage" title="<?= _cw('Nutzung: ') . number_format($usage[$i]/$usage[0]*100, 0, ',', ' '); ?>%">
-                <div class="usage" style="height: <?= 100-($usage[$i]/$usage[0]*100); ?>%;"></div>
-            </li>
-        <? endfor; ?>
-    </ul>
-</div>
+<h1 style="float: left"><?= _cw('FortschrittsÃ¼bersicht fÃ¼r Lehrende') ?></h1>
 <div class="clear"></div>
 <ul id="overview-chapter-nav">
     <li class="overview-chapter-nav-arrow" id="overview-chapter-nav-left"></li>
@@ -101,7 +69,7 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>"
                 </td>
                 <td>
                     <? if($subchapter['date'] != ''):?>
-                    <div class="overview-date" title="<?= _cw('zuletzt genutzt am: ') . date('d.m.Y H:i', strtotime($subchapter['date']))?> Uhr">
+                    <div class="overview-date" title="<?= htmlReady($subchapter['title'])._cw(' wurde von einem Teilnehmer zuletzt am ') . date('d.m.Y', strtotime($subchapter['date']))._cw(' bearbeitet')?>">
                         <p class="overview-date-month"><?= $monate[date('n', strtotime($subchapter['date']))]?></p>
                         <p class="overview-date-day"><?= date('d', strtotime($subchapter['date']))?></p>
                         <p class="overview-date-time"><?= date('H:i', strtotime($subchapter['date']))?></p>

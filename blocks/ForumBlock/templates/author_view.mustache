@@ -2,11 +2,11 @@
 {{^inactive}}
     <div>
         {{#connected}}
-        Momentan verknüpft mit: <a href="{{area_url}}">{{area_name}}</a><br>
+        Momentan verknÃ¼pft mit: <a href="{{area_url}}">{{area_name}}</a><br>
         <br>
         {{/connected}}
 
-        Wählen Sie hier einen vorhandenen Forenbereich aus oder lassen Sie automatisch einen neuen erstellen:
+        WÃ¤hlen Sie hier einen vorhandenen Forenbereich aus oder lassen Sie automatisch einen neuen erstellen:
         <select name="area">
             <option value="-1">Automatisch neuen Forenbereich erstellen</option>
         {{#areas}}
@@ -22,6 +22,6 @@
 {{/inactive}}
 {{#inactive}}
     <div class="messagebox messagebox_info">
-        {{#i18n}}Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet werden...{{/i18n}}
+        {{#i18n}}FÃ¼r diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet werden...{{/i18n}}
     </div>
 {{/inactive}}

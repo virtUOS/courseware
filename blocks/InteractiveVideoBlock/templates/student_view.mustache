@@ -33,12 +33,12 @@
                     {{#has_solution}}
                         {{#correct}}
                             <input type="hidden" class="cw-iav-test-correct" value="true">
-                            <div class="messagebox messagebox_success">{{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}</div>
+                            <div class="messagebox messagebox_success">{{#i18n}}Ihre LÃ¶sung ist korrekt!{{/i18n}}</div>
                             <div class="cw-iav-test-content-question">{{{solution}}}</div>
                             
                         {{/correct}}
                         {{^correct}}
-                            <div class="messagebox messagebox_error">{{#i18n}}Ihre Lösung ist nicht korrekt!{{/i18n}}</div>
+                            <div class="messagebox messagebox_error">{{#i18n}}Ihre LÃ¶sung ist nicht korrekt!{{/i18n}}</div>
                             <div class="cw-iav-test-content-question">{{{question}}}</div>
                             <button name="submit-exercise" class="button" style="display: inline-block">{{#i18n}}Abschicken{{/i18n}}</button>
                         {{/correct}}
@@ -67,12 +67,12 @@
 {{/iav_url}}
 {{^iav_url}}
     <div class="messagebox messagebox_info">
-        {{#i18n}}Es wurde noch keine Videodatei ausgewählt.{{/i18n}}
+        {{#i18n}}Es wurde noch keine Videodatei ausgewÃ¤hlt.{{/i18n}}
     </div>
 {{/iav_url}}
 {{/inactive}}
 {{#inactive}}
     <div class="messagebox messagebox_info">
-        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+        {{#i18n}}Dieser Block steht Ihnen erst zur VerfÃ¼gung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloÃŸen haben.{{/i18n}}
     </div>
 {{/inactive}}

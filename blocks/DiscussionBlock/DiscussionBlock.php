@@ -10,6 +10,8 @@ use Mooc\UI\Section\Section;
 class DiscussionBlock extends Block
 {
     const NAME = 'Blubber-Diskussion';
+    const BLOCK_CLASS = 'interaction';
+    const DESCRIPTION = 'Diskussion per Blubber';
 
     public static function additionalInstanceAllowed($container, Section $section, $subType = null)
     {
@@ -49,6 +51,11 @@ class DiscussionBlock extends Block
         return array();
     }
 
+    public function preview_view()
+    {
+
+        return;
+    }
 
     /**
      * {@inheritDoc}

@@ -6,16 +6,17 @@
   {{/blocks}}
 
   <div class=no-content>
-    <p>{{#i18n}}Keine Inhaltsblöcke{{/i18n}}</p>
+    <p>{{#i18n}}Keine InhaltsblÃ¶cke{{/i18n}}</p>
   </div>
-
+  {{#can_update}}
   <section class="block-adder" style="border: solid thin #ccc; padding: 0; margin:0;">
     {{> block_types_view}}
   </section>
+  {{/can_update}}
 {{/inactive}}
 
 {{#inactive}}
 <div class="messagebox messagebox_info">
-    {{#i18n}}Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    {{#i18n}}Dieser Abschnitt steht Ihnen erst zur VerfÃ¼gung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloÃŸen haben.{{/i18n}}
 </div>
 {{/inactive}}

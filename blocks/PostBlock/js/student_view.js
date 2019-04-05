@@ -104,7 +104,11 @@ export default StudentView.extend({
 
     sendShortcut(e) {
         var $view =  this;
-        if (e.ctrlKey && e.keyCode == 13) {
+        if (e.defaultPrevented) {
+                return;
+            }
+        var key = e.key || e.keyCode;
+        if (e.ctrlKey && (key === 'Enter' || key === 13)) {
             // Ctrl-Enter pressed
             $view.onSend($view.$('button[name=send]'));
         }

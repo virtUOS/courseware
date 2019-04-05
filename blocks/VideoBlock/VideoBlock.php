@@ -25,8 +25,8 @@ class VideoBlock extends Block
     private function array_rep() {
         return array(
             'url'               => $this->url,
-            'webvideo'          => $this->webvideo, 
-            'webvideosettings'  => $this->webvideosettings, 
+            'webvideo'          => $this->webvideo,
+            'webvideosettings'  => $this->webvideosettings,
             'videoTitle'        => $this->videoTitle,
             'aspect'            => $this->aspect
         );
@@ -39,7 +39,20 @@ class VideoBlock extends Block
         }
         $this->setGrade(1.0);
         $array = $this->array_rep();
-        $array['webvideo'] = json_decode($array['webvideo']);
+
+        if ($array['webvideo'] != '') {
+            $array['webvideo'] = json_decode($array['webvideo'], true);
+            foreach($array['webvideo'] as &$webvideo) {
+                if($webvideo['source'] == 'file') {
+                    $file = \FileRef::find($webvideo['file_id']);
+                    if($file) {
+                        $webvideo['src'] = ($file->terms_of_use->fileIsDownloadable($file, false)) ? $file->getDownloadURL() : '';
+                    } else {
+                        $webvideo['src'] = '';
+                    }
+                }
+            }
+        }
 
         return $array;
     }
@@ -47,14 +60,29 @@ class VideoBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-        $video_files = $this->showFiles();
-        if (empty($video_files)) {
-            $video_files = false;
+        $webvideos = json_decode($this->webvideo);
+        $file_ids = array();
+        foreach ($webvideos as $webvideo) {
+            if (!empty($webvideo->file_id)) {
+                array_push($file_ids, $webvideo->file_id);
+            }
         }
+        $files_arr = $this->showFiles($file_ids);
+
+        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && empty($files_arr['other_user_files']) && empty($file_ids);
 
         return array_merge($this->array_rep(), array(
-            'video_files' => $video_files
+            'no_files' => $no_files,
+            'video_files_other' => $files_arr['other_user_files'],
+            'video_files_user' => $files_arr['userfilesarray'],
+            'video_files_course' => $files_arr['coursefilesarray']
         ));
+    }
+
+    public function preview_view()
+    {
+
+        return array('videoTitle' => $this->videoTitle);
     }
 
     public function save_handler($data)
@@ -69,32 +97,49 @@ class VideoBlock extends Block
         return $this->array_rep();
     }
 
-    private function showFiles()
+    private function showFiles($file_ids)
     {
-        $db = \DBManager::get();
-        $stmt = $db->prepare('
-            SELECT 
-                * 
-            FROM 
-                dokumente 
-            WHERE 
-                seminar_id = :seminar_id
-            ORDER BY 
-                name
-        ');
-        $stmt->bindParam(':seminar_id', $this->container['cid']);
-        $stmt->execute();
-        $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        $filesarray = array();
-        foreach ($response as $item) {
-            if ((strpos($item['filename'], 'mp4') > -1) || (strpos($item['filename'], 'webm') > -1) || (strpos($item['filename'], 'ogg') > -1)) {
-                $document = \StudipDocument::find($item['dokument_id']);
-                $item['download_url'] = \URLHelper::getURL( 'sendfile.php',  array('type'=>'0', 'file_id' => $document->id, 'file_name' => $document->name) );
-                $filesarray[] = $item;
+        $coursefilesarray = array();
+        $userfilesarray = array();
+        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
+        $other_user_files = array();
+
+        foreach ($course_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isVideo()) && (!$ref->isLink())) {
+                    $coursefilesarray[] = $ref;
+                }
+                $key = array_search($ref->id, $file_ids);
+                if($key > -1) {
+                    unset ($file_ids[$key]);
+                }
             }
         }
 
-        return $filesarray;
+        foreach ($user_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isVideo()) && (!$ref->isLink())) {
+                    $userfilesarray[] = $ref;
+                }
+                if(in_array($ref->id, $file_ids)) {
+                    unset ($file_ids[$key]);
+                }
+            }
+        }
+
+        if (empty($file_ids)) {
+            $other_user_files = false;
+        } else {
+            foreach ($file_ids as $id) {
+                $file_ref = \FileRef::find($id);
+                array_push($other_user_files, $file_ref);
+            }
+        }
+
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'other_user_files' => $other_user_files);
     }
 
     /**
@@ -113,15 +158,16 @@ class VideoBlock extends Block
         $sources = json_decode($this->webvideo);
         foreach ($sources as $source) {
             if ($source->file_id != '') {
-                $document = new \StudipDocument($source->file_id);
+                $file_ref = new \FileRef($source->file_id);
+                $file = new \File($file_ref->file_id);
                 $files[] = array(
-                    'id' => $source->file_id,
-                    'name' => $document->name,
-                    'description' => $document->description,
-                    'filename' => $document->filename,
-                    'filesize' => $document->filesize,
-                    'url' => $document->url,
-                    'path' => get_upload_file_path($source->file_id),
+                    'id' => $file_ref->id,
+                    'name' => $file_ref->name,
+                    'description' => $file_ref->description,
+                    'filename' => $file->name,
+                    'filesize' => $file->size,
+                    'url' => $file->getURL(),
+                    'path' => $file->getPath()
                 );
             }
         }
@@ -152,11 +198,11 @@ class VideoBlock extends Block
         if (isset($properties['url'])) {
             $this->url = $properties['url'];
         }
-        
+
         if (isset($properties['webvideo'])) {
             $this->webvideo = $properties['webvideo'];
         }
-        
+
         if (isset($properties['webvideosettings'])) {
             $this->webvideosettings = $properties['webvideosettings'];
         }
@@ -164,7 +210,7 @@ class VideoBlock extends Block
         if (isset($properties['aspect'])) {
             $this->aspect = $properties['aspect'];
         }
-        
+
         if (isset($properties['videoTitle'])) {
             $this->videoTitle = $properties['videoTitle'];
         }
@@ -182,13 +228,14 @@ class VideoBlock extends Block
             foreach ($webvideo as &$source) {
                 if(($source->file_name == $file->name) && ($source->file_id != '')) {
                     $source->file_id = $file->id;
-                    $document = \StudipDocument::find($file->id);
-                    $source->src = \URLHelper::getURL( 'sendfile.php',  array('type'=>'0', 'file_id' => $document->id, 'file_name' => $document->name) );
+                    $source->src = $file->getDownloadURL();
+                    $this->webvideo = json_encode($webvideo);
+
+                    $this->save();
+                    return array($file->id);
                 }
             }
         }
-        $this->webvideo = json_encode($webvideo);
 
-        $this->save();
     }
 }

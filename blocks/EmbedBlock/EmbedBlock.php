@@ -30,12 +30,26 @@ class EmbedBlock extends Block
         }
         $this->setGrade(1.0);
         $json_url = $this->build_request($this->embed_source, $this->embed_url);
+        if(!function_exists('curl_init')) {
+            return array('no_curl' => true);
+        }
         $oembed = json_decode($this->curl_get($json_url));
         
         switch ($oembed->type) {
             case 'video':
             case 'rich':
                 $html = $oembed->html;
+                $dom = new \DOMDocument;
+                $dom->loadHTML($html);
+                $xpath = new \DOMXPath($dom);
+                $nodes = $xpath->query("//iframe");
+                foreach($nodes as $node) {
+                    $src = $node->getAttribute('src');
+                    $src = preg_replace("/^http:/i", "https:", $src);
+                    $node->setAttribute('src', $src);
+                }
+                $html = $dom->saveHTML();
+
                 if (($oembed->provider_name == 'YouTube') && ($this->embed_time != '')){
                     $time = json_decode($this->embed_time);
                     $start = $time->start;
@@ -50,6 +64,7 @@ class EmbedBlock extends Block
                     }
                     $html = $dom->saveHTML();
                 }
+
                 break;
             case 'photo':
                 $html = '<img class="embed-block-image" src="'.$oembed->url.'" width="'.$oembed->width.'px" 
@@ -80,8 +95,15 @@ class EmbedBlock extends Block
         $this->authorizeUpdate();
 
         return array_merge($this->getAttrArray(), array(
-            'embed_sources' => $this->getSources()
+            'embed_sources' => $this->getSources(),
+            'no_curl' => !function_exists('curl_init')
         ));
+    }
+
+    public function preview_view()
+    {
+
+        return array('embed_source' => $this->embed_source);
     }
 
     public function save_handler(array $data)
@@ -113,10 +135,10 @@ class EmbedBlock extends Block
 
     private function build_request($embed_source, $embed_url) {
         $endpoints = array(
-            'vimeo' => 'http://vimeo.com/api/oembed.json',
+            'vimeo' => 'https://vimeo.com/api/oembed.json',
             'youtube' => 'https://www.youtube.com/oembed',
             'giphy' => 'https://giphy.com/services/oembed',
-            'flickr' => 'http://www.flickr.com/services/oembed/',
+            'flickr' => 'https://www.flickr.com/services/oembed/',
             'sway' => 'https://sway.com/api/v1.0/oembed',
             'spotify' => 'https://embed.spotify.com/oembed/',
             'deviantart' => 'https://backend.deviantart.com/oembed',
@@ -124,11 +146,11 @@ class EmbedBlock extends Block
             'codesandbox' => 'https://codesandbox.io/oembed',
             'codepen' => 'https://codepen.io/api/oembed',
             'ethfiddle' => 'https://ethfiddle.com/services/oembed/',
-            'slideshare' => 'http://www.slideshare.net/api/oembed/2',
+            'slideshare' => 'https://www.slideshare.net/api/oembed/2',
             'speakerdeck' => 'https://speakerdeck.com/oembed.json',
             'audiomack' => 'https://www.audiomack.com/oembed',
             'kidoju' => 'https://www.kidoju.com/api/oembed',
-            'learningapps' => 'http://learningapps.org/oembed.php',
+            'learningapps' => 'https://learningapps.org/oembed.php',
             'soundcloud' => 'https://soundcloud.com/oembed'
         );
 

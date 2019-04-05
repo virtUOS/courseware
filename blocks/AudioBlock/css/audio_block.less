@@ -86,6 +86,13 @@
 }
 
 section#courseware .block-content:not([data-view="student"]) {
+    .cw-audioblock-recorder-wrapper {
+        display: inline-block;
+        margin-top: 0.75em;
+        vertical-align: bottom;
+        margin-left: 1em;
+    }
+
     select.cw-audioblock-source {
         width: 14em; 
         margin-right:1.75em;
@@ -93,6 +100,50 @@ section#courseware .block-content:not([data-view="student"]) {
 
     label.cw-audioblock-description-label {
         padding-left: 1.75em
+    }
+
+    .cw-audioblock-recorder-reset {
+        .assets-bg-icon("blue/trash.svg");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 20px;
+        background-color: #fff;
+        height: 20px;
+        width: 20px;
+        border: none;
+        vertical-align: top;
+        cursor: pointer;
+    }
+
+    .cw-audioblock-recorder-start {
+        .assets-bg-icon("blue/span-full.svg");
+        background-position: 6px center;
+        padding-left: 2em;
+        &:hover {
+            .assets-bg-icon("white/span-full.svg");
+        }
+    }
+
+    .cw-audioblock-recording-wrapper {
+        .assets-bg-icon("red/span-full.svg");
+        color: #d60000;
+        border-color: #d60000;
+        background-position: 6px center;
+        padding-left: 2em;
+        cursor: progress;
+        &:hover {
+            background-color: #fff;
+            color: #d60000;
+        }
+    }
+
+    .cw-audioblock-recorder-stop {
+        .assets-bg-icon("blue/stop.svg");
+        background-position: 6px center;
+        padding-left: 2em;
+        &:hover {
+            .assets-bg-icon("white/stop.svg");
+        }
     }
 }
 

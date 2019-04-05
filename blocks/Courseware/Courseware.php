@@ -44,6 +44,8 @@ class Courseware extends Block
         $this->defineField('show_section_nav', \Mooc\SCOPE_BLOCK, true);
 
         $this->defineField('sections_as_chapters', \Mooc\SCOPE_BLOCK, false);
+        
+        $this->defineField('scrollytelling', \Mooc\SCOPE_BLOCK, false);
     }
 
     public function student_view($context = array())
@@ -102,6 +104,7 @@ class Courseware extends Block
             'active_subchapter'     => $active_subchapter,
             'show_section_nav'      => $this->show_section_nav,
             'sections_as_chapters'  => $this->sections_as_chapters,
+            'scrollytelling'        => $this->scrollytelling,
             'isSequential'          => $this->progression == 'seq',
             'active_section'        => $active_section, 
             'cw_title'              => $courseware->title,
@@ -382,6 +385,16 @@ class Courseware extends Block
         return $this->sections_as_chapters;
     }
 
+    public function setScrollytelling($state)
+    {
+        $this->scrollytelling = $state;
+    }
+
+    public function getScrollytelling()
+    {
+        return $this->scrollytelling;
+    }
+
     ///////////////////////
     // PRIVATE FUNCTIONS //
     ///////////////////////
@@ -478,7 +491,7 @@ class Courseware extends Block
             $json['unpublished'] = true;
         }
 
-        $json['dom_title'] = $child->publication_date ? date('d.m.Y', $child->publication_date) : '';
+
         $json['selected'] = $selected == $child->id;
 
         return $json;
@@ -548,7 +561,7 @@ class Courseware extends Block
             // aside section
             else {
                 // find aside's "parent" sub/chapter
-                // TODO: gruseliger Hack, um das Unter/Kapitel zu finden, in dem die Section eingehängt ist.
+                // TODO: gruseliger Hack, um das Unter/Kapitel zu finden, in dem die Section eingehÃ¤ngt ist.
                 $field = current(\Mooc\DB\Field::findBySQL('user_id = "" AND name = "aside_section" AND json_data = ?', array(json_encode($block->id))));
 
                 return $field->block;
@@ -630,6 +643,7 @@ class Courseware extends Block
             'type' => $type,
             'title' => $data['title'],
             'publication_date' => $data['publication_date'],
+            'withdraw_date' => $data['withdraw_date'],
             'position' => $block->getNewPosition($parent_id)
         ));
 

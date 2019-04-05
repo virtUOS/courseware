@@ -1,0 +1,107 @@
+@import '../../../assets/less/variables';
+@import '../../../assets/less/mixins';
+.cw-date-wrapper {
+    display: table;
+    margin: 0 auto;
+    cursor: pointer;
+    .cw-date-countdown {
+        display: none;
+
+        .cw-date-countdown-digit {
+            display: inline-block;
+            margin-right: 4px;
+        
+            .cw-date-countdown-number {
+                font-size: 6em;
+                line-height: 1.25em;
+                height: 1.25em;
+                padding: 3px 29px;
+                background: rgba(245,245,245,1);
+                font-weight: 300;
+            }
+        
+            .cw-date-countdown-label-sg,
+            .cw-date-countdown-label-pl {
+                display:none;
+                padding: 5px;
+                font-size: 1.25em;
+                text-align: left;
+                text-transform: uppercase;
+            }
+        }
+
+    }
+
+    .cw-date-date {
+        display: none;
+        .cw-date-date-space {
+            display: inline-block;
+            width: 2em;
+
+        }
+
+        .cw-date-date-digits{
+            display: inline-block;
+
+            .cw-date-date-number {
+                font-size: 5em;
+                line-height: 1.25em;
+                height: 1.25em;
+                padding: 0.25em;
+                background: rgba(245,245,245,1);
+                font-weight: 300;
+            }
+        }
+    }
+}
+
+.cw-sidebar {
+    .cw-date-countdown {
+        .cw-date-countdown-digit {
+            margin: 0;
+    
+            .cw-date-countdown-number {
+                font-size: 1.75em;
+                padding: 0.7em;
+            }
+
+            .cw-date-countdown-label-sg,
+            .cw-date-countdown-label-pl {
+                padding: 2px;
+                font-size: 0.75em;
+            }
+        }
+    }
+
+    .cw-date-date {
+        .cw-date-date-space {
+            width: 0.5em;
+        }
+
+        .cw-date-date-digits{
+            .cw-date-date-number {
+                font-size: 2em;
+                padding: 4px 10px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: @mobile-max-width) {
+    .cw-date-countdown {
+        .cw-date-countdown-digit {
+            margin: 0;
+    
+            .cw-date-countdown-number {
+                font-size: 2.15em;
+                padding: 0.75em;
+            }
+    
+            .cw-date-countdown-label-sg,
+            .cw-date-countdown-label-pl {
+                padding: 2px;
+                font-size: 0.75em;
+            }
+        }
+    }
+}

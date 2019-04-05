@@ -8,6 +8,7 @@ export default Backbone.View.extend({
 
   events: {
     'submit form': 'submit',
+    'change input[name="publication_date"]': 'change_publication_date',
     'click button.cancel': 'cancel'
   },
 
@@ -24,15 +25,18 @@ export default Backbone.View.extend({
 
   render() {
     var data = {
-      title: this.model.get('title'),
-      visible_since_title: this.model.get('visible_since_title')
+      title: this.model.get('title')
     };
 
     // hide publication_date for sections
-    if (this.model.get('type') !== 'Section') {
+    if (this.model.get('type') !== 'section') {
       if (this.model.get('publication_date')) {
         var date = new Date(this.model.get('publication_date') * 1000);
         data.publication_date = dateformat(date, 'yyyy-mm-dd');
+      }
+      if (this.model.get('withdraw_date')) {
+        var date = new Date(this.model.get('withdraw_date') * 1000);
+        data.withdraw_date = dateformat(date, 'yyyy-mm-dd');
       }
       data.chapter = true;
     }
@@ -44,24 +48,35 @@ export default Backbone.View.extend({
 
   postRender() {
     this.$('input').eq(0).select().focus();
+    this.$('input[name="withdraw_date"]').attr('min', this.$('input[name="publication_date"]').val());
   },
 
   promise() {
     return this.deferred;
   },
+  
+  change_publication_date(){
+    this.$('input[name="withdraw_date"]').attr('min', this.$('input[name="publication_date"]').val());
+  },
 
   submit(event) {
     event.preventDefault();
     var new_title = this.$('input').val().trim();
-    var new_publication_date = Math.floor(Date.parse(this.$('input[type=date]').val()) / 1000);
+    var new_publication_date = Math.floor(Date.parse(this.$('input[name="publication_date"]').val()) / 1000);
+    var new_withdraw_date = Math.floor(Date.parse(this.$('input[name="withdraw_date"]').val()) / 1000);
 
     if (new_title === '') {
       return;
     }
 
+    if (new_publication_date >= new_withdraw_date) {
+        return;
+    }
+
     this.model.set({
       title: new_title,
-      publication_date: new_publication_date
+      publication_date: new_publication_date,
+      withdraw_date: new_withdraw_date
     });
     this.resolve(this.model);
   },

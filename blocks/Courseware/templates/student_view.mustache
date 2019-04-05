@@ -1,6 +1,6 @@
 <section
   id=courseware
-  class="view-student{{#user_may_author}} user-may-author{{/user_may_author}}{{#user_is_nobody}} user-is-nobody{{/user_is_nobody}} loading"
+  class="view-student{{#user_may_author}} user-may-author{{/user_may_author}}{{#user_is_nobody}} user-is-nobody{{/user_is_nobody}} loading {{#scrollytelling}}scrollyware{{/scrollytelling}}"
   data-blockid="{{courseware.id}}"
   data-type=Courseware>
 
@@ -16,13 +16,8 @@
   </nav>
 
   <aside class="cw-sidebar">
-    <div class="cw-sidebar-image">
-        <span class="cw-sidebar-image-title">{{cw_title}}</span>
-    </div>
+    <div class="cw-sidebar-image"></div>
     <nav class="cw-navigation">
-          <p class="cw-navigation-header">
-            Navigation
-          </p>
         {{#user_is_teacher}}
           <ul class="cw-navigation-teacher">
             <a class="cw-navigation-courseware cw-navigation-active-link" href="#">
@@ -30,9 +25,9 @@
                     {{cw_title}}
                 </li>
             </a>
-            <a class="cw-navigation-news" href="{{#plugin_url}}courseware/news{{/plugin_url}}">
+            <a class="cw-navigation-blockmanager" href="{{#plugin_url}}block_manager{{/plugin_url}}">
                 <li>
-                    {{#i18n}}Letzte Änderungen{{/i18n}}
+                    {{#i18n}}Struktur bearbeiten{{/i18n}}
                 </li>
             </a>
             <a class="cw-navigation-settings" href="{{#plugin_url}}courseware/settings{{/plugin_url}}">
@@ -40,14 +35,19 @@
                     {{#i18n}}Einstellungen{{/i18n}}
                 </li>
             </a>
+            <a class="cw-navigation-news" href="{{#plugin_url}}courseware/news{{/plugin_url}}">
+                <li>
+                    {{#i18n}}Letzte Ã„nderungen{{/i18n}}
+                </li>
+            </a>
             <a class="cw-navigation-progressoverview" href="{{#plugin_url}}cpo{{/plugin_url}}">
                 <li>
-                    {{#i18n}}Fortschrittsübersicht{{/i18n}}
+                    {{#i18n}}FortschrittsÃ¼bersicht{{/i18n}}
                 </li>
             </a>
             <a class="cw-navigation-postoverview" href="{{#plugin_url}}cpo/postoverview{{/plugin_url}}">
                 <li>
-                    {{#i18n}}Diskussionsübersicht{{/i18n}}
+                    {{#i18n}}DiskussionsÃ¼bersicht{{/i18n}}
                 </li>
             </a>
             <a class="cw-navigation-export" href="{{#plugin_url}}export{{/plugin_url}}">
@@ -70,14 +70,14 @@
                 </li>
             </a>
             <a class="cw-navigation-news" href="{{#plugin_url}}courseware/news{{/plugin_url}}">
-                <li>
-                    {{#i18n}}Letzte Änderungen{{/i18n}}
-                </li>
+              <li>
+                  {{#i18n}}Letzte Ã„nderungen{{/i18n}}
+              </li>
             </a>
             <a class="cw-navigation-progress" href="{{#plugin_url}}progress{{/plugin_url}}">
-                <li>
-                    {{#i18n}}Fortschrittsübersicht{{/i18n}}
-                </li>
+              <li>
+                  {{#i18n}}FortschrittsÃ¼bersicht{{/i18n}}
+              </li>
             </a>
           </ul>
         {{/user_is_teacher}}
@@ -91,16 +91,16 @@
 
       <li class=no-content>{{#i18n}}Keine Kapitel{{/i18n}}</li>
       <li class=controls>
-        <button class=add-chapter>{{#i18n}}Kapitel einfügen{{/i18n}}</button>
+        <button class=add-chapter>{{#i18n}}Kapitel einfÃ¼gen{{/i18n}}</button>
         <button class=init-sort-chapter>{{#i18n}}Kapitel sortieren{{/i18n}}</button>
-        <button class=stop-sort-chapter>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
+        <button class=stop-sort-chapter>{{#i18n}}Sortieren abschlieÃŸen{{/i18n}}</button>
         {{^active_chapter.aside_section}}
-          <button class=activate-aside-section>{{#i18n}}Seitenblöcke aktivieren{{/i18n}}</button>
+          <button class=activate-aside-section>{{#i18n}}SeitenblÃ¶cke aktivieren{{/i18n}}</button>
         {{/active_chapter.aside_section}}
         {{#active_chapter.aside_section}}
-            <button class=deactivate-aside-section data-type=Chapter>{{#i18n}}Seitenblöcke entfernen{{/i18n}}</button>
+            <button class=deactivate-aside-section data-type=Chapter>{{#i18n}}SeitenblÃ¶cke entfernen{{/i18n}}</button>
         {{/active_chapter.aside_section}}
-        <button class="add-topics" data-title="{{#i18n}}Für jedes Thema aus dem Ablaufplan dieser Veranstaltung wird ein Kapitel angelegt{{/i18n}}">{{#i18n}}Ablaufplan importieren{{/i18n}}</button>
+        <button class="add-topics" data-title="{{#i18n}}FÃ¼r jedes Thema aus dem Ablaufplan dieser Veranstaltung wird ein Kapitel angelegt{{/i18n}}">{{#i18n}}Ablaufplan importieren{{/i18n}}</button>
       </li>
       
     </ol>
@@ -115,7 +115,7 @@
 
           <header>
             <h1>
-              {{#i18n}}Sidebar für {{/i18n}}
+              {{#i18n}}Sidebar fÃ¼r {{/i18n}}
                 {{#titleize}}{{active_chapter.title}}{{/titleize}}
             </h1>
           </header>
@@ -136,7 +136,7 @@
 
           <header>
             <h1>
-              {{#i18n}}Sidebar für {{/i18n}}
+              {{#i18n}}Sidebar fÃ¼r {{/i18n}}
                 {{#titleize}}{{active_subchapter.title}}{{/titleize}}
             </h1>
           </header>
@@ -146,13 +146,10 @@
       {{/aside_section}}
     {{/active_subchapter}}
   </aside>
-<button class="mobile-show-nav-button"></button>  
-  {{#show_section_nav}}
-    {{^sections_as_chapters}}
-      {{> active_subchapter}}
-    {{/sections_as_chapters}}
-  {{/show_section_nav}}
-  
+  <button class="mobile-show-nav-button"></button>  
+
+  {{> active_subchapter}}
+
   {{#user_is_teacher}}
     <div class=mode-switch>
       <button class="student" data-title="{{#i18n}}Studentenmodus{{/i18n}}"></button>
@@ -166,7 +163,7 @@
 
   <div class="clear"></div>
 </section>
-            <script>
-                var VIPS_BASE_URL = "{{vips_path}}";
-            </script>
-            <script src="{{vips_url}}/js/vips.js"></script>
+<script>
+    var VIPS_BASE_URL = "{{vips_path}}";
+</script>
+<script src="{{vips_url}}/js/vips.js"></script>

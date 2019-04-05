@@ -1,0 +1,98 @@
+.active-section section.block.ScrollyBlock {
+    display: none;
+}
+
+&.scrollyware {
+    padding:0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    max-width: unset;
+    max-height: unset;
+
+    .cw-sidebar {
+        top: 4em;
+        background-color: #fff;
+        padding-right: 8px;
+        z-index: 99;
+        .cw-sidebar-image,
+        .aside-section,
+        li.selected ~ li.controls .activate-aside-section,
+        .deactivate-aside-section {
+            display: none;
+        }
+    }
+
+    .menu-toggle-button {
+        .btn(hamburger);
+        width: 48px;
+        height: 38px;
+        background-size: 32px;
+        
+        &:hover {
+            .btn(hamburger, white);
+            width: 48px;
+            height: 38px;
+            background-size: 32px;
+            background-color: #28497c;
+        }
+    }
+
+    .breadcrumb,
+    .mobile-show-nav-button {
+        display: none;
+    }
+
+    &.view-author {
+        .active-section {
+            padding-top: 6em;
+        }
+        .block-adder {
+            position: absolute;
+            top: 4em;
+            background-color: #fff;
+            width: 100%;
+            z-index: 43;
+        }
+    }
+
+    .cw-sidebar,
+    .breadcrumb {
+        display: none;
+    }
+    .active-section .title  {
+        position: absolute;
+        top: 0;
+        right: 1em;
+    }
+    .mode-switch {
+        position: absolute;
+        right: 1em;
+        top: 8em;
+        z-index: 12;
+    }
+
+    .active-section {
+        max-width: unset;
+    }
+    
+    section.block {
+        width: 50%;
+        max-width: 720px;
+        margin-right: auto;
+        margin-left: auto;
+        
+        &.HtmlBlock,
+        &.TypewriterBlock {
+            font-size: 18px;
+            h2 {
+                font-size: 30px;
+                font-weight: 600;
+                border: none;
+            }
+        }
+        &.ScrollyBlock {
+            display: block;
+        }
+    }
+}

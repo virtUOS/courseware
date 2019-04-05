@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-0215 12:14+0200\n"
+"POT-Creation-Date: 2019-03-0314 08:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,13 +20,16 @@ msgstr ""
 msgid "Abschicken"
 msgstr ""
 
-msgid "Abschnitt einfügen"
+msgid "Abschnitt einfÃ¼gen"
 msgstr ""
 
 msgid "Abschnitte sortieren"
 msgstr ""
 
-msgid "Abschnitt löschen"
+msgid "Abschnitt Icon auswÃ¤hlen"
+msgstr ""
+
+msgid "Abschnitt lÃ¶schen"
 msgstr ""
 
 msgid "Abschnittstitel bearbeiten"
@@ -41,34 +44,73 @@ msgstr ""
 msgid "Accordion"
 msgstr ""
 
+msgid "Achtung! PHP-CURL ist nicht installiert. Ohne PHP-CURL funktioniert dieser Block nicht."
+msgstr ""
+
 msgid "akzeptieren"
+msgstr ""
+
+msgid "Alarm"
+msgstr ""
+
+msgid "Alle"
+msgstr ""
+
+msgid "Alle Bilddateien die sich in diesem Ordner des Dateibereichts befinden werden in der Galerie angezeigt."
 msgstr ""
 
 msgid "alles zeigen"
 msgstr ""
 
-msgid "Ändern"
+msgid "Anfangsbuchstabe groÃ?"
 msgstr ""
 
 msgid "Anheben"
 msgstr ""
 
-msgid "Antwort zurücksetzen"
+msgid "Anmerkung zur LÃ¶sung"
+msgstr ""
+
+msgid "Anpassen abschlieÃ?en"
+msgstr ""
+
+msgid "Antwort zurÃ¼cksetzen"
 msgstr ""
 
 msgid "Anzeigen"
 msgstr ""
 
+msgid "Ã?berschrift"
+msgstr ""
+
 msgid "Art des Links"
 msgstr ""
 
-msgid "Audiodatei"
+msgid "Aufgaben"
 msgstr ""
 
 msgid "Aufgabenblatt"
 msgstr ""
 
-msgid "Aufgabenblätter verwalten"
+msgid "AufgabenblÃ¤tter verwalten"
+msgstr ""
+
+msgid "Aufgabe verwenden"
+msgstr ""
+
+msgid "Aufnahme"
+msgstr ""
+
+msgid "Aufnahme beenden"
+msgstr ""
+
+msgid "Aufnahme lÃ¶schen"
+msgstr ""
+
+msgid "Aufnahme lÃ¤uft"
+msgstr ""
+
+msgid "Aufnahme starten"
 msgstr ""
 
 msgid "ausrufen"
@@ -83,7 +125,13 @@ msgstr ""
 msgid "Autoplay-Timer (in Sekunden)"
 msgstr ""
 
+msgid "Autor"
+msgstr ""
+
 msgid "Autorenmodus"
+msgstr ""
+
+msgid "Balkendiagramm"
 msgstr ""
 
 msgid "Bereits vorhandene Diskussion verwenden"
@@ -95,25 +143,76 @@ msgstr ""
 msgid "betrachten"
 msgstr ""
 
-msgid "Bewegen Sie den Cursor über das Informations-Icon des gewünschten Blocks um die Block-Id zu erfahren."
+msgid "Bewegen Sie den Cursor Ã¼ber das Informations-Icon des gewÃ¼nschten Blocks um die Block-Id zu erfahren."
+msgstr ""
+
+msgid "Bezeichnung"
 msgstr ""
 
 msgid "Bezeichung des Links"
 msgstr ""
 
+msgid "Bild nachher - Dateibereich"
+msgstr ""
+
+msgid "Bild nachher - URL"
+msgstr ""
+
 msgid "Bildschirm"
 msgstr ""
 
-msgid "Bitte beachten Sie das nicht alle Blocktypen in diesen Block eingebunden werden können."
+msgid "Bildvergleich: Es wurden noch nicht zwei Bilder ausgewÃ¤hlt"
 msgstr ""
 
-msgid "Block hinzufügen"
+msgid "Bild vorher - Dateibereich"
+msgstr ""
+
+msgid "Bild vorher - URL"
+msgstr ""
+
+msgid "Bitte beachten Sie, dass StudIP Ã¼ber eine sichere Verbindung aufgerufen wird. Es kÃ¶nnen nur Quellen eingebunden werden, die auch Ã¼ber eine sichere Verbindung verfÃ¼gen. Nutzen Sie das Protokoll https in der URL!"
+msgstr ""
+
+msgid "Bitte vergleichen Sie Ihre LÃ¶sung mit der MusterlÃ¶sung."
+msgstr ""
+
+msgid "Bitte verwenden Sie den Firefox oder Chrome Browser um eine Audiodatei aufzunehmen"
+msgstr ""
+
+msgid "Bitte wenden Sie sich an Ihren Administrator."
+msgstr ""
+
+msgid "blau"
+msgstr ""
+
+msgid "Block bearbeiten"
+msgstr ""
+
+msgid "Block entfernen"
+msgstr ""
+
+msgid "Block hinzufÃ¼gen"
+msgstr ""
+
+msgid "Block verstecken"
+msgstr ""
+
+msgid "Block zeigen"
 msgstr ""
 
 msgid "Blubber muss in dieser Veranstaltung aktiviert sein."
 msgstr ""
 
+msgid "Box"
+msgstr ""
+
+msgid "Breit"
+msgstr ""
+
 msgid "Breite"
+msgstr ""
+
+msgid "CC Lizenz"
 msgstr ""
 
 msgid "CC Lizenztyp angeben:"
@@ -122,13 +221,19 @@ msgstr ""
 msgid "chatten"
 msgstr ""
 
-msgid "Danke! Sie haben alle Aufgaben gelöst."
+msgid "Countdown"
 msgstr ""
 
-msgid "Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten Abschnitt fortfahren."
+msgid "Danke! Sie haben alle Aufgaben gelÃ¶st."
 msgstr ""
 
-msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
+msgid "Danke! Sie haben alle Aufgaben gelÃ¶st und kÃ¶nnen nun mit dem nÃ¤chsten Abschnitt fortfahren."
+msgstr ""
+
+msgid "Danke! Sie kÃ¶nnen nun mit dem nÃ¤chsten Abschnitt fortfahren."
+msgstr ""
+
+msgid "Das Opencast Plugin ist nicht installiert. Bitte wenden Sie sich an Ihren Administrator."
 msgstr ""
 
 msgid "Datei aus dem Dateibereich"
@@ -137,19 +242,43 @@ msgstr ""
 msgid "Dateibereich"
 msgstr ""
 
+msgid "Dateien dieser Veranstaltung"
+msgstr ""
+
 msgid "Dateityp"
 msgstr ""
 
-msgid "Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
+msgid "Datenbezeichnung"
 msgstr ""
 
-msgid "Die Evaluationen müssen im System aktiviert sein."
+msgid "Datensatz"
 msgstr ""
 
-msgid "Die gewählte Seite kann nur mit einer sicheren Verbindung eingebunden werden. Bitte geben Sie wenn möglich https in der URL an."
+msgid "Datensatz entfernen"
 msgstr ""
 
-msgid "Die gewählte Seite verbietet eine Einbindung per IFrame!"
+msgid "Datensatz hinzufÃ¼gen"
+msgstr ""
+
+msgid "Datum"
+msgstr ""
+
+msgid "Der Aufgabentyp hat sich geÃ¤ndert. Bitte wenden Sie sich an Ihren Dozenten."
+msgstr ""
+
+msgid "Diagrammtyp"
+msgstr ""
+
+msgid "Die angegebene URL scheint nicht zu der gewÃ¤hlten Plattform zu gehÃ¶ren. Bitte Ã¼berprÃ¼fen Sie Ihre Eingabe."
+msgstr ""
+
+msgid "Die Evaluationen mÃ¼ssen im System aktiviert sein."
+msgstr ""
+
+msgid "Die gewÃ¤hlte Seite kann nur mit einer sicheren Verbindung eingebunden werden. Bitte geben Sie, wenn mÃ¶glich, https in der URL an."
+msgstr ""
+
+msgid "Die gewÃ¤hlte Seite verbietet eine Einbindung per IFrame!"
 msgstr ""
 
 msgid "Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an Ihren Administrator."
@@ -158,37 +287,55 @@ msgstr ""
 msgid "Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an Ihren Dozenten."
 msgstr ""
 
+msgid "Die installierte Vips Version ist nicht kompatibel."
+msgstr ""
+
 msgid "Diese Aufgabe wurde bereits korrigiert."
 msgstr ""
 
 msgid "Diese Aufgabe wurde noch nicht korrigiert."
 msgstr ""
 
-msgid "Dieser Abschnitt steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
+msgid "Dieser Abschnitt steht Ihnen erst zur VerfÃ¼gung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloÃ?en haben."
 msgstr ""
 
-msgid "Dieser Block ermöglicht das Suchen innerhalb der Courseware dieser Veranstaltung."
+msgid "Dieser Block ermÃ¶glicht das Suchen innerhalb der Courseware dieser Veranstaltung."
 msgstr ""
 
-msgid "Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben."
+msgid "Dieser Block steht Ihnen erst zur VerfÃ¼gung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloÃ?en haben."
 msgstr ""
 
-msgid "Dieser Test ist zurzeit nicht verfügbar."
+msgid "Dieser Test ist zurzeit nicht verfÃ¼gbar."
 msgstr ""
 
-msgid "Diskussionsübersicht"
+msgid "DiskussionsÃ¼bersicht"
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "Download: Es wurde keine Datei ausgewÃ¤hlt"
 msgstr ""
 
 msgid "editieren"
 msgstr ""
 
-msgid "Eine Datei ausw&auml;hlen"
+msgid "Einblendungen"
 msgstr ""
 
-msgid "Eine Einbindung per IFrame ist nicht möglich. Bitte wenden Sie sich an Ihren Dozenten."
+msgid "Einblendung hinzufÃ¼gen"
 msgstr ""
 
-msgid "Einen Ordner ausw&auml;hlen"
+msgid "Einblendung lÃ¶schen"
+msgstr ""
+
+msgid "Eine Datei auswÃ¤hlen"
+msgstr ""
+
+msgid "Eine Einbindung per IFrame ist nicht mÃ¶glich. Bitte wenden Sie sich an Ihren Dozenten."
+msgstr ""
+
+msgid "Einen Ordner auswÃ¤hlen"
 msgstr ""
 
 msgid "eingebettetes Video (iframe)"
@@ -197,31 +344,46 @@ msgstr ""
 msgid "Einstellungen"
 msgstr ""
 
+msgid "Enddatum liegt vor Startdatum!"
+msgstr ""
+
 msgid "Ende"
 msgstr ""
 
 msgid "entfernen"
 msgstr ""
 
-msgid "Entfernen"
-msgstr ""
-
 msgid "erstellt am"
 msgstr ""
 
-msgid "Es gibt momentan keine Aufgaben, die zum Bearbeiten zur Verfügung stehen."
+msgid "erstellt von"
 msgstr ""
 
-msgid "Es sind keine Aufgabenblätter des Types \""
+msgid "Es gibt momentan keine Aufgaben, die zum Bearbeiten zur VerfÃ¼gung stehen."
+msgstr ""
+
+msgid "Es sind keine AufgabenblÃ¤tter des Types"
+msgstr ""
+
+msgid "Es wird nur ein Endzeitpunkt gesetzt wenn der Endzeitpunkt grÃ¶Ã?er als der Startzeitpunkt ist"
 msgstr ""
 
 msgid "Es wurde bisher keine Evaluation erstellt!"
 msgstr ""
 
-msgid "Es wurde keine Audiodatei ausgewählt"
+msgid "Es wurde keine Audiodatei ausgewÃ¤hlt"
 msgstr ""
 
-msgid "Es wurde keine Datei ausw&auml;hlt"
+msgid "Es wurde keine PDF-Datei ausgewÃ¤hlt."
+msgstr ""
+
+msgid "Es wurde kein OpenCast-Video ausgewÃ¤hlt."
+msgstr ""
+
+msgid "Es wurden noch keine Karten angelegt"
+msgstr ""
+
+msgid "Es wurde noch keine Videodatei ausgewÃ¤hlt."
 msgstr ""
 
 msgid "Es wurde noch kein Video eingetragen."
@@ -230,49 +392,139 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
+msgid "externer Link"
+msgstr ""
+
+msgid "fÃ¼r alle DisplaygrÃ¶Ã?en"
+msgstr ""
+
+msgid "FÃ¼r diese Frage haben Sie bereits eine Antwort abgegeben."
+msgstr ""
+
+msgid "FÃ¼r diesen Block sind keine Einstellungen notwendig."
+msgstr ""
+
+msgid "FÃ¼r diesen Diskussionsblock muss \"Blubber\" in dieser Veranstaltung eingeschaltet werden.."
+msgstr ""
+
+msgid "FÃ¼r diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet werden..."
+msgstr ""
+
+msgid "fÃ¼r groÃ?e Displays"
+msgstr ""
+
+msgid "FÃ¼r jede NutzerIn wird ein individueller Wert Ã¼bergeben mit dem die Anwendung die NutzerIn wiedererkennen kann. Um RÃ¼ckschlÃ¼ssen auf die IdentitÃ¤t zu verhindern, wird die StudIp-Nutzer-Id mit der Zufallszeichenfolge verschlÃ¼sselt. WÃ¤hlen Sie identische Zufallszeichenfolgen, wenn an verschiedenen Stellen gleiche Nutzer-Ids erzeugt werden sollen."
+msgstr ""
+
+msgid "FÃ¼r jedes Thema aus dem Ablaufplan dieser Veranstaltung wird ein Kapitel angelegt"
+msgstr ""
+
+msgid "fÃ¼r kleine Displays"
+msgstr ""
+
+msgid "(fÃ¼r Studierende nicht sichtbar)"
+msgstr ""
+
+msgid "FÃ¼r Videos von Plattformen wie YouTube oder vimeo nutzen Sie bitte den Embed-Block"
+msgstr ""
+
 msgid "Farbe"
 msgstr ""
 
-msgid "Fortschrittsübersicht"
+msgid "Farbschema"
+msgstr ""
+
+msgid "Favoriten"
+msgstr ""
+
+msgid "Favoriten anpassen"
+msgstr ""
+
+msgid "Folgende Blocktypen kÃ¶nnen in diesen Block eingebunden werden:"
+msgstr ""
+
+msgid "FortschrittsÃ¼bersicht"
 msgstr ""
 
 msgid "Frage"
 msgstr ""
 
-msgid "Freigegeben ab:"
+msgid "Freitext, Video, externer Inhalt (iframe), Download, Merksatz, Link, Embed"
 msgstr ""
 
-msgid "für alle Displaygrößen"
+msgid "Geben Sie das Mikrofon frei um eine Aufnahme zu ermÃ¶glichen"
 msgstr ""
 
-msgid "Für diese Frage haben Sie bereits eine Antwort abgegeben."
+msgid "Geben Sie hier eine URL an die direkt zu einer Bilddatei fÃ¼hrt. Die URL kÃ¶nnen Sie z.B. aus der Adresszeile Ihres Browsers kopieren."
 msgstr ""
 
-msgid "Für diesen Diskussionsblock muss \"Blubber\" in dieser Veranstaltung eingeschaltet werden.."
+msgid "Geben Sie hier eine URL an die direkt zu einer Datei fÃ¼hrt. Die URL kÃ¶nnen Sie z.B. aus der Adresszeile Ihres Browsers kopieren."
 msgstr ""
 
-msgid "Für diesen Forumsblock muss das Forum in dieser Veranstaltung eingeschaltet werden..."
+msgid "Geben Sie hier eine URL an die direkt zu einer Videodatei fÃ¼hrt. Die URL kÃ¶nnen Sie z.B. aus der Adresszeile Ihres Browsers kopieren."
 msgstr ""
 
-msgid "für große Displays"
+msgid "gelb"
 msgstr ""
 
-msgid "für kleine Displays"
+msgid "Gesamtes Kapitel lÃ¶schen"
 msgstr ""
 
-msgid "Gesamtes Kapitel löschen"
+msgid "Gesamtes Unterkapitel lÃ¶schen"
 msgstr ""
 
-msgid "Gesamtes Unterkapitel löschen"
+msgid "Geschwindigkeit"
 msgstr ""
 
-msgid "hinzufügen"
+msgid "grÃ¼n"
 msgstr ""
 
-msgid "Höhe"
+msgid "grau"
 msgstr ""
 
-msgid "H&ouml;he der Galerie (in Pixeln)"
+msgid "groÃ?"
+msgstr ""
+
+msgid "HÃ¶he"
+msgstr ""
+
+msgid "HÃ¶he der Galerie (in Pixeln)"
+msgstr ""
+
+msgid "Haltepunkte"
+msgstr ""
+
+msgid "Haltepunkt hinzufÃ¼gen"
+msgstr ""
+
+msgid "Haltepunkt lÃ¶schen"
+msgstr ""
+
+msgid "hellgrau"
+msgstr ""
+
+msgid "Herunterladen"
+msgstr ""
+
+msgid "Hier werden alle Audiodateien aus dem Dateibereich aufgelistet."
+msgstr ""
+
+msgid "Hier werden alle Bilddateien aus dem Dateibereich aufgelistet."
+msgstr ""
+
+msgid "Hier werden alle PDF-Dateien aus dem Dateibereich aufgelistet."
+msgstr ""
+
+msgid "Hier werden alle Videodateien aus dem Dateibereich aufgelistet."
+msgstr ""
+
+msgid "hinzufÃ¼gen"
+msgstr ""
+
+msgid "Hoch"
+msgstr ""
+
+msgid "https://www.beispiel.de/bild.jpg"
 msgstr ""
 
 msgid "Icon"
@@ -281,31 +533,37 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-msgid "Ihre Lösung ist korrekt!"
+msgid "Ihre LÃ¶sung ist korrekt!"
 msgstr ""
 
-msgid "Ihre Lösung ist nicht korrekt!"
+msgid "Ihre LÃ¶sung ist nicht korrekt!"
 msgstr ""
 
-msgid "Ihre Lösung wurde eingetragen."
+msgid "Ihre LÃ¶sung wurde eingetragen."
 msgstr ""
 
-msgid "Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal."
+msgid "Ihr LÃ¶sungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal."
 msgstr ""
 
-msgid "Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
+msgid "Im aktuellen Aufgabenblatt sind nicht unterstÃ¼tzte Aufgabentypen enthalten!"
 msgstr ""
 
 msgid "Import"
 msgstr ""
 
+msgid "in anderen Kapiteln"
+msgstr ""
+
 msgid "in Courseware suchen..."
 msgstr ""
 
-msgid "In dem ausgew&auml;hlten Ordner befinden sich keine Bilder."
+msgid "In dem ausgewÃ¤hlten Ordner befinden sich keine Bilder."
 msgstr ""
 
-msgid "Info"
+msgid "In diesem Abschnitt sind keine BlÃ¶cke vorhanden die sich gruppieren lassen."
+msgstr ""
+
+msgid "in diesem Kapitel"
 msgstr ""
 
 msgid "Infobox nach Download"
@@ -320,7 +578,22 @@ msgstr ""
 msgid "Inhalt"
 msgstr ""
 
-msgid "Kapitel einfügen"
+msgid "Interaktion"
+msgstr ""
+
+msgid "interner Link"
+msgstr ""
+
+msgid "invertiert"
+msgstr ""
+
+msgid "Invertiert"
+msgstr ""
+
+msgid "ja"
+msgstr ""
+
+msgid "Kapitel einfÃ¼gen"
 msgstr ""
 
 msgid "Kapitel sortieren"
@@ -329,13 +602,31 @@ msgstr ""
 msgid "Kapiteltitel bearbeiten"
 msgstr ""
 
+msgid "Karte"
+msgstr ""
+
+msgid "Karte hinzufÃ¼gen"
+msgstr ""
+
+msgid "kein Aufgabenblatt"
+msgstr ""
+
+msgid "kein Bild"
+msgstr ""
+
 msgid "Keine Abschnitte"
+msgstr ""
+
+msgid "keine Audiodatei verfÃ¼gbar"
 msgstr ""
 
 msgid "Keine Aufgaben."
 msgstr ""
 
-msgid "Keine Inhaltsblöcke"
+msgid "keine Bilddatei verfÃ¼gbar"
+msgstr ""
+
+msgid "Keine InhaltsblÃ¶cke"
 msgstr ""
 
 msgid "Keine Kapitel"
@@ -344,67 +635,238 @@ msgstr ""
 msgid "keinen Treffer gefunden"
 msgstr ""
 
+msgid "keine PDF-Datei verfÃ¼gbar"
+msgstr ""
+
 msgid "Keine Unterkapitel"
 msgstr ""
 
-msgid "Kein Test verfügbar. Vips muss in dieser Veranstaltung aktiviert sein."
+msgid "keine Videodatei verfÃ¼gbar"
 msgstr ""
 
-msgid "Kein Test verfügbar. Vips muss installiert sein."
+msgid "Kein Test verfÃ¼gbar. Vips muss in dieser Veranstaltung aktiviert sein."
+msgstr ""
+
+msgid "Kein Test verfÃ¼gbar. Vips muss installiert sein."
+msgstr ""
+
+msgid "klicken um Karte umzudrehen"
 msgstr ""
 
 msgid "Kommentiere dies"
 msgstr ""
 
-msgid "Kontrollelemente verstecken"
-msgstr ""
-
 msgid "kooperieren"
 msgstr ""
 
-msgid "Letzte Änderungen"
+msgid "Kreisdiagramm"
+msgstr ""
+
+msgid "langsam"
+msgstr ""
+
+msgid "Layout"
+msgstr ""
+
+msgid "Letzte Ã?nderungen"
+msgstr ""
+
+msgid "lila"
+msgstr ""
+
+msgid "Liniendiagramm"
+msgstr ""
+
+msgid "links groÃ?"
+msgstr ""
+
+msgid "links klein"
+msgstr ""
+
+msgid "links mittel"
+msgstr ""
+
+msgid "Link zur Plattform"
+msgstr ""
+
+msgid "Lizenz der Plattform"
 msgstr ""
 
 msgid "Merksatz"
 msgstr ""
 
-msgid "Mit diesem Block fassen Sie mehrere Blöcke dieser Seite zum Durchblättern zusammen."
+msgid "Mikrofon freigeben um etwas aufzunehmen"
 msgstr ""
 
-msgid "Musterlösung:"
+msgid "Minute"
 msgstr ""
 
-msgid "Name des Übergabeparameters"
+msgid "Minuten"
+msgstr ""
+
+msgid "Mit diesem Block fassen Sie mehrere BlÃ¶cke dieser Seite zum DurchblÃ¤ttern zusammen."
+msgstr ""
+
+msgid "Mit diesem Block kÃ¶nnen Sie Inhalte wie Videos, Bilder, Audiodateien etc. von diversen Plattformen in Courseware anzeigen lassen. Auf der Seite der Plattform kÃ¶nnen Sie die URL direkt aus der Adressleiste Ihres Browsers kopieren. Die Verwendung eines Embed-Codes ist nicht notwendig."
+msgstr ""
+
+msgid "mittel"
+msgstr ""
+
+msgid "mitte links"
+msgstr ""
+
+msgid "mitte mitte"
+msgstr ""
+
+msgid "mitte rechts"
+msgstr ""
+
+msgid "Multimedia"
+msgstr ""
+
+msgid "MusterlÃ¶sung:"
+msgstr ""
+
+msgid "nÃ¤chste Karte"
+msgstr ""
+
+msgid "nÃ¤chster Abschnitt"
+msgstr ""
+
+msgid "Name des Ã?bergabeparameters"
 msgstr ""
 
 msgid "Navigation verbergen"
 msgstr ""
 
-msgid "Nutzerspezifische ID übergeben"
+msgid "nein"
 msgstr ""
 
-msgid "openCast"
+msgid "normal"
+msgstr ""
+
+msgid "Nutzerfortschritt anzeigen"
+msgstr ""
+
+msgid "Nutzer muss Beitrag verfassen um Fortschitt zu erreichen"
+msgstr ""
+
+msgid "Nutzerspezifische ID Ã¼bergeben"
+msgstr ""
+
+msgid "oben links"
+msgstr ""
+
+msgid "oben mitte"
+msgstr ""
+
+msgid "oben rechts"
+msgstr ""
+
+msgid "Opencast Player verwenden"
+msgstr ""
+
+msgid "Opencast Video"
+msgstr ""
+
+msgid "orange"
+msgstr ""
+
+msgid "Ordner dieser Veranstaltung"
+msgstr ""
+
+msgid "Ort"
 msgstr ""
 
 msgid "planen"
 msgstr ""
 
-msgid "puz­zeln"
+msgid "Plattform"
+msgstr ""
+
+msgid "Polar-Area Diagram"
+msgstr ""
+
+msgid "Position"
+msgstr ""
+
+msgid "puzÂ­zeln"
+msgstr ""
+
+msgid "Quellcode"
 msgstr ""
 
 msgid "Quelle"
 msgstr ""
 
-msgid "Quelle hinzufügen"
+msgid "Quelle entfernen"
 msgstr ""
 
-msgid "Seitenblöcke aktivieren"
+msgid "Quelle hinzufÃ¼gen"
 msgstr ""
 
-msgid "Seitenblöcke entfernen"
+msgid "RÃ¼ckgÃ¤ngig"
 msgstr ""
 
-msgid "Seitenverhältnis"
+msgid "RÃ¼ckseite - Bild aus Dateibereich"
+msgstr ""
+
+msgid "RÃ¼ckseite - Bild von URL"
+msgstr ""
+
+msgid "RÃ¼ckseite - Text"
+msgstr ""
+
+msgid "rechts groÃ?"
+msgstr ""
+
+msgid "rechts klein"
+msgstr ""
+
+msgid "rechts mittel"
+msgstr ""
+
+msgid "Ringdiagramm"
+msgstr ""
+
+msgid "rot"
+msgstr ""
+
+msgid "SÃ¤ulendiagramm"
+msgstr ""
+
+msgid "schnell"
+msgstr ""
+
+msgid "Schnellauswahl"
+msgstr ""
+
+msgid "Schriftart"
+msgstr ""
+
+msgid "SchriftgrÃ¶Ã?e"
+msgstr ""
+
+msgid "schwarz"
+msgstr ""
+
+msgid "sehr schnell"
+msgstr ""
+
+msgid "SeitenblÃ¶cke aktivieren"
+msgstr ""
+
+msgid "SeitenblÃ¶cke entfernen"
+msgstr ""
+
+msgid "SeitenverhÃ¤ltnis"
+msgstr ""
+
+msgid "Sekunde"
+msgstr ""
+
+msgid "Sekunden"
 msgstr ""
 
 msgid "senden"
@@ -413,13 +875,28 @@ msgstr ""
 msgid "sichtbar ab:"
 msgstr ""
 
-msgid "Sidebar für"
+msgid "Sidebar fÃ¼r"
 msgstr ""
 
-msgid "Sortieren abschließen"
+msgid "Sie kÃ¶nnen mehrere Quellen pro Video angeben. Neben unterschiedlichen Formaten sind auch Videos fÃ¼r kleine Displays (&le;800px) und groÃ?e Displays (>800px) mÃ¶glich."
+msgstr ""
+
+msgid "Sortieren abschlieÃ?en"
 msgstr ""
 
 msgid "Speichern"
+msgstr ""
+
+msgid "Speichern nicht mÃ¶glich. Bitte wÃ¤hlen Sie eine Datei oder machen Sie eine Aufnahme."
+msgstr ""
+
+msgid "Speichern nicht mÃ¶glich. Die Aufnahme wurde noch nicht beendet."
+msgstr ""
+
+msgid "Sprache"
+msgstr ""
+
+msgid "Standard"
 msgstr ""
 
 msgid "Start"
@@ -428,13 +905,40 @@ msgstr ""
 msgid "Stellen Sie eine Frage oder kommentieren Sie..."
 msgstr ""
 
+msgid "Struktur bearbeiten"
+msgstr ""
+
+msgid "Strukturen & Layout"
+msgstr ""
+
 msgid "Studentenmodus"
+msgstr ""
+
+msgid "Stunde"
+msgstr ""
+
+msgid "Stunden"
 msgstr ""
 
 msgid "suchen"
 msgstr ""
 
+msgid "tÃ¼rkis"
+msgstr ""
+
 msgid "Tabs"
+msgstr ""
+
+msgid "Tag"
+msgstr ""
+
+msgid "Tage"
+msgstr ""
+
+msgid "Termin herunterladen"
+msgstr ""
+
+msgid "Text"
 msgstr ""
 
 msgid "Titel"
@@ -446,13 +950,28 @@ msgstr ""
 msgid "Titel des Unterkapitels bearbeiten"
 msgstr ""
 
-msgid "Title"
+msgid "Tragen Sie in das Feld URL (Uniform Resource Locator) die Adresse der Seite ein, die im iFrame erscheinen soll.<br> Bitte beachten Sie, dass manche Seiten die Darstellung in einem iFrame blockieren."
 msgstr ""
 
-msgid "Überschrift"
+msgid "Typ"
 msgstr ""
 
-msgid "Unterkapitel einfügen"
+msgid "Uhrzeit"
+msgstr ""
+
+msgid "unsichtbar ab:"
+msgstr ""
+
+msgid "unten links"
+msgstr ""
+
+msgid "unten mitte"
+msgstr ""
+
+msgid "unten rechts"
+msgstr ""
+
+msgid "Unterkapitel einfÃ¼gen"
 msgstr ""
 
 msgid "Unterkapitel sortieren"
@@ -461,31 +980,70 @@ msgstr ""
 msgid "URL"
 msgstr ""
 
-msgid "Video automatisch starten"
+msgid "verÃ¶ffentlicht auf"
+msgstr ""
+
+msgid "verfÃ¼gbare Sprachen"
 msgstr ""
 
 msgid "Video-Typ:"
 msgstr ""
 
+msgid "Vips ist nicht aktiviert."
+msgstr ""
+
+msgid "Vips ist nicht installiert."
+msgstr ""
+
+msgid "Voll"
+msgstr ""
+
+msgid "volle Breite"
+msgstr ""
+
+msgid "Vorderseite - Bild aus Dateibereich"
+msgstr ""
+
+msgid "Vorderseite - Bild von URL"
+msgstr ""
+
+msgid "Vorderseite - Text"
+msgstr ""
+
+msgid "vorherige Karte"
+msgstr ""
+
+msgid "vorheriger Abschnitt"
+msgstr ""
+
 msgid "Vorschau"
 msgstr ""
 
-msgid "Was sollen die Lernenden bestätigen?"
+msgid "WÃ¤hlen Sie ein Icon fÃ¼r diesen Abschnitt aus"
 msgstr ""
 
-msgid "webAudio"
+msgid "WÃ¤hlen Sie hier ein Aufgabenblatt aus dem Vips Plugin aus"
+msgstr ""
+
+msgid "Was sollen die Lernenden bestÃ¤tigen?"
+msgstr ""
+
+msgid "webAudio (URL)"
+msgstr ""
+
+msgid "webVideo (URL)"
 msgstr ""
 
 msgid "Webvideo (URL)"
 msgstr ""
 
-msgid "Wegen des gewählten Lizenzstatus kann diese PDF-Datei nicht angezeigt werden."
+msgid "Wegen des gewÃ¤hlten Lizenzstatus kann diese PDF-Datei nicht angezeigt werden."
 msgstr ""
 
-msgid "Wegen des gewählten Lizenzstatus können Sie diese Audiodatei nicht abspielen."
+msgid "Wegen des gewÃ¤hlten Lizenzstatus kÃ¶nnen Sie diese Audiodatei nicht abspielen."
 msgstr ""
 
-msgid "Wegen des gewählten Lizenzstatus können Sie diese Datei nicht herunterladen."
+msgid "Wegen des gewÃ¤hlten Lizenzstatus kÃ¶nnen Sie diese Datei nicht herunterladen."
 msgstr ""
 
 msgid "weiter"
@@ -494,22 +1052,52 @@ msgstr ""
 msgid "weniger zeigen"
 msgstr ""
 
-msgid "Youtube"
+msgid "Werk"
 msgstr ""
 
-msgid "Zeit zurücksetzen"
+msgid "Wert"
+msgstr ""
+
+msgid "Zeitpunkt"
 msgstr ""
 
 msgid "Ziel des Links"
 msgstr ""
 
-msgid "Zufallszeichen für Verschlüsselung"
+msgid "Zufallszeichen fÃ¼r VerschlÃ¼sselung"
 msgstr ""
 
-msgid "zurück"
+msgid "zurÃ¼ck"
 msgstr ""
 
-msgid "Bestätigung"
+msgid "ZurÃ¼cksetzen"
+msgstr ""
+
+msgid "Neuer Abschnitt"
+msgstr ""
+
+msgid "Neues Kapitel"
+msgstr ""
+
+msgid "Neues Unterkapitel"
+msgstr ""
+
+msgid "Sichtbar ab"
+msgstr ""
+
+msgid "Wollen Sie den Block wirklich löschen?"
+msgstr ""
+
+msgid "Wollen Sie den gesamten Abschnitt wirklich löschen?"
+msgstr ""
+
+msgid "Wollen Sie wirklich löschen? Sämtliche enthaltenen Abschnitte und Blöcke werden unwiderruflich entfernt!"
+msgstr ""
+
+msgid "Wollen Sie wirklich löschen? Sämtliche enthaltenen Blöcke werden unwiderruflich entfernt!"
+msgstr ""
+
+msgid "Best?tigung"
 msgstr ""
 
 msgid "Diskussion"

@@ -25,7 +25,22 @@ class Section extends Block
     // definition of precedence of icons
     // larger array index -> higher precedence
     // thus ICON_VIDEO has the highest precedence
-    private static $icon_precedences = array(self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO, self::ICON_AUDIO, self::ICON_CODE, self::ICON_SEARCH, self::ICON_GALLERY);
+    private static $icon_precedences = array(
+        self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO,
+        self::ICON_AUDIO, self::ICON_CODE, self::ICON_SEARCH, self::ICON_GALLERY
+    );
+
+    private static $custom_icons =  array(
+        'doctoral_cap', 'community', 'edit', 'plugin',
+        'graph', 'admin', 'billboard', 'category',
+        'cloud2', 'comment', 'date', 'edit-small',
+        'exclaim', 'favorite', 'file', 'folder-empty2',
+        'group2', 'guestbook', 'home', 'key',
+        'literature', 'news', 'notification2', 'place',
+        'print', 'ranking', 'refresh', 'resources',
+        'staple', 'star', 'stat', 'studygroup',
+        'tag', 'wizard', 'youtube'
+    );
 
     // mapping of block types to icons
     private static $map_blocks_to_icons = array(
@@ -39,6 +54,7 @@ class Section extends Block
         'TestBlock' => self::ICON_TASK,
         'SearchBlock' => self::ICON_SEARCH,
         'CodeBlock' => self::ICON_CODE,
+        'CanvasBlock' => self::ICON_GALLERY,
         'GalleryBlock' => self::ICON_GALLERY,
         'BeforeAfterBlock' => self::ICON_GALLERY,
     );
@@ -47,6 +63,7 @@ class Section extends Block
     {
         $this->defineField('visited', \Mooc\SCOPE_USER, false);
         $this->defineField('icon', \Mooc\SCOPE_BLOCK, self::ICON_DEFAULT);
+        $this->defineField('custom_icon', \Mooc\SCOPE_BLOCK, false);
     }
 
     public function student_view($context = array())
@@ -62,12 +79,22 @@ class Section extends Block
         $icon = $this->icon;
         $title = $this->title;
         $visited = $this->visited;
+        $can_update = $this->container['current_user']->canUpdate($this);
 
         $blocks = $this->traverseChildren(
             function (Block $child) use ($context) {
+                if (!$this->getCurrentUser()->canRead($child)) {
+                    return null;
+                }
                 $json = $child->toJSON();
                 $json['block_content'] = $child->render('student', $context);
                 $json['view_name'] = 'student';
+                
+                if (!$child->getModel()->isVisible()) {
+                    $json['invisible'] = true;
+                } else  {
+                    $json['invisible'] = false;
+                }
 
                 return $json;
             }
@@ -77,9 +104,6 @@ class Section extends Block
         }
         // block adder
         $block_types = $this->getBlockTypes();
-        $content_block_types_basic = $block_types['basic_blocks'];
-        $content_block_types_advanced = $block_types['advanced_blocks'];
-
         $content_block_types_function = $block_types['function_blocks'];
         $content_block_types_interaction = $block_types['interaction_blocks'];
         $content_block_types_layout = $block_types['layout_blocks'];
@@ -87,24 +111,25 @@ class Section extends Block
         $content_block_types_all = $block_types['all_blocks'];
         $content_block_types_favorite = $block_types['favorite_blocks'];
 
-
         return compact(
             'blocks', 
-            'content_block_types_basic',
-            'content_block_types_advanced',
             'content_block_types_function',
             'content_block_types_interaction',
             'content_block_types_layout',
             'content_block_types_multimedia',
             'content_block_types_all',
             'content_block_types_favorite',
-            'icon', 'title', 'visited');
+            'icon',
+            'title', 
+            'visited',
+            'can_update'
+        );
     }
 
     public function add_content_block_handler($data)
     {
         if (!$this->container['current_user']->canCreate($this)) {
-            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt Bl�cke anzulegen.'));
+            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt Blöcke anzulegen.'));
         }
 
         if (!isset($data['type'])) {
@@ -134,7 +159,9 @@ class Section extends Block
 
         $block->store();
 
-        $this->updateIconWithBlock($block);
+        if (!$this->custom_icon) {
+            $this->updateIconWithBlock($block);
+        }
 
         /** @var \Mooc\UI\Block $uiBlock */
         $uiBlock = $this->getBlockFactory()->makeBlock($block);
@@ -147,7 +174,7 @@ class Section extends Block
     public function remove_content_block_handler($data)
     {
         if (!$this->container['current_user']->canUpdate($this)) {
-            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt Bl�cke zu l�schen.'));
+            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt Blöcke zu löschen.'));
         }
 
         if (!isset($data['child_id'])) {
@@ -161,13 +188,18 @@ class Section extends Block
 
         $child->delete();
 
-        $this->refreshIcon();
+        if (!$this->custom_icon) {
+            $this->refreshIcon();
+         }
 
         return array('status' => 'ok');
     }
 
     public function add_favorites_handler($data)
     {
+        if (!$this->container['current_user']->canUpdate($this)) {
+            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
+        }
         if (!isset($data['favorites'])) {
             throw new BadRequest('Type required.');
         }
@@ -178,10 +210,41 @@ class Section extends Block
         return;
     }
 
+    public function set_icon_handler($data)
+    {
+        if (!$this->container['current_user']->canUpdate($this)) {
+            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
+        }
+        $this->custom_icon = true;
+        if (in_array($data['icon'], $this->allowed_icons())) {
+            $this->icon = $data['icon'];
+        } else {
+            $this->icon = self::ICON_DEFAULT;
+        }
+
+        return true;
+    }
+
+    public function allowed_icons()
+    {
+        return array_merge(self::$icon_precedences , self::$custom_icons);
+    }
+
+    public function visibility_handler($data)
+    {
+        if (!$this->container['current_user']->canUpdate($this)) {
+            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
+        }
+        $child = $this->_model->children->findOneBy('id', (int) $data['block_id']); //Mooc\DB\Block
+
+        $child->visible = $data['visible'];
+        return $child->store();
+    }
+
     private function get_favorites()
     {
         $user_id = $this->container['current_user_id'];
-        $favs = \UserConfig::get($user_id)->COURSEWARE_FAVORITE_BLOCKS;        
+        $favs = \UserConfig::get($user_id)->COURSEWARE_FAVORITE_BLOCKS;
         if (!$favs) {
             return false;
         }
@@ -200,7 +263,9 @@ class Section extends Block
         foreach ($this->_model->children as $child) {
             /** @var \Mooc\UI\Block $block */
             $block = $this->getBlockFactory()->makeBlock($child);
-            $files = array_merge($files, $block->getFiles());
+            if ($block != null) {
+                $files = array_merge($files, $block->getFiles());
+            }
         }
 
         return $files;

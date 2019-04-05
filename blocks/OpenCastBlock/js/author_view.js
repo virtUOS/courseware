@@ -37,7 +37,7 @@ export default AuthorView.extend({
             return;
         }
         event.isUserInputHandled = true;
-        Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie die Seite trotzdem verlassen?'));
+        Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Ã„nderungen. MÃ¶chten Sie die Seite trotzdem verlassen?'));
     },
 
     onModeSwitch(toView, event) {
@@ -53,7 +53,7 @@ export default AuthorView.extend({
             return;
         }
         event.isUserInputHandled = true;
-        Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
+        Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Ã„nderungen. MÃ¶chten Sie trotzdem fortfahren?'));
     },
 
     onSave(event) {

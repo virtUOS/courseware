@@ -31,7 +31,8 @@ export default StudentView.extend({
     'click .mode-switch .student': 'switchToStudentMode',
     'click .mode-switch .author':  'switchToAuthorMode',
     'click .mobile-show-nav-button' : 'showMobileNavigation',
-    'click a.navigate':            'navigateTo'
+    'click a.navigate':            'navigateTo',
+    'click .menu-toggle-button': 'toggleMenu'
   },
 
   initialize() {
@@ -197,5 +198,9 @@ export default StudentView.extend({
         this.$el.find(".breadcrumb").hide();
         jQuery(event.target).addClass("nav-on");
     }
-  }
+  },
+  
+  toggleMenu(event) {
+    this.$('.cw-sidebar').toggle();
+    }
 });

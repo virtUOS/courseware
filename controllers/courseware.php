@@ -226,6 +226,11 @@ class CoursewareController extends CoursewareStudipController
                 break;
         }
 
+        /////////////////////////
+        //   Scrollytelling   //
+        ////////////////////////
+        $this->storeScrollytelling(isset($courseware_settings['scrollytelling']) ? true : false);
+        
         ////////////////////////
         // EDITING PERMISSION //
         ////////////////////////
@@ -293,6 +298,13 @@ class CoursewareController extends CoursewareStudipController
         }
     }
 
+    private function storeScrollytelling($active)
+    {
+        if (!$this->courseware_block->setScrollytelling($active)) {
+            // TODO: send a message back
+        }
+    }
+
     private function storeEditingPermission($tutor_may_edit)
     {
         $perm = $tutor_may_edit
@@ -303,7 +315,7 @@ class CoursewareController extends CoursewareStudipController
         // this setting
         if ($perm === Courseware::EDITING_PERMISSION_DOZENT &&
             $this->container['current_user']->getPerm($this->container['cid']) === 'tutor') {
-            throw new Trails_Exception(401, _cw("Tutoren können diese Einstellung nicht speichern."));
+            throw new Trails_Exception(401, _cw("Tutoren kÃ¶nnen diese Einstellung nicht speichern."));
         }
 
         if (!$this->courseware_block->setEditingPermission($perm)) {

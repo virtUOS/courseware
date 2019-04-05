@@ -78,7 +78,7 @@ class XmlVisitor extends AbstractVisitor
             $fileNode = $this->appendBlockNode('file', null, $attributes);
 
             if (trim($file['description']) !== '') {
-                $fileNode->appendChild($this->document->createCDATASection(studip_utf8encode($file['description'])));
+                $fileNode->appendChild($this->document->createCDATASection(utf8_encode($file['description'])));
             }
         }
     }
@@ -163,8 +163,10 @@ class XmlVisitor extends AbstractVisitor
 
         foreach ($section->getModel()->children as $block) {
             $uiBlock = $this->blockFactory->makeBlock($block);
-            $this->startVisitingBlock($uiBlock);
-            $this->endVisitingBlock($uiBlock);
+            if ($uiBlock != null) {
+                $this->startVisitingBlock($uiBlock);
+                $this->endVisitingBlock($uiBlock);
+            }
         }
     }
 
@@ -187,8 +189,10 @@ class XmlVisitor extends AbstractVisitor
 
         foreach ($section->getModel()->children as $block) {
             $uiBlock = $this->blockFactory->makeBlock($block);
-            $this->startVisitingBlock($uiBlock);
-            $this->endVisitingBlock($uiBlock);
+            if ($uiBlock != null) {
+                $this->startVisitingBlock($uiBlock);
+                $this->endVisitingBlock($uiBlock);
+            }
         }
     }
 
@@ -256,7 +260,7 @@ class XmlVisitor extends AbstractVisitor
             $contents = $block->exportContents();
 
             if ($contents !== null) {
-                $blockNode->appendChild($this->document->createCDATASection(studip_utf8encode($contents)));
+                $blockNode->appendChild($this->document->createCDATASection(utf8_encode($contents)));
             }
         }
     }
@@ -363,7 +367,7 @@ class XmlVisitor extends AbstractVisitor
     private function createAttributeNode($name, $value)
     {
         $attribute = $this->document->createAttribute($name);
-        $attribute->value = htmlspecialchars(studip_utf8encode($value));
+        $attribute->value = htmlspecialchars($value);
 
         return $attribute;
     }

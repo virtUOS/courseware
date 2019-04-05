@@ -32,23 +32,6 @@ class ImportController extends CoursewareStudipController
             if (count($this->errors) === 0) {
                 $this->installModule($_FILES['import_file']['tmp_name']);
             }
-
-        // search for content modules from marketplace
-        } else if (Request::method() == 'POST' && Request::option('subcmd')=='search') {
-            require_once('lib/plugins/engine/PluginRepository.class.php');
-            $repo = new PluginRepository('http://content.moocip.de/?dispatch=xml');
-            $this->modules = $repo->getPlugins(Request::option('q'));
-
-        // search for content modules from marketplace
-        } else if (Request::method() == 'POST' && Request::option('subcmd')=='install') {
-            $temp_name = tempnam(get_config('TMP_PATH'), 'module');
-            require_once('lib/plugins/engine/PluginRepository.class.php');
-            $repo = new PluginRepository('http://content.moocip.de/?dispatch=xml');
-            $module=$repo->getPlugin(Request::quoted('n'));
-            if (!@copy($module['url'], $temp_name)) {
-                $this->msg = _cw('Das Herunterladen des Moduls ist fehlgeschlagen.');
-            }
-            $this->installModule($temp_name);
         }
 
         if (Navigation::hasItem('/course/mooc_courseware/import')) {
@@ -69,7 +52,7 @@ class ImportController extends CoursewareStudipController
         $dataFile = $tempDir.'/data.xml';
 
         if (!is_file($dataFile)) {
-            $errors[] = _cw('Import-Archiv enth�lt keine Datendatei data.xml.');
+            $errors[] = _cw('Import-Archiv enthält keine Datendatei data.xml.');
 
             return false;
         }
@@ -79,14 +62,27 @@ class ImportController extends CoursewareStudipController
 
         if (count($validationErrors) > 0) {
             foreach ($validationErrors as $validationError) {
-                if ($validationError->code == 1878){
-                    $warnings[] = $validationError->message;
-                } else {
-                    $errors[] = $validationError->message;
+                switch ($validationError->code){
+                    case 1878: // handle unknown blocks
+                        $warnings[] = $validationError->message;
+                        break;
+                    case 1824: // invalid filesize - no int value
+                    case 1831: // empty filename
+                        if (strpos($validationError->message, 'file') > -1) {
+                            $warnings[] = $validationError->message;
+                        } else {
+                            $errors[] = $validationError->message;
+                        }
+                        break;
+                    default:
+                        $errors[] = $validationError->message;
                 }
             }
+            if (!empty($warnings)){
+                array_unshift($warnings, _cw('Es konnten möglicherweise nicht alle Blöcke importiert werden'));
+            }
             if (!empty($errors)){
-                array_unshift($errors, _cw('Die Datendatei data.xml enth�lt kein valides XML.'));
+                array_unshift($errors, _cw('Die Datendatei data.xml enthält kein valides XML.'));
 
                 return false;
             }
@@ -100,14 +96,29 @@ class ImportController extends CoursewareStudipController
         // create a temporary directory
         $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
         mkdir($tempDir);
-        unzip_file($filename, $tempDir);
+        $extracted = Studip\ZipArchive::extractToPath($filename, $tempDir);
+        if (!$extracted) {
+            $this->errors[] = _cw('Das Import-Archiv ist beschädigt.');
+            return false;
+        }
+
+        $root_folder = Folder::findTopFolder($GLOBALS['SessionSeminar']);
+        $parent_folder = FileManager::getTypedFolder($root_folder->id);
+        // create new folder for import
+        $request = array('name' => 'Courseware-Import '.date("d.m.Y", time()), 'description' => 'folder for imported courseware content');
+        $new_folder = new StandardFolder();
+        $new_folder->setDataFromEditTemplate($request);
+        $new_folder->user_id = User::findCurrent()->id;
+        $courseware_folder = $parent_folder->createSubfolder($new_folder);
+
+        $install_folder = FileManager::getTypedFolder($courseware_folder->id);
 
         if ($this->validateUploadFile($tempDir, $this->errors, $this->warnings)) {
             $courseware = $this->container['current_courseware'];
             $importer = new XmlImport($this->plugin->getBlockFactory());
             $redirect = true;
             try {
-                $importer->import($tempDir, $courseware);
+                $importer->import($tempDir, $courseware, $install_folder);
             } catch (Exception $e){
                 $this->errors[] = $e;
                 $redirect = false;

@@ -3,17 +3,15 @@ import StudentView from 'js/student_view'
 import helper from 'js/url'
 
 export default StudentView.extend({
-  events: {
-  },
+    events: {},
 
-  initialize() { },
+    initialize() {},
 
-  render() {
-    return this;
-  },
+    render() {
+        return this;
+    },
 
-  postRender() {
-    return this;
-  },
-
+    postRender() {
+        return this;
+    },
 });

@@ -34,7 +34,7 @@ export default StudentView.extend({
             if(!$name) {$name = $id; }
             var $thisblock = $("#block-"+$id);
             if ($thisblock.length == 0) { return; }
-            $thisblock.hide();
+            $thisblock.addClass('block-is-assorted');
             if ($maxheight < $thisblock.height()) $maxheight = $thisblock.height();
             if ($name == "") {$name = "Block "+$id;}
             switch($assorttype){

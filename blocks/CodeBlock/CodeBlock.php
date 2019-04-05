@@ -33,6 +33,14 @@ class CodeBlock extends Block
         return array_merge($this->getAttrArray());
     }
 
+    public function preview_view()
+    {
+        return array(
+            'code_content' => substr(\STUDIP\Markup::purifyHtml($this->code_content), 0, 160).'…',
+            'code_lang' => $this->code_lang
+        );
+    }
+
     private function getAttrArray() 
     {
         return array(

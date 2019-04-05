@@ -1,6 +1,6 @@
 <?php
 
-class AddChdateToUserProgress extends DBMigration
+class AddChdateToUserProgress extends Migration
 {
     public function description()
     {

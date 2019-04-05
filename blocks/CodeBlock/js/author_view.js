@@ -45,7 +45,7 @@ export default AuthorView.extend({
     postRender() {
         hljs.highlightBlock(this.$('.code-content-preview > pre > code')[0]);
     },
-
+    
     updatePreview() {
         var $code_content = this.escapeHtml(this.$('textarea').val());
         var $code_lang = this.$(".code_lang").val();

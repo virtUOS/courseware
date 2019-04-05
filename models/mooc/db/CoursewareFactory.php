@@ -3,6 +3,7 @@ namespace Mooc\DB;
 
 /**
  * @author  <mlunzena@uos.de>
+ * @author Ron Lucke <lucke@elan-ev.de>
  */
 class CoursewareFactory
 {

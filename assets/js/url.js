@@ -63,8 +63,9 @@ export default {
   ajax,
 
   getView(block_id, view) {
+    var cid = Config.cid;
     return ajax({
-      url: this.block_url(block_id, { view }),
+      url: this.block_url(block_id, { view, cid }),
       dataType: 'html',
       type: 'GET'
     });
@@ -76,9 +77,9 @@ export default {
       data: _.clone(data),
       handler
     };
-
+    var cid = Config.cid;
     return ajax({
-      url: this.block_url(block_id),
+      url: this.block_url(block_id, { cid }),
       type: 'POST',
       data: JSON.stringify(payload),
       contentType: 'application/json',

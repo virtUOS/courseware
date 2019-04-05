@@ -48,20 +48,30 @@ class InteractiveVideoBlock extends Block
                             $correct = $evaluation['percent'] == 1;
                         }
                         $exercises[] = array(
-                            'question' => $exercise->getSolveTemplate($solution, $assignment, $user->id)->render(),
-                            'question_description'=> formatReady($exercise->description),
-                            'title' => $exercise->title,
-                            'id' => $exercise->getId(),
-                            'correct' => $correct,
-                            'has_solution' => $has_solution,
-                            'solution' => $exercise->getCorrectionTemplate($solution)->render(),
+                            'question'              => $exercise->getSolveTemplate($solution, $assignment, $user->id)->render(),
+                            'question_description'  => formatReady($exercise->description),
+                            'title'                 => $exercise->title,
+                            'id'                    => $exercise->getId(),
+                            'correct'               => $correct,
+                            'has_solution'          => $has_solution,
+                            'solution'              => $exercise->getCorrectionTemplate($solution)->render(),
                         );
                     }
                 }
             }
         }
         if ($this->iav_source != '') {
-            $iav_url = json_decode($this->iav_source)->url;
+            $iav_source = json_decode($this->iav_source, true);
+            if (!$iav_source['external']) {
+                $file = \FileRef::find($iav_source['file_id']);
+                if ($file) { 
+                    $iav_url = ($file->terms_of_use->fileIsDownloadable($file, false)) ? $file->getDownloadURL() : '';
+                } else {
+                    $iav_url = '';
+                }
+            } else {
+                $iav_url = $iav_source['url'];
+            }
         } else {
             $iav_url = '';
         }
@@ -112,38 +122,50 @@ class InteractiveVideoBlock extends Block
         if ($this->iav_source != '') {
             $source = json_decode($this->iav_source);
             $iav_url = $source->url;
+            $iav_file_id = $source->file_id;
+            $iav_file_name = $source->file_name;
             $external_file = $source->external;
         } else {
             $iav_url = '';
             $external_file = false;
+            $iav_file_id = '';
+            $iav_file_name = '';
         }
-        $video_files = $this->showFiles();
-        if (empty($video_files)) {
-            $video_files = false;
-        }
+        $files_arr = $this->showFiles(array($iav_file_id));
+        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && empty($files_arr['other_user_files']) && empty($iav_file_id);
+
 
         return array_merge($this->getAttrArray(), array(
-            'block_id'          => $this->_model->id,
-            'has_assignments'   => !empty($assignments),
-            'assignments'       => $assignments, 
-            'exercises'         => $exercises, 
-            'active'            => $active, 
-            'version'           => $version,
-            'installed'         => $installed,
-            'manage_tests_url'  => \PluginEngine::getURL('vipsplugin', array(), 'sheets'),
-            'iav_url'           => $iav_url,
-            'external_file'     => $external_file,
-            'video_files'       => $video_files
+            'block_id'           => $this->_model->id,
+            'has_assignments'    => !empty($assignments),
+            'assignments'        => $assignments,
+            'exercises'          => $exercises,
+            'active'             => $active,
+            'version'            => $version,
+            'installed'          => $installed,
+            'manage_tests_url'   => \PluginEngine::getURL('vipsplugin', array(), 'sheets'),
+            'iav_url'            => $iav_url,
+            'external_file'      => $external_file,
+            'user_video_files'   => $files_arr['userfilesarray'],
+            'course_video_files' => $files_arr['coursefilesarray'],
+            'no_video_files'     => $no_files,
+            'other_user_files'    => $files_arr['other_user_files']
         ));
+    }
+
+    public function preview_view()
+    {
+
+        return array('url' => json_decode($this->iav_source)->url);
     }
 
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
         $this->iav_source = $data['iav_source']; // json
-        $this->iav_overlays = $data['iav_overlays']; // json 
-        $this->iav_stops = $data['iav_stops']; // json 
-        $this->iav_tests = $data['iav_tests']; // json 
+        $this->iav_overlays = $data['iav_overlays']; // json
+        $this->iav_stops = $data['iav_stops']; // json
+        $this->iav_tests = $data['iav_tests']; // json
         $this->assignment_id = $data['assignment_id'];
 
         return $this->getAttrArray();
@@ -204,32 +226,49 @@ class InteractiveVideoBlock extends Block
         );
     }
 
-    private function showFiles()
+    private function showFiles($file_ids)
     {
-        $db = \DBManager::get();
-        $stmt = $db->prepare('
-            SELECT 
-                * 
-            FROM 
-                dokumente 
-            WHERE 
-                seminar_id = :seminar_id
-            ORDER BY 
-                name
-        ');
-        $stmt->bindParam(':seminar_id', $this->container['cid']);
-        $stmt->execute();
-        $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        $filesarray = array();
-        foreach ($response as $item) {
-            if ((strpos($item['filename'], 'mp4') > -1) || (strpos($item['filename'], 'webm') > -1) || (strpos($item['filename'], 'ogg') > -1)) {
-                $document = \StudipDocument::find($item['dokument_id']);
-                $item['download_url'] = \URLHelper::getURL( 'sendfile.php',  array('type'=>'0', 'file_id' => $document->id, 'file_name' => $document->name) );
-                $filesarray[] = $item;
+        $coursefilesarray = array();
+        $userfilesarray = array();
+        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
+        $other_user_files = array();
+
+        foreach ($course_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isVideo()) && (!$ref->isLink())) {
+                    $coursefilesarray[] = $ref;
+                }
+                $key = array_search($ref->id, $file_ids);
+                if($key > -1) {
+                    unset ($file_ids[$key]);
+                }
             }
         }
 
-        return $filesarray;
+        foreach ($user_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isVideo()) && (!$ref->isLink())) {
+                    $userfilesarray[] = $ref;
+                }
+                if(in_array($ref->id, $file_ids)) {
+                    unset ($file_ids[$key]);
+                }
+            }
+        }
+
+        if (empty($file_ids)) {
+            $other_user_files = false;
+        } else {
+            foreach ($file_ids as $id) {
+                $file_ref = \FileRef::find($id);
+                array_push($other_user_files, $file_ref);
+            }
+        }
+
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'other_user_files' => $other_user_files);
     }
 
     /**
@@ -250,28 +289,27 @@ class InteractiveVideoBlock extends Block
     public function getFiles()
     {
         $source = json_decode($this->iav_source);
+        $files = array();
 
         if (!$source->external) {
-            $document = new \StudipDocument($source->file_id);
-            $files[] = array(
-                'id' => $source->file_id,
-                'name' => $document->name,
-                'description' => $document->description,
-                'filename' => $document->filename,
-                'filesize' => $document->filesize,
-                'url' => $document->url,
-                'path' => get_upload_file_path($source->file_id),
-            );
+            $file_ref = new \FileRef($source->file_id);
+            $file = new \File($file_ref->file_id);
 
-            return $files;
-        } else {
-
-            return array();
+            array_push( $files, array (
+                'id' => $file_ref->id,
+                'name' => $file_ref->name,
+                'description' => $file_ref->description,
+                'filename' => $file->name,
+                'filesize' => $file->size,
+                'url' => $file->getURL(),
+                'path' => $file->getPath()
+            ));
         }
 
+        return $files;
     }
 
-    /**
+   /**
      * {@inheritdoc}
      */
     public function getXmlNamespace()
@@ -325,6 +363,11 @@ class InteractiveVideoBlock extends Block
         $this->save();
     }
 
+    private function setFileId($file_name)
+    {
+        return;
+    }
+
     public function importContents($contents, array $files)
     {
         $source = json_decode($this->iav_source);
@@ -332,13 +375,13 @@ class InteractiveVideoBlock extends Block
             foreach($files as $file){
                 if ($source->file_name == $file->name) {
                     $source->file_id = $file->id;
-                    $document = \StudipDocument::find($file->id);
-                    $source->url = \URLHelper::getURL( 'sendfile.php',  array('type'=>'0', 'file_id' => $document->id, 'file_name' => $document->name) );
+                    $source->url = $file->getDownloadURL();
+                    $this->iav_source = json_encode($source);
+
+                    $this->save();
+                    return array($file->id);
                 }
             }
-        $this->iav_source = json_encode($source);
         }
-
-        $this->save();
     }
 }

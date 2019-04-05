@@ -58,7 +58,8 @@ export default AuthorView.extend({
             $view.$('.cw-iav-controls').hide();
             return ;
         }
-
+        //$view.$(".cw-iav-url").val($view.$(".cw-iav-url-stored").val());
+        
         if (source_data != '') {
             var source_data = JSON.parse(source_data);
             if (source_data.external) {
@@ -121,6 +122,7 @@ export default AuthorView.extend({
 
     onSave(event) {
         var $view = this;
+
         var $overlay_items = $view.$('.cw-iav-overlay-edit-item');
         var overlay_json = [];
         $overlay_items.each(function(index){
@@ -175,7 +177,6 @@ export default AuthorView.extend({
             iav_source.url = this.$(".cw-iav-url").val();
             iav_source.external = true;
         } else {
-            iav_source.url = this.$('.cw-iav-video-file option:selected').attr('file_url');
             iav_source.file_id = this.$('.cw-iav-video-file option:selected').attr('file_id');
             iav_source.file_name = this.$('.cw-iav-video-file option:selected').attr('file_name');
             iav_source.external = false;
@@ -606,7 +607,7 @@ export default AuthorView.extend({
         if (type == ''){
             return;
         }
-        var html = '<div id="dialog"><p>Hiermit löschen Sie die Einblendung. Die Änderung wird erst mit dem speichern des Blockes wirksam.</p></div>';
+        var html = '<div id="dialog"><p>Hiermit lÃ¶schen Sie die Einblendung. Die Ã„nderung wird erst mit dem speichern des Blockes wirksam.</p></div>';
         $(html).appendTo($(event.currentTarget));
         $('#dialog').dialog({
           resizable: false,
@@ -615,7 +616,7 @@ export default AuthorView.extend({
           modal: true,
           title: name + " entfernen",
           buttons: {
-            "Löschen": function() {
+            "LÃ¶schen": function() {
               $( this ).dialog( "close" );
                 var item_id = event.currentTarget.attributes.getNamedItem('data-'+type+'id').value;
                 view.$('.'+type+'-list-item.active-item[data-'+type+'id="'+item_id+'"]').parent().remove();
@@ -726,7 +727,7 @@ export default AuthorView.extend({
             return;
         }
         event.isUserInputHandled = true;
-        Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie die Seite trotzdem verlassen?'));
+        Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Ã„nderungen. MÃ¶chten Sie die Seite trotzdem verlassen?'));
     },
 
     onModeSwitch(toView, event) {
@@ -742,6 +743,7 @@ export default AuthorView.extend({
             return;
         }
         event.isUserInputHandled = true;
-        Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
+        Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Ã„nderungen. MÃ¶chten Sie trotzdem fortfahren?'));
     }
 });
+

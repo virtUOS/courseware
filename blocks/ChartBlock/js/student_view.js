@@ -23,9 +23,11 @@ export default StudentView.extend({
     buildChart() {
         var $view = this;
         var ctx = $view.$('.cw-chartblock-canvas').get(0).getContext('2d');
+
         var $type = $view.$(".cw-chart-stored-type").val();
         var $content = $view.$(".cw-chart-stored-content").val();
         var json = JSON.parse($content);
+        
         var $labels = [];
         var $data = [];
         var $backgroundColor = [];
@@ -62,6 +64,10 @@ export default StudentView.extend({
                     },
                     legend: {
                         display: false
+                    },
+                    title:{
+                        display: true,
+                        text: $label
                     }
                 }
             });
@@ -78,7 +84,12 @@ export default StudentView.extend({
                         borderWidth: 1
                     }]
                 },
-                options: {}
+                options: {
+                    title:{
+                        display: true,
+                        text: $label
+                    }
+                }
             });
         }
 
@@ -95,7 +106,12 @@ export default StudentView.extend({
                         pointBackgroundColor: $borderColor
                     }]
                 },
-                options: {}
+                options: {
+                    title:{
+                        display: true,
+                        text: $label
+                    }
+                }
             });
         }
     },

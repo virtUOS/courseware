@@ -124,10 +124,9 @@ export default AuthorView.extend({
     $.each($allfiles, function (key, value) {
       $files.append($('<option>', {
         value: value.name,
-        text: value.filename,
-        file_id: value.dokument_id,
-        file_name: value.filename,
-        selected: value.dokument_id == $stored_file
+        file_id: value.id,
+        text: value.name,
+        selected: value.id == $stored_file
       }));
     });
     $files.prop('disabled', false);

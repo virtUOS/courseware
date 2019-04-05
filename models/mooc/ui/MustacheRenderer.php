@@ -17,8 +17,8 @@ class MustacheRenderer
         $loader = new \Mustache_Loader_FilesystemLoader($block_template_dir);
         $m = new \Mustache_Engine(array(
             'cache'            => $GLOBALS['TMP_PATH'] . DIRECTORY_SEPARATOR . 'courseware',
-            'charset'          => 'windows-1252',
-            'escape'           => function($value) { return htmlspecialchars("$value", ENT_QUOTES, 'cp1252', false); },
+            'charset'          => 'UTF-8',
+            'escape'           => function($value) { return htmlspecialchars("$value", ENT_QUOTES, 'UTF-8', false); },
             'helpers'          => $this->container['block_renderer_helpers'],
             'loader'           => $loader,
             'strict_callables' => true

@@ -15,7 +15,9 @@ namespace Mooc\DB;
  * @property \Course $course
  * @property string  $title
  * @property int     $position
+ * @property boolean $visible
  * @property int     $publication_date
+ * @property int     $withdraw_date
  * @property int     $chdate
  * @property int     $mkdate
  */
@@ -281,7 +283,18 @@ class Block extends \SimpleORMap implements \Serializable
         }
 
         // check if block is published
-        return $this->publication_date <= $timestamp;
+        return (($this->publication_date <= $timestamp || $this->publication_date == null) && ($this->withdraw_date >= $timestamp || $this->withdraw_date == null));
+    }
+
+    /**
+     * @param boolean $visible
+     *
+     * @return bool
+     */
+    public function isVisible()
+    {
+        // check if block is visible
+        return $this->visible;
     }
 
     public function serialize()
@@ -325,6 +338,9 @@ class Block extends \SimpleORMap implements \Serializable
 
             return $status;
         } else {
+            if (!$this->isVisible()) {
+                return true;
+            }
             $progress = new UserProgress(array($this->id, $uid));
 
             return $progress->getPercentage() === 1;

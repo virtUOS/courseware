@@ -1,7 +1,8 @@
 {{#opencast}}
     <input type="hidden" class="cw-opencast-stored-id" value="{{opencastid}}">
-
+    
     <label for="cw-opencast-content">{{#i18n}}Opencast Video{{/i18n}}:</label>
+    
     <select name="cw-opencast-content" class="cw-opencast-content">
         {{#episodes}}
             <option data-urlmp4="{{url_mp4}}" data-urlopencast="{{url_opencast}}" data-opencastid="{{id}}">{{title}}</option>

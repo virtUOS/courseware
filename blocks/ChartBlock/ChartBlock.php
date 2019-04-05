@@ -7,7 +7,7 @@ class ChartBlock extends Block
 {
     const NAME = 'Diagramm';
     const BLOCK_CLASS = 'multimedia';
-    const DESCRIPTION = 'Stellt Datensätze in einem Diagramm dar';
+    const DESCRIPTION = 'Stellt DatensÃ¤tze in einem Diagramm dar';
 
     public function initialize()
     {
@@ -37,6 +37,12 @@ class ChartBlock extends Block
             'chart_label' => $this->chart_label,
             'chart_type' => $this->chart_type
         );
+    }
+
+    public function preview_view()
+    {
+
+        return $this->getAttrArray();
     }
 
     public function save_handler(array $data)

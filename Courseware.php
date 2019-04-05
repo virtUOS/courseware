@@ -52,7 +52,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         return 'Courseware';
     }
 
-    // bei Aufruf des Plugins über plugin.php/mooc/...
+    // bei Aufruf des Plugins Ã¼ber plugin.php/mooc/...
     public function initialize()
     {
         //PageLayout::setTitle($_SESSION['SessSemName']['header_line'] . ' - ' . $this->getPluginname());
@@ -81,40 +81,42 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         $navigation->addSubnavigation('index', clone $navigation);
 
-        $navigation->addSubnavigation(
-            'news',
-            new Navigation(
-                _cw('Letzte Änderungen'),
-                PluginEngine::getURL($this, compact('cid'), 'courseware/news', true)
-            )
-        );
 
         //NavigationForLecturers
         if ($this->container['current_user']->hasPerm($courseId, 'tutor')) {
+            $managerUrl = PluginEngine::getURL($this, compact('cid'), 'block_manager', true);
+            $navigation->addSubnavigation(
+                'block_manager',
+                new Navigation(_cw('Struktur bearbeiten'), $managerUrl)
+            );
             $settingsUrl = PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true);
             $navigation->addSubnavigation(
                 'settings', 
                 new Navigation(_cw('Einstellungen'), $settingsUrl)
             );
-
+            $navigation->addSubnavigation(
+                'news',
+                new Navigation(
+                    _cw('Letzte Ã„nderungen'),
+                    PluginEngine::getURL($this, compact('cid'), 'courseware/news', true)
+                )
+            );
             $cpoUrl = PluginEngine::getURL($this, compact('cid'), 'cpo', true);
             $navigation->addSubnavigation(
                 'progressoverview',
-                new Navigation(_cw('Fortschrittsübersicht'), $cpoUrl)
+                new Navigation(_cw('FortschrittsÃ¼bersicht'), $cpoUrl)
             );
 
             $postoverviewUrl = PluginEngine::getURL($this, compact('cid'), 'cpo/postoverview', true);
             $navigation->addSubnavigation(
                 'postoverview',
-                new Navigation(_cw('Diskussionsübersicht'), $postoverviewUrl)
+                new Navigation(_cw('DiskussionsÃ¼bersicht'), $postoverviewUrl)
             );
-
             $exportUrl = PluginEngine::getURL($this, compact('cid'), 'export', true);
             $navigation->addSubnavigation(
                 'export',
                 new Navigation(_cw('Export'), $exportUrl)
             );
-
             $importUrl = PluginEngine::getURL($this, compact('cid'), 'import', true);
             $navigation->addSubnavigation(
                 'import',
@@ -124,10 +126,17 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         //NavigationForStudents
         } else {
             if (!$this->container['current_user']->isNobody()) {
+                $navigation->addSubnavigation(
+                    'news',
+                    new Navigation(
+                        _cw('Letzte Ã„nderungen'),
+                        PluginEngine::getURL($this, compact('cid'), 'courseware/news', true)
+                    )
+                );
                 $progressUrl = PluginEngine::getURL($this, compact('cid'), 'progress', true);
                 $navigation->addSubnavigation(
                     'progress',
-                    new Navigation(_cw('Fortschrittsübersicht'), $progressUrl)
+                    new Navigation(_cw('FortschrittsÃ¼bersicht'), $progressUrl)
                 );
             }
         }
@@ -255,7 +264,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
     public function perform($unconsumedPath)
     {
-        if (!$this->isActivated($this->container['cid'])) {
+        if ((!$this->isActivated($this->container['cid']))&& ($_SERVER['REQUEST_METHOD'] === 'GET')) {
             throw new AccessDeniedException('plugin not activated for this course!');
         }
 
@@ -265,7 +274,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         // load i18n only if plugin is un use
         PageLayout::addHeadElement('script', array(),
-            "String.toLocaleString('".PluginEngine::getLink($this, array('cid' => null), 'localization')."');");
+            "String.toLocaleString('".PluginEngine::getLink($this, array('cid' => $this->container['cid']), 'localization')."');");
 
         $dispatcher = new Trails_Dispatcher(
             $this->getPluginPath(),
@@ -281,7 +290,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
      */
     public function getContext()
     {
-        return Request::option('cid') ?: $GLOBALS['SessionSeminar'];
+        return $GLOBALS['SessionSeminar'];
     }
 
     /**
@@ -360,13 +369,13 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $can_edit = $GLOBALS['perm']->have_studip_perm('tutor', $this->container['cid']);
 
         if ($can_edit) {
-            $description = _cw('Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. Schalten Sie zwischen Teilnehmenden-Sicht und Editier-Modus um und fügen Sie Abschnitte und Blöcke (Text und Bild, Video, Diskussion, Quiz)  hinzu. Aufgaben erstellen und verwalten Sie mit dem Vips-Plugin und binden Sie dann in einen Courseware-Abschnitt ein.');
+            $description = _cw('Mit dem Courseware-Modul kÃ¶nnen Sie interaktive Lernmodule in Stud.IP erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. Schalten Sie zwischen Teilnehmenden-Sicht und Editier-Modus um und fÃ¼gen Sie Abschnitte und BlÃ¶cke (Text und Bild, Video, Diskussion, Quiz)  hinzu. Aufgaben erstellen und verwalten Sie mit dem Vips-Plugin und binden Sie dann in einen Courseware-Abschnitt ein.');
             Helpbar::get()->addPlainText(_cw('Information'), $description, 'icons/white/info-circle.svg');
 
-            $tip = _cw("Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt 'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden.");
+            $tip = _cw("Sie kÃ¶nnen den Courseware-Reiter umbenennen! WÃ¤hlen Sie dazu den Punkt 'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden.");
             Helpbar::get()->addPlainText(_cw('Tipp'), $tip, 'icons/white/info-circle.svg');
         } else {
-            $description = _cw('Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, Kommunikationselemente und kleine Quizzes beinhalten. Ihren Bearbeitungsfortschritt sehen Sie auf einen Blick im Reiter Fortschrittsübersicht.');
+            $description = _cw('Ãœber dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule direkt in Stud.IP zur VerfÃ¼gung. Die Module kÃ¶nnen Texte, Bilder, Videos, Kommunikationselemente und kleine Quizzes beinhalten. Ihren Bearbeitungsfortschritt sehen Sie auf einen Blick im Reiter FortschrittsÃ¼bersicht.');
             Helpbar::get()->addPlainText(_cw('Hinweis'), $description, 'icons/white/info-circle.svg');
         }
     }
@@ -429,7 +438,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         // create a widget for given id (md5 hash - ensured by markup regex)
         return '<span class="mooc-forumblock">'
             .'<a href="'.PluginEngine::getLink('courseware', array('selected' => $matches[2]), 'courseware').'">'
-            ._cw('Zurück zur Courseware')
+            ._cw('ZurÃ¼ck zur Courseware')
             .'</a></span>';
     }
 
@@ -479,7 +488,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $stmt->bindParam(':uid', $user_id);
         $stmt->execute();
         $block_content = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $plugin_data['Courseware - Blöcke'] = ['table_name' => 'mooc_userprogress', 'table_content' => $block_content];
+        $plugin_data['Courseware - BlÃ¶cke'] = ['table_name' => 'mooc_userprogress', 'table_content' => $block_content];
 
         return $plugin_data;
     }

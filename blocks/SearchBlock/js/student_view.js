@@ -42,7 +42,7 @@ export default StudentView.extend({
             if ( event.which == 13 ) { view.onSearch();}
         });
     }, 
-    
+
     showResults(response) {
         var $result = jQuery.parseJSON(response);
         var $html ="";

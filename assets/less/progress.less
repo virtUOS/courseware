@@ -163,6 +163,10 @@ th.subchapter-description {
         }
 
       }
+      
+      &.no-children {
+        opacity: 0.5;
+      }
     }
 
     // flexbox fallbacks
@@ -253,6 +257,7 @@ th.subchapter-description {
       background-image: url('../../../../../assets/images/icons/white/arr_1left.svg');
     }
     &#overview-chapter-nav-right {
+      float: right;
       background-image: url('../../../../../assets/images/icons/blue/arr_1right.svg');
     }
     &#overview-chapter-nav-right:hover {
@@ -334,7 +339,6 @@ th.subchapter-description {
 }
 
 .overview-chapter-details {
-    margin: 0 64px;
     display: none;
 }
 
@@ -666,5 +670,21 @@ th.subchapter-description {
     font-weight: 600;
     p {
         margin: 0;
+    }
+}
+
+button.cw-reset-progress-button {
+    background-image: url("../../../../../assets/images/icons/blue/refresh.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-position-x: 6px;
+    padding-left: 30px;
+
+    &:hover {
+        background-image: url("../../../../../assets/images/icons/white/refresh.svg");
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-position-x: 6px;
+        padding-left: 30px;
     }
 }

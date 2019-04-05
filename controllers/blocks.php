@@ -93,6 +93,7 @@ class BlocksController extends CoursewareStudipController {
 
         $block->title = $title;
         $block->publication_date = (int)$this->data['publication_date'] ?: null;
+        $block->withdraw_date = (int)$this->data['withdraw_date'] ?: null;
 
         if (is_integer($block->store())) {
             $this->render_json($block->toArray());

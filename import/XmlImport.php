@@ -11,6 +11,7 @@ use Mooc\UI\Section\Section;
  * Courseware XML import.
  *
  * @author Christian Flothmann <christian.flothmann@uos.de>
+ * @author Ron Lucke <lucke@elan-ev.de>
  */
 class XmlImport implements ImportInterface
 {
@@ -27,7 +28,7 @@ class XmlImport implements ImportInterface
     /**
      * {@inheritdoc}
      */
-    public function import($path, Courseware $courseware)
+    public function import($path, Courseware $courseware, $folder)
     {
         $dataFile = $path.'/data.xml';
         $document = new \DOMDocument();
@@ -41,7 +42,7 @@ class XmlImport implements ImportInterface
         foreach ($coursewareNode->childNodes as $child) {
             if ($child instanceof \DOMElement) {
                 if  ($child->tagName === 'file') {
-                    $this->processFile($child, $courseware, $path, $files);
+                    $this->processFile($child, $courseware, $path, $files, $folder);
                 }
             }
         }
@@ -73,39 +74,37 @@ class XmlImport implements ImportInterface
      * @param array       $files      Mapping of original file ids to new
      *                                document instances
      */
-    private function processFile(\DOMElement $node, Courseware $courseware, $path, &$files)
+    private function processFile(\DOMElement $node, Courseware $courseware, $path, &$files, $folder)
     {
         /** @var \Seminar_User $user */
         global $user;
-
-        $folder = \TreeAbstract::getInstance('StudipDocumentTree', array('range_id' => $courseware->getModel()->seminar_id));
-        $folders = $folder->getKids($courseware->getModel()->seminar_id);
         $originId = $node->getAttribute('id');
-        $filename = studip_utf8decode($node->getAttribute('filename'));
-        $sourceFile = $path.'/'.$originId.'/'.$filename;
-        $data = array(
-            'range_id' => $folders[0],
-            'user_id' => $user->cfg->getUserId(),
-            'seminar_id' => $courseware->getModel()->seminar_id,
-            'name' => studip_utf8decode($node->getAttribute('name')),
-            'description' => studip_utf8decode($node->textContent),
-            'filename' => $filename,
-            'filesize' => studip_utf8decode($node->getAttribute('filesize')),
-            'url' => studip_utf8decode($node->getAttribute('url')),
-            'author_name' => $user->getFullName(),
-        );
+        $filename = $node->getAttribute('filename');
+        $filesize = $node->getAttribute('filesize');
 
-        if (file_exists($sourceFile)) {
-            // the file is part of the uploaded ZIP archive
-            $document = \StudipDocument::createWithFile($sourceFile, $data);
-        } else {
-            // the file is referenced by URL
-            $document = new \StudipDocument();
-            $document->setData($data);
-            $document->store();
+        if (!($originId && $filename && $filesize)) {
+
+            return;
         }
 
-        $files[$originId] = $document;
+        // is this file already stored
+        $stored_file = \FileRef::findOneBySQL('name = ? AND folder_id = ?', array($node->getAttribute('name'), $folder->id));
+        if(!$stored_file) {
+            $file = [
+                        'name'     => $filename,
+                        'type'     => mime_content_type($path.'/'.$originId.'/'.$filename),
+                        'tmp_name' => $path.'/'.$originId.'/'.$filename,
+                        'url'      => $node->getAttribute('url'),
+                        'size'     => $node->getAttribute('filesize'),
+                        'user_id'  => $user->id,
+                        'error'    => ""
+                    ];
+            $new_reference = $folder->createFile($file);
+        } else {
+            $new_reference = $stored_file;
+        }
+
+        $files[$originId] = $new_reference;
     }
 
     /**
@@ -122,9 +121,9 @@ class XmlImport implements ImportInterface
             array(
                 'type'       => 'Chapter',
                 'parent'     => $courseware->getModel(),
-                'title'      => studip_utf8decode($node->getAttribute('title')),
+                'title'      => $node->getAttribute('title'),
                 'seminar_id' => $courseware->getModel()->seminar_id,
-                'uuid'       => studip_utf8decode($node->getAttribute('uuid'))
+                'uuid'       => $node->getAttribute('uuid')
             ));
 
         foreach ($node->childNodes as $childNode) {
@@ -157,9 +156,9 @@ class XmlImport implements ImportInterface
             array(
                 'type'       => 'Subchapter',
                 'parent'     => $chapter,
-                'title'      => studip_utf8decode($node->getAttribute('title')),
+                'title'      => $node->getAttribute('title'),
                 'seminar_id' => $chapter->seminar_id,
-                'uuid'       => studip_utf8decode($node->getAttribute('uuid'))
+                'uuid'       => $node->getAttribute('uuid')
             ));
 
         foreach ($node->childNodes as $childNode) {
@@ -192,9 +191,9 @@ class XmlImport implements ImportInterface
             array(
                 'type'       => 'Section',
                 'parent'     => $subChapter,
-                'title'      => studip_utf8decode($node->getAttribute('title')),
+                'title'      => $node->getAttribute('title'),
                 'seminar_id' => $subChapter->seminar_id,
-                'uuid'       => studip_utf8decode($node->getAttribute('uuid'))
+                'uuid'       => $node->getAttribute('uuid')
             ));
 
         /** @var \Mooc\UI\Section\Section $uiSection */
@@ -224,16 +223,15 @@ class XmlImport implements ImportInterface
         $section = $this->createBlock(
             array(
                 'type'       => 'Section',
-                'title'      => studip_utf8decode($node->getAttribute('title')),
+                'title'      => $node->getAttribute('title'),
                 'seminar_id' => $sub_chapter->seminar_id,
-                'uuid'       => studip_utf8decode($node->getAttribute('uuid'))
+                'uuid'       => $node->getAttribute('uuid')
             ));
 
         // store aside section's ID in sub/chapter's field
         $aside_field = new \Mooc\DB\Field(array($sub_chapter->id, '', 'aside_section'));
         $aside_field->content = $section->id;
         $aside_field->store();
-
 
         /** @var \Mooc\UI\Section\Section $uiSection */
         $uiSection = $this->blockFactory->makeBlock($section);
@@ -259,17 +257,16 @@ class XmlImport implements ImportInterface
      */
     private function processBlockNode(\DOMElement $node, Section $section, $files)
     {
-
         $block = $this->createBlock(
             array(
-                'type'       => studip_utf8decode($node->getAttribute('type')),
+                'type'       => $node->getAttribute('type'),
                 'sub_type'   => $node->hasAttribute('sub-type')
-                                ? studip_utf8decode($node->getAttribute('sub-type'))
+                                ? $node->getAttribute('sub-type')
                                 : null,
                 'parent'     => $section->getModel(),
-                'title'      => studip_utf8decode($node->getAttribute('title')),
+                'title'      => $node->getAttribute('title'),
                 'seminar_id' => $section->getModel()->seminar_id,
-                'uuid'       => studip_utf8decode($node->getAttribute('uuid'))
+                'uuid'       => $node->getAttribute('uuid')
             ));
 
         $section->updateIconWithBlock($block);
@@ -290,7 +287,7 @@ class XmlImport implements ImportInterface
             }
 
             if ($attribute->namespaceURI !== null) {
-                $properties[$attribute->name] = studip_utf8decode($attribute->value);
+                $properties[$attribute->name] = $attribute->value;
             }
         }
 
@@ -326,6 +323,7 @@ class XmlImport implements ImportInterface
 
         if ($parent) {
             $block->parent = $parent;
+            $block->position = $block->getNewPosition($parent->id);
         }
 
         if ($uuid) {

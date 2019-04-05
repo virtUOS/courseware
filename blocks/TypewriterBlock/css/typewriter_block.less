@@ -1,0 +1,48 @@
+@import '../../../assets/less/variables';
+@import '../../../assets/less/mixins';
+
+textarea.cw-typewriter-content {
+    width: 96%;
+    height: 12em;
+    overflow-y: auto;
+    overflow-x: hidden;
+    resize: none;
+    vertical-align: baseline;
+    margin-left: 1em;
+}
+.cw-typewriter {
+    &.font-typewriter{
+        font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
+    }
+    &.font-trebuchet {
+        font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", sans-serif;
+    }
+    &.font-tahoma {
+        font-family: Tahoma, Verdana, Segoe, sans-serif;
+    }
+    &.font-georgia {
+        font-family: Georgia, Times, "Times New Roman", serif;
+    }
+    &.font-narrow {
+        font-family: "Arial Narrow", Arial, "Helvetica Condensed", Helvetica, sans-serif;
+    }
+
+    &.size-tall {
+        font-size: 1.5em;
+        line-height: 1.25em;
+    }
+    &.size-grande {
+        font-size: 2em;
+        line-height: 1.25em;
+    }
+    &.size-huge {
+        font-size: 4em;
+        line-height: 1.25em;
+    }
+}
+
+.cw-sidebar {
+    textarea.cw-typewriter-content {
+        width: 98%;
+    }
+}

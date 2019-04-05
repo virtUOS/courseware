@@ -8,7 +8,7 @@ class OpenCastBlock extends Block
     const NAME = 'Opencast';
     const BLOCK_CLASS = 'multimedia';
     const DESCRIPTION = 'Bindet Opencast Videos mit Hilfe des OpencastPlugins ein';
-    const HINT = 'Für diesen Block muss das Opencast Plugin aktiviert sein';
+    const HINT = 'FÃ¼r diesen Block muss das Opencast Plugin aktiviert sein';
 
     public function initialize()
     {
@@ -74,6 +74,12 @@ class OpenCastBlock extends Block
             'useplayer' => $useplayer,
             'opencast' => true
         ));
+    }
+
+    public function preview_view()
+    {
+
+        return;
     }
 
     private function getAttrArray() 

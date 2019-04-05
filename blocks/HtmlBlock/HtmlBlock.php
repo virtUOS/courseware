@@ -2,7 +2,6 @@
 namespace Mooc\UI\HtmlBlock;
 
 use Mooc\UI\Block;
-use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * @property string $content
@@ -38,9 +37,21 @@ class HtmlBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-        $content = htmlReady($this->content);
+        $content = \STUDIP\Markup::markAsHtml($this->content);
 
         return compact('content');
+    }
+
+    public function preview_view()
+    {
+        $content = $this->content;
+        if (strpos($content, "<!DOCTYPE html") == 0 ) {
+            $content = \STUDIP\Markup::markAsHtml($content);
+        }
+
+        $content = substr(strip_tags(formatReady($content)), 0, 240).'…';
+
+        return array('content' => $content);
     }
 
     /**
@@ -58,7 +69,7 @@ class HtmlBlock extends Block
             $this->content = "";
         } else {
             $dom = new \DOMDocument();
-            $dom->loadHTML($content);
+            $dom->loadHTML('<?xml encoding="utf-8" ?>'.$content);
             $xpath = new \DOMXPath($dom);
             $hrefs = $xpath->evaluate("//a");
             for ($i = 0; $i < $hrefs->length; $i++) {
@@ -84,7 +95,14 @@ class HtmlBlock extends Block
         }
 
         $document = new \DOMDocument();
-        $document->loadHTML($this->content);
+        $encoding = '<?xml encoding="utf-8" ?>';
+        $pos = strrpos($this->content, $encoding);
+        if ($pos === false) {
+            $content = $encoding.$this->content;
+        } else { 
+            $content = $this->content;
+        }
+        $document->loadHTML($content);
 
         $anchorElements = $document->getElementsByTagName('a');
         foreach ($anchorElements as $element) {
@@ -120,51 +138,60 @@ class HtmlBlock extends Block
         global $user;
 
         $files = array();
-        $crawler = new Crawler($this->content);
         $block = $this;
+        $document = new \DOMDocument();
+        $encoding = '<?xml encoding="utf-8" ?>';
+        $pos = strrpos($this->content, $encoding);
+        if ($pos === false) {
+            $content = $encoding.$this->content;
+        } else { 
+            $content = $this->content;
+        }
+        $document->loadHTML($content);
 
         // extract a file id from a URL
         $extractFile = function ($url) use ($user, $block) {
             return $block->applyCallbackOnInternalUrl($url, function ($components, $queryParams) use ($user) {
                 if (isset($queryParams['file_id'])) {
-                    $document = new \StudipDocument($queryParams['file_id']);
-
-                    if (!$document->checkAccess($user->cfg->getUserId())) {
-                        return null;
-                    }
+                    $file_ref = new \FileRef($queryParams['file_id']);
+                    $file = new \File($file_ref->file_id);
 
                     return array(
                         'id' => $queryParams['file_id'],
-                        'name' => $document->name,
-                        'description' => $document->description,
-                        'filename' => $document->filename,
-                        'filesize' => $document->filesize,
-                        'url' => $document->url,
-                        'path' => get_upload_file_path($queryParams['file_id']),
+                        'name' => $file_ref->name,
+                        'description' => $file_ref->description,
+                        'filename' => $file->name,
+                        'filesize' => $file->size,
+                        'url' => $file->getURL(),
+                        'path' => $file->getPath()
                     );
                 }
 
-                return null;
+                return array();
             });
         };
 
-        // filter files referenced in anchor elements
-        $crawler->filterXPath('//a')->each(function (Crawler $node) use ($extractFile, &$files) {
-            $file = $extractFile($node->attr('href'));
-
+        $anchorElements = $document->getElementsByTagName('a');
+        foreach ($anchorElements as $element) {
+            if (!$element instanceof \DOMElement || !$element->hasAttribute('href')) {
+                continue;
+            }
+            $file = $extractFile($element->getAttribute('href'));
             if ($file !== null) {
                 $files[] = $file;
             }
-        });
+        }
 
-        // filter files referenced in image elements
-        $crawler->filterXPath('//img')->each(function (Crawler $node) use ($extractFile, &$files) {
-            $file = $extractFile($node->attr('src'));
-
+        $imageElements = $document->getElementsByTagName('img');
+        foreach ($imageElements as $element) {
+            if (!$element instanceof \DOMElement || !$element->hasAttribute('src')) {
+                continue;
+            }
+            $file = $extractFile($element->getAttribute('src'));
             if ($file !== null) {
                 $files[] = $file;
             }
-        });
+        }
 
         return $files;
     }
@@ -174,18 +201,26 @@ class HtmlBlock extends Block
      */
     public function importContents($contents, array $files)
     {
+        $used_files = array();
         $document = new \DOMDocument();
-        $document->loadHTML(studip_utf8decode($contents));
-
+        $encoding = '<?xml encoding="utf-8" ?>';
+        $pos = strrpos($contents, $encoding);
+        if ($pos === false) {
+            $content = $encoding.$contents;
+        } else { 
+            $content = $contents;
+        }
+        $document->loadHTML($content);
         $anchorElements = $document->getElementsByTagName('a');
         foreach ($anchorElements as $element) {
             if (!$element instanceof \DOMElement || !$element->hasAttribute('href')) {
                 continue;
             }
             $block = $this;
-            $this->applyCallbackOnInternalUrl($element->getAttribute('href'), function ($components) use ($block, $element, $files) {
+            $this->applyCallbackOnInternalUrl($element->getAttribute('href'), function ($components) use ($block, $element, $files, &$used_files) {
                 parse_str($components['query'], $queryParams);
                 $queryParams['file_id'] = $files[$queryParams['file_id']]->id;
+                array_push($used_files, $queryParams['file_id']);
                 $components['query'] = http_build_query($queryParams);
                 $element->setAttribute('href', $block->buildUrl($GLOBALS['ABSOLUTE_URI_STUDIP'], '/sendfile.php', $components));
             });
@@ -197,16 +232,18 @@ class HtmlBlock extends Block
                 continue;
             }
             $block = $this;
-            $this->applyCallbackOnInternalUrl($element->getAttribute('src'), function ($components) use ($block, $element, $files) {
+            $this->applyCallbackOnInternalUrl($element->getAttribute('src'), function ($components) use ($block, $element, $files, &$used_files) {
                 parse_str($components['query'], $queryParams);
                 $queryParams['file_id'] = $files[$queryParams['file_id']]->id;
+                array_push($used_files, $queryParams['file_id']);
                 $components['query'] = http_build_query($queryParams);
                 $element->setAttribute('src', $block->buildUrl($GLOBALS['ABSOLUTE_URI_STUDIP'], '/sendfile.php', $components));
             });
         }
-        $this->content = $document->saveHTML();
+        $this->content = \STUDIP\Markup::purifyHtml($document->saveHTML());
 
         $this->save();
+        return $used_files;
     }
 
     /**
@@ -251,4 +288,5 @@ class HtmlBlock extends Block
     {
         return rtrim($baseUrl, '/').'/'.ltrim($path, '/').'?'.$components['query'];
     }
+
 }

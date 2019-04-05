@@ -19,28 +19,28 @@
             <br>
         {{/download_info}}
     {{/confirmed}}
-    {{#file}}
+    {{#file_available}}
         {{#download_access}}
             <div class="download-file">
-                <div class="cw-download-info" > &nbsp; {{file}} &nbsp; <span>{{file_name}}</span></div>
+                <div class="cw-download-info cw-fileicon-{{icon}}" > &nbsp; {{file}} </div>
                  <div class="cw-download-button-wrapper">
-                    <a href="../../sendfile.php?force_download=1&type={{#url}}6{{/url}}{{^url}}0{{/url}}&file_id={{file_id}}&file_name={{file_name}}" target="_blank"> 
-                        <button name="download" class="cw-download-button" style="display: inline-block;">download</button>
+                    <a href="{{url}}"> 
+                        <button name="download" class="cw-download-button" style="display: inline-block;">{{#i18n}}Herunterladen{{/i18n}}</button>
                     </a> 
                 </div>
             </div>
         {{/download_access}}
         {{^download_access}}
             <div class="messagebox messagebox_info">
-                {{#i18n}}Wegen des gew‰hlten Lizenzstatus kˆnnen Sie diese Datei nicht herunterladen.{{/i18n}}
+                {{#i18n}}Wegen des gew√§hlten Lizenzstatus k√∂nnen Sie diese Datei nicht herunterladen.{{/i18n}}
             </div>
         {{/download_access}}
-    {{/file}}
-    {{^file}}
+    {{/file_available}}
+    {{^file_available}}
         <div class="messagebox messagebox_info">
-            {{#i18n}}Download: Es wurde keine Datei ausgew‰hlt{{/i18n}}
+            {{#i18n}}Download: Es wurde keine Datei ausgew√§hlt{{/i18n}}
         </div>
-    {{/file}}
+    {{/file_available}}
     <input type="hidden" name="file" value="{{file}}" />
     <input type="hidden" name="file_name" value="{{file_name}}" />
     <input type="hidden" name="file_id" value="{{file_id}}" />
@@ -48,9 +48,10 @@
     <input type="hidden" name="download_info" value="{{download_info}}" />
     <input type="hidden" name="download_success" value="{{download_success}}" />
     <input type="hidden" name="download_access" value="{{download_access}}" />
+    <input type="hidden" name="icon" value="{{icon}}" />
 {{/inactive}}
 {{#inactive}}
     <div class="messagebox messagebox_info">
-        {{#i18n}}Dieser Block steht Ihnen erst zur Verf¸gung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloﬂen haben.{{/i18n}}
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verf√ºgung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschlo√üen haben.{{/i18n}}
     </div>
 {{/inactive}}

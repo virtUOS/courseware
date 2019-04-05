@@ -14,13 +14,13 @@
         <option value="webvideo">{{#i18n}}Webvideo (URL){{/i18n}}</option>
         <option value="url">{{#i18n}}eingebettetes Video (iframe){{/i18n}}</option>
     </select>
-    <button class="cw-webvideo-type-info cw-info" data-title="{{#i18n}}F¸r Videos von Plattformen wie YouTube oder vimeo nutzen Sie bitte den Embed-Block{{/i18n}}"></button>
+    <button class="cw-webvideo-type-info cw-info" data-title="{{#i18n}}F√ºr Videos von Plattformen wie YouTube oder vimeo nutzen Sie bitte den Embed-Block{{/i18n}}"></button>
     </div>
     <div class="videoblocktitle">
-        <label class="videotitlename">{{#i18n}}‹berschrift{{/i18n}}: </label>
+        <label class="videotitlename">{{#i18n}}√úberschrift{{/i18n}}: </label>
         <input type="text" class="videotitle" value="{{videoTitle}}">
     </div>
-    <label for="videoaspect">{{#i18n}}Seitenverh‰ltnis{{/i18n}}</label>
+    <label for="videoaspect">{{#i18n}}Seitenverh√§ltnis{{/i18n}}</label>
     <select name="videoaspect" class="cw-videoblock-aspect">
         <option value="aspect-169">16:9</option>
         <option value="aspect-43">4:3</option>
@@ -33,7 +33,7 @@
     <div class="videosource videosource-webvideo">
         <div class="webvideo-description">
             <p>
-            {{#i18n}}Sie kˆnnen mehrere Quellen pro Video angeben. Neben unterschiedlichen Formaten sind auch Videos f¸r kleine Displays (&le;800px) und groﬂe Displays (>800px) mˆglich.{{/i18n}}
+            {{#i18n}}Sie k√∂nnen mehrere Quellen pro Video angeben. Neben unterschiedlichen Formaten sind auch Videos f√ºr kleine Displays (&le;800px) und gro√üe Displays (>800px) m√∂glich.{{/i18n}}
             </p>
         </div>
         <div class="webvideo">
@@ -42,15 +42,38 @@
                 <option value="file">{{#i18n}}Dateibereich{{/i18n}}:</option>
             </select>
             <input type="text" class="cw-webvideo-source-url">
-            <button class="cw-webvideo-source-url-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Videodatei f¸hrt. Die URL kˆnnen Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
+            <button class="cw-webvideo-source-url-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Videodatei f√ºhrt. Die URL k√∂nnen Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
 
-            <select class="cw-webvideo-source-file" {{^video_files}}disabled{{/video_files}}>
-                {{#video_files}}
-                    <option file_id="{{dokument_id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
-                {{/video_files}}
-                {{^video_files}}
-                    <option file_id="" file_name="" file_url="" selected>{{#i18n}}keine Videodatei verf¸gbar{{/i18n}}</option>
-                {{/video_files}}
+            <select class="cw-webvideo-source-file" {{#no_files}}disabled{{/no_files}}>
+                {{^no_files}}
+                    <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
+                        {{#video_files_course}}
+                            <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                        {{/video_files_course}}
+                        {{^video_files_course}}
+                            <option file_id="" file_name="" file_url="">{{#i18n}}keine Videodatei verf√ºgbar{{/i18n}}</option>
+                        {{/video_files_course}}
+                    </optgroup>
+                    <optgroup label="Dateien im eigenen Dateibereich">
+                        {{#video_files_user}}
+                            <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                        {{/video_files_user}}
+                        {{^video_files_user}}
+                            <option file_id="" file_name="" file_url="">{{#i18n}}keine Videodatei verf√ºgbar{{/i18n}}</option>
+                        {{/video_files_user}}
+                    </optgroup>
+                    <optgroup label="Dateien im Dateibereich anderer Nutzer">
+                        {{#video_files_other}}
+                            <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                        {{/video_files_other}}
+                        {{^video_files_other}}
+                            <option file_id="" file_name="" file_url="">{{#i18n}}keine Videodatei verf√ºgbar{{/i18n}}</option>
+                        {{/video_files_other}}
+                    </optgroup>
+                {{/no_files}}
+                {{#no_files}}
+                    <option file_id="" file_name="" file_url="" selected>{{#i18n}}keine Videodatei verf√ºgbar{{/i18n}}</option>
+                {{/no_files}}
             </select>
             <button class="cw-webvideo-source-file-info cw-info" data-title="{{#i18n}}Hier werden alle Videodateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
             <br>
@@ -62,14 +85,14 @@
             </select>
             <label for="webvideosrc-mediaquery" class="cw-webvideo-label">{{#i18n}}Bildschirm{{/i18n}}:</label>
             <select class="webvideosrc-mediaquery">
-                <option value="normal">{{#i18n}}f¸r alle Displaygrˆﬂen{{/i18n}}</option>
-                <option value="large">{{#i18n}}f¸r groﬂe Displays{{/i18n}}</option>
-                <option value="small">{{#i18n}}f¸r kleine Displays{{/i18n}}</option>
+                <option value="normal">{{#i18n}}f√ºr alle Displaygr√∂√üen{{/i18n}}</option>
+                <option value="large">{{#i18n}}f√ºr gro√üe Displays{{/i18n}}</option>
+                <option value="small">{{#i18n}}f√ºr kleine Displays{{/i18n}}</option>
             </select>
             <br>
             <button class="removemediatype">{{#i18n}}Quelle entfernen{{/i18n}}</button>
         </div>
-        <button name="addmediatype" class="addmediatype">{{#i18n}}Quelle hinzuf¸gen{{/i18n}}</button>
+        <button name="addmediatype" class="addmediatype">{{#i18n}}Quelle hinzuf√ºgen{{/i18n}}</button>
     </div>
     <div class="videostatus">
         <span class="status">&nbsp;</span>

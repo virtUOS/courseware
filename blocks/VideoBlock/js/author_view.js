@@ -27,7 +27,7 @@ export default AuthorView.extend({
           return;
         }
         event.isUserInputHandled = true;
-        Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie die Seite trotzdem verlassen?'));
+        Backbone.trigger('preventnavigateto', !confirm('Es gibt nicht gespeicherte Ã„nderungen. MÃ¶chten Sie die Seite trotzdem verlassen?'));
     },
 
     onModeSwitch(toView, event) {
@@ -43,7 +43,7 @@ export default AuthorView.extend({
           return;
         }
         event.isUserInputHandled = true;
-        Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
+        Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Ã„nderungen. MÃ¶chten Sie trotzdem fortfahren?'));
     },
 
     render() {
@@ -120,12 +120,12 @@ export default AuthorView.extend({
           webvideo = '';
           webvideosettings = '';
         }
-        status.text('Speichere Änderungen...');
+        status.text('Speichere Ã„nderungen...');
 
         helper.callHandler(this.model.id, 'save', {
           url, webvideo, webvideosettings, videoTitle, aspect
         }).then(function () {
-          status.text('Änderungen wurden gespeichert.');
+          status.text('Ã„nderungen wurden gespeichert.');
           view.switchBack();
         }).catch(function (error) {
           status.text('Fehler beim Speichern: ' + $.parseJSON(error.responseText).reason);

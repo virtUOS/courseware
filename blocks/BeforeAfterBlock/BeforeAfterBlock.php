@@ -18,8 +18,14 @@ class BeforeAfterBlock extends Block
     public function student_view()
     {
         $this->setGrade(1.0);
-        $ba_img_before = json_decode($this->ba_before)->url;
-        $ba_img_after = json_decode($this->ba_after)->url;
+        $before_file = \FileRef::find(json_decode($this->ba_before)->file_id);
+        if ($before_file) {
+            $ba_img_before = $before_file->getDownloadURL();
+        }
+        $after_file = \FileRef::find(json_decode($this->ba_after)->file_id);
+        if ($after_file) {
+            $ba_img_after = $after_file->getDownloadURL();
+        }
         $ba_enable = (($ba_img_before != '') && ($ba_img_after != '')) ? true : false;
 
         return array(
@@ -37,8 +43,34 @@ class BeforeAfterBlock extends Block
         $ba_img_before_external = json_decode($this->ba_before)->source == 'url' ? true : false;
         $ba_img_after_external = json_decode($this->ba_after)->source == 'url' ? true : false;
 
+        $files_arr = $this->showFiles($before->file_id, $after->file_id);
+
+        $no_files = 
+            empty($files_arr['userfilesarray']) && 
+            empty($files_arr['coursefilesarray']) && 
+            ($files_arr['before_file_id_found'] == false) && 
+            ($files_arr['after_file_id_found'] == false) &&
+            empty($before->file_id) &&
+            empty($after->file_id);
+
+        if((!$files_arr['before_file_id_found']) && (!empty($before->file_id)) ){
+            $before_other_user_file = array('id' => $before->file_id, 'name' => $before->file_name, 'download_url' => $before->url);
+        } else {
+            $before_other_user_file = false;
+        }
+
+        if((!$files_arr['after_file_id_found']) && (!empty($after->file_id))) {
+            $after_other_user_file = array('id' => $after->file_id, 'name' => $after->file_name, 'download_url' => $after->url);
+        } else {
+            $after_other_user_file = false;
+        }
+
         return array_merge($this->getAttrArray(), array(
-            'image_files' => $this->showFiles(),
+            'image_files_user' => $files_arr['userfilesarray'],
+            'image_files_course' => $files_arr['coursefilesarray'],
+            'before_other_user_file' => $before_other_user_file,
+            'after_other_user_file' => $after_other_user_file,
+            'no_files' => $no_files,
             'img_before' => $before->url,
             'img_after' => $after->url,
             'file_id_before' => $before->file_id,
@@ -46,6 +78,13 @@ class BeforeAfterBlock extends Block
             'img_before_external' => $ba_img_before_external,
             'img_after_external' => $ba_img_after_external
         ));
+    }
+
+    public function preview_view()
+    {
+        $ba_img_before = json_decode($this->ba_before)->url;
+
+        return array('before_img' => $ba_img_before);
     }
 
     private function getAttrArray() 
@@ -71,7 +110,7 @@ class BeforeAfterBlock extends Block
     }
 
     public function exportProperties()
-    {
+    { 
        return array(
             'ba_before' => $this->ba_before,
             'ba_after' => $this->ba_after
@@ -83,7 +122,7 @@ class BeforeAfterBlock extends Block
         $ba_files = [];
         $before = json_decode($this->ba_before);
         $after = json_decode($this->ba_after);
-
+        
         if ($before->source == 'file') {
             array_push($ba_files, $before->file_id);
         }
@@ -92,15 +131,17 @@ class BeforeAfterBlock extends Block
         }
 
         foreach ($ba_files as $ba_file){
-            $document = new \StudipDocument($ba_file);
+            $file_ref = new \FileRef($ba_file);
+            $file = new \File($file_ref->file_id);
+
             $files[] = array(
                 'id' => $ba_file,
-                'name' => $document->name,
-                'description' => $document->description,
-                'filename' => $document->filename,
-                'filesize' => $document->filesize,
-                'url' => $document->url,
-                'path' => get_upload_file_path($ba_file)
+                'name' => $file_ref->name,
+                'description' => $file_ref->description,
+                'filename' => $file->name,
+                'filesize' => $file->size,
+                'url' => $file->getURL(),
+                'path' => $file->getPath()
             );
         }
 
@@ -133,17 +174,20 @@ class BeforeAfterBlock extends Block
     {
         $ba_before = json_decode($this->ba_before);
         $ba_after = json_decode($this->ba_after);
+        $used_files = array();
 
         foreach($files as $file){
             if(($ba_after->file_name == $file->name) && ($ba_after->source == 'file')) {
                 $ba_after->file_id = $file->id;
-                $document = \StudipDocument::find($file->id);
-                $ba_after->url = \URLHelper::getURL( 'sendfile.php',  array('type'=>'0', 'file_id' => $document->id, 'file_name' => $document->name) );
+                $file_ref_after = new \FileRef($ba_after->file_id);
+                $ba_after->url = $file_ref_after->download_url;
+                array_push($used_files, $file->id);
             }
             if (($ba_before->file_name == $file->name) && ($ba_before->source == 'file')) {
                 $ba_before->file_id = $file->id;
-                $document = \StudipDocument::find($file->id);
-                $ba_before->url = \URLHelper::getURL( 'sendfile.php',  array('type'=>'0', 'file_id' => $document->id, 'file_name' => $document->name) );
+                $file_ref_before = new \FileRef($ba_before->file_id);
+                $ba_before->url = $file_ref_before->download_url;
+                array_push($used_files, $file->id);
             }
         }
 
@@ -151,43 +195,52 @@ class BeforeAfterBlock extends Block
         $this->ba_after = json_encode($ba_after);
 
         $this->save();
+        return $used_files;
     }
 
-    private function showFiles()
+    private function showFiles($before_file_id, $after_file_id)
     {
-        $db = \DBManager::get();
-        $stmt = $db->prepare('
-            SELECT
-                *
-            FROM
-                dokumente
-            WHERE
-                seminar_id = :seminar_id
-            ORDER BY
-                name
-        ');
-        $stmt->bindParam(':seminar_id', $this->container['cid']);
-        $stmt->execute();
-        $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $coursefilesarray = array();
+        $userfilesarray = array();
+        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
+        $before_file_id_found = false;
+        $after_file_id_found = false;
 
-        $filesarray = array();
-        $mimetypes = [
-            'bmp', 'cod', 'ras', 'fif', 'gif', 'ief', 'jpeg', 
-            'jpg', 'jpe', 'png', 'svg', 'tif', 'tiff', 'mcf', 
-            'wbmp', 'fh4', 'fh5', 'fhc', 'ico', 'pnm', 'pbm',
-            'pgm', 'ppm', 'rgb', 'xwd', 'xbm', 'xpm'
-        ];
-        foreach ($response as $item) {
-            if(in_array(strtolower(substr($item['name'], -3)), $mimetypes) || in_array(strtolower(substr($item['name'], -4)), $mimetypes))
-            {
-                if (\StudipDocument::find($item['dokument_id'])->checkAccess($this->container['current_user_id'])) {
-                    $document = \StudipDocument::find($item['dokument_id']);
-                    $item['download_url'] = \URLHelper::getURL( 'sendfile.php',  array('type'=>'0', 'file_id' => $document->id, 'file_name' => $document->name) );
-                    $filesarray[] = $item;
+        foreach ($course_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isImage()) && (!$ref->isLink())) {
+                    $coursefilesarray[] = $ref;
+                }
+                if($ref->id == $before_file_id){
+                    $before_file_id_found = true;
+                }
+                if($ref->id == $after_file_id){
+                    $after_file_id_found = true;
                 }
             }
         }
 
-        return $filesarray;
+        foreach ($user_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isImage()) && (!$ref->isLink())) {
+                    $userfilesarray[] = $ref;
+                }
+                if($ref->id == $before_file_id){
+                    $before_file_id_found = true;
+                }
+                if($ref->id == $after_file_id){
+                    $after_file_id_found = true;
+                }
+            }
+        }
+
+        return array(
+            'coursefilesarray' => $coursefilesarray,
+            'userfilesarray' => $userfilesarray,
+            'before_file_id_found' => $before_file_id_found,
+            'after_file_id_found' => $after_file_id_found);
     }
 }

@@ -11,8 +11,8 @@ class TestBlock extends Block
 {
     const NAME = 'Quiz';
     const BLOCK_CLASS = 'interaction';
-    const DESCRIPTION = 'Stellt ein Aufgabenblatt aus Vips zur Verfügung';
-    const HINT = 'Für diesen Block muss das Vips Plugin aktiviert sein';
+    const DESCRIPTION = 'Stellt ein Aufgabenblatt aus Vips zur VerfÃ¼gung';
+    const HINT = 'FÃ¼r diesen Block muss das Vips Plugin aktiviert sein';
 
     function initialize()
     {
@@ -25,7 +25,7 @@ class TestBlock extends Block
     {
         return array(
             'selftest' => _cw('Selbsttest'),
-            'practice' => _cw('Übung'),
+            'practice' => _cw('Ãœbung'),
         );
     }
 
@@ -125,6 +125,13 @@ class TestBlock extends Block
             ));
     }
 
+    public function preview_view()
+    {
+        $assignment = \VipsAssignment::find($this->assignment_id);
+
+        return array('name' => $assignment->test->title);
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
@@ -137,6 +144,8 @@ class TestBlock extends Block
 
     public function exercise_submit_handler($data)
     {
+        global $user;
+
         parse_str($data, $requestParams);
         $requestParams = studip_utf8decode($requestParams);
         $exercise_id = $requestParams['exercise_id'];
@@ -177,8 +186,31 @@ class TestBlock extends Block
         if ($start > $now || $now > $end) {
             throw new \Exception(_cw('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
         }
-        $solution = $exercise->getSolutionFromRequest($requestParams);
+
+        $files = null;
+        if($requestParams['file'] != '') {
+            $file_name = $requestParams['filename'];
+            $file_size = $requestParams['filesize'];
+            $file_type = $requestParams['filetype'];
+            $file_data = explode('base64,', $requestParams['file'])[1];
+            $file_data = str_replace(' ', '+', $file_data);
+            $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
+            mkdir($tempDir);
+            file_put_contents($tempDir.'/'.$file_name, base64_decode($file_data));
+
+            $file = [
+                    'name'     => $file_name,
+                    'type'     => $file_type,
+                    'tmp_name' => $tempDir.'/'.$file_name,
+                    'size'     => filesize($tempDir.'/'.$file_name),
+                    'user_id'  => $user->id
+                ];
+            $files['upload'] = $file;
+        }
+
+        $solution = $exercise->getSolutionFromRequest($requestParams, $files);
         if ($this->container['current_user']->isNobody()) {
+            if ($assignment->type == "selftest") {
                 $assignment->correctSolution($solution);
                 return array(
                     'is_nobody'      => true, 
@@ -187,11 +219,50 @@ class TestBlock extends Block
                     'exercise_index' => $exercise_index,
                     'title'          => $exercise->title
                 );
+            } else {
+                return array(
+                    'is_nobody'      => true, 
+                    'hasSolution'    => true, 
+                    'solution'       => _cw('Diese Aufgabe kÃ¶nnen nur eingeloggte Nutzer abgeben.'),
+                    'exercise_index' => $exercise_index,
+                    'title'          => $exercise->title
+                );
+            }
         }
         $assignment->storeSolution($solution);
         $progress = $this->calcGrades();
+        if ($files != null) {
+            $this->deleteRecursively($tempDir);
+        }
 
         return array('grade' => $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0);
+    }
+
+    private function deleteRecursively($path)
+    {
+        if (is_dir($path)) {
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($path),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+
+            foreach ($files as $file) {
+                /** @var SplFileInfo $file */
+                if (in_array($file->getBasename(), array('.', '..'))) {
+                    continue;
+                }
+
+                if ($file->isFile() || $file->isLink()) {
+                    unlink($file->getRealPath());
+                } else if ($file->isDir()) {
+                    rmdir($file->getRealPath());
+                }
+            }
+
+            rmdir($path);
+        } else if (is_file($path) || is_link($path)) {
+            unlink($path);
+        }
     }
 
     public function exercise_reset_handler($data)
@@ -396,8 +467,7 @@ class TestBlock extends Block
                 'is_corrected'        => $solution['corrected'] && ($assignment->options['released'] == 2),
                 'tries_left'          => $tries_left, 
                 'tries_pl'            => $tries_pl,
-                'character_picker'    => $character_picker,
-                'file_upload'         => $exercise->options['file_upload']
+                'character_picker'    => $character_picker
             );
             $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
             $available = !$entry['show_solution'] && !$entry['solving_allowed']; //or correction is available
@@ -443,7 +513,7 @@ class TestBlock extends Block
     {
         if ($this->assignment_id == "") {
             $courseware = $this->container['current_courseware'];
-            if ( ($this->test_id == "") ||  !($courseware->vipsVersion()) ){
+            if ( ($this->test_id == "") || !($courseware->vipsVersion()) ){
                 return;
             }
             $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
@@ -452,12 +522,12 @@ class TestBlock extends Block
         }
 
         if ($assignment == null) {
-            return;
+                return;
         }
         $xml = $assignment->exportXML();
 
         return array(
-            'xml' => studip_utf8decode($xml)
+            'xml' => $xml
         );
     }
 
@@ -483,7 +553,7 @@ class TestBlock extends Block
     public function importProperties(array $properties)
     {
         if (isset($properties['xml'])) {
-            $xml = studip_utf8encode($properties['xml']);
+            $xml = $properties['xml'];
             $result = \VipsAssignment::importXML($xml, $this->container['current_user_id'] , $this->container['cid']);
             $this->assignment_id = $result->id;
         }

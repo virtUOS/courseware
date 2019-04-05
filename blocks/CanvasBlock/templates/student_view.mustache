@@ -1,0 +1,46 @@
+{{^inactive}}
+<input type="hidden" class="cw-canvasblock-bgimage" value="{{bg_image}}">
+<input type="hidden" class="cw-canvasblock-stored-draw" value="{{canvas_draw}}">
+{{#description}}
+<div class="cw-canvasblock-description">
+    <p>{{description}}</p>
+</div>
+{{/description}}
+<div class="cw-canvasblock-toolbar">
+    <div class="cw-canvasblock-buttonset">
+    <button class="cw-canvasblock-reset" data-title="{{#i18n}}Zurücksetzen{{/i18n}}"></button>
+    <button class="cw-canvasblock-undo" data-title="{{#i18n}}Rückgängig{{/i18n}}"></button>
+    <button class="cw-canvasblock-download" data-title="{{#i18n}}Download{{/i18n}}"></button>
+    </div>
+    <div class="cw-canvasblock-buttonset">
+        <button class="cw-canvasblock-color" value="white"></button>
+        <button class="cw-canvasblock-color" value="blue"></button>
+        <button class="cw-canvasblock-color" value="green"></button>
+        <button class="cw-canvasblock-color" value="purple"></button>
+        <button class="cw-canvasblock-color" value="red"></button>
+        <button class="cw-canvasblock-color" value="orange"></button>
+        <button class="cw-canvasblock-color" value="yellow"></button>
+        <button class="cw-canvasblock-color" value="grey"></button>
+        <button class="cw-canvasblock-color" value="darkgrey"></button>
+        <button class="cw-canvasblock-color" value="black"></button>
+    </div>
+    <div class="cw-canvasblock-buttonset">
+    <button class="cw-canvasblock-size cw-canvasblock-size-small" value="small"></button>
+    <button class="cw-canvasblock-size cw-canvasblock-size-normal" value="normal"></button>
+    <button class="cw-canvasblock-size cw-canvasblock-size-large" value="large"></button>
+    <button class="cw-canvasblock-size cw-canvasblock-size-huge" value="huge"></button>
+    </div>
+    <div class="cw-canvasblock-buttonset">
+    <button class="cw-canvasblock-tool cw-canvasblock-tool-pen" value="pen"></button>
+    <button class="cw-canvasblock-tool cw-canvasblock-tool-text" value="text">T</button>
+    </div>
+</div>
+<img src="{{image_url}}" class="cw-canvasblock-original-img">
+<canvas class="cw-canvasblock-canvas" style=" border: solid thin #ccc;"></canvas>
+
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive}}

@@ -82,6 +82,12 @@ class ForumBlock extends Block
         );
     }
 
+    public function preview_view()
+    {
+
+        return;
+    }
+
     private function connectToArea($area_id)
     {
         $old_area_id = $this->area_id;

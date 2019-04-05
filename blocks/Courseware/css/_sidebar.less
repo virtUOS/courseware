@@ -3,30 +3,20 @@
     top: 0;
     left: 0;
     margin: 0;
+    padding-left: 0;
+    padding-right: @sidebar-padding-right;
     width: @sidebar-width;
-    border: 1px solid #8b8f95;
-    border-left: none;
 
     .cw-sidebar-image {
         background-image: url("../../../../../assets/images/sidebar/seminar-sidebar.png");
         width: @sidebar-width;
-        height: 103px;
+        height: 62px;
         background-size: 270px auto;
-        .cw-sidebar-image-title {
-            padding: 5px 8px;
-            color: #fff; 
-            font-size: 1.2em;
-            text-overflow: ellipsis;
-            position: relative;
-            top: 72px;
-            
-        }
     }
 
     .cw-navigation {
-        padding: 0 0 1em;
         border: 1px solid #d0d7e3; 
-        margin: 7px 5px 0;
+        margin: 0.75em 0;
 
         .cw-navigation-header {
             background: #e7ebf1;
@@ -38,7 +28,7 @@
         .cw-navigation-teacher,
         .cw-navigation-student {
             list-style: none; 
-            padding: 0;
+            padding: 4px 0;
             a.cw-navigation-active-link {
                 color: #fff;
             }
@@ -46,6 +36,7 @@
                 padding: 0 1em;
                 &.cw-navigation-active {
                     background-color: #28497c;
+                    line-height: 2em;
                 }
             }
         }

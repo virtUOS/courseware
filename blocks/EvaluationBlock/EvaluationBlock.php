@@ -8,11 +8,12 @@ use Mooc\UI\Section\Section;
 /**
  * Display the course evaluations in a (M)ooc.IP block.
  *
- * @author AndrÈ Klaﬂen <klassen@elan-ev.de>
+ * @author Andr√© Kla√üen <klassen@elan-ev.de>
  */
 class EvaluationBlock extends Block
 {
     const NAME = 'Evaluationen';
+    const DESCRIPTION = 'Bindet eine Evaluation ein';
 
     public function initialize()
     {
@@ -33,6 +34,12 @@ class EvaluationBlock extends Block
         $content = self::mustachify($evaluations);
 
         return array('active' => true, 'content' => $content);
+    }
+
+    public function preview_view()
+    {
+
+        return;
     }
 
     /**

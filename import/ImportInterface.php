@@ -19,5 +19,5 @@ interface ImportInterface
      * @param Courseware $context The courseware context in which to import
      *                            the given data
      */
-    public function import($path, Courseware $context);
+    public function import($path, Courseware $context, $folder);
 }

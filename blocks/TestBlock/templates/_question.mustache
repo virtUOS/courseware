@@ -1,4 +1,4 @@
-<form class="studip_form">
+<form class="studip_form cw-vips-{{exercise_type}}">
     <input type="hidden" name="action" value="sheets">
     <input type="hidden" name="subaction" value="submit_exercise">
     <input type="hidden" name="submit_exercise" value="1">
@@ -8,9 +8,6 @@
     <input type="hidden" name="number_of_answers" value="{{number_of_answers}}">
     <input type="hidden" name="solver_user_id" value="{{solver_user_id}}">
     <input type="hidden" name="exercise_index" value="{{exercise_index}}">
-    {{#file_upload}}
-        <div class="messagebox messagebox_info">{{#i18n}}Das hochladen einer Datei zu dieser Frage ist in Courseware nicht möglich.{{/i18n}}</div>
-    {{/file_upload}}
     <fieldset>
         <legend>{{ title }}</legend>
         <legend>{{{question_description}}}</legend>
@@ -21,6 +18,6 @@
             <button class="open_character_picker button">Zeichenwähler öffnen</button>
             <div id="character_picker"></div>
     {{/character_picker}}
-    <button name="submit-exercise" class="button" style="display: inline-block">{{#i18n}}Abschicken{{/i18n}}</button>
+    <button name="submit-exercise" class="button cw-test-submit-button">{{#i18n}}Abschicken{{/i18n}}</button>
     </div>
 </form>

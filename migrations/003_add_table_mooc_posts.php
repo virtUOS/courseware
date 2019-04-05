@@ -7,7 +7,7 @@
  */
 
 
-class AddTableMoocPosts extends DBMigration
+class AddTableMoocPosts extends Migration
 {
     public function description()
     {

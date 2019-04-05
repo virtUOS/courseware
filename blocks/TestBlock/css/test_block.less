@@ -12,7 +12,7 @@ ul.exercise {
     padding: 0;
     list-style-type: none;
 
-    li {
+    li.exercise-item {
         border: solid thin #ccc;
     }
 
@@ -252,6 +252,10 @@ ul.exercise {
             position: relative;
             display: block;
             margin-top: 10px;
+
+            &:nth-child(2) {
+                margin-bottom: 1em;
+            }
         }
 
         > div {
@@ -360,4 +364,10 @@ ul.exercise {
             }
         }
     }
+}
+
+/*** hide lti-exercise submit button ***/
+section#courseware ul.exercise .cw-vips-lti_exercise button.cw-test-submit-button {
+    display: none;
+
 }

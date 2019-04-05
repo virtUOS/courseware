@@ -1,0 +1,35 @@
+<input type="hidden" class="cw-typewriter-stored-json" value="{{typewriter_json}}">
+
+<label for="cw-typewriter-content" class="cw-typewriter-content-label">{{#i18n}}Inhalt{{/i18n}}:</label>
+<textarea name="cw-typewriter-content" class="cw-typewriter-content">{{typewriter_content}}</textarea>
+
+<label for="cw-typewriter-speed" class="cw-typewriter-speed-label">{{#i18n}}Geschwindigkeit{{/i18n}}:</label>
+<select class="cw-typewriter-speed" name="cw-typewriter-speed">
+    <option value="0">{{#i18n}}langsam{{/i18n}}</option>
+    <option value="1">{{#i18n}}normal{{/i18n}}</option>
+    <option value="2">{{#i18n}}schnell{{/i18n}}</option>
+    <option value="3">{{#i18n}}sehr schnell{{/i18n}}</option>
+</select>
+
+<label for="cw-typewriter-font" class="cw-typewriter-font-label">{{#i18n}}Schriftart{{/i18n}}:</label>
+<select class="cw-typewriter-font" name="cw-typewriter-font">
+    <option value="font-default">{{#i18n}}Standard{{/i18n}}</option>
+    <option value="font-typewriter">Lucida Sans Typewriter</option>
+    <option value="font-trebuchet">Trebuchet MS</option>
+    <option value="font-tahoma">Tahoma</option>
+    <option value="font-georgia">Georgia</option>
+    <option value="font-narrow">Arial Narrow</option>
+</select>
+
+<label for="cw-typewriter-size" class="cw-typewriter-size-label">{{#i18n}}Schriftgröße{{/i18n}}:</label>
+<select class="cw-typewriter-size" name="cw-typewriter-size">
+    <option value="size-default">100%</option>
+    <option value="size-tall">150%</option>
+    <option value="size-grande">200%</option>
+    <option value="size-huge">400%</option>
+</select>
+
+<div class="cw-button-box">
+    <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
+    <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+</div>

@@ -45,7 +45,7 @@ class LocalizationController extends CoursewareStudipController
         }
 
         $this->layout = null;
-        $this->language = str_replace('.UTF-8', '', $_SESSION['_language']);
+        //$this->language = str_replace('.UTF-8', '', $_SESSION['_language']);
 
         // make this instance available to the view to use
         // the helper methods

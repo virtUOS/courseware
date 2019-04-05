@@ -6,9 +6,9 @@ use Mooc\UI\Block;
 
 class ConfirmBlock extends Block
 {
-    const NAME = 'Bestätigung';
+    const NAME = 'BestÃ¤tigung';
     const BLOCK_CLASS = 'function';
-    const DESCRIPTION = 'Vom Lernenden bestätigen lassen das der Inhalt betrachtet wurde';
+    const DESCRIPTION = 'Vom Lernenden bestÃ¤tigen lassen das der Inhalt betrachtet wurde';
 
     public function initialize()
     {
@@ -36,6 +36,12 @@ class ConfirmBlock extends Block
         return array(
             'title' => $this->title
         );
+    }
+
+    public function preview_view()
+    {
+
+        return;
     }
 
     // this is called when any user checks the checkbox

@@ -1,11 +1,11 @@
 import StudentView from 'js/student_view'
 
 export default StudentView.extend({
-  events: {},
+    events: {},
 
-  initialize(options) {},
+    initialize(options) {},
 
-  render() { 
-    return this; 
-  }
+    render() { 
+        return this; 
+    }
 });

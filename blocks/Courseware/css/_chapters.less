@@ -1,6 +1,6 @@
 ol.chapters {
   padding: 0;
-  margin: 7px 5px 1em;
+  margin-bottom: 0.75em;
   border: 1px solid #d0d7e3;
 
   .title span.indented {
@@ -248,15 +248,27 @@ ol.subchapters {
 }
 
 &.user-may-author {
-  li[data-type="Chapter"]:not([data-publication='']),
-  li[data-type="Subchapter"]:not([data-publication='']) 
-  {
-        & > div.title > a.navigate {
-          .bgImg(date, grey, 16);
-          background-position: center right;
+  li[data-type="Chapter"],
+  li[data-type="Subchapter"] {
+        &.unpublished > div.title{
+            
+            a.navigate {
+                opacity: 0.5;
+            }
         }
-        &.unpublished > div.title > a.navigate {
-            opacity: 0.5;
+        &:not([data-publication='']),
+        &:not([data-withdraw='']) {
+            &.unpublished {
+                border: dashed thin rgba(40, 73, 124, 0.5);
+            }
+            > div.title >  a.navigate {
+                .bgImg(date, grey, 16);
+                background-position: center right;
+            }
+        }
+        .date-info {
+            display: none;
+            color: red;
         }
   }
   span.complete {

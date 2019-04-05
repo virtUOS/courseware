@@ -7,7 +7,7 @@ export default AuthorView.extend({
 
     events: {
         'click button[name=save]':   'onSave',
-        'click button[name=cancel]': 'switchBack',
+        'click button[name=cancel]': 'onCancel',
     },
 
     initialize() {
@@ -21,7 +21,10 @@ export default AuthorView.extend({
 
     postRender() {
         var $view = this;
-        $view.$('.cw-pdf-set-file option[value="'+$view.$('.cw-pdf-file-stored').val()+'"]').prop('selected', true);
+        if ($view.$('.cw-pdf-file-stored').val() != '') {
+            $view.$('.cw-pdf-set-file option[file_id="'+$view.$('.cw-pdf-file-id-stored').val()+'"]').prop('selected', true);
+        }
+
         return this;
     },
 
@@ -54,16 +57,14 @@ export default AuthorView.extend({
 
     onSave(event) {
         var $view = this;
-        var $pdf_file     = $view.$('.cw-pdf-set-file').val();
-        var $pdf_file_id  = $view.$('.cw-pdf-set-file option:selected').attr('document_id');
-        var $pdf_filename = $view.$('.cw-pdf-set-file option:selected').attr('filename');
+        var $pdf_file_id  = $view.$('.cw-pdf-set-file option:selected').attr('file_id');
+        var $pdf_filename = $view.$('.cw-pdf-set-file option:selected').attr('file_name');
         var $pdf_title    = $view.$('.cw-pdf-set-title').val();
         if ($pdf_title == "") {
             $pdf_title = $pdf_filename;
         }
         helper
             .callHandler(this.model.id, 'save', {
-                pdf_file: $pdf_file,
                 pdf_filename: $pdf_filename,
                 pdf_file_id: $pdf_file_id,
                 pdf_title: $pdf_title
@@ -82,5 +83,10 @@ export default AuthorView.extend({
                   console.log(errorMessage, arguments);
                 }
             );
+      },
+
+      onCancel() {
+        this.switchBack();
+        helper.reload();
       }
 });

@@ -5,12 +5,12 @@ import AuthorView from './author_view'
 import '../css/video_block.less'
 
 export default block_types.add({
-  name: 'VideoBlock',
+    name: 'VideoBlock',
 
-  content_block: true,
+    content_block: true,
 
-  views: {
-    student: StudentView,
-    author: AuthorView
-  }
+    views: {
+        student: StudentView,
+        author: AuthorView
+    }
 });

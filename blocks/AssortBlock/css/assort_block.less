@@ -1,4 +1,20 @@
 @import '../../../assets/less/mixins';
+
+section#courseware .active-section section.block.block-is-assorted,
+section#courseware .aside-section section.block.block-is-assorted {
+    display: none;
+}
+
+section#courseware.view-author .active-section section.block.block-is-assorted,
+section#courseware.view-author .aside-section section.block.block-is-assorted {
+    display: block;
+    border: dashed thin #ccc;
+    &:hover {
+        border: dashed thin #000;
+    }
+}
+
+
 /* author mode */
 .AssortBlock {
     .cw-assort-description {
@@ -111,8 +127,10 @@
 
 /* normal tabs */
 .AssortBlock {
-    .ui-tabs { 
-        .ui-tabs-nav { 
+    .ui-tabs {
+        padding: 0;
+        .ui-tabs-nav {
+            padding: 0.5em 0.5em 0 0.5em;
             li { 
                 a {
                     color: #28497c;
@@ -125,16 +143,36 @@
 
 /* accordion */
 .AssortBlock {
-    .ui-accordion-content {
-        padding: 1em !important;
-        border: thin solid #ccc !important;
-        border-top: none !important;
+    .assortblock-content.ui-accordion{
+        border: solid thin #ccc;
     }
 
     .ui-accordion-header {
-        border: solid 1x #ccc !important;
-        padding: 8px 8px 8px 30px !important;  
+        background-color: #eee;
+        border: none !important;
+        border-bottom: solid thin #ccc !important;
+        padding: 1em 1em 1em 6px !important;  
         color: #28497c;
+        span.ui-icon {
+            margin-right: 0.5em;
+        }
+        &.ui-accordion-header-collapsed {
+            &:last-of-type {
+                border-bottom: none !important;
+            }
+        }
+        &.ui-accordion-header-active {
+            font-weight: 600;
+        }
+    }
+
+    .ui-accordion-content {
+        padding: 1em !important;
+        border: none !important;
+        border-bottom: solid thin #ccc !important;
+        &:last-of-type {
+            border-bottom: none !important;
+        }
     }
 }
 /* END accordion */
@@ -142,9 +180,8 @@
 /* sidebar special */
 .cw-sidebar {
     .AssortBlock {
-        border: none;
         .ui-accordion-header {
-            padding: 6px 6px 6px 30px !important;  
+            padding: 6px 6px 6px 3px !important;  
         }
 
         .cw-html-wrapper {

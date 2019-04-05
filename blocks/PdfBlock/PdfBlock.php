@@ -3,7 +3,7 @@ namespace Mooc\UI\PdfBlock;
 
 use Mooc\UI\Block;
 
-class PdfBlock extends Block 
+class PdfBlock extends Block
 {
     const NAME = 'PDF mit Vorschau';
     const BLOCK_CLASS = 'multimedia';
@@ -18,14 +18,15 @@ class PdfBlock extends Block
     }
 
     public function student_view()
-    {   
+    {
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
-
-        $document = \StudipDocument::find($this->pdf_file_id);
-        if ($document) {
-            $access = $document->checkAccess($this->container['current_user_id']);
+        $file = \FileRef::find($this->pdf_file_id);
+        if ($file) {
+            $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
+        } else {
+            $access = true;
         }
         $this->setGrade(1.0);
         $plugin_manager = \PluginManager::getInstance();
@@ -34,18 +35,42 @@ class PdfBlock extends Block
         return array_merge($this->getAttrArray(), array(
             'access'           => $access,
             'courseware_path'  => $courseware_path
-            
+
         ));
     }
 
     public function author_view()
     {
         $this->authorizeUpdate();
+        $file_id = $this->pdf_file_id;
+        $files_arr = $this->showFiles($file_id);
 
-        return array_merge($this->getAttrArray(), array('pdf_files' => $this->showFiles()));
+        $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['pdf_id_found'] == false) && empty($file_id);
+
+        if((!$files_arr['pdf_id_found']) && (!empty($file_id))){
+            $other_user_file = array('id' => $file_id, 'name' => $this->pdf_filename, 'pdf_file' => $this->pdf_file);
+        } else {
+            $other_user_file = false;
+        }
+
+        return array_merge(
+            $this->getAttrArray(),
+            array(
+                'user_pdf_files' => $files_arr['userfilesarray'],
+                'course_pdf_files' => $files_arr['coursefilesarray'],
+                'no_pdf_files' => $no_files,
+                'other_user_file' => $other_user_file
+            )
+        );
     }
 
-    private function getAttrArray() 
+    public function preview_view()
+    {
+
+        return array('pdf_filename' => $this->pdf_filename);
+    }
+
+    private function getAttrArray()
     {
         return array(
             'pdf_file'      => $this->pdf_file,
@@ -54,47 +79,53 @@ class PdfBlock extends Block
             'pdf_title'     => $this->pdf_title
         );
     }
-    
-    private function showFiles()
-    {
-        $db = \DBManager::get();
-        $stmt = $db->prepare('
-            SELECT 
-                * 
-            FROM 
-                dokumente 
-            WHERE 
-                seminar_id = :seminar_id
-            ORDER BY 
-                name
-        ');
-        $stmt->bindParam(':seminar_id', $this->container['cid']);
-        $stmt->execute();
-        $response = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        $filesarray = array();
-        foreach ($response as $item) {
-            if ((strpos($item['filename'], 'pdf') > -1)) {
-                if($item['url'] == "") {unset($item['url']);}
-                $filesarray[] = $item;
+    private function showFiles($file_id)
+    {
+        $coursefilesarray = array();
+        $userfilesarray = array();
+        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
+        $pdf_id_found = false;
+
+        foreach ($course_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if ( ($ref->mime_type == "application/pdf") && (!$ref->isLink()) ) {
+                    $coursefilesarray[] = $ref;
+                }
+                if($ref->id == $file_id) {
+                    $pdf_id_found = true;
+                }
             }
         }
 
-        return $filesarray;
+        foreach ($user_folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->mime_type == "application/pdf") && (!$ref->isLink())) {
+                    $userfilesarray[] = $ref;
+                }
+                if($ref->id == $file_id) {
+                    $pdf_id_found = true;
+                }
+            }
+        }
+
+        return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'pdf_id_found' => $pdf_id_found);
     }
 
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
 
-        if (isset ($data['pdf_file'])) {
-            $this->pdf_file = $data['pdf_file'];
-        }
         if (isset ($data['pdf_filename'])) {
             $this->pdf_filename = $data['pdf_filename'];
         }
         if (isset ($data['pdf_file_id'])) {
             $this->pdf_file_id = $data['pdf_file_id'];
+            $file_ref = new \FileRef($this->pdf_file_id);
+            $this->pdf_file = $file_ref->getDownloadURL();
         }
         if (isset ($data['pdf_title'])) {
             $this->pdf_title = \STUDIP\Markup::purifyHtml($data['pdf_title']);
@@ -113,15 +144,16 @@ class PdfBlock extends Block
         if (empty($this->pdf_file_id)) {
             return array();
         }
-        $document = new \StudipDocument($this->pdf_file_id);
+        $file_ref = new \FileRef($this->pdf_file_id);
+        $file = new \File($file_ref->file_id);
         $files[] = array(
-            'id'            => $this->pdf_file_id,
-            'name'          => $document->name,
-            'description'   => $document->description,
-            'filename'      => $document->filename,
-            'filesize'      => $document->filesize,
-            'url'           => $document->url,
-            'path'          => get_upload_file_path($this->pdf_file_id)
+            'id' => $this->pdf_file_id,
+            'name' => $file_ref->name,
+            'description' => $file_ref->description,
+            'filename' => $file->name,
+            'filesize' => $file->size,
+            'url' => $file->getURL(),
+            'path' => $file->getPath()
         );
 
         return $files;
@@ -145,29 +177,23 @@ class PdfBlock extends Block
         if (isset($properties['pdf_filename'])) {
             $this->pdf_filename = $properties['pdf_filename'];
         }
-        $this->setFileId($this->pdf_filename);
+
         $this->save();
-    }
-
-    private function setFileId($file_name)
-    {
-        $cid = $this->container['cid'];
-        $document = current(\StudipDocument::findBySQL('filename = ? AND seminar_id = ?', array($file_name, $cid)));
-        $this->pdf_file_id = $document->dokument_id;
-        if ($document->url == "") {
-            $this->pdf_file = "../../sendfile.php?type=0&file_id=".$document->dokument_id."&file_name=".$file_name;
-        } else {
-            $this->pdf_file = "../../sendfile.php?type=6&file_id=".$document->dokument_id."&file_name=".$file_name;
-        }
-
-        return;
     }
 
     public function importContents($contents, array $files)
     {
-        $file = reset($files);
-        if (($file->id == $this->pdf_file_id)) {
-            $this->save();
+        foreach($files as $file){
+            if($file->name == "") {
+                continue;
+            }
+            if($this->pdf_filename == $file->name) {
+                $this->pdf_file_id = $file->id;
+                $this->pdf_file = $file->getDownloadURL();
+
+                $this->save();
+                return array($file->id);
+            }
         }
     }
 }

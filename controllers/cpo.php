@@ -23,11 +23,13 @@ class CpoController extends CoursewareStudipController
         }
 
         $teachers = (new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), 'dozent');
+        $members = (new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), 'autor');
         $dids = array_map(function($teacher){return $teacher->user_id;} , $teachers); // dozent ids
+        $mids = array_map(function($members){return $members->user_id;} , $members); // member ids
         $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId()));
         $bids   = array_map(function ($block) { return (int) $block->id; }, $blocks); // block ids
         $progress = array_reduce(
-            \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id NOT IN (?)', array($bids, $dids)),
+            \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id NOT IN (?) AND user_id IN (?)', array($bids, $dids, $mids)),
             function ($memo, $item) {
                 if (array_key_exists($item->block_id,$memo)) {
                     $stored_grade = $memo[$item->block_id]['grade'];
@@ -53,11 +55,11 @@ class CpoController extends CoursewareStudipController
             },
             array());
 
-        $members = count((new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), 'autor'));
+        $members_count = count((new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), 'autor'));
         foreach ($progress as &$block) {
             $block['grade'] = $block['grade'] / $block['users'];
             if($block['users'] < $members) {
-                $block['grade'] = ($block['grade'] * $block['users']) / $members;
+                $block['grade'] = ($block['grade'] * $block['users']) / $members_count;
             }
         }
 
@@ -263,7 +265,7 @@ class CpoController extends CoursewareStudipController
         $parent['children'] = array_filter(
             isset($grouped[$parent['id']]) ? $grouped[$parent['id']] : array(),
             function ($item) {
-                return $item['publication_date'] <= time();
+                return ($item['publication_date'] <= time()) && ($item['visible'] == 1) && ($item['withdraw_date'] >= time() || $item['withdraw_date'] == null);
             });
         usort($parent['children'], function($a, $b) {
             return $a['position'] - $b['position'];
