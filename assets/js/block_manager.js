@@ -326,7 +326,7 @@ function setImport() {
                                     node.setAttribute('temp-id' , section_counter);
                                     var $this_section = $('<li class="section-item section-item-import" data-id="import-'+section_counter+'"></li>').appendTo($this_section_list);
                                     if (node.getAttribute('title').length > 24) {
-                                        $('<p class="section-description" title="'+node.getAttribute('title')+'">'+node.getAttribute('title').slice(0,24)+'… <span>'+block_map[node.nodeName]+'</span></p>').appendTo($this_section);
+                                        $('<p class="section-description" title="'+node.getAttribute('title')+'">'+node.getAttribute('title').slice(0,20)+'… <span>'+block_map[node.nodeName]+'</span></p>').appendTo($this_section);
                                     } else {
                                         $('<p class="section-description">'+node.getAttribute('title')+'<span>'+block_map[node.nodeName]+'</span></p>').appendTo($this_section);
                                     }

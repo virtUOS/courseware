@@ -71,7 +71,7 @@ if (count($successes) > 0) {
                             <ul class="section-list">
                                 <? foreach((array)$subchapter['children'] as $section):?>
                                     <li class="section-item" data-id="<?= $section['id']?>">
-                                        <p class="section-description" <? if(strlen($section['title'])>24): ?>title="<?= $section['title'] ?>"<?endif?>><?= substr($section['title'], 0, 24)?><? if(strlen($section['title'])>24): ?>…<?endif?> <span><?= _cw('Abschnitt') ?></span></p>
+                                        <p class="section-description" <? if(strlen($section['title'])>20): ?>title="<?= $section['title'] ?>"<?endif?>><?= substr($section['title'], 0, 20)?><? if(strlen($section['title'])>20): ?>…<?endif?> <span><?= _cw('Abschnitt') ?></span></p>
                                         <ul class="block-list">
                                         <? if($section['children'] != null):?>
                                             <? foreach((array)$section['children'] as $block):?>
