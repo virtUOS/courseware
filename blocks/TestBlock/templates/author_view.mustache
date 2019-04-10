@@ -19,17 +19,17 @@
                 {{/assignments}}
             </select>
             <button class="cw-testblock-select-info cw-info" data-title="{{#i18n}}Wählen Sie hier ein Aufgabenblatt aus dem Vips Plugin aus{{/i18n}}"></button>
-            <div class="cw-button-box">
-                <a href="{{manage_tests_url}}" class="button">{{#i18n}}Aufgabenblätter verwalten{{/i18n}}</a>
-                <button name="save" class="button">Speichern</button>
-                <button name="cancel" class="button">Abbrechen</button>
-            </div>
         {{/has_assignments}}
         {{^has_assignments}}
             <div class="messagebox messagebox_error">
                 {{#i18n}}Es sind keine Aufgabenblätter des Types{{/i18n}} "{{type}}" {{#i18n}}vorhanden{{/i18n}}.
             </div>
         {{/has_assignments}}
+        <div class="cw-button-box">
+            <a href="{{manage_tests_url}}" class="button">{{#i18n}}Aufgabenblätter verwalten{{/i18n}}</a>
+            <button name="save" class="button">Speichern</button>
+            <button name="cancel" class="button">Abbrechen</button>
+        </div>
     {{/version}}
     {{^version}}
         <div class="messagebox messagebox_error">{{#i18n}}Die installierte Version von Vips ist veraltet. Bitte wenden Sie sich an Ihren Administrator.{{/i18n}}</div>
