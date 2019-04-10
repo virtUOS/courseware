@@ -36,7 +36,7 @@ class AssortBlock extends Block
     public function preview_view()
     {
 
-        return;
+        return array('assortblocks' => json_decode($this->assortblocks));
     }
 
     public function save_handler(array $data)
