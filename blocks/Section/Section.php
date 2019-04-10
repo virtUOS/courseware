@@ -35,7 +35,7 @@ class Section extends Block
         'graph', 'admin', 'billboard', 'category',
         'cloud2', 'comment', 'date', 'edit-small',
         'exclaim', 'favorite', 'file', 'folder-empty2',
-        'group2', 'guestbook', 'home', 'key',
+        'group2', 'guestbook', 'home', 'key','license',
         'literature', 'news', 'notification2', 'place',
         'print', 'ranking', 'refresh', 'resources',
         'staple', 'star', 'stat', 'studygroup',
