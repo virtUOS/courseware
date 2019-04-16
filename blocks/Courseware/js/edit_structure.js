@@ -29,7 +29,7 @@ export default Backbone.View.extend({
     };
 
     // hide publication_date for sections
-    if (this.model.get('type') !== 'section') {
+    if (this.model.get('type') !== 'Section') {
       if (this.model.get('publication_date')) {
         var date = new Date(this.model.get('publication_date') * 1000);
         data.publication_date = dateformat(date, 'yyyy-mm-dd');
