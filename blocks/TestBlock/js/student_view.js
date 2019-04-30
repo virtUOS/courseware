@@ -29,41 +29,58 @@ export default StudentView.extend({
         },
 
         'click button[name=submit-exercise]': function (event) {
-            var $form = this.$(event.target).closest('form'),
+            let $form = this.$(event.target).closest('form'),
                 view = this,
                 $exercise_index = $form.find('input[name="exercise_index"]').val(),
                 $block = this.$el.parent();
 
-            var file = false;
+            let files = [];
             if (this.$('input[name="upload"]').length > 0) {
-             file = this.$('input[name="upload"]')[0].files[0]; //Files[0] = 1st file
+                files.push(this.$('input[name="upload"]')[0].files[0]); //Files[0] = 1st file
+            }
+            if (this.$('input[name="upload[]"]').length > 0) {
+                files = this.$('input[name="upload[]"]')[0].files; 
+            }
+            let files_array = [];
+            let promises = [];
+            if (files.length > 0) {
+                $.each(files, function(index, file){
+                    let filePromise = new Promise( resolve => {
+                        let reader = new FileReader();
+                        let file_data = {};
+                        reader.readAsDataURL(file);
+                        reader.onloadend = function(){
+                            file_data.file = reader.result;
+                            file_data.name = file.name;
+                            file_data.size = file.size;
+                            file_data.type = file.type;
+                            files_array.push(file_data);
+                            resolve(reader.result);
+                        };
+                    });
+                    promises.push(filePromise);
+                });
             }
 
-            if (file) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                  reader.onloadend = function() {
-                     let file_str = "&file="+reader.result+"&filename="+file.name+"&filesize="+file.size+"&filetype="+file.type;
-                     helper.callHandler(view.model.id, 'exercise_submit', $form.serialize()+file_str)
-                    .then(function (resp) {
-                        if(resp.is_nobody) {
-                            var $ex =view.$("#exercise"+resp.exercise_index);
-                            $ex.find(".cw-test-content").first().html('<form class="studip_form"><fieldset><legend>'+resp.title+'</legend>'+resp.solution+'</fieldset></form>');
-                        } else {
-                            return view.renderServerSide();
-                        }
-                    }).then(function () {
-                        $block.find('.exercise').hide();
-                        $block.find('#exercise' + $exercise_index).show();
-                        $block.find('.submitinfo').slideDown(250).delay(1500).slideUp(250);
-                        $(window).trigger('resize');
-                    })
-                    .catch(function () {
-                        console.log('failed to store the solution');
-                    });
-                 }
-            } else {
-                helper.callHandler(this.model.id, 'exercise_submit', $form.serialize())
+            let indexed_array = {};
+
+            $.each($form.serializeArray(), function () {
+                if (this.name.indexOf('[') < 0) {
+                        indexed_array[this.name] = this.value || '';
+                } else {
+                    let splinter = this.name.split('[');
+                    let name = splinter[0];
+                    let key = splinter[1].split(']')[0];
+                    if (!indexed_array[name]) {
+                        indexed_array[name] = [indexed_array[name]];
+                    }
+                    indexed_array[name][key] = this.value || '';
+                }
+            });
+
+            Promise.all(promises).then(function() {
+                indexed_array.files = files_array;
+                helper.callHandler(view.model.id, 'exercise_submit', indexed_array)
                 .then(function (resp) {
                     if(resp.is_nobody) {
                         var $ex =view.$("#exercise"+resp.exercise_index);
@@ -80,8 +97,8 @@ export default StudentView.extend({
                 .catch(function () {
                     console.log('failed to store the solution');
                 });
-            }
-
+            });                
+            
             return false;
         },
 

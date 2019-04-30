@@ -146,10 +146,8 @@ class TestBlock extends Block
     {
         global $user;
 
-        parse_str($data, $requestParams);
-        $requestParams = studip_utf8decode($requestParams);
-        $exercise_id = $requestParams['exercise_id'];
-        $exercise_index = $requestParams['exercise_index'];
+        $exercise_id = $data['exercise_id'];
+        $exercise_index = $data['exercise_index'];
 
         if ($this->assignment_id == "") {
             if ($this->test_id != "") {
@@ -188,27 +186,35 @@ class TestBlock extends Block
         }
 
         $files = null;
-        if($requestParams['file'] != '') {
-            $file_name = $requestParams['filename'];
-            $file_size = $requestParams['filesize'];
-            $file_type = $requestParams['filetype'];
-            $file_data = explode('base64,', $requestParams['file'])[1];
-            $file_data = str_replace(' ', '+', $file_data);
-            $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
-            mkdir($tempDir);
-            file_put_contents($tempDir.'/'.$file_name, base64_decode($file_data));
 
-            $file = [
-                    'name'     => $file_name,
-                    'type'     => $file_type,
-                    'tmp_name' => $tempDir.'/'.$file_name,
-                    'size'     => filesize($tempDir.'/'.$file_name),
-                    'user_id'  => $user->id
-                ];
-            $files['upload'] = $file;
+        if($data['files'] != '') {
+
+            $files['upload']['name'] =  [];
+            $files['upload']['type'] =  [];
+            $files['upload']['tmp_name'] = [];
+            $files['upload']['size'] = [];
+            $files['upload']['user_id'] = [];
+            $files_array = $data['files'];
+            foreach($files_array as $file) {
+                $file_name = $file['name'];
+                $file_size = $file['size'];
+                $file_type = $file['type'];
+                $file_data = explode('base64,', $file['file']);
+                $file_data = str_replace(' ', '+', $file_data[1]);
+
+                $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
+                mkdir($tempDir);
+                file_put_contents($tempDir.'/'.$file_name, base64_decode($file_data));
+
+                array_push($files['upload']['name'], $file_name);
+                array_push($files['upload']['type'], $file_type);
+                array_push($files['upload']['tmp_name'], $tempDir.'/'.$file_name);
+                array_push($files['upload']['size'], filesize($tempDir.'/'.$file_name));
+                array_push($files['upload']['user_id'], $user->id);
+            }
         }
 
-        $solution = $exercise->getSolutionFromRequest($requestParams, $files);
+        $solution = $exercise->getSolutionFromRequest($data, $files);
         if ($this->container['current_user']->isNobody()) {
             if ($assignment->type == "selftest") {
                 $assignment->correctSolution($solution);
