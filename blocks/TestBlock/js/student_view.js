@@ -119,6 +119,7 @@ export default StudentView.extend({
                 $num = parseInt(options.numexes, 10);
             }
             $block.find('.exercise').hide();
+            $block.find('#exercise' + $num).show();
 
             $(window).trigger('resize');
         },
