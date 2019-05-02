@@ -62,7 +62,7 @@ class VideoBlock extends Block
         $this->authorizeUpdate();
         $webvideos = json_decode($this->webvideo);
         $file_ids = array();
-        foreach ($webvideos as $webvideo) {
+        foreach ((array)$webvideos as $webvideo) {
             if (!empty($webvideo->file_id)) {
                 array_push($file_ids, $webvideo->file_id);
             }
