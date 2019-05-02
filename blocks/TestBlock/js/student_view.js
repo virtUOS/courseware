@@ -119,10 +119,7 @@ export default StudentView.extend({
                 $num = parseInt(options.numexes, 10);
             }
             $block.find('.exercise').hide();
-            var $ex = $block.find('#exercise' + $num).show();
-            if ($ex.find("input[name=exercise_type]").val() == 'tb_exercise') {
-                $ex.find('table.default').hide();
-            }
+
             $(window).trigger('resize');
         },
 
