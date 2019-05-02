@@ -188,7 +188,6 @@ class TestBlock extends Block
         $files = null;
 
         if($data['files'] != '') {
-
             $files['upload']['name'] =  [];
             $files['upload']['type'] =  [];
             $files['upload']['tmp_name'] = [];
@@ -197,17 +196,12 @@ class TestBlock extends Block
             $files_array = $data['files'];
             foreach($files_array as $file) {
                 $file_name = $file['name'];
-                $file_size = $file['size'];
-                $file_type = $file['type'];
-                $file_data = explode('base64,', $file['file']);
-                $file_data = str_replace(' ', '+', $file_data[1]);
-
                 $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
                 mkdir($tempDir);
-                file_put_contents($tempDir.'/'.$file_name, base64_decode($file_data));
+                file_put_contents($tempDir.'/'.$file_name, base64_decode(explode('base64,', $file['file'])[1]));
 
                 array_push($files['upload']['name'], $file_name);
-                array_push($files['upload']['type'], $file_type);
+                array_push($files['upload']['type'], $file['type']);
                 array_push($files['upload']['tmp_name'], $tempDir.'/'.$file_name);
                 array_push($files['upload']['size'], filesize($tempDir.'/'.$file_name));
                 array_push($files['upload']['user_id'], $user->id);
