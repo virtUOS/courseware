@@ -70,11 +70,19 @@ export default StudentView.extend({
                 } else {
                     let splinter = this.name.split('[');
                     let name = splinter[0];
-                    let key = splinter[1].split(']')[0];
-                    if (!indexed_array[name]) {
-                        indexed_array[name] = [indexed_array[name]];
+                    if (this.name.indexOf('[]') > 0) {
+                        if (!indexed_array[name]) {
+                            indexed_array[name] = [indexed_array[name]];
+                            indexed_array[name] = [];
+                        }
+                        indexed_array[name].push(this.value);
+                    }else {
+                        let key = splinter[1].split(']')[0];
+                        if (!indexed_array[name]) {
+                            indexed_array[name] = [indexed_array[name]];
+                        }
+                        indexed_array[name][key] = this.value || '';
                     }
-                    indexed_array[name][key] = this.value || '';
                 }
             });
 
