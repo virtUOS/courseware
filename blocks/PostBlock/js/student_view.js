@@ -72,6 +72,7 @@ export default StudentView.extend({
     updateContent(updateLoop) {
         var $view = this;
         var $timestamp = $view.$(".cw-postblock-timestamp").val();
+        var $message = $view.$('.cw-postblock-textbox').val();
         helper
             .callHandler(this.model.id, 'update', {
                 timestamp: $timestamp
@@ -84,6 +85,12 @@ export default StudentView.extend({
                         $view.model.set('posts',content.posts);
                         $view.model.set('timestamp',content.timestamp);
                         $view.render();
+                        if (updateLoop != null) {
+                            $view.$('.cw-postblock-textbox').val($message);
+                            if ($message != '') {
+                                $view.$('.cw-postblock-textbox').focus();
+                            }
+                        }
                         $view.$('.cw-postblock-posts').scrollTop($view.$('.cw-postblock-posts')[0].scrollHeight);
                         if($view.$('.cw-postblock-posts').outerHeight() < 420) {
                             $view.$('.cw-postblock-showall-messages').hide();
