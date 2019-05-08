@@ -33,7 +33,10 @@
                                         {{/tries_left}}{{/tryagain}}
                                         {{#correct}}
                                             {{^tb_exercise}}<div class="messagebox messagebox_success">{{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}</div>{{/tb_exercise}}
-                                            {{#tb_exercise}}<div class="messagebox messagebox_info">{{#i18n}}Bitte vergleichen Sie Ihre Lösung mit der Musterlösung.{{/i18n}}</div>{{/tb_exercise}}
+                                            {{#tb_exercise}}
+                                                <div class="messagebox messagebox_info">{{#i18n}}Bitte vergleichen Sie Ihre Lösung mit der Musterlösung.{{/i18n}}</div>
+                                                <div class="messagebox messagebox_error file-upload-failed" style="display: none;">{{#i18n}}Hochladen der Datei fehlgeschlagen! Leere Dateien werden nicht angenommen.{{/i18n}}</div>
+                                            {{/tb_exercise}}
                                         {{/correct}}
                                         {{^correct}}
                                             {{^tries_left}}
@@ -47,6 +50,7 @@
                                         <div class="messagebox messagebox_info answerinfo">{{#i18n}}Für diese Frage haben Sie bereits eine Antwort abgegeben.{{/i18n}}</div>
                                     {{/has_solution}}
                                         <div class="messagebox messagebox_info submitinfo" style="display: none;">{{#i18n}}Ihre Lösung wurde eingetragen.{{/i18n}}</div>
+                                        <div class="messagebox messagebox_error file-upload-failed" style="display: none;">{{#i18n}}Hochladen der Datei fehlgeschlagen! Leere Dateien werden nicht angenommen.{{/i18n}}</div>
                                 {{/self_test}}
                                 {{#solved_completely}}
                                     <div class="messagebox messagebox_success">

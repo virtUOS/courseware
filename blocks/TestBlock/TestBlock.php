@@ -229,13 +229,25 @@ class TestBlock extends Block
                 );
             }
         }
-        $assignment->storeSolution($solution);
-        $progress = $this->calcGrades();
-        if ($files != null) {
+
+        $file_upload_failed = false;
+        if($data['files'] != null) {
+            $solution_files = [];
+            foreach ($solution->files as $vips_file) {
+                $solution_files[] = $vips_file->toArray()['name'];
+            }
+            foreach($files_array as $file) {
+                if ( !in_array($file['name'], $solution_files)) {
+                    $file_upload_failed = true;
+                }
+            }
             $this->deleteRecursively($tempDir);
         }
 
-        return array('grade' => $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0);
+        $assignment->storeSolution($solution);
+        $progress = $this->calcGrades();
+
+        return array('grade' => $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0, 'file_upload_failed' => $file_upload_failed);
     }
 
     private function deleteRecursively($path)

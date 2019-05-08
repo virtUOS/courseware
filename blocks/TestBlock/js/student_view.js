@@ -88,8 +88,10 @@ export default StudentView.extend({
 
             Promise.all(promises).then(function() {
                 indexed_array.files = files_array;
+                let file_upload_failed = false;
                 helper.callHandler(view.model.id, 'exercise_submit', indexed_array)
                 .then(function (resp) {
+                    file_upload_failed = resp.file_upload_failed
                     if(resp.is_nobody) {
                         var $ex =view.$("#exercise"+resp.exercise_index);
                         $ex.find(".cw-test-content").first().html('<form class="studip_form"><fieldset><legend>'+resp.title+'</legend>'+resp.solution+'</fieldset></form>');
@@ -99,7 +101,10 @@ export default StudentView.extend({
                 }).then(function () {
                     $block.find('.exercise').hide();
                     $block.find('#exercise' + $exercise_index).show();
-                    $block.find('.submitinfo').slideDown(250).delay(1500).slideUp(250);
+                    $block.find('.submitinfo').slideDown(250).delay(2500).slideUp(250);
+                    if(file_upload_failed) {
+                        $block.find('.file-upload-failed').slideDown(250).delay(2500).slideUp(250);
+                    }
                     $(window).trigger('resize');
                 })
                 .catch(function () {
