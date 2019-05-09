@@ -1,6 +1,10 @@
 @import '../../../assets/less/mixins';
 
 .CanvasBlock {
+    .cw-canvasblock-upload-message{
+        display: none;
+    }
+
     .cw-canvasblock-original-img {
         display: none;
     }
@@ -104,6 +108,21 @@
 
         &.cw-canvasblock-download {
             .assets-bg-icon("blue/download.svg");
+        }
+        &.cw-canvasblock-store {
+            .assets-bg-icon("blue/upload.svg");
+        }
+        &.cw-canvasblock-show-all {
+            .assets-bg-icon("blue/group2.svg");
+            &.selected-view {
+                border: solid 2px #000;
+            }
+        }
+        &.cw-canvasblock-show-own {
+            .assets-bg-icon("blue/headache.svg");
+            &.selected-view {
+                border: solid 2px #000;
+            }
         }
     }
 

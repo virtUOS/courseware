@@ -3,6 +3,7 @@
 namespace Mooc\UI\CanvasBlock;
 
 use Mooc\UI\Block;
+use Mooc\DB\Field as DBField;
 
 class CanvasBlock extends Block
 {
@@ -18,6 +19,8 @@ class CanvasBlock extends Block
 
     public function student_view()
     {
+        global $user;
+
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
@@ -33,10 +36,22 @@ class CanvasBlock extends Block
             $image_url = $content->image_url;
             $access = true;
         }
+        
+        $fields = DBField::findBySQL('block_id = ? AND name = ? AND NOT user_id = ?', array($this->id, 'canvas_draw', $user->id));
+        foreach($fields as $field){
+            $draws [] = $field->json_data;
+        }
 
         return array_merge(
             $this->getAttrArray(),
-            array('image_url'=> $image_url, 'bg_image' => $bg_image, 'description' => $content->description)
+            array(
+                'image_url'=> $image_url,
+                'bg_image' => $bg_image,
+                'description' => $content->description,
+                'upload_enabled' => $content->upload_enabled,
+                'upload_folder' => $content->upload_folder_name,
+                'draws' => json_encode($draws)
+            )
         );
     }
 
@@ -55,6 +70,11 @@ class CanvasBlock extends Block
             $other_user_file = false;
         }
 
+        $folders =  \Folder::findBySQL('range_id = ? AND folder_type != ?', array($this->container['cid'], 'RootFolder'));
+        $root_folder = \Folder::findOneBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'RootFolder'));
+        $root_folder->name = 'Hauptordner';
+        array_unshift($folders, $root_folder);
+
         return array_merge(
             $this->getAttrArray(), 
             array(
@@ -62,7 +82,8 @@ class CanvasBlock extends Block
                 'image_files_user' => $files_arr['userfilesarray'], 
                 'image_files_course' => $files_arr['coursefilesarray'], 
                 'no_image_files' => $no_files, 
-                'other_user_file' => $other_user_file
+                'other_user_file' => $other_user_file,
+                'folders' => $folders
             )
         );
     }
@@ -102,6 +123,64 @@ class CanvasBlock extends Block
         }
 
         return;
+    }
+
+    public function store_image_handler(array $data)
+    {
+        global $user;
+
+        if (empty($data['image'])) {
+            return false;
+        }
+
+        $content = json_decode($this->canvas_content);
+        $upload_folder = \FileManager::getTypedFolder($content->upload_folder_id);
+
+        $file_name = $user->nachname.'_'.$user->vorname.'_'.date('d-m-Y').'.jpeg';
+        $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
+        mkdir($tempDir);
+        file_put_contents($tempDir.'/'.$file_name, base64_decode(explode('base64,', $data['image'])[1]));
+
+        $file = [
+            'name'     => $file_name,
+            'type'     => mime_content_type($tempDir.'/'.$file_name),
+            'tmp_name' => $tempDir.'/'.$file_name,
+            'size'     => filesize($tempDir.'/'.$file_name),
+            'user_id'  => $user->id,
+            'error'    => ""
+        ];
+
+        $new_reference = $upload_folder->createFile($file);
+        $this->deleteRecursively($tempDir);
+
+        return $new_reference;
+    }
+
+    private function deleteRecursively($path)
+    {
+        if (is_dir($path)) {
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($path),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+
+            foreach ($files as $file) {
+                /** @var SplFileInfo $file */
+                if (in_array($file->getBasename(), array('.', '..'))) {
+                    continue;
+                }
+
+                if ($file->isFile() || $file->isLink()) {
+                    unlink($file->getRealPath());
+                } else if ($file->isDir()) {
+                    rmdir($file->getRealPath());
+                }
+            }
+
+            rmdir($path);
+        } else if (is_file($path) || is_link($path)) {
+            unlink($path);
+        }
     }
 
     private function showFiles($file_id)

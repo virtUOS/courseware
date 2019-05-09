@@ -58,6 +58,7 @@ export default AuthorView.extend({
             $view.$('.cw-canvasblock-source option[value="none"]').prop('selected', true);
             break;
     }
+    $view.$('.cw-canvasblock-upload-folder option[folder-id="'+content.upload_folder_id+'"]').prop('selected', true);
 
     this.$('.cw-canvasblock-description').val(content.description);
   },
@@ -97,13 +98,23 @@ export default AuthorView.extend({
     switch (content.source){
         case 'web':
             content.image_url = $view.$('input.cw-canvasblock-file').val();
-            content.image = true;
+            if(content.image_url != '') {
+              content.image = true;
+            } else {
+              content.image = false;
+              content.source = 'none';
+            }
             break;
         case 'cw':
             content.image_url = '';
             content.image_id = $view.$('select.cw-canvasblock-file option:selected').attr('file-id');
             content.image_name = $view.$('select.cw-canvasblock-file option:selected').attr('filename');
-            content.image = true;
+            if (content.image_id != '') {
+              content.image = true;  
+            } else {
+              content.image = false;
+              content.source = 'none';
+            }
             break;
         case 'none':
             content.image_url = '';
@@ -111,6 +122,14 @@ export default AuthorView.extend({
             break;
     }
     content.description = $view.$('.cw-canvasblock-description').val();
+
+    content.upload_folder_name = $view.$('.cw-canvasblock-upload-folder').val();
+    content.upload_folder_id = $view.$('.cw-canvasblock-upload-folder option:selected').attr('folder-id');
+    if ((content.upload_folder_name == '') || (content.upload_folder_id == '')) {
+      content.upload_enabled = false;
+    } else {
+      content.upload_enabled = true;
+    }
 
     content = JSON.stringify(content);
     helper

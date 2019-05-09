@@ -17,7 +17,7 @@
                 <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
             {{/image_files_course}}
             {{^image_files_course}}
-                <option value="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                <option value="" file-id="" filename="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
             {{/image_files_course}}
         </optgroup>
         <optgroup label="Dateien im eigenen Dateibereich">
@@ -25,7 +25,7 @@
                 <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
             {{/image_files_user}}
             {{^image_files_user}}
-                <option value="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                <option value="" file-id="" filename="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
             {{/image_files_user}}
         </optgroup>
         {{#other_user_file}}
@@ -42,6 +42,17 @@
 
 <input class="cw-canvasblock-file" name="cw-canvasblock-file">
 <button class="cw-canvasblock-file-input-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Datei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
+<br>
+
+<label for="cw-canvasblock-upload-folder" class="cw-canvasblock-upload-folder-label">{{#i18n}}Speicherort{{/i18n}}:</label>
+<select class="cw-canvasblock-upload-folder" name="cw-canvasblock-upload-folder">
+    <option value="" folder-id="">{{#i18n}}keinen Upload ermöglichen{{/i18n}}</option>
+    <optgroup label="{{#i18n}}Ordner dieser Veranstaltung{{/i18n}}">
+    {{#folders}}
+        <option value="{{name}}" folder-id="{{id}}">{{name}}</option>
+    {{/folders}}
+    </optgroup>
+</select>
 
 <div class="cw-button-box">
     <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>

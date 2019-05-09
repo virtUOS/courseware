@@ -19,6 +19,9 @@ export default StudentView.extend({
         'click .cw-canvasblock-size': 'changeSize',
         'click .cw-canvasblock-tool': 'changeTool',
         'click .cw-canvasblock-download' : 'downloadImage',
+        'click .cw-canvasblock-store' : 'uploadImage',
+        'click .cw-canvasblock-show-all': 'showAllDraws',
+        'click .cw-canvasblock-show-own': 'showOwnDraw',
         'click .cw-canvasblock-undo': 'undoDraw'
     },
 
@@ -202,6 +205,72 @@ export default StudentView.extend({
         this.Text =  JSON.parse(draw.Text);
     },
 
+    showOwnDraw(){
+        this.redraw();
+        this.$('.cw-canvasblock-show-own').addClass('selected-view');
+        this.$('.cw-canvasblock-show-all').removeClass('selected-view');
+    },
+
+    showAllDraws(){
+        var view = this;
+        var context = this.context;
+        let draws = JSON.parse(view.$('.cw-canvasblock-all-draws').val());
+
+        this.$('.cw-canvasblock-show-own').removeClass('selected-view');
+        this.$('.cw-canvasblock-show-all').addClass('selected-view');
+
+        var outlineImage = new Image();
+        outlineImage.src = this.$('.cw-canvasblock-original-img').attr('src');
+        var bg = this.$('.cw-canvasblock-bgimage').val();
+        $(outlineImage).on('load', function(){// chrome needs this!
+            context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+            context.fillStyle = "#ffffff";
+            context.fillRect(0, 0, context.canvas.width, context.canvas.height); // set background
+            if (bg == 1) { 
+                context.drawImage(outlineImage, 0, 0, context.canvas.width, context.canvas.height);
+            }
+            context.lineJoin = "round";
+
+            $.each(draws, function(key, value){
+                let draw = JSON.parse(value);
+                draw = JSON.parse(draw);
+                let clickX = JSON.parse(draw.clickX);
+                let clickY = JSON.parse(draw.clickY);
+                let clickDrag = JSON.parse(draw.clickDrag);
+                let clickColor =  JSON.parse(draw.clickColor);
+                let clickSize =  JSON.parse(draw.clickSize);
+                let clickTool =  JSON.parse(draw.clickTool);
+                let Text =  JSON.parse(draw.Text);
+                for(var i=0; i < clickX.length; i++) {
+                    if (clickTool[i] == 'pen') {
+                        context.beginPath();
+                        if(clickDrag[i] && i) {
+                            context.moveTo(clickX[i-1], clickY[i-1]);
+                         } else {
+                             context.moveTo(clickX[i]-1, clickY[i]);
+                         }
+                         context.lineTo(clickX[i], clickY[i]);
+                         context.closePath();
+                         context.strokeStyle = clickColor[i];
+                         context.lineWidth = clickSize[i];
+                         context.stroke();
+                    }
+                    if (clickTool[i] == 'text') {
+                        let fontsize = clickSize[i]*6;
+                        context.font = fontsize+"px Arial";
+                        context.fillStyle = clickColor[i];
+                        context.fillText(Text[i], clickX[i], clickY[i]+fontsize);
+                    }
+                }
+            });
+        });
+
+        if (bg == 0) {
+            $(outlineImage).trigger('load');
+        }
+
+    },
+
     redraw() {
         var $view = this;
         var context = this.context;
@@ -379,18 +448,36 @@ export default StudentView.extend({
     },
 
     downloadImage() {
-        var image = this.context.canvas.toDataURL();
+        var image = this.context.canvas.toDataURL("image/jpeg", 1.0);
         $("<a/>", {
             "class": "cw-canvasblock-download-link",
             "text": 'download',
             "title": 'download',
             "href": image,
-            "download" : "cw-img.png"
+            "download" : "cw-img.jpeg"
         }).appendTo(this.$el);
 
         var link = this.$('.cw-canvasblock-download-link');
         link[0].click();
         link.remove();
+    },
+
+    uploadImage(){
+        var image = this.context.canvas.toDataURL("image/jpeg", 1.0);
+        var $view = this;
+
+        helper
+        .callHandler(this.model.id, 'store_image', {
+            image: image
+        })
+        .then(
+            function(){
+                $view.$('.cw-canvasblock-upload-message').slideDown(250).delay(2500).slideUp(250);
+            },
+            function(error){
+                console.log(error);
+            }
+        );
     },
 
     undoDraw() {
