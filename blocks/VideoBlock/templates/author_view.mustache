@@ -12,6 +12,7 @@
     <label>{{#i18n}}Video-Typ:{{/i18n}}</label>
     <select class="videotype">
         <option value="webvideo">{{#i18n}}Webvideo (URL){{/i18n}}</option>
+        <option value="recorder">{{#i18n}}Video aufnehmen{{/i18n}}</option>
         <option value="url">{{#i18n}}eingebettetes Video (iframe){{/i18n}}</option>
     </select>
     <button class="cw-webvideo-type-info cw-info" data-title="{{#i18n}}Für Videos von Plattformen wie YouTube oder vimeo nutzen Sie bitte den Embed-Block{{/i18n}}"></button>
@@ -30,6 +31,30 @@
         <label class="videosrcname">{{#i18n}}Quelle{{/i18n}}:</label>
         <input type="text" class="videosrc" value="{{url}}">
     </div>
+
+    <div class="cw-videoblock-recorder-wrapper"> 
+        <label class="cw-videoblock-recorder-label">{{#i18n}}Aufnahme{{/i18n}}:</label>
+        <span class="cw-videoblock-recorder-enable-info">
+            {{#i18n}}Kamera freigeben um etwas aufzunehmen{{/i18n}}.
+        </span>
+        <span class="cw-videoblock-recorder-browser-info">
+            {{#i18n}}Bitte verwenden Sie den Firefox oder Chrome Browser um eine Videodatei aufzunehmen{{/i18n}}.
+        </span>
+        <span class="cw-videoblock-recording-info">
+            <button class="button cw-videoblock-recording-wrapper">
+                {{#i18n}}Aufnahme läuft{{/i18n}}:
+                <span class="cw-videoblock-recording-timer"></span>
+            </button>
+        </span>
+        <span class="cw-videoblock-recorder-buttons">
+          <button class="button cw-videoblock-recorder-start">{{#i18n}}Aufnahme starten{{/i18n}}</button>
+          <button class="button cw-videoblock-recorder-stop">{{#i18n}}Aufnahme beenden{{/i18n}}</button>
+        </span>
+        <span class="cw-videoblock-recorder-player">
+        </span>
+        <span><button class="button cw-videoblock-recorder-reset">{{#i18n}}Aufnahme löschen{{/i18n}}</button></span>
+    </div>
+
     <div class="videosource videosource-webvideo">
         <div class="webvideo-description">
             <p>

@@ -11,7 +11,11 @@ export default AuthorView.extend({
         'click button[name=preview]': 'showPreview',
         'click button[name=addmediatype]': 'addmediatype',
         'click button.removemediatype': 'removemediatype',
-        'change select.cw-webvideo-source': 'toggleSourceEvent'
+        'change select.cw-webvideo-source': 'toggleSourceEvent',
+
+        'click .cw-videoblock-recorder-start': 'startRecording',
+        'click .cw-videoblock-recorder-stop': 'stopRecording',
+        'click .cw-videoblock-recorder-reset': 'resetRecorder'
     },
 
     initialize() {
@@ -137,6 +141,7 @@ export default AuthorView.extend({
         var videourl = this.$('.videourl').val();
         this.$('.videosource').hide();
         this.$('.cw-webvideo-source-file-info').hide();
+
         switch (videotype) {
             case 'webvideo':
                 var webvideodata = this.$('.webvideodata').val();
@@ -152,6 +157,48 @@ export default AuthorView.extend({
                 this.$('.videosource-url').show();
                 this.$('iframe').show();
                 this.$('video').hide();
+                break;
+            case 'recorder':
+                var $view = this;
+                $view.resetRecorder();
+                $view.$('.cw-videoblock-recorder-wrapper').show();
+                $view.$('.cw-videoblock-recording-info').hide();
+                $view.$('.cw-videoblock-recorder-browser-info').hide();
+                $view.$('.cw-videoblock-recorder-start').hide();
+                $view.$('.cw-videoblock-recorder-stop').hide();
+                if (!window.MediaRecorder) {
+                    $view.$('.cw-videoblock-recorder-enable-info').hide();
+                    $view.$('.cw-videoblock-recorder-browser-info').show();
+                    break;
+                }
+
+                navigator.mediaDevices.getUserMedia({
+                    audio: true, 
+                    video: {
+                        width: { min: 1024, ideal: 1280, max: 1920 },
+                        height: { min: 576, ideal: 720, max: 1080 }
+                    }
+                }).then(_stream => {
+                    this.stream = _stream;
+
+                    $view.$('.cw-videoblock-recorder-start').show();
+                    $view.$('.cw-videoblock-recorder-enable-info').hide();
+                    $view.recorder = new MediaRecorder(this.stream);
+                    let video = this.$('.video-wrapper video')[0];
+                    video.srcObject = this.stream;
+                    video.onloadedmetadata = function(e) {
+                        video.play();
+                    };
+
+                    $view.recorder.ondataavailable = e => {
+                        $view.chunks.push(e.data);
+                        if($view.recorder.state == 'inactive')  {
+                            video.pause();
+                            video.srcObject = null;
+                            $view.makeBlob();
+                        }
+                    };
+                });
                 break;
         }
     },
@@ -250,5 +297,86 @@ export default AuthorView.extend({
             this.$('.cw-webvideo-source-url-info').hide();
             this.$('.cw-webvideo-source-file-info').show();
         }
+    },
+
+
+    startRecording() {
+        this.chunks = [];
+        this.recorder.start();
+        this.$('.cw-videoblock-recording-info').show();
+        this.setTimer(0);
+  
+        this.$('.cw-videoblock-recorder-start').hide();
+        this.$('.cw-videoblock-recorder-stop').show();
+    },
+  
+    stopRecording() {
+        this.recorder.stop();
+        this.$('.cw-videoblock-recording-info').hide();
+        this.$('.cw-videoblock-recorder-stop').hide();
+    },
+  
+    resetRecorder() {
+        let video = this.$('.video-wrapper video')[0];
+        video.controls = false;
+        video.src = '';
+        this.blob = null;
+        this.chunks = [];
+        video.srcObject = this.stream;
+        video.onloadedmetadata = function(e) {
+            video.play();
+        };
+        this.$('.cw-videoblock-recorder-start').show();
+        this.$('.cw-videoblock-recorder-stop').hide();
+        this.$('.cw-videoblock-recorder-reset').hide();
+    },
+  
+    makeBlob(){
+        var $view = this;
+        let video = $view.$('.video-wrapper video')[0];
+        this.blob = new Blob($view.chunks, {type: 'video/ogg' })
+        let url = URL.createObjectURL(this.blob);
+        video.controls = true;
+        video.src = url;
+        video.pause();
+        $view.$('.cw-videoblock-recorder-reset').show();
+  
+        var reader = new FileReader();
+        reader.readAsDataURL($view.blob);
+        reader.onloadend = function() {
+           $view.blob.base64data = reader.result.toString();                
+       }
+    }, 
+  
+    setTimer(i) {
+        var $view = this;
+        if (this.recorder.state == 'recording') {
+            this.$('.cw-videoblock-recording-timer').text(this.seconds2time(i));
+            i++;
+            setTimeout(function(){ $view.setTimer(i); }, 1000);
+        }
+     },
+  
+    seconds2time(seconds) {
+      var hours   = Math.floor(seconds / 3600),
+          minutes = Math.floor((seconds - (hours * 3600)) / 60),
+          time = '';
+  
+      seconds = seconds - (hours * 3600) - (minutes * 60);
+  
+      if (hours != 0) {
+        time = hours + ':';
+      }
+      if (minutes != 0 || time !== '') {
+        minutes = (minutes < 10 && time !== '') ? '0' + minutes : String(minutes);
+        time += minutes + ':';
+      }
+      if (time === '') {
+        time = (seconds < 10) ? '0:0' + seconds : '0:' + seconds;
+      }
+      else {
+        time += (seconds < 10) ? '0' + seconds : String(seconds);
+      }
+      return time;
     }
 });

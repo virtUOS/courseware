@@ -53,9 +53,14 @@
     }
 }
 
+.cw-videoblock-recorder-wrapper {
+    display: none;
+}
+
 .block-content {
     .video-wrapper {
         margin-bottom: 2em;
+        background-color: #ccc;
 
         &.aspect-169 {
             padding-bottom: 56.25%; /* 16:9 ratio; 9/16*100 */
@@ -76,6 +81,9 @@
             left: 0;
             width: 100%;
             height: 100%;
+        }
+        video {
+            width: 100%;
         }
     }
 
@@ -148,6 +156,14 @@ section#courseware .block-content:not([data-view="student"]) label.cw-webvideo-l
     padding-left: 1.75em;
 }
 
+section#courseware .block-content:not([data-view="student"]) label.cw-videoblock-recorder-label {
+    width: 15em;
+}
+section#courseware .cw-videoblock-recorder-buttons button.button,
+section#courseware button.cw-videoblock-recording-wrapper,
+section#courseware button.cw-videoblock-recorder-reset {
+            vertical-align: baseline;
+}
 .cw-webvideo-source-file {
     display: none;
 }
