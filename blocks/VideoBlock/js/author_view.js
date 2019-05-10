@@ -141,6 +141,13 @@ export default AuthorView.extend({
         var videourl = this.$('.videourl').val();
         this.$('.videosource').hide();
         this.$('.cw-webvideo-source-file-info').hide();
+        this.$('.button[name="preview"]').show();
+        this.$('.cw-videoblock-recorder-wrapper').hide();
+        this.$('.cw-videoblock-aspect').attr('disabled', false);
+        let video = this.$('.video-wrapper video')[0];
+        video.srcObject = null;
+        video.controls = true;
+        video.pause();
 
         switch (videotype) {
             case 'webvideo':
@@ -161,11 +168,15 @@ export default AuthorView.extend({
             case 'recorder':
                 var $view = this;
                 $view.resetRecorder();
+                $view.$('.button[name="preview"]').hide();
+                $view.$('.cw-videoblock-aspect option[value="aspect-169"]').attr('selected', true);
+                $view.$('.cw-videoblock-aspect').attr('disabled', true);
                 $view.$('.cw-videoblock-recorder-wrapper').show();
                 $view.$('.cw-videoblock-recording-info').hide();
                 $view.$('.cw-videoblock-recorder-browser-info').hide();
                 $view.$('.cw-videoblock-recorder-start').hide();
                 $view.$('.cw-videoblock-recorder-stop').hide();
+                $view.$('.cw-videoblock-recorder-enable-info').show();
                 if (!window.MediaRecorder) {
                     $view.$('.cw-videoblock-recorder-enable-info').hide();
                     $view.$('.cw-videoblock-recorder-browser-info').show();
@@ -187,7 +198,9 @@ export default AuthorView.extend({
                     let video = this.$('.video-wrapper video')[0];
                     video.srcObject = this.stream;
                     video.onloadedmetadata = function(e) {
-                        video.play();
+                        if(video.srcObject != null) {
+                            video.play();
+                        }
                     };
 
                     $view.recorder.ondataavailable = e => {
@@ -323,9 +336,6 @@ export default AuthorView.extend({
         this.blob = null;
         this.chunks = [];
         video.srcObject = this.stream;
-        video.onloadedmetadata = function(e) {
-            video.play();
-        };
         this.$('.cw-videoblock-recorder-start').show();
         this.$('.cw-videoblock-recorder-stop').hide();
         this.$('.cw-videoblock-recorder-reset').hide();
@@ -338,7 +348,6 @@ export default AuthorView.extend({
         let url = URL.createObjectURL(this.blob);
         video.controls = true;
         video.src = url;
-        video.pause();
         $view.$('.cw-videoblock-recorder-reset').show();
   
         var reader = new FileReader();
