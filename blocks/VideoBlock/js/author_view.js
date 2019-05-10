@@ -79,55 +79,61 @@ export default AuthorView.extend({
         var status = this.$('.status');
         var aspect = this.$('select.cw-videoblock-aspect').val();
         var videoTitle = this.$('.videotitle').val();
-        var url, webvideo, webvideosettings;
+        var url = '';
+        var webvideo = '';
+        var webvideosettings = '';
+        var recording = '';
 
-        if (videotype == 'webvideo') {
-            url = '';
-            webvideosettings = 'controls ';
-            webvideo = new Array();
-            this.$('.videosource-webvideo > .webvideo').each(function () {
-                let source = $(this).find('.cw-webvideo-source').val();
-                let src = '';
-                let file_id = '';
-                let file_name = '';
-                if (source == 'url') {
-                    src = $(this).find('.cw-webvideo-source-url').val();
-                } else {
-                    src =  $(this).find('.cw-webvideo-source-file option:selected').attr('file_url');
-                    file_id =  $(this).find('.cw-webvideo-source-file option:selected').attr('file_id');
-                    file_name =  $(this).find('.cw-webvideo-source-file option:selected').attr('file_name');
+        switch(videotype) {
+            case 'webvideo':
+                webvideosettings = 'controls ';
+                webvideo = new Array();
+                this.$('.videosource-webvideo > .webvideo').each(function () {
+                    let source = $(this).find('.cw-webvideo-source').val();
+                    let src = '';
+                    let file_id = '';
+                    let file_name = '';
+                    if (source == 'url') {
+                        src = $(this).find('.cw-webvideo-source-url').val();
+                    } else {
+                        src =  $(this).find('.cw-webvideo-source-file option:selected').attr('file_url');
+                        file_id =  $(this).find('.cw-webvideo-source-file option:selected').attr('file_id');
+                        file_name =  $(this).find('.cw-webvideo-source-file option:selected').attr('file_name');
+                    }
+                    let type = $(this).find('.webvideosrc-mediatype').val();
+                    let query = $(this).find('.webvideosrc-mediaquery').val();
+                    let media = '', attr = '';
+                    switch (query) {
+                        case 'normal':
+                            media = '';
+                            break;
+                        case 'large':
+                            media = 'screen and (min-device-width:801px)';
+                            break;
+                        case 'small':
+                            media = 'screen and (max-device-width:800px)';
+                            break;
+                    }
+                    if (src != '') {
+                        webvideo.push({ src, source, type, query, media, attr, file_id, file_name });
+                    }
+                });
+                if (view.$('.videoautostart').is(':checked')) {
+                    webvideosettings += 'autoplay ';
                 }
-                let type = $(this).find('.webvideosrc-mediatype').val();
-                let query = $(this).find('.webvideosrc-mediaquery').val();
-                let media = '', attr = '';
-                switch (query) {
-                    case 'normal':
-                        media = '';
-                        break;
-                    case 'large':
-                        media = 'screen and (min-device-width:801px)';
-                        break;
-                    case 'small':
-                        media = 'screen and (max-device-width:800px)';
-                        break;
-                }
-                if (src != '') {
-                    webvideo.push({ src, source, type, query, media, attr, file_id, file_name });
-                }
-            });
-            if (view.$('.videoautostart').is(':checked')) {
-                webvideosettings += 'autoplay ';
-            }
-            webvideo = JSON.stringify(webvideo);
-        } else {
-          url = this.$('.videosrc').val()
-          webvideo = '';
-          webvideosettings = '';
+                webvideo = JSON.stringify(webvideo);
+                break;
+            case 'url':
+                url = this.$('.videosrc').val();
+                break;
+            case 'recorder':
+                recording = this.blob.base64data;
+                break;
         }
         status.text('Speichere Änderungen...');
 
         helper.callHandler(this.model.id, 'save', {
-          url, webvideo, webvideosettings, videoTitle, aspect
+          url, webvideo, webvideosettings, videoTitle, aspect, recording, videotype
         }).then(function () {
           status.text('Änderungen wurden gespeichert.');
           view.switchBack();

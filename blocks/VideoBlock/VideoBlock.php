@@ -94,7 +94,99 @@ class VideoBlock extends Block
         $this->videoTitle = \STUDIP\Markup::purifyHtml((string) $data['videoTitle']);
         $this->aspect = (string) $data['aspect'];
 
+        if($data['recording'] != '') {
+            $this->webvideosettings = 'controls';
+            $this->store_recording($data['recording']);
+        }
+
         return $this->array_rep();
+    }
+
+    private function store_recording($video) 
+    {
+        global $user;
+
+        $video = explode(',', $video)[1];
+        $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
+        mkdir($tempDir);
+        //create file in temp dir
+        if ($this->videoTitle == '') {
+            $filename = 'Courseware-Aufnahme-'.date("d.m.Y-H:i", time()).'.ogg';
+        } else {
+            $filename = trim($this->videoTitle).'-'.date("d.m.Y-H:i", time()).'.ogg';
+        }
+        file_put_contents($tempDir.'/'.$filename, base64_decode($video));
+        // get personal root folder
+        $root_folder = \Folder::findTopFolder($GLOBALS['SessionSeminar']);
+        $parent_folder = \FileManager::getTypedFolder($root_folder->id);
+        $subfolders = $parent_folder->getSubfolders();
+        $cw_folder = null;
+        // search courseware upload folder
+        foreach($subfolders as $subfolder) {
+            if ($subfolder->name == 'Courseware-Upload') {
+                $cw_folder = $subfolder;
+            }
+        }
+        // create courseware upload folder
+        if ($cw_folder == null) {
+            $request = array('name' => 'Courseware-Upload', 'description' => 'folder for courseware content');
+            $new_folder = new \CoursePublicFolder();
+            $new_folder->setDataFromEditTemplate($request);
+            $new_folder->user_id = $user->id;
+            $cw_folder = $parent_folder->createSubfolder($new_folder);
+        }
+        $folder = \FileManager::getTypedFolder($cw_folder->id);
+        // create studip file
+        $video_file = [
+                'name'     => $filename,
+                'type'     => 'video/ogg',
+                'tmp_name' => $tempDir.'/'.$filename,
+                'size'     => filesize($tempDir.'/'.$filename),
+                'user_id'  => $user->id
+            ];
+        
+        $new_reference = $folder->createFile($video_file);
+
+        $webvideo = [
+            'src'       => $new_reference->download_url,
+            'source'    => 'file',
+            'type'      => 'ogg',
+            'query'     => 'normal',
+            'media'     => '',
+            'attr'      => '',
+            'file_id'   => $new_reference->id,
+            'file_name' => $new_reference->name
+        ];
+        $this->webvideo = json_encode(array($webvideo));
+
+        $this->deleteRecursively($tempDir);
+    }
+
+    private function deleteRecursively($path)
+    {
+        if (is_dir($path)) {
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($path),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+
+            foreach ($files as $file) {
+                /** @var SplFileInfo $file */
+                if (in_array($file->getBasename(), array('.', '..'))) {
+                    continue;
+                }
+
+                if ($file->isFile() || $file->isLink()) {
+                    unlink($file->getRealPath());
+                } else if ($file->isDir()) {
+                    rmdir($file->getRealPath());
+                }
+            }
+
+            rmdir($path);
+        } else if (is_file($path) || is_link($path)) {
+            unlink($path);
+        }
     }
 
     private function showFiles($file_ids)
