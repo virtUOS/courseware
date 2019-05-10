@@ -50,7 +50,8 @@ class CanvasBlock extends Block
                 'description' => $content->description,
                 'upload_enabled' => $content->upload_enabled,
                 'upload_folder' => $content->upload_folder_name,
-                'draws' => json_encode($draws)
+                'draws' => json_encode($draws),
+                'show_userdata' => $this->showUserdata($content->show_userdata)
             )
         );
     }
@@ -180,6 +181,20 @@ class CanvasBlock extends Block
             rmdir($path);
         } else if (is_file($path) || is_link($path)) {
             unlink($path);
+        }
+    }
+
+    private function showUserdata($show_userdata)
+    {
+        switch($show_userdata){
+            case 'off':
+                return false;
+            case 'teacher':
+                return $this->container['current_user']->canUpdate($this);
+            case 'all':
+                return true;
+            default:
+                return false;
         }
     }
 

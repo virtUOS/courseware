@@ -59,6 +59,7 @@ export default AuthorView.extend({
             break;
     }
     $view.$('.cw-canvasblock-upload-folder option[folder-id="'+content.upload_folder_id+'"]').prop('selected', true);
+    $view.$('.cw-canvasblock-show-userdata option[value="'+content.show_userdata+'"]').prop('selected', true);
 
     this.$('.cw-canvasblock-description').val(content.description);
   },
@@ -121,6 +122,7 @@ export default AuthorView.extend({
             content.image = false;
             break;
     }
+
     content.description = $view.$('.cw-canvasblock-description').val();
 
     content.upload_folder_name = $view.$('.cw-canvasblock-upload-folder').val();
@@ -130,6 +132,8 @@ export default AuthorView.extend({
     } else {
       content.upload_enabled = true;
     }
+
+    content.show_userdata = $view.$('.cw-canvasblock-show-userdata').val();
 
     content = JSON.stringify(content);
     helper
