@@ -159,6 +159,35 @@ class AudioBlock extends Block
         $this->audio_source = 'cw';
         $this->audio_id = $new_reference->id;
         $this->audio_file_name = $new_reference->name;
+
+        $this->deleteRecursively($tempDir);
+    }
+
+    private function deleteRecursively($path)
+    {
+        if (is_dir($path)) {
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($path),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+
+            foreach ($files as $file) {
+                /** @var SplFileInfo $file */
+                if (in_array($file->getBasename(), array('.', '..'))) {
+                    continue;
+                }
+
+                if ($file->isFile() || $file->isLink()) {
+                    unlink($file->getRealPath());
+                } else if ($file->isDir()) {
+                    rmdir($file->getRealPath());
+                }
+            }
+
+            rmdir($path);
+        } else if (is_file($path) || is_link($path)) {
+            unlink($path);
+        }
     }
 
     private function showFiles()
