@@ -250,33 +250,6 @@ class TestBlock extends Block
         return array('grade' => $progress->max_grade > 0 ? $progress->grade / $progress->max_grade : 0, 'file_upload_failed' => $file_upload_failed);
     }
 
-    private function deleteRecursively($path)
-    {
-        if (is_dir($path)) {
-            $files = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($path),
-                \RecursiveIteratorIterator::CHILD_FIRST
-            );
-
-            foreach ($files as $file) {
-                /** @var SplFileInfo $file */
-                if (in_array($file->getBasename(), array('.', '..'))) {
-                    continue;
-                }
-
-                if ($file->isFile() || $file->isLink()) {
-                    unlink($file->getRealPath());
-                } else if ($file->isDir()) {
-                    rmdir($file->getRealPath());
-                }
-            }
-
-            rmdir($path);
-        } else if (is_file($path) || is_link($path)) {
-            unlink($path);
-        }
-    }
-
     public function exercise_reset_handler($data)
     {
         $user = $this->container['current_user'];

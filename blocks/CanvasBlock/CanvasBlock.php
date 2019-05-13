@@ -157,33 +157,6 @@ class CanvasBlock extends Block
         return $new_reference;
     }
 
-    private function deleteRecursively($path)
-    {
-        if (is_dir($path)) {
-            $files = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($path),
-                \RecursiveIteratorIterator::CHILD_FIRST
-            );
-
-            foreach ($files as $file) {
-                /** @var SplFileInfo $file */
-                if (in_array($file->getBasename(), array('.', '..'))) {
-                    continue;
-                }
-
-                if ($file->isFile() || $file->isLink()) {
-                    unlink($file->getRealPath());
-                } else if ($file->isDir()) {
-                    rmdir($file->getRealPath());
-                }
-            }
-
-            rmdir($path);
-        } else if (is_file($path) || is_link($path)) {
-            unlink($path);
-        }
-    }
-
     private function showUserdata($show_userdata)
     {
         switch($show_userdata){
