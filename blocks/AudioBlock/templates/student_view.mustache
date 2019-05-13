@@ -4,8 +4,8 @@
     </audio>
     {{#audio_file}}
         {{#audio_access}}
+            {{#audio_description}}<h1 class="cw-audio-description">{{audio_description}}</h1>{{/audio_description}}
             <div class="cw-audio-container">
-                <p class="cw-audio-description">{{audio_description}}</p>
                 <div class="cw-audio-controls">
                     <div class="cw-audio-range" ></div>
                     <span class="cw-audio-time"></span>

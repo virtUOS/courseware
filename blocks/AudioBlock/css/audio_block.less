@@ -1,16 +1,24 @@
 @import '../../../assets/less/mixins';
 
 .AudioBlock {
-    border: solid thin #d8d8d8;
-    padding: 10px;
+    // border: solid thin #d8d8d8;
+    // padding: 10px;
 }
 
 .cw-audio-description {
-    padding-bottom: 1em;
+    .cw-block-header();
+    border-bottom: none;
+    // padding-bottom: 1em;
+}
+
+.cw-audio-container {
+    border: solid thin #ccc;
+    padding-top: 2em;
 }
 
 .cw-audio-controls {
     text-align: right;
+    padding: 0 0.5em;
 }
 
 .cw-audio-range {
@@ -25,13 +33,13 @@
 
     .ui-slider-handle {
         border-radius: 20px;
-        width: 1.8em;
-        height: 1.8em;
+        width: 1em;
+        height: 1.7em;
         top: -0.5em;
         background-color: #ddd;
         border-color: #ccc;
         cursor: pointer;
-        margin-left: -3px;
+        margin-left: -2px;
     }
 }
 

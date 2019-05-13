@@ -4,9 +4,9 @@
 <input type="hidden" class="cw-canvasblock-all-draws" value="{{draws}}">
 <div class="messagebox messagebox_info cw-canvasblock-upload-message">{{#i18n}}Bild wurde im Ordner{{/i18n}} &bdquo;{{upload_folder}}&ldquo; {{#i18n}}abgelegt{{/i18n}}.</div>
 {{#description}}
-<div class="cw-canvasblock-description">
-    <p>{{description}}</p>
-</div>
+<h1 class="cw-canvasblock-description">
+    {{description}}
+</h1>
 {{/description}}
 <div class="cw-canvasblock-toolbar">
     <div class="cw-canvasblock-buttonset">
@@ -45,7 +45,7 @@
     </div>
 </div>
 <img src="{{image_url}}" class="cw-canvasblock-original-img">
-<canvas class="cw-canvasblock-canvas" style=" border: solid thin #ccc;"></canvas>
+<canvas class="cw-canvasblock-canvas"></canvas>
 
 {{/inactive}}
 {{#inactive}}

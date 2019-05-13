@@ -1,40 +1,40 @@
 {{^inactive}}
     {{#download_title}}
-        <h4 class="cw-download-title">{{download_title}}</h4>
+        <h1 class="cw-download-title">{{download_title}}</h1>
     {{/download_title}}
-    {{#confirmed}}
-        {{#download_success}}
-            <div class="messagebox messagebox_success">
-                {{download_success}}
-            </div>
-            <br>
-        {{/download_success}}
-    {{/confirmed}}
-    
-    {{^confirmed}}
-        {{#download_info}}
-            <div class="messagebox messagebox_info">
-                {{download_info}}
-            </div>
-            <br>
-        {{/download_info}}
-    {{/confirmed}}
     {{#file_available}}
-        {{#download_access}}
-            <div class="download-file">
+        <div class="cw-download-file">
+            {{#download_access}}
+                {{#confirmed}}
+                    {{#download_success}}
+                        <div class="messagebox messagebox_success">
+                            {{download_success}}
+                        </div>
+                        <br>
+                    {{/download_success}}
+                {{/confirmed}}
+                
+                {{^confirmed}}
+                    {{#download_info}}
+                        <div class="messagebox messagebox_info">
+                            {{download_info}}
+                        </div>
+                        <br>
+                    {{/download_info}}
+                {{/confirmed}}
                 <div class="cw-download-info cw-fileicon-{{icon}}" > &nbsp; {{file}} </div>
-                 <div class="cw-download-button-wrapper">
+                <div class="cw-download-button-wrapper">
                     <a href="{{url}}"> 
                         <button name="download" class="cw-download-button" style="display: inline-block;">{{#i18n}}Herunterladen{{/i18n}}</button>
                     </a> 
                 </div>
-            </div>
-        {{/download_access}}
-        {{^download_access}}
-            <div class="messagebox messagebox_info">
-                {{#i18n}}Wegen des gewählten Lizenzstatus können Sie diese Datei nicht herunterladen.{{/i18n}}
-            </div>
-        {{/download_access}}
+            {{/download_access}}
+            {{^download_access}}
+                <div class="messagebox messagebox_info">
+                    {{#i18n}}Wegen des gewählten Lizenzstatus können Sie diese Datei nicht herunterladen.{{/i18n}}
+                </div>
+            {{/download_access}}
+        </div>
     {{/file_available}}
     {{^file_available}}
         <div class="messagebox messagebox_info">

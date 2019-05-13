@@ -46,7 +46,7 @@ export default StudentView.extend({
         var $canvas = $view.$('.cw-canvasblock-canvas');
         var img = $original_img[0];
         var canvas = $canvas[0];
-        canvas.width = 860;
+        canvas.width = 868;
         if ($original_img[0].height > 0) {
             canvas.height = Math.round((canvas.width / $original_img[0].width) * $original_img[0].height);
         } else {
