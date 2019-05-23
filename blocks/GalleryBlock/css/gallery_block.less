@@ -2,41 +2,45 @@
 @import '../../../assets/less/mixins';
 @import '../../../node_modules/slick-carousel/slick/slick.less';
 
-.slick-prev.slick-arrow,
-.slick-next.slick-arrow {
+.slick-arrow {
     color: transparent;
     width: 35px;
     height: 35px;
-    background-color: #bbb;
+    background-color: rgba(255,255,255,0.6);
     background-size: 20px;
-    border-radius: 2px;
     background-size: 24px;
     background-position: 50%;
     background-repeat: no-repeat;
     border: none;
     outline: none;
     position: absolute;
-    top: 50%;
+    top: 0%;
     display: block;
     z-index: 42;
-    margin-top: -10px;
     padding: 0;
     cursor: pointer;
+    &:hover{
+        background-color: #28497c;
+    }
 }
 
 .slick-prev.slick-arrow {
-    .assets-bg-icon("white/arr_1left.svg");
-    background-color: rgba(0,0,0,0.4);
+    .assets-bg-icon("blue/arr_1left.svg");
+    &:hover{
+        .assets-bg-icon("white/arr_1left.svg");
+    }
 }
 
 .slick-next.slick-arrow {
-    .assets-bg-icon("white/arr_1right.svg");
-    background-color: rgba(0,0,0,0.4);
+    .assets-bg-icon("blue/arr_1right.svg");
     right: 0;
+    &:hover{
+        .assets-bg-icon("white/arr_1right.svg");
+    }
 }
 
 .slick-list.draggable {
-    margin: 30px auto 50px;
+    margin: 0 auto 50px;
     max-width: 100%;
     .slick-slide img {
         max-width: 100%;
