@@ -9,6 +9,8 @@ export default AuthorView.extend({
     events: {
         'click button[name=save]':   'onSave',
         'click button[name=cancel]': 'switchBack',
+        'click ul.cw-code-tabs li': 'changeTab',
+        'change .cw-code-file-upload': 'fileUpload',
         'change textarea.code-content-editor': 'updatePreview',
         'keyup textarea.code-content-editor': 'updatePreview',
         'paste textarea.code-content-editor': 'updatePreview',
@@ -46,7 +48,10 @@ export default AuthorView.extend({
         hljs.highlightBlock(this.$('.code-content-preview > pre > code')[0]);
     },
     
-    updatePreview() {
+    updatePreview(event) {
+        if(event) {
+            this.$(".cw-code-file-upload").val("");
+        }
         var $code_content = this.escapeHtml(this.$('textarea').val());
         var $code_lang = this.$(".code_lang").val();
         var $preview_block = this.$('.code-content-preview > pre > code');
@@ -122,5 +127,31 @@ export default AuthorView.extend({
 
         event.isUserInputHandled = true;
         Backbone.trigger('preventviewswitch', !confirm('Es gibt nicht gespeicherte Änderungen. Möchten Sie trotzdem fortfahren?'));
+    },
+
+    changeTab(event) {
+        let clicked = $(event.target);
+        this.$('ul.cw-code-tabs li').removeClass('active');
+        this.$('div.cw-code-container').removeClass('active');
+        clicked.addClass('active');
+        this.$('.'+clicked.attr('data-tab')).addClass('active');
+    },
+
+    fileUpload(event) {
+        let file = event.target.files[0];
+        let view = this;
+        const reader = new FileReader();
+
+        // get Code from uploaded file
+        reader.onload = function(event) {
+            view.$('textarea').val(event.target.result);
+            view.updatePreview();
+        }
+        reader.readAsText(file);
+
+        // set language
+        let lang = file.name.split('.').pop();
+        this.$('.code_lang').val(lang);
+        this.updatePreview();
     }
 });

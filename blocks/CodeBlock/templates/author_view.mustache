@@ -3,13 +3,24 @@
     <pre><code class="{{code_lang}}">{{code_content}}</code></pre>
 </div>
 <br>
-<label for="code_content">{{#i18n}}Quellcode{{/i18n}}:</label>
-<textarea class="code-content-editor" name="code_content">{{{code_content}}}</textarea>
-<br>
-<label for="code_lang">{{#i18n}}Sprache{{/i18n}}: </label>
-<input type="text" name="code_lang" class="code_lang" value="{{code_lang}}"> 
-<a target="_blank" href="http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases" >{{#i18n}}verfügbare Sprachen{{/i18n}}...</a>
-<div class="cw-button-box">
-    <button name=save class=button>{{#i18n}}Speichern{{/i18n}}</button>
-    <button name=cancel class=button>{{#i18n}}Abbrechen{{/i18n}}</button>
+<div>
+    <ul class="cw-code-tabs">
+        <li class="cw-code-tab active" data-tab="cw-code-tab-manual">Quellcode eingeben</li>
+        <li class="cw-code-tab" data-tab="cw-code-tab-upload">Datei hochladen</li>
+    </ul>
+    <div class="cw-code-container cw-code-tab-manual active">
+        <label for="code_content">{{#i18n}}Quellcode{{/i18n}}:</label>
+        <textarea class="code-content-editor" name="code_content">{{{code_content}}}</textarea>
+    </div>
+    <div class="cw-code-container cw-code-tab-upload">
+        <label for="code_file_upload">{{#i18n}}Datei auswählen{{/i18n}}:</label>
+        <input class="cw-code-file-upload" name="code_file_upload" type="file">
+    </div>
+    <label for="code_lang">{{#i18n}}Sprache{{/i18n}}: </label>
+    <input type="text" name="code_lang" class="code_lang" value="{{code_lang}}"> 
+    <a target="_blank" href="http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases" >{{#i18n}}verfügbare Sprachen{{/i18n}}...</a>
+    <div class="cw-button-box">
+        <button name=save class=button>{{#i18n}}Speichern{{/i18n}}</button>
+        <button name=cancel class=button>{{#i18n}}Abbrechen{{/i18n}}</button>
+    </div>
 </div>

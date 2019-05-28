@@ -99,3 +99,42 @@
     font-family: monospace;
     text-transform: full-width;
 }
+
+ul.cw-code-tabs{
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  color: #222;
+}
+ul.cw-code-tabs li{
+  border: solid thin #ccc;
+  border-bottom: none;
+  background: none;
+  color: #222;
+  display: inline-block;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+ul.cw-code-tabs li.active{
+  background: #28497c;
+  color: #ffffff;
+  border-color: #28497c;
+}
+
+.cw-code-container{
+  display: none;
+  background: #ffffff;
+  border: solid thin #ccc;
+  padding: 5px 10px;
+  height: 25em;
+}
+
+.cw-code-container.active{
+  display: inherit;
+}
+
+section#courseware .block-content:not([data-view="student"]) input.cw-code-file-upload {
+  border: none;
+  padding: 1em 0;
+}
