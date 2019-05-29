@@ -127,6 +127,10 @@ export default AuthorView.extend({
                 url = this.$('.videosrc').val();
                 break;
             case 'recorder':
+            if (this.blob == null){
+                    view.$('.cw-video-empty-recording').slideDown(250).delay(2500).slideUp(250);
+                    return;
+                }
                 recording = this.blob.base64data;
                 break;
         }
@@ -200,7 +204,12 @@ export default AuthorView.extend({
 
                     $view.$('.cw-videoblock-recorder-start').show();
                     $view.$('.cw-videoblock-recorder-enable-info').hide();
-                    $view.recorder = new MediaRecorder(this.stream);
+                    let options = {
+                        audioBitsPerSecond : 128000,
+                        videoBitsPerSecond : 1400000,
+                        mimeType : 'video/webm'
+                    }
+                    $view.recorder = new MediaRecorder(this.stream, options);
                     let video = this.$('.video-wrapper video')[0];
                     video.srcObject = this.stream;
                     video.onloadedmetadata = function(e) {
@@ -350,7 +359,7 @@ export default AuthorView.extend({
     makeBlob(){
         var $view = this;
         let video = $view.$('.video-wrapper video')[0];
-        this.blob = new Blob($view.chunks, {type: 'video/ogg' })
+        this.blob = new Blob($view.chunks, {type: 'video/webm' })
         let url = URL.createObjectURL(this.blob);
         video.controls = true;
         video.src = url;

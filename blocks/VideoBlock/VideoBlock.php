@@ -111,9 +111,9 @@ class VideoBlock extends Block
         mkdir($tempDir);
         //create file in temp dir
         if ($this->videoTitle == '') {
-            $filename = 'Courseware-Aufnahme-'.date("d.m.Y-H:i", time()).'.ogg';
+            $filename = 'Courseware-Aufnahme-'.date("d.m.Y-H:i", time()).'.webm';
         } else {
-            $filename = trim($this->videoTitle).'-'.date("d.m.Y-H:i", time()).'.ogg';
+            $filename = trim($this->videoTitle).'-'.date("d.m.Y-H:i", time()).'.webm';
         }
         file_put_contents($tempDir.'/'.$filename, base64_decode($video));
         // get personal root folder
@@ -139,7 +139,7 @@ class VideoBlock extends Block
         // create studip file
         $video_file = [
                 'name'     => $filename,
-                'type'     => 'video/ogg',
+                'type'     => 'video/webm',
                 'tmp_name' => $tempDir.'/'.$filename,
                 'size'     => filesize($tempDir.'/'.$filename),
                 'user_id'  => $user->id
@@ -150,7 +150,7 @@ class VideoBlock extends Block
         $webvideo = [
             'src'       => $new_reference->download_url,
             'source'    => 'file',
-            'type'      => 'ogg',
+            'type'      => 'webm',
             'query'     => 'normal',
             'media'     => '',
             'attr'      => '',
