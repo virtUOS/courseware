@@ -60,6 +60,7 @@ class CoursewareController extends CoursewareStudipController
     
     public function news_action()
     {
+        PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
         //get all new blocks and push them into an array
         $db = DBManager::get();
         $stmt = $db->prepare("
@@ -149,7 +150,30 @@ class CoursewareController extends CoursewareStudipController
         if(empty($this->new_ones) && (Request::get("iconnav") == 'true')) {
             return $this->redirect('courseware');
         }
+        $this->new_content = array();
+        foreach ($this->new_ones as $item){
+            $block = new Mooc\DB\Block($item["id"]);
+            if ( (strpos($item["title"], "AsideSection") >-1) || (in_array($block->type , array("Chapter", "Subchapter", "Section"))) ){continue;}
+            $chapter = $block->parent->parent->parent->title;
+            $subchapter = $block->parent->parent->title;
+            $section = $block->parent->title;
+            $class_name = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
+            $name_constant = $class_name.'::NAME';
 
+            if (defined($name_constant)) {
+                $title = _cw(constant($name_constant));
+            } else {
+                $title = $block->title;
+            }
+            $ui_block = $this->plugin->getBlockFactory()->makeBlock($block);
+            $this->new_content[$chapter][$subchapter][$section][$block->id] = array(
+                'title' => $title, 
+                'type' => $block->type,
+                'id' => $block->id,
+                'ui_block' => $ui_block 
+            );
+        }
+        
         return true;
     }
 

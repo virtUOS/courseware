@@ -1,0 +1,145 @@
+@import 'mixins';
+@import 'variables';
+
+.assets-bg-icon(@img) {
+    background-image: url("../@{blocks-icons-dir}/@{img}");
+}
+
+#courseware-news{
+    .cw-news-list-sections {
+        margin-top: 0.5em;
+        padding-left: 0;
+        max-width: 75%;
+
+        .cw-news-item-section {
+            list-style: none;
+            h2 {
+                background-color: #28497c;
+                color: #ffffff;
+                border: none;
+                padding: 0.5em 1em;
+                width: 100%;
+            }
+        }
+    }
+
+    .cw-news-list-blocks {
+        margin-top: 0.5em;
+        padding-left: 0;
+        max-width: 75%;
+        .cw-news-item-block {
+            list-style: none;
+            border: solid thin #28497c;
+            height: 14em; 
+            width: 14em;
+            float: left;
+            margin-right: 1em;
+            padding: 0.5em 1em;
+
+            .cw-block-title {
+                .assets-bg-icon('blue/plugin.svg');
+                background-size: 16px;
+                background-position: left center;
+                background-repeat: no-repeat;
+                margin: .25em;
+                padding: .5em .5em .5em 1.5em;
+                color: #28497c;
+                cursor: pointer;
+                &.type-AudioBlock {
+                    .assets-bg-icon("blue/play.svg");
+                }
+                &.type-ConfirmBlock {
+                    .assets-bg-icon("blue/accept.svg");
+                }
+                &.type-DownloadBlock {
+                    .assets-bg-icon("blue/download.svg");
+                }
+                &.type-EvaluationBlock {
+                    .assets-bg-icon("blblueack/evaluation.svg");
+                }
+                &.type-ForumBlock {
+                    .assets-bg-icon("blue/forum.svg");
+                }
+                &.type-HtmlBlock {
+                    .assets-bg-icon("blue/edit.svg");
+                }
+                &.type-CanvasBlock,
+                &.type-BeforeAfterBlock,
+                &.type-ImageMapBlock,
+                &.type-GalleryBlock {
+                    background-image: url("../images/icons/blue/picture.svg");
+                }
+                &.type-DialogCardsBlock {
+                    background-image: url("../images/icons/blue/dialog-cards.svg");
+                }
+                &.type-AssortBlock {
+                    .assets-bg-icon("blue/hamburger.svg");
+                }
+                &.type-PostBlock,
+                &.type-DiscussionBlock {
+                    .assets-bg-icon("blue/chat.svg");
+                }
+                &.type-LinkBlock {
+                    .assets-bg-icon("blue/link-extern.svg");
+                }
+                &.type-KeyPointBlock {
+                    .assets-bg-icon("blue/exclaim-circle.svg");
+                }
+                &.type-PdfBlock {
+                    .assets-bg-icon("blue/file-pdf.svg");
+                }
+                &.type-CodeBlock {
+                    .assets-bg-icon("blue/computer.svg");
+                }
+                &.type-EmbedBlock {
+                    .assets-bg-icon("blue/code.svg");
+                }
+                &.type-TestBlock {
+                    .assets-bg-icon("blue/question-circle.svg");
+                }
+                &.type-SearchBlock {
+                    .assets-bg-icon("blue/search.svg");
+                }
+                &.type-VideoBlock,
+                &.type-InteractiveVideoBlock {
+                    .assets-bg-icon("blue/video.svg");
+                }
+                &.type-OpenCastBlock{
+                    background-image: url("../images/icons/blue/opencast.svg");
+                }
+                &.type-IFrameBlock {
+                    .assets-bg-icon("blue/door-enter.svg");
+                }
+                &.type-ChartBlock {
+                    .assets-bg-icon("blue/vote.svg");
+                }
+                &.type-DateBlock {
+                    .assets-bg-icon("blue/date.svg");
+                }
+                &.type-TypewriterBlock {
+                    .assets-bg-icon("blue/wizard.svg");
+                }
+                &.type-ScrollyBlock {
+                    .assets-bg-icon("blue/literature.svg");
+                }
+                &.type-AudioGalleryBlock {
+                    .assets-bg-icon("blue/consultation.svg");
+                }
+            }
+
+            img {
+                width: 100%;
+            }
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+}
