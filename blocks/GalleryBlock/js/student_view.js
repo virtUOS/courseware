@@ -14,6 +14,9 @@ export default StudentView.extend({
   },
 
   postRender() {
+      if(this.$('.messagebox_info').length) {
+        return;
+      }
       let $autoplay = this.$('input[name="gallery-autoplay"]').val() == 1;
       let $autoplaytimer = this.$('input[name="gallery-autoplay-timer"]').val()*1000;
       let $hidenav = this.$('input[name="gallery-hidenav"]').val() == 0;
