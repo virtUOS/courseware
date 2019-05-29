@@ -99,7 +99,90 @@ section#courseware {
       span.type {
         margin-left: 5px;
         float: left;
+        background-position: left center;
+        background-size: 16px;
+        background-repeat: no-repeat;
+        padding-left: 24px;
 
+        &.type-AudioBlock {
+            .assets-bg-icon("black/play.svg");
+        }
+        &.type-ConfirmBlock {
+            .assets-bg-icon("black/accept.svg");
+        }
+        &.type-DownloadBlock {
+            .assets-bg-icon("black/download.svg");
+        }
+        &.type-EvaluationBlock {
+            .assets-bg-icon("black/evaluation.svg");
+        }
+        &.type-ForumBlock {
+            .assets-bg-icon("black/forum.svg");
+        }
+        &.type-HtmlBlock {
+            .assets-bg-icon("black/edit.svg");
+        }
+        &.type-CanvasBlock,
+        &.type-BeforeAfterBlock,
+        &.type-GalleryBlock {
+            background-image: url("../images/icons/black/picture.svg");
+        }
+        &.type-DialogCardsBlock {
+            background-image: url("../images/icons/black/dialog-cards.svg");
+        }
+        &.type-AssortBlock {
+            .assets-bg-icon("black/hamburger.svg");
+        }
+        &.type-PostBlock,
+        &.type-DiscussionBlock {
+            .assets-bg-icon("black/chat.svg");
+        }
+        &.type-LinkBlock {
+            .assets-bg-icon("black/link-extern.svg");
+        }
+        &.type-KeyPointBlock {
+            .assets-bg-icon("black/exclaim-circle.svg");
+        }
+        &.type-PdfBlock {
+            .assets-bg-icon("black/file-pdf.svg");
+        }
+        &.type-CodeBlock {
+            .assets-bg-icon("black/computer.svg");
+        }
+        &.type-EmbedBlock {
+            .assets-bg-icon("black/code.svg");
+        }
+        &.type-TestBlock {
+            .assets-bg-icon("black/question-circle.svg");
+        }
+        &.type-SearchBlock {
+            .assets-bg-icon("black/search.svg");
+        }
+        &.type-VideoBlock,
+        &.type-InteractiveVideoBlock {
+            .assets-bg-icon("black/video.svg");
+        }
+        &.type-OpenCastBlock{
+            background-image: url("../images/icons/black/opencast.svg");
+        }
+        &.type-IFrameBlock {
+            .assets-bg-icon("black/door-enter.svg");
+        }
+        &.type-ChartBlock {
+            .assets-bg-icon("black/vote.svg");
+        }
+        &.type-DateBlock {
+            .assets-bg-icon("black/date.svg");
+        }
+        &.type-TypewriterBlock {
+            .assets-bg-icon("black/wizard.svg");
+        }
+        &.type-ScrollyBlock {
+            .assets-bg-icon("black/literature.svg");
+        }
+        &.type-AudioGalleryBlock {
+            .assets-bg-icon("black/consultation.svg");
+        }
         .not-visible-info {
             font-weight: 600;
         }
@@ -342,9 +425,11 @@ section#courseware {
                     .assets-bg-icon("white/search.svg");
                 }
                 &.cw-block-fav-item-icon-VideoBlock,
-                &.cw-block-fav-item-icon-InteractiveVideoBlock,
-                &.cw-block-fav-item-icon-OpenCastBlock {
+                &.cw-block-fav-item-icon-InteractiveVideoBlock {
                     .assets-bg-icon("white/video.svg");
+                }
+                &.cw-block-fav-item-icon-OpenCastBlock {
+                    background-image: url("../images/icons/white/opencast.svg");
                 }
                 &.cw-block-fav-item-icon-IFrameBlock {
                     .assets-bg-icon("white/door-enter.svg");
@@ -463,11 +548,13 @@ section#courseware {
             }
             &.cw-block-fav-item-icon-VideoBlock,
             &.cw-block-fav-item-icon-InteractiveVideoBlock,
-            &.cw-block-fav-item-icon-OpenCastBlock,
             &.cw-block-adder-item-icon-VideoBlock,
-            &.cw-block-adder-item-icon-InteractiveVideoBlock,
-            &.cw-block-adder-item-icon-OpenCastBlock {
+            &.cw-block-adder-item-icon-InteractiveVideoBlock {
                 .assets-bg-icon("blue/video.svg");
+            }
+            &.cw-block-fav-item-icon-OpenCastBlock,
+            &.cw-block-adder-item-icon-OpenCastBlock {
+                background-image: url("../images/icons/blue/opencast.svg");
             }
             &.cw-block-fav-item-icon-IFrameBlock,
             &.cw-block-adder-item-icon-IFrameBlock {
@@ -557,6 +644,9 @@ section#courseware {
         }
         > .cw-section-icon-selection:checked + .cw-section-icon-selection-video {
             .assets-bg-icon("white/video.svg");
+        }
+        > .cw-section-icon-selection:checked + .cw-section-icon-selection-opencast {
+            background-image: url("../images/icons/white/opencast.svg");
         }
          > .cw-section-icon-selection:checked +.cw-section-icon-selection-chat {
             .assets-bg-icon("white/chat.svg");
@@ -690,6 +780,9 @@ section#courseware {
         }
         .cw-section-icon-selection-video {
             .assets-bg-icon("blue/video.svg");
+        }
+        .cw-section-icon-selection-opencast {
+            background-image: url("../images/icons/blue/opencast.svg");
         }
         .cw-section-icon-selection-chat {
             .assets-bg-icon("blue/chat.svg");

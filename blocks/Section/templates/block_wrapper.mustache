@@ -5,7 +5,7 @@
   data-blocktype="{{type}}">
   {{#can_update}}
   <div class="controls{{#editable}} editable{{/editable}}{{^editable}} not-editable{{/editable}}">
-    <span class="type">{{readable_name}} {{#invisible}}<span class="not-visible-info">{{#i18n}}(für Studierende nicht sichtbar){{/i18n}}</span>{{/invisible}}</span> 
+    <span class="type type-{{type}}">{{readable_name}} {{#invisible}}<span class="not-visible-info">{{#i18n}}(für Studierende nicht sichtbar){{/i18n}}</span>{{/invisible}}</span> 
     <button class=lower>{{#i18n}}Absenken{{/i18n}}</button>
     <button class=raise>{{#i18n}}Anheben{{/i18n}}</button>
     <button class=author data-title="{{#i18n}}Block bearbeiten{{/i18n}}">{{#i18n}}Ändern{{/i18n}}</button>
