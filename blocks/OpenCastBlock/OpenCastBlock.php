@@ -46,17 +46,20 @@ class OpenCastBlock extends Block
         $oc_episodes = $ocmodel->getEpisodesforREST();
 
         $search_client = \SearchClient::getInstance($course_id);
-        $video_url = $search_client->getBaseURL() . "/engage/theodul/ui/core.html?id=";
+        $video_url_theodul = $search_client->getBaseURL() . "/engage/theodul/ui/core.html?mode=embed&id=";
+        $video_url_paella = $search_client->getBaseURL() . "/paella/ui/embed.html?id=";
 
         $episodes = [];
         foreach($oc_episodes as $episode){
             $presenter_download = $episode['presenter_download'];
             $first_key = key($presenter_download);
             $url_mp4 = $episode['presenter_download'][$first_key]['url'];
-            $url_opencast = \URLHelper::getURL($video_url . $episode['id']);
+            $url_opencast_theodul = \URLHelper::getURL($video_url_theodul . $episode['id']);
+            $url_opencast_paella = \URLHelper::getURL($video_url_paella . $episode['id']);
             array_push($episodes, array(
                 'url_mp4' => $url_mp4, 
-                'url_opencast' => $url_opencast, 
+                'url_opencast_theodul' => $url_opencast_theodul,
+                'url_opencast_paella' => $url_opencast_paella,
                 'title' => $episode['title'],
                 'id' => $episode['id']
                 ));
@@ -66,6 +69,8 @@ class OpenCastBlock extends Block
             $opencast_content_json = json_decode($this->opencast_content);
             $opencastid = $opencast_content_json->id;
             $useplayer = $opencast_content_json->useplayer;
+        } else {
+            $useplayer = 'theodul';
         }
 
         return array_merge($this->getAttrArray(), array(

@@ -20,10 +20,23 @@ export default AuthorView.extend({
     },
 
     postRender() {
-        var $view = this;
-        var $opencastid = $view.$('.cw-opencast-stored-id').val();
-        if ($opencastid != '') {
-            $view.$('.cw-opencast-content option[data-opencastid="'+$opencastid+'"]').prop('selected', true);
+        let $opencast_id = this.$('.cw-opencast-stored-id').val();
+        let $opencast_player = this.$('.cw-opencast-stored-player').val();
+        if ($opencast_id != '') {
+            this.$('.cw-opencast-content option[data-opencastid="'+$opencast_id+'"]').prop('selected', true);
+        }
+        switch($opencast_player){
+            case 'treu':
+            case 'theodul':
+            default:
+                this.$('.cw-opencast-useocplayer[value="theodul"]').prop('checked', true);
+                break;
+            case 'paella':
+                this.$('.cw-opencast-useocplayer[value="paella"]').prop('checked', true);
+                break;
+            case 'false':
+                this.$('.cw-opencast-useocplayer[value="false"]').prop('checked', true);
+                break;
         }
 
         return this;
@@ -58,11 +71,21 @@ export default AuthorView.extend({
 
     onSave(event) {
         var $view = this;
-        var $opencast_content = {};
-        $opencast_content.url_mp4 = $view.$(".cw-opencast-content option:selected").attr('data-urlmp4');
-        $opencast_content.url_opencast = $view.$(".cw-opencast-content option:selected").attr('data-urlopencast');
-        $opencast_content.id = $view.$(".cw-opencast-content option:selected").attr('data-opencastid');
-        $opencast_content.useplayer = $view.$('.cw-opencast-useocplayer').prop( "checked" );
+        let $opencast_content = {};
+        $opencast_content.id = this.$(".cw-opencast-content option:selected").attr('data-opencastid');
+        $opencast_content.useplayer = this.$('.cw-opencast-useocplayer:checked').val();
+        switch($opencast_content.useplayer) {
+            case 'theodul':
+            default:
+                $opencast_content.url_opencast_theodul = this.$(".cw-opencast-content option:selected").attr('data-urlopencasttheodul');
+                break;
+            case 'paella':
+                $opencast_content.url_opencast_paella = this.$(".cw-opencast-content option:selected").attr('data-urlopencastpaella');
+                break;
+            case 'false':
+                $opencast_content.url_mp4 = this.$(".cw-opencast-content option:selected").attr('data-urlmp4');
+                break;
+        }
         $opencast_content = JSON.stringify($opencast_content);
         helper
         .callHandler(this.model.id, 'save', {

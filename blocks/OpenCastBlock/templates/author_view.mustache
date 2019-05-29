@@ -1,16 +1,25 @@
 {{#opencast}}
     <input type="hidden" class="cw-opencast-stored-id" value="{{opencastid}}">
+    <input type="hidden" class="cw-opencast-stored-player" value="{{useplayer}}">
     
     <label for="cw-opencast-content">{{#i18n}}Opencast Video{{/i18n}}:</label>
     
     <select name="cw-opencast-content" class="cw-opencast-content">
         {{#episodes}}
-            <option data-urlmp4="{{url_mp4}}" data-urlopencast="{{url_opencast}}" data-opencastid="{{id}}">{{title}}</option>
+            <option 
+                data-urlmp4="{{url_mp4}}" 
+                data-urlopencasttheodul="{{url_opencast_theodul}}" 
+                data-urlopencastpaella="{{url_opencast_paella}}"
+                data-opencastid="{{id}}">
+                {{title}}
+            </option>
         {{/episodes}}
     </select>
     <br>
-    <label for="cw-opencast-useocplayer">{{#i18n}}Opencast Player verwenden{{/i18n}}</label>
-    <input type="checkbox" class="cw-opencast-useocplayer" name="cw-opencast-useocplayer" {{#useplayer}} checked {{/useplayer}}>
+    <label for="cw-opencast-useocplayer">{{#i18n}}Opencast Player{{/i18n}}</label>
+    <input type="radio" class="cw-opencast-useocplayer" name="cw-opencast-useocplayer" value="theodul"> theodul
+    <input type="radio" class="cw-opencast-useocplayer" name="cw-opencast-useocplayer" value="paella"> paella
+    <input type="radio" class="cw-opencast-useocplayer" name="cw-opencast-useocplayer" value="false"> nicht verwenden
     <div class="cw-button-box">
         <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
         <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>

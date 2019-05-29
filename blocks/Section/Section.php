@@ -15,6 +15,7 @@ class Section extends Block
     const ICON_CHAT = 'chat';
     const ICON_CODE = 'code';
     const ICON_VIDEO = 'video';
+    const ICON_OPENCAST = 'opencast';
     const ICON_AUDIO = 'audio';
     const ICON_GALLERY = 'gallery';
     const ICON_TASK = 'task';
@@ -26,7 +27,7 @@ class Section extends Block
     // larger array index -> higher precedence
     // thus ICON_VIDEO has the highest precedence
     private static $icon_precedences = array(
-        self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO,
+        self::ICON_DEFAULT, self::ICON_CHAT, self::ICON_TASK, self::ICON_VIDEO, self::ICON_OPENCAST,
         self::ICON_AUDIO, self::ICON_CODE, self::ICON_SEARCH, self::ICON_GALLERY
     );
 
@@ -48,7 +49,7 @@ class Section extends Block
         'ForumBlock' => self::ICON_CHAT,
         'PostBlock' => self::ICON_CHAT,
         'VideoBlock' => self::ICON_VIDEO,
-        'OpenCastBlock' => self::ICON_VIDEO,
+        'OpenCastBlock' => self::ICON_OPENCAST,
         'InteractiveVideoBlock' => self::ICON_VIDEO,
         'AudioBlock' => self::ICON_AUDIO,
         'TestBlock' => self::ICON_TASK,
