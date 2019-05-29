@@ -1,0 +1,10 @@
+{{^inactive}}
+    <input type="hidden" class="cw-image-map-stored-content" value="{{image_map_content}}"/>
+    <img src="{{image_url}}" class="cw-image-map-original-img">
+    <canvas class="cw-image-map-canvas"></canvas>
+{{/inactive}}
+{{#inactive}}
+    <div class="messagebox messagebox_info">
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+    </div>
+{{/inactive}}

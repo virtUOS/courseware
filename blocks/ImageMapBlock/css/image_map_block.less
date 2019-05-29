@@ -1,0 +1,66 @@
+@import '../../../assets/less/mixins';
+
+.ImageMapBlock {
+
+    .cw-image-map-buttonset {
+        display: inline-block;
+        padding: 5px;
+        margin-right: 0.5em;
+
+        button {
+            cursor: pointer;
+            border: solid thin #ccc;
+            height: 32px;
+            width: 32px;
+            background-color: white;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 24px 24px;
+            vertical-align: bottom;
+
+            &.add-shape{
+                padding-left: 1.5em;
+                width: unset;
+                background-position: 6px center;
+                background-size: 16px 16px;
+                color: #28497c;
+                min-width: 7em;
+                .assets-bg-icon("blue/add.svg");
+            }
+            &.remove-shape {
+                .assets-bg-icon("blue/trash.svg");
+            }
+    
+            &.cw-image-map-color {
+                &[value=transparent] {
+                    .assets-bg-icon("lightblue/decline.svg");
+                }
+                &.selected-color {
+                    border: solid 2px #000;
+                }
+            }
+            &.cw-image-map-resize{
+                padding-left: 1.5em;
+                width: unset;
+                background-position: 6px center;
+                background-size: 16px 16px;
+                color: #28497c;
+                min-width: 5.5em;
+                &.raise-size{
+                    .assets-bg-icon("blue/add.svg");
+                }
+                &.reduce-size{
+                    .assets-bg-icon("blue/remove.svg");
+                }
+            }
+        }
+    }
+
+    .cw-image-map-data-label.disabled {
+        color: #ccc;
+    }
+}
+
+section#courseware .block-content:not([data-view="student"]) select.cw-image-map-source {
+    width: 15em;
+}
