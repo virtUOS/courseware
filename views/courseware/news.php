@@ -5,7 +5,7 @@
         <? foreach ($chapter_content as $subchapter_title => $subchapter_content):?>
             <? foreach ($subchapter_content as $section_title => $section_content):?>
                 <li class="cw-news-item-section">
-                <h2><?= $chapter_title.'&rarr;'.$subchapter_title.'&rarr;'.$section_title ?></h2>
+                <h2><?= $chapter_title.' &rarr; '.$subchapter_title.' &rarr; '.$section_title ?></h2>
                     <ul class="cw-news-list-blocks">
                     <? foreach ($section_content as $block_id => $block):?>
                         <li class="cw-news-item-block">
