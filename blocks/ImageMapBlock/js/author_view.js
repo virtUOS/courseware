@@ -17,7 +17,10 @@ export default AuthorView.extend({
         'click .cw-image-map-resize': 'shapeResize',
         'input .shape-text': 'changeText',
         'input .shape-target': 'changeTarget',
-        'change select.cw-image-map-source': 'selectSource'
+        'input .shape-title': 'changeTitle',
+        'change select.cw-image-map-source': 'selectSource',
+        'change select.cw-image-map-file' : 'selectFile',
+        'input input.cw-image-map-file' : 'selectFile'
     },
 
     initialize() {
@@ -55,9 +58,6 @@ export default AuthorView.extend({
         this.$('.cw-image-map-color[value="transparent"]').addClass('selected-color');
 
         //hide input fields
-        this.$('.shape-text').val('').prop('disabled', true);
-        this.$('.cw-image-map-data-label').addClass('disabled');
-        this.$('.shape-target').val('').prop('disabled', true);
         this.$('.remove-shape').hide();
         this.$('.resize-buttons').hide();
         this.$('.cw-image-map-resize').hide();
@@ -151,65 +151,55 @@ export default AuthorView.extend({
         let view = this;
         $.each(this.shapes, function(key, value){
             let shape = value;
+            let text = shape.data.text;
+            let shape_width = 0, shape_height = 0, text_X = 0, text_Y = 0;
+
             context.beginPath();
             switch (shape.type) {
                 case 'arc':
+                    shape_width =  Math.round((2*shape.data.radius)/Math.sqrt(2))
+                    shape_height =  shape_width;
+                    text_X = shape.data.centerX;
+                    text_Y = shape.data.centerY - shape.data.radius*0.75;
                     context.arc(shape.data.centerX, shape.data.centerY, shape.data.radius, 0, 2 * Math.PI); // x, y, r, startAngle, endAngle ... Angle in radians!
                     context.fillStyle = shape.data.fillStyle;
                     context.fill();
                     break;
                 case 'ellipse':
+                    shape_width = shape.data.radiusX;
+                    shape_height = shape.data.radiusY*1.75;
+                    text_X = shape.data.X ;
+                    text_Y = shape.data.Y - shape.data.radiusY*0.8;
                     context.ellipse(shape.data.X, shape.data.Y, shape.data.radiusX, shape.data.radiusY, 0, 0, 2 * Math.PI);
                     context.fillStyle = shape.data.fillStyle;
                     context.fill();
                     break;
                 case 'rect':
+                    shape_width = shape.data.width;
+                    shape_height = shape.data.height;
+                    text_X = shape.data.X + shape.data.width/2;
+                    text_Y = shape.data.Y;
                     context.rect(shape.data.X, shape.data.Y, shape.data.width, shape.data.height);
                     context.fillStyle = shape.data.fillStyle;
                     context.fill();
-                    break;
-                case 'text':
-                    let text = shape.data.text;
-                    let text_width = context.measureText(text).width;
-                    if (text_width > shape.data.width) {
-                        text = text.split(' ');
-                        let line = "";
-                        let word = " ";
-                        let new_text = [];
-                        do{
-                            word = text.shift();
-                            line = line + word + " ";
-                            if (context.measureText(line).width > shape.data.width) {
-                                text.unshift(word);
-                                line = line.substring(0, line.lastIndexOf(word));
-                                new_text.push(line.trim());
-                                line = "";
-                            }
-                        } while (text.length > 0)
-                        new_text.push(line.trim());
-                        text = new_text;
-                    } else {
-                        text = [text];
-                    }
-                    context.rect(shape.data.X, shape.data.Y, shape.data.width, shape.data.height);
-                    context.fillStyle = shape.data.fillStyle;
-                    context.fill();
-                    context.textAlign = "center"; 
-                    context.font = "14px Arial"
-                    if (view.darkColors.indexOf(shape.data.colorName) > -1) {
-                        context.fillStyle = '#ffffff';
-                    } else { 
-                        context.fillStyle = '#000000';
-                    }
-                    let lineHeight = shape.data.height/(text.length+1);
-                    $.each(text, function(key, value){
-                        context.fillText(value, shape.data.X + shape.data.width/2,  shape.data.Y + lineHeight*(key+1));
-                    });
-                    
                     break;
                 default:
                     return;
 
+            }
+            if ((text) && (shape.data.colorName != 'transparent')) {
+                text = view.fitTextToShape(context, text, shape_width);
+                context.textAlign = "center"; 
+                context.font = "14px Arial"
+                if (view.darkColors.indexOf(shape.data.colorName) > -1) {
+                    context.fillStyle = '#ffffff';
+                } else { 
+                    context.fillStyle = '#000000';
+                }
+                let lineHeight = shape_height/(text.length+1);
+                $.each(text, function(key, value){
+                    context.fillText(value, text_X, text_Y + lineHeight*(key+1));
+                });
             }
             if (shape.data.border){
                 context.lineWidth = 1;
@@ -222,6 +212,30 @@ export default AuthorView.extend({
             }
             context.closePath();
         });
+    },
+
+    fitTextToShape(context, text, shape_width) {
+        let text_width = context.measureText(text).width;
+        if (text_width > shape_width) {
+            text = text.split(' ');
+            let line = "";
+            let word = " ";
+            let new_text = [];
+            do{
+                word = text.shift();
+                line = line + word + " ";
+                if (context.measureText(line).width > shape_width) {
+                    text.unshift(word);
+                    line = line.substring(0, line.lastIndexOf(word));
+                    new_text.push(line.trim());
+                    line = "";
+                }
+            } while (text.length > 0)
+            new_text.push(line.trim());
+            return new_text;
+        } else {
+            return [text];
+        }
     },
 
     hitTest(mouseX, mouseY, shape) {
@@ -327,9 +341,9 @@ export default AuthorView.extend({
 
     setFormContent(){
         let shape = this.shapes[this.shape_selection_index];
-        this.$('.shape-text').val('').prop('disabled', true);
-        this.$('.cw-image-map-data-label').addClass('disabled');
-        this.$('.shape-target').val('').prop('disabled', true);
+        this.$('.shape-target').val('');
+        this.$('.shape-title').val('');
+        this.$('.shape-text').val('');
         this.$('.resize-buttons').hide();
         this.$('.cw-image-map-resize').hide();
 
@@ -345,14 +359,13 @@ export default AuthorView.extend({
                     break;
                 case 'text':
                     this.$('.resize-rect').show();
-                    this.$('.shape-text').val(shape.data.text).prop('disabled', false);
-                    this.$('.cw-image-map-data-label[for="shape-text"]').removeClass('disabled');
                     break;
             }
             this.$('.add-shape').hide();
             this.$('.remove-shape').show();
-            this.$('.shape-target').val(shape.target).prop('disabled', false);
-            this.$('.cw-image-map-data-label[for="shape-target"]').removeClass('disabled');
+            this.$('.shape-target').val(shape.target);
+            this.$('.shape-text').val(shape.data.text);
+            this.$('.shape-title').val(shape.title);
         }
     },
 
@@ -367,12 +380,6 @@ export default AuthorView.extend({
                 shape.data.radius = 50;
                 break;
             case 'rect':
-                shape.data.X = 60;
-                shape.data.Y = 60;
-                shape.data.width = 100;
-                shape.data.height = 50;
-                break;
-            case 'text':
                 shape.data.X = 60;
                 shape.data.Y = 60;
                 shape.data.width = 100;
@@ -486,6 +493,13 @@ export default AuthorView.extend({
         }
     },
 
+    changeTitle(){
+        let shape = this.shapes[this.shape_selection_index];
+        if (shape){
+            shape.title = this.$('.shape-title').val();
+        }
+    },
+
     selectSource() {
         let selection = this.$('.cw-image-map-source').val();
         this.$('input.cw-image-map-file').hide();
@@ -505,6 +519,29 @@ export default AuthorView.extend({
         }
     
         return;
+    },
+    
+    selectFile() {
+        let view = this;
+        let selection = this.$('.cw-image-map-source').val();
+        let url = ""
+        switch (selection) {
+            case 'cw':
+                url = this.$('.cw-image-map-file option:selected').data('url');
+                break;
+            case 'web':
+                url = this.$('input.cw-image-map-file').val();
+                break;
+            default:
+                return;
+        }
+        this.$('.cw-image-map-original-img').attr('src', url);
+        let $original_img = this.$('.cw-image-map-original-img');
+        this.buildCanvas($original_img);
+
+        $original_img.on('load', function(){
+            view.buildCanvas($original_img);
+        });
     },
 
     onNavigate(event) {

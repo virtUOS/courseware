@@ -65,9 +65,8 @@ export default StudentView.extend({
             view.drawShapes();
 
             if(!(view.$('.cw-image-from-canvas').length > 0)) {
-                view.$('.cw-image-map-canvas').hide().after('<img class="cw-image-from-canvas">');
-                let img = view.$('.cw-image-from-canvas')[0];
-                img.src = view.context.canvas.toDataURL("image/jpeg", 1.0);
+                let src = view.context.canvas.toDataURL("image/jpeg", 1.0);
+                view.$('.cw-image-map-canvas').hide().after('<img class="cw-image-from-canvas" src="'+src+'">');
                 view.mapImage();
             }
         });
@@ -82,65 +81,83 @@ export default StudentView.extend({
         let view = this;
         $.each(this.shapes, function(key, value){
             let shape = value;
+            let text = shape.data.text;
+            let shape_width = 0, shape_height = 0, text_X = 0, text_Y = 0;
+
             context.beginPath();
             switch (shape.type) {
                 case 'arc':
+                    shape_width =  Math.round((2*shape.data.radius)/Math.sqrt(2))
+                    shape_height =  shape_width;
+                    text_X = shape.data.centerX;
+                    text_Y = shape.data.centerY - shape.data.radius*0.75;
                     context.arc(shape.data.centerX, shape.data.centerY, shape.data.radius, 0, 2 * Math.PI); // x, y, r, startAngle, endAngle ... Angle in radians!
                     context.fillStyle = shape.data.fillStyle;
                     context.fill();
                     break;
                 case 'ellipse':
+                    shape_width = shape.data.radiusX;
+                    shape_height = shape.data.radiusY*1.75;
+                    text_X = shape.data.X ;
+                    text_Y = shape.data.Y - shape.data.radiusY*0.8;
                     context.ellipse(shape.data.X, shape.data.Y, shape.data.radiusX, shape.data.radiusY, 0, 0, 2 * Math.PI);
                     context.fillStyle = shape.data.fillStyle;
                     context.fill();
                     break;
                 case 'rect':
+                    shape_width = shape.data.width;
+                    shape_height = shape.data.height;
+                    text_X = shape.data.X + shape.data.width/2;
+                    text_Y = shape.data.Y;
                     context.rect(shape.data.X, shape.data.Y, shape.data.width, shape.data.height);
                     context.fillStyle = shape.data.fillStyle;
                     context.fill();
-                    break;
-                case 'text':
-                    let text = shape.data.text;
-                    let text_width = context.measureText(text).width;
-                    if (text_width > shape.data.width) {
-                        text = text.split(' ');
-                        let line = "";
-                        let word = " ";
-                        let new_text = [];
-                        do{
-                            word = text.shift();
-                            line = line + word + " ";
-                            if (context.measureText(line).width > shape.data.width) {
-                                text.unshift(word);
-                                line = line.substring(0, line.lastIndexOf(word));
-                                new_text.push(line.trim());
-                                line = "";
-                            }
-                        } while (text.length > 0)
-                        new_text.push(line.trim());
-                        text = new_text;
-                    } else {
-                        text = [text];
-                    }
-                    context.rect(shape.data.X, shape.data.Y, shape.data.width, shape.data.height);
-                    context.fillStyle = shape.data.fillStyle;
-                    context.fill();
-                    context.textAlign = "center"; 
-                    context.font = "14px Arial"
-                    if (view.darkColors.indexOf(shape.data.colorName) > -1) {
-                        context.fillStyle = '#ffffff';
-                    } else { 
-                        context.fillStyle = '#000000';
-                    }
-                    let lineHeight = shape.data.height/(text.length+1);
-                    $.each(text, function(key, value){
-                        context.fillText(value, shape.data.X + shape.data.width/2,  shape.data.Y + lineHeight*(key+1));
-                    });            
                     break;
                 default:
                     return;
+
             }
+            if ((text) && (shape.data.colorName != 'transparent')) {
+                text = view.fitTextToShape(context, text, shape_width);
+                context.textAlign = "center"; 
+                context.font = "14px Arial"
+                if (view.darkColors.indexOf(shape.data.colorName) > -1) {
+                    context.fillStyle = '#ffffff';
+                } else { 
+                    context.fillStyle = '#000000';
+                }
+                let lineHeight = shape_height/(text.length+1);
+                $.each(text, function(key, value){
+                    context.fillText(value, text_X, text_Y + lineHeight*(key+1));
+                });
+            }
+
+            context.closePath();
         });
+    },
+
+    fitTextToShape(context, text, shape_width) {
+        let text_width = context.measureText(text).width;
+        if (text_width > shape_width) {
+            text = text.split(' ');
+            let line = "";
+            let word = " ";
+            let new_text = [];
+            do{
+                word = text.shift();
+                line = line + word + " ";
+                if (context.measureText(line).width > shape_width) {
+                    text.unshift(word);
+                    line = line.substring(0, line.lastIndexOf(word));
+                    new_text.push(line.trim());
+                    line = "";
+                }
+            } while (text.length > 0)
+            new_text.push(line.trim());
+            return new_text;
+        } else {
+            return [text];
+        }
     },
 
     mapImage(){
@@ -156,6 +173,7 @@ export default StudentView.extend({
         $.each(this.shapes, function(key, value){
             let shape = value;
             let target = shape.target;
+            let $area;
             if(target) {
                 switch (shape.type) {
                     case 'arc':
@@ -179,6 +197,9 @@ export default StudentView.extend({
                         let y2 = shape.data.Y+shape.data.height;
                         $map.append('<area id="shape-'+key+'" shape="rect" coords="'+shape.data.X+', '+shape.data.Y+', '+x2+', '+y2+'" href="'+target+'" target="_blank">');
                         break;
+                }
+                if (shape.title) {
+                    $map.find('#shape-'+key).attr('title',shape.title);
                 }
             }
         });

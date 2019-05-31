@@ -107,9 +107,12 @@ class ImageMapBlock extends Block
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
                 if (($ref->isImage()) && (!$ref->isLink())) {
+                    $url = $ref->getDownloadURL();
+                    $ref = $ref->toArray();
+                    $ref['url'] = $url;
                     $coursefilesarray[] = $ref;
                 }
-                if($ref->id == $file_id) {
+                if($ref['id'] == $file_id) {
                     $image_id_found = true;
                 }
             }
@@ -119,9 +122,12 @@ class ImageMapBlock extends Block
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
                 if (($ref->isImage()) && (!$ref->isLink())) {
+                    $url = $ref->getDownloadURL();
+                    $ref = $ref->toArray();
+                    $ref['url'] = $url;
                     $userfilesarray[] = $ref;
                 }
-                if($ref->id == $file_id) {
+                if($ref['id'] == $file_id) {
                     $image_id_found = true;
                 }
             }
