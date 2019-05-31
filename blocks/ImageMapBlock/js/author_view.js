@@ -158,6 +158,11 @@ export default AuthorView.extend({
                     context.fillStyle = shape.data.fillStyle;
                     context.fill();
                     break;
+                case 'ellipse':
+                    context.ellipse(shape.data.X, shape.data.Y, shape.data.radiusX, shape.data.radiusY, 0, 0, 2 * Math.PI);
+                    context.fillStyle = shape.data.fillStyle;
+                    context.fill();
+                    break;
                 case 'rect':
                     context.rect(shape.data.X, shape.data.Y, shape.data.width, shape.data.height);
                     context.fillStyle = shape.data.fillStyle;
@@ -223,7 +228,7 @@ export default AuthorView.extend({
         if (shape.type == 'arc') {
             let dx = shape.data.centerX - mouseX;
             let dy = shape.data.centerY - mouseY;
-            
+
             return(dx*dx + dy*dy < shape.data.radius*shape.data.radius);
         }
         if ((shape.type == 'rect') || (shape.type == 'text')) {
@@ -232,12 +237,18 @@ export default AuthorView.extend({
 
             return( (dx <= shape.data.width) && (dy <= shape.data.height) && (dx >= 0) && (dy >= 0) );
         }
+        if (shape.type == 'ellipse') {
+            let dx = shape.data.X - mouseX ;
+            let dy = shape.data.Y - mouseY;
+
+            return ((Math.abs(dx) < shape.data.radiusX) && (Math.abs(dy) < shape.data.radiusY));
+        }
     },
 
     mouseDownListener(event) {
         let canvas = this.$('.cw-image-map-canvas')[0];
         let bRect = canvas.getBoundingClientRect();
-		let mouseX = (event.clientX - bRect.left)*(canvas.width/bRect.width);
+        let mouseX = (event.clientX - bRect.left)*(canvas.width/bRect.width);
         let mouseY = (event.clientY - bRect.top)*(canvas.height/bRect.height);
         let view = this;
         this.shape_selected = false;
@@ -259,7 +270,7 @@ export default AuthorView.extend({
         }
         let canvas = this.$('.cw-image-map-canvas')[0];
         let bRect = canvas.getBoundingClientRect();
-		let targetX = Math.round((event.clientX - bRect.left)*(canvas.width/bRect.width));
+        let targetX = Math.round((event.clientX - bRect.left)*(canvas.width/bRect.width));
         let targetY = Math.round((event.clientY - bRect.top)*(canvas.height/bRect.height));
         let shape = this.shapes[this.shape_selection_index];
         switch(shape.type) {
@@ -271,6 +282,10 @@ export default AuthorView.extend({
             case 'text':
                 shape.data.X = shape.data.X + (targetX - shape.data.X) - 0.5 * shape.data.width;
                 shape.data.Y = shape.data.Y + (targetY - shape.data.Y) - 0.5 * shape.data.height;
+                break;
+            case 'ellipse':
+                shape.data.X = shape.data.X + (targetX - shape.data.X);
+                shape.data.Y = shape.data.Y + (targetY - shape.data.Y);
                 break;
 
         }
@@ -285,7 +300,7 @@ export default AuthorView.extend({
     selectShape(){
         let canvas = this.$('.cw-image-map-canvas')[0];
         let bRect = canvas.getBoundingClientRect();
-		let mouseX = (event.clientX - bRect.left)*(canvas.width/bRect.width);
+        let mouseX = (event.clientX - bRect.left)*(canvas.width/bRect.width);
         let mouseY = (event.clientY - bRect.top)*(canvas.height/bRect.height);
         let view = this;
 
@@ -325,6 +340,7 @@ export default AuthorView.extend({
                     this.$('.resize-arc').show();
                     break;
                 case 'rect':
+                case 'ellipse':
                     this.$('.resize-rect').show();
                     break;
                 case 'text':
@@ -361,6 +377,12 @@ export default AuthorView.extend({
                 shape.data.Y = 60;
                 shape.data.width = 100;
                 shape.data.height = 50;
+                break;
+            case 'ellipse':
+                shape.data.X = 60;
+                shape.data.Y = 60;
+                shape.data.radiusX = 50;
+                shape.data.radiusY = 20;
                 break;
             default: 
                 return;
@@ -401,18 +423,22 @@ export default AuthorView.extend({
                 break;
             case 'raise-width':
                 shape.data.width = shape.data.width + 10;
+                shape.data.radiusX = shape.data.radiusX + 10;
                 break;
             case 'reduce-width':
-                    if(shape.data.width > 10) {
+                    if((shape.data.width > 10) || shape.data.radiusX > 10 ){
                         shape.data.width = shape.data.width - 10;
+                        shape.data.radiusX = shape.data.radiusX - 10;
                     }
                 break;
             case 'raise-height':
                 shape.data.height = shape.data.height + 10;
+                shape.data.radiusY = shape.data.radiusY + 10;
                 break;
             case 'reduce-height':
-                if(shape.data.height > 10) {
+                if((shape.data.height > 10)|| (shape.data.radiusY > 10)) {
                     shape.data.height = shape.data.height - 10;
+                    shape.data.radiusY = shape.data.radiusY - 10;
                 }
                 break;
             default:

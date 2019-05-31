@@ -89,6 +89,11 @@ export default StudentView.extend({
                     context.fillStyle = shape.data.fillStyle;
                     context.fill();
                     break;
+                case 'ellipse':
+                    context.ellipse(shape.data.X, shape.data.Y, shape.data.radiusX, shape.data.radiusY, 0, 0, 2 * Math.PI);
+                    context.fillStyle = shape.data.fillStyle;
+                    context.fill();
+                    break;
                 case 'rect':
                     context.rect(shape.data.X, shape.data.Y, shape.data.width, shape.data.height);
                     context.fillStyle = shape.data.fillStyle;
@@ -155,6 +160,18 @@ export default StudentView.extend({
                 switch (shape.type) {
                     case 'arc':
                         $map.append('<area id="shape-'+key+'" shape="circle" coords="'+shape.data.centerX+', '+shape.data.centerY+', '+shape.data.radius+'" href="'+target+'" target="_blank">');
+                        break;
+                    case 'ellipse':
+                        let coords = '';
+                        let x = 0, y = 0;
+
+                        for (let theta=0; theta < 2*Math.PI; theta+=2*Math.PI/20) {
+                            x = shape.data.X + Math.round(shape.data.radiusX * Math.cos(theta));
+                            y = shape.data.Y + Math.round(shape.data.radiusY * Math.sin(theta));
+                            coords = coords + x + ',' + y + ',';
+                        }
+
+                        $map.append('<area id="shape-'+key+'" shape="poly" coords="'+coords+'" href="'+target+'" target="_blank">');
                         break;
                     case 'rect':
                     case 'text':
