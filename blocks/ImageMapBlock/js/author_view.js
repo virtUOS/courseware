@@ -157,7 +157,7 @@ export default AuthorView.extend({
             context.beginPath();
             switch (shape.type) {
                 case 'arc':
-                    shape_width =  Math.round((2*shape.data.radius)/Math.sqrt(2))
+                    shape_width =  Math.round((2*shape.data.radius)/Math.sqrt(2));
                     shape_height =  shape_width;
                     text_X = shape.data.centerX;
                     text_Y = shape.data.centerY - shape.data.radius*0.75;
@@ -187,6 +187,7 @@ export default AuthorView.extend({
                     return;
 
             }
+            
             if ((text) && (shape.data.colorName != 'transparent')) {
                 text = view.fitTextToShape(context, text, shape_width);
                 context.textAlign = "center"; 
@@ -221,8 +222,12 @@ export default AuthorView.extend({
             let line = "";
             let word = " ";
             let new_text = [];
+
             do{
                 word = text.shift();
+                if (context.measureText(word).width >= shape_width) {
+                    return ['#error'];
+                }
                 line = line + word + " ";
                 if (context.measureText(line).width > shape_width) {
                     text.unshift(word);
