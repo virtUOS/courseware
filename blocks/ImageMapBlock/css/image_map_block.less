@@ -56,11 +56,43 @@
         }
     }
 
-    .cw-image-map-data-label.disabled {
+    .cw-image-map-data-input.disabled {
         color: #ccc;
     }
 }
 
-section#courseware .block-content:not([data-view="student"]) select.cw-image-map-source {
-    width: 15em;
+section#courseware .block-content:not([data-view="student"]) {
+
+    select.cw-image-map-link-type, 
+    select.cw-image-map-source {
+        width: 15em;
+    }
+
+    select.cw-image-map-shape-link-protocol {
+        width: 6em;
+    }
+
+    input.cw-image-map-shape-link-target {
+        width: 23.75em;
+        margin-left: 0;
+    }
+
+    select.cw-image-map-source {
+            width: 9em;
+    }
+    
+    select:disabled,
+    input:disabled {
+        border-color: #ccc;
+        color: #ccc;
+    }
+
+    .cw-image-map-canvas,
+     {
+        max-width: 100%;
+    }
+}
+
+section#courseware.view-author .block-content .cw-image-from-canvas {
+    max-width: 100%;
 }

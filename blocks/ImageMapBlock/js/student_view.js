@@ -176,36 +176,35 @@ export default StudentView.extend({
         // insert areas
         $.each(this.shapes, function(key, value){
             let shape = value;
-            let target = shape.target;
-            let $area;
-            if(target) {
-                switch (shape.type) {
-                    case 'arc':
-                        $map.append('<area id="shape-'+key+'" shape="circle" coords="'+shape.data.centerX+', '+shape.data.centerY+', '+shape.data.radius+'" href="'+target+'" target="_blank">');
-                        break;
-                    case 'ellipse':
-                        let coords = '';
-                        let x = 0, y = 0;
 
-                        for (let theta=0; theta < 2*Math.PI; theta+=2*Math.PI/20) {
-                            x = shape.data.X + Math.round(shape.data.radiusX * Math.cos(theta));
-                            y = shape.data.Y + Math.round(shape.data.radiusY * Math.sin(theta));
-                            coords = coords + x + ',' + y + ',';
-                        }
+            switch (shape.type) {
+                case 'arc':
+                    $map.append('<area id="shape-'+key+'" shape="circle" coords="'+shape.data.centerX+', '+shape.data.centerY+', '+shape.data.radius+'">');
+                    break;
+                case 'ellipse':
+                    let coords = '';
+                    let x = 0, y = 0;
 
-                        $map.append('<area id="shape-'+key+'" shape="poly" coords="'+coords+'" href="'+target+'" target="_blank">');
-                        break;
-                    case 'rect':
-                    case 'text':
-                        let x2 = shape.data.X+shape.data.width;
-                        let y2 = shape.data.Y+shape.data.height;
-                        $map.append('<area id="shape-'+key+'" shape="rect" coords="'+shape.data.X+', '+shape.data.Y+', '+x2+', '+y2+'" href="'+target+'" target="_blank">');
-                        break;
-                }
-                if (shape.title) {
-                    $map.find('#shape-'+key).attr('title',shape.title);
-                }
+                    for (let theta=0; theta < 2*Math.PI; theta+=2*Math.PI/20) {
+                        x = shape.data.X + Math.round(shape.data.radiusX * Math.cos(theta));
+                        y = shape.data.Y + Math.round(shape.data.radiusY * Math.sin(theta));
+                        coords = coords + x + ',' + y + ',';
+                    }
+
+                    $map.append('<area id="shape-'+key+'" shape="poly" coords="'+coords+'">');
+                    break;
+                case 'rect':
+                case 'text':
+                    let x2 = shape.data.X+shape.data.width;
+                    let y2 = shape.data.Y+shape.data.height;
+                    $map.append('<area id="shape-'+key+'" shape="rect" coords="'+shape.data.X+', '+shape.data.Y+', '+x2+', '+y2+'">');
+                    break;
             }
+
+            let area = $map.find('#shape-'+key);
+            shape.title ? area.attr('title',shape.title) : area.attr('title', '');
+            shape.target ? area.attr('href', shape.target) : area.attr('href', '#');
+            shape.link_type == 'external' ? area.attr('target', '_blank') : area.attr('target', '_self');
         });
     }
 });

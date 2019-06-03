@@ -2,12 +2,13 @@
 namespace Mooc\UI\ImageMapBlock;
 
 use Mooc\UI\Block;
+use Mooc\DB\Block as DBBlock;
 
 class ImageMapBlock extends Block 
 {
-    const NAME = 'ImageMap';
+    const NAME = 'Verweissensitive Grafik';
     const BLOCK_CLASS = 'interaction';
-    const DESCRIPTION = 'ImageMap';
+    const DESCRIPTION = 'Beliebige Bereiche auf einem Bild lassen sich verlinken';
 
     public function initialize()
     {
@@ -32,8 +33,17 @@ class ImageMapBlock extends Block
             $access = true;
         }
 
+        foreach($content->shapes as $shape) {
+            if ($shape->link_type == "internal") {
+                $shape->target = "courseware?cid=".$this->container['cid']."&selected=".$this->getTargetId($shape->target);
+            }
+        }
+        
+        $content = json_encode($content);
+
         return array_merge($this->getAttrArray(), array(
-            'image_url' => $image_url
+            'image_url' => $image_url,
+            'content' => $content
         ));
     }
 
@@ -61,13 +71,26 @@ class ImageMapBlock extends Block
             $image_url = $content->image_url;
             $access = true;
         }
+        if (strpos($this->getModel()->parent->title, "AsideSection") > -1) {
+            $hasinternal = false;
+        } else {
+            $hasinternal = true;
+        }
+        $inthischapter = $this->getThisChapterSiblings();
+        $inotherchapters= $this->getOtherSubchapters();
 
         return array_merge($this->getAttrArray(), array(
-            'image_files_user' => $files_arr['userfilesarray'], 
-            'image_files_course' => $files_arr['coursefilesarray'], 
-            'no_image_files' => $no_files, 
-            'other_user_file' => $other_user_file,
-            'image_url' => $image_url
+            'image_files_user'      => $files_arr['userfilesarray'], 
+            'image_files_course'    => $files_arr['coursefilesarray'], 
+            'no_image_files'        => $no_files, 
+            'other_user_file'       => $other_user_file,
+            'image_url'             => $image_url,
+
+            'inthischapter'         => $inthischapter, 
+            'inotherchapters'       => $inotherchapters,
+            'hasinternal'           => $hasinternal, 
+            'hasnext'               => $this->getTargetId("next") != null,
+            'hasprev'               => $this->getTargetId("prev") != null
         ));
     }
 
@@ -82,6 +105,96 @@ class ImageMapBlock extends Block
         return array(
             'image_map_content' => $this->image_map_content
         );
+    }
+
+    private function getTargetId($target)
+    {
+        $id = '';
+        $section = $this->getModel()->parent;
+        $subchapter = $section->parent;
+        $chapter = $subchapter->parent;
+        $courseware = $this->container['current_courseware'];
+
+        if ($target == 'next') {
+            $id = $courseware->getNeighborSections($section)['next']['id'];
+        }
+
+        if ($target == 'prev') {
+            $id = $courseware->getNeighborSections($section)['prev']['id'];
+        }
+
+        if (strpos($target, 'sibling') > -1) {
+            $num = (int)substr($target, 7);
+            $id = $this->getModel()->parent->parent->parent->children[$num]['id'];
+        }
+
+        if (strpos($target, 'other') > -1) {
+            $chapter_pos = substr($target, 5);
+            $chapter_pos = (int)strtok($chapter_pos,'_cpos');
+            $subchapter_pos = (int)substr($target, strpos($target, '_item') + 5);
+
+            $thischapter = $this->getModel()->parent->parent->parent;
+            $allchapters = $thischapter->parent->children;
+            $i = 0; $this_chapter_pos = "";
+            foreach($allchapters as $chapter) {
+                if($thischapter->id == $chapter->id) {
+                    $this_chapter_pos = $i;
+                }
+                $i++;
+            }
+
+            $chatper = $allchapters[$this_chapter_pos + $chapter_pos];
+            $id = $chatper->children[$subchapter_pos]['id'];
+        }
+
+        return $id;
+    }
+
+    private function getThisChapterSiblings()
+    {
+        $inthischapter = array();
+        $chapter = $this->getModel()->parent->parent->parent;
+        $children = $chapter->children;
+        $i = 0;
+        foreach ($children as $sibling) {
+            array_push($inthischapter, array("value" => "sibling".$i, "title" => $sibling->title));
+            $i++;
+        }
+
+        return $inthischapter;
+    }
+
+    private function getOtherSubchapters()
+    {
+        $inotherchapters = array();
+        $thischapter = $this->getModel()->parent->parent->parent;
+        $allchapters = $thischapter->parent->children;
+        $i = 0; $this_chapter_pos = '';
+
+        foreach($allchapters as $chapter) {
+            if($thischapter->id == $chapter->id) {
+                $this_chapter_pos = $i;
+            }
+            $i++;
+        }
+
+        foreach($allchapters as $key => $chapter) {
+            if ($key == $this_chapter_pos) { 
+                continue;
+            }
+            $relativ_chapter_pos = $key - $this_chapter_pos;
+            $subchapters = $chapter->children;
+            $i = 0;
+            foreach ($subchapters as $subchapter) {
+                array_push($inotherchapters, array(
+                    'value' => 'other_cpos'.$relativ_chapter_pos.'_item'.$i, 
+                    'title' => $chapter->title.' -> '.$subchapter->title
+                ));
+                $i++;
+            }
+        }
+
+        return $inotherchapters;
     }
 
     public function save_handler(array $data)

@@ -16,8 +16,11 @@ export default AuthorView.extend({
         'click .cw-image-map-color': 'selectColor',
         'click .cw-image-map-resize': 'shapeResize',
         'input .shape-text': 'changeText',
-        'input .shape-target': 'changeTarget',
-        'input .shape-title': 'changeTitle',
+        'input .cw-image-map-shape-link-target': 'changeTarget',
+        'change .cw-image-map-shape-link-target': 'changeTarget',
+        'change .cw-image-map-shape-link-protocol': 'changeTarget',
+        'change .cw-image-map-shape-link-type': 'selectLinkType',
+        'input .cw-image-map-shape-title': 'changeTitle',
         'change select.cw-image-map-source': 'selectSource',
         'change select.cw-image-map-file' : 'selectFile',
         'input input.cw-image-map-file' : 'selectFile'
@@ -98,7 +101,8 @@ export default AuthorView.extend({
             this.$('.cw-image-map-file-select-info').hide();
             this.$('.cw-image-map-source option[value="none"]').prop('selected', true);
         }
-        
+
+        this.setFormContent();
 
         // load background image
         let $original_img = this.$('.cw-image-map-original-img');
@@ -346,13 +350,21 @@ export default AuthorView.extend({
 
     setFormContent(){
         let shape = this.shapes[this.shape_selection_index];
-        this.$('.shape-target').val('');
-        this.$('.shape-title').val('');
+        this.$('.cw-image-map-shape-title').val('');
         this.$('.shape-text').val('');
         this.$('.resize-buttons').hide();
         this.$('.cw-image-map-resize').hide();
+        this.$('.cw-image-map-shape-link-type option[value="external"]').prop('selected', true);
+        this.$('input.cw-image-map-shape-link-target').val('');
 
         if (shape) {
+            this.$('.shape-text').prop('disabled', false);
+            this.$('.cw-image-map-shape-link-type').prop('disabled', false);
+            this.$('.cw-image-map-shape-link-protocol').prop('disabled', false);
+            this.$('.cw-image-map-shape-link-target').prop('disabled', false);
+            this.$('.cw-image-map-shape-title').prop('disabled', false);
+            this.$('.cw-image-map-data-input').removeClass('disabled');
+            
             this.$('.resize-buttons').show();
             switch (shape.type){
                 case 'arc':
@@ -370,7 +382,43 @@ export default AuthorView.extend({
             this.$('.remove-shape').show();
             this.$('.shape-target').val(shape.target);
             this.$('.shape-text').val(shape.data.text);
-            this.$('.shape-title').val(shape.title);
+            this.$('.cw-image-map-shape-title').val(shape.title);
+            this.$('.cw-image-map-shape-link-type option[value="'+shape.link_type+'"]').prop('selected', true);
+            switch (shape.link_type) {
+                case 'external':
+                    this.$('select.cw-image-map-shape-link-target').hide();
+                    this.$('input.cw-image-map-shape-link-target').show();
+                    this.$('.cw-image-map-shape-link-protocol').show();
+                    this.$('input.cw-image-map-shape-link-target').val(shape.target.replace('http://','').replace('https://',''));
+                    if (shape.target.indexOf('https://') > -1) {
+                        this.$('.cw-image-map-shape-link-protocol option[value="https://"]').prop('selected', true);
+                    }
+                    break;
+                case 'internal':
+                    shape.target = this.$('select.cw-image-map-shape-link-target option[value="'+shape.target+'"]').prop('selected', true);
+                    this.$('select.cw-image-map-shape-link-target').show();
+                    this.$('input.cw-image-map-shape-link-target').hide();
+                    this.$('.cw-image-map-shape-link-protocol').hide();
+                    break;
+                default:
+                    this.$('select.cw-image-map-shape-link-target').hide();
+                    this.$('input.cw-image-map-shape-link-target').show();
+                    this.$('.cw-image-map-shape-link-protocol').show();
+                    this.$('.cw-image-map-shape-link-type option[value="external"]').prop('selected', true);
+                
+            }
+
+        } else {
+            this.$('.shape-text').prop('disabled', true);
+            this.$('.cw-image-map-shape-link-type').prop('disabled', true);
+            this.$('.cw-image-map-shape-link-protocol').prop('disabled', true);
+            this.$('.cw-image-map-shape-link-target').prop('disabled', true);
+            this.$('.cw-image-map-shape-title').prop('disabled', true);
+            this.$('.cw-image-map-data-input').addClass('disabled');
+            this.$('select.cw-image-map-shape-link-target').hide();
+            this.$('input.cw-image-map-shape-link-target').show();
+            this.$('.cw-image-map-shape-link-protocol').show();
+            this.$('.cw-image-map-shape-link-type option[value="external"]').prop('selected', true);
         }
     },
 
@@ -493,15 +541,39 @@ export default AuthorView.extend({
 
     changeTarget(){
         let shape = this.shapes[this.shape_selection_index];
+        let link_type = this.$('.cw-image-map-shape-link-type option:selected').val()
         if (shape){
-            shape.target = this.$('.shape-target').val();
+            shape.link_type = link_type;
+            if (link_type == 'external') {
+                shape.target = this.$('.cw-image-map-shape-link-protocol option:selected').val()+this.$('input.cw-image-map-shape-link-target').val();
+            }
+            if (link_type == 'internal') {
+                shape.target = this.$('select.cw-image-map-shape-link-target option:selected').val();
+            }
+            console.log(shape.target);
         }
+
+    },
+
+    selectLinkType() {
+        let link_type = this.$('.cw-image-map-shape-link-type option:selected').val();
+        if (link_type == 'internal') {
+            this.$('select.cw-image-map-shape-link-target').show();
+            this.$('input.cw-image-map-shape-link-target').hide();
+            this.$('.cw-image-map-shape-link-protocol').hide();
+        }
+        if (link_type == 'external') {
+            this.$('select.cw-image-map-shape-link-target').hide();
+            this.$('input.cw-image-map-shape-link-target').show();
+            this.$('.cw-image-map-shape-link-protocol').show();
+        }
+        this.changeTarget();
     },
 
     changeTitle(){
         let shape = this.shapes[this.shape_selection_index];
         if (shape){
-            shape.title = this.$('.shape-title').val();
+            shape.title = this.$('.cw-image-map-shape-title').val();
         }
     },
 
