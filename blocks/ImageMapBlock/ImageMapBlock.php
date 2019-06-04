@@ -38,7 +38,7 @@ class ImageMapBlock extends Block
                 $shape->target = "courseware?cid=".$this->container['cid']."&selected=".$this->getTargetId($shape->target);
             }
         }
-        
+
         $content = json_encode($content);
 
         return array_merge($this->getAttrArray(), array(
@@ -54,8 +54,8 @@ class ImageMapBlock extends Block
         $files_arr = $this->showFiles($content->image_id);
 
         $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['image_id_found'] == false) && empty($content->image_id);
-        
-        if((!$files_arr['image_id_found']) && (!empty($content->image_id))){
+
+        if ((!$files_arr['image_id_found']) && (!empty($content->image_id))) {
             $other_user_file = array('id' => $content->image_id, 'name' => $content->image_name);
         } else {
             $other_user_file = false;
@@ -85,7 +85,6 @@ class ImageMapBlock extends Block
             'no_image_files'        => $no_files, 
             'other_user_file'       => $other_user_file,
             'image_url'             => $image_url,
-
             'inthischapter'         => $inthischapter, 
             'inotherchapters'       => $inotherchapters,
             'hasinternal'           => $hasinternal, 
@@ -96,8 +95,17 @@ class ImageMapBlock extends Block
 
     public function preview_view()
     {
+        $content = json_decode($this->image_map_content);
+        if ($content->source == "cw") {
+            $file = \FileRef::find($content->image_id);
+            if ($file) {
+                $image_url = $file->getDownloadURL();
+            }
+        } else {
+            $image_url = $content->image_url;
+        }
 
-        return array();
+        return array('image_url' => $image_url);
     }
 
     private function getAttrArray() 
@@ -207,7 +215,7 @@ class ImageMapBlock extends Block
 
         return;
     }
-    
+
     private function showFiles($file_id)
     {
         $coursefilesarray = array();
@@ -256,7 +264,29 @@ class ImageMapBlock extends Block
 
     public function getFiles()
     {
-        // TODO
+        $content = json_decode($this->image_map_content);
+
+        if ($content->source != 'cw') {
+            return;
+        }
+
+        if ($content->image_id == '') {
+            return;
+        }
+        $file_ref = new \FileRef($content->image_id);
+        $file = new \File($file_ref->file_id);
+
+        $files[] = array(
+            'id' => $content->image_id,
+            'name' => $file_ref->name,
+            'description' => $file_ref->description,
+            'filename' => $file->name,
+            'filesize' => $file->size,
+            'url' => $file->getURL(),
+            'path' => $file->getPath()
+        );
+
+        return $files;
     }
 
     public function getXmlNamespace()
@@ -280,6 +310,22 @@ class ImageMapBlock extends Block
 
     public function importContents($contents, array $files)
     {
-        // TODO
+        $content = json_decode($this->image_map_content);
+
+        if ($content->source != 'cw') {
+            return;
+        }
+
+        foreach($files as $file){
+            if ($file->name == '') {
+                continue;
+            }
+            if($content->image_name == $file->name) {
+                $content->image_id = $file->id;
+                $this->save();
+
+                return array($file->id);
+            }
+        }
     }
 }

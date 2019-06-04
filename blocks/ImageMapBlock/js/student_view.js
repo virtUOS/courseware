@@ -13,8 +13,7 @@ export default StudentView.extend({
     },
 
     postRender() {
-        var view = this;
-
+        let view = this;
         let content = this.$('.cw-image-map-stored-content').val();
         if (content != '') {
             content = JSON.parse(content);
@@ -50,12 +49,12 @@ export default StudentView.extend({
 
     },
 
-    drawScreen(){
-        var context = this.context;
+    drawScreen() {
+        let context = this.context;
         let view = this;
-        var outlineImage = new Image();
+        let outlineImage = new Image();
         outlineImage.src = this.$('.cw-image-map-original-img').attr('src');
-        $(outlineImage).on('load', function(){// chrome needs this!
+        $(outlineImage).on('load', function() {// chrome needs this!
             context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
             context.fillStyle = "#ffffff";
             context.fillRect(0, 0, context.canvas.width, context.canvas.height); // set background
@@ -64,7 +63,7 @@ export default StudentView.extend({
             }
             view.drawShapes();
 
-            if(!(view.$('.cw-image-from-canvas').length > 0)) {
+            if (!(view.$('.cw-image-from-canvas').length > 0)) {
                 let src = view.context.canvas.toDataURL("image/jpeg", 1.0);
                 view.$('.cw-image-map-canvas').hide().after('<img class="cw-image-from-canvas" src="'+src+'">');
                 view.mapImage();
@@ -76,10 +75,10 @@ export default StudentView.extend({
         }
     },
 
-    drawShapes(){
+    drawShapes() {
         let context = this.context;
         let view = this;
-        $.each(this.shapes, function(key, value){
+        $.each(this.shapes, function(key, value) {
             let shape = value;
             let text = shape.data.text;
             let shape_width = 0, shape_height = 0, text_X = 0, text_Y = 0;
@@ -114,10 +113,10 @@ export default StudentView.extend({
                     context.fill();
                     break;
                 default:
-                    return;
 
+                    return;
             }
-            
+
             if ((text) && (shape.data.colorName != 'transparent')) {
                 text = view.fitTextToShape(context, text, shape_width);
                 context.textAlign = "center"; 
@@ -128,7 +127,7 @@ export default StudentView.extend({
                     context.fillStyle = '#000000';
                 }
                 let lineHeight = shape_height/(text.length+1);
-                $.each(text, function(key, value){
+                $.each(text, function(key, value) {
                     context.fillText(value, text_X, text_Y + lineHeight*(key+1));
                 });
             }
@@ -164,7 +163,7 @@ export default StudentView.extend({
         }
     },
 
-    mapImage(){
+    mapImage() {
         let $img = this.$('.cw-image-from-canvas');
         let image = $img[0];
         // generate map name
@@ -174,7 +173,7 @@ export default StudentView.extend({
         $img.after('<map name="'+map_name+'"></map>');
         let $map = this.$('map[name="'+map_name+'"]');
         // insert areas
-        $.each(this.shapes, function(key, value){
+        $.each(this.shapes, function(key, value) {
             let shape = value;
 
             switch (shape.type) {
@@ -184,13 +183,11 @@ export default StudentView.extend({
                 case 'ellipse':
                     let coords = '';
                     let x = 0, y = 0;
-
                     for (let theta=0; theta < 2*Math.PI; theta+=2*Math.PI/20) {
                         x = shape.data.X + Math.round(shape.data.radiusX * Math.cos(theta));
                         y = shape.data.Y + Math.round(shape.data.radiusY * Math.sin(theta));
                         coords = coords + x + ',' + y + ',';
                     }
-
                     $map.append('<area id="shape-'+key+'" shape="poly" coords="'+coords+'">');
                     break;
                 case 'rect':
