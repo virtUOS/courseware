@@ -35,7 +35,7 @@ export default StudentView.extend({
 
     buildCanvas($original_img) {
         let canvas = this.$('.cw-image-map-canvas')[0];
-        canvas.width = 868;
+        canvas.width = 860;
         if ($original_img[0].height > 0) {
             canvas.height = Math.round((canvas.width / $original_img[0].width) * $original_img[0].height);
         } else {

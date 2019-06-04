@@ -1,7 +1,9 @@
 @import '../../../assets/less/mixins';
 
 .ImageMapBlock {
-
+    .block-content {
+        overflow-x: auto;
+    }
     .cw-image-map-buttonset {
         display: inline-block;
         padding: 5px;
@@ -87,12 +89,12 @@ section#courseware .block-content:not([data-view="student"]) {
         color: #ccc;
     }
 
-    .cw-image-map-canvas,
-     {
-        max-width: 100%;
+    .cw-image-map-canvas {
+        //max-width: 100%;
     }
 }
 
-section#courseware.view-author .block-content .cw-image-from-canvas {
-    max-width: 100%;
+section#courseware.view-student .block-content .cw-image-from-canvas {
+    border: solid thin #ccc;
+    padding: 3px;
 }
