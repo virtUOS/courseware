@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg  width="16" height="16" id="icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <defs>
+    <style>
+      .fil1{fill:#abb7ce; stroke:#abb7ce;}
+    </style>
+  </defs>
+  <title
+     id="title7">Icon Light Bulb</title>
+  <g
+     transform="matrix(0.00885827,0,0,0.00885827,0.13559175,-65.067809)"
+     id="light-bulb">
+    <path
+       class="fil1"
+       d="m 1156.2864,8711.386 -491.80912,0 c -19.07183,0 -34.08573,-13.8079 -34.08573,-30.9744 0,-94.7894 -21.10075,-178.7564 -51.53453,-254.8863 -31.24533,-77.996 -72.22935,-148.5281 -110.37301,-214.5821 -64.51951,-111.2095 -122.54646,-210.8504 -122.54646,-318.701 l 0,-5.971 c 1.62312,-166.0681 73.04095,-298.176 178.95038,-389.2334 105.50362,-91.0574 245.90453,-140.3181 386.30552,-140.3181 1.2173,0 2.4346,0 3.2462,0.3733 l 2.0289,0 c 147.70495,1.1195 295.00445,57.4706 401.31955,159.3504 94.9533,91.4308 157.0381,218.6872 157.0381,375.7988 0,107.8506 -58.027,207.4915 -122.1407,318.701 -76.2873,131.3615 -162.3132,279.1432 -162.3132,469.4684 0,17.1665 -15.014,30.9744 -34.0859,30.9744 z"/>
+    <rect
+       class="fil1"
+       x="740"
+       y="-8880"
+       width="330"
+       height="10"
+       style="fill-opacity:1;stroke-width:110;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       transform="scale(1,-1)" />
+    <rect
+       class="fil1"
+       x="780"
+       y="-9080"
+       width="250"
+       height="10"
+       style="stroke-width:110;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       transform="scale(1,-1)" />
+  </g>
+</svg>

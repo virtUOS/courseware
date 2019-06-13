@@ -40,7 +40,7 @@ class Section extends Block
         'literature', 'news', 'notification2', 'place',
         'print', 'ranking', 'refresh', 'resources',
         'staple', 'star', 'stat', 'studygroup',
-        'tag', 'wizard', 'youtube'
+        'tag', 'wizard', 'youtube', 'light-bulb'
     );
 
     // mapping of block types to icons
