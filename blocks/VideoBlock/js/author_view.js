@@ -187,46 +187,67 @@ export default AuthorView.extend({
                 $view.$('.cw-videoblock-recorder-start').hide();
                 $view.$('.cw-videoblock-recorder-stop').hide();
                 $view.$('.cw-videoblock-recorder-enable-info').show();
+                $view.$('.cw-videoblock-recorder-device-info').hide();
                 if (!window.MediaRecorder) {
                     $view.$('.cw-videoblock-recorder-enable-info').hide();
                     $view.$('.cw-videoblock-recorder-browser-info').show();
                     break;
                 }
 
-                navigator.mediaDevices.getUserMedia({
-                    audio: true, 
-                    video: {
-                        width: { min: 1024, ideal: 1280, max: 1920 },
-                        height: { min: 576, ideal: 720, max: 1080 }
-                    }
-                }).then(_stream => {
-                    this.stream = _stream;
 
-                    $view.$('.cw-videoblock-recorder-start').show();
-                    $view.$('.cw-videoblock-recorder-enable-info').hide();
-                    let options = {
-                        audioBitsPerSecond : 128000,
-                        videoBitsPerSecond : 1400000,
-                        mimeType : 'video/webm'
-                    }
-                    $view.recorder = new MediaRecorder(this.stream, options);
-                    let video = this.$('.video-wrapper video')[0];
-                    video.srcObject = this.stream;
-                    video.onloadedmetadata = function(e) {
-                        if(video.srcObject != null) {
-                            video.play();
+                navigator.mediaDevices.enumerateDevices()
+                    .then(function(deviceInfos){
+                        let videoInput = false;
+                        let audioInput = false;
+                        $.each(deviceInfos, function(){
+                            if (this.kind == 'videoinput') {
+                                videoInput = true;
+                            }
+                            if (this.kind == 'audioinput') {
+                                audioInput = true;
+                            }
+                        });
+                        if (!(videoInput && audioInput)) {
+                            $view.$('.cw-videoblock-recorder-enable-info').hide();
+                            $view.$('.cw-videoblock-recorder-device-info').show();
+                        } else {
+                            navigator.mediaDevices.getUserMedia({
+                                audio: true, 
+                                video: {
+                                    width: { min: 1024, ideal: 1280, max: 1920 },
+                                    height: { min: 576, ideal: 720, max: 1080 }
+                                }
+                            }).then(_stream => {
+                                $view.stream = _stream;
+            
+                                $view.$('.cw-videoblock-recorder-start').show();
+                                $view.$('.cw-videoblock-recorder-enable-info').hide();
+                                let options = {
+                                    audioBitsPerSecond : 128000,
+                                    videoBitsPerSecond : 1400000,
+                                    mimeType : 'video/webm'
+                                }
+                                $view.recorder = new MediaRecorder($view.stream, options);
+                                let video = $view.$('.video-wrapper video')[0];
+                                video.srcObject = $view.stream;
+                                video.onloadedmetadata = function(e) {
+                                    if(video.srcObject != null) {
+                                        video.play();
+                                    }
+                                };
+            
+                                $view.recorder.ondataavailable = e => {
+                                    $view.chunks.push(e.data);
+                                    if($view.recorder.state == 'inactive')  {
+                                        video.pause();
+                                        video.srcObject = null;
+                                        $view.makeBlob();
+                                    }
+                                };
+                            });
                         }
-                    };
+                    });
 
-                    $view.recorder.ondataavailable = e => {
-                        $view.chunks.push(e.data);
-                        if($view.recorder.state == 'inactive')  {
-                            video.pause();
-                            video.srcObject = null;
-                            $view.makeBlob();
-                        }
-                    };
-                });
                 break;
         }
     },

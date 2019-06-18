@@ -171,24 +171,38 @@ export default AuthorView.extend({
             $view.$('.cw-audioblock-recorder-browser-info').hide();
             $view.$('.cw-audioblock-recorder-start').hide();
             $view.$('.cw-audioblock-recorder-stop').hide();
+            $view.$('.cw-audioblock-recorder-device-info').hide();
             if (!window.MediaRecorder) {
                 $view.$('.cw-audioblock-recorder-enable-info').hide();
                 $view.$('.cw-audioblock-recorder-browser-info').show();
                 break;
             }
+            navigator.mediaDevices.enumerateDevices()
+            .then(function(deviceInfos){
+                let audioInput = false;
+                $.each(deviceInfos, function(){
+                     if (this.kind == 'audioinput') {
+                        audioInput = true;
+                    }
+                });
+                if (!( audioInput)) {
+                    $view.$('.cw-audioblock-recorder-enable-info').hide();
+                    $view.$('.cw-audioblock-recorder-device-info').show();
+                } else {
+                  navigator.mediaDevices.getUserMedia({audio: true}).then(_stream => {
+                      let stream = _stream;
 
-            navigator.mediaDevices.getUserMedia({audio: true}).then(_stream => {
-                let stream = _stream;
+                      $view.$('.cw-audioblock-recorder-start').show();
+                      $view.$('.cw-audioblock-recorder-enable-info').hide();
+                      $view.recorder = new MediaRecorder(stream);
 
-                $view.$('.cw-audioblock-recorder-start').show();
-                $view.$('.cw-audioblock-recorder-enable-info').hide();
-                $view.recorder = new MediaRecorder(stream);
-
-                $view.recorder.ondataavailable = e => {
-                  $view.chunks.push(e.data);
-                  if($view.recorder.state == 'inactive')  $view.makeBlob();
-                };
-              });
+                      $view.recorder.ondataavailable = e => {
+                        $view.chunks.push(e.data);
+                        if($view.recorder.state == 'inactive')  $view.makeBlob();
+                      };
+                    });
+                }
+            });
             break;
     }
 
