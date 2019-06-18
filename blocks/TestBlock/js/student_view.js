@@ -63,32 +63,23 @@ export default StudentView.extend({
             }
 
             let indexed_array = {};
-
             $.each($form.serializeArray(), function () {
-                if (this.name.indexOf('[') < 0) {
-                        indexed_array[this.name] = this.value || '';
-                } else {
-                    let splinter = this.name.split('[');
-                    let name = splinter[0];
-                    if (this.name.indexOf('[]') > 0) {
-                        if (!indexed_array[name]) {
-                            indexed_array[name] = [indexed_array[name]];
-                            indexed_array[name] = [];
-                        }
-                        indexed_array[name].push(this.value);
-                    }else {
-                        let key = splinter[1].split(']')[0];
-                        if (!indexed_array[name]) {
-                            indexed_array[name] = [indexed_array[name]];
-                        }
-                        indexed_array[name][key] = this.value || '';
+                if (this.name.indexOf('answer[') > -1) {
+                    if (!('answer' in indexed_array)) {
+                        indexed_array['answer'] = {};
                     }
+                    let split = this.name.split('[');
+                    let key = split[1].split(']')[0];
+                    indexed_array['answer'][key] =  this.value;
+                } else {
+                    indexed_array[this.name] = this.value;
                 }
             });
 
             Promise.all(promises).then(function() {
                 indexed_array.files = files_array;
                 let file_upload_failed = false;
+                // console.log(indexed_array); return;
                 helper.callHandler(view.model.id, 'exercise_submit', indexed_array)
                 .then(function (resp) {
                     file_upload_failed = resp.file_upload_failed
@@ -110,8 +101,8 @@ export default StudentView.extend({
                 .catch(function () {
                     console.log('failed to store the solution');
                 });
-            });                
-            
+            });
+
             return false;
         },
 
