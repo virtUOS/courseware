@@ -21,9 +21,7 @@ export default AuthorView.extend({
         'change .cw-image-map-shape-link-protocol': 'changeTarget',
         'change .cw-image-map-shape-link-type': 'selectLinkType',
         'input .cw-image-map-shape-title': 'changeTitle',
-        'change select.cw-image-map-source': 'selectSource',
-        'change select.cw-image-map-file' : 'selectFile',
-        'input input.cw-image-map-file' : 'selectFile'
+        'change select.cw-image-map-file' : 'selectFile'
     },
 
     initialize() {
@@ -69,37 +67,11 @@ export default AuthorView.extend({
         if (content != '') {
             content = JSON.parse(content);
             this.shapes = content.shapes;
-            switch (content.source) {
-                case 'cw':
-                    this.$('input.cw-image-map-file').hide();
-                    this.$('.cw-image-map-file-input-info').hide();
-                    this.$('.cw-image-map-file option[file-id="'+content.image_id+'"]').prop('selected', true);
-                    this.$('.cw-image-map-source option[value="cw"]').prop('selected', true);
-                    this.$('select.cw-image-map-file').show();
-                    this.$('.cw-image-map-file-select-info').show();
-                    break;
-                case 'web':
-                    this.$('select.cw-image-map-file').hide();
-                    this.$('.cw-image-map-file-select-info').hide();
-                    this.$('input.cw-image-map-file').val(content.image_url);
-                    this.$('.cw-image-map-source option[value="web"]').prop('selected', true);
-                    this.$('.cw-image-map-file-input-info').show();
-                    break;
-                case 'none':
-                    this.$('input.cw-image-map-file').hide();
-                    this.$('.cw-image-map-file-input-info').hide();
-                    this.$('select.cw-image-map-file').hide();
-                    this.$('.cw-image-map-file-select-info').hide();
-                    this.$('.cw-image-map-source option[value="none"]').prop('selected', true);
-                    break;
-            }
+            this.$('.cw-image-map-file option[file-id="'+content.image_id+'"]').prop('selected', true);
+            this.$('.cw-image-map-source option[value="cw"]').prop('selected', true);
+
         } else {
             this.shapes = [];
-            this.$('input.cw-image-map-file').hide();
-            this.$('.cw-image-map-file-input-info').hide();
-            this.$('select.cw-image-map-file').hide();
-            this.$('.cw-image-map-file-select-info').hide();
-            this.$('.cw-image-map-source option[value="none"]').prop('selected', true);
         }
 
         this.setFormContent();
@@ -593,18 +565,8 @@ export default AuthorView.extend({
 
     selectFile() {
         let view = this;
-        let selection = this.$('.cw-image-map-source').val();
-        let url = ""
-        switch (selection) {
-            case 'cw':
-                url = this.$('.cw-image-map-file option:selected').data('url');
-                break;
-            case 'web':
-                url = this.$('input.cw-image-map-file').val();
-                break;
-            default:
-                return;
-        }
+        let url = this.$('.cw-image-map-file option:selected').data('url');
+
         this.$('.cw-image-map-original-img').attr('src', url);
         let $original_img = this.$('.cw-image-map-original-img');
         this.buildCanvas($original_img);
@@ -645,32 +607,13 @@ export default AuthorView.extend({
         var view = this;
         let content = {};
         content.shapes = this.shapes;
-        content.source = this.$('.cw-image-map-source').val();
-        switch (content.source) {
-            case 'web':
-                content.image_url = this.$('input.cw-image-map-file').val();
-                if (content.image_url != '') {
-                content.image = true;
-                } else {
-                content.image = false;
-                content.source = 'none';
-                }
-                break;
-            case 'cw':
-                content.image_url = '';
-                content.image_id = this.$('select.cw-image-map-file option:selected').attr('file-id');
-                content.image_name = this.$('select.cw-image-map-file option:selected').attr('filename');
-                if (content.image_id != '') {
-                content.image = true;  
-                } else {
-                content.image = false;
-                content.source = 'none';
-                }
-                break;
-            case 'none':
-                content.image_url = '';
-                content.image = false;
-                break;
+        content.image_url = '';
+        content.image_id = this.$('select.cw-image-map-file option:selected').attr('file-id');
+        content.image_name = this.$('select.cw-image-map-file option:selected').attr('filename');
+        if (content.image_id != '') {
+            content.image = true;  
+        } else {
+            content.image = false;
         }
         content = JSON.stringify(content);
         helper

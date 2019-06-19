@@ -1,15 +1,11 @@
 <input type="hidden" class="cw-image-map-stored-content" value="{{image_map_content}}"/>
 
 <div class="cw-image-map-file-selector">
-    <label for="cw-image-map-source" class="cw-image-map-source-label">{{#i18n}}Bild{{/i18n}}:</label>
-    <select class="cw-image-map-source" name="cw-image-map-source">
-        <option value="cw">{{#i18n}}Dateibereich{{/i18n}}:</option>
-        <option value="web">{{#i18n}}URL{{/i18n}}:</option>
-        <option value="none">{{#i18n}}kein Bild{{/i18n}}:</option>
-    </select>
+    <label for="cw-image-map-file" class="cw-image-map-file-label">{{#i18n}}Bild{{/i18n}}:</label>
 
     <select class="cw-image-map-file" name="cw-image-map-file" {{#no_image_files}}disabled{{/no_image_files}}>
         {{^no_image_files}}
+            <option value="">{{#i18n}}kein Bild ausgewählt{{/i18n}}</option>
             <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
                 {{#image_files_course}}
                     <option value="" file-id="{{id}}" filename="{{name}}" data-url="{{url}}" mime-type="{{mime_type}}">{{name}}</option>
@@ -36,10 +32,7 @@
             <option value="" selected>{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
         {{/no_image_files}}
     </select>
-    <button class="cw-image-map-file-select-info cw-info" data-title="{{#i18n}}Hier werden alle Bilddateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
 
-    <input class="cw-image-map-file" name="cw-image-map-file">
-    <button class="cw-image-map-file-input-info cw-info" data-title="{{#i18n}}Geben Sie hier eine URL an die direkt zu einer Datei führt. Die URL können Sie z.B. aus der Adresszeile Ihres Browsers kopieren.{{/i18n}}"></button>
 </div>
 <br>
 <img src="{{image_url}}" class="cw-image-map-original-img">

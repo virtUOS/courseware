@@ -23,15 +23,10 @@ class ImageMapBlock extends Block
         }
         $content = json_decode($this->image_map_content);
         if ($content != null) {
-            if ($content->source == "cw") {
-                $file = \FileRef::find($content->image_id);
-                if ($file) {
-                    $image_url = $file->getDownloadURL();
-                    $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
-                }
-            } else {
-                $image_url = $content->image_url;
-                $access = true;
+            $file = \FileRef::find($content->image_id);
+            if ($file) {
+                $image_url = $file->getDownloadURL();
+                $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
             }
 
             foreach($content->shapes as $shape) {
@@ -64,16 +59,13 @@ class ImageMapBlock extends Block
             $other_user_file = false;
         }
 
-        if ($content->source == "cw") {
-            $file = \FileRef::find($content->image_id);
-            if ($file) {
-                $image_url = $file->getDownloadURL();
-                $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
-            }
-        } else {
-            $image_url = $content->image_url;
-            $access = true;
+        
+        $file = \FileRef::find($content->image_id);
+        if ($file) {
+           $image_url = $file->getDownloadURL();
+            $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
         }
+
         if (strpos($this->getModel()->parent->title, "AsideSection") > -1) {
             $hasinternal = false;
         } else {
@@ -99,13 +91,9 @@ class ImageMapBlock extends Block
     public function preview_view()
     {
         $content = json_decode($this->image_map_content);
-        if ($content->source == "cw") {
-            $file = \FileRef::find($content->image_id);
-            if ($file) {
-                $image_url = $file->getDownloadURL();
-            }
-        } else {
-            $image_url = $content->image_url;
+        $file = \FileRef::find($content->image_id);
+        if ($file) {
+            $image_url = $file->getDownloadURL();
         }
 
         return array('image_url' => $image_url);
@@ -269,10 +257,6 @@ class ImageMapBlock extends Block
     {
         $content = json_decode($this->image_map_content);
 
-        if ($content->source != 'cw') {
-            return;
-        }
-
         if ($content->image_id == '') {
             return;
         }
@@ -314,10 +298,6 @@ class ImageMapBlock extends Block
     public function importContents($contents, array $files)
     {
         $content = json_decode($this->image_map_content);
-
-        if ($content->source != 'cw') {
-            return;
-        }
 
         foreach($files as $file){
             if ($file->name == '') {
