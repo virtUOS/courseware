@@ -22,23 +22,27 @@ class ImageMapBlock extends Block
             return array('inactive' => true);
         }
         $content = json_decode($this->image_map_content);
-        if ($content->source == "cw") {
-            $file = \FileRef::find($content->image_id);
-            if ($file) {
-                $image_url = $file->getDownloadURL();
-                $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
+        if ($content != null) {
+            if ($content->source == "cw") {
+                $file = \FileRef::find($content->image_id);
+                if ($file) {
+                    $image_url = $file->getDownloadURL();
+                    $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
+                }
+            } else {
+                $image_url = $content->image_url;
+                $access = true;
             }
-        } else {
-            $image_url = $content->image_url;
-            $access = true;
-        }
 
-        foreach($content->shapes as $shape) {
-            if ($shape->link_type == "internal") {
-                $shape->target = "courseware?cid=".$this->container['cid']."&selected=".$this->getTargetId($shape->target);
+            foreach($content->shapes as $shape) {
+                if ($shape->link_type == "internal") {
+                    $shape->target = "courseware?cid=".$this->container['cid']."&selected=".$this->getTargetId($shape->target);
+                }
             }
+            $content = json_encode($content);
+        } else {
+            $content = '';
         }
-        $content = ($content == null) ? '' : json_encode($content);
 
         return array_merge($this->getAttrArray(), array(
             'image_url' => $image_url,
