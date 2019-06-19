@@ -38,8 +38,7 @@ class ImageMapBlock extends Block
                 $shape->target = "courseware?cid=".$this->container['cid']."&selected=".$this->getTargetId($shape->target);
             }
         }
-
-        $content = json_encode($content);
+        $content = ($content == null) ? '' : json_encode($content);
 
         return array_merge($this->getAttrArray(), array(
             'image_url' => $image_url,
