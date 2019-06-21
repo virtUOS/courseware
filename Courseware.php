@@ -167,7 +167,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         $db = DBManager::get();
 
-        $stmt = $db->prepare('
+        $stmt = $db->prepare("
             SELECT
                 COUNT(*)
             FROM
@@ -176,7 +176,9 @@ class Courseware extends StudIPPlugin implements StandardPlugin
                 seminar_id = :cid
             AND
                 chdate >= :last_visit
-        ');
+            AND 
+				type NOT IN ('Courseware', 'Chapter', 'Subchapter', 'Section')
+        ");
         $stmt->bindParam(':cid', $courseId);
         $stmt->bindParam(':last_visit', $last_visit);
         $stmt->execute();

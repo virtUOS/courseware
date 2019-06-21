@@ -72,6 +72,8 @@ class CoursewareController extends CoursewareStudipController
                 seminar_id = :cid
             AND
                 chdate >= :last_visit
+            AND 
+				type NOT IN ('Courseware', 'Chapter', 'Subchapter', 'Section')
         ");
         $stmt->bindParam(":cid", $this->container['cid']);
         $stmt->bindParam(":last_visit", object_get_visit($this->container['cid'], "courseware"));
