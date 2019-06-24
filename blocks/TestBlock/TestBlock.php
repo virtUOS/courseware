@@ -266,7 +266,7 @@ class TestBlock extends Block
             $test_id = $assignment->test->id;
         }
 
-        check_test_access($test_id);
+        check_test_access($assignment->id);
         $now = time();
         $start = strtotime($assignment->start);
         $end = strtotime($assignment->end);
