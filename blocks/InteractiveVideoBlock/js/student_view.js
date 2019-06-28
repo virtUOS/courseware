@@ -187,9 +187,9 @@ export default StudentView.extend({
         for (var i in overlay_json) {
             var $overlay = $view.$('.cw-iav-overlay-content');
             if (($time >= overlay_json[i].start ) && ($time <= overlay_json[i].end)) {
-                $overlay.filter('[data-overlayid='+overlay_json[i].id+']').show('fade', 800);
+                $overlay.filter('[data-overlayid='+overlay_json[i].id+']').fadeIn(800);
             } else {
-                $overlay.filter('[data-overlayid='+overlay_json[i].id+']').hide('fade', 800);
+                $overlay.filter('[data-overlayid='+overlay_json[i].id+']').fadeOut(800);
             }
         }
     },
@@ -234,7 +234,7 @@ export default StudentView.extend({
             if (interactionevents[0].type == 'stop') {
                 let $stop = $view.$('.cw-iav-stop-content[data-stopid='+interactionevents[0].id+']')
                 if ($stop.is(':hidden')) {
-                    $stop.show('fade', 800);
+                    $stop.fadeIn(800);
                     interaction = true;
                 }
             }
@@ -242,7 +242,7 @@ export default StudentView.extend({
             if (interactionevents[0].type == 'test') {
                 let $test = $view.$('.cw-iav-test-content[data-testid='+interactionevents[0].id+']');
                 if ($test.is(':hidden')) {
-                    $test.show('fade', 800);
+                    $test.fadeIn(800);
                     $(window).trigger('resize');
                     interaction = true;
                 }
@@ -373,8 +373,8 @@ export default StudentView.extend({
                 $view.$('.test-json').val(JSON.stringify(test_json));
             }
         }
-        $view.$('.cw-iav-stop-content').hide('fade', 800);
-        $view.$('.cw-iav-test-content').hide('fade', 800);
+        $view.$('.cw-iav-stop-content').fadeOut(800);
+        $view.$('.cw-iav-test-content').fadeOut(800);
     },
 
     submitExercise(event) {
