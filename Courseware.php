@@ -84,7 +84,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         //NavigationForLecturers
         if ($this->container['current_user']->hasPerm($courseId, 'tutor')) {
-            $managerUrl = PluginEngine::getURL($this, compact('cid'), 'block_manager', true);
+            $managerUrl = PluginEngine::getURL($this, compact('cid'), 'block_manager/index', true);
             $navigation->addSubnavigation(
                 'block_manager',
                 new Navigation(_cw('Struktur bearbeiten'), $managerUrl)
