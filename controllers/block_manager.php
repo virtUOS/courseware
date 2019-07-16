@@ -16,14 +16,14 @@ class BlockManagerController extends CoursewareStudipController
     {
         parent::before_filter($action, $args);
 
-        if (!$this->container['current_user']->canCreate($this->container['current_courseware'])) {
-            throw new Trails_Exception(401);
-        }
+        // if (!$this->container['current_user']->canCreate($this->container['current_courseware'])) {
+        //     throw new Trails_Exception(401);
+        // }
         if (Navigation::hasItem('/course/mooc_courseware/block_manager')) {
             Navigation::activateItem('/course/mooc_courseware/block_manager');
         }
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
-        PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/block_manager.js');
+        // PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/block_manager.js');
         PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/ziploader/zip-loader.min.js');
     }
 
@@ -44,7 +44,10 @@ class BlockManagerController extends CoursewareStudipController
                     $plugin_info = $plugin_manager->getPluginInfo('Courseware');
                     if ($plugin_manager->isPluginActivated($plugin_info['id'], $seminar_user_obj->Seminar_id)) {
                         $semester = Semester::findOneBySQL('beginn = ?', array($remote_course->start_time));
-                        $this->remote_courses[$semester->name][$seminar_user_obj->Seminar_id] = $remote_course->getFullname();
+                        if(!isset($this->remote_courses[$semester->name])) {
+                            $this->remote_courses[$semester->name] = [];
+                        } 
+                        array_push($this->remote_courses[$semester->name], array('id' => $seminar_user_obj->Seminar_id, 'name' => $remote_course->getFullname()));
                     }
                 }
             }
@@ -56,21 +59,112 @@ class BlockManagerController extends CoursewareStudipController
             $this->full_import();
         }
 
-        if (Request::method() == 'POST' && Request::option('subcmd')=='store_changes') {
-            $this->store_changes();
-        }
-
-        if (Request::method() == 'POST' && Request::option('subcmd')=='showRemoteCourseware') {
-            $this->show_remote_courseware = true;
-            $this->remote_course_name = Course::find(Request::get('remote_course_id'))->getFullname();
-            $this->remote_courseware = $this->getRemoteCourseware(Request::get('remote_course_id'));
-        }
-
         $grouped = $this->getGrouped($this->cid);
 
         $this->courseware = current($grouped['']);
         $this->buildTree($grouped, $this->courseware);
+        $this->courseware_json = json_encode($this->courseware);
+        $this->remote_courses_json = json_encode($this->remote_courses);
     }
+
+    // public function groups_action()
+    // {
+    //     $this->cid = Request::get('cid');
+    //     $grouped = $this->getGrouped($this->cid);
+    //     $this->courseware = current($grouped['']);
+    //     $this->buildTree($grouped, $this->courseware);
+
+        
+    //     $this->buildSidebar('groups');
+    // }
+
+    // public function groups_vue_action()
+    // {
+    //     $this->cid = Request::get('cid');
+    //     $statusgruppen = \Statusgruppen::findBySQL('range_id = ?', array($this->cid));
+    //     $data = [];
+
+    //     foreach ($statusgruppen as $statusgruppe) {
+    //         $data[] = array('id' => $statusgruppe['id'], 'name' => $statusgruppe['name']);
+    //     }
+
+    //     $this->response->add_header('Content-Type', 'application/json');
+    //     $this->render_text(json_encode($data));
+    // }
+
+    // public function members_vue_action()
+    // {
+    //     $cid = Request::get('cid');
+    //     $db = DBManager::get();
+    //     $stmt = $db->prepare("
+    //         SELECT
+    //             *
+    //         FROM
+    //             seminar_user
+    //         INNER JOIN 
+    //             auth_user_md5 USING (user_id)
+    //         WHERE
+    //             seminar_id = :cid
+    //         AND
+    //             status = 'autor'
+    //         ORDER BY
+    //             position, Nachname ASC
+    //     ");
+    //     $stmt->bindParam(":cid", $this->container['cid']);
+    //     $stmt->execute();
+    //     $members = ($stmt->fetchAll(PDO::FETCH_ASSOC));
+    //     $data = [];
+    //     foreach($members as $member){
+    //         $data[] = array('id' => $member['user_id'], 'name' => $member['username']);
+    //     }
+
+    //     $this->response->add_header('Content-Type', 'application/json');
+    //     $this->render_text(json_encode($data));
+    // }
+
+    public function courseware_vue_action()
+    {
+        $cid = Request::get('cid');
+        $grouped = $this->getGrouped($cid);
+        $courseware = current($grouped['']);
+        $this->buildTree($grouped, $courseware);
+
+        $this->response->add_header('Content-Type', 'application/json');
+        $this->render_text(json_encode($courseware));
+    }
+
+    public function get_remote_course_action()
+    {
+        $remote_cid = Request::get('remote_cid');
+        $courseware = $this->getRemoteCourseware($remote_cid);
+
+        $this->response->add_header('Content-Type', 'application/json');
+        $this->render_text(json_encode($courseware));
+    }
+
+    // private function buildSidebar($view_name)
+    // {
+    //     $sidebar = Sidebar::get();
+    //     $sidebar->setImage('sidebar/group-sidebar.png');
+    //     $views = new ViewsWidget();
+    //     $views->addLink(
+    //             _('Struktur bearbeiten'),
+    //             $this->url_for('block_manager/index'),
+    //             null,
+    //             [],
+    //             'index'
+    //         );
+    //     $views->addLink(
+    //             _('Gruppen Freigaben'),
+    //             $this->url_for('block_manager/groups'),
+    //             null,
+    //             [],
+    //             'groups'
+    //         );
+
+    //     $views->getElements()[$view_name]->setActive(true);
+    //     $sidebar->addWidget($views);
+    // }
 
     private function getGrouped($cid)
     {
@@ -80,7 +174,13 @@ class BlockManagerController extends CoursewareStudipController
                 $arr = $item->toArray();
                 if (!$item->isStructuralBlock()) {
                     $arr['isBlock'] = true;
-                    $arr['ui_block'] = $this->plugin->getBlockFactory()->makeBlock($item);
+                    $ui_block = $this->plugin->getBlockFactory()->makeBlock($item);
+                    $arr['ui_block'] = $ui_block;
+                    $arr['readable_name'] = $ui_block::NAME;
+                    $arr['preview'] = '';
+                    if(method_exists($ui_block, 'preview_view')) {
+                        $arr['preview'] = $ui_block->render('preview', array());
+                    }
                 }
                 if ($arr['publication_date'] != null) {
                     $arr['publication_date'] = date('d.m.Y',$arr['publication_date']);
@@ -206,10 +306,15 @@ class BlockManagerController extends CoursewareStudipController
         return $tempDir;
     }
 
-    private function createImportFolder()
+    private function createImportFolder($cid = null)
     {
-        $root_folder = Folder::findTopFolder($GLOBALS['SessionSeminar']);
+        if($cid == null) {
+            $root_folder = Folder::findTopFolder($GLOBALS['SessionSeminar']);
+        } else {
+            $root_folder = Folder::findTopFolder($cid);
+        }
         $parent_folder = FileManager::getTypedFolder($root_folder->id);
+
         // create new folder for import
         $request = array('name' => 'Courseware-Import '.date("d.m.Y", time()), 'description' => 'folder for imported courseware content');
         $new_folder = new StandardFolder();
@@ -261,21 +366,24 @@ class BlockManagerController extends CoursewareStudipController
         return true;
     }
 
-    public function store_changes()
+    public function store_changes_vue_action()
     {
-        $cid = Request::get('cid');
-        $import = Request::get('import');
-        $remote = Request::get('remote');
-        $import_xml = Request::get('importXML');
-        $remote_course_name = Request::get('remote_course_name');
-        $chapter_list = json_decode(Request::get('chapterList'), true);
-        $subchapter_list = json_decode(Request::get('subchapterList'), true);
-        $section_list = json_decode(Request::get('sectionList'), true);
-        $block_list = json_decode(Request::get('blockList'), true);
+        $request = trim(file_get_contents("php://input"));
+        $decoded_request = json_decode($request, true);
+        $cid = $decoded_request['cid'];
+        $import = $decoded_request['import'];
+        $remote = $decoded_request['remote'];
+        $import_xml = $decoded_request['importXML'];
+        $chapter_list = json_decode($decoded_request['chapterList'], true);
+        $subchapter_list = json_decode($decoded_request['subchapterList'], true);
+        $section_list = json_decode($decoded_request['sectionList'], true);
+        $block_list = json_decode($decoded_request['blockList'], true);
+
         $courseware = $this->container['current_courseware'];
         $changes = false;
+        $remote_map = '';
 
-        if ($import == 'false') {
+        if (!$import) {
             foreach(array($subchapter_list, $section_list, $block_list) as $list) {
                 foreach((array)$list as $key => $value) {
                     $parent = dbBlock::find($key);
@@ -296,15 +404,12 @@ class BlockManagerController extends CoursewareStudipController
                 $courseware->updateChildPositions($chapter_list);
                 $changes = true;
             }
-            if ($changes) {
-                $this->successes[] = _cw('Änderungen wurden gespeichert');
-            } else {
-                $this->warnings[] = _cw('Es wurden keine Änderungen vorgenommen');
-            }
-
-            return true;
         } else {
-            if ($remote == 'true') {
+            if ($remote) {
+                $remote_chapter_map = [];
+                $remote_subchapter_map = [];
+                $remote_section_map = [];
+                $remote_block_map = [];
 
                 foreach((array)$chapter_list as &$chapter_id){
                     if(strpos($chapter_id, 'remote') > -1) {
@@ -312,6 +417,7 @@ class BlockManagerController extends CoursewareStudipController
                         $db_block = dbBlock::find($original_block_id);
                         $data = array('title' => $db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                         $block = $this->createAnyBlock($courseware->id, 'Chapter', $data);
+                        $remote_chapter_map[$chapter_id] = $block->id;
                         $this->updateListKey($subchapter_list, $chapter_id, $block->id);
                         $chapter_id = $block->id;
                     }
@@ -325,6 +431,7 @@ class BlockManagerController extends CoursewareStudipController
                             $db_block = dbBlock::find($original_block_id);
                             $data = array('title' => $db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $block = $this->createAnyBlock($parent_id, 'Subchapter', $data);
+                            $remote_subchapter_map[$subchapter_id] = $block->id;
                             $this->updateListKey($section_list, $subchapter_id, $block->id);
                             $subchapter_id = $block->id;
                         }
@@ -345,6 +452,7 @@ class BlockManagerController extends CoursewareStudipController
                                 $new_ui_block->icon = $remote_ui_block->icon;
                             }
                             $new_ui_block->save();
+                            $remote_section_map[$section_id] = intval($new_block->id);
                             $this->updateListKey($block_list, $section_id, intval($new_block->id));
                             $section_id = intval($new_block->id);
                         }
@@ -364,6 +472,7 @@ class BlockManagerController extends CoursewareStudipController
     
                             $data = array('title' => $remote_db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $new_block = $this->createAnyBlock($parent_id, $remote_db_block->type, $data);
+                            $remote_block_map[$block_id] = intval($new_block->id);
                             $this->updateBlockId($block_list, $block_id, $new_block->id);
                             $block_id = intval($new_block->id);
 
@@ -374,7 +483,7 @@ class BlockManagerController extends CoursewareStudipController
                                 $this->errors[] = _cw('Daten wurden nicht importiert');
                                 $this->successes[] = _cw('Änderungen wurden gespeichert');
 
-                                return;
+                                break 2;
                             }
                             $files = $remote_ui_block->getFiles();
                             foreach($files as &$file) {
@@ -383,6 +492,7 @@ class BlockManagerController extends CoursewareStudipController
                             }
                             $new_ui_block->importProperties($remote_ui_block->exportProperties());
                             $new_ui_block->importContents($remote_ui_block->exportContents(), $files);
+                            
                         }
                     }
                 }
@@ -392,7 +502,13 @@ class BlockManagerController extends CoursewareStudipController
                     $import_folder->delete();
                 }
 
-                $this->successes[] = _cw('Daten wurden aus "'.$remote_course_name.'" importiert');
+                $remote_map = json_encode(array(
+                    'chapter_map' => $remote_chapter_map, 
+                    'subchapter_map' => $remote_subchapter_map, 
+                    'section_map' => $remote_section_map, 
+                    'block_map' => $remote_block_map
+                ));
+
 
             } else {
                 if ($import_xml == '') {
@@ -403,13 +519,21 @@ class BlockManagerController extends CoursewareStudipController
                 if (!$this->validateUploadFile($import_xml)){
                     return false;
                 }
+                $file_data = $decoded_request['fileData'];
+                $zip_file = base64_decode(explode('base64,', $file_data['file'])[1]);
 
-                $tempDir = $this->extractArchive($_FILES['cw-file-upload-import']['tmp_name']);
-                if (!$tempDir) {
+                // $tempDir = $this->extractArchive($_FILES['cw-file-upload-import']['tmp_name']);
+                $tempDirZip = $GLOBALS['TMP_PATH'].'/'.uniqid();
+                mkdir($tempDirZip);
+                file_put_contents($tempDirZip.'/'.$file_data['name'], $zip_file);
+                $tempDirFiles = $this->extractArchive($tempDirZip.'/'.$file_data['name']);
+                $this->deleteRecursively($tempDirZip);
+                if (!$tempDirFiles) {
+                    var_dump('no files'); die;
                     return false;
                 }
 
-                $import_folder = $this->createImportFolder();
+                $import_folder = $this->createImportFolder($cid);
 
                 // store files
                 $files = array();
@@ -417,12 +541,12 @@ class BlockManagerController extends CoursewareStudipController
                 foreach ($coursewareNode->childNodes as $child) {
                     if ($child instanceof DOMElement) {
                         if  ($child->tagName === 'file') {
-                            $this->processFile($child, $tempDir, $files, $import_folder);
+                            $this->processFile($child, $tempDirFiles, $files, $import_folder);
                         }
                     }
                 }
                 // clean up temp directory
-                $this->deleteRecursively($tempDir);
+                $this->deleteRecursively($tempDirFiles);
 
                 foreach((array)$chapter_list as &$chapter_id){
                     if(strpos($chapter_id, 'import') > -1) {
@@ -511,7 +635,7 @@ class BlockManagerController extends CoursewareStudipController
                                 unset($block_list[$block_id]);
                                 $this->errors[] = _cw('Daten wurden nicht importiert');
                                 $this->successes[] = _cw('Änderungen wurden gespeichert');
-    
+
                                 return;
                             }
 
@@ -526,6 +650,7 @@ class BlockManagerController extends CoursewareStudipController
                                     $properties[$attribute->name] = $attribute->value;
                                 }
                             }
+
                             if (count($properties) > 0) {
                                 $uiBlock->importProperties($properties);
                             }
@@ -546,7 +671,6 @@ class BlockManagerController extends CoursewareStudipController
                     $import_folder->delete();
                 }
 
-                $this->successes[] = _cw('Daten wurden importiert');
             }
 
             $courseware = dbBlock::findCourseware($this->cid);
@@ -562,8 +686,11 @@ class BlockManagerController extends CoursewareStudipController
                 }
             }
 
-            $this->successes[] = _cw('Änderungen wurden gespeichert');
         }
+        $this->response->add_header('Content-Type', 'application/json');
+        $answer = json_encode(['errors' => $this->errors, 'successes' => $this->successes, 'remote_map' => $remote_map]);
+        $this->render_text($answer);
+
     }
 
     private function createAnyBlock($parent, $type, $data)
