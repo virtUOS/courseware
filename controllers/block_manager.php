@@ -379,7 +379,8 @@ class BlockManagerController extends CoursewareStudipController
         $section_list = json_decode($decoded_request['sectionList'], true);
         $block_list = json_decode($decoded_request['blockList'], true);
 
-        $courseware = $this->container['current_courseware'];
+        // $courseware = $this->container['current_courseware'];
+        $courseware = dbBlock::findCourseware($cid);
         $changes = false;
         $remote_map = '';
 
@@ -399,7 +400,6 @@ class BlockManagerController extends CoursewareStudipController
                 }
             }
 
-            $courseware = dbBlock::findCourseware($cid);
             if ($chapter_list != null) {
                 $courseware->updateChildPositions($chapter_list);
                 $changes = true;
@@ -419,6 +419,7 @@ class BlockManagerController extends CoursewareStudipController
                         $block = $this->createAnyBlock($courseware->id, 'Chapter', $data);
                         $remote_chapter_map[$chapter_id] = $block->id;
                         $this->updateListKey($subchapter_list, $chapter_id, $block->id);
+                        $this->updateChapterListValue($chapter_list, $chapter_id, $block->id);
                         $chapter_id = $block->id;
                     }
                 }
@@ -433,6 +434,7 @@ class BlockManagerController extends CoursewareStudipController
                             $block = $this->createAnyBlock($parent_id, 'Subchapter', $data);
                             $remote_subchapter_map[$subchapter_id] = $block->id;
                             $this->updateListKey($section_list, $subchapter_id, $block->id);
+                            $this->updateListValue($subchapter_list, $subchapter_id, $block->id);
                             $subchapter_id = $block->id;
                         }
                     }
@@ -454,13 +456,14 @@ class BlockManagerController extends CoursewareStudipController
                             $new_ui_block->save();
                             $remote_section_map[$section_id] = intval($new_block->id);
                             $this->updateListKey($block_list, $section_id, intval($new_block->id));
+                            $this->updateListValue($section_list, $section_id, intval($new_block->id));
                             $section_id = intval($new_block->id);
                         }
                     }
                 }
 
                 //create import folder
-                $import_folder = $this->createImportFolder();
+                $import_folder = $this->createImportFolder($cid);
 
                 foreach((array)$block_list as $key => &$value) {
                     $parent_id = $key;
@@ -560,6 +563,7 @@ class BlockManagerController extends CoursewareStudipController
                         $data = array('title' => $chapter_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                         $block = $this->createAnyBlock($courseware->id, 'Chapter', $data);
                         $this->updateListKey($subchapter_list, $chapter_id, $block->id);
+                        $this->updateChapterListValue($chapter_list, $chapter_id, $block->id);
                         $chapter_id = $block->id;
                     }
                 }
@@ -578,6 +582,7 @@ class BlockManagerController extends CoursewareStudipController
                             $data = array('title' => $subchapter_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $block = $this->createAnyBlock($parent_id, 'Subchapter', $data);
                             $this->updateListKey($section_list, $subchapter_id, $block->id);
+                            $this->updateListValue($subchapter_list, $subchapter_id, $block->id);
                             $subchapter_id = $block->id;
                         }
                     }
@@ -603,6 +608,7 @@ class BlockManagerController extends CoursewareStudipController
                             }
                             $uiSection->save();
                             $this->updateListKey($block_list, $section_id, $block->id);
+                            $this->updateListValue($section_list, $section_id, $block->id);
                             $section_id = $block->id;
                         }
                     }
@@ -673,7 +679,6 @@ class BlockManagerController extends CoursewareStudipController
 
             }
 
-            $courseware = dbBlock::findCourseware($this->cid);
             if ($chapter_list != null) {
                 $courseware->updateChildPositions($chapter_list);
                 $changes = true;
@@ -719,6 +724,31 @@ class BlockManagerController extends CoursewareStudipController
                 $list[$newkey] = $list[$oldkey];
                 unset($list[$oldkey]);
 
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function updateListValue(&$list, $old_id, $new_id)
+    {
+        reset($list);
+        $el = key($list);
+        foreach($list[$el] as $key => $value) {
+            if ($value == $old_id) {
+                $list[$el][$key] = $new_id;
+                return true;
+            }
+        }
+
+        return false;
+    }
+    private function updateChapterListValue(&$list, $old_id, $new_id)
+    {
+        foreach($list as $key => $value) {
+            if ($value == $old_id) {
+                $list[$key] = $new_id;
                 return true;
             }
         }

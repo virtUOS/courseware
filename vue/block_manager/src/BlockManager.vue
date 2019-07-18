@@ -27,6 +27,7 @@
                         :key="semester_name"
                         :courses="courses"
                         :semester_name="semester_name"
+                        @course-selected="getRemoteCourse"
                     />
                 </ul>
             </div>
@@ -65,6 +66,7 @@
                             class="cw-file-upload-import"
                             id="cw-file-upload-import"
                             accept=".zip"
+                            @change="setImport"
                         />
                         <p>Import-Archiv hochladen</p>
                     </label>
@@ -74,12 +76,13 @@
                     <div
                         id="cw-import-from-course"
                         title="Importieren Sie Inhalte aus einer anderen Veranstaltung in der Sie Dozent sind"
+                        @click="importFromCourse"
                     >
                         <p>Aus Veranstaltung importieren</p>
                     </div>
                 </li>
             </ul>
-            <button class="button" id="cw-import-menu-back">zurück zur Auswahl</button>
+            <button class="button" id="cw-import-menu-back" @click="resetImport">zurück zur Auswahl</button>
             <div style="clear: both;"></div>
         </div>
     </div>
@@ -122,56 +125,30 @@ export default {
         this.blockMap = JSON.parse(COURSEWARE.data.block_map);
     },
     mounted() {
-        let view = this;
-        $(document).ready(function() {
-            $('.chapter-description, .subchapter-description, .section-description, .block-description')
-                .siblings('ul')
-                .hide();
-            view.startMouseListeners();
-            view.createSortables();
-            view.setImport();
-            if ($('#cw-blockmanager-info').children().length > 0) {
-                $('#cw-blockmanager-info').show();
-            }
-            $('#cw-import-from-course').click(function() {
-                $('#cw-import-menu-back').show();
-                $('#cw-import-selection').hide();
-                $('#user-course-list').show();
-                $('.semester-description')
-                    .siblings('ul')
-                    .hide();
-            });
-            $('.semester-description').click(function() {
-                $(this)
-                    .siblings('ul')
-                    .toggle();
-                if (!$(this).hasClass('unfolded')) {
-                    $(this).addClass('unfolded');
-                } else {
-                    $(this).removeClass('unfolded');
-                }
-            });
-            $('.blockmanager-course-item').click(function() {
-                let remote_cid = $(this).data('remote_cid'),
-                    remote_name = $(this).data('remote_name');
-                view.getRemoteCourse(remote_cid, remote_name);
-            });
-
-            $('#cw-import-menu-back')
-                .hide()
-                .click(function() {
-                    $('#user-course-list').hide();
-                    $('.cw-remote-courseware').hide();
-                    $('#cw-import-lists').hide();
-                    $('#cw-import-selection').show();
-                    $('.semester-description').removeClass('unfolded');
-                    $(this).hide();
-                    view.importTitle = 'Import';
-                    view.fileError = false;
-                });
-        });
+        this.startMouseListeners();
+        this.createSortables();
     },
     methods: {
+        importFromCourse() {
+            $('#cw-import-menu-back').show();
+            $('#cw-import-selection').hide();
+            $('#user-course-list').show();
+            $('.semester-description')
+                .siblings('ul')
+                .hide();
+        },
+        resetImport(event) {
+            $('#user-course-list').hide();
+            $('.cw-remote-courseware').hide();
+            $('#cw-import-lists').hide();
+            $('#cw-import-selection').show();
+            $('#cw-import-wrapper')
+                .find('.unfolded')
+                .removeClass('unfolded');
+            $(event.target).hide();
+            this.importTitle = 'Import';
+            this.fileError = false;
+        },
         startMouseListeners() {
             $('.chapter-description, .subchapter-description, .section-description, .block-description')
                 .mousedown(function() {
@@ -220,7 +197,7 @@ export default {
                         if ($(ui.item).hasClass('chapter-item-remote')) {
                             view.remoteData = true;
                         }
-                        $('#chapterList').val(JSON.stringify(view.chapterList));
+
                         view.storeChanges();
                     }
                 })
@@ -238,7 +215,7 @@ export default {
                             .parents('.chapter-item')
                             .first();
                         view.subchapterList[$parent.data('id')] = [];
-                        $.each(this.subchapterList, function(chapter_id) {
+                        $.each(view.subchapterList, function(chapter_id) {
                             var entry = [];
                             $('.chapter-item[data-id="' + chapter_id + '"]')
                                 .find('.subchapter-item')
@@ -259,7 +236,17 @@ export default {
                         if ($(ui.item).hasClass('subchapter-item-remote')) {
                             view.remoteData = true;
                         }
-                        $('#subchapterList').val(JSON.stringify(view.subchapterList));
+                        if (
+                            $(ui.item)
+                                .parents('.chapter-item')
+                                .hasClass('element_hidden')
+                        ) {
+                            $(ui.item).addClass('element_hidden');
+                            $(ui.item)
+                                .find('p.subchapter-description')
+                                .addClass('element_hidden');
+                        }
+
                         view.storeChanges();
                     }
                 })
@@ -298,7 +285,17 @@ export default {
                         if ($(ui.item).hasClass('section-item-remote')) {
                             view.remoteData = true;
                         }
-                        $('#sectionList').val(JSON.stringify(view.sectionList));
+                        if (
+                            $(ui.item)
+                                .parents('.subchapter-item')
+                                .hasClass('element_hidden')
+                        ) {
+                            $(ui.item).addClass('element_hidden');
+                            $(ui.item)
+                                .find('p.section-description')
+                                .addClass('element_hidden');
+                        }
+
                         view.storeChanges();
                     }
                 })
@@ -337,6 +334,17 @@ export default {
                         if ($(ui.item).hasClass('block-item-remote')) {
                             view.remoteData = true;
                         }
+                        if (
+                            $(ui.item)
+                                .parents('.section-item')
+                                .hasClass('element_hidden')
+                        ) {
+                            $(ui.item).addClass('element_hidden');
+                            $(ui.item)
+                                .find('p.block-description')
+                                .addClass('element_hidden');
+                        }
+
                         view.storeChanges();
                     }
                 })
@@ -395,6 +403,7 @@ export default {
             });
         },
         changeRemoteIds(remoteMap) {
+            //TODO all lists not only blockList !!!
             $.each(remoteMap.block_map, function(remote_id, new_id) {
                 $('.block-item[data-id="' + remote_id + '"]')
                     .not('.block-item-import')
@@ -414,7 +423,7 @@ export default {
                 .removeClass(classes);
         },
         importBlocks($item) {
-            let this_vue = this;
+            let view = this;
             var parent_id = $item.attr('data-id');
             var $blocks = $item.find('.block-item');
             var entry = [];
@@ -422,51 +431,50 @@ export default {
                 entry.push($(this).attr('data-id'));
             });
             if (entry.length > 0) {
-                this_vue.blockList[parent_id] = entry;
-                $('#blockList').val(JSON.stringify(this_vue.blockList));
+                view.blockList[parent_id] = entry;
             }
         },
 
         importSections($item) {
+            let view = this;
             var parent_id = $item.attr('data-id');
             var $sections = $item.find('.section-item');
             var entry = [];
             $.each($sections, function() {
                 entry.push($(this).attr('data-id'));
-                this.importBlocks($(this));
+                view.importBlocks($(this));
             });
             if (entry.length > 0) {
-                this.sectionList[parent_id] = entry;
-                $('#sectionList').val(JSON.stringify(this.sectionList));
+                view.sectionList[parent_id] = entry;
             }
         },
         importSubchapters($item) {
+            let view = this;
             var parent_id = $item.attr('data-id');
             var $subchapters = $item.find('.subchapter-item');
             var entry = [];
             $.each($subchapters, function() {
                 entry.push($(this).attr('data-id'));
-                this.importSections($(this));
+                view.importSections($(this));
             });
             if (entry.length > 0) {
-                this.subchapterList[parent_id] = entry;
-                $('#subchapterList').val(JSON.stringify(this.subchapterList));
+                view.subchapterList[parent_id] = entry;
             }
         },
-        getRemoteCourse(remote_cid, remote_name) {
+        getRemoteCourse(event) {
             let view = this;
             axios
                 .get('get_remote_course', {
                     params: {
                         cid: COURSEWARE.config.cid,
-                        remote_cid: remote_cid
+                        remote_cid: event.remoteId
                     }
                 })
                 .then(response => {
                     view.remoteCourseware = response.data;
                 })
                 .then(function() {
-                    view.importTitle = 'Import: ' + remote_name;
+                    view.importTitle = 'Import: ' + event.remoteName;
                     view.createSortablesForImport();
                     view.stopMouseListeners();
                     view.startMouseListeners();
@@ -542,116 +550,110 @@ export default {
         },
         setImport() {
             let view = this;
-            $('#cw-file-upload-import').on('change', function(event) {
-                view.fileError = false;
-                const file0 = event.target.files[0];
-                var $file_input = $(this),
-                    $file_input_clone = $file_input.clone();
-                $file_input_clone.attr('id', 'cw-file-upload-full-import');
+            view.fileError = false;
+            const file0 = event.target.files[0];
 
-                $('#cw-blockmanager-form-full-import').css('display', 'inline-block');
-                $('#cw-import-menu-back').show();
+            $('#cw-blockmanager-form-full-import').css('display', 'inline-block');
+            $('#cw-import-menu-back').show();
 
-                ZipLoader.unzip(file0)
-                    .then(function(unziped) {
-                        var text, parser, xmlDoc;
-                        if (unziped.files['data.xml'] == undefined) {
-                            view.fileError = true;
-                            return;
-                        }
+            ZipLoader.unzip(file0)
+                .then(function(unziped) {
+                    var text, parser, xmlDoc;
+                    if (unziped.files['data.xml'] == undefined) {
+                        view.fileError = true;
+                        return;
+                    }
 
-                        text = unziped.extractAsText('data.xml');
-                        parser = new DOMParser();
-                        xmlDoc = parser.parseFromString(text, 'text/xml');
+                    text = unziped.extractAsText('data.xml');
+                    parser = new DOMParser();
+                    xmlDoc = parser.parseFromString(text, 'text/xml');
 
-                        var chapter_counter = 0,
-                            subchapter_counter = 0,
-                            section_counter = 0;
-                        view.importCourseware = [];
-                        view.importCourseware['chapters'] = [];
-                        $.each(xmlDoc.documentElement.children, function(key, node) {
-                            if (node.nodeName == 'chapter') {
-                                chapter_counter++;
-                                node.setAttribute('temp-id', chapter_counter);
-                                let chapterNum = view.importCourseware['chapters'].push({
-                                    title: node.getAttribute('title'),
-                                    id: 'import-' + chapter_counter,
-                                    publication_date: false,
-                                    withdraw_date: false,
-                                    isPublished: true
-                                });
-                                let current_chapter = view.importCourseware['chapters'][chapterNum - 1];
+                    var chapter_counter = 0,
+                        subchapter_counter = 0,
+                        section_counter = 0;
+                    view.importCourseware = [];
+                    view.importCourseware['chapters'] = [];
+                    $.each(xmlDoc.documentElement.children, function(key, node) {
+                        if (node.nodeName == 'chapter') {
+                            chapter_counter++;
+                            node.setAttribute('temp-id', chapter_counter);
+                            let chapterNum = view.importCourseware['chapters'].push({
+                                title: node.getAttribute('title'),
+                                id: chapter_counter,
+                                publication_date: false,
+                                withdraw_date: false,
+                                isPublished: true
+                            });
+                            let current_chapter = view.importCourseware['chapters'][chapterNum - 1];
 
-                                if (typeof current_chapter === 'undefined') {
-                                    return true; //skip to next
-                                }
-                                current_chapter.children = [];
-                                $.each(node.children, function(key, node) {
-                                    if (node.nodeName == 'subchapter') {
-                                        subchapter_counter++;
-                                        node.setAttribute('temp-id', subchapter_counter);
-                                        let subchapterNum = current_chapter.children.push({
-                                            title: node.getAttribute('title'),
-                                            id: 'import-' + subchapter_counter,
-                                            publication_date: false,
-                                            withdraw_date: false,
-                                            isPublished: true
-                                        });
-                                        let current_subchapter = current_chapter.children[subchapterNum - 1];
-
-                                        if (typeof current_subchapter === 'undefined') {
-                                            return true; //skip to next
-                                        }
-                                        current_subchapter.children = [];
-                                        $.each(node.children, function(key, node) {
-                                            if (node.nodeName == 'section') {
-                                                section_counter++;
-                                                node.setAttribute('temp-id', section_counter);
-
-                                                let sectionNum = current_subchapter.children.push({
-                                                    title: node.getAttribute('title'),
-                                                    id: 'import-' + section_counter,
-                                                    isPublished: true
-                                                });
-                                                let current_section = current_subchapter.children[sectionNum - 1];
-                                                if (typeof current_section === 'undefined') {
-                                                    return true; //skip to next
-                                                }
-                                                current_section.children = [];
-                                                $.each(node.children, function(key, node) {
-                                                    if (node.nodeName == 'block') {
-                                                        //build block
-                                                        current_section.children.push({
-                                                            type: node.getAttribute('type'),
-                                                            id: node.getAttribute('uuid'),
-                                                            isPublished: true,
-                                                            preview: view.getNodeContent(node),
-                                                            readable_name: view.blockMap[node.getAttribute('type')]
-                                                        });
-                                                    }
-                                                });
-                                            }
-                                        });
-                                    }
-                                });
+                            if (typeof current_chapter === 'undefined') {
+                                return true; //skip to next
                             }
-                        });
-                        let oSerializer = new XMLSerializer();
-                        view.importXML = oSerializer.serializeToString(xmlDoc);
-                    })
-                    .then(function() {
-                        view.createSortablesForImport();
-                        view.stopMouseListeners();
-                        view.startMouseListeners();
-                        $('.subchapter-list-import, .section-list-import, .block-list-import').hide();
-                        $('#cw-import-selection').hide();
-                        if (!view.fileError) {
-                            $('#cw-import-lists').show();
+                            current_chapter.children = [];
+                            $.each(node.children, function(key, node) {
+                                if (node.nodeName == 'subchapter') {
+                                    subchapter_counter++;
+                                    node.setAttribute('temp-id', subchapter_counter);
+                                    let subchapterNum = current_chapter.children.push({
+                                        title: node.getAttribute('title'),
+                                        id: subchapter_counter,
+                                        publication_date: false,
+                                        withdraw_date: false,
+                                        isPublished: true
+                                    });
+                                    let current_subchapter = current_chapter.children[subchapterNum - 1];
+
+                                    if (typeof current_subchapter === 'undefined') {
+                                        return true; //skip to next
+                                    }
+                                    current_subchapter.children = [];
+                                    $.each(node.children, function(key, node) {
+                                        if (node.nodeName == 'section') {
+                                            section_counter++;
+                                            node.setAttribute('temp-id', section_counter);
+
+                                            let sectionNum = current_subchapter.children.push({
+                                                title: node.getAttribute('title'),
+                                                id: section_counter,
+                                                isPublished: true
+                                            });
+                                            let current_section = current_subchapter.children[sectionNum - 1];
+                                            if (typeof current_section === 'undefined') {
+                                                return true; //skip to next
+                                            }
+                                            current_section.children = [];
+                                            $.each(node.children, function(key, node) {
+                                                if (node.nodeName == 'block') {
+                                                    //build block
+                                                    current_section.children.push({
+                                                        type: node.getAttribute('type'),
+                                                        id: node.getAttribute('uuid'),
+                                                        isPublished: true,
+                                                        preview: view.getNodeContent(node),
+                                                        readable_name: view.blockMap[node.getAttribute('type')]
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
                         }
-                        view.importTitle = 'Import: ' + file0.name + ' (' + view.calcFileSize(file0.size) + ')';
-                        $file_input_clone.appendTo('#cw-blockmanager-form-full-import');
                     });
-            });
+                    let oSerializer = new XMLSerializer();
+                    view.importXML = oSerializer.serializeToString(xmlDoc);
+                })
+                .then(function() {
+                    view.createSortablesForImport();
+                    view.stopMouseListeners();
+                    view.startMouseListeners();
+                    $('.subchapter-list-import, .section-list-import, .block-list-import').hide();
+                    $('#cw-import-selection').hide();
+                    if (!view.fileError) {
+                        $('#cw-import-lists').show();
+                    }
+                    view.importTitle = 'Import: ' + file0.name + ' (' + view.calcFileSize(file0.size) + ')';
+                });
         },
         getNodeContent(node) {
             return NodeContentHelper.getContent(node);
