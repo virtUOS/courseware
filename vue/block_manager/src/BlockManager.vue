@@ -15,9 +15,9 @@
                 />
             </ul>
         </div>
-        <div id="cw-import-wrapper" class="cw-blockmanager-wrapper">
+        <div id="cw-action-wrapper" class="cw-blockmanager-wrapper">
             <div id="cw-import-title" class="cw-blockmanager-title">
-                <p>{{ importTitle }}</p>
+                <p>{{ actionTitle }}</p>
             </div>
             <div class="messagebox messagebox_error" v-if="fileError">Das Archiv enthält keine Coursewaredaten</div>
             <div id="user-course-list">
@@ -53,11 +53,12 @@
                     />
                 </ul>
             </div>
-            <ul id="cw-import-selection">
+            <ul id="cw-action-selection">
                 <li>
                     <label
                         for="cw-file-upload-import"
                         id="cw-file-upload-import-label"
+                        class="cw-action-menu-button"
                         title="Laden Sie eine Datei hoch, die Sie zuvor aus einer Courseware exportiert haben"
                     >
                         <input
@@ -71,18 +72,23 @@
                         <p>Import-Archiv hochladen</p>
                     </label>
                 </li>
-
                 <li>
                     <div
                         id="cw-import-from-course"
+                        class="cw-action-menu-button"
                         title="Importieren Sie Inhalte aus einer anderen Veranstaltung in der Sie Dozent sind"
                         @click="importFromCourse"
                     >
-                        <p>Aus Veranstaltung importieren</p>
+                        <p>{{ courseImportText }}</p>
+                    </div>
+                </li>
+                <li>
+                    <div id="cw-set-decontrol" class="cw-action-menu-button" title="" @click="setDecontrol">
+                        <p>{{ setDecontrolText }}</p>
                     </div>
                 </li>
             </ul>
-            <button class="button" id="cw-import-menu-back" @click="resetImport">zurück zur Auswahl</button>
+            <button class="button" id="cw-reset-action-menu" @click="resetActionMenu">zurück zur Auswahl</button>
             <div style="clear: both;"></div>
         </div>
     </div>
@@ -106,7 +112,9 @@ export default {
             subchapterList: {},
             sectionList: {},
             blockList: {},
-            importTitle: 'Import',
+            actionTitle: 'Aktionen',
+            courseImportText: 'Aus Veranstaltung importieren',
+            setDecontrolText: 'Freigaben setzen',
             remoteData: false,
             importData: false,
             importMap: [],
@@ -130,23 +138,24 @@ export default {
     },
     methods: {
         importFromCourse() {
-            $('#cw-import-menu-back').show();
-            $('#cw-import-selection').hide();
+            this.actionTitle = this.courseImportText;
+            $('#cw-reset-action-menu').show();
+            $('#cw-action-selection').hide();
             $('#user-course-list').show();
             $('.semester-description')
                 .siblings('ul')
                 .hide();
         },
-        resetImport(event) {
+        resetActionMenu(event) {
             $('#user-course-list').hide();
             $('.cw-remote-courseware').hide();
             $('#cw-import-lists').hide();
-            $('#cw-import-selection').show();
-            $('#cw-import-wrapper')
+            $('#cw-action-selection').show();
+            $('#cw-action-wrapper')
                 .find('.unfolded')
                 .removeClass('unfolded');
             $(event.target).hide();
-            this.importTitle = 'Import';
+            this.actionTitle = 'Aktionen';
             this.fileError = false;
         },
         startMouseListeners() {
@@ -474,11 +483,11 @@ export default {
                     view.remoteCourseware = response.data;
                 })
                 .then(function() {
-                    view.importTitle = 'Import: ' + event.remoteName;
+                    view.actionTitle = 'Import: ' + event.remoteName;
                     view.createSortablesForImport();
                     view.stopMouseListeners();
                     view.startMouseListeners();
-                    $('#cw-import-selection').hide();
+                    $('#cw-action-selection').hide();
                     $('#user-course-list').hide();
                     $('.cw-remote-courseware').show();
                 })
@@ -554,7 +563,7 @@ export default {
             const file0 = event.target.files[0];
 
             $('#cw-blockmanager-form-full-import').css('display', 'inline-block');
-            $('#cw-import-menu-back').show();
+            $('#cw-reset-action-menu').show();
 
             ZipLoader.unzip(file0)
                 .then(function(unziped) {
@@ -629,7 +638,7 @@ export default {
                                                         type: node.getAttribute('type'),
                                                         id: node.getAttribute('uuid'),
                                                         isPublished: true,
-                                                        preview: view.getNodeContent(node),
+                                                        preview: NodeContentHelper.getContent(node),
                                                         readable_name: view.blockMap[node.getAttribute('type')]
                                                     });
                                                 }
@@ -648,15 +657,12 @@ export default {
                     view.stopMouseListeners();
                     view.startMouseListeners();
                     $('.subchapter-list-import, .section-list-import, .block-list-import').hide();
-                    $('#cw-import-selection').hide();
+                    $('#cw-action-selection').hide();
                     if (!view.fileError) {
                         $('#cw-import-lists').show();
                     }
-                    view.importTitle = 'Import: ' + file0.name + ' (' + view.calcFileSize(file0.size) + ')';
+                    view.actionTitle = 'Import: ' + file0.name + ' (' + view.calcFileSize(file0.size) + ')';
                 });
-        },
-        getNodeContent(node) {
-            return NodeContentHelper.getContent(node);
         },
         calcFileSize(size) {
             if ((size / 1048576).toFixed(0) != 0) {
