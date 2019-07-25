@@ -16,6 +16,20 @@ export default StudentView.extend({
   },
 
   postRender() {
-    window.MathJax.Hub.Queue([ 'Typeset', window.MathJax.Hub, this.el ]);
+    let mathjaxP;
+
+    if (window.MathJax && window.MathJax.Hub) {
+      mathjaxP = Promise.resolve(window.MathJax);
+    } else if (window.STUDIP && window.STUDIP.loadChunk) {
+      mathjaxP = window.STUDIP.loadChunk('mathjax');
+    }
+
+    mathjaxP && mathjaxP
+      .then(({ Hub }) => {
+        Hub.Queue(['Typeset', Hub, this.el]);
+      })
+      .catch(() => {
+        console.log('Warning: Could not load MathJax.');
+      });
   }
 });
