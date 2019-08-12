@@ -225,6 +225,14 @@ class VideoBlock extends Block
             if ($source->file_id != '') {
                 $file_ref = new \FileRef($source->file_id);
                 $file = new \File($file_ref->file_id);
+            } else {
+                // for old data structure without file_id element
+                $src = $source->src;
+                parse_str($src, $queryParams);
+                $file_ref = new \FileRef($queryParams['file_id']);
+                $file = new \File($file_ref->file_id);
+            }
+            if ($file_ref && $file) {
                 $files[] = array(
                     'id' => $file_ref->id,
                     'name' => $file_ref->name,
@@ -236,6 +244,9 @@ class VideoBlock extends Block
                 );
             }
         }
+    if (empty($files)) {
+        $files = array();
+    }
 
         return $files;
     }
