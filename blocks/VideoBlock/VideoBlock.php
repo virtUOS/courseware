@@ -227,8 +227,7 @@ class VideoBlock extends Block
                 $file = new \File($file_ref->file_id);
             } else {
                 // for old data structure without file_id element
-                $src = $source->src;
-                parse_str($src, $queryParams);
+                parse_str($source->src, $queryParams);
                 $file_ref = new \FileRef($queryParams['file_id']);
                 $file = new \File($file_ref->file_id);
             }
@@ -302,7 +301,15 @@ class VideoBlock extends Block
                 continue;
             }
             foreach ($webvideo as &$source) {
-                if(($source->file_name == $file->name) && ($source->file_id != '')) {
+                $source_filename = $source->file_name;
+                $file_name = $file->name;
+                if (($source->file_id == '') && ($source->src != '') ) {
+                    $file_name = str_replace(' ', '_', $file->name);
+                    parse_str($source->src, $queryParams);
+                    $source_filename = $queryParams['file_name'];
+                }
+
+                if($source_filename == $file_name) {
                     $source->file_id = $file->id;
                     $source->src = $file->getDownloadURL();
                     $this->webvideo = json_encode($webvideo);
