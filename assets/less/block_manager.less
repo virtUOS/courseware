@@ -21,8 +21,8 @@
         .cw-blockmanager-title {
             border-top: solid thin #28497c;
             border-bottom: solid thin #28497c;
-            color: #fff;
-            background-color: #28497c;
+            color: #28497c;
+            background-color: #e7ebf1;
             font-weight: 600;
 
             p {
@@ -103,9 +103,9 @@
                         background-color: #fff;
                         padding: 1em 1em 1em 2em;
                         &.unfolded {
-                            background-image: url("../@{blocks-icons-dir}/white/arr_1down.svg");
-                            background-color: #28497c;
-                            color: #fff;
+                            background-image: url("../@{blocks-icons-dir}/blue/arr_1down.svg");
+                            background-color: #e7ebf1;
+                            color: #28497c;
                         }
                     }
                 }
@@ -115,18 +115,23 @@
 
                     .blockmanager-course-item {
                         padding: 1em 1em 1em 2.5em;
-                        background-color: #28497c;
-                        background-image: url("../@{blocks-icons-dir}/white/seminar.svg");
+                        background-color: #fff;
+                        background-image: url("../@{blocks-icons-dir}/blue/seminar.svg");
                         background-size: 16px;
                         background-position: 10px center;
                         background-repeat: no-repeat;
-                        color: #fff;
+                        color: #28497c;
                         font-weight: 600;
-                        border: none;
+                        border: solid thin #28497c;
                         cursor: pointer;
                         display: inline-block;
                         width: 100%;
                         text-align: left;
+                        &:hover {
+                            color: #fff;
+                            background-color: #28497c;
+                            background-image: url("../@{blocks-icons-dir}/white/seminar.svg");
+                        }
                     }
                     
                     &.semester-item {
@@ -241,11 +246,11 @@
             background-color: #fff;
             padding: 1em 1em 1em 2em;
             &.unfolded {
-                background-image: url("../@{blocks-icons-dir}/white/arr_1down.svg");
-                background-color: #28497c;
-                color: #fff;
+                background-image: url("../@{blocks-icons-dir}/blue/arr_1down.svg");
+                background-color: #e7ebf1;
+                color: #28497c;
                 span.header-info-wrapper {
-                    color: #fff;
+                    color: #28497c;
                 }
                 &.element_hidden {
                     // background-color: #abb7ce;
