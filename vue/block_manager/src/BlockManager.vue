@@ -91,13 +91,18 @@
             <button class="button" id="cw-reset-action-menu" @click="resetActionMenu">zurück zur Auswahl</button>
             <div style="clear: both;"></div>
         </div>
+        <EditDialog />
+        <RemoveDialog />
     </div>
 </template>
 
 <script>
 import ChapterItem from './components/ChapterItem.vue';
 import SemesterItem from './components/SemesterItem.vue';
+import EditDialog from './components/EditDialog.vue';
+import RemoveDialog from './components/RemoveDialog.vue';
 import NodeContentHelper from './assets/NodeContentHelper.js';
+import BlockManagerDialogs from './assets/BlockManagerDialogs.js';
 import axios from 'axios';
 export default {
     name: 'BlockManager',
@@ -125,7 +130,9 @@ export default {
     },
     components: {
         ChapterItem,
-        SemesterItem
+        SemesterItem,
+        EditDialog,
+        RemoveDialog
     },
     created() {
         this.courseware = JSON.parse(COURSEWARE.data.courseware);
@@ -135,8 +142,16 @@ export default {
     mounted() {
         this.startMouseListeners();
         this.createSortables();
+
+        BlockManagerDialogs.createEditDialog($('#editDialog'));
+        BlockManagerDialogs.createRemoveDialog($('#removeDialog'));
     },
     methods: {
+        setDecontrol() {
+            $('#cw-reset-action-menu').show();
+            $('#cw-action-selection').hide();
+            this.actionTitle = this.setDecontrolText;
+        },
         importFromCourse() {
             this.actionTitle = this.courseImportText;
             $('#cw-reset-action-menu').show();
@@ -171,7 +186,7 @@ export default {
                     this.isDragging = false;
                     if (!wasDragging) {
                         $(this)
-                            .siblings('ul')
+                            .siblings('ul, .element-toolbar')
                             .toggle();
                         if (!$(this).hasClass('unfolded')) {
                             $(this).addClass('unfolded');

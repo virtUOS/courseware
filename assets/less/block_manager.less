@@ -91,7 +91,7 @@
                     padding: 0;
                     background-color: #fff;
                     
-                    p.semester-description {
+                    .semester-description {
                         margin: 0;
                         color: #28497c;
                         font-weight: 600;
@@ -232,24 +232,27 @@
         margin: 1em;
         background-color: #fff;
 
-        p.chapter-description,
-        p.subchapter-description,
-        p.section-description {
+        .chapter-description,
+        .subchapter-description,
+        .section-description {
+            p {
+                display: inline-block;
+            }
             margin: 0;
             color: #28497c;
             font-weight: 600;
             cursor: default;
             background-image: url("../@{blocks-icons-dir}/blue/arr_1right.svg");
             background-size: 16px;
-            background-position: 6px center;
+            background-position: 6px 15px;
             background-repeat: no-repeat;
             background-color: #fff;
-            padding: 1em 1em 1em 2em;
+            padding: 1em 1em 0.25em 2em;
             &.unfolded {
                 background-image: url("../@{blocks-icons-dir}/blue/arr_1down.svg");
                 background-color: #e7ebf1;
                 color: #28497c;
-                span.header-info-wrapper {
+                .header-info-wrapper {
                     color: #28497c;
                 }
                 &.element_hidden {
@@ -259,7 +262,7 @@
                 }
 
             }
-            span.header-info-wrapper {
+            .header-info-wrapper {
                 font-weight: normal;
                 // color: #adb9cd;
                 color: #28497c;
@@ -521,4 +524,43 @@
             }
         }
     }
+
+    .element-toolbar {
+        display: none;
+        background-color: #e7ebf1;
+        border-top: solid 3px #fff;
+        padding: 7px;
+        text-align: right;
+        button {
+            height: 28px;
+            width: 28px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: transparent;
+            background-size: 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .edit {
+            .assets-bg-icon("blue/edit.svg");
+        }
+        .trash{
+            .assets-bg-icon("blue/trash.svg");
+        }
+    }
+
+    #editDialog{
+        display: none;
+    }
+    #removeDialog{
+        display: none;
+        .remove-question {
+            .assets-bg-icon("red/question-circle-full.svg");
+            background-repeat: no-repeat;
+            background-size: 32px;
+            background-position-y: center;
+            padding: 1em 1em 1em 3em;
+        }
+    }
+
 }

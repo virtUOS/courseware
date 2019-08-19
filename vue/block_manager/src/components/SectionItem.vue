@@ -8,10 +8,10 @@
         }"
         :data-id="id"
     >
-        <p class="section-description" v-bind:class="{ element_hidden: !section.isPublished }">
-            {{ section.title }}
-            <span class="header-info-wrapper">Abschnitt</span>
-        </p>
+        <div class="section-description" v-bind:class="{ element_hidden: !section.isPublished }">
+            <p class="section-title" :title="section.title">{{ section.shortTitle }}</p>
+            <p class="header-info-wrapper">Abschnitt</p>
+        </div>
         <ul class="block-list" :class="{ 'block-list-import': importContent }">
             <BlockItem
                 v-for="block in section.children"
@@ -26,6 +26,7 @@
 
 <script>
 import BlockItem from './BlockItem.vue';
+import BlockManagerHelper from './../assets/BlockManagerHelper';
 export default {
     name: 'SectionItem',
     data() {
@@ -48,6 +49,7 @@ export default {
         if (this.importContent && this.remoteContent) {
             this.id = 'remote-' + this.id;
         }
+        this.section.shortTitle = BlockManagerHelper.shortTitle(this.section.title, 30);
     }
 };
 </script>

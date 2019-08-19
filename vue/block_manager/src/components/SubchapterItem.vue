@@ -8,14 +8,14 @@
         }"
         :data-id="id"
     >
-        <p class="subchapter-description" v-bind:class="{ element_hidden: !subchapter.isPublished }">
-            {{ subchapter.title }}
-            <span class="header-info-wrapper">
+        <div class="subchapter-description" v-bind:class="{ element_hidden: !subchapter.isPublished }">
+            <p class="subchapter-title" :title="subchapter.title">{{ subchapter.shortTitle }}</p>
+            <p class="header-info-wrapper">
                 Unterkapitel
                 <span v-if="subchapter.publication_date"> | veröffentlichen: {{ subchapter.publication_date }}</span>
                 <span v-if="subchapter.withdraw_date"> | widerrufen: {{ subchapter.withdraw_date }}</span>
-            </span>
-        </p>
+            </p>
+        </div>
         <ul class="section-list" :class="{ 'section-list-import': importContent }">
             <SectionItem
                 v-for="section in subchapter.children"
@@ -30,6 +30,7 @@
 
 <script>
 import SectionItem from './SectionItem.vue';
+import BlockManagerHelper from './../assets/BlockManagerHelper';
 export default {
     name: 'SubchapterItem',
     data() {
@@ -52,6 +53,7 @@ export default {
         if (this.importContent && this.remoteContent) {
             this.id = 'remote-' + this.id;
         }
+        this.subchapter.shortTitle = BlockManagerHelper.shortTitle(this.subchapter.title, 30);
     }
 };
 </script>
