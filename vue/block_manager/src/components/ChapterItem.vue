@@ -2,22 +2,22 @@
     <li
         class="chapter-item"
         :class="{
-            element_hidden: !chapter.isPublished,
+            element_hidden: !isPublished,
             'chapter-item-import': importContent,
             'chapter-item-remote': remoteContent
         }"
         :data-id="id"
     >
-        <div class="chapter-description" v-bind:class="{ element_hidden: !chapter.isPublished }">
-            <p class="chapter-title" :title="chapter.title">
-                {{ this.chapter.shortTitle }}
+        <div class="chapter-description">
+            <p class="chapter-title" :title="title">
+                {{ shortTitle }}
             </p>
             <p class="header-info-wrapper">
                 <span>
                     Kapitel
                 </span>
-                <span v-if="chapter.publication_date">| veröffentlichen: {{ chapter.publication_date }}</span>
-                <span v-if="chapter.withdraw_date"> | widerrufen: {{ chapter.withdraw_date }}</span>
+                <span v-if="publication_date">| veröffentlichen: {{ publication_date_readable }}</span>
+                <span v-if="withdraw_date"> | widerrufen: {{ withdraw_date_readable }}</span>
             </p>
         </div>
         <div class="element-toolbar">
@@ -44,7 +44,14 @@ export default {
     name: 'ChapterItem',
     data() {
         return {
-            id: this.chapter.id
+            id: this.chapter.id,
+            publication_date: this.chapter.publication_date,
+            publication_date_readable: this.getReadableDate(this.chapter.publication_date),
+            withdraw_date: this.chapter.withdraw_date,
+            withdraw_date_readable: this.getReadableDate(this.chapter.withdraw_date),
+            isPublished: this.chapter.isPublished,
+            title: this.chapter.title,
+            shortTitle: this.chapter.shortTitle
         };
     },
     components: {
@@ -62,18 +69,28 @@ export default {
         if (this.importContent && this.remoteContent) {
             this.id = 'remote-' + this.id;
         }
-        this.chapter.shortTitle = BlockManagerHelper.shortTitle(this.chapter.title, 30);
+        this.shortTitle = BlockManagerHelper.shortTitle(this.title, 30);
     },
     methods: {
         editChapter(element) {
             let view = this;
             return new Promise(function(resolve, reject) {
-                BlockManagerDialogs.useEditDialog(element, resolve, reject);
+                BlockManagerDialogs.useEditDialog(element, true, resolve, reject);
             }).then(
                 success => {
                     success = JSON.parse(success);
-                    view.chapter.title = success.title;
-                    view.chapter.shortTitle = BlockManagerHelper.shortTitle(view.chapter.title, 30);
+                    view.title = success.title;
+                    if (success.publication_date) {
+                        view.publication_date = success.publication_date * 1000;
+                    } else {
+                        view.publication_date = null;
+                    }
+                    if (success.withdraw_date) {
+                        view.withdraw_date = success.withdraw_date * 1000;
+                    } else {
+                        view.withdraw_date = null;
+                    }
+                    view.shortTitle = BlockManagerHelper.shortTitle(view.title, 30);
                 },
                 fail => {
                     console.log(fail);
@@ -94,6 +111,42 @@ export default {
                     console.log(fail);
                 }
             );
+        },
+        getReadableDate(date) {
+            let datetime = new Date(date);
+            return (
+                ('0' + datetime.getDate()).slice(-2) +
+                '.' +
+                ('0' + (datetime.getMonth() + 1)).slice(-2) +
+                '.' +
+                datetime.getFullYear()
+            );
+        },
+        updateIsPublished() {
+            let now = new Date();
+            let publication_date = new Date(this.publication_date);
+            let withdraw_date = new Date(this.withdraw_date);
+
+            if (
+                (publication_date < now || publication_date == null) &&
+                (withdraw_date > now || withdraw_date == null)
+            ) {
+                this.isPublished = true;
+            } else {
+                this.isPublished = false;
+            }
+        }
+    },
+    watch: {
+        publication_date: function() {
+            this.chapter.publication_date = this.publication_date;
+            this.publication_date_readable = this.getReadableDate(this.publication_date);
+            this.updateIsPublished();
+        },
+        withdraw_date: function() {
+            this.chapter.withdraw_date = this.withdraw_date;
+            this.withdraw_date_readable = this.getReadableDate(this.withdraw_date);
+            this.updateIsPublished();
         }
     }
 };

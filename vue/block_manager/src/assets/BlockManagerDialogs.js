@@ -9,9 +9,47 @@ export default {
         removeDialogNode = node;
     },
 
-    useEditDialog(element, resolve, reject) {
+    useEditDialog(element, isChapter, resolve, reject) {
         editDialogNode.find('#editDialogElementId').val(element.id);
         editDialogNode.find('#editDialogElementTitle').val(element.title);
+        if (isChapter) {
+            //let pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
+            if (element.publication_date) {
+                editDialogNode
+                    .find('#editDialogElementPublicationDate')
+                    .val(new Date(element.publication_date).toISOString().substr(0, 10))
+                    .show();
+                editDialogNode
+                    .find('#editDialogElementWithdrawDate')
+                    .attr('min', new Date(element.publication_date).toISOString().substr(0, 10));
+            } else {
+                editDialogNode
+                    .find('#editDialogElementPublicationDate')
+                    .val('')
+                    .show();
+                editDialogNode.find('#editDialogElementWithdrawDate').attr('min', null);
+            }
+            if (element.withdraw_date) {
+                editDialogNode
+                    .find('#editDialogElementWithdrawDate')
+                    .val(new Date(element.withdraw_date).toISOString().substr(0, 10))
+                    .show();
+            } else {
+                editDialogNode
+                    .find('#editDialogElementWithdrawDate')
+                    .val('')
+                    .show();
+            }
+        } else {
+            editDialogNode
+                .find('#editDialogElementPublicationDate')
+                .val('')
+                .hide();
+            editDialogNode
+                .find('#editDialogElementWithdrawDate')
+                .val('')
+                .hide();
+        }
         editDialogNode.dialog({
             resizable: false,
             title: element.title + ' bearbeiten',
@@ -27,6 +65,30 @@ export default {
                     data.title = $(this)
                         .find('#editDialogElementTitle')
                         .val();
+                    if (isChapter) {
+                        let pattern = /(\d{4})-(\d{2})-(\d{2})/;
+                        let PublicationDate = $(this)
+                            .find('#editDialogElementPublicationDate')
+                            .val();
+                        if (PublicationDate) {
+                            data.publication_date = Math.floor(Date.parse(PublicationDate)) / 1000;
+                            data.publication_date_readable = PublicationDate.replace(pattern, '$3.$2.$1');
+                        } else {
+                            data.publication_date = NaN;
+                        }
+                        let WithdrawDate = $(this)
+                            .find('#editDialogElementWithdrawDate')
+                            .val();
+                        if (WithdrawDate) {
+                            data.withdraw_date = Math.floor(Date.parse(WithdrawDate)) / 1000;
+                            data.withdraw_date_readable = WithdrawDate.replace(pattern, '$3.$2.$1');
+                        } else {
+                            data.withdraw_date = NaN;
+                        }
+                        if (data.withdraw_date <= data.publication_date) {
+                            data.withdraw_date = NaN;
+                        }
+                    }
                     data = JSON.stringify(data);
                     $.ajax({
                         type: 'PUT',
@@ -57,7 +119,6 @@ export default {
                 let $buttons = $(this)
                     .parent()
                     .find('.ui-dialog-buttonset .ui-button');
-                console.log($buttons);
                 $buttons.eq(0).addClass('accept');
                 $buttons.eq(1).addClass('cancel');
             }

@@ -182,12 +182,9 @@ class BlockManagerController extends CoursewareStudipController
                         $arr['preview'] = $ui_block->render('preview', array());
                     }
                 }
-                if ($arr['publication_date'] != null) {
-                    $arr['publication_date'] = date('d.m.Y',$arr['publication_date']);
-                }
-                if ($arr['withdraw_date'] != null) {
-                    $arr['withdraw_date'] = date('d.m.Y',$arr['withdraw_date']);
-                }
+                $arr['publication_date'] = $arr['publication_date'] * 1000;
+                $arr['withdraw_date'] = $arr['withdraw_date'] * 1000;
+
                 $arr['isPublished'] = $item->isPublished();
                 $memo[$item->parent_id][] = $arr;
                 return $memo;
