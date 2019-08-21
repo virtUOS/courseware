@@ -2,15 +2,18 @@
     <li
         class="section-item"
         :class="{
-            element_hidden: !section.isPublished,
             'section-item-import': importContent,
             'section-item-remote': remoteContent
         }"
         :data-id="id"
     >
-        <div class="section-description" v-bind:class="{ element_hidden: !section.isPublished }">
-            <p class="section-title" :title="section.title">{{ section.shortTitle }}</p>
+        <div class="section-description">
+            <p class="section-title" :title="title">{{ shortTitle }}</p>
             <p class="header-info-wrapper">Abschnitt</p>
+        </div>
+        <div class="element-toolbar">
+            <button class="edit" @click="editSection(section)"></button>
+            <button class="trash" @click="removeSection(section)"></button>
         </div>
         <ul class="block-list" :class="{ 'block-list-import': importContent }">
             <BlockItem
@@ -27,11 +30,14 @@
 <script>
 import BlockItem from './BlockItem.vue';
 import BlockManagerHelper from './../assets/BlockManagerHelper';
+import BlockManagerDialogs from './../assets/BlockManagerDialogs';
 export default {
     name: 'SectionItem',
     data() {
         return {
-            id: this.section.id
+            id: this.section.id,
+            title: this.section.title,
+            shortTitle: this.section.shortTitle
         };
     },
     components: {
@@ -49,9 +55,40 @@ export default {
         if (this.importContent && this.remoteContent) {
             this.id = 'remote-' + this.id;
         }
-        this.section.shortTitle = BlockManagerHelper.shortTitle(this.section.title, 30);
+        this.shortTitle = BlockManagerHelper.shortTitle(this.section.title, 30);
+    },
+    methods: {
+        editSection(element) {
+            let view = this;
+            return new Promise(function(resolve, reject) {
+                BlockManagerDialogs.useEditDialog(element, false, resolve, reject);
+            }).then(
+                success => {
+                    success = JSON.parse(success);
+                    view.title = success.title;
+                    view.section.title = success.title;
+                    view.shortTitle = BlockManagerHelper.shortTitle(view.title, 30);
+                },
+                fail => {
+                    console.log(fail);
+                }
+            );
+        },
+        removeSection(element) {
+            let view = this;
+            return new Promise(function(resolve, reject) {
+                BlockManagerDialogs.useRemoveDialog(element, true, resolve, reject);
+            }).then(
+                success => {
+                    success = JSON.parse(success);
+                    console.log(success);
+                    $('li[data-id=' + view.section.id + ']').remove();
+                },
+                fail => {
+                    console.log(fail);
+                }
+            );
+        }
     }
 };
 </script>
-
-<style scoped></style>

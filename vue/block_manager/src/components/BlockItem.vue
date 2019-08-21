@@ -8,10 +8,13 @@
         }"
         :data-id="id"
     >
-        <p class="block-description" v-bind:class="{ element_hidden: !block.isPublished }">
+        <div class="block-description" v-bind:class="{ element_hidden: !block.isPublished }">
             <span :class="['block-icon cw-block-icon-' + block.type]"></span>
             {{ block.readable_name }}
-        </p>
+        </div>
+        <div class="element-toolbar">
+            <button class="trash" @click="removeBlock(block)"></button>
+        </div>
         <ul class="block-preview" :class="{ 'block-preview-import': importContent }">
             <li class="block-content-preview" v-html="preview"></li>
         </ul>
@@ -19,6 +22,7 @@
 </template>
 
 <script>
+import BlockManagerDialogs from './../assets/BlockManagerDialogs';
 export default {
     name: 'BlockItem',
     data() {
@@ -41,8 +45,23 @@ export default {
         if (this.importContent && this.remoteContent) {
             this.id = 'remote-' + this.id;
         }
+    },
+    methods: {
+        removeBlock(element) {
+            let view = this;
+            return new Promise(function(resolve, reject) {
+                BlockManagerDialogs.useRemoveDialog(element, false, resolve, reject);
+            }).then(
+                success => {
+                    success = JSON.parse(success);
+                    console.log(success);
+                    $('li[data-id=' + view.block.id + ']').remove();
+                },
+                fail => {
+                    console.log(fail);
+                }
+            );
+        }
     }
 };
 </script>
-
-<style scoped></style>

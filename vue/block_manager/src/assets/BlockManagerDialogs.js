@@ -13,7 +13,8 @@ export default {
         editDialogNode.find('#editDialogElementId').val(element.id);
         editDialogNode.find('#editDialogElementTitle').val(element.title);
         if (isChapter) {
-            //let pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
+            editDialogNode.find('label[for=publication_date]').show();
+            editDialogNode.find('label[for=withdraw_date]').show();
             if (element.publication_date) {
                 editDialogNode
                     .find('#editDialogElementPublicationDate')
@@ -41,6 +42,8 @@ export default {
                     .show();
             }
         } else {
+            editDialogNode.find('label[for=publication_date]').hide();
+            editDialogNode.find('label[for=withdraw_date]').hide();
             editDialogNode
                 .find('#editDialogElementPublicationDate')
                 .val('')
@@ -124,13 +127,22 @@ export default {
             }
         });
     },
-    useRemoveDialog(element, resolve, reject) {
+    useRemoveDialog(element, isStrucutalElement, resolve, reject) {
+        let title = element.title;
         removeDialogNode.find('#editDialogElementId').val(element.id);
         removeDialogNode.find('#editDialogElementTitle').val(element.title);
+        if (isStrucutalElement) {
+            removeDialogNode.find('.remove-strucutal-element-question').show();
+            removeDialogNode.find('.remove-block-element-question').hide();
+        } else {
+            removeDialogNode.find('.remove-strucutal-element-question').hide();
+            removeDialogNode.find('.remove-block-element-question').show();
+            title = element.readable_name;
+        }
         removeDialogNode
             .dialog({
                 resizable: false,
-                title: element.title + ' löschen',
+                title: title + ' löschen',
                 height: 'auto',
                 width: 'auto',
                 modal: true,

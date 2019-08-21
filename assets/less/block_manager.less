@@ -232,9 +232,19 @@
         margin: 1em;
         background-color: #fff;
 
+        .chapter-description {
+            width: 616px;
+        }
+        .subchapter-description {
+            width: 586px;
+        }
+        .section-description {
+            width: 276px;
+        }
         .chapter-description,
         .subchapter-description,
         .section-description {
+            display: inline-block;
             p {
                 display: inline-block;
             }
@@ -252,21 +262,18 @@
                 background-image: url("../@{blocks-icons-dir}/blue/arr_1down.svg");
                 background-color: #e7ebf1;
                 color: #28497c;
-                .header-info-wrapper {
-                    color: #28497c;
-                }
-                &.element_hidden {
-                    // background-color: #abb7ce;
-                    background-color: #ccc;
-    
-                }
-
             }
             .header-info-wrapper {
                 font-weight: normal;
                 // color: #adb9cd;
                 color: #28497c;
                 float: right;
+                .published-info {
+                    color:#00962d;
+                }
+                .unpublished-info {
+                    color: #ffad00; 
+                }
                 .structure-not-visible {
                     .assets-bg-icon("grey/visibility-invisible.svg");
                     background-size: 16px 16px;
@@ -276,10 +283,6 @@
                     height: 16px;
                     margin-left: 0.5em;
                 }
-            }
-            &.element_hidden {
-                background-color: #f8f8f8;
-
             }
         }
     }
@@ -305,9 +308,6 @@
         list-style: none;
         margin-bottom: 1em;
         color: #28497c;
-        &.element_hidden{
-            border-color: #abb7ce;
-        }
     }
 
     .section-item {
@@ -317,7 +317,12 @@
     }
 
     .block-item {
+        .element-toolbar.unfolded{
+            background-color: #fff;
+        }
         .block-description {
+            display: inline-block;
+            width: 278px;
             background-image: url("../@{blocks-icons-dir}/blue/arr_1right.svg");
             background-size: 16px;
             background-position: 6px center;
@@ -526,16 +531,20 @@
     }
 
     .element-toolbar {
-        display: none;
-        background-color: #e7ebf1;
-        border-top: solid 3px #fff;
-        padding: 7px;
+        display: inline-block;
+        background-color: #fff;
+        height: 30px;
+        padding: 1em 1em 0.25em 0.25em;
         text-align: right;
+        &.unfolded {
+            background-color: #e7ebf1;
+        }
         button {
             height: 28px;
             width: 28px;
+            margin-left: 4px;
             background-repeat: no-repeat;
-            background-position: center;
+            background-position: right top;
             background-color: transparent;
             background-size: 20px;
             border: none;

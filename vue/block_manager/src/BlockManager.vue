@@ -186,12 +186,18 @@ export default {
                     this.isDragging = false;
                     if (!wasDragging) {
                         $(this)
-                            .siblings('ul, .element-toolbar')
+                            .siblings('ul')
                             .toggle();
                         if (!$(this).hasClass('unfolded')) {
                             $(this).addClass('unfolded');
+                            $(this)
+                                .siblings('.element-toolbar')
+                                .addClass('unfolded');
                         } else {
                             $(this).removeClass('unfolded');
+                            $(this)
+                                .siblings('.element-toolbar')
+                                .removeClass('unfolded');
                         }
                     }
                 });

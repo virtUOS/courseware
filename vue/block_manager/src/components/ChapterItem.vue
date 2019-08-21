@@ -2,7 +2,6 @@
     <li
         class="chapter-item"
         :class="{
-            element_hidden: !isPublished,
             'chapter-item-import': importContent,
             'chapter-item-remote': remoteContent
         }"
@@ -13,11 +12,22 @@
                 {{ shortTitle }}
             </p>
             <p class="header-info-wrapper">
-                <span>
+                <span
+                    :class="{
+                        'unpublished-info': !isPublished && (publication_date || withdraw_date),
+                        'published-info': isPublished && (publication_date || withdraw_date)
+                    }"
+                >
                     Kapitel
                 </span>
-                <span v-if="publication_date">| veröffentlichen: {{ publication_date_readable }}</span>
-                <span v-if="withdraw_date"> | widerrufen: {{ withdraw_date_readable }}</span>
+                <span
+                    v-if="publication_date"
+                    :class="{ 'unpublished-info': !isPublished, 'published-info': isPublished }"
+                    >| veröffentlichen: {{ publication_date_readable }}</span
+                >
+                <span v-if="withdraw_date" :class="{ 'unpublished-info': !isPublished, 'published-info': isPublished }">
+                    | widerrufen: {{ withdraw_date_readable }}</span
+                >
             </p>
         </div>
         <div class="element-toolbar">
@@ -46,9 +56,9 @@ export default {
         return {
             id: this.chapter.id,
             publication_date: this.chapter.publication_date,
-            publication_date_readable: this.getReadableDate(this.chapter.publication_date),
+            publication_date_readable: BlockManagerHelper.getReadableDate(this.chapter.publication_date),
             withdraw_date: this.chapter.withdraw_date,
-            withdraw_date_readable: this.getReadableDate(this.chapter.withdraw_date),
+            withdraw_date_readable: BlockManagerHelper.getReadableDate(this.chapter.withdraw_date),
             isPublished: this.chapter.isPublished,
             title: this.chapter.title,
             shortTitle: this.chapter.shortTitle
@@ -80,6 +90,7 @@ export default {
                 success => {
                     success = JSON.parse(success);
                     view.title = success.title;
+                    view.chapter.title = success.title;
                     if (success.publication_date) {
                         view.publication_date = success.publication_date * 1000;
                     } else {
@@ -100,7 +111,7 @@ export default {
         removeChapter(element) {
             let view = this;
             return new Promise(function(resolve, reject) {
-                BlockManagerDialogs.useRemoveDialog(element, resolve, reject);
+                BlockManagerDialogs.useRemoveDialog(element, true, resolve, reject);
             }).then(
                 success => {
                     success = JSON.parse(success);
@@ -112,16 +123,7 @@ export default {
                 }
             );
         },
-        getReadableDate(date) {
-            let datetime = new Date(date);
-            return (
-                ('0' + datetime.getDate()).slice(-2) +
-                '.' +
-                ('0' + (datetime.getMonth() + 1)).slice(-2) +
-                '.' +
-                datetime.getFullYear()
-            );
-        },
+
         updateIsPublished() {
             let now = new Date();
             let publication_date = new Date(this.publication_date);
@@ -140,16 +142,14 @@ export default {
     watch: {
         publication_date: function() {
             this.chapter.publication_date = this.publication_date;
-            this.publication_date_readable = this.getReadableDate(this.publication_date);
+            this.publication_date_readable = BlockManagerHelper.getReadableDate(this.publication_date);
             this.updateIsPublished();
         },
         withdraw_date: function() {
             this.chapter.withdraw_date = this.withdraw_date;
-            this.withdraw_date_readable = this.getReadableDate(this.withdraw_date);
+            this.withdraw_date_readable = BlockManagerHelper.getReadableDate(this.withdraw_date);
             this.updateIsPublished();
         }
     }
 };
 </script>
-
-<style scoped></style>
