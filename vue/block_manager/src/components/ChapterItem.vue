@@ -23,17 +23,21 @@
                 <span
                     v-if="publication_date"
                     :class="{ 'unpublished-info': !isPublished, 'published-info': isPublished }"
-                    >| veröffentlichen: {{ publication_date_readable }}</span
+                    >| sichtbar ab: {{ publication_date_readable }}</span
                 >
                 <span v-if="withdraw_date" :class="{ 'unpublished-info': !isPublished, 'published-info': isPublished }">
-                    | widerrufen: {{ withdraw_date_readable }}</span
+                    | unsichtbar ab: {{ withdraw_date_readable }}</span
                 >
             </p>
         </div>
-        <div class="element-toolbar">
-            <button class="edit" @click="editChapter(chapter)"></button>
-            <button class="trash" @click="removeChapter(chapter)"></button>
-        </div>
+        <ActionMenuItem
+            :buttons="['edit', 'remove', 'groups', 'users']"
+            @edit="editChapter(chapter)"
+            @remove="removeChapter(chapter)"
+            @set-users="console.log('todo')"
+            @set-groups="console.log('todo')"
+        />
+
         <ul class="subchapter-list" :class="{ 'subchapter-list-import': importContent }">
             <SubchapterItem
                 v-for="subchapter in chapter.children"
@@ -43,11 +47,17 @@
                 :remoteContent="remoteContent"
             />
         </ul>
+        <ul class="subchapter-actions">
+            <li>
+                <button class="button add">Unterkapitel hinzufügen</button>
+            </li>
+        </ul>
     </li>
 </template>
 
 <script>
 import SubchapterItem from './SubchapterItem.vue';
+import ActionMenuItem from './ActionMenuItem.vue';
 import BlockManagerHelper from './../assets/BlockManagerHelper';
 import BlockManagerDialogs from './../assets/BlockManagerDialogs';
 export default {
@@ -65,7 +75,8 @@ export default {
         };
     },
     components: {
-        SubchapterItem
+        SubchapterItem,
+        ActionMenuItem
     },
     props: {
         chapter: Object,

@@ -22,17 +22,21 @@
                     v-if="publication_date"
                     :class="{ 'unpublished-info': !isPublished, 'published-info': isPublished }"
                 >
-                    | veröffentlichen: {{ publication_date_readable }}</span
+                    | sichtbar ab: {{ publication_date_readable }}</span
                 >
                 <span v-if="withdraw_date" :class="{ 'unpublished-info': !isPublished, 'published-info': isPublished }">
-                    | widerrufen: {{ withdraw_date_readable }}</span
+                    | unsichtbar ab: {{ withdraw_date_readable }}</span
                 >
             </p>
         </div>
-        <div class="element-toolbar">
-            <button class="edit" @click="editSubchapter(subchapter)"></button>
-            <button class="trash" @click="removeSubchapter(subchapter)"></button>
-        </div>
+        <ActionMenuItem
+            :buttons="['edit', 'remove', 'groups', 'users']"
+            @edit="editSubchapter(subchapter)"
+            @remove="removeSubchapter(subchapter)"
+            @set-users="console.log('todo')"
+            @set-groups="console.log('todo')"
+        />
+
         <ul class="section-list" :class="{ 'section-list-import': importContent }">
             <SectionItem
                 v-for="section in subchapter.children"
@@ -47,6 +51,7 @@
 
 <script>
 import SectionItem from './SectionItem.vue';
+import ActionMenuItem from './ActionMenuItem.vue';
 import BlockManagerHelper from './../assets/BlockManagerHelper';
 import BlockManagerDialogs from './../assets/BlockManagerDialogs';
 export default {
@@ -64,7 +69,8 @@ export default {
         };
     },
     components: {
-        SectionItem
+        SectionItem,
+        ActionMenuItem
     },
     props: {
         subchapter: Object,

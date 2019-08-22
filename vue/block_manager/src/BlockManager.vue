@@ -191,12 +191,12 @@ export default {
                         if (!$(this).hasClass('unfolded')) {
                             $(this).addClass('unfolded');
                             $(this)
-                                .siblings('.element-toolbar')
+                                .siblings('.strucutal-element-menu')
                                 .addClass('unfolded');
                         } else {
                             $(this).removeClass('unfolded');
                             $(this)
-                                .siblings('.element-toolbar')
+                                .siblings('.strucutal-element-menu')
                                 .removeClass('unfolded');
                         }
                     }
