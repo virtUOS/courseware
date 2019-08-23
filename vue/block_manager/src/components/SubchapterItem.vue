@@ -33,8 +33,8 @@
             :buttons="['edit', 'remove', 'groups', 'users']"
             @edit="editSubchapter(subchapter)"
             @remove="removeSubchapter(subchapter)"
-            @set-users="console.log('todo')"
-            @set-groups="console.log('todo')"
+            @set-users="setUserApproval(subchapter)"
+            @set-groups="setGroupApproval(subchapter)"
         />
 
         <ul class="section-list" :class="{ 'section-list-import': importContent }">
@@ -141,6 +141,34 @@ export default {
             } else {
                 this.isPublished = false;
             }
+        },
+        setUserApproval(element) {
+            let view = this;
+            return new Promise(function(resolve, reject) {
+                BlockManagerDialogs.useUserApprovalDialog(element, resolve, reject);
+            }).then(
+                success => {
+                    success = JSON.parse(success);
+                    console.log(success);
+                },
+                fail => {
+                    console.log(fail);
+                }
+            );
+        },
+        setGroupApproval(element) {
+            let view = this;
+            return new Promise(function(resolve, reject) {
+                BlockManagerDialogs.useGroupApprovalDialog(element, resolve, reject);
+            }).then(
+                success => {
+                    success = JSON.parse(success);
+                    console.log(success);
+                },
+                fail => {
+                    console.log(fail);
+                }
+            );
         }
     },
     watch: {

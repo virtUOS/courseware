@@ -11,10 +11,7 @@
             <p class="section-title" :title="title">{{ shortTitle }}</p>
             <p class="header-info-wrapper">Abschnitt</p>
         </div>
-        <div class="element-toolbar">
-            <button class="edit" @click="editSection(section)"></button>
-            <button class="trash" @click="removeSection(section)"></button>
-        </div>
+        <ActionMenuItem :buttons="['edit', 'remove']" @edit="editSection(section)" @remove="removeSection(section)" />
         <ul class="block-list" :class="{ 'block-list-import': importContent }">
             <BlockItem
                 v-for="block in section.children"
@@ -29,6 +26,7 @@
 
 <script>
 import BlockItem from './BlockItem.vue';
+import ActionMenuItem from './ActionMenuItem.vue';
 import BlockManagerHelper from './../assets/BlockManagerHelper';
 import BlockManagerDialogs from './../assets/BlockManagerDialogs';
 export default {
@@ -41,7 +39,8 @@ export default {
         };
     },
     components: {
-        BlockItem
+        BlockItem,
+        ActionMenuItem
     },
     props: {
         section: Object,

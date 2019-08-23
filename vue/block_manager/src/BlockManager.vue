@@ -82,15 +82,12 @@
                         <p>{{ courseImportText }}</p>
                     </div>
                 </li>
-                <li>
-                    <div id="cw-set-decontrol" class="cw-action-menu-button" title="" @click="setDecontrol">
-                        <p>{{ setDecontrolText }}</p>
-                    </div>
-                </li>
             </ul>
             <button class="button" id="cw-reset-action-menu" @click="resetActionMenu">zurück zur Auswahl</button>
             <div style="clear: both;"></div>
         </div>
+        <UserApprovalDialog />
+        <GroupApprovalDialog />
         <EditDialog />
         <RemoveDialog />
     </div>
@@ -99,6 +96,8 @@
 <script>
 import ChapterItem from './components/ChapterItem.vue';
 import SemesterItem from './components/SemesterItem.vue';
+import UserApprovalDialog from './components/UserApprovalDialog.vue';
+import GroupApprovalDialog from './components/GroupApprovalDialog.vue';
 import EditDialog from './components/EditDialog.vue';
 import RemoveDialog from './components/RemoveDialog.vue';
 import NodeContentHelper from './assets/NodeContentHelper.js';
@@ -119,7 +118,6 @@ export default {
             blockList: {},
             actionTitle: 'Aktionen',
             courseImportText: 'Aus Veranstaltung importieren',
-            setDecontrolText: 'Freigaben setzen',
             remoteData: false,
             importData: false,
             importMap: [],
@@ -131,6 +129,8 @@ export default {
     components: {
         ChapterItem,
         SemesterItem,
+        UserApprovalDialog,
+        GroupApprovalDialog,
         EditDialog,
         RemoveDialog
     },
@@ -143,14 +143,16 @@ export default {
         this.startMouseListeners();
         this.createSortables();
 
+        BlockManagerDialogs.createUserApprovalDialog($('#userApprovalDialog'));
+        BlockManagerDialogs.createGroupApprovalDialog($('#groupApprovalDialog'));
         BlockManagerDialogs.createEditDialog($('#editDialog'));
         BlockManagerDialogs.createRemoveDialog($('#removeDialog'));
     },
     methods: {
-        setDecontrol() {
+        setApproval() {
             $('#cw-reset-action-menu').show();
             $('#cw-action-selection').hide();
-            this.actionTitle = this.setDecontrolText;
+            this.actionTitle = this.setApprovalText;
         },
         importFromCourse() {
             this.actionTitle = this.courseImportText;
@@ -191,12 +193,12 @@ export default {
                         if (!$(this).hasClass('unfolded')) {
                             $(this).addClass('unfolded');
                             $(this)
-                                .siblings('.strucutal-element-menu')
+                                .siblings('.strucutal-element-menu-wrapper')
                                 .addClass('unfolded');
                         } else {
                             $(this).removeClass('unfolded');
                             $(this)
-                                .siblings('.strucutal-element-menu')
+                                .siblings('.strucutal-element-menu-wrapper')
                                 .removeClass('unfolded');
                         }
                     }

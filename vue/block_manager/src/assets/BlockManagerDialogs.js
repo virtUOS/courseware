@@ -1,5 +1,7 @@
 var editDialogNode = null;
 var removeDialogNode = null;
+var userApprovalDialogNode = null;
+var groupApprovalDialogNode = null;
 
 export default {
     createEditDialog(node) {
@@ -7,6 +9,12 @@ export default {
     },
     createRemoveDialog(node) {
         removeDialogNode = node;
+    },
+    createUserApprovalDialog(node) {
+        userApprovalDialogNode = node;
+    },
+    createGroupApprovalDialog(node) {
+        groupApprovalDialogNode = node;
     },
 
     useEditDialog(element, isChapter, resolve, reject) {
@@ -189,5 +197,69 @@ export default {
             })
             .prev('.ui-dialog-titlebar')
             .css('background', '#d60000');
+    },
+    useUserApprovalDialog(element, resolve, reject) {
+        userApprovalDialogNode.find('#userApprovalDialogElementId').val(element.id);
+        userApprovalDialogNode.find('#userApprovalDialogElementTitle').val(element.title);
+        userApprovalDialogNode.dialog({
+            resizable: false,
+            title: 'Studierenden Schreibrechte für "' + element.title + '" geben',
+            height: 'auto',
+            width: '1200',
+            modal: true,
+            buttons: {
+                Speichern: function() {},
+                Abbrechen: function() {
+                    $(this)
+                        .dialog('destroy')
+                        .hide();
+                }
+            },
+            close: function() {
+                $(this)
+                    .dialog('destroy')
+                    .hide();
+            },
+            create: function() {
+                let $buttons = $(this)
+                    .parent()
+                    .find('.ui-dialog-buttonset .ui-button');
+                console.log($buttons);
+                $buttons.eq(0).addClass('accept');
+                $buttons.eq(1).addClass('cancel');
+            }
+        });
+    },
+    useGroupApprovalDialog(element, resolve, reject) {
+        groupApprovalDialogNode.find('#groupApprovalDialogElementId').val(element.id);
+        groupApprovalDialogNode.find('#groupApprovalDialogElementTitle').val(element.title);
+        groupApprovalDialogNode.dialog({
+            resizable: false,
+            title: 'Gruppen Schreibrechte für "' + element.title + '" geben',
+            height: 'auto',
+            width: '1200',
+            modal: true,
+            buttons: {
+                Speichern: function() {},
+                Abbrechen: function() {
+                    $(this)
+                        .dialog('destroy')
+                        .hide();
+                }
+            },
+            close: function() {
+                $(this)
+                    .dialog('destroy')
+                    .hide();
+            },
+            create: function() {
+                let $buttons = $(this)
+                    .parent()
+                    .find('.ui-dialog-buttonset .ui-button');
+                console.log($buttons);
+                $buttons.eq(0).addClass('accept');
+                $buttons.eq(1).addClass('cancel');
+            }
+        });
     }
 };

@@ -34,8 +34,8 @@
             :buttons="['edit', 'remove', 'groups', 'users']"
             @edit="editChapter(chapter)"
             @remove="removeChapter(chapter)"
-            @set-users="console.log('todo')"
-            @set-groups="console.log('todo')"
+            @set-users="setUserApproval(chapter)"
+            @set-groups="setGroupApproval(chapter)"
         />
 
         <ul class="subchapter-list" :class="{ 'subchapter-list-import': importContent }">
@@ -134,7 +134,6 @@ export default {
                 }
             );
         },
-
         updateIsPublished() {
             let now = new Date();
             let publication_date = new Date(this.publication_date);
@@ -148,6 +147,34 @@ export default {
             } else {
                 this.isPublished = false;
             }
+        },
+        setUserApproval(element) {
+            let view = this;
+            return new Promise(function(resolve, reject) {
+                BlockManagerDialogs.useUserApprovalDialog(element, resolve, reject);
+            }).then(
+                success => {
+                    success = JSON.parse(success);
+                    console.log(success);
+                },
+                fail => {
+                    console.log(fail);
+                }
+            );
+        },
+        setGroupApproval(element) {
+            let view = this;
+            return new Promise(function(resolve, reject) {
+                BlockManagerDialogs.useGroupApprovalDialog(element, resolve, reject);
+            }).then(
+                success => {
+                    success = JSON.parse(success);
+                    console.log(success);
+                },
+                fail => {
+                    console.log(fail);
+                }
+            );
         }
     },
     watch: {

@@ -12,9 +12,7 @@
             <span :class="['block-icon cw-block-icon-' + block.type]"></span>
             {{ block.readable_name }}
         </div>
-        <div class="element-toolbar">
-            <button class="trash" @click="removeBlock(block)"></button>
-        </div>
+        <ActionMenuItem :buttons="['remove']" @remove="removeBlock(block)" />
         <ul class="block-preview" :class="{ 'block-preview-import': importContent }">
             <li class="block-content-preview" v-html="preview"></li>
         </ul>
@@ -22,6 +20,7 @@
 </template>
 
 <script>
+import ActionMenuItem from './ActionMenuItem.vue';
 import BlockManagerDialogs from './../assets/BlockManagerDialogs';
 export default {
     name: 'BlockItem',
@@ -31,7 +30,9 @@ export default {
             preview: ''
         };
     },
-    components: {},
+    components: {
+        ActionMenuItem
+    },
     props: {
         block: Object,
         importContent: Boolean,
