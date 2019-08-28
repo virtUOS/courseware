@@ -1101,6 +1101,7 @@ button.cw-reset-progress-button:hover {
 #courseware-blockmanager .cw-blockmanager-wrapper .cw-blockmanager-title {
   border-top: solid thin #28497c;
   border-bottom: solid thin #28497c;
+  background-color: #e7ebf1;
   color: #28497c;
   font-weight: 600;
 }
@@ -1149,36 +1150,42 @@ button.cw-reset-progress-button:hover {
 }
 #courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul.semester-list p.semester-description {
   margin: 0;
-  color: #fff;
+  color: #28497c;
   font-weight: 600;
   cursor: default;
-  background-image: url("../../../../../assets/images/icons/white/arr_1right.svg");
+  background-image: url("../../../../../assets/images/icons/blue/arr_1right.svg");
   background-size: 16px;
   background-position: 6px center;
   background-repeat: no-repeat;
-  background-color: #28497c;
+  background-color: #fff;
   padding: 1em 1em 1em 2em;
 }
 #courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul.semester-list p.semester-description.unfolded {
-  background-image: url("../../../../../assets/images/icons/white/arr_1down.svg");
+  background-image: url("../../../../../assets/images/icons/blue/arr_1down.svg");
+  background-color: #e7ebf1;
 }
 #courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul li {
   margin: 1em;
 }
 #courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul li .blockmanager-course-item {
   padding: 1em 1em 1em 2.5em;
-  background-color: #28497c;
-  background-image: url("../../../../../assets/images/icons/white/seminar.svg");
+  background-color: #fff;
+  background-image: url("../../../../../assets/images/icons/blue/seminar.svg");
   background-size: 16px;
   background-position: 10px center;
   background-repeat: no-repeat;
-  color: #fff;
+  color: #28497c;
   font-weight: 600;
-  border: none;
+  border: solid thin #28497c;
   cursor: pointer;
   display: inline-block;
   width: 100%;
   text-align: left;
+}
+#courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul li .blockmanager-course-item:hover {
+  background-image: url("../../../../../assets/images/icons/white/seminar.svg");
+  color: #fff;
+  background-color: #28497c;
 }
 #courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul li.semester-item {
   background-color: #fff;
@@ -1268,14 +1275,14 @@ button.cw-reset-progress-button:hover {
 #courseware-blockmanager .section-list p.section-description,
 #courseware-blockmanager .block-list p.section-description {
   margin: 0;
-  color: #fff;
+  color: #28497c;
   font-weight: 600;
   cursor: default;
-  background-image: url("../../../../../assets/images/icons/white/arr_1right.svg");
+  background-image: url("../../../../../assets/images/icons/blue/arr_1right.svg");
   background-size: 16px;
   background-position: 6px center;
   background-repeat: no-repeat;
-  background-color: #28497c;
+  background-color: #fff;
   padding: 1em 1em 1em 2em;
 }
 #courseware-blockmanager .chapter-list p.chapter-description.unfolded,
@@ -1290,7 +1297,8 @@ button.cw-reset-progress-button:hover {
 #courseware-blockmanager .subchapter-list p.section-description.unfolded,
 #courseware-blockmanager .section-list p.section-description.unfolded,
 #courseware-blockmanager .block-list p.section-description.unfolded {
-  background-image: url("../../../../../assets/images/icons/white/arr_1down.svg");
+  background-image: url("../../../../../assets/images/icons/blue/arr_1down.svg");
+  background-color: #e7ebf1;
 }
 #courseware-blockmanager .chapter-list p.chapter-description span,
 #courseware-blockmanager .subchapter-list p.chapter-description span,
@@ -1305,7 +1313,7 @@ button.cw-reset-progress-button:hover {
 #courseware-blockmanager .section-list p.section-description span,
 #courseware-blockmanager .block-list p.section-description span {
   font-weight: normal;
-  color: #adb9cd;
+  color: #28497c;
   float: right;
 }
 #courseware-blockmanager .chapter-list p.chapter-description span .structure-not-visible,
@@ -1498,7 +1506,7 @@ button.cw-reset-progress-button:hover {
 #courseware-news .cw-news-list-sections {
   margin-top: 0.5em;
   padding-left: 0;
-  max-width: 75%;
+  max-width: 831px;
 }
 #courseware-news .cw-news-list-sections .cw-news-item-section {
   list-style: none;
@@ -1508,22 +1516,20 @@ button.cw-reset-progress-button:hover {
   color: #ffffff;
   border: none;
   padding: 1em;
-  width: 100%;
   font-weight: 400;
   font-size: 14px;
 }
 #courseware-news .cw-news-list-blocks {
   margin-top: 0.5em;
   padding-left: 0;
-  max-width: 75%;
 }
 #courseware-news .cw-news-list-blocks .cw-news-item-block {
   list-style: none;
   border: solid thin #28497c;
-  height: 14em;
-  width: 14em;
+  height: 220px;
+  width: 240px;
   float: left;
-  margin-right: 1em;
+  margin: 0.5em 0.5em 0 0;
   padding: 0.5em 1em;
 }
 #courseware-news .cw-news-list-blocks .cw-news-item-block .cw-block-title {
@@ -9304,6 +9310,14 @@ section#courseware.view-student .aside-section .no-content {
 section.TestBlock div.description {
   margin-bottom: 20px;
 }
+.question_title {
+  font-size: 12pt;
+  margin-left: 0.25em;
+}
+.question_description {
+  padding: 1em 0 1em 0;
+  margin-left: 0.5em;
+}
 ul.exercise {
   margin: 0;
   padding: 0;
@@ -9373,12 +9387,15 @@ ul.exercise .cw-test-content form {
 }
 ul.exercise .cw-test-content .answer,
 ul.exercise .cw-test-content label {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: normal;
   line-height: 32px;
-  padding-left: 5px;
+  padding-left: 7px;
   text-transform: none;
   display: block;
+}
+ul.exercise .cw-test-content .label_text {
+  margin-left: 7px;
 }
 ul.exercise .cw-test-content select {
   margin: 0 5px;
