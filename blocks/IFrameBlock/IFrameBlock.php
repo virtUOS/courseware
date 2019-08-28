@@ -11,7 +11,7 @@ class IFrameBlock extends Block
 
     public function initialize()
     {
-        $this->defineField('url',    \Mooc\SCOPE_BLOCK, "http://studip.de");
+        $this->defineField('url',    \Mooc\SCOPE_BLOCK, "https://studip.de");
         $this->defineField('height', \Mooc\SCOPE_BLOCK, 600);
         $this->defineField('width', \Mooc\SCOPE_BLOCK, 100);
         $this->defineField('submit_user_id', \Mooc\SCOPE_BLOCK, false);
