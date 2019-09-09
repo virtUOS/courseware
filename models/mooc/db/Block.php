@@ -380,4 +380,30 @@ class Block extends \SimpleORMap implements \Serializable
     {
         return $this->seminar_id == $cid;
     }
+
+    public function hasApproval($uid)
+    {
+        return $this->hasUserApproval($uid) || $this->hasGroupApproval($uid);
+    }
+
+    private function hasUserApproval($uid)
+    {
+
+    }
+
+    private function hasGroupApproval($uid)
+    {
+
+    }
+
+    private function getApproval($type)
+    {
+        $approval_json = json_decode($this->approval);
+        switch ($type) {
+            case 'User':
+                return $approval_json->users;
+            case 'Group':
+                return $approval_json->groups;
+        }
+    }
 }

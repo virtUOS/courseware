@@ -20,27 +20,60 @@
                         <a href="#" class="set-groups" @click="$emit('set-groups')">Schreibrechte für Gruppen setzen</a>
                     </li>
                     <li v-if="this.edit_button" class="action-menu-item">
-                        <a href="#" class="edit-element" @click="$emit('edit')">Element bearbeiten</a>
+                        <a href="#" class="edit-element" @click="editDialogVisible = true">Element bearbeiten</a>
                     </li>
                     <li v-if="this.remove_button" class="action-menu-item">
-                        <a href="#" class="remove-element" @click="$emit('remove')">Element löschen</a>
+                        <a href="#" class="remove-element" @click="removeDialogVisible = true">Element löschen</a>
+                    </li>
+
+                    <li v-if="this.add_child_button" class="action-menu-item">
+                        <a href="#" class="add-child-element" @click="addChildDialogVisible = true"
+                            >Unterelement hinzufügen</a
+                        >
                     </li>
                 </ul>
             </div>
         </nav>
+        <RemoveDialog
+            :DialogVisible="this.removeDialogVisible"
+            :element="this.element"
+            @close="removeDialogVisible = false"
+            @remove="$emit('remove')"
+        />
+        <EditDialog
+            :DialogVisible="this.editDialogVisible"
+            :element="this.element"
+            @close="editDialogVisible = false"
+            @edit="editDialogAction"
+        />
+        <AddChildDialog
+            :DialogVisible="this.addChildDialogVisible"
+            :element="this.element"
+            @close="addChildDialogVisible = false"
+            @add-child="addChildDialogAction"
+        />
     </div>
 </template>
 <script>
+import RemoveDialog from './RemoveDialog.vue';
+import EditDialog from './EditDialog.vue';
+import AddChildDialog from './AddChildDialog.vue';
 export default {
     props: {
-        buttons: Array
+        buttons: Array,
+        element: Object
     },
+    components: { RemoveDialog, EditDialog, AddChildDialog },
     data() {
         return {
             edit_button: false,
             remove_button: false,
             groups_button: false,
-            users_button: false
+            users_button: false,
+            add_child_button: false,
+            removeDialogVisible: false,
+            editDialogVisible: false,
+            addChildDialogVisible: false
         };
     },
     created() {
@@ -53,6 +86,9 @@ export default {
                 case 'remove':
                     view.remove_button = true;
                     break;
+                case 'add-child':
+                    view.add_child_button = true;
+                    break;
                 case 'groups':
                     view.groups_button = true;
                     break;
@@ -61,6 +97,14 @@ export default {
                     break;
             }
         });
+    },
+    methods: {
+        editDialogAction(data) {
+            this.$emit('edit', data);
+        },
+        addChildDialogAction(data) {
+            this.$emit('add-child', data);
+        }
     }
 };
 </script>

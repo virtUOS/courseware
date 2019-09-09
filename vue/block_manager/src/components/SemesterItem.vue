@@ -1,7 +1,9 @@
 <template>
     <li class="semester-item">
-        <p class="semester-description" @click="toggleList">{{ semester_name }}</p>
-        <ul class="course-list">
+        <p class="semester-description" :class="{ unfolded: unfolded }" @click="toggleList">
+            {{ semester_name }}
+        </p>
+        <ul v-if="unfolded" class="course-list">
             <CourseItem v-for="course in courses" :key="course.id" :course="course" @course-selected="courseSelected" />
         </ul>
     </li>
@@ -18,19 +20,17 @@ export default {
         courses: Array,
         semester_name: String
     },
+    data() {
+        return {
+            unfolded: false
+        };
+    },
     methods: {
         courseSelected(event) {
             this.$emit('course-selected', event);
         },
-        toggleList(event) {
-            $(event.target)
-                .siblings('ul')
-                .toggle();
-            if (!$(event.target).hasClass('unfolded')) {
-                $(event.target).addClass('unfolded');
-            } else {
-                $(event.target).removeClass('unfolded');
-            }
+        toggleList() {
+            this.unfolded = !this.unfolded;
         }
     }
 };

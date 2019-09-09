@@ -1,5 +1,5 @@
 export default {
-    shortTitle(title, length = 5) {
+    shortTitle(title, length = 30) {
         return title.length > length ? title.substr(0, length - 1) + '…' : title;
     },
     getReadableDate(date) {

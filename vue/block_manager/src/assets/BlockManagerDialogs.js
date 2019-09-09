@@ -201,6 +201,20 @@ export default {
     useUserApprovalDialog(element, resolve, reject) {
         userApprovalDialogNode.find('#userApprovalDialogElementId').val(element.id);
         userApprovalDialogNode.find('#userApprovalDialogElementTitle').val(element.title);
+        let data;
+        $.ajax({
+            type: 'POST',
+            url: 'get_course_users',
+            data: { cid: COURSEWARE.config.cid },
+            success: function(response) {
+                console.log(response);
+                data = response;
+            },
+            error: function() {
+                reject('can not remove node!');
+            }
+        });
+        console.log(data);
         userApprovalDialogNode.dialog({
             resizable: false,
             title: 'Studierenden Schreibrechte für "' + element.title + '" geben',
@@ -230,7 +244,7 @@ export default {
             }
         });
     },
-    useGroupApprovalDialog(element, resolve, reject) {
+    useGroupApprovalDialog(element) {
         groupApprovalDialogNode.find('#groupApprovalDialogElementId').val(element.id);
         groupApprovalDialogNode.find('#groupApprovalDialogElementTitle').val(element.title);
         groupApprovalDialogNode.dialog({

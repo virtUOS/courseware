@@ -8,12 +8,21 @@
         }"
         :data-id="id"
     >
-        <div class="block-description" v-bind:class="{ element_hidden: !block.isPublished }">
+        <div
+            class="block-description block-handle"
+            :class="{ element_hidden: !block.isPublished, unfolded: unfolded }"
+            @click="toggleContent"
+        >
             <span :class="['block-icon cw-block-icon-' + block.type]"></span>
             {{ block.readable_name }}
         </div>
-        <ActionMenuItem :buttons="['remove']" @remove="removeBlock(block)" />
-        <ul class="block-preview" :class="{ 'block-preview-import': importContent }">
+        <ActionMenuItem
+            v-if="!this.importContent && !this.remoteContent"
+            :buttons="['remove']"
+            :element="this.block"
+            @remove="removeElement"
+        />
+        <ul v-if="unfolded" class="block-preview" :class="{ 'block-preview-import': importContent }">
             <li class="block-content-preview" v-html="preview"></li>
         </ul>
     </li>
@@ -21,13 +30,13 @@
 
 <script>
 import ActionMenuItem from './ActionMenuItem.vue';
-import BlockManagerDialogs from './../assets/BlockManagerDialogs';
 export default {
     name: 'BlockItem',
     data() {
         return {
             id: this.block.id,
-            preview: ''
+            preview: '',
+            unfolded: false
         };
     },
     components: {
@@ -48,20 +57,11 @@ export default {
         }
     },
     methods: {
-        removeBlock(element) {
-            let view = this;
-            return new Promise(function(resolve, reject) {
-                BlockManagerDialogs.useRemoveDialog(element, false, resolve, reject);
-            }).then(
-                success => {
-                    success = JSON.parse(success);
-                    console.log(success);
-                    $('li[data-id=' + view.block.id + ']').remove();
-                },
-                fail => {
-                    console.log(fail);
-                }
-            );
+        removeElement() {
+            this.$emit('remove-block', this.block);
+        },
+        toggleContent() {
+            this.unfolded = !this.unfolded;
         }
     }
 };

@@ -4,7 +4,12 @@
             class="blockmanager-course-item"
             :data-remote_cid="course.id"
             :data-remote_name="course.name"
-            @click="$emit('course-selected', { remoteName: course.name, remoteId: course.id })"
+            @click="
+                $emit('course-selected', {
+                    remoteName: course.name,
+                    remoteId: course.id
+                })
+            "
         >
             {{ course.name }}
         </button>

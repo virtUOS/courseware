@@ -110,6 +110,11 @@ class User extends \User
         return $GLOBALS['perm']->get_studip_perm($cid, $this->id);
     }
 
+    public function hasApproval(DbBlock $block)
+    {
+        return $block->hasApproval($this->id);
+    }
+
     public function isNobody()
     {
         return $this->id === 'nobody';

@@ -7,7 +7,15 @@
         }"
         :data-id="id"
     >
-        <div class="subchapter-description">
+        <div
+            class="subchapter-description subchapter-handle"
+            :class="{
+                'full-width': importContent,
+                'full-width': remoteContent,
+                unfolded: unfolded
+            }"
+            @click="toggleContent"
+        >
             <p class="subchapter-title" :title="title">{{ shortTitle }}</p>
             <p class="header-info-wrapper">
                 <span
@@ -20,32 +28,62 @@
                 </span>
                 <span
                     v-if="publication_date"
-                    :class="{ 'unpublished-info': !isPublished, 'published-info': isPublished }"
+                    :class="{
+                        'unpublished-info': !isPublished,
+                        'published-info': isPublished
+                    }"
                 >
                     | sichtbar ab: {{ publication_date_readable }}</span
                 >
-                <span v-if="withdraw_date" :class="{ 'unpublished-info': !isPublished, 'published-info': isPublished }">
+                <span
+                    v-if="withdraw_date"
+                    :class="{
+                        'unpublished-info': !isPublished,
+                        'published-info': isPublished
+                    }"
+                >
                     | unsichtbar ab: {{ withdraw_date_readable }}</span
                 >
             </p>
         </div>
         <ActionMenuItem
-            :buttons="['edit', 'remove', 'groups', 'users']"
-            @edit="editSubchapter(subchapter)"
-            @remove="removeSubchapter(subchapter)"
-            @set-users="setUserApproval(subchapter)"
-            @set-groups="setGroupApproval(subchapter)"
+            v-if="!this.importContent && !this.remoteContent"
+            :buttons="['edit', 'remove', 'groups', 'users', 'add-child']"
+            :element="this.element"
+            @edit="editElement"
+            @remove="removeElement"
+            @add-child="addChild"
+            @set-users="setUserApproval"
+            @set-groups="setGroupApproval"
+            :class="{ unfolded: unfolded }"
         />
 
-        <ul class="section-list" :class="{ 'section-list-import': importContent }">
+        <draggable
+            tag="ul"
+            v-if="unfolded"
+            :list="sections"
+            :group="{ name: 'sections' }"
+            v-bind="dragOptions"
+            class="section-list"
+            :class="{ 'section-list-import': importContent }"
+            ghost-class="ghost"
+            handle=".section-handle"
+            :move="checkMove"
+            @start="dragging = true"
+            @sort="sortItem"
+            @end="finishMove"
+        >
             <SectionItem
-                v-for="section in subchapter.children"
+                v-for="section in sections"
                 :key="section.id"
-                :section="section"
+                :element="section"
                 :importContent="importContent"
                 :remoteContent="remoteContent"
+                @blockListUpdate="updateBlockList"
+                @remove-section="removeSection"
             />
-        </ul>
+            <p v-if="sections.length == 0">This Subchapter is empty. You can drop a section here or add a new one.</p>
+        </draggable>
     </li>
 </template>
 
@@ -53,134 +91,129 @@
 import SectionItem from './SectionItem.vue';
 import ActionMenuItem from './ActionMenuItem.vue';
 import BlockManagerHelper from './../assets/BlockManagerHelper';
-import BlockManagerDialogs from './../assets/BlockManagerDialogs';
+import draggable from 'vuedraggable';
+import axios from 'axios';
 export default {
     name: 'SubchapterItem',
     data() {
         return {
-            id: this.subchapter.id,
-            publication_date: this.subchapter.publication_date,
-            publication_date_readable: BlockManagerHelper.getReadableDate(this.subchapter.publication_date),
-            withdraw_date: this.subchapter.withdraw_date,
-            withdraw_date_readable: BlockManagerHelper.getReadableDate(this.subchapter.withdraw_date),
-            isPublished: this.subchapter.isPublished,
-            title: this.subchapter.title,
-            shortTitle: this.subchapter.shortTitle
+            id: this.element.id,
+            publication_date: this.element.publication_date,
+            publication_date_readable: BlockManagerHelper.getReadableDate(this.element.publication_date),
+            withdraw_date: this.element.withdraw_date,
+            withdraw_date_readable: BlockManagerHelper.getReadableDate(this.element.withdraw_date),
+            isPublished: this.element.isPublished,
+            title: this.element.title,
+            shortTitle: this.element.shortTitle,
+            unfolded: false,
+            sections: this.element.children,
+            sectionList: {},
+            dragging: false
         };
     },
     components: {
         SectionItem,
-        ActionMenuItem
+        ActionMenuItem,
+        draggable
     },
     props: {
-        subchapter: Object,
+        element: Object,
         importContent: Boolean,
         remoteContent: Boolean
     },
     created() {
+        if (this.sections == null) {
+            this.sections = [];
+        }
         if (this.importContent && !this.remoteContent) {
             this.id = 'import-' + this.id;
         }
         if (this.importContent && this.remoteContent) {
             this.id = 'remote-' + this.id;
         }
-        this.shortTitle = BlockManagerHelper.shortTitle(this.subchapter.title, 30);
-    },
-    methods: {
-        editSubchapter(element) {
-            let view = this;
-            return new Promise(function(resolve, reject) {
-                BlockManagerDialogs.useEditDialog(element, true, resolve, reject);
-            }).then(
-                success => {
-                    success = JSON.parse(success);
-                    view.title = success.title;
-                    view.subchapter.title = success.title;
-                    if (success.publication_date) {
-                        view.publication_date = success.publication_date * 1000;
-                    } else {
-                        view.publication_date = null;
-                    }
-                    if (success.withdraw_date) {
-                        view.withdraw_date = success.withdraw_date * 1000;
-                    } else {
-                        view.withdraw_date = null;
-                    }
-                    view.shortTitle = BlockManagerHelper.shortTitle(view.title, 30);
-                },
-                fail => {
-                    console.log(fail);
-                }
-            );
-        },
-        removeSubchapter(element) {
-            let view = this;
-            return new Promise(function(resolve, reject) {
-                BlockManagerDialogs.useRemoveDialog(element, true, resolve, reject);
-            }).then(
-                success => {
-                    success = JSON.parse(success);
-                    console.log(success);
-                    $('li[data-id=' + view.subchapter.id + ']').remove();
-                },
-                fail => {
-                    console.log(fail);
-                }
-            );
-        },
-        updateIsPublished() {
-            let now = new Date();
-            let publication_date = new Date(this.publication_date);
-            let withdraw_date = new Date(this.withdraw_date);
-
-            if (
-                (publication_date < now || publication_date == null) &&
-                (withdraw_date > now || withdraw_date == null)
-            ) {
-                this.isPublished = true;
-            } else {
-                this.isPublished = false;
-            }
-        },
-        setUserApproval(element) {
-            let view = this;
-            return new Promise(function(resolve, reject) {
-                BlockManagerDialogs.useUserApprovalDialog(element, resolve, reject);
-            }).then(
-                success => {
-                    success = JSON.parse(success);
-                    console.log(success);
-                },
-                fail => {
-                    console.log(fail);
-                }
-            );
-        },
-        setGroupApproval(element) {
-            let view = this;
-            return new Promise(function(resolve, reject) {
-                BlockManagerDialogs.useGroupApprovalDialog(element, resolve, reject);
-            }).then(
-                success => {
-                    success = JSON.parse(success);
-                    console.log(success);
-                },
-                fail => {
-                    console.log(fail);
-                }
-            );
-        }
+        this.shortTitle = BlockManagerHelper.shortTitle(this.element.title, 30);
     },
     watch: {
-        publication_date: function() {
-            this.subchapter.publication_date = this.publication_date;
-            this.publication_date_readable = BlockManagerHelper.getReadableDate(this.publication_date);
-            this.updateIsPublished();
+        sections: function() {
+            if (this.sections == null) {
+                this.sections = [];
+            }
+            let list = [];
+            this.sections.forEach(element => {
+                list.push(element.id);
+            });
+            this.sectionList[this.id] = list;
+        }
+    },
+    methods: {
+        updateBlockList(data) {
+            this.$emit('blockListUpdate', data);
         },
-        withdraw_date: function() {
-            this.subchapter.withdraw_date = this.withdraw_date;
-            this.withdraw_date_readable = BlockManagerHelper.getReadableDate(this.withdraw_date);
-            this.updateIsPublished();
+        checkMove() {},
+        sortItem() {
+            this.$emit('sectionListUpdate', this.sectionList);
+        },
+        finishMove() {
+            this.dragging = false;
+            //this.storeSectionMove();
+        },
+        storeSectionMove() {
+            let view = this;
+            axios
+                .post('store_element_move', {
+                    cid: COURSEWARE.config.cid,
+                    elementList: JSON.stringify(view.sectionList),
+                    type: 'Section'
+                })
+                .then(data => {
+                    console.log(data.response);
+                })
+                .catch(error => {
+                    console.log('there was an error: ' + error.response);
+                });
+        },
+        removeElement() {
+            this.$emit('remove-subchapter', this.element);
+        },
+        editElement(data) {
+            this.title = data.title;
+            this.shortTitle = BlockManagerHelper.shortTitle(data.title);
+            this.publication_date = data.publication_date * 1000;
+            this.publication_date_readable = data.publication_date_readable;
+            this.withdraw_date = data.withdraw_date * 1000;
+            this.withdraw_date_readable = data.withdraw_date_readable;
+            this.isPublished = data.isPublished;
+        },
+        addChild(data) {
+            this.sections.push(data);
+        },
+        removeSection(data) {
+            let sections = [];
+            this.sections.forEach(element => {
+                if (element.id != data.id) {
+                    sections.push(element);
+                }
+            });
+            this.sections = sections;
+        },
+        setUserApproval(data) {
+            console.log(data);
+        },
+        setGroupApproval(data) {
+            console.log(data);
+        },
+        toggleContent() {
+            this.unfolded = !this.unfolded;
+        }
+    },
+    computed: {
+        dragOptions() {
+            return {
+                animation: 200,
+                group: 'description',
+                disabled: false,
+                ghostClass: 'ghost'
+            };
         }
     }
 };

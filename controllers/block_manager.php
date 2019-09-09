@@ -67,61 +67,6 @@ class BlockManagerController extends CoursewareStudipController
         $this->remote_courses_json = json_encode($this->remote_courses);
     }
 
-    // public function groups_action()
-    // {
-    //     $this->cid = Request::get('cid');
-    //     $grouped = $this->getGrouped($this->cid);
-    //     $this->courseware = current($grouped['']);
-    //     $this->buildTree($grouped, $this->courseware);
-
-        
-    //     $this->buildSidebar('groups');
-    // }
-
-    // public function groups_vue_action()
-    // {
-    //     $this->cid = Request::get('cid');
-    //     $statusgruppen = \Statusgruppen::findBySQL('range_id = ?', array($this->cid));
-    //     $data = [];
-
-    //     foreach ($statusgruppen as $statusgruppe) {
-    //         $data[] = array('id' => $statusgruppe['id'], 'name' => $statusgruppe['name']);
-    //     }
-
-    //     $this->response->add_header('Content-Type', 'application/json');
-    //     $this->render_text(json_encode($data));
-    // }
-
-    // public function members_vue_action()
-    // {
-    //     $cid = Request::get('cid');
-    //     $db = DBManager::get();
-    //     $stmt = $db->prepare("
-    //         SELECT
-    //             *
-    //         FROM
-    //             seminar_user
-    //         INNER JOIN 
-    //             auth_user_md5 USING (user_id)
-    //         WHERE
-    //             seminar_id = :cid
-    //         AND
-    //             status = 'autor'
-    //         ORDER BY
-    //             position, Nachname ASC
-    //     ");
-    //     $stmt->bindParam(":cid", $this->container['cid']);
-    //     $stmt->execute();
-    //     $members = ($stmt->fetchAll(PDO::FETCH_ASSOC));
-    //     $data = [];
-    //     foreach($members as $member){
-    //         $data[] = array('id' => $member['user_id'], 'name' => $member['username']);
-    //     }
-
-    //     $this->response->add_header('Content-Type', 'application/json');
-    //     $this->render_text(json_encode($data));
-    // }
-
     public function courseware_vue_action()
     {
         $cid = Request::get('cid');
@@ -142,29 +87,34 @@ class BlockManagerController extends CoursewareStudipController
         $this->render_text(json_encode($courseware));
     }
 
-    // private function buildSidebar($view_name)
-    // {
-    //     $sidebar = Sidebar::get();
-    //     $sidebar->setImage('sidebar/group-sidebar.png');
-    //     $views = new ViewsWidget();
-    //     $views->addLink(
-    //             _('Struktur bearbeiten'),
-    //             $this->url_for('block_manager/index'),
-    //             null,
-    //             [],
-    //             'index'
-    //         );
-    //     $views->addLink(
-    //             _('Gruppen Freigaben'),
-    //             $this->url_for('block_manager/groups'),
-    //             null,
-    //             [],
-    //             'groups'
-    //         );
+    public function add_structure_action()
+    {
+        $request = trim(file_get_contents("php://input"));
+        $decoded_request = json_decode($request, true);
+        $parent_id = $decoded_request['parent'];
+        $title = $decoded_request['title'];
+        $type = $decoded_request['type'];
+        $cid = $decoded_request['cid'];
+        
+        
+        $block = new \Mooc\DB\Block();
+        $block->setData(array(
+            'seminar_id' => $cid,
+            'parent_id' => $parent_id,
+            'type' => $type,
+            'title' => $title,
+            'position' => $block->getNewPosition($parent_id)
+        ));
 
-    //     $views->getElements()[$view_name]->setActive(true);
-    //     $sidebar->addWidget($views);
-    // }
+        $block->store();
+        $block = $block->toArray();
+        $block['childType'] = $this->getSubElement($block['type']);
+        $block['isStrucutalElement'] = true;
+        $block['isBlock'] = false;
+
+        $this->response->add_header('Content-Type', 'application/json');
+        $this->render_text(json_encode($block));
+    }
 
     private function getGrouped($cid)
     {
@@ -172,7 +122,10 @@ class BlockManagerController extends CoursewareStudipController
             dbBlock::findBySQL('seminar_id = ? ORDER BY id, position', array($cid)),
             function($memo, $item) {
                 $arr = $item->toArray();
+                $arr['isStrucutalElement'] = true;
+                $arr['childType'] = $this->getSubElement($arr['type']);
                 if (!$item->isStructuralBlock()) {
+                    $arr['isStrucutalElement'] = false;
                     $arr['isBlock'] = true;
                     $ui_block = $this->plugin->getBlockFactory()->makeBlock($item);
                     $arr['ui_block'] = $ui_block;
@@ -193,7 +146,26 @@ class BlockManagerController extends CoursewareStudipController
 
         return $grouped;
     }
-    
+
+    private function getSubElement($type) {
+        $sub_element = null;
+        switch($type) {
+            case 'Chapter':
+                $sub_element = 'Subchapter';
+                break;
+            case 'Subchapter':
+                $sub_element = 'Section';
+                break;
+            case 'Section':
+                $sub_element = 'Block';
+                break;
+            case 'Block':
+            default:
+        }
+
+        return $sub_element;
+    }
+
     private function getRemoteCourseware($cid)
     {
         $grouped = $this->getGrouped($cid);
@@ -204,6 +176,33 @@ class BlockManagerController extends CoursewareStudipController
         return $remote_courseware;
     }
 
+    public function get_course_users_action()
+    {
+        $cid = Request::get('cid');
+        $course_members = CourseMember::findByCourse($cid);
+        $users_json = [];
+        foreach($course_members as $member) {
+           array_push($users_json, [
+               'user_id' => $member->user_id,
+               'firstname' => $member->vorname,
+               'lastname' => $member->nachname,
+               'username' => $member->username
+            ]);
+        }
+
+        $this->response->add_header('Content-Type', 'application/json');
+        $this->render_text(json_encode($users_json));
+    }
+
+    public function get_course_groups_action($cid)
+    {
+        $cid = Request::get('cid');
+        $element_id = Request::get('element_id');
+        $groups = Statusgruppen::findAllByRangeId($cid);
+
+        $this->response->add_header('Content-Type', 'application/json');
+        $this->render_text(json_encode($groups));
+    }
 
     private function buildBlockMap()
     {
@@ -361,6 +360,45 @@ class BlockManagerController extends CoursewareStudipController
         }
 
         return true;
+    }
+
+    public function store_element_move_action()
+    {
+        $errors = "";
+        $successes = "";
+        $request = trim(file_get_contents("php://input"));
+        $decoded_request = json_decode($request, true);
+        $cid = $decoded_request['cid'];
+        $type = $decoded_request['type'];
+        $elementList =   json_decode($decoded_request['elementList'], true);
+        $courseware = dbBlock::findCourseware($cid);
+
+        switch ($type) {
+            case 'Chapter': 
+                $courseware->updateChildPositions($elementList);
+                $successes = "Chapter changes stored";
+                break;
+            case 'Subchapter':
+            case 'Section':
+            case 'Block':
+                foreach((array)$elementList as $key => $value) {
+                    $parent = dbBlock::find($key);
+                    foreach($value as $bid) {
+                        $block = dbBlock::find($bid);
+                        if ($parent->id != $block->parent_id) {
+                            $block->parent_id = $parent->id;
+                            $block->store();
+                        }
+                    }
+                    $parent->updateChildPositions($value);
+                    $successes = "Element changes stored";
+                }
+                break;
+            
+        }
+        $this->response->add_header('Content-Type', 'application/json');
+        $answer = json_encode(['errors' => $errors, 'successes' => $successes]);
+        $this->render_text($answer);
     }
 
     public function store_changes_vue_action()

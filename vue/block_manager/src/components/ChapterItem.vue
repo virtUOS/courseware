@@ -7,7 +7,15 @@
         }"
         :data-id="id"
     >
-        <div class="chapter-description">
+        <div
+            class="chapter-description chapter-handle"
+            :class="{
+                'full-width': importContent,
+                'full-width': remoteContent,
+                unfolded: unfolded
+            }"
+            @click="toggleContent"
+        >
             <p class="chapter-title" :title="title">
                 {{ shortTitle }}
             </p>
@@ -21,67 +29,114 @@
                     Kapitel
                 </span>
                 <span
-                    v-if="publication_date"
-                    :class="{ 'unpublished-info': !isPublished, 'published-info': isPublished }"
+                    v-if="publication_date && !this.importContent && !this.remoteContent"
+                    :class="{
+                        'unpublished-info': !isPublished,
+                        'published-info': isPublished
+                    }"
                     >| sichtbar ab: {{ publication_date_readable }}</span
                 >
-                <span v-if="withdraw_date" :class="{ 'unpublished-info': !isPublished, 'published-info': isPublished }">
+                <span
+                    v-if="withdraw_date && !this.importContent && !this.remoteContent"
+                    :class="{
+                        'unpublished-info': !isPublished,
+                        'published-info': isPublished
+                    }"
+                >
                     | unsichtbar ab: {{ withdraw_date_readable }}</span
                 >
             </p>
         </div>
         <ActionMenuItem
-            :buttons="['edit', 'remove', 'groups', 'users']"
-            @edit="editChapter(chapter)"
-            @remove="removeChapter(chapter)"
-            @set-users="setUserApproval(chapter)"
-            @set-groups="setGroupApproval(chapter)"
+            v-if="!this.importContent && !this.remoteContent"
+            :buttons="['edit', 'remove', 'groups', 'users', 'add-child']"
+            :element="this.element"
+            @edit="editElement"
+            @remove="removeElement"
+            @add-child="addChild"
+            @set-users="setUserApproval"
+            @set-groups="setGroupApproval"
+            :class="{ unfolded: unfolded }"
         />
-
-        <ul class="subchapter-list" :class="{ 'subchapter-list-import': importContent }">
+        <draggable
+            tag="ul"
+            v-if="unfolded"
+            :list="subchapters"
+            :group="{ name: 'subchapters' }"
+            v-bind="dragOptions"
+            class="subchapter-list"
+            :class="{ 'subchapter-list-import': importContent }"
+            ghost-class="ghost"
+            handle=".subchapter-handle"
+            :move="checkMove"
+            @start="dragging = true"
+            @add="addItem"
+            @remove="removeItem"
+            @sort="sortItem"
+            @end="finishMove"
+        >
+            <!-- <transition-group
+        type="transition"
+        :name="!dragging ? 'flip-list' : null"
+      > -->
             <SubchapterItem
-                v-for="subchapter in chapter.children"
-                :key="subchapter.id"
-                :subchapter="subchapter"
+                v-for="elementChild in subchapters"
+                :key="elementChild.id"
+                :element="elementChild"
                 :importContent="importContent"
                 :remoteContent="remoteContent"
+                @blockListUpdate="updateBlockList"
+                @sectionListUpdate="updateSectionList"
+                @remove-subchapter="removeSubchapter"
             />
-        </ul>
-        <ul class="subchapter-actions">
+            <p v-if="subchapters.length == 0">
+                This Chapter is empty. You can drop a subchapter here or add a new one.
+            </p>
+            <!-- </transition-group> -->
+        </draggable>
+        <!-- <ul v-if="!importContent && !remoteContent && unfolded" class="subchapter-actions">
             <li>
                 <button class="button add">Unterkapitel hinzufügen</button>
             </li>
-        </ul>
+        </ul> -->
     </li>
 </template>
 
 <script>
 import SubchapterItem from './SubchapterItem.vue';
 import ActionMenuItem from './ActionMenuItem.vue';
-import BlockManagerHelper from './../assets/BlockManagerHelper';
-import BlockManagerDialogs from './../assets/BlockManagerDialogs';
+// import BlockManagerHelper from './../assets/BlockManagerHelper';
+import blockManagerHelperMixin from './../mixins/blockManagerHelperMixin.js';
+import draggable from 'vuedraggable';
+import axios from 'axios';
 export default {
     name: 'ChapterItem',
+    mixins: [blockManagerHelperMixin],
+    props: {
+        element: Object,
+        importContent: Boolean,
+        remoteContent: Boolean
+    },
     data() {
         return {
-            id: this.chapter.id,
-            publication_date: this.chapter.publication_date,
-            publication_date_readable: BlockManagerHelper.getReadableDate(this.chapter.publication_date),
-            withdraw_date: this.chapter.withdraw_date,
-            withdraw_date_readable: BlockManagerHelper.getReadableDate(this.chapter.withdraw_date),
-            isPublished: this.chapter.isPublished,
-            title: this.chapter.title,
-            shortTitle: this.chapter.shortTitle
+            id: this.element.id,
+            publication_date: this.element.publication_date,
+            publication_date_readable: this.getReadableDate(this.element.publication_date),
+            withdraw_date: this.element.withdraw_date,
+            withdraw_date_readable: this.getReadableDate(this.element.withdraw_date),
+            isPublished: this.element.isPublished,
+            title: this.element.title,
+            shortTitle: this.cutTitle(this.element.title, 30),
+            unfolded: false,
+            subchapters: this.element.children,
+            subchapterList: {},
+            dragging: false
         };
     },
     components: {
         SubchapterItem,
-        ActionMenuItem
-    },
-    props: {
-        chapter: Object,
-        importContent: Boolean,
-        remoteContent: Boolean
+        ActionMenuItem,
+        draggable
     },
     created() {
         if (this.importContent && !this.remoteContent) {
@@ -90,103 +145,94 @@ export default {
         if (this.importContent && this.remoteContent) {
             this.id = 'remote-' + this.id;
         }
-        this.shortTitle = BlockManagerHelper.shortTitle(this.title, 30);
-    },
-    methods: {
-        editChapter(element) {
-            let view = this;
-            return new Promise(function(resolve, reject) {
-                BlockManagerDialogs.useEditDialog(element, true, resolve, reject);
-            }).then(
-                success => {
-                    success = JSON.parse(success);
-                    view.title = success.title;
-                    view.chapter.title = success.title;
-                    if (success.publication_date) {
-                        view.publication_date = success.publication_date * 1000;
-                    } else {
-                        view.publication_date = null;
-                    }
-                    if (success.withdraw_date) {
-                        view.withdraw_date = success.withdraw_date * 1000;
-                    } else {
-                        view.withdraw_date = null;
-                    }
-                    view.shortTitle = BlockManagerHelper.shortTitle(view.title, 30);
-                },
-                fail => {
-                    console.log(fail);
-                }
-            );
-        },
-        removeChapter(element) {
-            let view = this;
-            return new Promise(function(resolve, reject) {
-                BlockManagerDialogs.useRemoveDialog(element, true, resolve, reject);
-            }).then(
-                success => {
-                    success = JSON.parse(success);
-                    console.log(success);
-                    $('li[data-id=' + view.chapter.id + ']').remove();
-                },
-                fail => {
-                    console.log(fail);
-                }
-            );
-        },
-        updateIsPublished() {
-            let now = new Date();
-            let publication_date = new Date(this.publication_date);
-            let withdraw_date = new Date(this.withdraw_date);
-
-            if (
-                (publication_date < now || publication_date == null) &&
-                (withdraw_date > now || withdraw_date == null)
-            ) {
-                this.isPublished = true;
-            } else {
-                this.isPublished = false;
-            }
-        },
-        setUserApproval(element) {
-            let view = this;
-            return new Promise(function(resolve, reject) {
-                BlockManagerDialogs.useUserApprovalDialog(element, resolve, reject);
-            }).then(
-                success => {
-                    success = JSON.parse(success);
-                    console.log(success);
-                },
-                fail => {
-                    console.log(fail);
-                }
-            );
-        },
-        setGroupApproval(element) {
-            let view = this;
-            return new Promise(function(resolve, reject) {
-                BlockManagerDialogs.useGroupApprovalDialog(element, resolve, reject);
-            }).then(
-                success => {
-                    success = JSON.parse(success);
-                    console.log(success);
-                },
-                fail => {
-                    console.log(fail);
-                }
-            );
+        if (this.subchapters == null) {
+            this.subchapters = [];
         }
+        console.log(this.element);
     },
     watch: {
-        publication_date: function() {
-            this.chapter.publication_date = this.publication_date;
-            this.publication_date_readable = BlockManagerHelper.getReadableDate(this.publication_date);
-            this.updateIsPublished();
+        subchapters: function() {
+            let list = [];
+            this.subchapters.forEach(element => {
+                list.push(element.id);
+            });
+            this.subchapterList[this.id] = list;
+            this.$emit('subchapterListUpdate', this.subchapterList);
+        }
+    },
+    methods: {
+        updateBlockList(data) {
+            this.$emit('blockListUpdate', data);
         },
-        withdraw_date: function() {
-            this.chapter.withdraw_date = this.withdraw_date;
-            this.withdraw_date_readable = BlockManagerHelper.getReadableDate(this.withdraw_date);
-            this.updateIsPublished();
+        updateSectionList(data) {
+            this.$emit('sectionListUpdate', data);
+        },
+        checkMove() {},
+        addItem() {},
+        removeItem() {},
+        sortItem() {},
+        finishMove() {
+            this.dragging = false;
+
+            //this.storeSubchapterMove();
+        },
+        storeSubchapterMove() {
+            let view = this;
+            axios
+                .post('store_element_move', {
+                    cid: COURSEWARE.config.cid,
+                    elementList: JSON.stringify(view.subchapterList),
+                    type: 'Subchapter'
+                })
+                .then(data => {
+                    console.log(data.response);
+                })
+                .catch(error => {
+                    console.log('there was an error: ' + error.response);
+                });
+        },
+        removeElement() {
+            this.$emit('remove-chapter', this.element);
+        },
+        editElement(data) {
+            this.title = data.title;
+            this.shortTitle = this.cutTitle(data.title);
+            this.publication_date = data.publication_date * 1000;
+            this.publication_date_readable = data.publication_date_readable;
+            this.withdraw_date = data.withdraw_date * 1000;
+            this.withdraw_date_readable = data.withdraw_date_readable;
+            this.isPublished = data.isPublished;
+        },
+        addChild(data) {
+            this.subchapters.push(data);
+        },
+        removeSubchapter(data) {
+            let subchapters = [];
+            this.subchapters.forEach(element => {
+                if (element.id != data.id) {
+                    subchapters.push(element);
+                }
+            });
+            this.subchapters = subchapters;
+        },
+        setUserApproval(data) {
+            console.log(data);
+        },
+        setGroupApproval(data) {
+            console.log(data);
+        },
+        toggleContent() {
+            this.unfolded = !this.unfolded;
+        }
+    },
+    computed: {
+        dragOptions() {
+            return {
+                animation: 200,
+                group: 'description',
+                disabled: false,
+                ghostClass: 'ghost'
+            };
         }
     }
 };
