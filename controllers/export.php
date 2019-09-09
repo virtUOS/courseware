@@ -34,8 +34,10 @@ class ExportController extends CoursewareStudipController
             }
 
             $destination = $tempDir . '/' . $file['id'];
-            mkdir($destination);
-            copy($file['path'], $destination.'/'.$file['filename']);
+            if (!is_dir($destination)) {
+                mkdir($destination);
+                copy($file['path'], $destination.'/'.$file['filename']);
+            }
         }
         
         if (Request::submitted('plaintext')) {
