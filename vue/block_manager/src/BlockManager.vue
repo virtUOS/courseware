@@ -3,9 +3,11 @@
         <div class="cw-blockmanager-wrapper">
             <div class="cw-blockmanager-title">
                 <p>{{ this.courseware.title }}</p>
-                <span class="cw-blockmanager-store-icon" title="speichern"></span>
-                <span class="cw-blockmanager-store-icon-error">Fehler beim Speichern</span>
+                <ActionMenuItem :buttons="['add-child']" :element="this.courseware" @add-child="addChild" />
+                <!-- <span class="cw-blockmanager-store-icon" title="speichern"></span>
+                <span class="cw-blockmanager-store-icon-error">Fehler beim Speichern</span> -->
             </div>
+
             <draggable
                 tag="ul"
                 :list="chapters"
@@ -30,18 +32,6 @@
                     @remove-chapter="removeChapter"
                 />
             </draggable>
-
-            <!-- <button
-        :class="{ 'button-disabled': !change }"
-        class="button"
-        id="cw-blockmananger-store-changes"
-        v-on="change ? { click: storeChanges } : {}"
-        :disabled="!change"
-      >
-        Änderungen speichern
-      </button> -->
-
-            <!-- <div style="clear: both;"></div> -->
         </div>
         <div id="cw-action-wrapper" class="cw-blockmanager-wrapper">
             <div id="cw-import-title" class="cw-blockmanager-title">
@@ -123,22 +113,14 @@
             </button>
             <div style="clear: both;"></div>
         </div>
-        <UserApprovalDialog />
-        <GroupApprovalDialog />
-        <EditDialog />
-        <RemoveDialog />
     </div>
 </template>
 
 <script>
 import ChapterItem from './components/ChapterItem.vue';
 import SemesterItem from './components/SemesterItem.vue';
-import UserApprovalDialog from './components/UserApprovalDialog.vue';
-import GroupApprovalDialog from './components/GroupApprovalDialog.vue';
-import EditDialog from './components/EditDialog.vue';
-import RemoveDialog from './components/RemoveDialog.vue';
+import ActionMenuItem from './components/ActionMenuItem.vue';
 import NodeContentHelper from './assets/NodeContentHelper.js';
-// import BlockManagerDialogs from './assets/BlockManagerDialogs.js';
 
 import axios from 'axios';
 import draggable from 'vuedraggable';
@@ -172,11 +154,8 @@ export default {
     components: {
         ChapterItem,
         SemesterItem,
-        UserApprovalDialog,
-        GroupApprovalDialog,
-        EditDialog,
-        RemoveDialog,
-        draggable
+        draggable,
+        ActionMenuItem
     },
     created() {
         this.courseware = JSON.parse(COURSEWARE.data.courseware);
@@ -184,14 +163,7 @@ export default {
         this.blockMap = JSON.parse(COURSEWARE.data.block_map);
         this.chapters = this.courseware.children;
     },
-    mounted() {
-        // this.startMouseListeners();
-        // this.createSortables();
-        // BlockManagerDialogs.createUserApprovalDialog($('#userApprovalDialog'));
-        // BlockManagerDialogs.createGroupApprovalDialog($('#groupApprovalDialog'));
-        // BlockManagerDialogs.createEditDialog($('#editDialog'));
-        // BlockManagerDialogs.createRemoveDialog($('#removeDialog'));
-    },
+    mounted() {},
     computed: {
         dragOptions() {
             return {
@@ -227,13 +199,13 @@ export default {
             this.blockList[key] = update[key];
             this.storeChanges();
         },
-        checkMove() {
-            // console.log('Future index: ' + e.draggedContext.futureIndex);
-        },
+
         finishMove() {
             this.dragging = false;
             this.storeChanges();
-            //this.storeChapterMove();
+        },
+        addChild(data) {
+            this.chapters.push(data);
         },
         removeChapter(data) {
             let chapters = [];
@@ -246,23 +218,9 @@ export default {
         },
         importFromCourse() {
             this.actionTitle = this.courseImportText;
-            // $('#cw-reset-action-menu').show();
-            // // $('#cw-action-selection').hide();
-            //$('#user-course-list').show();
-            // $('.semester-description')
-            //     .siblings('ul')
-            //     .hide();
             this.showRemoteCourseware = true;
         },
         resetActionMenu() {
-            // $('#user-course-list').hide();
-            // $('.cw-remote-courseware').hide();
-            // $('#cw-import-lists').hide();
-            // // $('#cw-action-selection').show();
-            // $('#cw-action-wrapper')
-            //     .find('.unfolded')
-            //     .removeClass('unfolded');
-            // $(event.target).hide();
             this.actionTitle = 'Aktionen';
             this.fileError = false;
             this.remoteCourseware = null;
@@ -477,21 +435,7 @@ export default {
         //         })
         //         .disableSelection();
         // },
-        storeChapterMove() {
-            let view = this;
-            axios
-                .post('store_element_move', {
-                    cid: COURSEWARE.config.cid,
-                    elementList: JSON.stringify(view.chapterList),
-                    type: 'Chapter'
-                })
-                .then(data => {
-                    console.log(data.response);
-                })
-                .catch(error => {
-                    console.log('there was an error: ' + error.response);
-                });
-        },
+
         storeChanges() {
             let view = this;
             let promises = [];

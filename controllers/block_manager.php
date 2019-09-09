@@ -150,6 +150,9 @@ class BlockManagerController extends CoursewareStudipController
     private function getSubElement($type) {
         $sub_element = null;
         switch($type) {
+            case 'Courseware':
+                $sub_element = 'Chapter';
+                break;
             case 'Chapter':
                 $sub_element = 'Subchapter';
                 break;

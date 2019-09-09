@@ -11,7 +11,14 @@
                     </header>
                     <section class="modal-body">
                         <label for="editDialogElementTitle">Titel:</label>
-                        <input type="text" name="editDialogElementTitle" v-model="title" />
+                        <input
+                            type="text"
+                            name="editDialogElementTitle"
+                            ref="editDialogElementTitle"
+                            v-model="title"
+                            @keyup.enter="edit"
+                            @keyup.esc="close"
+                        />
                     </section>
                     <footer class="modal-footer">
                         <slot name="footer">
@@ -71,26 +78,16 @@ export default {
                     console.log('there was an error: ' + error.response);
                     view.close();
                 });
-            //   $.ajax({
-            //     type: "POST",
-            //     url: "./add_structure",
-            //     contentType: "application/json",
-            //     data: JSON.stringify(data),
-            //     success: function(data) {
-            //         console.log(data);
-            //     //   view.$emit("edit", data);
-            //       view.$emit("close");
-            //     },
-            //     error: function() {
-            //       console.log("can not add node!");
-            //       view.$emit("close");
-            //     }
-            //   });
         }
     },
     watch: {
         DialogVisible: function() {
             this.visible = this.DialogVisible;
+            this.$nextTick(() => {
+                if (this.$refs.editDialogElementTitle) {
+                    this.$refs.editDialogElementTitle.focus();
+                }
+            });
         }
     }
 };

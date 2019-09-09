@@ -75,10 +75,6 @@
             @sort="sortItem"
             @end="finishMove"
         >
-            <!-- <transition-group
-        type="transition"
-        :name="!dragging ? 'flip-list' : null"
-      > -->
             <SubchapterItem
                 v-for="elementChild in subchapters"
                 :key="elementChild.id"
@@ -92,20 +88,13 @@
             <p v-if="subchapters.length == 0">
                 This Chapter is empty. You can drop a subchapter here or add a new one.
             </p>
-            <!-- </transition-group> -->
         </draggable>
-        <!-- <ul v-if="!importContent && !remoteContent && unfolded" class="subchapter-actions">
-            <li>
-                <button class="button add">Unterkapitel hinzufügen</button>
-            </li>
-        </ul> -->
     </li>
 </template>
 
 <script>
 import SubchapterItem from './SubchapterItem.vue';
 import ActionMenuItem from './ActionMenuItem.vue';
-// import BlockManagerHelper from './../assets/BlockManagerHelper';
 import blockManagerHelperMixin from './../mixins/blockManagerHelperMixin.js';
 import draggable from 'vuedraggable';
 import axios from 'axios';
@@ -148,7 +137,6 @@ export default {
         if (this.subchapters == null) {
             this.subchapters = [];
         }
-        console.log(this.element);
     },
     watch: {
         subchapters: function() {
@@ -173,8 +161,6 @@ export default {
         sortItem() {},
         finishMove() {
             this.dragging = false;
-
-            //this.storeSubchapterMove();
         },
         storeSubchapterMove() {
             let view = this;
