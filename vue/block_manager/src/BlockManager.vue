@@ -40,7 +40,7 @@
             <div class="messagebox messagebox_error" v-if="fileError">
                 Das Archiv enthält keine Coursewaredaten
             </div>
-            <div v-if="showRemoteCourseware && !remoteCourseware" id="user-course-list">
+            <div v-if="showRemoteCourseware && !remoteCourseware && !loading" id="user-course-list">
                 <ul class="semester-list">
                     <SemesterItem
                         v-for="(courses, semester_name) in this.remoteCourses"
@@ -103,8 +103,16 @@
                     </div>
                 </li>
             </ul>
+            <div v-if="(showRemoteCourseware || showImportCourseware) && loading">
+                <breeding-rhombus-spinner
+                    :animation-duration="2500"
+                    :size="65"
+                    :color="'#28497c'"
+                    class="cw-action-loading"
+                />
+            </div>
             <button
-                v-if="showRemoteCourseware || showImportCourseware"
+                v-if="(showRemoteCourseware || showImportCourseware) && !loading"
                 class="button"
                 id="cw-reset-action-menu"
                 @click="resetActionMenu"
@@ -121,11 +129,19 @@ import ChapterItem from './components/ChapterItem.vue';
 import SemesterItem from './components/SemesterItem.vue';
 import ActionMenuItem from './components/ActionMenuItem.vue';
 import NodeContentHelper from './assets/NodeContentHelper.js';
+import { BreedingRhombusSpinner } from 'epic-spinners';
 
 import axios from 'axios';
 import draggable from 'vuedraggable';
 export default {
     name: 'BlockManager',
+    components: {
+        ChapterItem,
+        SemesterItem,
+        draggable,
+        ActionMenuItem,
+        BreedingRhombusSpinner
+    },
     data() {
         return {
             courseware: {},
@@ -148,14 +164,9 @@ export default {
             importXML: '',
             blockMap: null,
             fileError: false,
-            dragging: false
+            dragging: false,
+            loading: false
         };
-    },
-    components: {
-        ChapterItem,
-        SemesterItem,
-        draggable,
-        ActionMenuItem
     },
     created() {
         this.courseware = JSON.parse(COURSEWARE.data.courseware);
@@ -542,6 +553,7 @@ export default {
             }
         },
         getRemoteCourse(event) {
+            this.loading = true;
             let view = this;
             axios
                 .get('get_remote_course', {
@@ -562,6 +574,7 @@ export default {
                     // $('#user-course-list').hide();
                     // $('.cw-remote-courseware').show();
                     view.showRemoteCourseware = true;
+                    view.loading = false;
                     console.log(view.remoteCourseware);
                 })
                 .catch(error => {
@@ -631,6 +644,7 @@ export default {
                 .disableSelection();
         },
         setImport() {
+            this.loading = true;
             let view = this;
             view.fileError = false;
             const file0 = event.target.files[0];
@@ -726,6 +740,7 @@ export default {
                     view.importXML = oSerializer.serializeToString(xmlDoc);
                 })
                 .then(function() {
+                    view.loading = false;
                     view.createSortablesForImport();
                     // view.stopMouseListeners();
                     // view.startMouseListeners();
