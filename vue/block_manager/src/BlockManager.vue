@@ -16,8 +16,8 @@
                 class="chapter-list"
                 ghost-class="ghost"
                 handle=".chapter-handle"
-                :move="checkMove"
                 @start="dragging = true"
+                @add="addChapter"
                 @end="finishMove"
             >
                 <ChapterItem
@@ -52,7 +52,17 @@
                 </ul>
             </div>
             <div v-if="showRemoteCourseware && remoteCourseware" class="cw-remote-courseware">
-                <ul class="chapter-list chapter-list-import">
+                <draggable
+                    tag="ul"
+                    :list="this.remoteCourseware.children"
+                    :group="{ name: 'chapters', pull: 'clone', put: false }"
+                    class="chapter-list chapter-list-import"
+                    ghost-class="ghost"
+                    handle=".chapter-handle"
+                    v-bind="dragOptionsRemote"
+                    @start="dragging = true"
+                    @end="finishMove"
+                >
                     <ChapterItem
                         v-for="remote_chapter in this.remoteCourseware.children"
                         :key="remote_chapter.id"
@@ -60,7 +70,7 @@
                         :importContent="true"
                         :remoteContent="true"
                     />
-                </ul>
+                </draggable>
             </div>
             <div v-if="showImportCourseware && importCourseware" id="cw-import-lists">
                 <ul class="chapter-list chapter-list-import">
@@ -129,8 +139,8 @@ import ChapterItem from './components/ChapterItem.vue';
 import SemesterItem from './components/SemesterItem.vue';
 import ActionMenuItem from './components/ActionMenuItem.vue';
 import NodeContentHelper from './assets/NodeContentHelper.js';
-import { BreedingRhombusSpinner } from 'epic-spinners';
 
+import { BreedingRhombusSpinner } from 'epic-spinners';
 import axios from 'axios';
 import draggable from 'vuedraggable';
 export default {
@@ -179,8 +189,15 @@ export default {
         dragOptions() {
             return {
                 animation: 200,
-                group: 'description',
                 disabled: false,
+                ghostClass: 'ghost'
+            };
+        },
+        dragOptionsRemote() {
+            return {
+                animation: 200,
+                disabled: false,
+                sort: false,
                 ghostClass: 'ghost'
             };
         }
@@ -210,6 +227,7 @@ export default {
             this.blockList[key] = update[key];
             this.storeChanges();
         },
+        addChapter() {},
 
         finishMove() {
             this.dragging = false;
@@ -575,7 +593,6 @@ export default {
                     // $('.cw-remote-courseware').show();
                     view.showRemoteCourseware = true;
                     view.loading = false;
-                    console.log(view.remoteCourseware);
                 })
                 .catch(error => {
                     console.log('there was an error: ' + error.response);
