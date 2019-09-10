@@ -17,7 +17,7 @@
                 ghost-class="ghost"
                 handle=".chapter-handle"
                 @start="dragging = true"
-                @add="addChapter"
+                @add="dropChapter"
                 @end="finishMove"
             >
                 <ChapterItem
@@ -61,7 +61,7 @@
                     handle=".chapter-handle"
                     v-bind="dragOptionsRemote"
                     @start="dragging = true"
-                    @end="finishMove"
+                    @clone="cloneChapter"
                 >
                     <ChapterItem
                         v-for="remote_chapter in this.remoteCourseware.children"
@@ -207,7 +207,13 @@ export default {
             let view = this;
             view.chapterList = [];
             this.chapters.forEach(element => {
-                view.chapterList.push(element.id);
+                if (element.seminar_id != COURSEWARE.config.cid) {
+                    view.chapterList.push('remote-' + element.id);
+                    view.remoteData = true;
+                    view.importData = true;
+                } else {
+                    view.chapterList.push(element.id);
+                }
             });
         }
     },
@@ -227,7 +233,8 @@ export default {
             this.blockList[key] = update[key];
             this.storeChanges();
         },
-        addChapter() {},
+        cloneChapter(el) {},
+        dropChapter(el) {},
 
         finishMove() {
             this.dragging = false;
@@ -500,14 +507,9 @@ export default {
                     .then(response => {
                         view.importData = false;
                         view.remoteData = false;
-
-                        if (response.data.remote_map != '') {
-                            let remoteMap = JSON.parse(response.data.remote_map);
-                            view.changeRemoteIds(remoteMap);
+                        if (response.data.courseware != '') {
+                            view.courseware = response.data.courseware;
                         }
-                    })
-                    .catch(error => {
-                        console.log('there was an error: ' + error.response);
                     });
             });
         },
