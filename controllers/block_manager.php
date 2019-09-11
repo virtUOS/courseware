@@ -116,12 +116,16 @@ class BlockManagerController extends CoursewareStudipController
         $this->render_text(json_encode($block));
     }
 
-    private function getGrouped($cid)
+    private function getGrouped($cid, $remote = false)
     {
         $grouped = array_reduce(
             dbBlock::findBySQL('seminar_id = ? ORDER BY id, position', array($cid)),
-            function($memo, $item) {
+            function($memo, $item) use($remote) {
                 $arr = $item->toArray();
+                $arr['isRemote'] = false;
+                if ($remote) {
+                    $arr['isRemote'] = true;
+                }
                 $arr['isStrucutalElement'] = true;
                 $arr['childType'] = $this->getSubElement($arr['type']);
                 if (!$item->isStructuralBlock()) {
@@ -171,7 +175,7 @@ class BlockManagerController extends CoursewareStudipController
 
     private function getRemoteCourseware($cid)
     {
-        $grouped = $this->getGrouped($cid);
+        $grouped = $this->getGrouped($cid, true);
 
         $remote_courseware = current($grouped['']);
         $this->buildTree($grouped, $remote_courseware);
@@ -433,8 +437,10 @@ class BlockManagerController extends CoursewareStudipController
                             $block->store();
                         }
                     }
-                    $parent->updateChildPositions($value);
-                    $changes = true;
+                    if($parent != null) { 
+                        $parent->updateChildPositions($value);
+                        $changes = true;
+                    }
                 }
             }
 
@@ -725,13 +731,22 @@ class BlockManagerController extends CoursewareStudipController
             foreach(array($subchapter_list, $section_list, $block_list) as $list) {
                 foreach((array)$list as $key => $value) {
                     $parent = dbBlock::find($key);
-                    $parent->updateChildPositions($value);
+                    if ($parent) {
+                        $parent->updateChildPositions($value);
+                    }
                 }
             }
 
         }
+
+
+        $grouped = $this->getGrouped($cid);
+        $courseware = current($grouped['']);
+        $this->buildTree($grouped, $courseware);
+
+
         $this->response->add_header('Content-Type', 'application/json');
-        $answer = json_encode(['errors' => $this->errors, 'successes' => $this->successes, 'remote_map' => $remote_map]);
+        $answer = json_encode(['errors' => $this->errors, 'successes' => $this->successes, 'remote_map' => $remote_map, 'courseware' => $courseware]);
         $this->render_text($answer);
 
     }

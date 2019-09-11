@@ -128,15 +128,41 @@ export default {
         draggable
     },
     created() {
-        if (this.importContent && !this.remoteContent) {
-            this.id = 'import-' + this.id;
-        }
-        if (this.importContent && this.remoteContent) {
-            this.id = 'remote-' + this.id;
-        }
         if (this.subchapters == null) {
             this.subchapters = [];
         }
+
+        if(!this.remoteContent && this.element.isRemote) {
+            this.id = 'remote-' + this.id; 
+            if (this.element.children) {
+                let subchapters = [];
+                let subchapterList = [];
+                this.element.children.forEach(subchapter => {
+                    subchapters.push('remote-' + subchapter.id);
+                    if (subchapter.children) {
+                        let sections = [];
+                        let sectionList = [];
+                        subchapter.children.forEach(section => {
+                            sections.push('remote-' + section.id);
+                            if (section.children) {
+                                let blocks = [];
+                                let blockList = [];
+                                section.children.forEach(block => {
+                                    blocks.push('remote-' + block.id);                        
+                                });
+                                blockList['remote-' + section.id] = blocks;
+                                this.$emit('blockListUpdate', blockList);
+                            }
+                        });
+                        sectionList['remote-' + subchapter.id] = sections;
+                        this.$emit('sectionListUpdate', sectionList);
+                    }
+                });
+                subchapterList[this.id] = subchapters;
+                this.$emit('subchapterListUpdate', subchapterList);
+            }
+        }
+
     },
     watch: {
         subchapters: function() {
@@ -145,7 +171,7 @@ export default {
                 list.push(element.id);
             });
             this.subchapterList[this.id] = list;
-            this.$emit('subchapterListUpdate', this.subchapterList);
+            
         }
     },
     methods: {
@@ -158,7 +184,9 @@ export default {
         checkMove() {},
         addItem() {},
         removeItem() {},
-        sortItem() {},
+        sortItem() {
+            this.$emit('subchapterListUpdate', this.subchapterList);
+        },
         finishMove() {
             this.dragging = false;
         },

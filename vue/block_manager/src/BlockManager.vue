@@ -17,7 +17,7 @@
                 ghost-class="ghost"
                 handle=".chapter-handle"
                 @start="dragging = true"
-                @add="dropChapter"
+                @sort="sortChapters"
                 @end="finishMove"
             >
                 <ChapterItem
@@ -61,7 +61,6 @@
                     handle=".chapter-handle"
                     v-bind="dragOptionsRemote"
                     @start="dragging = true"
-                    @clone="cloneChapter"
                 >
                     <ChapterItem
                         v-for="remote_chapter in this.remoteCourseware.children"
@@ -175,7 +174,8 @@ export default {
             blockMap: null,
             fileError: false,
             dragging: false,
-            loading: false
+            loading: false,
+            storeLock: false
         };
     },
     created() {
@@ -215,6 +215,7 @@ export default {
                     view.chapterList.push(element.id);
                 }
             });
+            
         }
     },
     methods: {
@@ -233,12 +234,12 @@ export default {
             this.blockList[key] = update[key];
             this.storeChanges();
         },
-        cloneChapter(el) {},
-        dropChapter(el) {},
 
+        sortChapters(){
+            this.storeChanges();
+        },
         finishMove() {
             this.dragging = false;
-            this.storeChanges();
         },
         addChild(data) {
             this.chapters.push(data);
@@ -473,6 +474,10 @@ export default {
         // },
 
         storeChanges() {
+            if(this.storeLock) {
+                return;
+            }
+            this.storeLock = true;
             let view = this;
             let promises = [];
             let fileData = {};
@@ -508,8 +513,12 @@ export default {
                         view.importData = false;
                         view.remoteData = false;
                         if (response.data.courseware != '') {
+                            // view.courseware = {};
                             view.courseware = response.data.courseware;
+                            // view.chapters = {};
+                            view.chapters = view.courseware.children;
                         }
+                        view.storeLock = false;
                     });
             });
         },

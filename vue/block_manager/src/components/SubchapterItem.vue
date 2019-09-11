@@ -90,18 +90,19 @@
 <script>
 import SectionItem from './SectionItem.vue';
 import ActionMenuItem from './ActionMenuItem.vue';
-import BlockManagerHelper from './../assets/BlockManagerHelper';
+import blockManagerHelperMixin from './../mixins/blockManagerHelperMixin.js';
 import draggable from 'vuedraggable';
 import axios from 'axios';
 export default {
     name: 'SubchapterItem',
+    mixins: [blockManagerHelperMixin],
     data() {
         return {
             id: this.element.id,
             publication_date: this.element.publication_date,
-            publication_date_readable: BlockManagerHelper.getReadableDate(this.element.publication_date),
+            publication_date_readable: this.getReadableDate(this.element.publication_date),
             withdraw_date: this.element.withdraw_date,
-            withdraw_date_readable: BlockManagerHelper.getReadableDate(this.element.withdraw_date),
+            withdraw_date_readable: this.getReadableDate(this.element.withdraw_date),
             isPublished: this.element.isPublished,
             title: this.element.title,
             shortTitle: this.element.shortTitle,
@@ -125,13 +126,18 @@ export default {
         if (this.sections == null) {
             this.sections = [];
         }
-        if (this.importContent && !this.remoteContent) {
-            this.id = 'import-' + this.id;
-        }
-        if (this.importContent && this.remoteContent) {
-            this.id = 'remote-' + this.id;
-        }
-        this.shortTitle = BlockManagerHelper.shortTitle(this.element.title, 30);
+        this.shortTitle = this.cutTitle(this.element.title, 30);
+
+        // if(!this.remoteContent && this.element.isRemote) {
+        //     this.id = 'remote-' + this.id; 
+        //     let list = [];
+        //     let sectionList = [];
+        //     this.element.children.forEach(element => {
+        //         list.push('remote-' + element.id);
+        //     });
+        //     sectionList[this.id] = list;
+        //     this.$emit('sectionListUpdate', sectionList);
+        // }
     },
     watch: {
         sections: function() {
@@ -143,6 +149,7 @@ export default {
                 list.push(element.id);
             });
             this.sectionList[this.id] = list;
+            this.$emit('sectionListUpdate', this.sectionList);
         }
     },
     methods: {
@@ -151,33 +158,17 @@ export default {
         },
         checkMove() {},
         sortItem() {
-            this.$emit('sectionListUpdate', this.sectionList);
+            
         },
         finishMove() {
             this.dragging = false;
-            //this.storeSectionMove();
-        },
-        storeSectionMove() {
-            let view = this;
-            axios
-                .post('store_element_move', {
-                    cid: COURSEWARE.config.cid,
-                    elementList: JSON.stringify(view.sectionList),
-                    type: 'Section'
-                })
-                .then(data => {
-                    console.log(data.response);
-                })
-                .catch(error => {
-                    console.log('there was an error: ' + error.response);
-                });
         },
         removeElement() {
             this.$emit('remove-subchapter', this.element);
         },
         editElement(data) {
             this.title = data.title;
-            this.shortTitle = BlockManagerHelper.shortTitle(data.title);
+            this.shortTitle = this.cutTitle(data.title);
             this.publication_date = data.publication_date * 1000;
             this.publication_date_readable = data.publication_date_readable;
             this.withdraw_date = data.withdraw_date * 1000;
@@ -210,7 +201,6 @@ export default {
         dragOptions() {
             return {
                 animation: 200,
-                group: 'description',
                 disabled: false,
                 ghostClass: 'ghost'
             };
