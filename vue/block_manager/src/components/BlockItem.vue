@@ -49,11 +49,9 @@ export default {
     },
     created() {
         this.preview = this.block.preview;
-        if (this.importContent && !this.remoteContent) {
-            this.id = 'import-' + this.id;
-        }
-        if (this.importContent && this.remoteContent) {
+        if (!this.remoteContent && this.block.isRemote) {
             this.id = 'remote-' + this.id;
+            this.$emit('updateParentList');
         }
     },
     methods: {

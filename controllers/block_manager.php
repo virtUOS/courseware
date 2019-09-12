@@ -432,7 +432,7 @@ class BlockManagerController extends CoursewareStudipController
                     $parent = dbBlock::find($key);
                     foreach($value as $bid) {
                         $block = dbBlock::find($bid);
-                        if ($parent->id != $block->parent_id) {
+                        if ($parent->id != $block->parent_id && $block) {
                             $block->parent_id = $parent->id;
                             $block->store();
                         }

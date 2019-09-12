@@ -62,16 +62,13 @@
             tag="ul"
             v-if="unfolded"
             :list="sections"
-            :group="{ name: 'sections' }"
+            :group="draggableGroup"
             v-bind="dragOptions"
             class="section-list"
             :class="{ 'section-list-import': importContent }"
             ghost-class="ghost"
             handle=".section-handle"
-            :move="checkMove"
-            @start="dragging = true"
             @sort="sortItem"
-            @end="finishMove"
         >
             <SectionItem
                 v-for="section in sections"
@@ -81,6 +78,8 @@
                 :remoteContent="remoteContent"
                 @blockListUpdate="updateBlockList"
                 @remove-section="removeSection"
+                @updateParentList="updateParentList"
+                @isRemote="isRemoteAction"
             />
             <p v-if="sections.length == 0">This Subchapter is empty. You can drop a section here or add a new one.</p>
         </draggable>
@@ -92,7 +91,6 @@ import SectionItem from './SectionItem.vue';
 import ActionMenuItem from './ActionMenuItem.vue';
 import blockManagerHelperMixin from './../mixins/blockManagerHelperMixin.js';
 import draggable from 'vuedraggable';
-import axios from 'axios';
 export default {
     name: 'SubchapterItem',
     mixins: [blockManagerHelperMixin],
@@ -109,7 +107,7 @@ export default {
             unfolded: false,
             sections: this.element.children,
             sectionList: {},
-            dragging: false
+            draggableGroup: { name: 'sections' }
         };
     },
     components: {
@@ -126,18 +124,33 @@ export default {
         if (this.sections == null) {
             this.sections = [];
         }
+        if (this.remoteContent && this.element.isRemote) {
+            this.draggableGroup = { name: 'sections', pull: 'clone', put: false };
+        }
         this.shortTitle = this.cutTitle(this.element.title, 30);
 
-        // if(!this.remoteContent && this.element.isRemote) {
-        //     this.id = 'remote-' + this.id; 
-        //     let list = [];
-        //     let sectionList = [];
-        //     this.element.children.forEach(element => {
-        //         list.push('remote-' + element.id);
-        //     });
-        //     sectionList[this.id] = list;
-        //     this.$emit('sectionListUpdate', sectionList);
-        // }
+        if (!this.remoteContent && this.element.isRemote) {
+            this.id = 'remote-' + this.id;
+            if (this.sections) {
+                let sections = [];
+                let sectionList = [];
+                this.sections.forEach(section => {
+                    sections.push('remote-' + section.id);
+                    if (section.children) {
+                        let blocks = [];
+                        let blockList = [];
+                        section.children.forEach(block => {
+                            blocks.push('remote-' + block.id);
+                        });
+                        blockList['remote-' + section.id] = blocks;
+                        this.$emit('blockListUpdate', blockList);
+                    }
+                });
+                sectionList[this.id] = sections;
+                this.$emit('sectionListUpdate', sectionList);
+            }
+            this.$emit('updateParentList');
+        }
     },
     watch: {
         sections: function() {
@@ -153,15 +166,25 @@ export default {
         }
     },
     methods: {
+        updateParentList() {
+            let list = [];
+            let view = this;
+            this.sections.forEach(element => {
+                if (element.isRemote) {
+                    list.push('remote-' + element.id);
+                    view.$emit('isRemote');
+                } else {
+                    list.push(element.id);
+                }
+            });
+            this.sectionList[this.id] = list;
+            this.$emit('sectionListUpdate', this.sectionList);
+        },
+        isRemoteAction() {
+            this.$emit('isRemote');
+        },
         updateBlockList(data) {
             this.$emit('blockListUpdate', data);
-        },
-        checkMove() {},
-        sortItem() {
-            
-        },
-        finishMove() {
-            this.dragging = false;
         },
         removeElement() {
             this.$emit('remove-subchapter', this.element);
@@ -199,11 +222,20 @@ export default {
     },
     computed: {
         dragOptions() {
-            return {
-                animation: 200,
-                disabled: false,
-                ghostClass: 'ghost'
-            };
+            if (this.remoteContent && this.element.isRemote) {
+                return {
+                    animation: 200,
+                    disabled: false,
+                    sort: false,
+                    ghostClass: 'ghost'
+                };
+            } else {
+                return {
+                    animation: 200,
+                    disabled: false,
+                    ghostClass: 'ghost'
+                };
+            }
         }
     }
 };

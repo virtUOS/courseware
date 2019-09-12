@@ -31,16 +31,12 @@
             tag="ul"
             v-if="unfolded"
             :list="blocks"
-            :group="{ name: 'blocks' }"
+            :group="draggableGroup"
             v-bind="dragOptions"
             class="block-list"
             :class="{ 'block-list-import': importContent }"
             ghost-class="ghost"
             handle=".block-handle"
-            :move="checkMove"
-            @start="dragging = true"
-            @sort="sortItem"
-            @end="finishMove"
         >
             <!-- <transition-group type="transition" :name="!dragging ? 'flip-list' : null"> -->
             <BlockItem
@@ -50,6 +46,8 @@
                 :importContent="importContent"
                 :remoteContent="remoteContent"
                 @remove-block="removeBlock"
+                @isRemote="isRemoteAction"
+                @updateParentList="updateParentList"
             />
             <p v-if="blocks.length == 0">This Section is empty. You can add Block in Courseware or drop on here.</p>
             <!-- </transition-group> -->
@@ -62,7 +60,6 @@ import BlockItem from './BlockItem.vue';
 import ActionMenuItem from './ActionMenuItem.vue';
 import BlockManagerHelper from './../assets/BlockManagerHelper';
 import draggable from 'vuedraggable';
-import axios from 'axios';
 export default {
     name: 'SectionItem',
     data() {
@@ -73,7 +70,7 @@ export default {
             unfolded: false,
             blocks: this.element.children,
             blockList: {},
-            dragging: false
+            draggableGroup: { name: 'blocks' }
         };
     },
     components: {
@@ -90,13 +87,28 @@ export default {
         if (this.blocks == null) {
             this.blocks = [];
         }
-        if (this.importContent && !this.remoteContent) {
-            this.id = 'import-' + this.id;
-        }
-        if (this.importContent && this.remoteContent) {
-            this.id = 'remote-' + this.id;
+        if (this.remoteContent && this.element.isRemote) {
+            this.draggableGroup = { name: 'blocks', pull: 'clone', put: false };
         }
         this.shortTitle = BlockManagerHelper.shortTitle(this.element.title, 30);
+
+        if (!this.remoteContent && this.element.isRemote) {
+            this.id = 'remote-' + this.id;
+            let view = this;
+            let blocks = [];
+            let blockList = [];
+            this.blocks.forEach(element => {
+                if (element.isRemote) {
+                    blocks.push('remote-' + element.id);
+                    view.$emit('isRemote');
+                } else {
+                    blocks.push(element.id);
+                }
+            });
+            blockList[this.id] = blocks;
+            this.$emit('blockListUpdate', blockList);
+            this.$emit('updateParentList');
+        }
     },
     watch: {
         blocks: function() {
@@ -105,31 +117,23 @@ export default {
                 list.push(element.id);
             });
             this.blockList[this.id] = list;
+            this.$emit('blockListUpdate', this.blockList);
         }
     },
     methods: {
-        checkMove() {},
-        sortItem() {
-            console.log('sort in ' + this.id);
-            this.$emit('blockListUpdate', this.blockList);
-        },
-        finishMove() {
-            this.dragging = false;
-        },
-        storeBlockMove() {
+        updateParentList() {
+            let list = [];
             let view = this;
-            axios
-                .post('store_element_move', {
-                    cid: COURSEWARE.config.cid,
-                    elementList: JSON.stringify(view.blockList),
-                    type: 'Block'
-                })
-                .then(data => {
-                    console.log(data.response);
-                })
-                .catch(error => {
-                    console.log('there was an error: ' + error.response);
-                });
+            this.blocks.forEach(element => {
+                if (element.isRemote) {
+                    list.push('remote-' + element.id);
+                    view.$emit('isRemote');
+                } else {
+                    list.push(element.id);
+                }
+            });
+            this.blockList[this.id] = list;
+            this.$emit('blockListUpdate', this.blockList);
         },
         removeBlock(data) {
             let blocks = [];
@@ -153,12 +157,20 @@ export default {
     },
     computed: {
         dragOptions() {
-            return {
-                animation: 200,
-                group: 'description',
-                disabled: false,
-                ghostClass: 'ghost'
-            };
+            if (this.remoteContent && this.element.isRemote) {
+                return {
+                    animation: 200,
+                    disabled: false,
+                    sort: false,
+                    ghostClass: 'ghost'
+                };
+            } else {
+                return {
+                    animation: 200,
+                    disabled: false,
+                    ghostClass: 'ghost'
+                };
+            }
         }
     }
 };

@@ -4,10 +4,7 @@
             <div class="cw-blockmanager-title">
                 <p>{{ this.courseware.title }}</p>
                 <ActionMenuItem :buttons="['add-child']" :element="this.courseware" @add-child="addChild" />
-                <!-- <span class="cw-blockmanager-store-icon" title="speichern"></span>
-                <span class="cw-blockmanager-store-icon-error">Fehler beim Speichern</span> -->
             </div>
-
             <draggable
                 tag="ul"
                 :list="chapters"
@@ -16,9 +13,7 @@
                 class="chapter-list"
                 ghost-class="ghost"
                 handle=".chapter-handle"
-                @start="dragging = true"
                 @sort="sortChapters"
-                @end="finishMove"
             >
                 <ChapterItem
                     v-for="element in this.chapters"
@@ -30,6 +25,7 @@
                     @blockListUpdate="updateBlockList"
                     @sectionListUpdate="updateSectionList"
                     @remove-chapter="removeChapter"
+                    @isRemote="isRemoteAction"
                 />
             </draggable>
         </div>
@@ -60,7 +56,6 @@
                     ghost-class="ghost"
                     handle=".chapter-handle"
                     v-bind="dragOptionsRemote"
-                    @start="dragging = true"
                 >
                     <ChapterItem
                         v-for="remote_chapter in this.remoteCourseware.children"
@@ -159,7 +154,6 @@ export default {
             importCourseware: null,
             showRemoteCourseware: false,
             showImportCourseware: false,
-            isDragging: false,
             chapters: {},
             chapterList: [],
             subchapterList: {},
@@ -173,7 +167,7 @@ export default {
             importXML: '',
             blockMap: null,
             fileError: false,
-            dragging: false,
+
             loading: false,
             storeLock: false
         };
@@ -207,7 +201,7 @@ export default {
             let view = this;
             view.chapterList = [];
             this.chapters.forEach(element => {
-                if (element.seminar_id != COURSEWARE.config.cid) {
+                if (element.isRemote) {
                     view.chapterList.push('remote-' + element.id);
                     view.remoteData = true;
                     view.importData = true;
@@ -215,10 +209,13 @@ export default {
                     view.chapterList.push(element.id);
                 }
             });
-            
         }
     },
     methods: {
+        isRemoteAction() {
+            this.remoteData = true;
+            this.importData = true;
+        },
         updateSubchapterList(update) {
             let key = Object.keys(update)[0];
             this.subchapterList[key] = update[key];
@@ -227,6 +224,7 @@ export default {
         updateSectionList(update) {
             let key = Object.keys(update)[0];
             this.sectionList[key] = update[key];
+            console.log(this.sectionList);
             this.storeChanges();
         },
         updateBlockList(update) {
@@ -234,12 +232,8 @@ export default {
             this.blockList[key] = update[key];
             this.storeChanges();
         },
-
-        sortChapters(){
+        sortChapters() {
             this.storeChanges();
-        },
-        finishMove() {
-            this.dragging = false;
         },
         addChild(data) {
             this.chapters.push(data);
@@ -265,216 +259,8 @@ export default {
             this.showRemoteCourseware = false;
             this.showImportCourseware = false;
         },
-        // startMouseListeners() {
-        //     $('.chapter-description, .subchapter-description, .section-description, .block-description')
-        //         .mousedown(function() {
-        //             this.isDragging = false;
-        //         })
-        //         .mousemove(function() {
-        //             this.isDragging = true;
-        //         })
-        //         .mouseup(function() {
-        //             let wasDragging = this.isDragging;
-        //             this.isDragging = false;
-        //             if (!wasDragging) {
-        //                 $(this)
-        //                     .siblings('ul')
-        //                     .toggle();
-        //                 if (!$(this).hasClass('unfolded')) {
-        //                     $(this).addClass('unfolded');
-        //                     $(this)
-        //                         .siblings('.strucutal-element-menu-wrapper')
-        //                         .addClass('unfolded');
-        //                 } else {
-        //                     $(this).removeClass('unfolded');
-        //                     $(this)
-        //                         .siblings('.strucutal-element-menu-wrapper')
-        //                         .removeClass('unfolded');
-        //                 }
-        //             }
-        //         });
-        // },
-        // stopMouseListeners() {
-        //     $('.chapter-description, .subchapter-description, .section-description, .block-description').unbind();
-        // },
-        // createSortables() {
-        //     let view = this;
-        //     $('.chapter-list')
-        //         .sortable({
-        //             connectWith: '.chapter-list:not(.chapter-list-import)',
-        //             placeholder: 'highlight',
-        //             start: function(event, ui) {
-        //                 ui.placeholder.height(ui.item.height());
-        //             },
-        //             update: function(event, ui) {
-        //                 view.chapterList = [];
-        //                 $('.chapter-list:not(.chapter-list-import) .chapter-item').each(function(key, value) {
-        //                     view.chapterList.push($(value).data('id'));
-        //                 });
-        //                 if ($(ui.item).hasClass('chapter-item-import')) {
-        //                     view.removeImportClasses($(ui.item));
-        //                     view.importSubchapters($(ui.item));
-        //                     view.importData = true;
-        //                 }
-        //                 if ($(ui.item).hasClass('chapter-item-remote')) {
-        //                     view.remoteData = true;
-        //                 }
-
-        //                 view.storeChanges();
-        //             }
-        //         })
-        //         .disableSelection();
-
-        //     $('.subchapter-list')
-        //         .sortable({
-        //             connectWith: '.subchapter-list:not(.subchapter-list-import)',
-        //             placeholder: 'highlight',
-        //             start: function(event, ui) {
-        //                 ui.placeholder.height(ui.item.height());
-        //             },
-        //             update: function(event, ui) {
-        //                 let $parent = $(ui.item)
-        //                     .parents('.chapter-item')
-        //                     .first();
-        //                 view.subchapterList[$parent.data('id')] = [];
-        //                 $.each(view.subchapterList, function(chapter_id) {
-        //                     var entry = [];
-        //                     $('.chapter-item[data-id="' + chapter_id + '"]')
-        //                         .find('.subchapter-item')
-        //                         .each(function(key, value) {
-        //                             entry.push($(value).data('id'));
-        //                         });
-        //                     if (entry.length > 0) {
-        //                         view.subchapterList[chapter_id] = entry;
-        //                     } else {
-        //                         delete view.subchapterList[chapter_id];
-        //                     }
-        //                 });
-        //                 if ($(ui.item).hasClass('subchapter-item-import')) {
-        //                     view.removeImportClasses($(ui.item));
-        //                     view.importSections($(ui.item));
-        //                     view.importData = true;
-        //                 }
-        //                 if ($(ui.item).hasClass('subchapter-item-remote')) {
-        //                     view.remoteData = true;
-        //                 }
-        //                 if (
-        //                     $(ui.item)
-        //                         .parents('.chapter-item')
-        //                         .hasClass('element_hidden')
-        //                 ) {
-        //                     $(ui.item).addClass('element_hidden');
-        //                     $(ui.item)
-        //                         .find('p.subchapter-description')
-        //                         .addClass('element_hidden');
-        //                 }
-
-        //                 view.storeChanges();
-        //             }
-        //         })
-        //         .disableSelection();
-
-        //     $('.section-list')
-        //         .sortable({
-        //             connectWith: '.section-list:not(.section-list-import)',
-        //             placeholder: 'highlight',
-        //             start: function(event, ui) {
-        //                 ui.placeholder.height(ui.item.height());
-        //             },
-        //             update: function(event, ui) {
-        //                 let $parent = $(ui.item)
-        //                     .parents('.subchapter-item')
-        //                     .first();
-        //                 view.sectionList[$parent.data('id')] = [];
-        //                 $.each(view.sectionList, function(subchapter_id) {
-        //                     var entry = [];
-        //                     $('.subchapter-item[data-id="' + subchapter_id + '"]')
-        //                         .find('.section-item')
-        //                         .each(function(key, value) {
-        //                             entry.push($(value).data('id'));
-        //                         });
-        //                     if (entry.length > 0) {
-        //                         view.sectionList[subchapter_id] = entry;
-        //                     } else {
-        //                         delete view.sectionList[subchapter_id];
-        //                     }
-        //                 });
-        //                 if ($(ui.item).hasClass('section-item-import')) {
-        //                     view.removeImportClasses($(ui.item));
-        //                     view.importBlocks($(ui.item));
-        //                     view.importData = true;
-        //                 }
-        //                 if ($(ui.item).hasClass('section-item-remote')) {
-        //                     view.remoteData = true;
-        //                 }
-        //                 if (
-        //                     $(ui.item)
-        //                         .parents('.subchapter-item')
-        //                         .hasClass('element_hidden')
-        //                 ) {
-        //                     $(ui.item).addClass('element_hidden');
-        //                     $(ui.item)
-        //                         .find('p.section-description')
-        //                         .addClass('element_hidden');
-        //                 }
-
-        //                 view.storeChanges();
-        //             }
-        //         })
-        //         .disableSelection();
-
-        //     $('.block-list')
-        //         .sortable({
-        //             connectWith: '.block-list:not(.block-list-import)',
-        //             placeholder: 'highlight',
-        //             start: function(event, ui) {
-        //                 ui.placeholder.height(ui.item.height() + 20);
-        //             },
-        //             update: function(event, ui) {
-        //                 let $parent = $(ui.item)
-        //                     .parents('.section-item')
-        //                     .first();
-        //                 view.blockList[$parent.data('id')] = [];
-        //                 $.each(view.blockList, function(section_id) {
-        //                     var entry = [];
-        //                     $('.section-item[data-id="' + section_id + '"]')
-        //                         .find('.block-item')
-        //                         .each(function(key, value) {
-        //                             entry.push($(value).attr('data-id'));
-        //                         });
-
-        //                     if (entry.length > 0) {
-        //                         view.blockList[section_id] = entry;
-        //                     } else {
-        //                         delete view.blockList[section_id];
-        //                     }
-        //                 });
-        //                 if ($(ui.item).hasClass('block-item-import')) {
-        //                     view.removeImportClasses($(ui.item));
-        //                     view.importData = true;
-        //                 }
-        //                 if ($(ui.item).hasClass('block-item-remote')) {
-        //                     view.remoteData = true;
-        //                 }
-        //                 if (
-        //                     $(ui.item)
-        //                         .parents('.section-item')
-        //                         .hasClass('element_hidden')
-        //                 ) {
-        //                     $(ui.item).addClass('element_hidden');
-        //                     $(ui.item)
-        //                         .find('p.block-description')
-        //                         .addClass('element_hidden');
-        //                 }
-
-        //                 view.storeChanges();
-        //             }
-        //         })
-        //         .disableSelection();
-        // },
-
         storeChanges() {
-            if(this.storeLock) {
+            if (this.storeLock) {
                 return;
             }
             this.storeLock = true;
@@ -521,26 +307,6 @@ export default {
                         view.storeLock = false;
                     });
             });
-        },
-        changeRemoteIds(remoteMap) {
-            //TODO all lists not only blockList !!!
-            $.each(remoteMap.block_map, function(remote_id, new_id) {
-                $('.block-item[data-id="' + remote_id + '"]')
-                    .not('.block-item-import')
-                    .attr('data-id', new_id)
-                    .removeClass('block-item-remote');
-            });
-            this.blockList = {};
-        },
-        removeImportClasses($item) {
-            var classes =
-                'chapter-item-import chapter-list-import subchapter-item-import subchapter-list-import section-item-import section-list-import block-item-import block-list-import';
-            $item.removeClass(classes);
-            $item
-                .find(
-                    '.chapter-item-import, .chapter-list-import, .subchapter-item-import, .subchapter-list-import, .section-item-import, .section-list-import, .block-item-import, .block-list-import'
-                )
-                .removeClass(classes);
         },
         importBlocks($item) {
             let view = this;
@@ -596,12 +362,6 @@ export default {
                 })
                 .then(function() {
                     view.actionTitle = 'Import: ' + event.remoteName;
-                    // view.createSortablesForImport();
-                    // view.stopMouseListeners();
-                    // view.startMouseListeners();
-                    // $('#cw-action-selection').hide();
-                    // $('#user-course-list').hide();
-                    // $('.cw-remote-courseware').show();
                     view.showRemoteCourseware = true;
                     view.loading = false;
                 })
@@ -770,10 +530,6 @@ export default {
                 .then(function() {
                     view.loading = false;
                     view.createSortablesForImport();
-                    // view.stopMouseListeners();
-                    // view.startMouseListeners();
-                    // $('.subchapter-list-import, .section-list-import, .block-list-import').hide();
-                    // $('#cw-action-selection').hide();
                     if (!view.fileError) {
                         $('#cw-import-lists').show();
                         view.showImportCourseware = true;
@@ -791,25 +547,3 @@ export default {
     }
 };
 </script>
-
-<style>
-button {
-    margin-top: 35px;
-}
-.flip-list-move {
-    transition: transform 0.5s;
-}
-.no-move {
-    transition: transform 0s;
-}
-.ghost {
-    opacity: 0.5;
-}
-
-.list-group {
-    min-height: 20px;
-}
-.list-group-item {
-    cursor: move;
-}
-</style>

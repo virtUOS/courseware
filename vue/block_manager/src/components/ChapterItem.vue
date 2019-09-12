@@ -62,18 +62,12 @@
             tag="ul"
             v-if="unfolded"
             :list="subchapters"
-            :group="{ name: 'subchapters' }"
+            :group="draggableGroup"
             v-bind="dragOptions"
             class="subchapter-list"
             :class="{ 'subchapter-list-import': importContent }"
             ghost-class="ghost"
             handle=".subchapter-handle"
-            :move="checkMove"
-            @start="dragging = true"
-            @add="addItem"
-            @remove="removeItem"
-            @sort="sortItem"
-            @end="finishMove"
         >
             <SubchapterItem
                 v-for="elementChild in subchapters"
@@ -83,7 +77,9 @@
                 :remoteContent="remoteContent"
                 @blockListUpdate="updateBlockList"
                 @sectionListUpdate="updateSectionList"
+                @updateParentList="updateParentList"
                 @remove-subchapter="removeSubchapter"
+                @isRemote="isRemoteAction"
             />
             <p v-if="subchapters.length == 0">
                 This Chapter is empty. You can drop a subchapter here or add a new one.
@@ -97,7 +93,6 @@ import SubchapterItem from './SubchapterItem.vue';
 import ActionMenuItem from './ActionMenuItem.vue';
 import blockManagerHelperMixin from './../mixins/blockManagerHelperMixin.js';
 import draggable from 'vuedraggable';
-import axios from 'axios';
 export default {
     name: 'ChapterItem',
     mixins: [blockManagerHelperMixin],
@@ -118,8 +113,8 @@ export default {
             shortTitle: this.cutTitle(this.element.title, 30),
             unfolded: false,
             subchapters: this.element.children,
-            subchapterList: {},
-            dragging: false
+            subchapterList: [],
+            draggableGroup: { name: 'subchapters' }
         };
     },
     components: {
@@ -131,9 +126,12 @@ export default {
         if (this.subchapters == null) {
             this.subchapters = [];
         }
+        if (this.remoteContent && this.element.isRemote) {
+            this.draggableGroup = { name: 'subchapters', pull: 'clone', put: false };
+        }
 
-        if(!this.remoteContent && this.element.isRemote) {
-            this.id = 'remote-' + this.id; 
+        if (!this.remoteContent && this.element.isRemote) {
+            this.id = 'remote-' + this.id;
             if (this.element.children) {
                 let subchapters = [];
                 let subchapterList = [];
@@ -148,7 +146,7 @@ export default {
                                 let blocks = [];
                                 let blockList = [];
                                 section.children.forEach(block => {
-                                    blocks.push('remote-' + block.id);                        
+                                    blocks.push('remote-' + block.id);
                                 });
                                 blockList['remote-' + section.id] = blocks;
                                 this.$emit('blockListUpdate', blockList);
@@ -162,7 +160,6 @@ export default {
                 this.$emit('subchapterListUpdate', subchapterList);
             }
         }
-
     },
     watch: {
         subchapters: function() {
@@ -171,7 +168,7 @@ export default {
                 list.push(element.id);
             });
             this.subchapterList[this.id] = list;
-            
+            this.$emit('subchapterListUpdate', this.subchapterList);
         }
     },
     methods: {
@@ -181,29 +178,22 @@ export default {
         updateSectionList(data) {
             this.$emit('sectionListUpdate', data);
         },
-        checkMove() {},
-        addItem() {},
-        removeItem() {},
-        sortItem() {
+        updateParentList() {
+            let list = [];
+            let view = this;
+            this.subchapters.forEach(element => {
+                if (element.isRemote) {
+                    list.push('remote-' + element.id);
+                    view.$emit('isRemote');
+                } else {
+                    list.push(element.id);
+                }
+            });
+            this.subchapterList[this.id] = list;
             this.$emit('subchapterListUpdate', this.subchapterList);
         },
-        finishMove() {
-            this.dragging = false;
-        },
-        storeSubchapterMove() {
-            let view = this;
-            axios
-                .post('store_element_move', {
-                    cid: COURSEWARE.config.cid,
-                    elementList: JSON.stringify(view.subchapterList),
-                    type: 'Subchapter'
-                })
-                .then(data => {
-                    console.log(data.response);
-                })
-                .catch(error => {
-                    console.log('there was an error: ' + error.response);
-                });
+        isRemoteAction() {
+            this.$emit('isRemote');
         },
         removeElement() {
             this.$emit('remove-chapter', this.element);
@@ -241,12 +231,20 @@ export default {
     },
     computed: {
         dragOptions() {
-            return {
-                animation: 200,
-                group: 'description',
-                disabled: false,
-                ghostClass: 'ghost'
-            };
+            if (this.remoteContent && this.element.isRemote) {
+                return {
+                    animation: 200,
+                    disabled: false,
+                    sort: false,
+                    ghostClass: 'ghost'
+                };
+            } else {
+                return {
+                    animation: 200,
+                    disabled: false,
+                    ghostClass: 'ghost'
+                };
+            }
         }
     }
 };
