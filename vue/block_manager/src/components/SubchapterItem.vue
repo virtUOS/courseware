@@ -10,8 +10,7 @@
         <div
             class="subchapter-description subchapter-handle"
             :class="{
-                'full-width': importContent,
-                'full-width': remoteContent,
+                'full-width': importContent || remoteContent,
                 unfolded: unfolded
             }"
             @click="toggleContent"
@@ -124,7 +123,7 @@ export default {
         if (this.sections == null) {
             this.sections = [];
         }
-        if (this.remoteContent && this.element.isRemote) {
+        if (this.importContent) {
             this.draggableGroup = { name: 'sections', pull: 'clone', put: false };
         }
         this.shortTitle = this.cutTitle(this.element.title, 30);
@@ -222,7 +221,7 @@ export default {
     },
     computed: {
         dragOptions() {
-            if (this.remoteContent && this.element.isRemote) {
+            if (this.importContent) {
                 return {
                     animation: 200,
                     disabled: false,

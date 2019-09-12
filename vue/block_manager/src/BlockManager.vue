@@ -67,7 +67,15 @@
                 </draggable>
             </div>
             <div v-if="showImportCourseware && importCourseware" id="cw-import-lists">
-                <ul class="chapter-list chapter-list-import">
+                <draggable
+                    tag="ul"
+                    :list="this.importCourseware.chapters"
+                    :group="{ name: 'chapters', pull: 'clone', put: false }"
+                    class="chapter-list chapter-list-import"
+                    ghost-class="ghost"
+                    handle=".chapter-handle"
+                    v-bind="dragOptionsRemote"
+                >
                     <ChapterItem
                         v-for="import_chapter in this.importCourseware.chapters"
                         :key="import_chapter.id"
@@ -75,7 +83,7 @@
                         :importContent="true"
                         :remoteContent="false"
                     />
-                </ul>
+                </draggable>
             </div>
             <ul v-if="!showRemoteCourseware && !showImportCourseware" id="cw-action-selection">
                 <li>
@@ -165,6 +173,7 @@ export default {
             importData: false,
             importMap: [],
             importXML: '',
+            importZIP: '',
             blockMap: null,
             fileError: false,
 
@@ -204,6 +213,9 @@ export default {
                 if (element.isRemote) {
                     view.chapterList.push('remote-' + element.id);
                     view.remoteData = true;
+                    view.importData = true;
+                } else if (element.isImport) {
+                    view.chapterList.push('import-' + element.id);
                     view.importData = true;
                 } else {
                     view.chapterList.push(element.id);
@@ -268,7 +280,8 @@ export default {
             let promises = [];
             let fileData = {};
             if (view.importData && !view.remoteData) {
-                let file = $('#cw-file-upload-import')[0].files[0];
+                console.log('use file');
+                let file = this.importZIP;
                 let filePromise = new Promise(resolve => {
                     let reader = new FileReader();
                     reader.readAsDataURL(file);
@@ -369,78 +382,14 @@ export default {
                     console.log('there was an error: ' + error.response);
                 });
         },
-        createSortablesForImport() {
-            $('.subchapter-list-import, .section-list-import, .block-list-import, .block-preview-import').hide();
-            $('.chapter-list-import')
-                .sortable({
-                    connectWith: '.chapter-list',
-                    placeholder: 'highlight',
-                    start: function(event, ui) {
-                        ui.placeholder.height(ui.item.height());
-                    },
-                    beforeStop: function(event, ui) {
-                        if (ui.item.parent().hasClass('chapter-list-import')) {
-                            $(this).sortable('cancel');
-                        }
-                    }
-                })
-                .disableSelection();
-
-            $('.subchapter-list-import')
-                .sortable({
-                    connectWith: '.subchapter-list',
-                    placeholder: 'highlight',
-                    start: function(event, ui) {
-                        ui.placeholder.height(ui.item.height());
-                    },
-                    beforeStop: function(event, ui) {
-                        if (ui.item.parent().hasClass('subchapter-list-import')) {
-                            $(this).sortable('cancel');
-                        }
-                    }
-                })
-                .disableSelection();
-
-            $('.section-list-import')
-                .sortable({
-                    connectWith: '.section-list',
-                    placeholder: 'highlight',
-                    start: function(event, ui) {
-                        ui.placeholder.height(ui.item.height());
-                    },
-                    beforeStop: function(event, ui) {
-                        if (ui.item.parent().hasClass('section-list-import')) {
-                            $(this).sortable('cancel');
-                        }
-                    }
-                })
-                .disableSelection();
-
-            $('.block-list-import')
-                .sortable({
-                    connectWith: '.block-list',
-                    placeholder: 'highlight',
-                    start: function(event, ui) {
-                        ui.placeholder.height(ui.item.height() + 20);
-                    },
-                    beforeStop: function(event, ui) {
-                        if (ui.item.parent().hasClass('block-list-import')) {
-                            $(this).sortable('cancel');
-                        }
-                    }
-                })
-                .disableSelection();
-        },
         setImport() {
             this.loading = true;
             let view = this;
             view.fileError = false;
-            const file0 = event.target.files[0];
+            this.importZIP = event.target.files[0];
 
-            // $('#cw-blockmanager-form-full-import').css('display', 'inline-block');
-            // $('#cw-reset-action-menu').show();
             this.showImportCourseware = true;
-            ZipLoader.unzip(file0)
+            ZipLoader.unzip(this.importZIP)
                 .then(function(unziped) {
                     var text, parser, xmlDoc;
                     if (unziped.files['data.xml'] == undefined) {
@@ -466,7 +415,8 @@ export default {
                                 id: chapter_counter,
                                 publication_date: false,
                                 withdraw_date: false,
-                                isPublished: true
+                                isPublished: true,
+                                isImport: true
                             });
                             let current_chapter = view.importCourseware['chapters'][chapterNum - 1];
 
@@ -483,7 +433,8 @@ export default {
                                         id: subchapter_counter,
                                         publication_date: false,
                                         withdraw_date: false,
-                                        isPublished: true
+                                        isPublished: true,
+                                        isImport: true
                                     });
                                     let current_subchapter = current_chapter.children[subchapterNum - 1];
 
@@ -499,7 +450,8 @@ export default {
                                             let sectionNum = current_subchapter.children.push({
                                                 title: node.getAttribute('title'),
                                                 id: section_counter,
-                                                isPublished: true
+                                                isPublished: true,
+                                                isImport: true
                                             });
                                             let current_section = current_subchapter.children[sectionNum - 1];
                                             if (typeof current_section === 'undefined') {
@@ -513,6 +465,7 @@ export default {
                                                         type: node.getAttribute('type'),
                                                         id: node.getAttribute('uuid'),
                                                         isPublished: true,
+                                                        isImport: true,
                                                         preview: NodeContentHelper.getContent(node),
                                                         readable_name: view.blockMap[node.getAttribute('type')]
                                                     });
@@ -529,12 +482,11 @@ export default {
                 })
                 .then(function() {
                     view.loading = false;
-                    view.createSortablesForImport();
                     if (!view.fileError) {
-                        $('#cw-import-lists').show();
                         view.showImportCourseware = true;
                     }
-                    view.actionTitle = 'Import: ' + file0.name + ' (' + view.calcFileSize(file0.size) + ')';
+                    view.actionTitle =
+                        'Import: ' + view.importZIP.name + ' (' + view.calcFileSize(view.importZIP.size) + ')';
                 });
         },
         calcFileSize(size) {
