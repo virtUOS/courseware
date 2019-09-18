@@ -67,6 +67,7 @@
             :class="{ 'subchapter-list-import': importContent }"
             ghost-class="ghost"
             handle=".subchapter-handle"
+            @sort="sortSubchapters"
         >
             <SubchapterItem
                 v-for="elementChild in subchapters"
@@ -74,11 +75,11 @@
                 :element="elementChild"
                 :importContent="importContent"
                 :remoteContent="remoteContent"
-                @blockListUpdate="updateBlockList"
-                @sectionListUpdate="updateSectionList"
-                @updateParentList="updateParentList"
+                :storeLock="storeLock"
+                @listUpdate="updateList"
                 @remove-subchapter="removeSubchapter"
                 @isRemote="isRemoteAction"
+                @isImport="isImportAction"
             />
             <p v-if="subchapters.length == 0">
                 This Chapter is empty. You can drop a subchapter here or add a new one.
@@ -98,7 +99,8 @@ export default {
     props: {
         element: Object,
         importContent: Boolean,
-        remoteContent: Boolean
+        remoteContent: Boolean,
+        storeLock: Boolean
     },
     data() {
         return {
@@ -125,75 +127,83 @@ export default {
         if (this.subchapters == null) {
             this.subchapters = [];
         }
-
         if (this.importContent) {
             this.draggableGroup = { name: 'subchapters', pull: 'clone', put: false };
         }
-
-        if (!this.remoteContent && this.element.isRemote) {
-            this.id = 'remote-' + this.id;
-            if (this.element.children) {
-                let subchapters = [];
-                let subchapterList = [];
-                this.element.children.forEach(subchapter => {
-                    subchapters.push('remote-' + subchapter.id);
-                    if (subchapter.children) {
-                        let sections = [];
-                        let sectionList = [];
-                        subchapter.children.forEach(section => {
-                            sections.push('remote-' + section.id);
-                            if (section.children) {
-                                let blocks = [];
-                                let blockList = [];
-                                section.children.forEach(block => {
-                                    blocks.push('remote-' + block.id);
-                                });
-                                blockList['remote-' + section.id] = blocks;
-                                this.$emit('blockListUpdate', blockList);
-                            }
-                        });
-                        sectionList['remote-' + subchapter.id] = sections;
-                        this.$emit('sectionListUpdate', sectionList);
-                    }
-                });
-                subchapterList[this.id] = subchapters;
-                this.$emit('subchapterListUpdate', subchapterList);
+    },
+    watch: {
+        element: function() {
+            if (this.element.children == null) {
+                this.subchapters = [];
+            } else {
+                this.subchapters = this.element.children;
             }
         }
     },
-    watch: {
-        subchapters: function() {
-            let list = [];
-            this.subchapters.forEach(element => {
-                list.push(element.id);
-            });
-            this.subchapterList[this.id] = list;
-            this.$emit('subchapterListUpdate', this.subchapterList);
-        }
-    },
     methods: {
-        updateBlockList(data) {
-            this.$emit('blockListUpdate', data);
-        },
-        updateSectionList(data) {
-            this.$emit('sectionListUpdate', data);
-        },
-        updateParentList() {
-            let list = [];
+        sortSubchapters() {
             let view = this;
+            let args = {};
+            let subchapterList = [];
+            let list = [];
+            let hasChildren = false;
             this.subchapters.forEach(element => {
                 if (element.isRemote) {
-                    list.push('remote-' + element.id);
-                    view.$emit('isRemote');
+                    list.push('remote_' + element.id);
+                    view.isRemoteAction();
+                    if (element.children != null) {
+                        hasChildren = true;
+                        view.buildChildrenList(element, 'remote_');
+                    }
+                } else if (element.isImport) {
+                    list.push('import_' + element.id);
+                    view.isImportAction();
+                    if (element.children.length > 0) {
+                        hasChildren = true;
+                        view.buildChildrenList(element);
+                    }
                 } else {
                     list.push(element.id);
                 }
             });
-            this.subchapterList[this.id] = list;
-            this.$emit('subchapterListUpdate', this.subchapterList);
+            subchapterList[this.id] = list;
+            args.list = subchapterList;
+            args.hasChildren = hasChildren;
+            args.type = 'subchapter';
+            this.$emit('listUpdate', args);
+        },
+        buildChildrenList(element, type) {
+            let view = this;
+            let list = [];
+            let updateList = [];
+            let args = {};
+            let hasChildren = false;
+            element.children.forEach(child => {
+                list.push(type + child.id);
+                if (child.children != null) {
+                    hasChildren = true;
+                    view.buildChildrenList(child, type);
+                }
+            });
+            updateList[type + element.id] = list;
+            args.list = updateList;
+            args.hasChildren = hasChildren;
+            if (element.type == 'Section') {
+                args.type = 'block';
+                this.$emit('listUpdate', args);
+            } else {
+                args.type = element.children[0].type.toLowerCase();
+                this.$emit('listUpdate', args);
+            }
         },
         isRemoteAction() {
             this.$emit('isRemote');
+        },
+        isImportAction() {
+            this.$emit('isImport');
+        },
+        updateList(args) {
+            this.$emit('listUpdate', args);
         },
         removeElement() {
             this.$emit('remove-chapter', this.element);
@@ -234,14 +244,14 @@ export default {
             if (this.importContent) {
                 return {
                     animation: 200,
-                    disabled: false,
+                    disabled: this.storeLock,
                     sort: false,
                     ghostClass: 'ghost'
                 };
             } else {
                 return {
                     animation: 200,
-                    disabled: false,
+                    disabled: this.storeLock,
                     ghostClass: 'ghost'
                 };
             }

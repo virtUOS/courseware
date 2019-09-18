@@ -369,45 +369,6 @@ class BlockManagerController extends CoursewareStudipController
         return true;
     }
 
-    public function store_element_move_action()
-    {
-        $errors = "";
-        $successes = "";
-        $request = trim(file_get_contents("php://input"));
-        $decoded_request = json_decode($request, true);
-        $cid = $decoded_request['cid'];
-        $type = $decoded_request['type'];
-        $elementList =   json_decode($decoded_request['elementList'], true);
-        $courseware = dbBlock::findCourseware($cid);
-
-        switch ($type) {
-            case 'Chapter': 
-                $courseware->updateChildPositions($elementList);
-                $successes = "Chapter changes stored";
-                break;
-            case 'Subchapter':
-            case 'Section':
-            case 'Block':
-                foreach((array)$elementList as $key => $value) {
-                    $parent = dbBlock::find($key);
-                    foreach($value as $bid) {
-                        $block = dbBlock::find($bid);
-                        if ($parent->id != $block->parent_id) {
-                            $block->parent_id = $parent->id;
-                            $block->store();
-                        }
-                    }
-                    $parent->updateChildPositions($value);
-                    $successes = "Element changes stored";
-                }
-                break;
-            
-        }
-        $this->response->add_header('Content-Type', 'application/json');
-        $answer = json_encode(['errors' => $errors, 'successes' => $successes]);
-        $this->render_text($answer);
-    }
-
     public function store_changes_vue_action()
     {
         $request = trim(file_get_contents("php://input"));
@@ -421,17 +382,19 @@ class BlockManagerController extends CoursewareStudipController
         $section_list = json_decode($decoded_request['sectionList'], true);
         $block_list = json_decode($decoded_request['blockList'], true);
 
-        // $courseware = $this->container['current_courseware'];
         $courseware = dbBlock::findCourseware($cid);
         $changes = false;
-        $remote_map = '';
-
+        $this->successes[] = $chapter_list;
         if (!$import) {
             foreach(array($subchapter_list, $section_list, $block_list) as $list) {
                 foreach((array)$list as $key => $value) {
                     $parent = dbBlock::find($key);
                     foreach($value as $bid) {
                         $block = dbBlock::find($bid);
+                        if ($block->seminar_id != $cid) {
+                            $this->errors[] = $block->seminar_id;
+                            continue;
+                        }
                         if ($parent->id != $block->parent_id && $block) {
                             $block->parent_id = $parent->id;
                             $block->store();
@@ -445,23 +408,17 @@ class BlockManagerController extends CoursewareStudipController
             }
 
             if ($chapter_list != null) {
-                $courseware->updateChildPositions($chapter_list);
+                $ans = $courseware->updateChildPositions($chapter_list);
                 $changes = true;
             }
         } else {
             if ($remote) {
-                $remote_chapter_map = [];
-                $remote_subchapter_map = [];
-                $remote_section_map = [];
-                $remote_block_map = [];
-
                 foreach((array)$chapter_list as &$chapter_id){
                     if(strpos($chapter_id, 'remote') > -1) {
-                        $original_block_id = str_replace('remote-', '', $chapter_id);
+                        $original_block_id = str_replace('remote_', '', $chapter_id);
                         $db_block = dbBlock::find($original_block_id);
                         $data = array('title' => $db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                         $block = $this->createAnyBlock($courseware->id, 'Chapter', $data);
-                        $remote_chapter_map[$chapter_id] = $block->id;
                         $this->updateListKey($subchapter_list, $chapter_id, $block->id);
                         $this->updateChapterListValue($chapter_list, $chapter_id, $block->id);
                         $chapter_id = $block->id;
@@ -472,11 +429,10 @@ class BlockManagerController extends CoursewareStudipController
                     $parent_id = $key;
                     foreach($value as &$subchapter_id) {
                         if(strpos($subchapter_id, 'remote') > -1) {
-                            $original_block_id = str_replace('remote-', '', $subchapter_id);
+                            $original_block_id = str_replace('remote_', '', $subchapter_id);
                             $db_block = dbBlock::find($original_block_id);
                             $data = array('title' => $db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $block = $this->createAnyBlock($parent_id, 'Subchapter', $data);
-                            $remote_subchapter_map[$subchapter_id] = $block->id;
                             $this->updateListKey($section_list, $subchapter_id, $block->id);
                             $this->updateListValue($subchapter_list, $subchapter_id, $block->id);
                             $subchapter_id = $block->id;
@@ -488,7 +444,7 @@ class BlockManagerController extends CoursewareStudipController
                     $parent_id = $key;
                     foreach($value as &$section_id) {
                         if(strpos($section_id, 'remote') > -1) {
-                            $remote_block_id = str_replace('remote-', '', $section_id);
+                            $remote_block_id = str_replace('remote_', '', $section_id);
                             $remote_db_block = dbBlock::find($remote_block_id);
                             $data = array('title' => $remote_db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $new_block = $this->createAnyBlock($parent_id, 'Section', $data);
@@ -498,7 +454,6 @@ class BlockManagerController extends CoursewareStudipController
                                 $new_ui_block->icon = $remote_ui_block->icon;
                             }
                             $new_ui_block->save();
-                            $remote_section_map[$section_id] = intval($new_block->id);
                             $this->updateListKey($block_list, $section_id, intval($new_block->id));
                             $this->updateListValue($section_list, $section_id, intval($new_block->id));
                             $section_id = intval($new_block->id);
@@ -513,13 +468,12 @@ class BlockManagerController extends CoursewareStudipController
                     $parent_id = $key;
                     foreach($value as &$block_id) {
                         if(strpos($block_id, 'remote') > -1) {
-                            $remote_block_id = str_replace('remote-', '', $block_id);
+                            $remote_block_id = str_replace('remote_', '', $block_id);
                             $remote_db_block = dbBlock::find($remote_block_id);
                             $remote_ui_block = $this->plugin->getBlockFactory()->makeBlock($remote_db_block);
     
                             $data = array('title' => $remote_db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $new_block = $this->createAnyBlock($parent_id, $remote_db_block->type, $data);
-                            $remote_block_map[$block_id] = intval($new_block->id);
                             $this->updateBlockId($block_list, $block_id, $new_block->id);
                             $block_id = intval($new_block->id);
 
@@ -548,16 +502,7 @@ class BlockManagerController extends CoursewareStudipController
                 if(empty($import_folder->getFiles())) {
                     $import_folder->delete();
                 }
-
-                $remote_map = json_encode(array(
-                    'chapter_map' => $remote_chapter_map, 
-                    'subchapter_map' => $remote_subchapter_map, 
-                    'section_map' => $remote_section_map, 
-                    'block_map' => $remote_block_map
-                ));
-
-
-            } else {
+            } else { // import
                 if ($import_xml == '') {
                     $this->errors[] = _cw('Das Import-Archiv enthält keine data.xml');
                 }
@@ -597,7 +542,7 @@ class BlockManagerController extends CoursewareStudipController
 
                 foreach((array)$chapter_list as &$chapter_id){
                     if(strpos($chapter_id, 'import') > -1) {
-                        $chapter_tempid = str_replace('import-', '', $chapter_id);
+                        $chapter_tempid = str_replace('import_', '', $chapter_id);
                         $chapter_title = '';
                         foreach($xml->getElementsByTagName('chapter') as $xml_chapter) {
                             if ($xml_chapter->getAttribute('temp-id') == $chapter_tempid) {
@@ -616,7 +561,7 @@ class BlockManagerController extends CoursewareStudipController
                     $parent_id = $key;
                     foreach($value as &$subchapter_id) {
                         if(strpos($subchapter_id, 'import') > -1) {
-                            $subchapter_tempid = str_replace('import-', '', $subchapter_id);
+                            $subchapter_tempid = str_replace('import_', '', $subchapter_id);
                             $subchapter_title = '';
                             foreach($xml->getElementsByTagName('subchapter') as $xml_subchapter) {
                                 if ($xml_subchapter->getAttribute('temp-id') == $subchapter_tempid) {
@@ -636,7 +581,7 @@ class BlockManagerController extends CoursewareStudipController
                     $parent_id = $key;
                     foreach($value as &$section_id) {
                         if(strpos($section_id, 'import') > -1) {
-                            $section_tempid = str_replace('import-', '', $section_id);
+                            $section_tempid = str_replace('import_', '', $section_id);
                             $section_title = '';
                             foreach($xml->getElementsByTagName('section') as $xml_section) {
                                 if ($xml_section->getAttribute('temp-id') == $section_tempid) {
@@ -663,7 +608,7 @@ class BlockManagerController extends CoursewareStudipController
                     $parent_id = $key;
                     foreach($value as &$block_id) {
                         if(strpos($block_id, 'import') > -1) {
-                            $block_uuid = str_replace('import-', '', $block_id);
+                            $block_uuid = str_replace('import_', '', $block_id);
                             $block_title = '';
                             $block_node = '';
                             $block_type = '';
@@ -709,7 +654,6 @@ class BlockManagerController extends CoursewareStudipController
                         }
                     }
                 }
-
                  //delete unused files
                 foreach($files as $file) {
                     if (!in_array($file->id , $used_files)) {
@@ -738,15 +682,13 @@ class BlockManagerController extends CoursewareStudipController
             }
 
         }
-
-
         $grouped = $this->getGrouped($cid);
         $courseware = current($grouped['']);
         $this->buildTree($grouped, $courseware);
-
+        $courseware = json_encode($courseware);
 
         $this->response->add_header('Content-Type', 'application/json');
-        $answer = json_encode(['errors' => $this->errors, 'successes' => $this->successes, 'remote_map' => $remote_map, 'courseware' => $courseware]);
+        $answer = json_encode(['errors' => $this->errors, 'successes' => $this->successes, 'courseware' => $courseware]);
         $this->render_text($answer);
 
     }

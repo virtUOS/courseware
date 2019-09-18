@@ -67,7 +67,7 @@
             :class="{ 'section-list-import': importContent }"
             ghost-class="ghost"
             handle=".section-handle"
-            @sort="sortItem"
+            @sort="sortSections"
         >
             <SectionItem
                 v-for="section in sections"
@@ -75,10 +75,11 @@
                 :element="section"
                 :importContent="importContent"
                 :remoteContent="remoteContent"
-                @blockListUpdate="updateBlockList"
+                :storeLock="storeLock"
+                @listUpdate="updateList"
                 @remove-section="removeSection"
-                @updateParentList="updateParentList"
                 @isRemote="isRemoteAction"
+                @isImport="isImportAction"
             />
             <p v-if="sections.length == 0">This Subchapter is empty. You can drop a section here or add a new one.</p>
         </draggable>
@@ -117,7 +118,8 @@ export default {
     props: {
         element: Object,
         importContent: Boolean,
-        remoteContent: Boolean
+        remoteContent: Boolean,
+        storeLock: Boolean
     },
     created() {
         if (this.sections == null) {
@@ -127,60 +129,80 @@ export default {
             this.draggableGroup = { name: 'sections', pull: 'clone', put: false };
         }
         this.shortTitle = this.cutTitle(this.element.title, 30);
-
-        if (!this.remoteContent && this.element.isRemote) {
-            this.id = 'remote-' + this.id;
-            if (this.sections) {
-                let sections = [];
-                let sectionList = [];
-                this.sections.forEach(section => {
-                    sections.push('remote-' + section.id);
-                    if (section.children) {
-                        let blocks = [];
-                        let blockList = [];
-                        section.children.forEach(block => {
-                            blocks.push('remote-' + block.id);
-                        });
-                        blockList['remote-' + section.id] = blocks;
-                        this.$emit('blockListUpdate', blockList);
-                    }
-                });
-                sectionList[this.id] = sections;
-                this.$emit('sectionListUpdate', sectionList);
-            }
-            this.$emit('updateParentList');
-        }
     },
     watch: {
-        sections: function() {
-            if (this.sections == null) {
+        element: function() {
+            if (this.element.children == null) {
                 this.sections = [];
+            } else {
+                this.sections = this.element.children;
             }
-            let list = [];
-            this.sections.forEach(element => {
-                list.push(element.id);
-            });
-            this.sectionList[this.id] = list;
-            this.$emit('sectionListUpdate', this.sectionList);
         }
     },
     methods: {
-        updateParentList() {
-            let list = [];
+        sortSections() {
             let view = this;
+            let args = {};
+            let sectionList = [];
+            let list = [];
+            let hasChildren = false;
             this.sections.forEach(element => {
                 if (element.isRemote) {
-                    list.push('remote-' + element.id);
-                    view.$emit('isRemote');
+                    list.push('remote_' + element.id);
+                    view.isRemoteAction();
+                    if (element.children != null) {
+                        hasChildren = true;
+                        view.buildChildrenList(element, 'remote_');
+                    }
+                } else if (element.isImport) {
+                    list.push('import_' + element.id);
+                    view.isImportAction();
+                    if (element.children.length > 0) {
+                        hasChildren = true;
+                        view.buildChildrenList(element);
+                    }
                 } else {
                     list.push(element.id);
                 }
             });
-            this.sectionList[this.id] = list;
-            this.$emit('sectionListUpdate', this.sectionList);
+            sectionList[this.id] = list;
+            args.list = sectionList;
+            args.hasChildren = hasChildren;
+            args.type = 'section';
+            this.$emit('listUpdate', args);
+        },
+        buildChildrenList(element, type) {
+            let view = this;
+            let list = [];
+            let updateList = [];
+            let args = {};
+            let hasChildren = false;
+            element.children.forEach(child => {
+                list.push(type + child.id);
+                if (child.children != null) {
+                    hasChildren = true;
+                    view.buildChildrenList(child, type);
+                }
+            });
+            updateList[type + element.id] = list;
+            args.list = updateList;
+            args.hasChildren = hasChildren;
+            if (element.type == 'Section') {
+                args.type = 'block';
+                this.$emit('listUpdate', args);
+            } else {
+                args.type = element.children[0].type.toLowerCase();
+                this.$emit('listUpdate', args);
+            }
+        },
+        updateList(args) {
+            this.$emit('listUpdate', args);
         },
         isRemoteAction() {
             this.$emit('isRemote');
+        },
+        isImportAction() {
+            this.$emit('isImport');
         },
         updateBlockList(data) {
             this.$emit('blockListUpdate', data);
@@ -224,14 +246,14 @@ export default {
             if (this.importContent) {
                 return {
                     animation: 200,
-                    disabled: false,
+                    disabled: this.storeLock,
                     sort: false,
                     ghostClass: 'ghost'
                 };
             } else {
                 return {
                     animation: 200,
-                    disabled: false,
+                    disabled: this.storeLock,
                     ghostClass: 'ghost'
                 };
             }

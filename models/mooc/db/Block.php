@@ -256,12 +256,12 @@ class Block extends \SimpleORMap implements \Serializable
      */
     public function updateChildPositions($positions)
     {
+        $db = \DBManager::get();
+
         $query = sprintf(
             'UPDATE %s SET position = FIND_IN_SET(id, ?) WHERE parent_id = ?',
             $this->db_table);
         $args = array(join(',', $positions), $this->id);
-
-        $db = \DBManager::get();
         $st = $db->prepare($query);
         $st->execute($args);
     }

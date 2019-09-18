@@ -3,17 +3,21 @@
         <div class="cw-blockmanager-wrapper">
             <div class="cw-blockmanager-title">
                 <p>{{ this.courseware.title }}</p>
+                <div class="cw-blockmanager-title-loading">
+                    <spring-spinner :animation-duration="1000" :size="30" :color="'#28497c'" v-if="storeLock" />
+                </div>
                 <ActionMenuItem :buttons="['add-child']" :element="this.courseware" @add-child="addChild" />
             </div>
             <draggable
                 tag="ul"
                 :list="chapters"
                 :group="{ name: 'chapters' }"
-                v-bind="dragOptions"
                 class="chapter-list"
                 ghost-class="ghost"
                 handle=".chapter-handle"
                 @sort="sortChapters"
+                @add="addChapter"
+                v-bind="storeLock ? { disabled: true } : { disabled: false, animation: 200 }"
             >
                 <ChapterItem
                     v-for="element in this.chapters"
@@ -21,11 +25,11 @@
                     :element="element"
                     :importContent="false"
                     :remoteContent="false"
-                    @subchapterListUpdate="updateSubchapterList"
-                    @blockListUpdate="updateBlockList"
-                    @sectionListUpdate="updateSectionList"
+                    :storeLock="storeLock"
+                    @listUpdate="updateList"
                     @remove-chapter="removeChapter"
                     @isRemote="isRemoteAction"
+                    @isImport="isImportAction"
                 />
             </draggable>
         </div>
@@ -55,7 +59,8 @@
                     class="chapter-list chapter-list-import"
                     ghost-class="ghost"
                     handle=".chapter-handle"
-                    v-bind="dragOptionsRemote"
+                    v-bind="storeLock ? { disabled: true } : { disabled: false, animation: 200, sort: false }"
+                    @clone="cloning"
                 >
                     <ChapterItem
                         v-for="remote_chapter in this.remoteCourseware.children"
@@ -63,6 +68,7 @@
                         :element="remote_chapter"
                         :importContent="true"
                         :remoteContent="true"
+                        :storeLock="storeLock"
                     />
                 </draggable>
             </div>
@@ -74,7 +80,7 @@
                     class="chapter-list chapter-list-import"
                     ghost-class="ghost"
                     handle=".chapter-handle"
-                    v-bind="dragOptionsRemote"
+                    v-bind="storeLock ? { disabled: true } : { disabled: false, animation: 200, sort: false }"
                 >
                     <ChapterItem
                         v-for="import_chapter in this.importCourseware.chapters"
@@ -82,6 +88,7 @@
                         :element="import_chapter"
                         :importContent="true"
                         :remoteContent="false"
+                        :storeLock="storeLock"
                     />
                 </draggable>
             </div>
@@ -116,12 +123,7 @@
                 </li>
             </ul>
             <div v-if="(showRemoteCourseware || showImportCourseware) && loading">
-                <breeding-rhombus-spinner
-                    :animation-duration="2500"
-                    :size="65"
-                    :color="'#28497c'"
-                    class="cw-action-loading"
-                />
+                <spring-spinner :animation-duration="3000" :size="65" :color="'#28497c'" class="cw-action-loading" />
             </div>
             <button
                 v-if="(showRemoteCourseware || showImportCourseware) && !loading"
@@ -142,7 +144,7 @@ import SemesterItem from './components/SemesterItem.vue';
 import ActionMenuItem from './components/ActionMenuItem.vue';
 import NodeContentHelper from './assets/NodeContentHelper.js';
 
-import { BreedingRhombusSpinner } from 'epic-spinners';
+import { SpringSpinner } from 'epic-spinners';
 import axios from 'axios';
 import draggable from 'vuedraggable';
 export default {
@@ -152,7 +154,7 @@ export default {
         SemesterItem,
         draggable,
         ActionMenuItem,
-        BreedingRhombusSpinner
+        SpringSpinner
     },
     data() {
         return {
@@ -171,12 +173,10 @@ export default {
             courseImportText: 'Aus Veranstaltung importieren',
             remoteData: false,
             importData: false,
-            importMap: [],
             importXML: '',
             importZIP: '',
             blockMap: null,
             fileError: false,
-
             loading: false,
             storeLock: false
         };
@@ -185,68 +185,95 @@ export default {
         this.courseware = JSON.parse(COURSEWARE.data.courseware);
         this.remoteCourses = JSON.parse(COURSEWARE.data.remote_courses);
         this.blockMap = JSON.parse(COURSEWARE.data.block_map);
-        this.chapters = this.courseware.children;
     },
     mounted() {},
-    computed: {
-        dragOptions() {
-            return {
-                animation: 200,
-                disabled: false,
-                ghostClass: 'ghost'
-            };
-        },
-        dragOptionsRemote() {
-            return {
-                animation: 200,
-                disabled: false,
-                sort: false,
-                ghostClass: 'ghost'
-            };
+    watch: {
+        courseware: function() {
+            this.chapters = this.courseware.children;
         }
     },
-    watch: {
-        chapters: function() {
+    methods: {
+        sortChapters() {
             let view = this;
-            view.chapterList = [];
+            let hasChildren = false;
+            this.cleanLists();
             this.chapters.forEach(element => {
                 if (element.isRemote) {
-                    view.chapterList.push('remote-' + element.id);
-                    view.remoteData = true;
-                    view.importData = true;
+                    view.chapterList.push('remote_' + element.id);
+                    view.isRemoteAction();
+                    if (element.children != null) {
+                        hasChildren = true;
+                        view.buildChildrenList(element, 'remote_');
+                    }
                 } else if (element.isImport) {
-                    view.chapterList.push('import-' + element.id);
-                    view.importData = true;
+                    view.chapterList.push('import_' + element.id);
+                    view.isImportAction();
+                    if (element.children.length > 0) {
+                        hasChildren = true;
+                        view.buildChildrenList(element);
+                    }
                 } else {
                     view.chapterList.push(element.id);
                 }
             });
-        }
-    },
-    methods: {
+            if (!hasChildren) {
+                this.storeChanges();
+            }
+        },
+        fillChapterList() {
+            this.chapters.forEach(element => {
+                this.chapterList.push(element.id);
+            });
+        },
+        buildChildrenList(element, type) {
+            let view = this;
+            let list = [];
+            let hasChildren = false;
+            element.children.forEach(child => {
+                list.push(type + child.id);
+                if (child.children != null) {
+                    hasChildren = true;
+                    view.buildChildrenList(child, type);
+                }
+            });
+            if (element.type == 'Section') {
+                this.blockList[type + element.id] = list;
+            } else {
+                this[element.children[0].type.toLowerCase() + 'List'][type + element.id] = list;
+            }
+            if (!hasChildren) {
+                this.storeChanges();
+            }
+        },
         isRemoteAction() {
             this.remoteData = true;
             this.importData = true;
         },
-        updateSubchapterList(update) {
-            let key = Object.keys(update)[0];
-            this.subchapterList[key] = update[key];
-            this.storeChanges();
+        isImportAction() {
+            this.remoteData = false;
+            this.importData = true;
+        },
+        updateList(args) {
+            let list = args.list;
+            let key = Object.keys(list)[0];
+            this[args.type + 'List'][key] = list[key];
+
+            if (!args.hasChildren) {
+                this.fillChapterList();
+                this.storeChanges();
+            }
         },
         updateSectionList(update) {
             let key = Object.keys(update)[0];
             this.sectionList[key] = update[key];
-            console.log(this.sectionList);
-            this.storeChanges();
+            //this.storeChanges();
         },
         updateBlockList(update) {
             let key = Object.keys(update)[0];
             this.blockList[key] = update[key];
-            this.storeChanges();
+            //this.storeChanges();
         },
-        sortChapters() {
-            this.storeChanges();
-        },
+
         addChild(data) {
             this.chapters.push(data);
         },
@@ -273,6 +300,7 @@ export default {
         },
         storeChanges() {
             if (this.storeLock) {
+                console.log('storeLock');
                 return;
             }
             this.storeLock = true;
@@ -280,7 +308,6 @@ export default {
             let promises = [];
             let fileData = {};
             if (view.importData && !view.remoteData) {
-                console.log('use file');
                 let file = this.importZIP;
                 let filePromise = new Promise(resolve => {
                     let reader = new FileReader();
@@ -311,15 +338,17 @@ export default {
                     .then(response => {
                         view.importData = false;
                         view.remoteData = false;
-                        if (response.data.courseware != '') {
-                            // view.courseware = {};
-                            view.courseware = response.data.courseware;
-                            // view.chapters = {};
-                            view.chapters = view.courseware.children;
-                        }
+                        view.cleanLists();
+                        view.courseware = JSON.parse(response.data.courseware);
                         view.storeLock = false;
                     });
             });
+        },
+        cleanLists() {
+            this.chapterList = [];
+            this.subchapterList = {};
+            this.sectionList = {};
+            this.blockList = {};
         },
         importBlocks($item) {
             let view = this;

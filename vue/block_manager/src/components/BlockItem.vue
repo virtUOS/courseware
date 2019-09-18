@@ -49,9 +49,10 @@ export default {
     },
     created() {
         this.preview = this.block.preview;
-        if (!this.remoteContent && this.block.isRemote) {
-            this.id = 'remote-' + this.id;
-            this.$emit('updateParentList');
+    },
+    watch: {
+        block: function() {
+            this.id = this.block.id;
         }
     },
     methods: {

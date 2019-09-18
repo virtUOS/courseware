@@ -36,8 +36,8 @@
             :class="{ 'block-list-import': importContent }"
             ghost-class="ghost"
             handle=".block-handle"
+            @sort="sortBlocks"
         >
-            <!-- <transition-group type="transition" :name="!dragging ? 'flip-list' : null"> -->
             <BlockItem
                 v-for="block in blocks"
                 :key="block.id"
@@ -46,10 +46,8 @@
                 :remoteContent="remoteContent"
                 @remove-block="removeBlock"
                 @isRemote="isRemoteAction"
-                @updateParentList="updateParentList"
             />
             <p v-if="blocks.length == 0">This Section is empty. You can add Block in Courseware or drop on here.</p>
-            <!-- </transition-group> -->
         </draggable>
     </li>
 </template>
@@ -80,7 +78,8 @@ export default {
     props: {
         element: Object,
         importContent: Boolean,
-        remoteContent: Boolean
+        remoteContent: Boolean,
+        storeLock: Boolean
     },
     created() {
         if (this.blocks == null) {
@@ -90,49 +89,37 @@ export default {
             this.draggableGroup = { name: 'blocks', pull: 'clone', put: false };
         }
         this.shortTitle = BlockManagerHelper.shortTitle(this.element.title, 30);
-
-        if (!this.remoteContent && this.element.isRemote) {
-            this.id = 'remote-' + this.id;
-            let view = this;
-            let blocks = [];
-            let blockList = [];
-            this.blocks.forEach(element => {
-                if (element.isRemote) {
-                    blocks.push('remote-' + element.id);
-                    view.$emit('isRemote');
-                } else {
-                    blocks.push(element.id);
-                }
-            });
-            blockList[this.id] = blocks;
-            this.$emit('blockListUpdate', blockList);
-            this.$emit('updateParentList');
-        }
     },
     watch: {
-        blocks: function() {
-            let list = [];
-            this.blocks.forEach(element => {
-                list.push(element.id);
-            });
-            this.blockList[this.id] = list;
-            this.$emit('blockListUpdate', this.blockList);
+        element: function() {
+            if (this.element.children == null) {
+                this.blocks = [];
+            } else {
+                this.blocks = this.element.children;
+            }
         }
     },
     methods: {
-        updateParentList() {
-            let list = [];
+        sortBlocks() {
             let view = this;
+            let args = {};
+            let blockList = [];
+            let list = [];
             this.blocks.forEach(element => {
                 if (element.isRemote) {
-                    list.push('remote-' + element.id);
+                    list.push('remote_' + element.id);
                     view.$emit('isRemote');
+                } else if (element.isImport) {
+                    list.push('import_' + element.id);
+                    view.$emit('isImport');
                 } else {
                     list.push(element.id);
                 }
             });
-            this.blockList[this.id] = list;
-            this.$emit('blockListUpdate', this.blockList);
+            blockList[this.id] = list;
+            args.list = blockList;
+            args.type = 'block';
+            this.$emit('listUpdate', args);
         },
         removeBlock(data) {
             let blocks = [];
@@ -159,14 +146,14 @@ export default {
             if (this.importContent) {
                 return {
                     animation: 200,
-                    disabled: false,
+                    disabled: this.storeLock,
                     sort: false,
                     ghostClass: 'ghost'
                 };
             } else {
                 return {
                     animation: 200,
-                    disabled: false,
+                    disabled: this.storeLock,
                     ghostClass: 'ghost'
                 };
             }
