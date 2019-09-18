@@ -207,9 +207,6 @@ export default {
         isImportAction() {
             this.$emit('isImport');
         },
-        updateBlockList(data) {
-            this.$emit('blockListUpdate', data);
-        },
         removeElement() {
             this.$emit('remove-subchapter', this.element);
         },

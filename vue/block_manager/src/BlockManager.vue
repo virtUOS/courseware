@@ -263,17 +263,6 @@ export default {
                 this.storeChanges();
             }
         },
-        updateSectionList(update) {
-            let key = Object.keys(update)[0];
-            this.sectionList[key] = update[key];
-            //this.storeChanges();
-        },
-        updateBlockList(update) {
-            let key = Object.keys(update)[0];
-            this.blockList[key] = update[key];
-            //this.storeChanges();
-        },
-
         addChild(data) {
             this.chapters.push(data);
         },
@@ -349,45 +338,6 @@ export default {
             this.subchapterList = {};
             this.sectionList = {};
             this.blockList = {};
-        },
-        importBlocks($item) {
-            let view = this;
-            var parent_id = $item.attr('data-id');
-            var $blocks = $item.find('.block-item');
-            var entry = [];
-            $.each($blocks, function() {
-                entry.push($(this).attr('data-id'));
-            });
-            if (entry.length > 0) {
-                view.blockList[parent_id] = entry;
-            }
-        },
-
-        importSections($item) {
-            let view = this;
-            var parent_id = $item.attr('data-id');
-            var $sections = $item.find('.section-item');
-            var entry = [];
-            $.each($sections, function() {
-                entry.push($(this).attr('data-id'));
-                view.importBlocks($(this));
-            });
-            if (entry.length > 0) {
-                view.sectionList[parent_id] = entry;
-            }
-        },
-        importSubchapters($item) {
-            let view = this;
-            var parent_id = $item.attr('data-id');
-            var $subchapters = $item.find('.subchapter-item');
-            var entry = [];
-            $.each($subchapters, function() {
-                entry.push($(this).attr('data-id'));
-                view.importSections($(this));
-            });
-            if (entry.length > 0) {
-                view.subchapterList[parent_id] = entry;
-            }
         },
         getRemoteCourse(event) {
             this.loading = true;
