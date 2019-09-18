@@ -208,9 +208,9 @@ export default {
                 } else if (element.isImport) {
                     view.chapterList.push('import_' + element.id);
                     view.isImportAction();
-                    if (element.children.length > 0) {
+                    if (element.children != null) {
                         hasChildren = true;
-                        view.buildChildrenList(element);
+                        view.buildChildrenList(element, 'import_');
                     }
                 } else {
                     view.chapterList.push(element.id);
@@ -236,7 +236,7 @@ export default {
                     view.buildChildrenList(child, type);
                 }
             });
-            if (element.type == 'Section') {
+            if (element.type.toLowerCase() == 'section') {
                 this.blockList[type + element.id] = list;
             } else {
                 this[element.children[0].type.toLowerCase() + 'List'][type + element.id] = list;
@@ -445,7 +445,8 @@ export default {
                                 publication_date: false,
                                 withdraw_date: false,
                                 isPublished: true,
-                                isImport: true
+                                isImport: true,
+                                type: node.nodeName
                             });
                             let current_chapter = view.importCourseware['chapters'][chapterNum - 1];
 
@@ -463,7 +464,8 @@ export default {
                                         publication_date: false,
                                         withdraw_date: false,
                                         isPublished: true,
-                                        isImport: true
+                                        isImport: true,
+                                        type: node.nodeName
                                     });
                                     let current_subchapter = current_chapter.children[subchapterNum - 1];
 
@@ -480,7 +482,8 @@ export default {
                                                 title: node.getAttribute('title'),
                                                 id: section_counter,
                                                 isPublished: true,
-                                                isImport: true
+                                                isImport: true,
+                                                type: node.nodeName
                                             });
                                             let current_section = current_subchapter.children[sectionNum - 1];
                                             if (typeof current_section === 'undefined') {
@@ -500,10 +503,19 @@ export default {
                                                     });
                                                 }
                                             });
+                                            if (current_section.children.length == 0) {
+                                                current_section.children = null;
+                                            }
                                         }
                                     });
+                                    if (current_subchapter.children.length == 0) {
+                                        current_subchapter.children = null;
+                                    }
                                 }
                             });
+                            if (current_chapter.children.length == 0) {
+                                current_chapter.children = null;
+                            }
                         }
                     });
                     let oSerializer = new XMLSerializer();

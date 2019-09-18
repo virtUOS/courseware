@@ -81,7 +81,10 @@
                 @isRemote="isRemoteAction"
                 @isImport="isImportAction"
             />
-            <p v-if="sections.length == 0">This Subchapter is empty. You can drop a section here or add a new one.</p>
+            <p v-if="sections.length == 0">
+                This Subchapter is empty.
+                <span v-if="!importContent">You can drop a section here or add a new one.</span>
+            </p>
         </draggable>
     </li>
 </template>
@@ -157,9 +160,9 @@ export default {
                 } else if (element.isImport) {
                     list.push('import_' + element.id);
                     view.isImportAction();
-                    if (element.children.length > 0) {
+                    if (element.children.length != null) {
                         hasChildren = true;
-                        view.buildChildrenList(element);
+                        view.buildChildrenList(element, 'import_');
                     }
                 } else {
                     list.push(element.id);
@@ -187,7 +190,7 @@ export default {
             updateList[type + element.id] = list;
             args.list = updateList;
             args.hasChildren = hasChildren;
-            if (element.type == 'Section') {
+            if (element.type.toLowerCase() == 'section') {
                 args.type = 'block';
                 this.$emit('listUpdate', args);
             } else {

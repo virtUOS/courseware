@@ -82,7 +82,8 @@
                 @isImport="isImportAction"
             />
             <p v-if="subchapters.length == 0">
-                This Chapter is empty. You can drop a subchapter here or add a new one.
+                This Chapter is empty.
+                <span v-if="!importContent">You can drop a subchapter here or add a new one.</span>
             </p>
         </draggable>
     </li>
@@ -158,9 +159,9 @@ export default {
                 } else if (element.isImport) {
                     list.push('import_' + element.id);
                     view.isImportAction();
-                    if (element.children.length > 0) {
+                    if (element.children != null) {
                         hasChildren = true;
-                        view.buildChildrenList(element);
+                        view.buildChildrenList(element, 'import_');
                     }
                 } else {
                     list.push(element.id);
@@ -188,7 +189,7 @@ export default {
             updateList[type + element.id] = list;
             args.list = updateList;
             args.hasChildren = hasChildren;
-            if (element.type == 'Section') {
+            if (element.type.toLowerCase() == 'section') {
                 args.type = 'block';
                 this.$emit('listUpdate', args);
             } else {

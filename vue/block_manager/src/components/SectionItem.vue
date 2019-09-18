@@ -47,7 +47,10 @@
                 @remove-block="removeBlock"
                 @isRemote="isRemoteAction"
             />
-            <p v-if="blocks.length == 0">This Section is empty. You can add Block in Courseware or drop on here.</p>
+            <p v-if="blocks.length == 0">
+                This Section is empty.
+                <span v-if="!importContent">You can add Block in Courseware or drop on here.</span>
+            </p>
         </draggable>
     </li>
 </template>
