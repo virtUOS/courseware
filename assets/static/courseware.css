@@ -3486,9 +3486,7 @@ section#courseware.scrollyware .breadcrumb {
   display: none;
 }
 section#courseware.scrollyware .active-section .title {
-  position: absolute;
-  top: 0;
-  right: 1em;
+  text-align: center;
 }
 section#courseware.scrollyware .mode-switch {
   position: absolute;
@@ -4925,6 +4923,31 @@ section.DiscussionBlock .contentbox article.thread.open .comment-writer {
 .btn-base:hover {
   cursor: pointer;
 }
+.EmbedBlock .cw-embedblock-title {
+  min-width: 10%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  font-style: normal;
+  font-weight: 600;
+  color: #28497c;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 10px 20px;
+  position: relative;
+  margin: 0;
+  text-align: center;
+  border: solid thin #ccc;
+  background-color: #fcfcfc;
+}
+.EmbedBlock .cw-embedblock-iframe {
+  width: 870px !important;
+}
+.EmbedBlock .cw-embedblock-image.full-width {
+  width: 870px;
+  height: auto;
+}
 .EmbedBlock .cw-embedblock-link {
   list-style: none;
   display: inline-block;
@@ -4972,6 +4995,13 @@ section#courseware .block-content:not([data-view="student"]) input.cw-embedblock
 }
 section#courseware .EmbedBlock button.cw-exclaim {
   display: none;
+}
+section#courseware.view-author .EmbedBlock .cw-embedblock-iframe {
+  width: 860px !important;
+}
+section#courseware.view-author .EmbedBlock .cw-embedblock-image.full-width {
+  width: 860px;
+  height: auto;
 }
 .mooc_evaluations section h3 {
   font-size: 14px;
@@ -9286,8 +9316,24 @@ section#courseware .aside-section .block-adder button.add-block {
 section#courseware .aside-section .block-adder button.add-block:hover {
   color: transparent;
 }
-section#courseware .aside-section .cw-block-adder-item {
-  margin-left: -1.5em;
+section#courseware .aside-section .block-adder .cw-block-adder-item {
+  min-height: unset;
+  padding: 0.5em 1em;
+  margin: 0.5em;
+  width: 16em;
+}
+section#courseware .aside-section .block-adder .cw-block-adder-item .cw-block-adder-item-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-size: 24px;
+}
+section#courseware .aside-section .block-adder .cw-block-adder-item .cw-block-adder-item-name {
+  display: inline-block;
+  vertical-align: bottom;
+}
+section#courseware .aside-section .block-adder .cw-block-adder-item .cw-block-adder-item-description {
+  display: none;
 }
 section#courseware .aside-section .block-adder .cw-block-adder-tab ul {
   padding: 0;
