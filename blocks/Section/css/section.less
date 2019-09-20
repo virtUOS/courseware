@@ -1029,11 +1029,27 @@ button.button.cw-active-selector {
     }
   }
 
-  .cw-block-adder-item {
-    margin-left: -1.5em;
-  }
-  
   .block-adder {
+    .cw-block-adder-item {
+        min-height: unset;
+        padding: 0.5em 1em;
+        margin: 0.5em;
+        width: 16em;
+
+        .cw-block-adder-item-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-size: 24px;
+        }
+        .cw-block-adder-item-name {
+            display: inline-block;
+            vertical-align: bottom;
+        }
+        .cw-block-adder-item-description {
+            display: none;
+        }
+      }
     .cw-block-adder-tab {
       ul {
         padding: 0;

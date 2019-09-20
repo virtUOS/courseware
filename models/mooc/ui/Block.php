@@ -513,6 +513,10 @@ abstract class Block {
         }
     }
 
+    protected function getUpdateAuthorization() {
+        return  $this->container['current_user']->canUpdate($this);
+    }
+
     // enforce current user with 'canUpdate' permission of this block
     protected function authorizeUpdate()
     {

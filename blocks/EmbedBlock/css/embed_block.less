@@ -1,6 +1,16 @@
 @import '../../../assets/less/mixins';
 
 .EmbedBlock {
+    .cw-embedblock-title {
+        .cw-block-header();
+    }
+    .cw-embedblock-iframe {
+        width: 870px !important;
+    }
+    .cw-embedblock-image.full-width{
+        width: 870px;
+        height: auto;
+    }
     .cw-embedblock-link {
         list-style: none;
         display: inline-block;
@@ -60,4 +70,14 @@ section#courseware .block-content:not([data-view="student"]) input.cw-embedblock
 
 section#courseware .EmbedBlock button.cw-exclaim {
     display: none;
+}
+
+section#courseware.view-author .EmbedBlock {
+    .cw-embedblock-iframe {
+        width: 860px !important;
+    }
+    .cw-embedblock-image.full-width{
+        width: 860px;
+        height: auto;
+    }
 }

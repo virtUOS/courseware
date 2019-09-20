@@ -7,4 +7,6 @@
     <xsd:attribute name="embed_url" type="xsd:string" />
     <xsd:attribute name="embed_source" type="xsd:string" />
     <xsd:attribute name="embed_time" type="xsd:string" />
+    <xsd:attribute name="embed_title" type="xsd:string" />
+    <xsd:attribute name="embed_fullwidth" type="xsd:boolean" />
 </xsd:schema>
