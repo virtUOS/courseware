@@ -1,13 +1,17 @@
 <input type="hidden" value="{{opencast_content}}">
 {{#url_isset}}
     {{#useplayer}}
-        <iframe width="860" height="484" src="{{url_opencast}}" allowfullscreen></iframe>
+        <iframe width="860" height="484" data-src="{{url_opencast}}" allowfullscreen class="courseware-oc-video"></iframe>
         <a href="{{url_opencast}}" target="_blank"><button class="button">Video in neuem Fenster anzeigen</button></a>
+        <script type="text/javascript">
+            OC_SEARCH_URL = '{{ search_url }}';
+            OC_LTI_DATA   =  {{{ lti_data }}};
+        </script>
     {{/useplayer}}
     {{^useplayer}}
         <video width="860" height="484" controls>
             <source src="{{url_mp4}}" type="video/mp4">
-        </video> 
+        </video>
     {{/useplayer}}
 {{/url_isset}}
 {{^url_isset}}

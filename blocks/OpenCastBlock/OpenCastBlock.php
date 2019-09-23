@@ -2,8 +2,10 @@
 namespace Mooc\UI\OpenCastBlock;
 
 use Mooc\UI\Block;
+use Opencast\LTI\OpencastLTI;
+use Opencast\LTI\LTIResourceLink;
 
-class OpenCastBlock extends Block 
+class OpenCastBlock extends Block
 {
     const NAME = 'Opencast';
     const BLOCK_CLASS = 'multimedia';
@@ -20,15 +22,36 @@ class OpenCastBlock extends Block
         $this->setGrade(1.0);
         $opencast_content_json = json_decode($this->opencast_content);
         $url_mp4 = $opencast_content_json->url_mp4;
-        $url_opencast = $opencast_content_json->url_opencast;
         $useplayer = $opencast_content_json->useplayer;
 
-        return array_merge($this->getAttrArray(), 
+        $url_opencast = ($useplayer == 'paella')
+            ? $opencast_content_json->url_opencast_paella
+            : $opencast_content_json->url_opencast_theodul;
+
+        $course_id = $this->container['cid'];
+
+        $lti_launch_data = OpencastLTI::generate_lti_launch_data(
+            $GLOBALS['user']->id,
+            $course_id,
+            LTIResourceLink::generate_link('series','view complete series for course')
+            //OpencastLTI::generate_tool('series', $this->connectedSeries[0]['series_id'])
+        );
+
+        $lti_data = OpencastLTI::sign_lti_data(
+            $lti_launch_data,
+            $config['lti_consumerkey'],
+            $config['lti_consumersecret'],
+            OpencastLTI::getSearchUrl($course_id)
+        );
+
+        return array_merge($this->getAttrArray(),
             array(
-                'url_mp4' => $url_mp4,
+                'url_mp4'      => $url_mp4,
                 'url_opencast' => $url_opencast,
-                'useplayer' => $useplayer,
-                'url_isset' => ($url_mp4 != '') && ($url_opencast != '')
+                'useplayer'    => $useplayer,
+                'url_isset'    =>  ($url_opencast != ''),
+                'lti_data'     => json_encode($lti_data),
+                'search_url'   => OpencastLTI::getSearchUrl($course_id)
             )
         );
     }
@@ -45,7 +68,7 @@ class OpenCastBlock extends Block
         $ocmodel = new \OCCourseModel($course_id);
         $oc_episodes = $ocmodel->getEpisodesforREST();
 
-        $search_client = \SearchClient::getInstance($course_id);
+        $search_client = \SearchClient::create($course_id);
         $video_url_theodul = $search_client->getBaseURL() . "/engage/theodul/ui/core.html?mode=embed&id=";
         $video_url_paella = $search_client->getBaseURL() . "/paella/ui/embed.html?id=";
 
@@ -57,7 +80,7 @@ class OpenCastBlock extends Block
             $url_opencast_theodul = \URLHelper::getURL($video_url_theodul . $episode['id']);
             $url_opencast_paella = \URLHelper::getURL($video_url_paella . $episode['id']);
             array_push($episodes, array(
-                'url_mp4' => $url_mp4, 
+                'url_mp4' => $url_mp4,
                 'url_opencast_theodul' => $url_opencast_theodul,
                 'url_opencast_paella' => $url_opencast_paella,
                 'title' => $episode['title'],
@@ -87,7 +110,7 @@ class OpenCastBlock extends Block
         return;
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'opencast_content' => $this->opencast_content
@@ -100,7 +123,7 @@ class OpenCastBlock extends Block
 
         if (isset ($data['opencast_content'])) {
             $this->opencast_content = (string) $data['opencast_content'];
-        } 
+        }
 
         return;
     }
