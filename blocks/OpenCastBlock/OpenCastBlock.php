@@ -4,6 +4,7 @@ namespace Mooc\UI\OpenCastBlock;
 use Mooc\UI\Block;
 use Opencast\LTI\OpencastLTI;
 use Opencast\LTI\LTIResourceLink;
+use Opencast\Models\OCConfig;
 
 class OpenCastBlock extends Block
 {
@@ -29,6 +30,8 @@ class OpenCastBlock extends Block
             : $opencast_content_json->url_opencast_theodul;
 
         $course_id = $this->container['cid'];
+
+        $config = OCConfig::getConfigForCourse($course_id);
 
         $lti_launch_data = OpencastLTI::generate_lti_launch_data(
             $GLOBALS['user']->id,
