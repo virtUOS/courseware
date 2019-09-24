@@ -13,6 +13,11 @@ export default StudentView.extend({
   },
 
   postRender() {
+      OC.ltiCall(OC_SEARCH_URL, OC_LTI_DATA, function() {
+          jQuery('iframe.courseware-oc-video').each(function() {
+              this.src = this.dataset.src;
+          });
+      });
     return this;
   },
 
