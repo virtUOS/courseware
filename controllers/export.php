@@ -34,7 +34,7 @@ class ExportController extends CoursewareStudipController
             }
 
             $destination = $tempDir . '/' . $file['id'];
-            if (!is_dir($destination)) {
+            if (!is_dir($destination) && file_exists($file['path'])) {
                 mkdir($destination);
                 copy($file['path'], $destination.'/'.$file['filename']);
             }
