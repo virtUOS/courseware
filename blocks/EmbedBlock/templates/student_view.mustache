@@ -1,11 +1,28 @@
 {{^inactive}}
+    {{#embed_title}}
+        <h1 class="cw-embedblock-title">{{embed_title}}</h1>
+    {{/embed_title}}
     {{{html}}}
     {{#oembed}}
     <div class="cw-embedblock-info">
-        <span class="cw-embedblock-title">{{title}}</span>
+        <span class="cw-oembed-title">{{title}}</span>
         {{#author_name}}<span class="cw-embedblock-author-name">{{#i18n}}erstellt von{{/i18n}} {{author_name}}</span>{{/author_name}}
         <span class="cw-embedblock-source">{{#i18n}}veröffentlicht auf{{/i18n}} {{embed_source}}</span>
     </div>
+    {{/oembed}}
+    {{^oembed}}
+        {{#isAuthor}}
+            {{#unauthorized}}
+                <div class="messagebox messagebox_error">
+                    {{#i18n}}Der Zugriff auf diesen Inhalt wird vom Anbieter gesperrt{{/i18n}}
+                </div>
+            {{/unauthorized}}
+            {{#not_found}}
+                <div class="messagebox messagebox_error">
+                    {{#i18n}}Der Inhalt konnte beim Anbieter nicht gefunden werden{{/i18n}}
+                </div>
+            {{/not_found}}
+        {{/isAuthor}}
     {{/oembed}}
 {{/inactive}}
 {{#inactive}}

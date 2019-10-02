@@ -168,6 +168,11 @@ abstract class Block {
             array());
     }
 
+    public function getSeminarId()
+    {
+        return  $this->container['cid'];
+    }
+
     /**
      * Returns the block's sub types.
      *
@@ -378,7 +383,7 @@ abstract class Block {
      *
      * @param array $properties The properties to import
      */
-    public function importProperties(array $properties)
+    public function importProperties(array $properties, $cid)
     {
     }
 
@@ -511,6 +516,10 @@ abstract class Block {
         if (isset($this->_progress)) {
             $this->_progress->store();
         }
+    }
+
+    protected function getUpdateAuthorization() {
+        return  $this->container['current_user']->canUpdate($this);
     }
 
     // enforce current user with 'canUpdate' permission of this block

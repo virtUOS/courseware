@@ -142,13 +142,14 @@
 import ChapterItem from './components/ChapterItem.vue';
 import SemesterItem from './components/SemesterItem.vue';
 import ActionMenuItem from './components/ActionMenuItem.vue';
-import NodeContentHelper from './assets/NodeContentHelper.js';
+import blockManagerHelperMixin from './mixins/blockManagerHelperMixin.js';
 
 import { SpringSpinner } from 'epic-spinners';
 import axios from 'axios';
 import draggable from 'vuedraggable';
 export default {
     name: 'BlockManager',
+    mixins: [blockManagerHelperMixin],
     components: {
         ChapterItem,
         SemesterItem,
@@ -330,6 +331,24 @@ export default {
                         view.cleanLists();
                         view.courseware = JSON.parse(response.data.courseware);
                         view.storeLock = false;
+                    })
+                    .catch(function(error) {
+                        if (error.response) {
+                            // The request was made and the server responded with a status code
+                            // that falls out of the range of 2xx
+                            console.log(error.response.data);
+                            console.log(error.response.status);
+                            console.log(error.response.headers);
+                        } else if (error.request) {
+                            // The request was made but no response was received
+                            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                            // http.ClientRequest in node.js
+                            console.log(error.request);
+                        } else {
+                            // Something happened in setting up the request that triggered an Error
+                            console.log('Error', error.message);
+                        }
+                        console.log(error.config);
                     });
             });
         },
@@ -448,7 +467,7 @@ export default {
                                                         id: node.getAttribute('uuid'),
                                                         isPublished: true,
                                                         isImport: true,
-                                                        preview: NodeContentHelper.getContent(node),
+                                                        preview: view.getContent(node),
                                                         readable_name: view.blockMap[node.getAttribute('type')]
                                                     });
                                                 }

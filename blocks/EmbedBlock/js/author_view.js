@@ -27,6 +27,9 @@ export default AuthorView.extend({
     postRender() {
         var $embed_source = this.$('.cw-embedblock-source-stored').val();
         this.$('.cw-embedblock-source option[value="'+$embed_source+'"]').prop('selected', true);
+        if (this.$('.cw-embedblock-fullwidth-stored').val() == 1) {
+            this.$('input[name="cw-embedblock-fullwidth"]').prop('checked', true);
+        }
         this.selectPlatform();
         this.checkURL();
         this.setTime();
@@ -61,11 +64,13 @@ export default AuthorView.extend({
 
     onSave(event) {
         var $view = this;
+        var $embed_title = $view.$('input[name="cw-embedblock-title"]').val();
         var $embed_url = $view.$('.cw-embedblock-url').val();
         var $embed_source = $view.$('select.cw-embedblock-source option:selected').val();
-        var use_time = this.$('.cw-embedblock-time-start-check').prop( "checked" );
+        var use_time = this.$('.cw-embedblock-time-start-check').prop('checked');
+        var $embed_time = {};
+        var $embed_fullwidth = false;
         if (use_time){
-            var $embed_time = {};
             $embed_time.start = parseInt (60 * this.$('.cw-embedblock-time-start-min').val()) + parseInt (this.$('.cw-embedblock-time-start-sec').val());
             $embed_time.end = parseInt(60 * this.$('.cw-embedblock-time-end-min').val()) + parseInt(this.$('.cw-embedblock-time-end-sec').val());
             if (($embed_time.start >= $embed_time.end) || (this.$('.cw-embedblock-time-end-check').prop( "checked" ) == false)){
@@ -77,14 +82,19 @@ export default AuthorView.extend({
                 $embed_time = JSON.stringify($embed_time);
             }
         } else {
-            $embed_time = '';
+            $embed_time = null;
+        }
+        if ($view.isImage()) {
+            $embed_fullwidth =  $view.$('input[name="cw-embedblock-fullwidth"]').prop('checked');
         }
 
         helper
           .callHandler(this.model.id, 'save', {
             embed_url: $embed_url,
             embed_source: $embed_source,
-            embed_time: $embed_time
+            embed_time: $embed_time,
+            embed_title: $embed_title,
+            embed_fullwidth: $embed_fullwidth
           })
           .then(
             // success
@@ -109,6 +119,18 @@ export default AuthorView.extend({
             this.$('.cw-embedblock-time').show();
         } else {
             this.$('.cw-embedblock-time').hide();
+        }
+        switch ($embed_source) {
+            case 'youtube':
+                this.$('.cw-embedblock-time').show();
+                break;
+            case 'deviantart':
+            case 'giphy':
+                this.$('.cw-embedblock-image-options').show();
+                break;
+            default:
+                this.$('.cw-embedblock-time').hide();
+                this.$('.cw-embedblock-image-options').hide();
         }
         this.checkURL();
 
@@ -212,6 +234,15 @@ export default AuthorView.extend({
                 this.$('.cw-embedblock-time-end-check').prop( "checked", true );
             }
             this.toggleTime();
+        }
+    },
+
+    isImage() {
+        var $embed_source = this.$('select.cw-embedblock-source option:selected').val();
+        if ($embed_source == 'giphy' || $embed_source == 'deviantart') {
+            return true;
+        } else {
+            return false;
         }
     }
 });

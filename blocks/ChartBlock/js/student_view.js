@@ -60,6 +60,11 @@ export default StudentView.extend({
                             ticks: {
                                 beginAtZero:true
                             }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
                         }]
                     },
                     legend: {

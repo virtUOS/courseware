@@ -5,7 +5,6 @@ export default StudentView.extend({
   },
 
   initialize() {
-
   },
 
   render() {

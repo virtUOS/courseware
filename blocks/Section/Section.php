@@ -265,7 +265,10 @@ class Section extends Block
             /** @var \Mooc\UI\Block $block */
             $block = $this->getBlockFactory()->makeBlock($child);
             if ($block != null) {
-                $files = array_merge($files, $block->getFiles());
+                $block_files = $block->getFiles();
+                if (is_array($block_files)) {
+                    $files = array_merge($files, $block_files);
+                }
             }
         }
 

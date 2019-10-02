@@ -9,8 +9,8 @@
     <input type="hidden" name="solver_user_id" value="{{solver_user_id}}">
     <input type="hidden" name="exercise_index" value="{{exercise_index}}">
     <fieldset>
-        <legend>{{ title }}</legend>
-        <legend>{{{question_description}}}</legend>
+        <legend class="question_title">{{ title }}</legend>
+        <div class="question_description">{{{question_description}}}</div>
         {{{question}}}
     </fieldset>
     <div class="cw-test-buttons-wrapper">

@@ -473,7 +473,7 @@ class BlockManagerController extends CoursewareStudipController
                             $remote_ui_block = $this->plugin->getBlockFactory()->makeBlock($remote_db_block);
     
                             $data = array('title' => $remote_db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
-                            $new_block = $this->createAnyBlock($parent_id, $remote_db_block->type, $data);
+                            $new_block = $this->createAnyBlock($parent_id, $remote_db_block->type, $data, $remote_db_block->sub_type);
                             $this->updateBlockId($block_list, $block_id, $new_block->id);
                             $block_id = intval($new_block->id);
 
@@ -489,11 +489,17 @@ class BlockManagerController extends CoursewareStudipController
                             $files = $remote_ui_block->getFiles();
                             foreach($files as &$file) {
                                 $remote_file = FileRef::find($file['id']);
-                                $file = FileManager::copyFileRef($remote_file, $import_folder, \User::findCurrent());
+
+                                if ($remote_file != null) {
+                                    $file = FileManager::copyFileRef($remote_file, $import_folder, \User::findCurrent());
+                                    
+                                }
                             }
-                            $new_ui_block->importProperties($remote_ui_block->exportProperties());
+
+                            if ($remote_ui_block->exportProperties() != null) {
+                                $new_ui_block->importProperties($remote_ui_block->exportProperties());
+                            }
                             $new_ui_block->importContents($remote_ui_block->exportContents(), $files);
-                            
                         }
                     }
                 }
@@ -693,7 +699,7 @@ class BlockManagerController extends CoursewareStudipController
 
     }
 
-    private function createAnyBlock($parent, $type, $data)
+    private function createAnyBlock($parent, $type, $data, $sub_type = '')
     {
         $block = new dbBlock();
         $parent_id = is_object($parent) ? $parent->id : $parent;
@@ -701,6 +707,7 @@ class BlockManagerController extends CoursewareStudipController
             'seminar_id' => $data['cid'],
             'parent_id' => $parent_id,
             'type' => $type,
+            'sub_type' => $sub_type,
             'title' => $data['title'],
             'publication_date' => $data['publication_date'],
             'withdraw_date' => $data['withdraw_date'],

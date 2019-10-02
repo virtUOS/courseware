@@ -58,10 +58,11 @@
 <script>
 import BlockItem from './BlockItem.vue';
 import ActionMenuItem from './ActionMenuItem.vue';
-import BlockManagerHelper from './../assets/BlockManagerHelper';
+import blockManagerHelperMixin from './../mixins/blockManagerHelperMixin.js';
 import draggable from 'vuedraggable';
 export default {
     name: 'SectionItem',
+    mixins: [blockManagerHelperMixin],
     data() {
         return {
             id: this.element.id,
@@ -91,7 +92,7 @@ export default {
         if (this.importContent) {
             this.draggableGroup = { name: 'blocks', pull: 'clone', put: false };
         }
-        this.shortTitle = BlockManagerHelper.shortTitle(this.element.title, 30);
+        this.shortTitle = this.cutTitle(this.element.title, 30);
     },
     watch: {
         element: function() {
@@ -138,7 +139,7 @@ export default {
         },
         editSection(data) {
             this.title = data.title;
-            this.shortTitle = BlockManagerHelper.shortTitle(data.title, 30);
+            this.shortTitle = this.cutTitle(data.title, 30);
         },
         toggleContent() {
             this.unfolded = !this.unfolded;

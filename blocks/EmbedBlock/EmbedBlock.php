@@ -21,6 +21,8 @@ class EmbedBlock extends Block
         $this->defineField('embed_url', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('embed_source', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('embed_time', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('embed_title', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('embed_fullwidth', \Mooc\SCOPE_BLOCK, true);
     }
 
     public function student_view()
@@ -33,8 +35,19 @@ class EmbedBlock extends Block
         if(!function_exists('curl_init')) {
             return array('no_curl' => true);
         }
-        $oembed = json_decode($this->curl_get($json_url));
-        
+        $request = $this->curl_get($json_url);
+        if($request == 'Unauthorized') {
+            return array('oembed' => false, 'unauthorized' => true, isAuthor => $this->getUpdateAuthorization());
+        }
+        if($request == 'Not Found') {
+            return array('oembed' => false, 'not_found' => true, isAuthor => $this->getUpdateAuthorization());
+        }
+        $oembed = json_decode($request);
+        $img_class = 'cw-embedblock-image';
+        if ($this->embed_fullwidth) {
+            $img_class = 'cw-embedblock-image full-width';
+        }
+
         switch ($oembed->type) {
             case 'video':
             case 'rich':
@@ -47,6 +60,7 @@ class EmbedBlock extends Block
                     $src = $node->getAttribute('src');
                     $src = preg_replace("/^http:/i", "https:", $src);
                     $node->setAttribute('src', $src);
+                    $node->setAttribute('class', 'cw-embedblock-iframe');
                 }
                 $html = $dom->saveHTML();
 
@@ -61,18 +75,19 @@ class EmbedBlock extends Block
                     foreach($nodes as $node) {
                         $src = $node->getAttribute('src');
                         $node->setAttribute('src', $src.'&start='.$start.'&end='.$end);
+                        $node->setAttribute('class', 'cw-embedblock-iframe');
                     }
                     $html = $dom->saveHTML();
                 }
 
                 break;
             case 'photo':
-                $html = '<img class="embed-block-image" src="'.$oembed->url.'" width="'.$oembed->width.'px" 
+                $html = '<img class="'.$img_class.'" src="'.$oembed->url.'" width="'.$oembed->width.'px" 
                 data-originalwidth="'.$oembed->width.'"  data-originalheight="'.$oembed->height.'" height="'.$oembed
                 ->height.'px" title="'.$oembed->title.'">'; break;
             case 'link':
                 if($oembed->provider_name == 'DeviantArt') {
-                    $html = '<img class="embed-block-image" src="'.$oembed->fullsize_url.'" width="'.$oembed->width.'px" 
+                    $html = '<img class="'.$img_class.'" src="'.$oembed->fullsize_url.'" width="'.$oembed->width.'px" 
                     data-originalwidth="'.$oembed->width.'"  data-originalheight="'.$oembed->height.'" height="'.$oembed
                     ->height.'px" title="'.$oembed->title.'">'; break;
                 }
@@ -85,7 +100,8 @@ class EmbedBlock extends Block
             array(
                 'html' => $html,
                 'oembed' => $oembed,
-                'embed_source' => $this->embed_source
+                'embed_source' => $this->embed_source,
+                'embed_title' => $this->embed_title
             )
         );
     }
@@ -109,6 +125,9 @@ class EmbedBlock extends Block
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();
+        if (isset($data['embed_title'])) {
+            $this->embed_title = \STUDIP\Markup::purifyHtml((string) $data['embed_title']);
+        }
         if (isset($data['embed_url'])) {
             $this->embed_url = \STUDIP\Markup::purifyHtml((string) $data['embed_url']);
         }
@@ -117,6 +136,9 @@ class EmbedBlock extends Block
         }
         if (isset($data['embed_time'])) {
             $this->embed_time =(string) $data['embed_time'];
+        }
+        if (isset($data['embed_fullwidth'])) {
+            $this->embed_fullwidth =(string) $data['embed_fullwidth'];
         }
 
         return;
@@ -205,9 +227,11 @@ class EmbedBlock extends Block
     private function getAttrArray()
     {
         return array(
+            'embed_title' => $this->embed_title,
             'embed_url' => $this->embed_url,
             'embed_source' => $this->embed_source,
-            'embed_time' => $this->embed_time
+            'embed_time' => $this->embed_time,
+            'embed_fullwidth' => $this->embed_fullwidth
         );
     }
 
@@ -237,6 +261,9 @@ class EmbedBlock extends Block
      */
     public function importProperties(array $properties)
     {
+        if (isset($properties['embed_title'])) {
+            $this->embed_title = $properties['embed_title'];
+        }
         if (isset($properties['embed_url'])) {
             $this->embed_url = $properties['embed_url'];
         }
@@ -245,6 +272,9 @@ class EmbedBlock extends Block
         }
         if (isset($properties['embed_time'])) {
             $this->embed_time = $properties['embed_time'];
+        }
+        if (isset($properties['embed_fullwidth'])) {
+            $this->embed_fullwidth = $properties['embed_fullwidth'];
         }
 
         $this->save();

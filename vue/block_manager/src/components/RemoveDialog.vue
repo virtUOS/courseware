@@ -19,11 +19,24 @@
                     </section>
                     <footer class="modal-footer">
                         <slot name="footer">
-                            <button type="button" class="button accept" @click="remove">
+                            <button type="button" class="button accept" @click="remove" v-if="!deleting">
                                 Ja
                             </button>
+                            <button type="button" class="button modal-progress" v-else>
+                                <spring-spinner
+                                    :animation-duration="3000"
+                                    :size="14"
+                                    :color="'#28497c'"
+                                    class="modal-progress-spinner"
+                                />
+                            </button>
 
-                            <button type="button" class="button cancel" @click="close">
+                            <button
+                                type="button"
+                                class="button cancel"
+                                :class="{ 'button-inactive': deleting }"
+                                @click="close"
+                            >
                                 Nein
                             </button>
                         </slot>
@@ -34,8 +47,11 @@
     </div>
 </template>
 <script>
+import { SpringSpinner } from 'epic-spinners';
+
 export default {
     name: 'RemoveDialog',
+    components: { SpringSpinner },
     props: {
         DialogVisible: Boolean,
         element: Object
@@ -44,7 +60,8 @@ export default {
         return {
             visible: this.DialogVisible,
             title: '',
-            currentElement: this.element
+            currentElement: this.element,
+            deleting: false
         };
     },
     mounted() {
@@ -59,12 +76,15 @@ export default {
     },
     methods: {
         close() {
-            this.$emit('close');
+            if (!this.deleting) {
+                this.$emit('close');
+            }
         },
         remove() {
             let data = {};
             let view = this;
             data.id = this.currentElement.id;
+            this.deleting = true;
             $.ajax({
                 type: 'DELETE',
                 url: '../blocks/' + data.id,
@@ -72,10 +92,12 @@ export default {
                 data: data,
                 success: function() {
                     view.$emit('remove');
+                    view.deleting = false;
                     view.$emit('close');
                 },
                 error: function() {
                     console.log('can not remove node!');
+                    view.deleting = false;
                     view.$emit('close');
                 }
             });

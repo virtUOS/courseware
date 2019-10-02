@@ -97,6 +97,7 @@ export default StudentView.extend({
                         $block.find('.file-upload-failed').slideDown(250).delay(2500).slideUp(250);
                     }
                     $(window).trigger('resize');
+                    view.resetUnsave();
                 })
                 .catch(function () {
                     console.log('failed to store the solution');
@@ -137,10 +138,36 @@ export default StudentView.extend({
                 this.$(event.target).addClass("showing");
                 this.$(event.target).html("Hinweis ausblenden");
             }
-        }
+        },
+
+        'click input[type=checkbox]': 'setUnsave',
+        'click input[type=radio]': 'setUnsave',
+        'mouseup .rh_item': 'setUnsave',
+        'change input[type=text]': 'setUnsave',
+        'change textarea': 'setUnsave',
+        'change select': 'setUnsave',
     },
 
     initialize() {
+        Backbone.on('beforenavigate', this.onNavigate, this);
+    },
+
+    onNavigate(event) {
+        if (this.unsavedInput.length > 0) {
+            let view = this;
+            let confirmText = '';
+            if (this.unsavedInput.length > 2) {
+                confirmText = 'Ihre Änderungen an mehr als 2 Frage wurden noch nicht abgeschickt.';
+            } else {
+                confirmText = 'Ihre Änderungen an ';
+                $.each(this.unsavedInput, function(index, question){
+                    confirmText += 'Frage ' + question.index + ' (' + question.title + ')';
+                    if ((index == 0) && (view.unsavedInput.length == 2)) {confirmText += ' und '}
+                });
+                confirmText += ' wurden noch nicht abgeschickt.';
+            }
+            Backbone.trigger('preventnavigateto', !confirm(confirmText + ' Möchten Sie die Seite trotzdem verlassen?'));
+        }
     },
 
     render() {
@@ -148,6 +175,7 @@ export default StudentView.extend({
     },
 
     postRender() {
+        this.unsavedInput = [];
         // TODO this code from vips.js should be called by vips.js
         if (this.$('.exercise').hasClass('vips14')) {
             this.$('.rh_list').sortable({
@@ -190,15 +218,27 @@ export default StudentView.extend({
                 update: this.rh_move_choice
             });
         }
+        $( ".rh_list" ).on( "sortchange", function( event, ui ) {} );
 
     },
 
     // TODO this code from vips.js should be called by vips.js
-    rh_move_choice(event, ui)
-    {
+    rh_move_choice(event, ui) {
         jQuery(this).children().each(function(i) {
             jQuery(this).find('input').val(i);
         });
+    },
+
+    setUnsave(event) {
+        let target = $(event.currentTarget);
+        let question = {};
+        question.index = target.parents('.cw-test-content').find('input[name=exercise_index]').val();
+        question.title = target.parents('.cw-test-content').find('.question_title').text();
+        this.unsavedInput.push(question);
+    },
+
+    resetUnsave() {
+        this.unsavedInput = [];
     }
 
 });

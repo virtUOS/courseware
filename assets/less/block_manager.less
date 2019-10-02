@@ -690,6 +690,10 @@
             justify-content: center;
             button.button {
                 padding: 7px 20px;
+
+                &.button-inactive {
+                    opacity: 0.4;
+                }
             }
         }
 
@@ -706,6 +710,12 @@
             .modal-close-button {
                 .assets-bg-icon("black/decline.svg");
             }
+        }
+        .modal-progress-spinner {
+            margin: auto;
+        }
+        .modal-progress:hover {
+            background-color: #fff;
         }
     }
 

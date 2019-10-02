@@ -225,6 +225,13 @@ class VideoBlock extends Block
             if ($source->file_id != '') {
                 $file_ref = new \FileRef($source->file_id);
                 $file = new \File($file_ref->file_id);
+            } else {
+                // for old data structure without file_id element
+                parse_str($source->src, $queryParams);
+                $file_ref = new \FileRef($queryParams['file_id']);
+                $file = new \File($file_ref->file_id);
+            }
+            if ($file_ref && $file) {
                 $files[] = array(
                     'id' => $file_ref->id,
                     'name' => $file_ref->name,
@@ -236,6 +243,9 @@ class VideoBlock extends Block
                 );
             }
         }
+    if (empty($files)) {
+        $files = array();
+    }
 
         return $files;
     }
@@ -291,9 +301,17 @@ class VideoBlock extends Block
                 continue;
             }
             foreach ($webvideo as &$source) {
-                if(($source->file_name == $file->name) && ($source->file_id != '')) {
+                $source_filename = $this->cleanFileName($source->file_name);
+                $file_name = $this->cleanFileName($file->name);
+                if (empty($source_filename)) {
+                    parse_str($source->src, $queryParams);
+                    $source_filename = $this->cleanFileName($queryParams['file_name']);
+                }
+
+                if($source_filename == $file_name) {
                     $source->file_id = $file->id;
                     $source->src = $file->getDownloadURL();
+                    $source->file_name = $file->name;
                     $this->webvideo = json_encode($webvideo);
 
                     $this->save();
@@ -302,5 +320,15 @@ class VideoBlock extends Block
             }
         }
 
+    }
+
+    private function cleanFileName($filename)
+    {
+        $filename = str_replace(' ', '', $filename);
+        $filename = str_replace('_', '', $filename);
+        $filename = str_replace('+', '', $filename);
+        $filename = str_replace('-', '', $filename);
+
+        return $filename;
     }
 }
