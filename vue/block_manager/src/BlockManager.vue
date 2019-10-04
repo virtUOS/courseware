@@ -16,7 +16,6 @@
                 ghost-class="ghost"
                 handle=".chapter-handle"
                 @sort="sortChapters"
-                @add="addChapter"
                 v-bind="storeLock ? { disabled: true } : { disabled: false, animation: 200 }"
             >
                 <ChapterItem
@@ -170,8 +169,8 @@ export default {
             subchapterList: {},
             sectionList: {},
             blockList: {},
-            actionTitle: 'Aktionen',
-            courseImportText: 'Aus Veranstaltung importieren',
+            actionTitle: this.$i18n.t("message.tasks"),
+            courseImportText: this.$i18n.t("message.importFromCourse"),
             remoteData: false,
             importData: false,
             importXML: '',
@@ -186,6 +185,7 @@ export default {
         this.courseware = JSON.parse(COURSEWARE.data.courseware);
         this.remoteCourses = JSON.parse(COURSEWARE.data.remote_courses);
         this.blockMap = JSON.parse(COURSEWARE.data.block_map);
+        
     },
     mounted() {},
     watch: {

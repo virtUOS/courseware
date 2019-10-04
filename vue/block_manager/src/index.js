@@ -1,8 +1,11 @@
-import Vue from 'vue';
-import BlockManager from './BlockManager.vue';
+import Vue from "vue";
+import BlockManager from "./BlockManager.vue";
+import i18n from "./i18n";
 
 Vue.config.productionTip = false;
 
 new Vue({
-    render: h => h(BlockManager)
-}).$mount('#block_mananger_content');
+  el: "#block_mananger_content",
+  i18n,
+  render: h => h(BlockManager)
+});

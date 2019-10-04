@@ -65,6 +65,7 @@ class BlockManagerController extends CoursewareStudipController
         $this->buildTree($grouped, $this->courseware);
         $this->courseware_json = json_encode($this->courseware);
         $this->remote_courses_json = json_encode($this->remote_courses);
+        $this->lang = getUserLanguage($this->container['current_user']->id);
     }
 
     public function courseware_vue_action()
