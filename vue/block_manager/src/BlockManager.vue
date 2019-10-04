@@ -97,7 +97,7 @@
                         for="cw-file-upload-import"
                         id="cw-file-upload-import-label"
                         class="cw-action-menu-button"
-                        title="Laden Sie eine Datei hoch, die Sie zuvor aus einer Courseware exportiert haben"
+                        :title="$t('message.importFromArchiveExplain')"
                     >
                         <input
                             type="file"
@@ -107,14 +107,14 @@
                             accept=".zip"
                             @change="setImport"
                         />
-                        <p>Import-Archiv hochladen</p>
+                        <p>{{$t('message.importFromArchiveButton')}}</p>
                     </label>
                 </li>
                 <li>
                     <div
                         id="cw-import-from-course"
                         class="cw-action-menu-button"
-                        title="Importieren Sie Inhalte aus einer anderen Veranstaltung in der Sie Dozent sind"
+                        :title="$t('message.importFromCourseExplain')"
                         @click="importFromCourse"
                     >
                         <p>{{ courseImportText }}</p>
@@ -130,7 +130,7 @@
                 id="cw-reset-action-menu"
                 @click="resetActionMenu"
             >
-                zurück zur Auswahl
+                {{$t('message.tasksBackButton')}}
             </button>
             <div style="clear: both;"></div>
         </div>
@@ -169,7 +169,7 @@ export default {
             subchapterList: {},
             sectionList: {},
             blockList: {},
-            actionTitle: this.$i18n.t("message.tasks"),
+            actionTitle: this.$i18n.t("message.actions"),
             courseImportText: this.$i18n.t("message.importFromCourse"),
             remoteData: false,
             importData: false,
@@ -281,7 +281,7 @@ export default {
             this.showRemoteCourseware = true;
         },
         resetActionMenu() {
-            this.actionTitle = 'Aktionen';
+            this.actionTitle = this.$i18n.t("message.actions");
             this.fileError = false;
             this.remoteCourseware = null;
             this.importCourseware = null;

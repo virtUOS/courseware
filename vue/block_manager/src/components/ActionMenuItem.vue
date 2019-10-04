@@ -8,28 +8,23 @@
             </a>
             <div class="action-menu-content">
                 <div class="action-menu-title">
-                    Aktionen
+                    {{$t('message.actions')}}
                 </div>
                 <ul class="action-menu-list">
                     <li v-if="this.users_button" class="action-menu-item">
-                        <a href="#" class="set-users" @click="$emit('set-users')"
-                            >Schreibrechte für Studierenden setzen</a
-                        >
+                        <a href="#" class="set-users" @click="$emit('set-users')">{{$t('message.setStudentPermissions')}}</a>
                     </li>
                     <li v-if="this.groups_button" class="action-menu-item">
-                        <a href="#" class="set-groups" @click="$emit('set-groups')">Schreibrechte für Gruppen setzen</a>
+                        <a href="#" class="set-groups" @click="$emit('set-groups')">{{$t('message.setGroupsPermissions')}}</a>
                     </li>
                     <li v-if="this.edit_button" class="action-menu-item">
-                        <a href="#" class="edit-element" @click="editDialogVisible = true">Element bearbeiten</a>
+                        <a href="#" class="edit-element" @click="editDialogVisible = true">{{$t('message.editElement')}}</a>
                     </li>
                     <li v-if="this.remove_button" class="action-menu-item">
-                        <a href="#" class="remove-element" @click="removeDialogVisible = true">Element löschen</a>
+                        <a href="#" class="remove-element" @click="removeDialogVisible = true">{{$t('message.deleteElement')}}</a>
                     </li>
-
                     <li v-if="this.add_child_button" class="action-menu-item">
-                        <a href="#" class="add-child-element" @click="addChildDialogVisible = true"
-                            >Unterelement hinzufügen</a
-                        >
+                        <a href="#" class="add-child-element" @click="addChildDialogVisible = true">{{$t('message.addSubelement')}}</a>
                     </li>
                 </ul>
             </div>

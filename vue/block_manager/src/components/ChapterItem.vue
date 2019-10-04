@@ -25,7 +25,7 @@
                         'published-info': isPublished && (publication_date || withdraw_date)
                     }"
                 >
-                    Kapitel
+                    {{$t('message.chapter')}}
                 </span>
                 <span
                     v-if="publication_date && !this.importContent && !this.remoteContent"
@@ -33,7 +33,7 @@
                         'unpublished-info': !isPublished,
                         'published-info': isPublished
                     }"
-                    >| sichtbar ab: {{ publication_date_readable }}</span
+                    >| {{$t('message.visibleFrom')}}: {{ publication_date_readable }}</span
                 >
                 <span
                     v-if="withdraw_date && !this.importContent && !this.remoteContent"
@@ -42,7 +42,7 @@
                         'published-info': isPublished
                     }"
                 >
-                    | unsichtbar ab: {{ withdraw_date_readable }}</span
+                    | {{$t('message.invisibleFrom')}}: {{ withdraw_date_readable }}</span
                 >
             </p>
         </div>
@@ -82,8 +82,8 @@
                 @isImport="isImportAction"
             />
             <p v-if="subchapters.length == 0">
-                This Chapter is empty.
-                <span v-if="!importContent">You can drop a subchapter here or add a new one.</span>
+                {{$t('message.emptyChapter')}}.
+                <span v-if="!importContent">{{$t('message.emptyChapterInfo')}}.</span>
             </p>
         </draggable>
     </li>

@@ -23,7 +23,7 @@
                         'published-info': isPublished && (publication_date || withdraw_date)
                     }"
                 >
-                    Unterkapitel
+                    {{$t('message.subchapter')}}
                 </span>
                 <span
                     v-if="publication_date"
@@ -32,7 +32,7 @@
                         'published-info': isPublished
                     }"
                 >
-                    | sichtbar ab: {{ publication_date_readable }}</span
+                    | {{$t('message.visibleFrom')}}: {{ publication_date_readable }}</span
                 >
                 <span
                     v-if="withdraw_date"
@@ -41,7 +41,7 @@
                         'published-info': isPublished
                     }"
                 >
-                    | unsichtbar ab: {{ withdraw_date_readable }}</span
+                    | {{$t('message.invisibleFrom')}}: {{ withdraw_date_readable }}</span
                 >
             </p>
         </div>
@@ -82,8 +82,8 @@
                 @isImport="isImportAction"
             />
             <p v-if="sections.length == 0">
-                This Subchapter is empty.
-                <span v-if="!importContent">You can drop a section here or add a new one.</span>
+                {{$t('message.emptySubchapter')}}.
+                <span v-if="!importContent">{{$t('message.emptySubchapterInfo')}}.</span>
             </p>
         </draggable>
     </li>
