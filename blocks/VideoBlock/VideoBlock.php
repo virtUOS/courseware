@@ -42,16 +42,19 @@ class VideoBlock extends Block
 
         if ($array['webvideo'] != '') {
             $array['webvideo'] = json_decode($array['webvideo'], true);
-            foreach($array['webvideo'] as &$webvideo) {
-                if($webvideo['source'] == 'file') {
-                    $file = \FileRef::find($webvideo['file_id']);
-                    if($file) {
-                        $webvideo['src'] = ($file->terms_of_use->fileIsDownloadable($file, false)) ? $file->getDownloadURL() : '';
-                    } else {
-                        $webvideo['src'] = '';
+            if (sizeof($array['webvideo']) > 0) {
+                foreach($array['webvideo'] as &$webvideo) {
+                    if($webvideo['source'] == 'file') {
+                        $file = \FileRef::find($webvideo['file_id']);
+                        if($file) {
+                            $webvideo['src'] = ($file->terms_of_use->fileIsDownloadable($file, false)) ? $file->getDownloadURL() : '';
+                        } else {
+                            $webvideo['src'] = '';
+                        }
                     }
                 }
             }
+
         }
 
         return $array;
