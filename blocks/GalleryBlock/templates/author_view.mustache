@@ -1,6 +1,7 @@
 <input type="hidden" value="{{gallery_folder_id}}" class="gallery-stored-folder">
 <input type="hidden" value="{{gallery_autoplay}}" class="gallery-stored-autoplay">
 <input type="hidden" value="{{gallery_hidenav}}" class="gallery-stored-hidenav">
+<input type="hidden" value="{{gallery_show_names}}" class="gallery-stored-show-names">
 
 <label for="gallery-folder">{{#i18n}}Einen Ordner auswählen{{/i18n}}:</label>
 <select type="text" class="gallery-folder" name="folder">
@@ -28,6 +29,9 @@
 <br>
 <label for="gallery-hidenav">{{#i18n}}Navigation verbergen{{/i18n}}:</label>
 <input name="gallery-hidenav" type="checkbox">
+<br>
+<label for="gallery-show-names">{{#i18n}}Dateinamen anzeigen{{/i18n}}:</label>
+<input name="gallery-show-names" type="checkbox">
 <div class="cw-button-box">
     <button name=save class=button>{{#i18n}}Speichern{{/i18n}}</button>
     <button name=cancel class=button>{{#i18n}}Abbrechen{{/i18n}}</button>

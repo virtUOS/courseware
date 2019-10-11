@@ -12,4 +12,5 @@
         <xsd:attribute name="gallery_autoplay_timer" type="xsd:string" /> 
         <xsd:attribute name="gallery_hidenav" type="xsd:string" /> 
         <xsd:attribute name="gallery_height" type="xsd:string" /> 
+        <xsd:attribute name="gallery_show_names" type="xsd:boolean" /> 
 </xsd:schema>

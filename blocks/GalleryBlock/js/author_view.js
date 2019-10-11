@@ -41,12 +41,16 @@ export default AuthorView.extend({
         });
         var $stored_autoplay = $view.$el.find('.gallery-stored-autoplay').val();
         var $stored_hidenav = $view.$el.find('.gallery-stored-hidenav').val();
+        var $stored_show_names = $view.$el.find('.gallery-stored-show-names').val();
 
         if ($stored_autoplay == 1) {
-            $view.$el.find('input[name="gallery-autoplay"]').prop( "checked", true)
+            $view.$el.find('input[name="gallery-autoplay"]').prop( "checked", true);
         }
         if ($stored_hidenav == 1) {
-            $view.$el.find('input[name="gallery-hidenav"]').prop( "checked", true)
+            $view.$el.find('input[name="gallery-hidenav"]').prop( "checked", true);
+        }
+        if ($stored_show_names == 1) {
+            $view.$el.find('input[name="gallery-show-names"]').prop( "checked", true);
         }
     },
 
@@ -57,9 +61,17 @@ export default AuthorView.extend({
         var $autoplaytimer = this.$el.find('input[name="gallery-autoplay-timer"]').val();
         var $height = this.$el.find('input[name="gallery-height"]').val();
         var $hidenav = this.$el.find('input[name="gallery-hidenav"]').prop( "checked") ? 1 : 0;
+        var $showNames = this.$el.find('input[name="gallery-show-names"]').prop( "checked") ? 1 : 0;
         var $gallery_folder_id = $folder.find('option:selected').attr('folder_id');
         helper
-          .callHandler(this.model.id, 'save', {gallery_folder_id: $gallery_folder_id, gallery_height: $height, gallery_autoplay: $autoplay, gallery_autoplay_timer: $autoplaytimer, gallery_hidenav: $hidenav})
+          .callHandler(this.model.id, 'save', {
+              gallery_folder_id: $gallery_folder_id,
+              gallery_height: $height,
+              gallery_autoplay: $autoplay,
+              gallery_autoplay_timer: $autoplaytimer,
+              gallery_hidenav: $hidenav,
+              gallery_show_names: $showNames
+            })
           .then(function () {
             jQuery(event.target).addClass('accept');
             view.switchBack();

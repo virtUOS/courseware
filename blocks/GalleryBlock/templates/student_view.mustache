@@ -3,11 +3,13 @@
     <input type="hidden" name="gallery-autoplay-timer" value="{{gallery_autoplay_timer}}">
     <input type="hidden" name="gallery-hidenav" value="{{gallery_hidenav}}">
     <input type="hidden" name="gallery-height" value="{{gallery_height}}">
+    <input type="hidden" name="gallery_show_names" value="{{gallery_show_names}}">
     
     <div class="cw-gallery" >
     {{#showFiles}}
         <div class="cw-gallery-image-wrapper">
             <img class="cw-gallery-image" src="{{url}}">
+            {{#gallery_show_names}}<p class="cw-gallery-image-name">{{name}}</p>{{/gallery_show_names}}
         </div>
     {{/showFiles}}
     </div>
