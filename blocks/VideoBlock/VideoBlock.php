@@ -42,7 +42,7 @@ class VideoBlock extends Block
 
         if ($array['webvideo'] != '') {
             $array['webvideo'] = json_decode($array['webvideo'], true);
-            if (sizeof($array['webvideo']) > 0) {
+            if (is_array($array['webvideo']) > 0) {
                 foreach($array['webvideo'] as &$webvideo) {
                     if($webvideo['source'] == 'file') {
                         $file = \FileRef::find($webvideo['file_id']);
