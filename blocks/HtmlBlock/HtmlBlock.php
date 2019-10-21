@@ -220,6 +220,14 @@ class HtmlBlock extends Block
             $this->applyCallbackOnInternalUrl($element->getAttribute('href'), function ($components) use ($block, $element, $files, &$used_files) {
                 parse_str($components['query'], $queryParams);
                 $queryParams['file_id'] = $files[$queryParams['file_id']]->id;
+                if($queryParams['file_id'] == null) {
+                    foreach ($files as $file_ref) {
+                        if($file_ref->name == $queryParams['file_name']) {
+                            $queryParams['file_id'] = $file_ref->id;
+                            break;
+                        }
+                    }
+                }
                 array_push($used_files, $queryParams['file_id']);
                 $components['query'] = http_build_query($queryParams);
                 $element->setAttribute('href', $block->buildUrl($GLOBALS['ABSOLUTE_URI_STUDIP'], '/sendfile.php', $components));
@@ -235,6 +243,14 @@ class HtmlBlock extends Block
             $this->applyCallbackOnInternalUrl($element->getAttribute('src'), function ($components) use ($block, $element, $files, &$used_files) {
                 parse_str($components['query'], $queryParams);
                 $queryParams['file_id'] = $files[$queryParams['file_id']]->id;
+                if($queryParams['file_id'] == null) {
+                    foreach ($files as $file_ref) {
+                        if($file_ref->name == $queryParams['file_name']) {
+                            $queryParams['file_id'] = $file_ref->id;
+                            break;
+                        }
+                    }
+                }
                 array_push($used_files, $queryParams['file_id']);
                 $components['query'] = http_build_query($queryParams);
                 $element->setAttribute('src', $block->buildUrl($GLOBALS['ABSOLUTE_URI_STUDIP'], '/sendfile.php', $components));
