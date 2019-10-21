@@ -205,11 +205,15 @@ class BlockManagerController extends CoursewareStudipController
     public function get_course_groups_action($cid)
     {
         $cid = Request::get('cid');
-        $element_id = Request::get('element_id');
+        // $element_id = Request::get('element_id');
         $groups = Statusgruppen::findAllByRangeId($cid);
+        $json_groups = [];
+        foreach($groups as $group) {
+            array_push($json_groups, ['id'=>$group->id, 'name'=> $group->name]);
+        }
 
         $this->response->add_header('Content-Type', 'application/json');
-        $this->render_text(json_encode($groups));
+        $this->render_text(json_encode($json_groups));
     }
 
     private function buildBlockMap()

@@ -16,7 +16,7 @@
             @click="toggleContent"
         >
             <p class="section-title" :title="title">{{ shortTitle }}</p>
-            <p class="header-info-wrapper">{{$t('message.section')}}</p>
+            <p class="header-info-wrapper">{{ $t('message.section') }}</p>
         </div>
         <ActionMenuItem
             v-if="!this.importContent && !this.remoteContent"
@@ -48,8 +48,8 @@
                 @isRemote="isRemoteAction"
             />
             <p v-if="blocks.length == 0">
-                {{$t('message.emptySection')}}.
-                <span v-if="!importContent">{{$t('message.emptySectionInfo')}}.</span>
+                {{ $t('message.emptySection') }}.
+                <span v-if="!importContent">{{ $t('message.emptySectionInfo') }}.</span>
             </p>
         </draggable>
     </li>

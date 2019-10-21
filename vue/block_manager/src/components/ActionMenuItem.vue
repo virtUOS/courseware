@@ -8,38 +8,60 @@
             </a>
             <div class="action-menu-content">
                 <div class="action-menu-title">
-                    {{$t('message.actions')}}
+                    {{ $t('message.actions') }}
                 </div>
                 <ul class="action-menu-list">
                     <li v-if="this.users_button" class="action-menu-item">
-                        <a href="#" class="set-users" @click="$emit('set-users')">{{$t('message.setStudentPermissions')}}</a>
+                        <a href="#" class="set-users" @click="setStudentsPermissionsDialogVisible = true">
+                            {{ $t('message.setStudentsPermissions') }}
+                        </a>
                     </li>
                     <li v-if="this.groups_button" class="action-menu-item">
-                        <a href="#" class="set-groups" @click="$emit('set-groups')">{{$t('message.setGroupsPermissions')}}</a>
+                        <a href="#" class="set-groups" @click="setGroupsPermissionsDialogVisible = true">
+                            {{ $t('message.setGroupsPermissions') }}
+                        </a>
                     </li>
                     <li v-if="this.edit_button" class="action-menu-item">
-                        <a href="#" class="edit-element" @click="editDialogVisible = true">{{$t('message.editElement')}}</a>
+                        <a href="#" class="edit-element" @click="editDialogVisible = true">
+                            {{ $t('message.editElement') }}
+                        </a>
                     </li>
                     <li v-if="this.remove_button" class="action-menu-item">
-                        <a href="#" class="remove-element" @click="removeDialogVisible = true">{{$t('message.deleteElement')}}</a>
+                        <a href="#" class="remove-element" @click="removeDialogVisible = true">
+                            {{ $t('message.deleteElement') }}
+                        </a>
                     </li>
                     <li v-if="this.add_child_button" class="action-menu-item">
-                        <a href="#" class="add-child-element" @click="addChildDialogVisible = true">{{$t('message.addSubelement')}}</a>
+                        <a href="#" class="add-child-element" @click="addChildDialogVisible = true">
+                            {{ $t('message.addSubelement') }}
+                        </a>
                     </li>
                 </ul>
             </div>
         </nav>
-        <RemoveDialog
-            :DialogVisible="this.removeDialogVisible"
+        <StudentsPermissionsDialog
+            :DialogVisible="this.setStudentsPermissionsDialogVisible"
             :element="this.element"
-            @close="removeDialogVisible = false"
-            @remove="$emit('remove')"
+            @close="setStudentsPermissionsDialogVisible = false"
+            @set="setStudentsPermissionsAction"
+        />
+        <GroupsPermissionsDialog
+            :DialogVisible="this.setGroupsPermissionsDialogVisible"
+            :element="this.element"
+            @close="setGroupsPermissionsDialogVisible = false"
+            @set="setGroupsPermissionsAction"
         />
         <EditDialog
             :DialogVisible="this.editDialogVisible"
             :element="this.element"
             @close="editDialogVisible = false"
             @edit="editDialogAction"
+        />
+        <RemoveDialog
+            :DialogVisible="this.removeDialogVisible"
+            :element="this.element"
+            @close="removeDialogVisible = false"
+            @remove="$emit('remove')"
         />
         <AddChildDialog
             :DialogVisible="this.addChildDialogVisible"
@@ -53,12 +75,14 @@
 import RemoveDialog from './RemoveDialog.vue';
 import EditDialog from './EditDialog.vue';
 import AddChildDialog from './AddChildDialog.vue';
+import StudentsPermissionsDialog from './StudentsPermissionsDialog.vue';
+import GroupsPermissionsDialog from './GroupsPermissionsDialog.vue';
 export default {
     props: {
         buttons: Array,
         element: Object
     },
-    components: { RemoveDialog, EditDialog, AddChildDialog },
+    components: { RemoveDialog, EditDialog, AddChildDialog, StudentsPermissionsDialog, GroupsPermissionsDialog },
     data() {
         return {
             edit_button: false,
@@ -68,7 +92,9 @@ export default {
             add_child_button: false,
             removeDialogVisible: false,
             editDialogVisible: false,
-            addChildDialogVisible: false
+            addChildDialogVisible: false,
+            setStudentsPermissionsDialogVisible: false,
+            setGroupsPermissionsDialogVisible: false
         };
     },
     created() {
@@ -99,6 +125,12 @@ export default {
         },
         addChildDialogAction(data) {
             this.$emit('add-child', data);
+        },
+        setStudentsPermissionsAction(data) {
+            this.$emit('set-students-permissions', data);
+        },
+        setGroupsPermissionsAction(data) {
+            this.$emit('set-groups-permissions', data);
         }
     }
 };

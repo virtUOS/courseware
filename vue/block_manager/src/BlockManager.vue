@@ -91,7 +91,8 @@
                     />
                 </draggable>
             </div>
-            <ul v-if="!showRemoteCourseware && !showImportCourseware" id="cw-action-selection">
+            <div v-if="showExportCourseware">Export…</div>
+            <ul v-if="!showRemoteCourseware && !showImportCourseware && !showExportCourseware" id="cw-action-selection">
                 <li>
                     <label
                         for="cw-file-upload-import"
@@ -107,7 +108,7 @@
                             accept=".zip"
                             @change="setImport"
                         />
-                        <p>{{$t('message.importFromArchiveButton')}}</p>
+                        <p>{{ $t('message.importFromArchiveButton') }}</p>
                     </label>
                 </li>
                 <li>
@@ -120,17 +121,30 @@
                         <p>{{ courseImportText }}</p>
                     </div>
                 </li>
+                <li>
+                    <div
+                        id="cw-export-download"
+                        class="cw-action-menu-button"
+                        :title="$t('message.exportExplain')"
+                        @click="showExport"
+                    >
+                        <p>{{ $t('message.exportButton') }}</p>
+                    </div>
+                </li>
             </ul>
             <div v-if="(showRemoteCourseware || showImportCourseware) && loading">
                 <spring-spinner :animation-duration="3000" :size="65" :color="'#28497c'" class="cw-action-loading" />
             </div>
             <button
-                v-if="(showRemoteCourseware || showImportCourseware) && !loading"
+                v-if="(showRemoteCourseware || showImportCourseware || showExportCourseware) && !loading"
                 class="button"
                 id="cw-reset-action-menu"
                 @click="resetActionMenu"
             >
-                {{$t('message.tasksBackButton')}}
+                {{ $t('message.tasksBackButton') }}
+            </button>
+            <button id="cw-export" class="button" v-if="showExportCourseware">
+                {{ $t('message.exportingButton') }}
             </button>
             <div style="clear: both;"></div>
         </div>
@@ -164,13 +178,14 @@ export default {
             importCourseware: null,
             showRemoteCourseware: false,
             showImportCourseware: false,
+            showExportCourseware: false,
             chapters: {},
             chapterList: [],
             subchapterList: {},
             sectionList: {},
             blockList: {},
-            actionTitle: this.$i18n.t("message.actions"),
-            courseImportText: this.$i18n.t("message.importFromCourse"),
+            actionTitle: this.$i18n.t('message.actions'),
+            courseImportText: this.$i18n.t('message.importFromCourse'),
             remoteData: false,
             importData: false,
             importXML: '',
@@ -185,15 +200,49 @@ export default {
         this.courseware = JSON.parse(COURSEWARE.data.courseware);
         this.remoteCourses = JSON.parse(COURSEWARE.data.remote_courses);
         this.blockMap = JSON.parse(COURSEWARE.data.block_map);
-        
     },
-    mounted() {},
+    mounted() {
+        this.getCourseUsers();
+        this.getCourseGroups();
+    },
     watch: {
         courseware: function() {
             this.chapters = this.courseware.children;
         }
     },
     methods: {
+        getCourseUsers() {
+            let view = this;
+            axios
+                .get('get_course_users', {
+                    params: {
+                        cid: COURSEWARE.config.cid
+                    }
+                })
+                .then(function(response) {
+                    view.$store.state.courseUsers = response.data;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                    return [];
+                });
+        },
+        getCourseGroups() {
+            let view = this;
+            axios
+                .get('get_course_groups', {
+                    params: {
+                        cid: COURSEWARE.config.cid
+                    }
+                })
+                .then(function(response) {
+                    view.$store.state.courseGroups = response.data;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                    return [];
+                });
+        },
         sortChapters() {
             let view = this;
             let hasChildren = false;
@@ -214,7 +263,7 @@ export default {
                         view.buildChildrenList(element, 'import_');
                     }
                 } else {
-                    view.chapterList.push(element.id);
+                    view.chapterList.push(parseInt(element.id, 10));
                 }
             });
             if (!hasChildren) {
@@ -280,13 +329,19 @@ export default {
             this.actionTitle = this.courseImportText;
             this.showRemoteCourseware = true;
         },
+        showExport() {
+            this.actionTitle = this.$i18n.t('message.exportButton');
+            this.showExportCourseware = true;
+        },
         resetActionMenu() {
-            this.actionTitle = this.$i18n.t("message.actions");
+            this.actionTitle = this.$i18n.t('message.actions');
             this.fileError = false;
             this.remoteCourseware = null;
             this.importCourseware = null;
+            this.exportCourseware = null;
             this.showRemoteCourseware = false;
             this.showImportCourseware = false;
+            this.showExportCourseware = false;
         },
         storeChanges() {
             if (this.storeLock) {

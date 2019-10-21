@@ -259,7 +259,7 @@ class Block extends \SimpleORMap implements \Serializable
         $db = \DBManager::get();
 
         $query = sprintf(
-            'UPDATE %s SET position = FIND_IN_SET(id, ?) WHERE parent_id = ?',
+            'UPDATE %s SET position = FIND_IN_SET(id, ?)-1 WHERE parent_id = ?',
             $this->db_table);
         $args = array(join(',', $positions), $this->id);
         $st = $db->prepare($query);

@@ -5,12 +5,12 @@
                 <div class="modal" role="dialog">
                     <header class="modal-header">
                         <slot name="header">
-                            {{$t('message.addDialogTitle')}}
+                            {{ $t('message.addDialogTitle') }}
                             <span class="modal-close-button" @click="close"></span>
                         </slot>
                     </header>
                     <section class="modal-body">
-                        <label for="editDialogElementTitle">{{$t('message.title')}}:</label>
+                        <label for="editDialogElementTitle">{{ $t('message.title') }}:</label>
                         <input
                             type="text"
                             name="editDialogElementTitle"
@@ -23,11 +23,11 @@
                     <footer class="modal-footer">
                         <slot name="footer">
                             <button type="button" class="button accept" @click="edit">
-                                {{$t('message.ButtonLabelSave')}}
+                                {{ $t('message.ButtonLabelSave') }}
                             </button>
 
                             <button type="button" class="button cancel" @click="close">
-                                {{$t('message.ButtonLabelClose')}}
+                                {{ $t('message.ButtonLabelClose') }}
                             </button>
                         </slot>
                     </footer>

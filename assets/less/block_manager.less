@@ -85,7 +85,18 @@
                 background-image: url("../@{blocks-icons-dir}/white/arr_eol-left.svg");
             }
         }
-
+        #cw-export {
+            float: right;
+            margin-right: 1em;
+            padding-left: 2.5em;
+            background-size: 16px;
+            background-position: 10px center;
+            background-repeat: no-repeat;
+            background-image: url("../@{blocks-icons-dir}/blue/download.svg");
+            &:hover {
+                background-image: url("../@{blocks-icons-dir}/white/download.svg");
+            }
+        }
 
 
         #user-course-list {
@@ -172,6 +183,12 @@
                         .assets-bg-icon("white/file.svg");
                     }
                 }
+                #cw-export-download {
+                    .assets-bg-icon("blue/download.svg");
+                    &:hover {
+                        .assets-bg-icon("white/download.svg");
+                    }
+                }
 
                 #cw-set-decontrol {
                     .assets-bg-icon("blue/group3.svg");
@@ -180,7 +197,7 @@
                     }
                 }
                 .cw-action-menu-button {
-                    min-width: 14em;
+                    min-width: 15em;
                     background-size: 24px;
                     background-repeat: no-repeat;
                     background-position: 8px 12px; 
@@ -189,7 +206,7 @@
                     color: #28497c;
                     display: inline-block;
                     cursor: pointer;
-                    margin: 1em;
+                    margin: 1em 0.75em;
                     padding: 5px 10px ;
                     p {
                         text-align: left;
@@ -682,6 +699,16 @@
                 border: solid thin #ccc;
                 min-width: 14em;
                 padding: 0.5em;
+            }
+            .students-permissions-list {
+                max-height: 24em;
+                overflow-y: auto;
+                list-style: none;
+                padding: 0 0 0 1em;
+                input[type="checkbox"] {
+                    border: none;
+                    min-width: unset;
+                }
             }
         }
     
