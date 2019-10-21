@@ -17,6 +17,7 @@
                 {{^skip_entry}}
                     <ul class="exercise {{#vips14}}vips14{{/vips14}}" id="exercise{{exercise_index}}">
                         <li class="exercise-item">
+                            <input type="hidden" class="numexes" value="{{number_of_exercises}}" />
                             <div class="exercisetitle">
                                 <button name="exercisenav" class="exercisenavbutton exercisenavback" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}", "direction": "back" }'></button>
                                 {{#i18n}}Frage{{/i18n}} {{exercise_index}} / {{number_of_exercises}}
