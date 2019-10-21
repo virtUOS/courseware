@@ -175,6 +175,9 @@ export default StudentView.extend({
     },
 
     postRender() {
+        if (this.$('.numexes').val() == 1) {
+            this.$('.exercisenavbutton').hide();
+        }
         this.unsavedInput = [];
         // TODO this code from vips.js should be called by vips.js
         if (this.$('.exercise').hasClass('vips14')) {

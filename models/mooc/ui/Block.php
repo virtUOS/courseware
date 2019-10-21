@@ -383,7 +383,7 @@ abstract class Block {
      *
      * @param array $properties The properties to import
      */
-    public function importProperties(array $properties, $cid)
+    public function importProperties(array $properties)
     {
     }
 

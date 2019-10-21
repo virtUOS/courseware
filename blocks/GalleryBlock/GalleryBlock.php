@@ -19,6 +19,7 @@ class GalleryBlock extends Block
         $this->defineField('gallery_autoplay_timer', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('gallery_hidenav', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('gallery_height', \Mooc\SCOPE_BLOCK, '600');
+        $this->defineField('gallery_show_names', \Mooc\SCOPE_BLOCK, false);
     }
 
     public function student_view()
@@ -58,7 +59,8 @@ class GalleryBlock extends Block
             'gallery_autoplay'       => $this->gallery_autoplay,
             'gallery_autoplay_timer' => $this->gallery_autoplay_timer,
             'gallery_hidenav'        => $this->gallery_hidenav,
-            'gallery_height'         => $this->gallery_height
+            'gallery_height'         => $this->gallery_height,
+            'gallery_show_names'     => $this->gallery_show_names
         );
     }
 
@@ -77,6 +79,9 @@ class GalleryBlock extends Block
         } 
         if (isset ($data['gallery_hidenav'])) {
             $this->gallery_hidenav = (string) $data['gallery_hidenav'];
+        } 
+        if (isset ($data['gallery_show_names'])) {
+            $this->gallery_show_names = (string) $data['gallery_show_names'];
         } 
         if (isset ($data['gallery_height']) && ($data['gallery_height'] > 0) && ($data['gallery_height'] <= 2000)) {
             $this->gallery_height = (string) $data['gallery_height'];
@@ -153,16 +158,19 @@ class GalleryBlock extends Block
         }
         if (isset ($properties['gallery_autoplay'])) {
             $this->gallery_autoplay = $properties['gallery_autoplay'];
-        } 
+        }
         if (isset ($properties['gallery_autoplay_timer'])) {
             $this->gallery_autoplay_timer = $properties['gallery_autoplay_timer'];
-        } 
+        }
         if (isset ($properties['gallery_hidenav'])) {
             $this->gallery_hidenav = $properties['gallery_hidenav'];
-        } 
+        }
         if (isset ($properties['gallery_height'])) {
             $this->gallery_height = $properties['gallery_height'];
-        } 
+        }
+        if (isset ($properties['gallery_show_names'])) {
+            $this->gallery_show_names = $properties['gallery_show_names'];
+        }
         if (isset ($properties['gallery_folder_name'])) {
             $gallery_folder_name = $properties['gallery_folder_name'];
         } else {
