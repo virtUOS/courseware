@@ -17,7 +17,7 @@ export default AuthorView.extend({
         'click .cw-image-map-resize': 'shapeResize',
         'input .shape-text': 'changeText',
         'input .cw-image-map-shape-link-target': 'changeTarget',
-        'change .cw-image-map-shape-link-target': 'changeTarget',
+        'click .cw-image-map-shape-link-target option': 'changeTarget',
         'change .cw-image-map-shape-link-protocol': 'changeTarget',
         'change .cw-image-map-shape-link-type': 'selectLinkType',
         'input .cw-image-map-shape-title': 'changeTitle',
@@ -363,7 +363,7 @@ export default AuthorView.extend({
                     }
                     break;
                 case 'internal':
-                    shape.target = this.$('select.cw-image-map-shape-link-target option[value="'+shape.target+'"]').prop('selected', true);
+                    this.$('select.cw-image-map-shape-link-target option[value="'+shape.target+'"]').prop('selected', true);
                     this.$('select.cw-image-map-shape-link-target').show();
                     this.$('input.cw-image-map-shape-link-target').hide();
                     this.$('.cw-image-map-shape-link-protocol').hide();

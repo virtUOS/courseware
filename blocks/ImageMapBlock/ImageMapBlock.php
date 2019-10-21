@@ -108,6 +108,9 @@ class ImageMapBlock extends Block
 
     private function getTargetId($target)
     {
+        if (!is_string($target)) {
+            return '';
+        }
         $id = '';
         $section = $this->getModel()->parent;
         $subchapter = $section->parent;
