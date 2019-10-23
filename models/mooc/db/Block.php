@@ -388,22 +388,59 @@ class Block extends \SimpleORMap implements \Serializable
 
     private function hasUserApproval($uid)
     {
+        $approval_json = json_decode($this->approval, true);
+        return $approval_json;
 
+        if ($approval_json !== FALSE && !empty($approval_json)) {
+            if(!empty($approval_json['users'])) {
+                return in_array($uid, $approval_json['users']);
+            }
+        }
+        return false;
     }
 
     private function hasGroupApproval($uid)
     {
-
+        $approval_json = json_decode($this->approval, true);
+        if ($approval_json !== FALSE && !empty($approval_json)) {
+            if(!empty($approval_json['groups'])) {
+                
+                //TODO
+                // find user in Group and check approval
+                return true;
+            }
+        }
+        return false;
     }
 
-    private function getApproval($type)
+    public function getApprovalList($type)
     {
-        $approval_json = json_decode($this->approval);
+        $approval_json = json_decode($this->approval, true);
         switch ($type) {
-            case 'User':
-                return $approval_json->users;
-            case 'Group':
-                return $approval_json->groups;
+            case 'users':
+                return $approval_json['users'];
+            case 'groups':
+                return $approval_json['groups'];
         }
+    }
+
+    public function setApprovalList($json) {
+        if (!$this->isStructuralBlock()) {
+            return false;
+        }
+        $approval_json = json_decode($this->approval, true);
+        $new_list = json_decode($json, true);
+        if ($approval_json === NULL) {
+            $approval_json = array();
+        }
+        if($new_list['users'] !== NULL){
+            $approval_json['users'] = $new_list['users'];
+        }
+        if($new_list['groups'] !== NULL){
+            $approval_json['groups'] = $new_list['groups'];
+        }
+
+        $this->approval = json_encode($approval_json);
+        $this->store();
     }
 }

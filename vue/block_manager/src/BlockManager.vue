@@ -387,7 +387,7 @@ export default {
                         view.courseware = JSON.parse(response.data.courseware);
                         view.storeLock = false;
                     })
-                    .catch(function(error) {
+                    .catch(error => {
                         if (error.response) {
                             // The request was made and the server responded with a status code
                             // that falls out of the range of 2xx

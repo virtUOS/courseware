@@ -12,9 +12,12 @@
                     <section class="modal-body">
                         <ul class="students-permissions-list">
                             <li v-for="user in users" :key="user.id">
-                                <input type="checkbox" />
-                                {{ user.firstname }} {{ user.lastname }}
-                                <i>{{ user.username }}</i>
+                                <label>
+                                    <input type="checkbox" :value="user.user_id" v-model="checkedUsers" />
+                                    {{ user.firstname }}
+                                    {{ user.lastname }}
+                                    <i>{{ user.username }}</i>
+                                </label>
                             </li>
                         </ul>
                     </section>
@@ -35,6 +38,8 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
     name: 'StudentsPermissionsDialog',
     props: {
@@ -45,9 +50,11 @@ export default {
         return {
             visible: this.DialogVisible,
             currentElement: this.element,
-            users: this.$store.state.courseUsers
+            users: this.$store.state.courseUsers,
+            checkedUsers: []
         };
     },
+
     methods: {
         close() {
             if (!this.deleting) {
@@ -55,34 +62,47 @@ export default {
             }
         },
         set() {
-            console.log('set students permissions');
-            // let data = {};
-            // let view = this;
-            // data.id = this.currentElement.id;
-            // this.deleting = true;
-            // $.ajax({
-            //     type: 'DELETE',
-            //     url: '../blocks/' + data.id,
-            //     contentType: 'application/json',
-            //     data: data,
-            //     success: function() {
-            //         view.$emit('remove');
-            //         view.deleting = false;
-            //         view.$emit('close');
-            //     },
-            //     error: function() {
-            //         console.log('can not remove node!');
-            //         view.deleting = false;
-            //         view.$emit('close');
-            //     }
-            // });
+            let bid = this.element.id;
+            let list = {};
+            list.users = this.checkedUsers;
+            axios
+                .post('set_element_approval_list', { bid: bid, list: JSON.stringify(list) })
+                .then(response => {
+                    console.log(response);
+                    this.$emit('close');
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.$emit('close');
+                });
+        },
+        getApprovalList() {
+            let bid = this.element.id;
+            let view = this;
+            axios
+                .post('get_element_approval_list', { bid: bid, type: 'users' })
+                .then(response => {
+                    if (response.data != null) {
+                        view.checkedUsers = response.data;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     },
     watch: {
         DialogVisible: function() {
             this.visible = this.DialogVisible;
             this.users = this.$store.state.courseUsers;
-            console.log(this.users);
+            if (this.visible) {
+                this.getApprovalList();
+            } else {
+                this.checkedUsers = [];
+            }
+        },
+        checkedUsers: function() {
+            console.log(this.checkedUsers);
         }
     }
 };

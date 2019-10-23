@@ -700,7 +700,8 @@
                 min-width: 14em;
                 padding: 0.5em;
             }
-            .students-permissions-list {
+            .students-permissions-list,
+            .groups-permissions-list {
                 max-height: 24em;
                 overflow-y: auto;
                 list-style: none;
@@ -708,6 +709,9 @@
                 input[type="checkbox"] {
                     border: none;
                     min-width: unset;
+                }
+                label {
+                    user-select: none;
                 }
             }
         }

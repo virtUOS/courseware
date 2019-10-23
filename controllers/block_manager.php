@@ -216,6 +216,30 @@ class BlockManagerController extends CoursewareStudipController
         $this->render_text(json_encode($json_groups));
     }
 
+    public function get_element_approval_list_action() {
+        $request = trim(file_get_contents("php://input"));
+        $decoded_request = json_decode($request, true);
+        $bid = $decoded_request['bid'];
+        $type = $decoded_request['type'];
+
+        $block = dbBlock::find($bid);
+        $list = $block->getApprovalList('users');
+        $this->response->add_header('Content-Type', 'application/json');
+        $this->render_text(json_encode($list));
+    }
+
+    public function set_element_approval_list_action() {
+        $request = trim(file_get_contents("php://input"));
+        $decoded_request = json_decode($request, true);
+        $bid = $decoded_request['bid'];
+        $list = $decoded_request['list'];
+
+        $block = dbBlock::find($bid);
+        $block->setApprovalList($list);
+        $this->response->add_header('Content-Type', 'application/json');
+        $this->render_text(true);
+    }
+
     private function buildBlockMap()
     {
         $block_map = [];

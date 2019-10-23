@@ -10,7 +10,11 @@
                         </slot>
                     </header>
                     <section class="modal-body">
-                        <p v-for="group in groups" :key="group.id">{{ group.name }}</p>
+                        <ul class="groups-permissions-list">
+                            <li v-for="group in groups" :key="group.id">
+                                <label> <input type="checkbox" /> {{ group.name }} </label>
+                            </li>
+                        </ul>
                     </section>
                     <footer class="modal-footer">
                         <slot name="footer">
