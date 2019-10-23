@@ -693,7 +693,7 @@
             label {
                 display: inline-block;
                 min-width: 8em;
-                margin-bottom: 1em;
+                margin-bottom: 0.5em;
             }
             input {
                 border: solid thin #ccc;
@@ -709,9 +709,13 @@
                 input[type="checkbox"] {
                     border: none;
                     min-width: unset;
+                    vertical-align: bottom;
                 }
                 label {
                     user-select: none;
+                    i {
+                        color: #ccc;
+                    }
                 }
             }
         }
