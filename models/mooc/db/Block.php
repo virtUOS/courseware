@@ -383,14 +383,15 @@ class Block extends \SimpleORMap implements \Serializable
 
     public function hasApproval($uid)
     {
+        if (!$this->isStructuralBlock()) {
+            return false;
+        }
         return $this->hasUserApproval($uid) || $this->hasGroupApproval($uid);
     }
 
     private function hasUserApproval($uid)
     {
         $approval_json = json_decode($this->approval, true);
-        return $approval_json;
-
         if ($approval_json !== FALSE && !empty($approval_json)) {
             if(!empty($approval_json['users'])) {
                 return in_array($uid, $approval_json['users']);
@@ -404,10 +405,12 @@ class Block extends \SimpleORMap implements \Serializable
         $approval_json = json_decode($this->approval, true);
         if ($approval_json !== FALSE && !empty($approval_json)) {
             if(!empty($approval_json['groups'])) {
-                
-                //TODO
-                // find user in Group and check approval
-                return true;
+                foreach($approval_json['groups'] as $group_id){
+                    $group = \Statusgruppen::find($group_id);
+                    if ($group->isMember($uid)) {
+                        return true;
+                    }
+                }
             }
         }
         return false;

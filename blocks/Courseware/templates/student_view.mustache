@@ -150,12 +150,12 @@
 
   {{> active_subchapter}}
 
-  {{#user_is_teacher}}
+  {{#user_may_author}}
     <div class=mode-switch>
       <button class="student" data-title="{{#i18n}}Studentenmodus{{/i18n}}"></button>
       <button class="author" data-title="{{#i18n}}Autorenmodus{{/i18n}}"></button>
     </div>
-  {{/user_is_teacher}}
+  {{/user_may_author}}
   
   {{#active_section}}
         {{> active_section}}

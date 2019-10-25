@@ -52,8 +52,6 @@
             @edit="editElement"
             @remove="removeElement"
             @add-child="addChild"
-            @set-users="setUserApproval"
-            @set-groups="setGroupApproval"
             :class="{ unfolded: unfolded }"
         />
 
@@ -230,12 +228,6 @@ export default {
                 }
             });
             this.sections = sections;
-        },
-        setUserApproval(data) {
-            console.log(data);
-        },
-        setGroupApproval(data) {
-            console.log(data);
         },
         toggleContent() {
             this.unfolded = !this.unfolded;

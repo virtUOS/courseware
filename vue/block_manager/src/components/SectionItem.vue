@@ -20,7 +20,7 @@
         </div>
         <ActionMenuItem
             v-if="!this.importContent && !this.remoteContent"
-            :buttons="['edit', 'remove']"
+            :buttons="['groups', 'users', 'edit', 'remove']"
             :element="this.element"
             @edit="editSection"
             @remove="removeElement"
