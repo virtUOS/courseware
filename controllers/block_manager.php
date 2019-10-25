@@ -205,12 +205,12 @@ class BlockManagerController extends CoursewareStudipController
     public function get_course_groups_action($cid)
     {
         $cid = Request::get('cid');
-        // $element_id = Request::get('element_id');
         $groups = Statusgruppen::findAllByRangeId($cid);
         $json_groups = [];
         foreach($groups as $group) {
             array_push($json_groups, ['id'=>$group->id, 'name'=> $group->name]);
         }
+        usort($json_groups, function($a, $b) { return strcmp($a['name'], $b['name']);});
 
         $this->response->add_header('Content-Type', 'application/json');
         $this->render_text(json_encode($json_groups));
@@ -223,7 +223,7 @@ class BlockManagerController extends CoursewareStudipController
         $type = $decoded_request['type'];
 
         $block = dbBlock::find($bid);
-        $list = $block->getApprovalList('users');
+        $list = $block->getApprovalList($type);
         $this->response->add_header('Content-Type', 'application/json');
         $this->render_text(json_encode($list));
     }

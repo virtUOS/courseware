@@ -100,9 +100,6 @@ export default {
             } else {
                 this.checkedUsers = [];
             }
-        },
-        checkedUsers: function() {
-            console.log(this.checkedUsers);
         }
     }
 };

@@ -1,7 +1,7 @@
 <template>
     <div class="strucutal-element-menu-wrapper">
-        <nav class="action-menu bymousedown strucutal-element-menu">
-            <a class="action-menu-icon" title="Aktionen" aria-expanded="true" aria-label="Aktionsmenü" href="#">
+        <nav class="action-menu bymousedown strucutal-element-menu" ref="actionMenu">
+            <a class="action-menu-icon" title="Aktionen" href="#">
                 <div></div>
                 <div></div>
                 <div></div>
@@ -12,27 +12,62 @@
                 </div>
                 <ul class="action-menu-list">
                     <li v-if="this.users_button" class="action-menu-item">
-                        <a href="#" class="set-users" @click="setStudentsPermissionsDialogVisible = true">
+                        <a
+                            href="#"
+                            class="set-users"
+                            @click="
+                                setStudentsPermissionsDialogVisible = true;
+                                $refs.actionMenu.classList.remove('active');
+                            "
+                        >
                             {{ $t('message.setStudentsPermissions') }}
                         </a>
                     </li>
                     <li v-if="this.groups_button" class="action-menu-item">
-                        <a href="#" class="set-groups" @click="setGroupsPermissionsDialogVisible = true">
+                        <a
+                            href="#"
+                            class="set-groups"
+                            @click="
+                                setGroupsPermissionsDialogVisible = true;
+                                $refs.actionMenu.classList.remove('active');
+                            "
+                        >
                             {{ $t('message.setGroupsPermissions') }}
                         </a>
                     </li>
                     <li v-if="this.edit_button" class="action-menu-item">
-                        <a href="#" class="edit-element" @click="editDialogVisible = true">
+                        <a
+                            href="#"
+                            class="edit-element"
+                            @click="
+                                editDialogVisible = true;
+                                $refs.actionMenu.classList.remove('active');
+                            "
+                        >
                             {{ $t('message.editElement') }}
                         </a>
                     </li>
                     <li v-if="this.remove_button" class="action-menu-item">
-                        <a href="#" class="remove-element" @click="removeDialogVisible = true">
+                        <a
+                            href="#"
+                            class="remove-element"
+                            @click="
+                                removeDialogVisible = true;
+                                $refs.actionMenu.classList.remove('active');
+                            "
+                        >
                             {{ $t('message.deleteElement') }}
                         </a>
                     </li>
                     <li v-if="this.add_child_button" class="action-menu-item">
-                        <a href="#" class="add-child-element" @click="addChildDialogVisible = true">
+                        <a
+                            href="#"
+                            class="add-child-element"
+                            @click="
+                                addChildDialogVisible = true;
+                                $refs.actionMenu.classList.remove('active');
+                            "
+                        >
                             {{ $t('message.addSubelement') }}
                         </a>
                     </li>
