@@ -90,6 +90,7 @@
       {{/chapters}}
 
       <li class=no-content>{{#i18n}}Keine Kapitel{{/i18n}}</li>
+      {{#user_is_teacher}}
       <li class=controls>
         <button class=add-chapter>{{#i18n}}Kapitel einfügen{{/i18n}}</button>
         <button class=init-sort-chapter>{{#i18n}}Kapitel sortieren{{/i18n}}</button>
@@ -102,7 +103,7 @@
         {{/active_chapter.aside_section}}
         <button class="add-topics" data-title="{{#i18n}}Für jedes Thema aus dem Ablaufplan dieser Veranstaltung wird ein Kapitel angelegt{{/i18n}}">{{#i18n}}Ablaufplan importieren{{/i18n}}</button>
       </li>
-      
+      {{/user_is_teacher}}
     </ol>
     {{#active_chapter}}
       {{#aside_section}}

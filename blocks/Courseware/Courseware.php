@@ -94,10 +94,17 @@ class Courseware extends Block
         $this->branchComplete($tree);
         $cid = $this->container['cid'];
 
+        $user_can_edit_chapter = $this->getCurrentUser()->canUpdate(DbBlock::find($active_chapter['id'])) || $this->getCurrentUser()->canUpdate($this->_model);
+        $user_can_edit_subchapter = $this->getCurrentUser()->canUpdate(DbBlock::find($active_subchapter['id'])) || $this->getCurrentUser()->canUpdate($this->_model);
+
+        var_dump($user_can_edit_chapter);
+        var_dump($user_can_edit_subchapter);
         return array_merge($tree, array(
             'user_is_nobody'        => $this->getCurrentUser()->isNobody(),
-            'user_may_author'       => $this->getCurrentUser()->canUpdate($this->_model),
+            'user_may_author'       => $this->getCurrentUser()->canUpdate($this->_model) || $user_can_edit_chapter || $user_can_edit_subchapter,
             'user_is_teacher'       => $this->getCurrentUser()->hasPerm($cid, 'tutor'),
+            'user_can_edit_chapter' => $user_can_edit_chapter,
+            'user_can_edit_subchapter' => $user_can_edit_subchapter,
             'section_nav'           => $section_nav,
             'courseware'            => $courseware,
             'active_chapter'        => $active_chapter,
