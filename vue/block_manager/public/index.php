@@ -10,7 +10,8 @@
             courseware: <?=json_encode($courseware_json)?>,
             remote_courses: <?=json_encode($remote_courses_json)?>,
             block_map: <?=json_encode($block_map)?>,
-            lang: '<?= $lang ?>'
+            lang: '<?= $lang ?>',
+            courseware_export_url: '<?= $courseware_export_url ?>'
         }
     }
 </script>

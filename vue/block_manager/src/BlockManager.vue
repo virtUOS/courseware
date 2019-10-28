@@ -91,7 +91,9 @@
                     />
                 </draggable>
             </div>
-            <div v-if="showExportCourseware">Export…</div>
+            <div v-if="showExportCourseware">
+                <!--- Export --->
+            </div>
             <ul v-if="!showRemoteCourseware && !showImportCourseware && !showExportCourseware" id="cw-action-selection">
                 <li>
                     <label
@@ -143,9 +145,14 @@
             >
                 {{ $t('message.tasksBackButton') }}
             </button>
-            <button id="cw-export" class="button" v-if="showExportCourseware">
-                {{ $t('message.exportingButton') }}
+            <button id="cw-import" class="button" v-if="showImportCourseware" @click="importCompleteArchive">
+                {{ $t('message.importingButton') }}
             </button>
+            <a :href="coursewareExportURL" v-if="showExportCourseware">
+                <button id="cw-export" class="button">
+                    {{ $t('message.exportingButton') }}
+                </button>
+            </a>
             <div style="clear: both;"></div>
         </div>
     </div>
@@ -193,7 +200,8 @@ export default {
             blockMap: null,
             fileError: false,
             loading: false,
-            storeLock: false
+            storeLock: false,
+            coursewareExportURL: COURSEWARE.data.courseware_export_url
         };
     },
     created() {
@@ -560,6 +568,42 @@ export default {
             } else {
                 return (size / 1024).toFixed(1) + ' kB';
             }
+        },
+        importCompleteArchive() {
+            this.storeLock = true;
+            let view = this;
+            let promises = [];
+            let fileData = {};
+            let file = this.importZIP;
+            let filePromise = new Promise(resolve => {
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = function() {
+                    fileData.file = reader.result;
+                    fileData.name = file.name;
+                    fileData.size = file.size;
+                    fileData.type = file.type;
+                    resolve(reader.result);
+                };
+            });
+            promises.push(filePromise);
+            Promise.all(promises).then(function() {
+                axios
+                    .post('import_complete_archive', {
+                        cid: COURSEWARE.config.cid,
+                        fileData: fileData
+                    })
+                    .then(response => {
+                        view.importData = false;
+                        view.remoteData = false;
+                        view.cleanLists();
+                        view.courseware = JSON.parse(response.data.courseware);
+                        view.storeLock = false;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            });
         }
     }
 };

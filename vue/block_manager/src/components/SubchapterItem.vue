@@ -26,7 +26,7 @@
                     {{ $t('message.subchapter') }}
                 </span>
                 <span
-                    v-if="publication_date"
+                    v-if="publication_date && !this.importContent && !this.remoteContent"
                     :class="{
                         'unpublished-info': !isPublished,
                         'published-info': isPublished
@@ -35,7 +35,7 @@
                     | {{ $t('message.visibleFrom') }}: {{ publication_date_readable }}</span
                 >
                 <span
-                    v-if="withdraw_date"
+                    v-if="withdraw_date && !this.importContent && !this.remoteContent"
                     :class="{
                         'unpublished-info': !isPublished,
                         'published-info': isPublished

@@ -85,6 +85,8 @@
                 background-image: url("../@{blocks-icons-dir}/white/arr_eol-left.svg");
             }
         }
+
+        #cw-import, 
         #cw-export {
             float: right;
             margin-right: 1em;
@@ -92,6 +94,16 @@
             background-size: 16px;
             background-position: 10px center;
             background-repeat: no-repeat;
+        }
+
+        #cw-import {
+            background-image: url("../@{blocks-icons-dir}/blue/install.svg");
+            &:hover {
+                background-image: url("../@{blocks-icons-dir}/white/install.svg");
+            }
+        }
+
+        #cw-export {
             background-image: url("../@{blocks-icons-dir}/blue/download.svg");
             &:hover {
                 background-image: url("../@{blocks-icons-dir}/white/download.svg");
@@ -324,6 +336,20 @@
                     width: 16px;
                     height: 16px;
                     margin-left: 0.5em;
+                }
+            }
+        }
+        &.chapter-list-import,
+        &.subchapter-list-import,
+        &.section-list-import,
+        &.block-list-import {
+            .chapter-description,
+            .subchapter-description,
+            .section-description { 
+                .header-info-wrapper {
+                    .unpublished-info {
+                        color: #28497c; 
+                    }
                 }
             }
         }

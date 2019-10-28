@@ -2,7 +2,7 @@
     <li
         class="block-item"
         :class="{
-            element_hidden: !block.isPublished,
+            element_hidden: !block.isPublished && !this.importContent && !this.remoteContent,
             'block-item-import': importContent,
             'block-item-remote': remoteContent
         }"
@@ -10,7 +10,10 @@
     >
         <div
             class="block-description block-handle"
-            :class="{ element_hidden: !block.isPublished, unfolded: unfolded }"
+            :class="{
+                element_hidden: !block.isPublished && !this.importContent && !this.remoteContent,
+                unfolded: unfolded
+            }"
             @click="toggleContent"
         >
             <span :class="['block-icon cw-block-icon-' + block.type]"></span>

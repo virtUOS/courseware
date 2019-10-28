@@ -55,10 +55,6 @@ class BlockManagerController extends CoursewareStudipController
 
         $this->block_map = json_encode($this->buildBlockMap());
 
-        if (Request::method() == 'POST' && Request::option('subcmd')=='fullimport') {
-            $this->full_import();
-        }
-
         $grouped = $this->getGrouped($this->cid);
 
         $this->courseware = current($grouped['']);
@@ -66,6 +62,7 @@ class BlockManagerController extends CoursewareStudipController
         $this->courseware_json = json_encode($this->courseware);
         $this->remote_courses_json = json_encode($this->remote_courses);
         $this->lang = getUserLanguage($this->container['current_user']->id);
+        $this->courseware_export_url = PluginEngine::getURL('courseware/export', compact('cid'), true);
     }
 
     public function courseware_vue_action()
@@ -287,36 +284,51 @@ class BlockManagerController extends CoursewareStudipController
         return $parent['children'];
     }
 
-    public function full_import()
+    public function import_complete_archive_action()
     {
-        $tempDir = $this->extractArchive($_FILES['cw-file-upload-import']['tmp_name']);
-        if (!$tempDir) {
+        $request = trim(file_get_contents("php://input"));
+        $decoded_request = json_decode($request, true);
+        $cid = $decoded_request['cid'];
+        $file_data = $decoded_request['fileData'];
+        $zip_file = base64_decode(explode('base64,', $file_data['file'])[1]);
+
+        $tempDirZip = $GLOBALS['TMP_PATH'].'/'.uniqid();
+        mkdir($tempDirZip);
+        file_put_contents($tempDirZip.'/'.$file_data['name'], $zip_file);
+        $tempDirFiles = $this->extractArchive($tempDirZip.'/'.$file_data['name']);
+        $this->deleteRecursively($tempDirZip);
+        if (!$tempDirFiles) {
             return;
         }
-
-        $xml_file = $tempDir.'/data.xml';
+        $xml_file = $tempDirFiles.'/data.xml';
         if (!is_file($xml_file)) {
-            $this->errors[] = _cw('Import-Archiv enthält keine Datendatei data.xml');
-
             return ;
         }
+
         $xml = file_get_contents($xml_file);
 
         if ($this->validateUploadFile($xml)) {
-            $import_folder = $this->createImportFolder();
-            $courseware = $this->container['current_courseware'];
+            $import_folder = $this->createImportFolder($cid);
+            //$courseware = $this->container['current_courseware'];
+            $courseware = $this->plugin->getBlockFactory()->makeBlock(dbBlock::findCourseware($cid));
             $importer = new XmlImport($this->plugin->getBlockFactory());
             try {
-                $importer->import($tempDir, $courseware, $import_folder);
+                $importer->import($tempDirFiles, $courseware, $import_folder);
             } catch (Exception $e){
                 $this->errors[] = $e;
             }
-            if ((count($this->errors) == 0) &&(count($this->warnings) == 0)) {
-                $this->successes[] = _cw('Das Archiv wurde erfolgreich importiert');
-            }
         }
 
-        $this->deleteRecursively($tempDir);
+        $this->deleteRecursively($tempDirFiles);
+
+        $grouped = $this->getGrouped($cid);
+        $courseware = current($grouped['']);
+        $this->buildTree($grouped, $courseware);
+        $courseware = json_encode($courseware);
+
+        $this->response->add_header('Content-Type', 'application/json');
+        $answer = json_encode(['errors' => $this->errors, 'successes' => $this->successes, 'courseware' => $courseware]);
+        $this->render_text($answer);
     }
 
     private function extractArchive($filename) {
@@ -556,7 +568,7 @@ class BlockManagerController extends CoursewareStudipController
                 $tempDirFiles = $this->extractArchive($tempDirZip.'/'.$file_data['name']);
                 $this->deleteRecursively($tempDirZip);
                 if (!$tempDirFiles) {
-                    var_dump('no files'); die;
+                    var_dump('no files');
                     return false;
                 }
 
@@ -860,49 +872,4 @@ class BlockManagerController extends CoursewareStudipController
 
         $files[$originId] = $new_reference;
     }
-
-    public function export_action()
-    {
-        // create a temporary directory
-        $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
-        mkdir($tempDir);
-
-        // dump the XML to the filesystem
-        $export = new XmlExport($this->plugin->getBlockFactory());
-        $courseware = $this->container['current_courseware'];
-        
-        foreach ($courseware->getFiles() as $file) {
-            if (trim($file['url']) !== '') {
-                continue;
-            }
-
-            $destination = $tempDir . '/' . $file['id'];
-            mkdir($destination);
-            copy($file['path'], $destination.'/'.$file['filename']);
-        }
-        
-        if (Request::submitted('plaintext')) {
-            $this->response->add_header('Content-Type', 'text/xml;charset=utf-8');
-            $this->render_text($export->export($courseware));
-            return;
-        }
-        file_put_contents($tempDir.'/data.xml', $export->export($courseware));
-
-        $zipFile = $GLOBALS['TMP_PATH'].'/'.uniqid().'.zip';
-        FileArchiveManager::createArchiveFromPhysicalFolder($tempDir, $zipFile);
-        $this->set_layout(null);
-        header('Content-Type: application/zip');
-        header('Content-Disposition: attachment; filename=courseware.zip');
-
-        while (ob_get_level()) {
-            ob_end_flush();
-        }
-        readfile($zipFile);
-
-        $this->deleteRecursively($tempDir);
-        $this->deleteRecursively($zipFile);
-
-        exit;
-    }
-
 }

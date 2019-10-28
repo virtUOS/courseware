@@ -39,7 +39,8 @@ const messages = {
             deleteDialogQuestionElement: 'Are you sure you want to delete this element and all its underlying elements',
             exportButton: 'Download export archive',
             exportExplain: 'Select content and download it as an archive file',
-            exportingButton: 'Export'
+            exportingButton: 'Export',
+            importingButton: 'Import complete archive'
         }
     },
     de_DE: {
@@ -80,7 +81,8 @@ const messages = {
                 'Möchten Sie dieses Element und alle darunter liegenden Elemente wirklich löschen',
             exportButton: 'Export-Archiv herunterladen',
             exportExplain: 'Wählen Sie Inhalte aus und laden diese als Archiv-Datei herunter',
-            exportingButton: 'Exportieren'
+            exportingButton: 'Exportieren',
+            importingButton: 'Komplettes Archiv importieren'
         }
     }
 };
