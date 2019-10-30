@@ -182,7 +182,7 @@ class BlockManagerController extends CoursewareStudipController
     public function get_course_users_action()
     {
         $cid = Request::get('cid');
-        $course_members = CourseMember::findByCourse($cid);
+        $course_members = CourseMember::findByCourseAndStatus($cid, 'autor');
         $users_json = [];
         foreach($course_members as $member) {
            array_push($users_json, [
