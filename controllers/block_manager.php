@@ -16,19 +16,18 @@ class BlockManagerController extends CoursewareStudipController
     {
         parent::before_filter($action, $args);
 
-        // if (!$this->container['current_user']->canCreate($this->container['current_courseware'])) {
-        //     throw new Trails_Exception(401);
-        // }
         if (Navigation::hasItem('/course/mooc_courseware/block_manager')) {
             Navigation::activateItem('/course/mooc_courseware/block_manager');
         }
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
-        // PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/block_manager.js');
         PageLayout::addScript($this->plugin->getPluginURL().'/assets/js/ziploader/zip-loader.min.js');
     }
 
     public function index_action()
     {
+        if (!$this->container['current_user']->canCreate($this->container['current_courseware'])) {
+            throw new Trails_Exception(401);
+        }
         $this->cid = Request::get('cid');
         $this->errors = [];
         $this->warnings = [];
@@ -93,8 +92,7 @@ class BlockManagerController extends CoursewareStudipController
         $title = $decoded_request['title'];
         $type = $decoded_request['type'];
         $cid = $decoded_request['cid'];
-        
-        
+
         $block = new \Mooc\DB\Block();
         $block->setData(array(
             'seminar_id' => $cid,
