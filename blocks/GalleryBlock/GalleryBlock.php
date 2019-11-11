@@ -28,10 +28,23 @@ class GalleryBlock extends Block
             return array('inactive' => true);
         }
         $this->setGrade(1.0);
+        $user = $this->container['current_user'];
+        if ($user->hasPerm($this->container['cid'], 'tutor')) {
+            $user_is_authorized = true;
+        } else {
+            $user_is_authorized = false;
+        }
+        $files = $this->showFiles($this->gallery_folder_id);
+        $gallery_has_files = sizeOf($files) > 0;
+        $folder_type = \Folder::find($this->gallery_folder_id)->folder_type;
 
         return array_merge(
             $this->getAttrArray(), 
-            array('showFiles' => $this->showFiles($this->gallery_folder_id )
+            array(
+                'showFiles' => $files,
+                'userIsAuthorized' => $user_is_authorized,
+                'galleryHasFiles' => $gallery_has_files,
+                'folderIsPublic' => in_array($folder_type, array("StandardFolder","CoursePublicFolder"), true)
             )
         );
     }
@@ -39,7 +52,7 @@ class GalleryBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-        $folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
+        $folders =  \Folder::findBySQL('range_id = ? AND (folder_type = ? OR folder_type = ?)', array($this->container['cid'], 'StandardFolder', 'CoursePublicFolder'));
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
 
         return array_merge($this->getAttrArray(), array("folders" => $folders, "user_folders" => $user_folders));
@@ -95,8 +108,11 @@ class GalleryBlock extends Block
 
     private function showFiles($folder_id)
     {
-        $response = \FileRef::findBySQL('folder_id = ?', array($folder_id));
         $filesarray = array();
+        if (!in_array(\Folder::find($this->gallery_folder_id)->folder_type, array("StandardFolder","CoursePublicFolder"), true)) {
+            return $filesarray;
+        }
+        $response = \FileRef::findBySQL('folder_id = ?', array($folder_id));
         foreach ($response as $item) {
             if (!$item->terms_of_use->fileIsDownloadable($item, false)) {
                 continue;
