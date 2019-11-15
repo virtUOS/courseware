@@ -8,13 +8,13 @@
                 <h2><?= $chapter_title.' &rarr; '.$subchapter_title.' &rarr; '.$section_title ?></h2>
                     <ul class="cw-news-list-blocks">
                     <? foreach ($section_content as $block_id => $block):?>
-                        <li class="cw-news-item-block">
-                            <? $ui_block = $block['ui_block']; ?>
-                            <a href="<?= \PluginEngine::getURL("courseware/courseware")."&selected=".$block['id'] ?>">
+                        <a href="<?= \PluginEngine::getURL("courseware/courseware")."&selected=".$block['id'] ?>">
+                            <li class="cw-news-item-block">
+                                <? $ui_block = $block['ui_block']; ?>
                                 <h4 class="cw-block-title type-<?= $block['type']?>"><?= $block['title'] ?></h4>
-                            </a>
-                            <div><?= $ui_block->render('preview', array()) ?></div>
-                        </li>
+                                <?= $ui_block->render('preview', array()) ?>
+                            </li>
+                        </a>
                     <? endforeach ?>
                     </ul>
                     <div style="clear: both"></div>
