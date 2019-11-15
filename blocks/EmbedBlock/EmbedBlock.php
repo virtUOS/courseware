@@ -53,7 +53,9 @@ class EmbedBlock extends Block
             case 'rich':
                 $html = $oembed->html;
                 $dom = new \DOMDocument;
+                $internalErrors = libxml_use_internal_errors(true);
                 $dom->loadHTML($html);
+                libxml_use_internal_errors($internalErrors);
                 $xpath = new \DOMXPath($dom);
                 $nodes = $xpath->query("//iframe");
                 foreach($nodes as $node) {
