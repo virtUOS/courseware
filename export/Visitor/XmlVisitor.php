@@ -75,7 +75,11 @@ class XmlVisitor extends AbstractVisitor
             if ($file['url']) {
                 $attributes[] = $this->createAttributeNode('url', $file['url']);
             }
-            $fileNode = $this->appendBlockNode('file', null, $attributes);
+            if(file_exists($file['path'])) {
+                $fileNode = $this->appendBlockNode('file', null, $attributes);
+            } else {
+                continue;
+            }
 
             if (trim($file['description']) !== '') {
                 $fileNode->appendChild($this->document->createCDATASection(utf8_encode($file['description'])));

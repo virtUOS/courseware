@@ -706,7 +706,7 @@ class BlockManagerController extends CoursewareStudipController
                     }
                 }
 
-                if(empty($import_folder->getFiles())) {
+                if(empty($import_folder->getFiles()) && empty($import_folder->getSubfolders())) {
                     $import_folder->delete();
                 }
 
