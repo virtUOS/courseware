@@ -1,0 +1,33 @@
+<input type="hidden" value="{{folder_id}}" folder-name="{{folder_name}}" class="cw-folder-stored-folder">
+
+<label for="cw-folder-select-folder">{{#i18n}}Einen Ordner auswählen{{/i18n}}:</label>
+<select type="text" class="cw-folder-select-folder" name="folder">
+    <optgroup label="{{#i18n}}Ordner dieser Veranstaltung{{/i18n}}">
+    {{#folders}}
+        <option value="{{id}}" data-folder_type="{{folder_type}}" data-folder_size="{{size}}" {{disabled}} class="cw-folder-icon {{folder_type}}"> {{name}}</option>
+    {{/folders}}
+    </optgroup>
+    {{#other_user_folder}}
+    <optgroup label="Ordner im Dateibereich eines anderen Nutzers">
+        <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
+    </optgroup>
+    {{/other_user_folder}}
+</select>
+<span class="cw-folder-icon"></span>
+<br>
+
+<label for="download-title">{{#i18n}}Titel des Blocks{{/i18n}}:</label>
+<input type="textbox" value="{{folder_title}}" name="download-title" class="download-textbox" spellcheck="true">
+<br>
+
+<div class="cw-toggle-upload">
+<label for="allow-upload" class="cw-upload-label">{{#i18n}}Upload erlauben{{/i18n}}?</label><input type="checkbox" value="allow-upload" name="allow-upload" class="cw-folder-allow-upload">
+<button class="cw-folder-allow-download-info cw-info" data-title="{{#i18n}}Nutzern erlauben, direkt über die Courseware Dateien in den ausgewählten Ordner hochzuladen{{/i18n}}"></button>
+</div>
+
+<div class="cw-button-box">
+    <button name=save class=button>{{#i18n}}Speichern{{/i18n}}</button>
+    <button name=cancel class=button>{{#i18n}}Abbrechen{{/i18n}}</button>
+</div>
+
+<input type="hidden" name="prev_allow_upload" value="{{allow_upload}}">
