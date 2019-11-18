@@ -40,7 +40,9 @@ const messages = {
             exportButton: 'Download export archive',
             exportExplain: 'Select content and download it as an archive file',
             exportingButton: 'Export',
-            importingButton: 'Import complete archive'
+            importingButton: 'Import complete archive',
+            noRemoteCoursesAvailable: 'There are no courses available for import',
+            invalidArchiveFile: 'The archive does not contain courseware data'
         }
     },
     de_DE: {
@@ -82,7 +84,9 @@ const messages = {
             exportButton: 'Export-Archiv herunterladen',
             exportExplain: 'Wählen Sie Inhalte aus und laden diese als Archiv-Datei herunter',
             exportingButton: 'Exportieren',
-            importingButton: 'Komplettes Archiv importieren'
+            importingButton: 'Komplettes Archiv importieren',
+            noRemoteCoursesAvailable: 'Es sind keine Veranstaltungen für den Import verfügbar',
+            invalidArchiveFile: 'Das Archiv enthält keine Coursewaredaten'
         }
     }
 };

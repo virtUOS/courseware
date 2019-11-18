@@ -37,7 +37,7 @@
                 <p>{{ actionTitle }}</p>
             </div>
             <div class="messagebox messagebox_error" v-if="fileError">
-                Das Archiv enthält keine Coursewaredaten
+                {{ $t('message.invalidArchiveFile') }}
             </div>
             <div v-if="showRemoteCourseware && !remoteCourseware && !loading" id="user-course-list">
                 <ul class="semester-list">
@@ -48,6 +48,9 @@
                         :semester_name="semester_name"
                         @course-selected="getRemoteCourse"
                     />
+                    <div v-if="this.remoteCourses.length == 0" class="messagebox messagebox_info">
+                        {{ $t('message.noRemoteCoursesAvailable') }}
+                    </div>
                 </ul>
             </div>
             <div v-if="showRemoteCourseware && remoteCourseware" class="cw-remote-courseware">
@@ -124,36 +127,41 @@
                     </div>
                 </li>
                 <li>
-                    <div
-                        id="cw-export-download"
-                        class="cw-action-menu-button"
-                        :title="$t('message.exportExplain')"
-                        @click="showExport"
-                    >
-                        <p>{{ $t('message.exportButton') }}</p>
-                    </div>
+                    <a :href="coursewareExportURL">
+                        <div id="cw-export-download" class="cw-action-menu-button" :title="$t('message.exportExplain')">
+                            <!-- @click="showExport" -->
+                            <p>{{ $t('message.exportButton') }}</p>
+                        </div>
+                    </a>
                 </li>
             </ul>
             <div v-if="(showRemoteCourseware || showImportCourseware) && loading">
                 <spring-spinner :animation-duration="3000" :size="65" :color="'#28497c'" class="cw-action-loading" />
             </div>
-            <button
-                v-if="(showRemoteCourseware || showImportCourseware || showExportCourseware) && !loading"
-                class="button"
-                id="cw-reset-action-menu"
-                @click="resetActionMenu"
-            >
-                {{ $t('message.tasksBackButton') }}
-            </button>
-            <button id="cw-import" class="button" v-if="showImportCourseware" @click="importCompleteArchive">
-                {{ $t('message.importingButton') }}
-            </button>
-            <a :href="coursewareExportURL" v-if="showExportCourseware">
-                <button id="cw-export" class="button">
-                    {{ $t('message.exportingButton') }}
+            <div class="cw-action-button-wrapper">
+                <button
+                    v-if="(showRemoteCourseware || showImportCourseware || showExportCourseware) && !loading"
+                    class="button"
+                    id="cw-reset-action-menu"
+                    @click="resetActionMenu"
+                >
+                    {{ $t('message.tasksBackButton') }}
                 </button>
-            </a>
-            <div style="clear: both;"></div>
+                <button
+                    id="cw-import"
+                    class="button"
+                    v-if="showImportCourseware && !fileError && !loading"
+                    @click="importCompleteArchive"
+                >
+                    {{ $t('message.importingButton') }}
+                </button>
+                <a :href="coursewareExportURL" v-if="showExportCourseware">
+                    <button id="cw-export" class="button">
+                        {{ $t('message.exportingButton') }}
+                    </button>
+                </a>
+                <div style="clear: both;"></div>
+            </div>
         </div>
     </div>
 </template>
