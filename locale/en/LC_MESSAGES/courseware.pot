@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  js.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-0314 08:47+0200\n"
+"POT-Creation-Date: 2019-11-1118 14:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "#-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-14 08:47+0100\n"
+"POT-Creation-Date: 2019-11-18 14:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,7 +66,7 @@ msgstr ""
 
 msgid ""
 "Achtung! PHP-CURL ist nicht installiert. Ohne PHP-CURL funktioniert dieser "
-"Block nicht."
+"Block nicht"
 msgstr ""
 
 msgid "akzeptieren"
@@ -84,6 +84,9 @@ msgid ""
 msgstr ""
 
 msgid "alles zeigen"
+msgstr ""
+
+msgid "ändern"
 msgstr ""
 
 msgid "Anfangsbuchstabe gro�?"
@@ -152,16 +155,19 @@ msgstr ""
 msgid "Autor"
 msgstr ""
 
-msgid "Autorenmodus"
+msgid "Balkendiagramm"
 msgstr ""
 
-msgid "Balkendiagramm"
+msgid "Bearbeitungsmodus"
 msgstr ""
 
 msgid "Bereits vorhandene Diskussion verwenden"
 msgstr ""
 
 msgid "Beschreibung"
+msgstr ""
+
+msgid "Beschriftung"
 msgstr ""
 
 msgid "betrachten"
@@ -176,6 +182,12 @@ msgid "Bezeichnung"
 msgstr ""
 
 msgid "Bezeichung des Links"
+msgstr ""
+
+msgid "Bild"
+msgstr ""
+
+msgid "Bild in voller Breite darstellen"
 msgstr ""
 
 msgid "Bild nachher - Dateibereich"
@@ -196,10 +208,18 @@ msgstr ""
 msgid "Bild vorher - URL"
 msgstr ""
 
+msgid "Bild wurde im Ordner"
+msgstr ""
+
 msgid ""
 "Bitte beachten Sie, dass StudIP über eine sichere Verbindung aufgerufen "
 "wird. Es können nur Quellen eingebunden werden, die auch über eine sichere "
 "Verbindung verfügen. Nutzen Sie das Protokoll https in der URL!"
+msgstr ""
+
+msgid ""
+"Bitte schlie�?en Sie ein Mikrofon und eine Kamera an um eine Videodatei "
+"aufzunehmen"
 msgstr ""
 
 msgid "Bitte vergleichen Sie Ihre Lösung mit der Musterlösung."
@@ -210,7 +230,12 @@ msgid ""
 "aufzunehmen"
 msgstr ""
 
-msgid "Bitte wenden Sie sich an Ihren Administrator."
+msgid ""
+"Bitte verwenden Sie den Firefox oder Chrome Browser um eine Videodatei "
+"aufzunehmen"
+msgstr ""
+
+msgid "Bitte wenden Sie sich an Ihren Administrator"
 msgstr ""
 
 msgid "blau"
@@ -274,10 +299,19 @@ msgstr ""
 msgid "Datei aus dem Dateibereich"
 msgstr ""
 
+msgid "Datei auswählen"
+msgstr ""
+
 msgid "Dateibereich"
 msgstr ""
 
 msgid "Dateien dieser Veranstaltung"
+msgstr ""
+
+msgid "Dateien zum hochladen auswählen"
+msgstr ""
+
+msgid "Dateinamen anzeigen"
 msgstr ""
 
 msgid "Dateityp"
@@ -300,6 +334,20 @@ msgstr ""
 
 msgid ""
 "Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
+msgstr ""
+
+msgid "Der ausgewählte Ordner enthält keine Dateien"
+msgstr ""
+
+msgid ""
+"Der ausgewählte Ordner ist zugriffsbeschränkt. Die Galerie wird nicht "
+"dargestellt."
+msgstr ""
+
+msgid "Der Inhalt konnte beim Anbieter nicht gefunden werden"
+msgstr ""
+
+msgid "Der Zugriff auf diesen Inhalt wird vom Anbieter gesperrt"
 msgstr ""
 
 msgid "Diagrammtyp"
@@ -355,7 +403,24 @@ msgid ""
 "Abschnitte erfolgreich abgeschlo�?en haben."
 msgstr ""
 
+msgid ""
+"Dieser Ordner ist versteckt und kann nicht von Teilnehmern eingesehen werden"
+msgstr ""
+
 msgid "Dieser Test ist zurzeit nicht verfügbar."
+msgstr ""
+
+msgid ""
+"Dieser Text wird angezeigt, wenn der Mauszeiger über die Form bewegt wird."
+msgstr ""
+
+msgid "Dies ist ein Gruppenordner"
+msgstr ""
+
+msgid "Dies ist ein Hausaufgabenordner"
+msgstr ""
+
+msgid "Dies ist ein zeitgesteuerter Ordner"
 msgstr ""
 
 #: Courseware.php:113
@@ -368,7 +433,15 @@ msgstr ""
 msgid "Download: Es wurde keine Datei ausgewählt"
 msgstr ""
 
+msgid ""
+"Durch das Anklicken der Checkbox wird es den Studenten erlaubt, direkt über "
+"die Courseware Dateien in den ausgewählten Ordner hochzuladen."
+msgstr ""
+
 msgid "editieren"
+msgstr ""
+
+msgid "eigenes Bild anzeigen"
 msgstr ""
 
 msgid "Einblendungen"
@@ -443,10 +516,12 @@ msgstr ""
 msgid "Es wurde noch keine Videodatei ausgewählt."
 msgstr ""
 
+msgid "Es wurde noch kein Video aufgezeichnet."
+msgstr ""
+
 msgid "Es wurde noch kein Video eingetragen."
 msgstr ""
 
-#: Courseware.php:118
 msgid "Export"
 msgstr ""
 
@@ -459,7 +534,7 @@ msgstr ""
 msgid "Für diese Frage haben Sie bereits eine Antwort abgegeben."
 msgstr ""
 
-msgid "Für diesen Block sind keine Einstellungen notwendig."
+msgid "Für diesen Block sind keine Einstellungen notwendig"
 msgstr ""
 
 msgid ""
@@ -604,6 +679,13 @@ msgstr ""
 msgid "Hoch"
 msgstr ""
 
+msgid "hochladen"
+msgstr ""
+
+msgid ""
+"Hochladen der Datei fehlgeschlagen! Leere Dateien werden nicht angenommen."
+msgstr ""
+
 msgid "https://www.beispiel.de/bild.jpg"
 msgstr ""
 
@@ -630,7 +712,10 @@ msgid ""
 "Im aktuellen Aufgabenblatt sind nicht unterstützte Aufgabentypen enthalten!"
 msgstr ""
 
-#: Courseware.php:123 views/block_manager/index.php:122
+msgid "im Dateibereich speichern"
+msgstr ""
+
+#: views/block_manager_old/index.php:122
 msgid "Import"
 msgstr ""
 
@@ -677,6 +762,9 @@ msgstr ""
 msgid "ja"
 msgstr ""
 
+msgid "Kamera freigeben um etwas aufzunehmen"
+msgstr ""
+
 msgid "Kapitel einfügen"
 msgstr ""
 
@@ -696,6 +784,9 @@ msgid "kein Aufgabenblatt"
 msgstr ""
 
 msgid "kein Bild"
+msgstr ""
+
+msgid "kein Bild ausgewählt"
 msgstr ""
 
 msgid "Keine Abschnitte"
@@ -719,6 +810,9 @@ msgstr ""
 msgid "keinen Treffer gefunden"
 msgstr ""
 
+msgid "keinen Upload ermöglichen"
+msgstr ""
+
 msgid "keine PDF-Datei verfügbar"
 msgstr ""
 
@@ -734,6 +828,9 @@ msgstr ""
 msgid "Kein Test verfügbar. Vips muss installiert sein."
 msgstr ""
 
+msgid "klein"
+msgstr ""
+
 msgid "klicken um Karte umzudrehen"
 msgstr ""
 
@@ -743,6 +840,9 @@ msgstr ""
 msgid "kooperieren"
 msgstr ""
 
+msgid "Kreis"
+msgstr ""
+
 msgid "Kreisdiagramm"
 msgstr ""
 
@@ -750,6 +850,9 @@ msgid "langsam"
 msgstr ""
 
 msgid "Layout"
+msgstr ""
+
+msgid "Lesemodus"
 msgstr ""
 
 msgid "Letzte �?nderungen"
@@ -854,7 +957,10 @@ msgstr ""
 msgid "oben rechts"
 msgstr ""
 
-msgid "Opencast Player verwenden"
+msgid "Objekt entfernen"
+msgstr ""
+
+msgid "Opencast Player"
 msgstr ""
 
 msgid "Opencast Video"
@@ -866,7 +972,13 @@ msgstr ""
 msgid "Ordner dieser Veranstaltung"
 msgstr ""
 
+msgid "Ordnername"
+msgstr ""
+
 msgid "Ort"
+msgstr ""
+
+msgid "Oval"
 msgstr ""
 
 msgid "planen"
@@ -908,6 +1020,12 @@ msgstr ""
 msgid "Rückseite - Text"
 msgstr ""
 
+msgid "Radius"
+msgstr ""
+
+msgid "Rechteck"
+msgstr ""
+
 msgid "rechts gro�?"
 msgstr ""
 
@@ -917,6 +1035,9 @@ msgstr ""
 msgid "rechts mittel"
 msgstr ""
 
+msgid "riesig"
+msgstr ""
+
 msgid "Ringdiagramm"
 msgstr ""
 
@@ -924,6 +1045,9 @@ msgid "rot"
 msgstr ""
 
 msgid "Säulendiagramm"
+msgstr ""
+
+msgid "Schlie�?en Sie ein Mikrofon an um etwas aufzunehmen"
 msgstr ""
 
 msgid "schnell"
@@ -989,6 +1113,9 @@ msgstr ""
 msgid "Speichern nicht möglich. Die Aufnahme wurde noch nicht beendet."
 msgstr ""
 
+msgid "Speicherort"
+msgstr ""
+
 msgid "Sprache"
 msgstr ""
 
@@ -1001,14 +1128,7 @@ msgstr ""
 msgid "Stellen Sie eine Frage oder kommentieren Sie..."
 msgstr ""
 
-#: Courseware.php:90 views/block_manager/index.php:38
-msgid "Struktur bearbeiten"
-msgstr ""
-
 msgid "Strukturen & Layout"
-msgstr ""
-
-msgid "Studentenmodus"
 msgstr ""
 
 msgid "Stunde"
@@ -1038,6 +1158,9 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
+msgid "Textwerkzeug"
+msgstr ""
+
 msgid "Titel"
 msgstr ""
 
@@ -1051,6 +1174,9 @@ msgid ""
 "Tragen Sie in das Feld URL (Uniform Resource Locator) die Adresse der Seite "
 "ein, die im iFrame erscheinen soll.<br> Bitte beachten Sie, dass manche "
 "Seiten die Darstellung in einem iFrame blockieren."
+msgstr ""
+
+msgid "transparent"
 msgstr ""
 
 msgid "Typ"
@@ -1077,6 +1203,9 @@ msgstr ""
 msgid "Unterkapitel sortieren"
 msgstr ""
 
+msgid "Upload erlauben?"
+msgstr ""
+
 msgid "URL"
 msgstr ""
 
@@ -1084,6 +1213,16 @@ msgid "veröffentlicht auf"
 msgstr ""
 
 msgid "verfügbare Sprachen"
+msgstr ""
+
+msgid "verstehen"
+msgstr ""
+
+#: Courseware.php:90
+msgid "Verwaltung"
+msgstr ""
+
+msgid "Video aufnehmen"
 msgstr ""
 
 msgid "Video-Typ:"
@@ -1164,6 +1303,12 @@ msgstr ""
 msgid "Wert"
 msgstr ""
 
+msgid "Werte anderer Nutzer anzeigen"
+msgstr ""
+
+msgid "Zeichenwerkzeug"
+msgstr ""
+
 msgid "Zeitpunkt"
 msgstr ""
 
@@ -1179,35 +1324,7 @@ msgstr ""
 msgid "Zurücksetzen"
 msgstr ""
 
-msgid "Neuer Abschnitt"
-msgstr ""
-
-msgid "Neues Kapitel"
-msgstr ""
-
-msgid "Neues Unterkapitel"
-msgstr ""
-
-msgid "Sichtbar ab"
-msgstr ""
-
-msgid "Wollen Sie den Block wirklich l�schen?"
-msgstr ""
-
-msgid "Wollen Sie den gesamten Abschnitt wirklich l�schen?"
-msgstr ""
-
-msgid ""
-"Wollen Sie wirklich l�schen? S�mtliche enthaltenen Abschnitte und Bl�cke "
-"werden unwiderruflich entfernt!"
-msgstr ""
-
-msgid ""
-"Wollen Sie wirklich l�schen? S�mtliche enthaltenen Bl�cke werden "
-"unwiderruflich entfernt!"
-msgstr ""
-
-msgid "Best?tigung"
+msgid "Best�tigung"
 msgstr ""
 
 msgid "Diskussion"
@@ -1219,20 +1336,20 @@ msgstr ""
 msgid "Freitext"
 msgstr ""
 
-#: Courseware.php:100 Courseware.php:132
+#: Courseware.php:100 Courseware.php:132 views/courseware/news.php:2
 msgid "Letzte Änderungen"
 msgstr ""
 
-#: Courseware.php:247
+#: Courseware.php:249
 #, php-format
 msgid "%s neue Courseware-Inhalte"
 msgstr ""
 
-#: Courseware.php:247
+#: Courseware.php:249
 msgid "1 neuer Courseware-Inhalt"
 msgstr ""
 
-#: Courseware.php:372
+#: Courseware.php:374
 msgid ""
 "Mit dem Courseware-Modul können Sie interaktive Lernmodule in Stud.IP "
 "erstellen. Strukturieren Sie Ihre Inhalte in Kapiteln und Unterkapiteln. "
@@ -1242,21 +1359,21 @@ msgid ""
 "in einen Courseware-Abschnitt ein."
 msgstr ""
 
-#: Courseware.php:373
+#: Courseware.php:375
 msgid "Information"
 msgstr ""
 
-#: Courseware.php:375
+#: Courseware.php:377
 msgid ""
 "Sie können den Courseware-Reiter umbenennen! Wählen Sie dazu den Punkt "
 "'Einstellungen', den Sie im Editiermodus unter der Seitennavigation finden."
 msgstr ""
 
-#: Courseware.php:376
+#: Courseware.php:378
 msgid "Tipp"
 msgstr ""
 
-#: Courseware.php:378
+#: Courseware.php:380
 msgid ""
 "Über dieses Modul stellen Ihre Lehrenden Ihnen multimediale Lernmodule "
 "direkt in Stud.IP zur Verfügung. Die Module können Texte, Bilder, Videos, "
@@ -1265,15 +1382,15 @@ msgid ""
 "Fortschrittsübersicht."
 msgstr ""
 
-#: Courseware.php:379
+#: Courseware.php:381
 msgid "Hinweis"
 msgstr ""
 
-#: Courseware.php:441
+#: Courseware.php:443
 msgid "Zurück zur Courseware"
 msgstr ""
 
-#: Courseware.php:447 models/mooc/db/CoursewareFactory.php:49
+#: Courseware.php:449 models/mooc/db/CoursewareFactory.php:49
 msgid "Courseware"
 msgstr ""
 
@@ -1281,57 +1398,36 @@ msgstr ""
 msgid "Die Einstellungen wurden gespeichert."
 msgstr ""
 
-#: controllers/courseware.php:318
+#: controllers/courseware.php:344
 msgid "Tutoren können diese Einstellung nicht speichern."
 msgstr ""
 
-#: controllers/block_manager.php:163
-msgid "Import-Archiv enthält keine Datendatei data.xml"
-msgstr ""
-
-#: controllers/block_manager.php:179
-msgid "Das Archiv wurde erfolgreich importiert"
-msgstr ""
-
-#: controllers/block_manager.php:188
+#: controllers/block_manager.php:335
 msgid "Es wurde kein Import-Archiv hochgeladen"
 msgstr ""
 
-#: controllers/block_manager.php:197
+#: controllers/block_manager.php:344
 msgid "Das Import-Archiv ist beschädigt"
 msgstr ""
 
-#: controllers/block_manager.php:248 controllers/import.php:82
+#: controllers/block_manager.php:400 controllers/import.php:82
 msgid "Es konnten möglicherweise nicht alle Blöcke importiert werden"
 msgstr ""
 
-#: controllers/block_manager.php:251
+#: controllers/block_manager.php:403
 msgid "Die Datendatei data.xml enthält kein valides XML"
 msgstr ""
 
-#: controllers/block_manager.php:296 controllers/block_manager.php:371
-#: controllers/block_manager.php:509 controllers/block_manager.php:561
-msgid "Änderungen wurden gespeichert"
-msgstr ""
-
-#: controllers/block_manager.php:298
-msgid "Es wurden keine Änderungen vorgenommen"
-msgstr ""
-
-#: controllers/block_manager.php:370 controllers/block_manager.php:508
+#: controllers/block_manager.php:524 controllers/block_manager.php:677
 msgid "Daten wurden nicht importiert"
 msgstr ""
 
-#: controllers/block_manager.php:391
-msgid "Daten wurden aus \""
+#: controllers/block_manager.php:525 controllers/block_manager.php:678
+msgid "Änderungen wurden gespeichert"
 msgstr ""
 
-#: controllers/block_manager.php:395
+#: controllers/block_manager.php:553
 msgid "Das Import-Archiv enthält keine data.xml"
-msgstr ""
-
-#: controllers/block_manager.php:545
-msgid "Daten wurden importiert"
 msgstr ""
 
 #: controllers/import.php:55
@@ -1350,15 +1446,11 @@ msgstr ""
 msgid "Fortschrittsübersicht für Lehrende"
 msgstr ""
 
-#: views/cpo/index.php:39
-msgid "Nutzung: "
-msgstr ""
-
-#: views/cpo/index.php:106
+#: views/cpo/index.php:72
 msgid " wurde von einem Teilnehmer zuletzt am "
 msgstr ""
 
-#: views/cpo/index.php:106
+#: views/cpo/index.php:72
 msgid " bearbeitet"
 msgstr ""
 
@@ -1422,6 +1514,83 @@ msgstr ""
 msgid "Dieser Abschnitt enthält keine Blöcke"
 msgstr ""
 
+#: views/block_manager_old/index.php:6
+msgid "Es ist ein Fehler aufgetreten"
+msgstr ""
+
+#: views/block_manager_old/index.php:8
+msgid "Es sind Fehler aufgetreten"
+msgstr ""
+
+#: views/block_manager_old/index.php:18
+msgid "Warnung"
+msgstr ""
+
+#: views/block_manager_old/index.php:27
+msgid "Erfolg"
+msgstr ""
+
+#: views/block_manager_old/index.php:38
+msgid "Struktur bearbeiten"
+msgstr ""
+
+#: views/block_manager_old/index.php:46 views/block_manager_old/index.php:139
+#: models/mooc/db/CoursewareFactory.php:51
+#: models/mooc/db/CoursewareFactory.php:52
+msgid "Kapitel"
+msgstr ""
+
+#: views/block_manager_old/index.php:48 views/block_manager_old/index.php:63
+#: views/block_manager_old/index.php:141 views/block_manager_old/index.php:156
+msgid "veröffentlichen"
+msgstr ""
+
+#: views/block_manager_old/index.php:51 views/block_manager_old/index.php:66
+#: views/block_manager_old/index.php:144 views/block_manager_old/index.php:159
+msgid "widerrufen"
+msgstr ""
+
+#: views/block_manager_old/index.php:61 views/block_manager_old/index.php:154
+msgid "Unterkapitel"
+msgstr ""
+
+#: views/block_manager_old/index.php:74 views/block_manager_old/index.php:167
+msgid "Abschnitt"
+msgstr ""
+
+#: views/block_manager_old/index.php:114
+msgid "Änderungen speichern"
+msgstr ""
+
+#: views/block_manager_old/index.php:130
+msgid "Komplettes Archiv importieren"
+msgstr ""
+
+#: views/block_manager_old/index.php:215
+msgid ""
+"Es wurden keine weitere Veranstaltung gefunden in der Courseware aktiv ist"
+msgstr ""
+
+#: views/block_manager_old/index.php:221
+msgid ""
+"Laden Sie eine Datei hoch, die Sie zuvor aus einer Courseware exportiert "
+"haben"
+msgstr ""
+
+#: views/block_manager_old/index.php:222
+msgid "Import-Archiv hochladen"
+msgstr ""
+
+#: views/block_manager_old/index.php:227
+msgid ""
+"Importieren Sie Inhalte aus einer anderen Veranstaltung in der Sie Dozent "
+"sind"
+msgstr ""
+
+#: views/block_manager_old/index.php:228
+msgid "Aus Veranstaltung importieren"
+msgstr ""
+
 #: views/import/index.php:1
 msgid "Datei hochladen"
 msgstr ""
@@ -1444,14 +1613,6 @@ msgstr ""
 msgid ""
 "Laden Sie eine Datei hoch, die Sie zuvor aus einer Courseware exportiert "
 "haben."
-msgstr ""
-
-#: views/courseware/news.php:2
-msgid "Neue Inhalte"
-msgstr ""
-
-#: views/courseware/news.php:29
-msgid "Es wurden keine neuen Inhalte seit Ihrem letzten Besuch erstellt."
 msgstr ""
 
 #: views/courseware/_settings_discussionblock.php:4
@@ -1589,90 +1750,30 @@ msgstr ""
 msgid "Änderungen übernehmen"
 msgstr ""
 
-#: views/block_manager/index.php:6
-msgid "Es ist ein Fehler aufgetreten"
-msgstr ""
-
-#: views/block_manager/index.php:8
-msgid "Es sind Fehler aufgetreten"
-msgstr ""
-
-#: views/block_manager/index.php:18
-msgid "Warnung"
-msgstr ""
-
-#: views/block_manager/index.php:27
-msgid "Erfolg"
-msgstr ""
-
-#: views/block_manager/index.php:46 views/block_manager/index.php:139
-#: models/mooc/db/CoursewareFactory.php:51
-#: models/mooc/db/CoursewareFactory.php:52
-msgid "Kapitel"
-msgstr ""
-
-#: views/block_manager/index.php:48 views/block_manager/index.php:63
-#: views/block_manager/index.php:141 views/block_manager/index.php:156
-msgid "veröffentlichen"
-msgstr ""
-
-#: views/block_manager/index.php:51 views/block_manager/index.php:66
-#: views/block_manager/index.php:144 views/block_manager/index.php:159
-msgid "widerrufen"
-msgstr ""
-
-#: views/block_manager/index.php:61 views/block_manager/index.php:154
-msgid "Unterkapitel"
-msgstr ""
-
-#: views/block_manager/index.php:74 views/block_manager/index.php:167
-msgid "Abschnitt"
-msgstr ""
-
-#: views/block_manager/index.php:114
-msgid "Änderungen speichern"
-msgstr ""
-
-#: views/block_manager/index.php:130
-msgid "Komplettes Archiv importieren"
-msgstr ""
-
-#: views/block_manager/index.php:208
-msgid ""
-"Es wurden keine weitere Veranstaltung gefunden in der Courseware aktiv ist."
-msgstr ""
-
-#: views/block_manager/index.php:214
-msgid ""
-"Laden Sie eine Datei hoch, die Sie zuvor aus einer Courseware exportiert "
-"haben"
-msgstr ""
-
-#: views/block_manager/index.php:215
-msgid "Import-Archiv hochladen"
-msgstr ""
-
-#: views/block_manager/index.php:220
-msgid ""
-"Importieren Sie Inhalte aus einer anderen Veranstaltung in der Sie Dozent "
-"sind"
-msgstr ""
-
-#: views/block_manager/index.php:221
-msgid "Aus Veranstaltung importieren"
-msgstr ""
-
 #: blocks/InteractiveVideoBlock/InteractiveVideoBlock.php:191
-#: blocks/TestBlock/TestBlock.php:187 blocks/TestBlock/TestBlock.php:291
+#: blocks/TestBlock/TestBlock.php:186 blocks/TestBlock/TestBlock.php:277
 msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
 msgstr ""
 
-#: blocks/Courseware/Courseware.php:618 models/mooc/db/CoursewareFactory.php:60
+#: blocks/Courseware/Courseware.php:624 models/mooc/db/CoursewareFactory.php:60
 msgid "Unterkapitel 1"
 msgstr ""
 
-#: blocks/Courseware/Courseware.php:626 models/mooc/db/CoursewareFactory.php:68
+#: blocks/Courseware/Courseware.php:632 models/mooc/db/CoursewareFactory.php:68
 msgid "Abschnitt 1"
+msgstr ""
+
+#: blocks/Section/Section.php:133
+msgid "Sie sind nicht berechtigt Blöcke anzulegen."
+msgstr ""
+
+#: blocks/Section/Section.php:178
+msgid "Sie sind nicht berechtigt Blöcke zu löschen."
+msgstr ""
+
+#: blocks/Section/Section.php:202 blocks/Section/Section.php:217
+#: blocks/Section/Section.php:237
+msgid "Sie sind nicht berechtigt diese Änderung vorzunehmen."
 msgstr ""
 
 #: blocks/AudioGalleryBlock/AudioGalleryBlock.php:155
@@ -1683,24 +1784,11 @@ msgstr ""
 msgid "Aufnahme konnte nicht gelöscht werden."
 msgstr ""
 
-#: blocks/Section/Section.php:132
-msgid "Sie sind nicht berechtigt Blöcke anzulegen."
-msgstr ""
-
-#: blocks/Section/Section.php:177
-msgid "Sie sind nicht berechtigt Blöcke zu löschen."
-msgstr ""
-
-#: blocks/Section/Section.php:201 blocks/Section/Section.php:216
-#: blocks/Section/Section.php:236
-msgid "Sie sind nicht berechtigt diese Änderung vorzunehmen."
-msgstr ""
-
-#: blocks/DiscussionBlock/DiscussionBlock.php:75
+#: blocks/DiscussionBlock/DiscussionBlock.php:77
 msgid "gemeinsam"
 msgstr ""
 
-#: blocks/DiscussionBlock/DiscussionBlock.php:76
+#: blocks/DiscussionBlock/DiscussionBlock.php:78
 msgid "in Gruppen"
 msgstr ""
 
@@ -1712,7 +1800,7 @@ msgstr ""
 msgid "Übung"
 msgstr ""
 
-#: blocks/TestBlock/TestBlock.php:226
+#: blocks/TestBlock/TestBlock.php:227
 msgid "Diese Aufgabe können nur eingeloggte Nutzer abgeben."
 msgstr ""
 
@@ -1724,6 +1812,6 @@ msgstr ""
 msgid "Name des HTML-Blocks"
 msgstr ""
 
-#: models/mooc/ui/Block.php:520
+#: models/mooc/ui/Block.php:529
 msgid "Sie sind nicht berechtigt diesen Block zu editieren."
 msgstr ""

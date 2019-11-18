@@ -67,6 +67,7 @@ class BlockManagerController extends CoursewareStudipController
     public function courseware_vue_action()
     {
         $cid = Request::get('cid');
+        $this->lang = getUserLanguage($this->container['current_user']->id);
         $grouped = $this->getGrouped($cid);
         $courseware = current($grouped['']);
         $this->buildTree($grouped, $courseware);
@@ -129,7 +130,7 @@ class BlockManagerController extends CoursewareStudipController
                     $arr['isBlock'] = true;
                     $ui_block = $this->plugin->getBlockFactory()->makeBlock($item);
                     $arr['ui_block'] = $ui_block;
-                    $arr['readable_name'] = $ui_block::NAME;
+                    $arr['readable_name'] = $this->getI18NBlockName($ui_block::NAME);
                     $arr['preview'] = '';
                     if(method_exists($ui_block, 'preview_view')) {
                         $arr['preview'] = $ui_block->render('preview', array());
@@ -869,5 +870,49 @@ class BlockManagerController extends CoursewareStudipController
         }
 
         $files[$originId] = $new_reference;
+    }
+
+    private function getI18NBlockName($name) {
+        $lang = getUserLanguage($this->container['current_user']->id);
+        $i18n_en = array(
+            'Audio' => 'Audio',
+            'Audio Galerie' => 'Audio Gallery',
+            'Bestätigung' => 'Confirmation',
+            'Bildvergleich' => 'Image Comparison',
+            'Dateiordner' => 'Folder',
+            'Diagramm' => 'Chart',
+            'Download' => 'Download',
+            'Embed' => 'Embed',
+            'Forum' => 'Forum',
+            'Freitext' => 'Free Text',
+            'Galerie' => 'Gallery',
+            'Gruppieren' => 'Group',
+            'Interactive Video' => 'Interactive Video',
+            'Kommentare & Diskussion' => 'Comments & Discussion',
+            'Leinwand' => 'Canvas',
+            'Lernkarten' => 'Dialog Cards',
+            'Link' => 'Link',
+            'Merksatz' => 'Key Point',
+            'Opencast' => 'Opencast',
+            'PDF mit Vorschau' => 'PDF preview',
+            'Quellcode' => 'Source Code',
+            'Quiz' => 'Quiz',
+            'Schreibmaschine' => 'Typewriter',
+            'Suche' => 'Search',
+            'Termin' => 'Date',
+            'Verweissensitive Grafik' => 'Image Map',
+            'Video' => 'Video',
+            'externer Inhalt (iframe)' => 'External Content (iframe)'
+
+
+        );
+        if ($lang == 'de_DE') {
+            return $name;
+        }
+        if ($lang == 'en_GB') {
+            return $i18n_en[$name];
+        }
+
+        return $name;
     }
 }

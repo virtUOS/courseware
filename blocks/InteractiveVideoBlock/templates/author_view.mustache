@@ -64,7 +64,7 @@
                     <option value="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
                 {{/course_video_files}}
             </optgroup>
-            <optgroup label="Dateien im eigenen Dateibereich">
+            <optgroup label="{{#i18n}}Dateien im eigenen Dateibereich{{/i18n}}">
                 {{#user_video_files}}
                     <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
                 {{/user_video_files}}
@@ -72,7 +72,7 @@
                     <option value="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
                 {{/user_video_files}}
             </optgroup>
-            <optgroup label="Dateien im Dateibereich anderer Nutzer">
+            <optgroup label="{{#i18n}}Dateien im Dateibereich anderer Nutzer{{/i18n}}">
                 {{#other_user_files}}
                     <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
                 {{/other_user_files}}

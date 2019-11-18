@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Courseware\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-0314 08:47+0200\n"
-"PO-Revision-Date: 2019-03-15 15:22+0100\n"
+"PO-Revision-Date: 2019-11-18 15:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: ELAN e.V. <lucke@elan-ev.de>\n"
 "Language: en\n"
@@ -155,7 +155,7 @@ msgid "Bewegen Sie den Cursor über das Informations-Icon des gewünschten Block
 msgstr "Move the cursor over the information icon of the desired block to get the block ID."
 
 msgid "Bezeichnung"
-msgstr "label"
+msgstr "Description"
 
 msgid "Bezeichung des Links"
 msgstr "Designation of the link"
@@ -430,6 +430,9 @@ msgstr "For each user, an individual value is transferred with which the applica
 msgid "Für jedes Thema aus dem Ablaufplan dieser Veranstaltung wird ein Kapitel angelegt"
 msgstr "For each topic from the schedule of this course, a chapter will be created"
 
+msgid "Ablaufplan importieren"
+msgstr "Import schedule"
+
 msgid "für kleine Displays"
 msgstr "for small displays"
 
@@ -498,7 +501,7 @@ msgid "groß"
 msgstr "big"
 
 msgid "Höhe"
-msgstr "Height"
+msgstr "height"
 
 msgid "Höhe der Galerie (in Pixeln)"
 msgstr "Height of the gallery (in pixels)"
@@ -1115,6 +1118,9 @@ msgstr "Do you really want to delete? All sections and blocks will be deleted pe
 msgid "Bestätigung"
 msgstr "Confirmation"
 
+msgid "Vom Lernenden bestätigen lassen, dass der Inhalt betrachtet wurde"
+msgstr "Have the learner confirm that the content has been viewed"
+
 msgid "Diskussion"
 msgstr "Discussion"
 
@@ -1708,6 +1714,9 @@ msgstr "Gallery"
 msgid "Gruppieren"
 msgstr "Group"
 
+msgid "Vereint Blöcke und erzeugt eine zusätzliche Navigation"
+msgstr "Combines blocks and creates additional navigation"
+
 msgid "Interactive Video"
 msgstr "Interactive Video"
 
@@ -1818,3 +1827,93 @@ msgstr "Date"
 
 msgid "Zeigt einen Termin oder Countdown an"
 msgstr "Displays an appointment or countdown"
+
+msgid "Dateiordner"
+msgstr "Folder"
+
+msgid "Stellt einen Ordner aus dem Dateibereich zur Verfügung"
+msgstr "Provides a folder from the Stud.IP file system"
+
+msgid "Verwaltung"
+msgstr "Administration"
+
+msgid "Verweissensitive Grafik"
+msgstr "Image Map"
+
+msgid "Beliebige Bereiche auf einem Bild lassen sich verlinken"
+msgstr "Any areas on a picture can be linked"
+
+msgid "Dateien zum hochladen auswählen"
+msgstr "Select files to upload"
+
+msgid "kein Bild ausgewählt"
+msgstr "no picture selected"
+
+msgid "Dateien im eigenen Dateibereich"
+msgstr "Files in your own file space"
+
+msgid "Datei im Dateibereich eines anderen Nutzers"
+msgstr "File in the file space of another user"
+
+msgid "Lesemodus"
+msgstr "read mode"
+
+msgid "Bearbeitungsmodus"
+msgstr "edit mode"
+
+msgid "Upload erlauben"
+msgstr "Allow upload"
+
+msgid "Nutzern erlauben, direkt über die Courseware Dateien in den ausgewählten Ordner hochzuladen"
+msgstr "Allow users to directly upload files to the selected folder via the courseware"
+
+msgid "Speicherort"
+msgstr "Storage location"
+
+msgid "Werte anderer Nutzer anzeigen"
+msgstr "Show the values ​​of other users"
+
+msgid "deaktiviert"
+msgstr "disabled"
+
+msgid "nur für Lehrende"
+msgstr "for teachers only"
+
+msgid "für alle"
+msgstr "for all"
+
+msgid "keinen Upload ermöglichen"
+msgstr "do not allow upload"
+
+msgid "Startpunkt wählen"
+msgstr "Select starting point"
+
+msgid "Strat"
+msgstr "Start"
+
+msgid "Endpunkt wählen"
+msgstr "Select endpoint"
+
+msgid "Kreis"
+msgstr "Circle"
+
+msgid "Oval"
+msgstr "Oval"
+
+msgid "Rechteck"
+msgstr "Rectangle"
+
+msgid "Beschriftung"
+msgstr "Label"
+
+msgid "Radius"
+msgstr "radius"
+
+msgid "Dieser Text wird angezeigt, wenn der Mauszeiger über die Form bewegt wird"
+msgstr "This text is displayed when the mouse pointer is moved over the shape"
+
+msgid "Quellcode eingeben"
+msgstr "Enter source code"
+
+msgid "Datei auswählen"
+msgstr "Choose a file"
