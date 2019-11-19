@@ -1,5 +1,111 @@
 CHANGELOG
 =========
+4.5.0
+-----
+* excitingly enhanced block manager build with vue.js
+* User or Group can get approval to edit
+* new Block: FolderBlock -> show all files in a Folder, upload is optional
+* numerous layout adjustments
+* update i18n
+* some fixes
+
+4.4.7
+-----
+* fix #185
+* fix #191
+* EmbedBlock -> add infoboxes, full width option for images
+* Blockadder -> fix sidebar layout
+* ChartBlock -> fix layout
+
+4.4.6
+-----
+HOTFIX !
+Fix IFrameBlock: prevent redirect
+
+4.4.5
+-----
+* fix VideoBlock export and import
+* upgrade block manager layout
+* TestBlock: Warning for unsaved answers
+
+4.4.4
+-----
+* Fixed MathJax issue (see #187)
+
+4.4.3
+-----
+* enhance CanvasBlock, CodeBlock and OpenCastBlock
+* add new Block: ImageMap
+* Video recording for teachers
+* fix GalleryBlock layout
+* add new icons
+* fix bugs and layout
+* StudIP 4.3 ready
+
+4.4.2
+-----
+* enhance TestBlock for Vips 1.5.1
+* some little fixes
+
+4.4.1
+-----
+* fix scrollytelling layout
+* enhance CanvasBlock
+* enhance BlockManager
+
+4.4.0
+-----
+* New Blocks:
+** Audio Gallery
+** Canvas
+
+* New Block Manager:
+** sort chapters, sub-chapters, sections and blocks via drag and drop
+** import from courseware in other courses
+** import parts from a courseware archiv (exported courseware content)
+
+* New Functions:
+** AudioBlock: take a recording with your microphone
+** TestBlock: is ready for Vips 1.5, file upload enabled
+** a single block can be invisible to students
+** withdraw date for chapters and sub-chapters
+
+* and some minor layout and bug fixes
+
+4.3.3
+-----
+* AssortBlock: show assorted blocks in author view
+* fix favorites
+
+4.3.2
+-----
+* fixing open graph issues
+* use config instead of datafields for favs
+
+4.3.1
+-----
+* custom icons for section nav
+* fix favorites for StudIP Version 4.0.x
+* open graph in LinkBlock
+
+4.3.0
+-----
+* introducing scrollytelling
+* new blocks for scrollytelling - DateBlock, TypewriterBlock and ScrollyBlock
+* add favorites to block adder
+* ready for Vips 1.4
+* StudIP user files accessible
+* fix some layout issues
+
+4.2.2
+-----
+* fix vips sortables
+* fix bug in InteractiveVideoBlock
+* enhance EmbedBlock - Youtube videos may have start and end time
+* fix file export
+* fix vips in iav
+* enhance assort block
+
 4.2.0
 -----
 * fixing HTMLBlock wysiwyg author view for Stud.IP >= 4.2
