@@ -27,7 +27,7 @@
             </a>
             <a class="cw-navigation-blockmanager" href="{{#plugin_url}}block_manager/index{{/plugin_url}}">
                 <li>
-                    {{#i18n}}Struktur bearbeiten{{/i18n}}
+                    {{#i18n}}Verwaltung{{/i18n}}
                 </li>
             </a>
             <a class="cw-navigation-settings" href="{{#plugin_url}}courseware/settings{{/plugin_url}}">
@@ -50,7 +50,7 @@
                     {{#i18n}}Diskussionsübersicht{{/i18n}}
                 </li>
             </a>
-            <a class="cw-navigation-export" href="{{#plugin_url}}export{{/plugin_url}}">
+            <!--- <a class="cw-navigation-export" href="{{#plugin_url}}export{{/plugin_url}}">
                 <li>
                     {{#i18n}}Export{{/i18n}}
                 </li>
@@ -59,7 +59,7 @@
                 <li>
                     {{#i18n}}Import{{/i18n}}
                 </li>
-            </a>
+            </a> -->
           </ul>
         {{/user_is_teacher}}
         {{^user_is_teacher}}
@@ -90,6 +90,7 @@
       {{/chapters}}
 
       <li class=no-content>{{#i18n}}Keine Kapitel{{/i18n}}</li>
+      {{#user_is_teacher}}
       <li class=controls>
         <button class=add-chapter>{{#i18n}}Kapitel einfügen{{/i18n}}</button>
         <button class=init-sort-chapter>{{#i18n}}Kapitel sortieren{{/i18n}}</button>
@@ -102,7 +103,7 @@
         {{/active_chapter.aside_section}}
         <button class="add-topics" data-title="{{#i18n}}Für jedes Thema aus dem Ablaufplan dieser Veranstaltung wird ein Kapitel angelegt{{/i18n}}">{{#i18n}}Ablaufplan importieren{{/i18n}}</button>
       </li>
-      
+      {{/user_is_teacher}}
     </ol>
     {{#active_chapter}}
       {{#aside_section}}
@@ -150,12 +151,12 @@
 
   {{> active_subchapter}}
 
-  {{#user_is_teacher}}
+  {{#user_may_author}}
     <div class=mode-switch>
-      <button class="student" data-title="{{#i18n}}Studentenmodus{{/i18n}}"></button>
-      <button class="author" data-title="{{#i18n}}Autorenmodus{{/i18n}}"></button>
+      <button class="student" data-title="{{#i18n}}Lesemodus{{/i18n}}"></button>
+      <button class="author" data-title="{{#i18n}}Bearbeitungsmodus{{/i18n}}"></button>
     </div>
-  {{/user_is_teacher}}
+  {{/user_may_author}}
   
   {{#active_section}}
         {{> active_section}}

@@ -125,6 +125,7 @@ export default AuthorView.extend({
                 this.$('.cw-embedblock-time').show();
                 break;
             case 'deviantart':
+            case 'flickr':
             case 'giphy':
                 this.$('.cw-embedblock-image-options').show();
                 break;
@@ -239,7 +240,7 @@ export default AuthorView.extend({
 
     isImage() {
         var $embed_source = this.$('select.cw-embedblock-source option:selected').val();
-        if ($embed_source == 'giphy' || $embed_source == 'deviantart') {
+        if ($embed_source == 'giphy' || $embed_source == 'deviantart' || $embed_source == 'flickr') {
             return true;
         } else {
             return false;

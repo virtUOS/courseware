@@ -54,11 +54,13 @@
         {{/next}}
       {{/section_nav}}
 
-      <li class=controls>
-        <button class=add-section>{{#i18n}}Abschnitt einfügen{{/i18n}}</button>
-        <button class=init-sort-section>{{#i18n}}Abschnitte sortieren{{/i18n}}</button>
-        <button class=stop-sort-section>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
-      </li>
+      {{#user_can_edit_subchapter}}
+        <li class=controls>
+          <button class=add-section>{{#i18n}}Abschnitt einfügen{{/i18n}}</button>
+          <button class=init-sort-section>{{#i18n}}Abschnitte sortieren{{/i18n}}</button>
+          <button class=stop-sort-section>{{#i18n}}Sortieren abschließen{{/i18n}}</button>
+        </li>
+      {{/user_can_edit_subchapter}}
     {{/sections_as_chapters}}
   {{/show_section_nav}}
 </ol>

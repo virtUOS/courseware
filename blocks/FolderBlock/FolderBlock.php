@@ -245,8 +245,12 @@ class FolderBlock extends Block
     private function getFileInfos()
     {
         $folder_content = json_decode($this->folder_content);
-        $folder = \Folder::find($folder_content->folder_id)->getTypedFolder();
-        if ($folder->folder_type == 'HomeworkFolder') {
+        $folder = \Folder::find($folder_content->folder_id);
+        if ($folder == null) {
+            return array('name' =>  array(), 'id' =>array());
+        }
+        $typed_folder = $folder->getTypedFolder();
+        if ($typed_folder->folder_type == 'HomeworkFolder') {
             return array('name' =>  array(), 'id' =>array());
         }
         $files_id = array();
@@ -262,11 +266,16 @@ class FolderBlock extends Block
     public function exportProperties()
     {
         $folder_content = json_decode($this->folder_content);
-        $folder = \Folder::find($folder_content->folder_id)->getTypedFolder();
         $file_infos = $this->getFileInfos();
         $folder_content->file_ids = $file_infos['id'];
         $folder_content->file_names = $file_infos['name'];
-        $folder_content->folder_type = $folder->folder_type;
+        $folder = \Folder::find($folder_content->folder_id);
+        if ($folder == null) {
+            $folder_content->folder_type = '';
+        } else {
+            $typed_folder = $folder->getTypedFolder();
+            $folder_content->folder_type = $typed_folder->folder_type;
+        }
 
         return array(
              'folder_content' => json_encode($folder_content),
@@ -275,9 +284,8 @@ class FolderBlock extends Block
 
     public function getFiles()
     {
-        $folder_content = json_decode($this->folder_content);
-        $folder = \Folder::find($folder_content->folder_id)->getTypedFolder();
         $files = array();
+        $folder_content = json_decode($this->folder_content);
         $file_ids = $this->getFileInfos()['id'];
 
         foreach ($file_ids as $file_id) {

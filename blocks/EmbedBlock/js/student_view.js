@@ -14,6 +14,7 @@ export default StudentView.extend({
     },
 
     postRender() {
+        
         $(window).trigger('resize');
     },
 
@@ -21,8 +22,8 @@ export default StudentView.extend({
         var $view = this,
             width = $view.$el.width(),
             iframe = $view.$('iframe'),
-            img = $view.$('img.embed-block-image');
-
+            img = $view.$('img.cw-embedblock-image'),
+            new_height = 0;
         if (iframe.length != 0) {
             var iframe_width = iframe.attr('width');
             var iframe_height = iframe.attr('height');
@@ -30,7 +31,7 @@ export default StudentView.extend({
                 iframe.attr('height', Math.round(width/1.65));
                 iframe.css('height', Math.round(width/1.65));
             } else {
-                var new_height = (iframe_height / iframe_width) * width;
+                new_height = (iframe_height / iframe_width) * width;
                 iframe.attr('height', new_height);
                 iframe.css('height', new_height);
             }
@@ -41,9 +42,8 @@ export default StudentView.extend({
         if (img.length != 0) {
             var img_width = img.attr('data-originalwidth'),
                 img_height = img.attr('data-originalheight');
-
             if (img_width > width) {
-                var new_height = (img_height / img_width) * width;
+                new_height = (img_height / img_width) * width;
                 img.attr('width', width+'px');
                 img.attr('height', new_height+'px');
             }

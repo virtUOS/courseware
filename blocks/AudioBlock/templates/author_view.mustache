@@ -30,7 +30,7 @@
             <option value="">{{#i18n}}keine Audiodatei verfügbar{{/i18n}}</option>
         {{/audio_files_course}}
     </optgroup>
-    <optgroup label="Dateien im eigenen Dateibereich">
+    <optgroup label="{{#i18n}}Dateien im eigenen Dateibereich{{/i18n}}">
         {{#audio_files_user}}
             <option value="{{name}}" file-id="{{id}}">{{name}}</option>
         {{/audio_files_user}}
@@ -39,7 +39,7 @@
         {{/audio_files_user}}
     </optgroup>
     {{#other_user_file}}
-        <optgroup label="Datei im Dateibereich eines anderen Nutzers">
+        <optgroup label="{{#i18n}}Datei im Dateibereich eines anderen Nutzers{{/i18n}}">
                 <option value="{{name}}" file-id="{{id}}">{{name}}</option>
         </optgroup>
     {{/other_user_file}}

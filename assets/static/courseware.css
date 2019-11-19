@@ -1093,66 +1093,138 @@ button.cw-reset-progress-button:hover {
 .clear {
   clear: both;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper {
+#block_manager-index {
+  /* DIALOGS */
+}
+#block_manager-index button.button {
+  padding: 14px 20px;
+}
+#block_manager-index #cw-blockmanager-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+#block_manager-index .cw-blockmanager-wrapper {
   border: solid thin #28497c;
   border-top: none;
-  margin-bottom: 2em;
+  margin: 0 1em 1em 0 ;
+  width: 626px;
+  min-width: 626px;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper .cw-blockmanager-title {
+#block_manager-index .cw-blockmanager-wrapper .cw-blockmanager-title {
   border-top: solid thin #28497c;
   border-bottom: solid thin #28497c;
-  background-color: #e7ebf1;
   color: #28497c;
+  background-color: #e7ebf1;
   font-weight: 600;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper .cw-blockmanager-title p {
+#block_manager-index .cw-blockmanager-wrapper .cw-blockmanager-title .cw-blockmanager-title-loading {
+  display: inline-block;
+  height: 3em;
+  width: 30px;
+  vertical-align: bottom;
+}
+#block_manager-index .cw-blockmanager-wrapper .cw-blockmanager-title p {
+  width: 540px;
   margin: 0;
   display: inline-block;
   padding: 1em;
   vertical-align: text-top;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper .cw-blockmanager-title#cw-export-title {
+#block_manager-index .cw-blockmanager-wrapper .cw-blockmanager-title .strucutal-element-menu-wrapper {
+  background-color: #e7ebf1;
+  vertical-align: bottom;
+}
+#block_manager-index .cw-blockmanager-wrapper .cw-blockmanager-title#cw-export-title {
   border-bottom: none;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper #cw-blockmanager-form-full-import {
+#block_manager-index .cw-blockmanager-wrapper #cw-file-upload-import {
+  display: none;
+}
+#block_manager-index .cw-blockmanager-wrapper #cw-blockmanager-form-full-import {
   float: right;
   display: none;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper #cw-blockmanager-form-full-import .cw-file-upload-import {
-  display: none;
-}
-#courseware-blockmanager .cw-blockmanager-wrapper #cw-blockmanager-form-full-import .button {
+#block_manager-index .cw-blockmanager-wrapper #cw-blockmanager-form-full-import .button {
   margin-right: 1em;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper #blockmanager-store-changes {
-  display: inline-block;
+#block_manager-index .cw-blockmanager-wrapper #cw-blockmananger-store-changes {
   float: right;
-}
-#courseware-blockmanager .cw-blockmanager-wrapper #blockmanager-store-changes .cw-file-upload-import {
-  display: none;
-}
-#courseware-blockmanager .cw-blockmanager-wrapper #blockmanager-store-changes .button {
   margin-right: 1em;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper #user-course-list,
-#courseware-blockmanager .cw-blockmanager-wrapper #cw-import-lists {
-  display: none;
+#block_manager-index .cw-blockmanager-wrapper #cw-blockmananger-store-changes.button-disabled {
+  background-color: #fff;
+  border-color: #ccc;
+  color: #ccc;
+  cursor: default;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul {
+#block_manager-index .cw-blockmanager-wrapper .cw-action-button-wrapper {
+  padding: 1em 0.25em;
+}
+#block_manager-index .cw-blockmanager-wrapper .cw-action-button-wrapper button {
+  margin: 0;
+}
+#block_manager-index .cw-blockmanager-wrapper #cw-reset-action-menu {
+  float: right;
+  margin-right: 1em;
+  padding-left: 2.5em;
+  background-image: url("../../../../../assets/images/icons/blue/arr_eol-left.svg");
+  background-size: 16px;
+  background-position: 10px center;
+  background-repeat: no-repeat;
+}
+#block_manager-index .cw-blockmanager-wrapper #cw-reset-action-menu:hover {
+  background-image: url("../../../../../assets/images/icons/white/arr_eol-left.svg");
+}
+#block_manager-index .cw-blockmanager-wrapper #cw-import,
+#block_manager-index .cw-blockmanager-wrapper #cw-export {
+  float: right;
+  margin-right: 1em;
+  padding-left: 2.5em;
+  background-size: 16px;
+  background-position: 10px center;
+  background-repeat: no-repeat;
+}
+#block_manager-index .cw-blockmanager-wrapper #cw-import {
+  background-image: url("../../../../../assets/images/icons/blue/install.svg");
+}
+#block_manager-index .cw-blockmanager-wrapper #cw-import:hover {
+  background-image: url("../../../../../assets/images/icons/white/install.svg");
+}
+#block_manager-index .cw-blockmanager-wrapper #cw-export {
+  background-image: url("../../../../../assets/images/icons/blue/download.svg");
+}
+#block_manager-index .cw-blockmanager-wrapper #cw-export:hover {
+  background-image: url("../../../../../assets/images/icons/white/download.svg");
+}
+#block_manager-index .cw-blockmanager-wrapper #user-course-list ul {
   list-style: none;
   padding: 0;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul.semester-list {
+#block_manager-index .cw-blockmanager-wrapper #user-course-list ul.semester-list {
   min-height: 2em;
   overflow: hidden;
   padding: 0;
   background-color: #fff;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul.semester-list p.semester-description {
+#block_manager-index .cw-blockmanager-wrapper #user-course-list ul.semester-list .semester-description {
   margin: 0;
   color: #28497c;
   font-weight: 600;
-  cursor: default;
+  cursor: pointer;
   background-image: url("../../../../../assets/images/icons/blue/arr_1right.svg");
   background-size: 16px;
   background-position: 6px center;
@@ -1160,15 +1232,17 @@ button.cw-reset-progress-button:hover {
   background-color: #fff;
   padding: 1em 1em 1em 2em;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul.semester-list p.semester-description.unfolded {
+#block_manager-index .cw-blockmanager-wrapper #user-course-list ul.semester-list .semester-description.unfolded {
   background-image: url("../../../../../assets/images/icons/blue/arr_1down.svg");
   background-color: #e7ebf1;
+  color: #28497c;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul li {
+#block_manager-index .cw-blockmanager-wrapper #user-course-list ul li {
   margin: 1em;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul li .blockmanager-course-item {
+#block_manager-index .cw-blockmanager-wrapper #user-course-list ul li .blockmanager-course-item {
   padding: 1em 1em 1em 2.5em;
+  margin: 0;
   background-color: #fff;
   background-image: url("../../../../../assets/images/icons/blue/seminar.svg");
   background-size: 16px;
@@ -1182,152 +1256,257 @@ button.cw-reset-progress-button:hover {
   width: 100%;
   text-align: left;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul li .blockmanager-course-item:hover {
-  background-image: url("../../../../../assets/images/icons/white/seminar.svg");
+#block_manager-index .cw-blockmanager-wrapper #user-course-list ul li .blockmanager-course-item:hover {
   color: #fff;
   background-color: #28497c;
+  background-image: url("../../../../../assets/images/icons/white/seminar.svg");
 }
-#courseware-blockmanager .cw-blockmanager-wrapper #user-course-list ul li.semester-item {
+#block_manager-index .cw-blockmanager-wrapper #user-course-list ul li.semester-item {
   background-color: #fff;
   border: solid thin #28497c;
   list-style: none;
   margin-bottom: 1em;
   color: #28497c;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper ul#cw-import-selection {
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection {
   list-style: none;
   padding: 0;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper ul#cw-import-selection li {
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li {
   float: left;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper ul#cw-import-selection li #cw-import-from-course {
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-import-from-course {
   background-image: url("../../../../assets/images/icons/blue/seminar.svg");
   background-image: url("../../../../../assets/images/icons/blue/seminar.svg");
 }
-#courseware-blockmanager .cw-blockmanager-wrapper ul#cw-import-selection li #cw-import-from-course:hover {
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-import-from-course:hover {
   background-image: url("../../../../assets/images/icons/white/seminar.svg");
   background-image: url("../../../../../assets/images/icons/white/seminar.svg");
 }
-#courseware-blockmanager .cw-blockmanager-wrapper ul#cw-import-selection li #cw-file-upload-import-label {
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-file-upload-import-label {
   background-image: url("../../../../assets/images/icons/blue/file.svg");
   background-image: url("../../../../../assets/images/icons/blue/file.svg");
 }
-#courseware-blockmanager .cw-blockmanager-wrapper ul#cw-import-selection li #cw-file-upload-import-label:hover {
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-file-upload-import-label:hover {
   background-image: url("../../../../assets/images/icons/white/file.svg");
   background-image: url("../../../../../assets/images/icons/white/file.svg");
 }
-#courseware-blockmanager .cw-blockmanager-wrapper ul#cw-import-selection li #cw-import-from-course,
-#courseware-blockmanager .cw-blockmanager-wrapper ul#cw-import-selection li #cw-file-upload-import-label {
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-download {
+  background-image: url("../../../../assets/images/icons/blue/download.svg");
+  background-image: url("../../../../../assets/images/icons/blue/download.svg");
+}
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-download:hover {
+  background-image: url("../../../../assets/images/icons/white/download.svg");
+  background-image: url("../../../../../assets/images/icons/white/download.svg");
+}
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-set-decontrol {
+  background-image: url("../../../../assets/images/icons/blue/group3.svg");
+  background-image: url("../../../../../assets/images/icons/blue/group3.svg");
+}
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-set-decontrol:hover {
+  background-image: url("../../../../assets/images/icons/white/group3.svg");
+  background-image: url("../../../../../assets/images/icons/white/group3.svg");
+}
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li .cw-action-menu-button {
+  min-width: 42em;
   background-size: 24px;
   background-repeat: no-repeat;
-  background-position: 12px;
+  background-position: 10px center;
   background-color: #fff;
   border: 1px solid #28497c;
   color: #28497c;
   display: inline-block;
   cursor: pointer;
-  margin: 1em;
-  padding: 0.75em 0.75em 0.5em 0.75em;
+  margin: 0.5em;
+  padding: 5px 10px ;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper ul#cw-import-selection li #cw-import-from-course p,
-#courseware-blockmanager .cw-blockmanager-wrapper ul#cw-import-selection li #cw-file-upload-import-label p {
-  text-align: center;
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li .cw-action-menu-button p {
+  text-align: left;
   margin-top: 6px;
   margin-left: 2.5em;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper ul#cw-import-selection li #cw-import-from-course:hover,
-#courseware-blockmanager .cw-blockmanager-wrapper ul#cw-import-selection li #cw-file-upload-import-label:hover {
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li .cw-action-menu-button:hover {
   color: #fff;
   background-color: #28497c;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper.cw-blockmanager-info {
+#block_manager-index .cw-blockmanager-wrapper.cw-blockmanager-info {
   margin-bottom: 2em;
   display: none;
 }
-#courseware-blockmanager .cw-blockmanager-wrapper.cw-blockmanager-info .cw-blockmanager-info-content {
+#block_manager-index .cw-blockmanager-wrapper.cw-blockmanager-info .cw-blockmanager-info-content {
   padding: 1em;
   margin-left: 1em;
 }
-#courseware-blockmanager .section-list {
+#block_manager-index .cw-blockmanager-wrapper .messagebox {
+  margin: 1em;
+}
+#block_manager-index .section-list {
   clear: both;
 }
-#courseware-blockmanager .chapter-list,
-#courseware-blockmanager .subchapter-list,
-#courseware-blockmanager .section-list,
-#courseware-blockmanager .block-list {
+#block_manager-index .subchapter-actions,
+#block_manager-index .section-actions {
+  padding: 0;
+  margin: 1em;
+}
+#block_manager-index .subchapter-actions li,
+#block_manager-index .section-actions li {
+  list-style: none;
+}
+#block_manager-index .chapter-list,
+#block_manager-index .subchapter-list,
+#block_manager-index .section-list,
+#block_manager-index .block-list {
   min-height: 2em;
-  overflow: hidden;
   padding: 0;
   margin: 1em;
   background-color: #fff;
 }
-#courseware-blockmanager .chapter-list p.chapter-description,
-#courseware-blockmanager .subchapter-list p.chapter-description,
-#courseware-blockmanager .section-list p.chapter-description,
-#courseware-blockmanager .block-list p.chapter-description,
-#courseware-blockmanager .chapter-list p.subchapter-description,
-#courseware-blockmanager .subchapter-list p.subchapter-description,
-#courseware-blockmanager .section-list p.subchapter-description,
-#courseware-blockmanager .block-list p.subchapter-description,
-#courseware-blockmanager .chapter-list p.section-description,
-#courseware-blockmanager .subchapter-list p.section-description,
-#courseware-blockmanager .section-list p.section-description,
-#courseware-blockmanager .block-list p.section-description {
+#block_manager-index .chapter-list .chapter-description,
+#block_manager-index .subchapter-list .chapter-description,
+#block_manager-index .section-list .chapter-description,
+#block_manager-index .block-list .chapter-description {
+  width: 526px;
+}
+#block_manager-index .chapter-list .chapter-description.full-width,
+#block_manager-index .subchapter-list .chapter-description.full-width,
+#block_manager-index .section-list .chapter-description.full-width,
+#block_manager-index .block-list .chapter-description.full-width {
+  width: 554px;
+}
+#block_manager-index .chapter-list .subchapter-description,
+#block_manager-index .subchapter-list .subchapter-description,
+#block_manager-index .section-list .subchapter-description,
+#block_manager-index .block-list .subchapter-description {
+  width: 496px;
+}
+#block_manager-index .chapter-list .subchapter-description.full-width,
+#block_manager-index .subchapter-list .subchapter-description.full-width,
+#block_manager-index .section-list .subchapter-description.full-width,
+#block_manager-index .block-list .subchapter-description.full-width {
+  width: 528px;
+}
+#block_manager-index .chapter-list .section-description,
+#block_manager-index .subchapter-list .section-description,
+#block_manager-index .section-list .section-description,
+#block_manager-index .block-list .section-description {
+  width: 466px;
+}
+#block_manager-index .chapter-list .section-description.full-width,
+#block_manager-index .subchapter-list .section-description.full-width,
+#block_manager-index .section-list .section-description.full-width,
+#block_manager-index .block-list .section-description.full-width {
+  width: 494px;
+}
+#block_manager-index .chapter-list .chapter-description,
+#block_manager-index .subchapter-list .chapter-description,
+#block_manager-index .section-list .chapter-description,
+#block_manager-index .block-list .chapter-description,
+#block_manager-index .chapter-list .subchapter-description,
+#block_manager-index .subchapter-list .subchapter-description,
+#block_manager-index .section-list .subchapter-description,
+#block_manager-index .block-list .subchapter-description,
+#block_manager-index .chapter-list .section-description,
+#block_manager-index .subchapter-list .section-description,
+#block_manager-index .section-list .section-description,
+#block_manager-index .block-list .section-description {
   margin: 0;
   color: #28497c;
   font-weight: 600;
-  cursor: default;
+  cursor: pointer;
   background-image: url("../../../../../assets/images/icons/blue/arr_1right.svg");
   background-size: 16px;
-  background-position: 6px center;
+  background-position: 6px 15px;
   background-repeat: no-repeat;
   background-color: #fff;
-  padding: 1em 1em 1em 2em;
+  padding: 1em 1em 4px 2em;
+  display: inline-block;
 }
-#courseware-blockmanager .chapter-list p.chapter-description.unfolded,
-#courseware-blockmanager .subchapter-list p.chapter-description.unfolded,
-#courseware-blockmanager .section-list p.chapter-description.unfolded,
-#courseware-blockmanager .block-list p.chapter-description.unfolded,
-#courseware-blockmanager .chapter-list p.subchapter-description.unfolded,
-#courseware-blockmanager .subchapter-list p.subchapter-description.unfolded,
-#courseware-blockmanager .section-list p.subchapter-description.unfolded,
-#courseware-blockmanager .block-list p.subchapter-description.unfolded,
-#courseware-blockmanager .chapter-list p.section-description.unfolded,
-#courseware-blockmanager .subchapter-list p.section-description.unfolded,
-#courseware-blockmanager .section-list p.section-description.unfolded,
-#courseware-blockmanager .block-list p.section-description.unfolded {
+#block_manager-index .chapter-list .chapter-description p,
+#block_manager-index .subchapter-list .chapter-description p,
+#block_manager-index .section-list .chapter-description p,
+#block_manager-index .block-list .chapter-description p,
+#block_manager-index .chapter-list .subchapter-description p,
+#block_manager-index .subchapter-list .subchapter-description p,
+#block_manager-index .section-list .subchapter-description p,
+#block_manager-index .block-list .subchapter-description p,
+#block_manager-index .chapter-list .section-description p,
+#block_manager-index .subchapter-list .section-description p,
+#block_manager-index .section-list .section-description p,
+#block_manager-index .block-list .section-description p {
+  display: inline-block;
+}
+#block_manager-index .chapter-list .chapter-description.unfolded,
+#block_manager-index .subchapter-list .chapter-description.unfolded,
+#block_manager-index .section-list .chapter-description.unfolded,
+#block_manager-index .block-list .chapter-description.unfolded,
+#block_manager-index .chapter-list .subchapter-description.unfolded,
+#block_manager-index .subchapter-list .subchapter-description.unfolded,
+#block_manager-index .section-list .subchapter-description.unfolded,
+#block_manager-index .block-list .subchapter-description.unfolded,
+#block_manager-index .chapter-list .section-description.unfolded,
+#block_manager-index .subchapter-list .section-description.unfolded,
+#block_manager-index .section-list .section-description.unfolded,
+#block_manager-index .block-list .section-description.unfolded {
   background-image: url("../../../../../assets/images/icons/blue/arr_1down.svg");
   background-color: #e7ebf1;
+  color: #28497c;
 }
-#courseware-blockmanager .chapter-list p.chapter-description span,
-#courseware-blockmanager .subchapter-list p.chapter-description span,
-#courseware-blockmanager .section-list p.chapter-description span,
-#courseware-blockmanager .block-list p.chapter-description span,
-#courseware-blockmanager .chapter-list p.subchapter-description span,
-#courseware-blockmanager .subchapter-list p.subchapter-description span,
-#courseware-blockmanager .section-list p.subchapter-description span,
-#courseware-blockmanager .block-list p.subchapter-description span,
-#courseware-blockmanager .chapter-list p.section-description span,
-#courseware-blockmanager .subchapter-list p.section-description span,
-#courseware-blockmanager .section-list p.section-description span,
-#courseware-blockmanager .block-list p.section-description span {
+#block_manager-index .chapter-list .chapter-description .header-info-wrapper,
+#block_manager-index .subchapter-list .chapter-description .header-info-wrapper,
+#block_manager-index .section-list .chapter-description .header-info-wrapper,
+#block_manager-index .block-list .chapter-description .header-info-wrapper,
+#block_manager-index .chapter-list .subchapter-description .header-info-wrapper,
+#block_manager-index .subchapter-list .subchapter-description .header-info-wrapper,
+#block_manager-index .section-list .subchapter-description .header-info-wrapper,
+#block_manager-index .block-list .subchapter-description .header-info-wrapper,
+#block_manager-index .chapter-list .section-description .header-info-wrapper,
+#block_manager-index .subchapter-list .section-description .header-info-wrapper,
+#block_manager-index .section-list .section-description .header-info-wrapper,
+#block_manager-index .block-list .section-description .header-info-wrapper {
   font-weight: normal;
   color: #28497c;
   float: right;
 }
-#courseware-blockmanager .chapter-list p.chapter-description span .structure-not-visible,
-#courseware-blockmanager .subchapter-list p.chapter-description span .structure-not-visible,
-#courseware-blockmanager .section-list p.chapter-description span .structure-not-visible,
-#courseware-blockmanager .block-list p.chapter-description span .structure-not-visible,
-#courseware-blockmanager .chapter-list p.subchapter-description span .structure-not-visible,
-#courseware-blockmanager .subchapter-list p.subchapter-description span .structure-not-visible,
-#courseware-blockmanager .section-list p.subchapter-description span .structure-not-visible,
-#courseware-blockmanager .block-list p.subchapter-description span .structure-not-visible,
-#courseware-blockmanager .chapter-list p.section-description span .structure-not-visible,
-#courseware-blockmanager .subchapter-list p.section-description span .structure-not-visible,
-#courseware-blockmanager .section-list p.section-description span .structure-not-visible,
-#courseware-blockmanager .block-list p.section-description span .structure-not-visible {
+#block_manager-index .chapter-list .chapter-description .header-info-wrapper .published-info,
+#block_manager-index .subchapter-list .chapter-description .header-info-wrapper .published-info,
+#block_manager-index .section-list .chapter-description .header-info-wrapper .published-info,
+#block_manager-index .block-list .chapter-description .header-info-wrapper .published-info,
+#block_manager-index .chapter-list .subchapter-description .header-info-wrapper .published-info,
+#block_manager-index .subchapter-list .subchapter-description .header-info-wrapper .published-info,
+#block_manager-index .section-list .subchapter-description .header-info-wrapper .published-info,
+#block_manager-index .block-list .subchapter-description .header-info-wrapper .published-info,
+#block_manager-index .chapter-list .section-description .header-info-wrapper .published-info,
+#block_manager-index .subchapter-list .section-description .header-info-wrapper .published-info,
+#block_manager-index .section-list .section-description .header-info-wrapper .published-info,
+#block_manager-index .block-list .section-description .header-info-wrapper .published-info {
+  color: #00962d;
+}
+#block_manager-index .chapter-list .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list .section-description .header-info-wrapper .unpublished-info {
+  color: #ffad00;
+}
+#block_manager-index .chapter-list .chapter-description .header-info-wrapper .structure-not-visible,
+#block_manager-index .subchapter-list .chapter-description .header-info-wrapper .structure-not-visible,
+#block_manager-index .section-list .chapter-description .header-info-wrapper .structure-not-visible,
+#block_manager-index .block-list .chapter-description .header-info-wrapper .structure-not-visible,
+#block_manager-index .chapter-list .subchapter-description .header-info-wrapper .structure-not-visible,
+#block_manager-index .subchapter-list .subchapter-description .header-info-wrapper .structure-not-visible,
+#block_manager-index .section-list .subchapter-description .header-info-wrapper .structure-not-visible,
+#block_manager-index .block-list .subchapter-description .header-info-wrapper .structure-not-visible,
+#block_manager-index .chapter-list .section-description .header-info-wrapper .structure-not-visible,
+#block_manager-index .subchapter-list .section-description .header-info-wrapper .structure-not-visible,
+#block_manager-index .section-list .section-description .header-info-wrapper .structure-not-visible,
+#block_manager-index .block-list .section-description .header-info-wrapper .structure-not-visible {
   background-image: url("../../../../assets/images/icons/grey/visibility-invisible.svg");
   background-image: url("../../../../../assets/images/icons/grey/visibility-invisible.svg");
   background-size: 16px 16px;
@@ -1337,33 +1516,83 @@ button.cw-reset-progress-button:hover {
   height: 16px;
   margin-left: 0.5em;
 }
-#courseware-blockmanager .highlight {
+#block_manager-index .chapter-list.chapter-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list.chapter-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list.chapter-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list.chapter-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list.subchapter-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list.subchapter-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list.subchapter-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list.subchapter-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list.section-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list.section-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list.section-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list.section-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list.block-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list.block-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list.block-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list.block-list-import .chapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list.chapter-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list.chapter-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list.chapter-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list.chapter-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list.subchapter-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list.subchapter-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list.subchapter-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list.subchapter-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list.section-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list.section-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list.section-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list.section-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list.block-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list.block-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list.block-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list.block-list-import .subchapter-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list.chapter-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list.chapter-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list.chapter-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list.chapter-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list.subchapter-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list.subchapter-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list.subchapter-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list.subchapter-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list.section-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list.section-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list.section-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list.section-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .chapter-list.block-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .subchapter-list.block-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .section-list.block-list-import .section-description .header-info-wrapper .unpublished-info,
+#block_manager-index .block-list.block-list-import .section-description .header-info-wrapper .unpublished-info {
+  color: #28497c;
+}
+#block_manager-index .highlight {
   border: 1px dashed #28497c;
   background-color: #fff;
   margin-bottom: 1em;
+  list-style: none;
 }
-#courseware-blockmanager .section-list > li.ui-sortable-placeholder {
-  width: 240px;
+#block_manager-index .section-list > li.ui-sortable-placeholder {
+  width: 400px;
   float: left;
   list-style: none;
 }
-#courseware-blockmanager .chapter-item,
-#courseware-blockmanager .subchapter-item,
-#courseware-blockmanager .section-item,
-#courseware-blockmanager .block-item {
+#block_manager-index .chapter-item,
+#block_manager-index .subchapter-item,
+#block_manager-index .section-item,
+#block_manager-index .block-item {
   background-color: #fff;
   border: solid thin #28497c;
   list-style: none;
   margin-bottom: 1em;
   color: #28497c;
 }
-#courseware-blockmanager .section-item {
-  float: left;
-  margin: 0.25em;
-  width: 20em;
-  color: #28497c;
+#block_manager-index .block-item .strucutal-element-menu-wrapper.unfolded {
+  background-color: #fff;
 }
-#courseware-blockmanager .block-item .block-description {
+#block_manager-index .block-item .block-description {
+  display: inline-block;
+  width: 436px;
   background-image: url("../../../../../assets/images/icons/blue/arr_1right.svg");
   background-size: 16px;
   background-position: 6px center;
@@ -1373,10 +1602,13 @@ button.cw-reset-progress-button:hover {
   color: #28497c;
   cursor: pointer;
 }
-#courseware-blockmanager .block-item .block-description.unfolded {
+#block_manager-index .block-item .block-description.full-width {
+  width: 464px;
+}
+#block_manager-index .block-item .block-description.unfolded {
   background-image: url("../../../../../assets/images/icons/blue/arr_1down.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon {
+#block_manager-index .block-item .block-description .block-icon {
   background-image: url("../../../../assets/images/icons/blue/plugin.svg");
   background-image: url("../../../../../assets/images/icons/blue/plugin.svg");
   background-size: 16px 16px;
@@ -1387,101 +1619,101 @@ button.cw-reset-progress-button:hover {
   vertical-align: text-bottom;
   margin-right: 0.5em;
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-AudioBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-AudioBlock {
   background-image: url("../../../../assets/images/icons/blue/play.svg");
   background-image: url("../../../../../assets/images/icons/blue/play.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-ConfirmBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-ConfirmBlock {
   background-image: url("../../../../assets/images/icons/blue/accept.svg");
   background-image: url("../../../../../assets/images/icons/blue/accept.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-DownloadBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-DownloadBlock {
   background-image: url("../../../../assets/images/icons/blue/download.svg");
   background-image: url("../../../../../assets/images/icons/blue/download.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-EvaluationBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-EvaluationBlock {
   background-image: url("../../../../assets/images/icons/blue/evaluation.svg");
   background-image: url("../../../../../assets/images/icons/blue/evaluation.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-ForumBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-ForumBlock {
   background-image: url("../../../../assets/images/icons/blue/forum.svg");
   background-image: url("../../../../../assets/images/icons/blue/forum.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-HtmlBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-HtmlBlock {
   background-image: url("../../../../assets/images/icons/blue/edit.svg");
   background-image: url("../../../../../assets/images/icons/blue/edit.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-CanvasBlock,
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-BeforeAfterBlock,
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-GalleryBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-CanvasBlock,
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-BeforeAfterBlock,
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-GalleryBlock {
   background-image: url("../images/icons/blue/picture.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-DialogCardsBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-DialogCardsBlock {
   background-image: url("../images/icons/blue/dialog-cards.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-AssortBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-AssortBlock {
   background-image: url("../../../../assets/images/icons/blue/hamburger.svg");
   background-image: url("../../../../../assets/images/icons/blue/hamburger.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-PostBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-PostBlock {
   background-image: url("../../../../assets/images/icons/blue/chat.svg");
   background-image: url("../../../../../assets/images/icons/blue/chat.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-LinkBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-LinkBlock {
   background-image: url("../../../../assets/images/icons/blue/link-extern.svg");
   background-image: url("../../../../../assets/images/icons/blue/link-extern.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-KeyPointBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-KeyPointBlock {
   background-image: url("../../../../assets/images/icons/blue/exclaim-circle.svg");
   background-image: url("../../../../../assets/images/icons/blue/exclaim-circle.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-PdfBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-PdfBlock {
   background-image: url("../../../../assets/images/icons/blue/file-pdf.svg");
   background-image: url("../../../../../assets/images/icons/blue/file-pdf.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-CodeBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-CodeBlock {
   background-image: url("../../../../assets/images/icons/blue/computer.svg");
   background-image: url("../../../../../assets/images/icons/blue/computer.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-EmbedBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-EmbedBlock {
   background-image: url("../../../../assets/images/icons/blue/code.svg");
   background-image: url("../../../../../assets/images/icons/blue/code.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-TestBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-TestBlock {
   background-image: url("../../../../assets/images/icons/blue/question-circle.svg");
   background-image: url("../../../../../assets/images/icons/blue/question-circle.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-SearchBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-SearchBlock {
   background-image: url("../../../../assets/images/icons/blue/search.svg");
   background-image: url("../../../../../assets/images/icons/blue/search.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-VideoBlock,
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-InteractiveVideoBlock,
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-OpenCastBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-VideoBlock,
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-InteractiveVideoBlock,
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-OpenCastBlock {
   background-image: url("../../../../assets/images/icons/blue/video.svg");
   background-image: url("../../../../../assets/images/icons/blue/video.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-IFrameBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-IFrameBlock {
   background-image: url("../../../../assets/images/icons/blue/door-enter.svg");
   background-image: url("../../../../../assets/images/icons/blue/door-enter.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-ChartBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-ChartBlock {
   background-image: url("../../../../assets/images/icons/blue/vote.svg");
   background-image: url("../../../../../assets/images/icons/blue/vote.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-DateBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-DateBlock {
   background-image: url("../../../../assets/images/icons/blue/date.svg");
   background-image: url("../../../../../assets/images/icons/blue/date.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-TypewriterBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-TypewriterBlock {
   background-image: url("../../../../assets/images/icons/blue/wizard.svg");
   background-image: url("../../../../../assets/images/icons/blue/wizard.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-icon.cw-block-icon-ScrollyBlock {
+#block_manager-index .block-item .block-description .block-icon.cw-block-icon-ScrollyBlock {
   background-image: url("../../../../assets/images/icons/blue/literature.svg");
   background-image: url("../../../../../assets/images/icons/blue/literature.svg");
 }
-#courseware-blockmanager .block-item .block-description .block-not-visible {
+#block_manager-index .block-item .block-description .block-not-visible {
   background-image: url("../../../../assets/images/icons/blue/visibility-invisible.svg");
   background-image: url("../../../../../assets/images/icons/blue/visibility-invisible.svg");
   background-size: 16px 16px;
@@ -1491,17 +1723,329 @@ button.cw-reset-progress-button:hover {
   height: 16px;
   float: right;
 }
-#courseware-blockmanager .block-item ul.block-preview {
+#block_manager-index .block-item .block-description.element_hidden {
+  color: #abb7ce;
+  background-image: url("../../../../../assets/images/icons/lightblue/arr_1right.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden.unfolded {
+  background-image: url("../../../../../assets/images/icons/lightblue/arr_1down.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon {
+  background-image: url("../../../../assets/images/icons/lightblue/plugin.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/plugin.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-AudioBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/play.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/play.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-ConfirmBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/accept.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/accept.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-DownloadBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/download.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/download.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-EvaluationBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/evaluation.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/evaluation.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-ForumBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/forum.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/forum.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-HtmlBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/edit.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/edit.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-CanvasBlock,
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-BeforeAfterBlock,
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-GalleryBlock {
+  background-image: url("../images/icons/lightblue/picture.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-DialogCardsBlock {
+  background-image: url("../images/icons/lightblue/dialog-cards.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-AssortBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/hamburger.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/hamburger.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-PostBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/chat.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/chat.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-LinkBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/link-extern.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/link-extern.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-KeyPointBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/exclaim-circle.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/exclaim-circle.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-PdfBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/file-pdf.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/file-pdf.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-CodeBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/computer.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/computer.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-EmbedBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/code.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/code.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-TestBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/question-circle.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/question-circle.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-SearchBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/search.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/search.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-VideoBlock,
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-InteractiveVideoBlock,
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-OpenCastBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/video.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/video.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-IFrameBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/door-enter.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/door-enter.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-ChartBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/vote.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/vote.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-DateBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/date.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/date.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-TypewriterBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/wizard.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/wizard.svg");
+}
+#block_manager-index .block-item .block-description.element_hidden .block-icon.cw-block-icon-ScrollyBlock {
+  background-image: url("../../../../assets/images/icons/lightblue/literature.svg");
+  background-image: url("../../../../../assets/images/icons/lightblue/literature.svg");
+}
+#block_manager-index .block-item ul.block-preview {
   padding: 0.5em;
 }
-#courseware-blockmanager .block-item ul.block-preview li {
+#block_manager-index .block-item ul.block-preview li {
   list-style: none;
 }
-#courseware-blockmanager .block-item ul.block-preview li.block-content-preview {
+#block_manager-index .block-item ul.block-preview li.block-content-preview {
   color: #000;
 }
-#courseware-blockmanager .block-item ul.block-preview li.block-content-preview img {
+#block_manager-index .block-item ul.block-preview li.block-content-preview img {
   width: 196px;
+}
+#block_manager-index .strucutal-element-menu-wrapper {
+  display: inline-block;
+  margin: 0;
+  padding: 11px 4px;
+  vertical-align: top;
+  background-color: #fff;
+}
+#block_manager-index .strucutal-element-menu-wrapper.unfolded {
+  background-color: #e7ebf1;
+}
+#block_manager-index #userApprovalDialog,
+#block_manager-index #groupApprovalDialog {
+  display: none;
+}
+#block_manager-index #editDialog {
+  display: none;
+}
+#block_manager-index #editDialog label {
+  width: 8em;
+  margin-bottom: 1em;
+  display: inline-block;
+}
+#block_manager-index #editDialog input[type=text] {
+  min-width: 16em;
+}
+#block_manager-index #removeDialog {
+  display: none;
+}
+#block_manager-index #removeDialog .remove-question {
+  background-image: url("../../../../assets/images/icons/red/question-circle-full.svg");
+  background-image: url("../../../../../assets/images/icons/red/question-circle-full.svg");
+  background-repeat: no-repeat;
+  background-size: 32px;
+  background-position-y: center;
+  padding: 1em 1em 1em 3em;
+}
+#block_manager-index .action-menu-item .set-groups {
+  background-image: url("../../../../assets/images/icons/blue/group3.svg");
+  background-image: url("../../../../../assets/images/icons/blue/group3.svg");
+}
+#block_manager-index .action-menu-item .set-users {
+  background-image: url("../../../../assets/images/icons/blue/headache.svg");
+  background-image: url("../../../../../assets/images/icons/blue/headache.svg");
+}
+#block_manager-index .action-menu-item .edit-element {
+  background-image: url("../../../../assets/images/icons/blue/edit.svg");
+  background-image: url("../../../../../assets/images/icons/blue/edit.svg");
+}
+#block_manager-index .action-menu-item .remove-element {
+  background-image: url("../../../../assets/images/icons/blue/trash.svg");
+  background-image: url("../../../../../assets/images/icons/blue/trash.svg");
+}
+#block_manager-index .action-menu-item .add-child-element {
+  background-image: url("../../../../assets/images/icons/blue/add.svg");
+  background-image: url("../../../../../assets/images/icons/blue/add.svg");
+}
+#block_manager-index .action-menu-item a {
+  padding-left: 32px;
+  background-repeat: no-repeat;
+  background-position-x: left;
+  background-size: 24px;
+  line-height: 34px;
+  background-position-y: 3px;
+}
+#block_manager-index .modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(40, 73, 124, 0.5);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 1001;
+}
+#block_manager-index .modal {
+  background: #ffffff;
+  -webkit-box-shadow: 2px 2px 20px 1px;
+          box-shadow: 2px 2px 20px 1px;
+  overflow-x: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 0.2em;
+}
+#block_manager-index .modal .modal-header,
+#block_manager-index .modal .modal-footer {
+  padding: 7px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+#block_manager-index .modal .modal-header {
+  background: #28497c none repeat scroll 0% 0%;
+  border-bottom: 1px solid #eeeeee;
+  color: #fff;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 1.3em;
+  padding: 0.5em 1em;
+}
+#block_manager-index .modal .modal-close-button {
+  background-image: url("../../../../assets/images/icons/white/decline.svg");
+  background-image: url("../../../../../assets/images/icons/white/decline.svg");
+  width: 24px;
+  height: 24px;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  margin-right: -10px;
+  margin-left: 2em;
+  cursor: pointer;
+}
+#block_manager-index .modal .modal-body {
+  color: #000;
+  position: relative;
+  padding: 20px 10px;
+}
+#block_manager-index .modal .modal-body label {
+  display: inline-block;
+  min-width: 8em;
+  margin-bottom: 0.5em;
+}
+#block_manager-index .modal .modal-body input {
+  border: solid thin #ccc;
+  min-width: 14em;
+  padding: 0.5em;
+}
+#block_manager-index .modal .modal-body .students-permissions-list,
+#block_manager-index .modal .modal-body .groups-permissions-list {
+  max-height: 24em;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0 0 0 1em;
+}
+#block_manager-index .modal .modal-body .students-permissions-list input[type="checkbox"],
+#block_manager-index .modal .modal-body .groups-permissions-list input[type="checkbox"] {
+  border: none;
+  min-width: unset;
+  vertical-align: bottom;
+}
+#block_manager-index .modal .modal-body .students-permissions-list label,
+#block_manager-index .modal .modal-body .groups-permissions-list label {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+#block_manager-index .modal .modal-body .students-permissions-list label i,
+#block_manager-index .modal .modal-body .groups-permissions-list label i {
+  color: #ccc;
+}
+#block_manager-index .modal .modal-footer {
+  border-top: 1px solid #eeeeee;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+#block_manager-index .modal .modal-footer button.button {
+  padding: 7px 20px;
+}
+#block_manager-index .modal .modal-footer button.button.button-inactive {
+  opacity: 0.4;
+}
+#block_manager-index .modal.alert .modal-header {
+  background: #d60000 none repeat scroll 0% 0%;
+}
+#block_manager-index .modal.warning .modal-header {
+  color: #000;
+  background: #ffad00 none repeat scroll 0% 0%;
+}
+#block_manager-index .modal.warning .modal-close-button {
+  background-image: url("../../../../assets/images/icons/black/decline.svg");
+  background-image: url("../../../../../assets/images/icons/black/decline.svg");
+}
+#block_manager-index .modal .modal-progress-spinner {
+  margin: auto;
+}
+#block_manager-index .modal .modal-progress:hover {
+  background-color: #fff;
+}
+#block_manager-index .cw-action-loading {
+  margin: 6em auto;
+}
+#block_manager-index .ghost {
+  opacity: 0.5;
 }
 #courseware-news .cw-news-list-sections {
   margin-top: 0.5em;
@@ -1523,6 +2067,9 @@ button.cw-reset-progress-button:hover {
   margin-top: 0.5em;
   padding-left: 0;
 }
+#courseware-news .cw-news-list-blocks a:hover {
+  color: #28497c;
+}
 #courseware-news .cw-news-list-blocks .cw-news-item-block {
   list-style: none;
   border: solid thin #28497c;
@@ -1531,6 +2078,11 @@ button.cw-reset-progress-button:hover {
   float: left;
   margin: 0.5em 0.5em 0 0;
   padding: 0.5em 1em;
+}
+#courseware-news .cw-news-list-blocks .cw-news-item-block:hover {
+  border: solid 2px #28497c;
+  color: #28497c;
+  padding: 6px 13px;
 }
 #courseware-news .cw-news-list-blocks .cw-news-item-block .cw-block-title {
   background-image: url("../../../../assets/images/icons/blue/plugin.svg");
@@ -1645,8 +2197,12 @@ button.cw-reset-progress-button:hover {
   background-image: url("../../../../assets/images/icons/blue/consultation.svg");
   background-image: url("../../../../../assets/images/icons/blue/consultation.svg");
 }
+#courseware-news .cw-news-list-blocks .cw-news-item-block .cw-block-title.type-FolderBlock {
+  background-image: url("../../../../assets/images/icons/blue/folder-full.svg");
+  background-image: url("../../../../../assets/images/icons/blue/folder-full.svg");
+}
 #courseware-news .cw-news-list-blocks .cw-news-item-block img {
-  width: 100%;
+  max-height: 175px;
 }
 .btn-base {
   width: 20px;
@@ -5015,6 +5571,296 @@ section#courseware.view-author .EmbedBlock .cw-embedblock-image.full-width {
 .btn-base:hover {
   cursor: pointer;
 }
+.cw-folder-title {
+  min-width: 10%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  font-style: normal;
+  font-weight: 600;
+  color: #28497c;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 10px 20px;
+  position: relative;
+  margin: 0;
+  text-align: center;
+  border: solid thin #ccc;
+  background-color: #fcfcfc;
+  border-bottom: none;
+  margin-bottom: 0;
+}
+.cw-folder {
+  border: solid thin #ccc;
+  padding: 1em;
+}
+.cw-folder ul {
+  padding: 0;
+}
+.cw-folder-file-item {
+  list-style: none;
+}
+.cw-folder-file-item:not(:last-child) {
+  border-bottom: solid thin #ccc;
+}
+.cw-folder-file-item a {
+  display: block;
+}
+.cw-folder-file-item:hover {
+  background-color: hsla(217, 6%, 45%, 0.2);
+}
+.cw-folder-file-info {
+  background-image: url("../../../../../assets/images/icons/blue/file.svg");
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  padding-left: 26px;
+  margin: 1em;
+  line-height: 24px;
+  color: #28497c;
+}
+.cw-folder-file-info.cw-folder-file-disabled {
+  background-image: url("../../../../../assets/images/icons/grey/file.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-audio {
+  background-image: url("../../../../../assets/images/icons/blue/file-audio.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-audio.cw-folder-file-disabled {
+  background-image: url("../../../../../assets/images/icons/grey/file-audio.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-pic {
+  background-image: url("../../../../../assets/images/icons/blue/file-pic.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-pic.cw-folder-file-disabled {
+  background-image: url("../../../../../assets/images/icons/grey/file-pic.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-video {
+  background-image: url("../../../../../assets/images/icons/blue/file-video.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-video.cw-folder-file-disabled {
+  background-image: url("../../../../../assets/images/icons/grey/file-video.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-pdf {
+  background-image: url("../../../../../assets/images/icons/blue/file-pdf.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-pdf.cw-folder-file-disabled {
+  background-image: url("../../../../../assets/images/icons/grey/file-pdf.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-text {
+  background-image: url("../../../../../assets/images/icons/blue/file-text.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-text.cw-folder-file-disabled {
+  background-image: url("../../../../../assets/images/icons/grey/file-text.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-ppt {
+  background-image: url("../../../../../assets/images/icons/blue/file-ppt.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-ppt.cw-folder-file-disabled {
+  background-image: url("../../../../../assets/images/icons/grey/file-ppt.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-archive {
+  background-image: url("../../../../../assets/images/icons/blue/file-archive.svg");
+}
+.cw-folder-file-info.cw-folder-fileicon-archive.cw-folder-file-disabled {
+  background-image: url("../../../../../assets/images/icons/grey/file-archive.svg");
+}
+.cw-folder-file-info.cw-folder-file-disabled {
+  color: #888;
+}
+.cw-folder-file-info span {
+  color: lightgrey;
+}
+.cw-folder-file-details {
+  color: #888;
+}
+.cw-folder-download-icon {
+  background-image: url("../../../../../assets/images/icons/blue/download.svg");
+  height: 24px;
+  width: 24px;
+  background-size: 24px;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 2em;
+  margin: 1em;
+}
+.cw-folder-download-icon.cw-folder-download-icon-disabled {
+  background-image: url("../../../../../assets/images/icons/grey/download.svg");
+}
+.arrow.icon-role-clickable.icon-shape-arr_1down {
+  display: none;
+}
+.cw-folder-allow-download-info {
+  margin-top: -10px;
+}
+section#courseware .block-content:not([data-view="student"]) label {
+  width: auto;
+}
+section#courseware .block-content:not([data-view="student"]) .select2-container {
+  margin-left: 1em;
+}
+section#courseware .block-content:not([data-view="student"]) .select2-container .select2-dropdown {
+  margin-left: -1em;
+}
+.cw-folder-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+}
+.cw-folder-icon.StandardFolder,
+.cw-folder-icon.CoursePublicFolder,
+.cw-folder-icon.PublicFolder {
+  background-image: url("../../../../../assets/images/icons/blue/folder-empty.svg");
+}
+.cw-folder-icon.StandardFolder.full,
+.cw-folder-icon.CoursePublicFolder.full,
+.cw-folder-icon.PublicFolder.full {
+  background-image: url("../../../../../assets/images/icons/blue/folder-full2.svg");
+}
+.cw-folder-icon.CourseGroupFolder {
+  background-image: url("../../../../../assets/images/icons/blue/folder-group-empty.svg");
+}
+.cw-folder-icon.CourseGroupFolder.full {
+  background-image: url("../../../../../assets/images/icons/blue/folder-group-full2.svg");
+}
+.cw-folder-icon.HomeworkFolder {
+  background-image: url("../../../../../assets/images/icons/blue/folder-lock-empty.svg");
+}
+.cw-folder-icon.HomeworkFolder.full {
+  background-image: url("../../../../../assets/images/icons/blue/folder-lock-full2.svg");
+}
+.cw-folder-icon.MaterialFolder {
+  background-image: url("../../../../../assets/images/icons/blue/download.svg");
+}
+.cw-folder-icon.TimedFolder {
+  background-image: url("../../../../../assets/images/icons/blue/folder-date-empty.svg");
+}
+.cw-folder-icon.TimedFolder.full {
+  background-image: url("../../../../../assets/images/icons/blue/folder-date-full2.svg");
+}
+.cw-folder-icon.HiddenFolder {
+  background-image: url("../../../../../assets/images/icons/grey/visibility-invisible/folder-lock-empty.svg");
+}
+.cw-folder-icon.HiddenFolder.full {
+  background-image: url("../../../../../assets/images/icons/grey/visibility-invisible/folder-lock-full.svg");
+}
+.cw-folder-upload {
+  margin-top: 1em;
+  padding: 0.5em;
+}
+.cw-folder-upload .cw-folder-upload-filename {
+  color: #28497c;
+  padding: 1em;
+  line-height: 36px;
+  vertical-align: text-bottom;
+  background-image: url("../../../../../assets/images/icons/blue/file.svg");
+  background-position: 0.5em center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  padding-left: 2.5em;
+  padding-right: 1em;
+}
+.cw-folder-upload .cw-folder-upload-filename,
+.cw-folder-upload .cw-folder-upload-button,
+.cw-folder-upload .cw-folder-reselect-button,
+.cw-folder-upload .cw-folder-file-upload {
+  display: none;
+}
+.cw-folder-upload .cw-folder-select-button,
+.cw-folder-upload .cw-folder-upload-button {
+  background-image: url("../../../../../assets/images/icons/blue/upload.svg");
+}
+.cw-folder-upload .cw-folder-select-button:hover,
+.cw-folder-upload .cw-folder-upload-button:hover {
+  background-image: url("../../../../../assets/images/icons/white/upload.svg");
+}
+.cw-folder-upload .cw-folder-reselect-button {
+  background-image: url("../../../../../assets/images/icons/blue/refresh.svg");
+}
+.cw-folder-upload .cw-folder-reselect-button:hover {
+  background-image: url("../../../../../assets/images/icons/white/refresh.svg");
+}
+.cw-folder-upload .cw-folder-select-button,
+.cw-folder-upload .cw-folder-reselect-button,
+.cw-folder-upload .cw-folder-upload-button {
+  color: #28497c;
+  border: solid thin #28497c;
+  background-color: #fff;
+  min-height: 27px;
+  line-height: 130%;
+  min-width: 100px;
+  padding: 5px 15px 5px 30px;
+  margin: 0 0 0.25em 0;
+  cursor: pointer;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: bottom;
+  white-space: nowrap;
+  width: auto;
+  height: 35px;
+  background-position: 16px center;
+  font-size: 14px;
+  padding-left: 48px;
+  padding-right: 20px;
+  background-repeat: no-repeat;
+}
+.cw-folder-upload .cw-folder-select-button:hover,
+.cw-folder-upload .cw-folder-reselect-button:hover,
+.cw-folder-upload .cw-folder-upload-button:hover {
+  background-color: #28497c;
+  color: #fff;
+  outline: 0;
+}
+/* sidebar special */
+.cw-sidebar .FolderBlock {
+  padding: 0;
+}
+.cw-sidebar .FolderBlock .cw-folder-title {
+  background: #e7ebf1;
+  color: #28497c;
+  font-weight: bold;
+  font-size: unset;
+  line-height: unset;
+  text-align: left;
+  padding: 4px;
+  margin: 0 0 10px 0;
+  border: none;
+  position: unset;
+}
+.cw-sidebar .FolderBlock .cw-file-info {
+  overflow: hidden;
+}
+.cw-sidebar .FolderBlock .cw-upload-label {
+  vertical-align: bottom;
+}
+.cw-sidebar .FolderBlock .cw-folder-button-wrapper .cw-folder-download-button {
+  min-width: 230px;
+  max-width: 230px;
+  background: transparent;
+  opacity: 0;
+}
+.cw-sidebar .FolderBlock .cw-upload-checkbox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.cw-sidebar .FolderBlock .cw-upload-checkbox .cw-upload-label {
+  margin-left: auto;
+}
+.btn-base {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  border: none;
+}
+.btn-base:hover {
+  cursor: pointer;
+}
 section.BlubberBlock div.blubber-stream.loading {
   background-image: url("../../../../../assets/images/ajax_indicator_small.gif");
   background-position: left;
@@ -5162,6 +6008,12 @@ section.BlubberBlock input[type=submit] {
 }
 .GalleryBlock .cw-gallery img {
   margin: auto;
+}
+.GalleryBlock .cw-gallery .cw-gallery-image-name {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin-top: 0.75em;
 }
 .btn-base {
   width: 20px;
@@ -5313,6 +6165,9 @@ section.HtmlBlock div.content:after {
 }
 .ImageMapBlock .block-content {
   overflow-x: auto;
+}
+.ImageMapBlock .block-content[data-view="student"] {
+  text-align: center;
 }
 .ImageMapBlock .cw-image-map-buttonset {
   display: inline-block;
@@ -7428,6 +8283,10 @@ section#courseware .active-section section.block div.controls span.type.type-Aud
 section#courseware .aside-section section.block div.controls span.type.type-AudioGalleryBlock {
   background-image: url("../../../../../assets/images/icons/black/consultation.svg");
 }
+section#courseware .active-section section.block div.controls span.type.type-FolderBlock,
+section#courseware .aside-section section.block div.controls span.type.type-FolderBlock {
+  background-image: url("../../../../../assets/images/icons/black/folder-full.svg");
+}
 section#courseware .active-section section.block div.controls span.type .not-visible-info,
 section#courseware .aside-section section.block div.controls span.type .not-visible-info {
   font-weight: 600;
@@ -8013,6 +8872,16 @@ section#courseware .active-section .block-adder .cw-block-fav-item.cw-block-fav-
 section#courseware .aside-section .block-adder .cw-block-fav-item.cw-block-fav-item-selected .cw-block-adder-item-icon.cw-block-fav-item-icon-AudioGalleryBlock {
   background-image: url("../../../../../assets/images/icons/white/consultation.svg");
 }
+section#courseware .active-section .block-adder .cw-block-adder-item.cw-block-fav-item-selected .cw-block-fav-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .aside-section .block-adder .cw-block-adder-item.cw-block-fav-item-selected .cw-block-fav-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .active-section .block-adder .cw-block-fav-item.cw-block-fav-item-selected .cw-block-fav-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .aside-section .block-adder .cw-block-fav-item.cw-block-fav-item-selected .cw-block-fav-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .active-section .block-adder .cw-block-adder-item.cw-block-fav-item-selected .cw-block-adder-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .aside-section .block-adder .cw-block-adder-item.cw-block-fav-item-selected .cw-block-adder-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .active-section .block-adder .cw-block-fav-item.cw-block-fav-item-selected .cw-block-adder-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .aside-section .block-adder .cw-block-fav-item.cw-block-fav-item-selected .cw-block-adder-item-icon.cw-block-fav-item-icon-FolderBlock {
+  background-image: url("../../../../../assets/images/icons/white/folder-full.svg");
+}
 section#courseware .active-section .block-adder .cw-block-adder-item.cw-block-fav-item-selected .cw-block-fav-item-description,
 section#courseware .aside-section .block-adder .cw-block-adder-item.cw-block-fav-item-selected .cw-block-fav-item-description,
 section#courseware .active-section .block-adder .cw-block-fav-item.cw-block-fav-item-selected .cw-block-fav-item-description,
@@ -8585,6 +9454,24 @@ section#courseware .aside-section .block-adder .cw-block-adder-item .cw-block-ad
 section#courseware .active-section .block-adder .cw-block-fav-item .cw-block-adder-item-icon.cw-block-adder-item-icon-AudioGalleryBlock,
 section#courseware .aside-section .block-adder .cw-block-fav-item .cw-block-adder-item-icon.cw-block-adder-item-icon-AudioGalleryBlock {
   background-image: url("../../../../../assets/images/icons/blue/consultation.svg");
+}
+section#courseware .active-section .block-adder .cw-block-adder-item .cw-block-fav-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .aside-section .block-adder .cw-block-adder-item .cw-block-fav-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .active-section .block-adder .cw-block-fav-item .cw-block-fav-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .aside-section .block-adder .cw-block-fav-item .cw-block-fav-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .active-section .block-adder .cw-block-adder-item .cw-block-adder-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .aside-section .block-adder .cw-block-adder-item .cw-block-adder-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .active-section .block-adder .cw-block-fav-item .cw-block-adder-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .aside-section .block-adder .cw-block-fav-item .cw-block-adder-item-icon.cw-block-fav-item-icon-FolderBlock,
+section#courseware .active-section .block-adder .cw-block-adder-item .cw-block-fav-item-icon.cw-block-adder-item-icon-FolderBlock,
+section#courseware .aside-section .block-adder .cw-block-adder-item .cw-block-fav-item-icon.cw-block-adder-item-icon-FolderBlock,
+section#courseware .active-section .block-adder .cw-block-fav-item .cw-block-fav-item-icon.cw-block-adder-item-icon-FolderBlock,
+section#courseware .aside-section .block-adder .cw-block-fav-item .cw-block-fav-item-icon.cw-block-adder-item-icon-FolderBlock,
+section#courseware .active-section .block-adder .cw-block-adder-item .cw-block-adder-item-icon.cw-block-adder-item-icon-FolderBlock,
+section#courseware .aside-section .block-adder .cw-block-adder-item .cw-block-adder-item-icon.cw-block-adder-item-icon-FolderBlock,
+section#courseware .active-section .block-adder .cw-block-fav-item .cw-block-adder-item-icon.cw-block-adder-item-icon-FolderBlock,
+section#courseware .aside-section .block-adder .cw-block-fav-item .cw-block-adder-item-icon.cw-block-adder-item-icon-FolderBlock {
+  background-image: url("../../../../../assets/images/icons/blue/folder-full.svg");
 }
 section#courseware .active-section .block-adder .cw-block-store-fav,
 section#courseware .aside-section .block-adder .cw-block-store-fav,

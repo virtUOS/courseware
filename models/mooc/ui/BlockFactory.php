@@ -33,6 +33,7 @@ class BlockFactory {
         if (!class_exists($class)) {
             return null;
         }
+        $this->container['cid'] = $sorm_block->seminar_id;
 
         return new $class($this->container, $sorm_block);
     }

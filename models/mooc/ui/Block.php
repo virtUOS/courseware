@@ -168,6 +168,11 @@ abstract class Block {
             array());
     }
 
+    public function getSeminarId()
+    {
+        return  $this->container['cid'];
+    }
+
     /**
      * Returns the block's sub types.
      *

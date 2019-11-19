@@ -25,7 +25,9 @@ export default StudentView.extend({
 
   postRender() {
     let fileCounter = this.$('input[name="file_counter"]').val();
-    if (fileCounter == 0) {
+    let allowUpload = this.$('input[name="allow_upload"]').val();
+    if ((fileCounter == 0) && (allowUpload != 1)){
+      this.$('.cw-folder-title').hide();
       this.$('.cw-folder').hide();
     }
   },

@@ -110,6 +110,11 @@ class User extends \User
         return $GLOBALS['perm']->get_studip_perm($cid, $this->id);
     }
 
+    public function hasApproval(DbBlock $block)
+    {
+        return $block->hasApproval($this->id);
+    }
+
     public function isNobody()
     {
         return $this->id === 'nobody';
@@ -130,7 +135,12 @@ class User extends \User
             $courseware_model = $block->getCoursewareOfThisBlock();
             $courseware = $this->container['block_factory']->makeBlock($courseware_model);
         }
-
-        return $this->hasPerm($block->seminar_id, $courseware->getEditingPermission());
+        $approval = false;
+        if (!$block->isStructuralBlock()) {
+            $approval = $this->hasApproval($block->parent);
+        } else {
+            $approval = $this->hasApproval($block);
+        }
+        return $this->hasPerm($block->seminar_id, $courseware->getEditingPermission()) || $approval;
     }
 }

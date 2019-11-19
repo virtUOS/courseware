@@ -256,12 +256,12 @@ class Block extends \SimpleORMap implements \Serializable
      */
     public function updateChildPositions($positions)
     {
+        $db = \DBManager::get();
+
         $query = sprintf(
-            'UPDATE %s SET position = FIND_IN_SET(id, ?) WHERE parent_id = ?',
+            'UPDATE %s SET position = FIND_IN_SET(id, ?)-1 WHERE parent_id = ?',
             $this->db_table);
         $args = array(join(',', $positions), $this->id);
-
-        $db = \DBManager::get();
         $st = $db->prepare($query);
         $st->execute($args);
     }
@@ -379,5 +379,107 @@ class Block extends \SimpleORMap implements \Serializable
     public function belongesToCourse($cid)
     {
         return $this->seminar_id == $cid;
+    }
+
+    public function hasApproval($uid)
+    {
+        if (!$this->isStructuralBlock()) {
+            return false;
+        }
+        return $this->hasUserApproval($uid) || $this->hasGroupApproval($uid);
+    }
+
+    private function hasUserApproval($uid)
+    {
+        $approval_json = json_decode($this->approval, true);
+        if ($approval_json !== FALSE && !empty($approval_json)) {
+            if(!empty($approval_json['users'])) {
+                return in_array($uid, $approval_json['users']);
+            }
+        }
+        return false;
+    }
+
+    private function hasGroupApproval($uid)
+    {
+        $approval_json = json_decode($this->approval, true);
+        if ($approval_json !== FALSE && !empty($approval_json)) {
+            if(!empty($approval_json['groups'])) {
+                foreach($approval_json['groups'] as $group_id){
+                    $group = \Statusgruppen::find($group_id);
+                    if ($group->isMember($uid)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public function getApprovalList($type)
+    {
+        $approval_json = json_decode($this->approval, true);
+        switch ($type) {
+            case 'users':
+                return $approval_json['users'];
+            case 'groups':
+                return $approval_json['groups'];
+        }
+    }
+
+    public function setApprovalList($json) {
+        if (!$this->isStructuralBlock()) {
+            return false;
+        }
+        $approval_json = json_decode($this->approval, true);
+        $new_list = json_decode($json, true);
+        if ($approval_json === NULL) {
+            $approval_json = array();
+        }
+        $old_list = $approval_json;
+        if($new_list['users'] !== NULL){
+            $approval_json['users'] = $new_list['users'];
+            $updateType = 'users';
+        }
+        if($new_list['groups'] !== NULL){
+            $approval_json['groups'] = $new_list['groups'];
+            $updateType = 'groups';
+        }
+
+        $this->approval = json_encode($approval_json);
+        $this->store();
+        $this->addApprovalToChildren($old_list, $new_list, $updateType);
+    }
+
+    public function addApprovalToChildren($oldList, $newList, $updateType) {
+
+        if(empty($oldList)) {
+            $oldList[$updateType] = array();
+        }
+
+        $rm_arr = array_diff($oldList[$updateType], $newList[$updateType]);
+        $add_arr = array_diff($newList[$updateType], $oldList[$updateType]);
+
+        foreach($this->getStructuralChildren() as $element) {
+            if(!$element->isStructuralBlock()) {return;}
+            $elementList = $element->getApprovalList($updateType);
+            if($elementList === NULL) {
+                $elementList = array();
+            }
+
+            foreach($add_arr as $add) {
+                if (!in_array($add, $elementList)){
+                    $elementList[] = $add;
+                }
+            }
+
+            foreach($elementList as $key => $value) {
+                if (in_array($value, $rm_arr)) {
+                    unset($elementList[$key]);
+                }
+            }
+
+            $element->setApprovalList(json_encode([$updateType => $elementList]));
+        }
     }
 }

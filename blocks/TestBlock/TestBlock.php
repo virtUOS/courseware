@@ -128,8 +128,9 @@ class TestBlock extends Block
     public function preview_view()
     {
         $assignment = \VipsAssignment::find($this->assignment_id);
+        $type = $this->getSubTypes()[$this->_model->sub_type];
 
-        return array('name' => $assignment->test->title);
+        return array('name' => $assignment->test->title, 'type' => $type);
     }
 
     public function save_handler(array $data)

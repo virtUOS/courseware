@@ -27,7 +27,7 @@ export default AuthorView.extend({
         if (!state.id) { return state.text; }
         if (state.element.dataset.folder_size > 0) { state.element.className = state.element.className + ' full';}
         var $state = $(
-          '<span class="new-select2-item ' + state.element.className + '"></span><span>' + state.text + '</span>'
+          '<span class="new-select2-item ' + state.element.className + '" data-folder_type="' + state.element.dataset.folder_type +'"></span><span>' + state.text + '</span>'
         );
         return $state;
       }
@@ -86,7 +86,7 @@ export default AuthorView.extend({
   },
 
   checkUpload() {
-    switch(this.$('.cw-folder-select-folder :selected').attr('folder_type')) {
+    switch(this.$('.cw-folder-select-folder option:selected').attr('data-folder_type')) {
     case 'HomeworkFolder':
       this.$('.cw-folder-allow-upload').prop('checked', true);
       this.$('.cw-folder-allow-upload').prop('disabled', true);

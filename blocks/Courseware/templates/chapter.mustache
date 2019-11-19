@@ -16,6 +16,7 @@
       {{/subchapters}}
 
       <li class=no-content>{{#i18n}}Keine Unterkapitel{{/i18n}}</li>
+      {{#user_can_edit_chapter}}
       <li class=controls>
         <button class=add-subchapter>{{#i18n}}Unterkapitel einfügen{{/i18n}}</button>
         <button class=init-sort-subchapter>{{#i18n}}Unterkapitel sortieren{{/i18n}}</button>
@@ -27,6 +28,7 @@
           <button class=deactivate-aside-section data-type=Subchapter>{{#i18n}}Seitenblöcke entfernen{{/i18n}}</button>
         {{/active_subchapter.aside_section}}
       </li>
+      {{/user_can_edit_chapter}}
       <div class="clear"></div>
     </ol>
   {{/selected}}
