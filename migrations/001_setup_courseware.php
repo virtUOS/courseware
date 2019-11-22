@@ -24,7 +24,8 @@ class SetupCourseware extends Migration
         // check if Mooc.IP is already installed and the schema-version of Mooc.IP
         // If it is the most recent one, do nothing,
         // if the schema-version is to old, do an exit rescue with an error message
-        $version = $db->fetchColumn("SELECT version FROM schema_version WHERE domain = 'Mooc.IP'");
+        $schema_version = new DBSchemaVersion('MOOC.IP');
+        $version = $schema_version->get();
 
         // check if Mooc.IP has been upgraded to OpenCourses
         if ($version && $version < 22) {
