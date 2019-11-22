@@ -20,6 +20,19 @@ class OpenCastBlock extends Block
 
     public function student_view()
     {
+        $plugin_manager = \PluginManager::getInstance();
+        $oc_present = false;
+        if (!$plugin_manager->getPlugin('OpenCast')) {
+            return array('oc_present' => $oc_present);
+        } else {
+            $plugin_info = $plugin_manager->getPluginInfo('OpenCast');
+            if (!$plugin_manager->isPluginActivated($plugin_info['id'], $this->getModel()->seminar_id)) {
+                return array('oc_present' => $oc_present);
+            } else {
+                $oc_present = true;
+            }
+        }
+
         $this->setGrade(1.0);
         $opencast_content_json = json_decode($this->opencast_content);
         $url_mp4 = $opencast_content_json->url_mp4;
@@ -49,6 +62,7 @@ class OpenCastBlock extends Block
 
         return array_merge($this->getAttrArray(),
             array(
+                'oc_present'   => $oc_present,
                 'url_mp4'      => $url_mp4,
                 'url_opencast' => $url_opencast,
                 'useplayer'    => $useplayer,
@@ -62,9 +76,19 @@ class OpenCastBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
+        $opencast_installed = false;
+        $opencast_active = false;
         $plugin_manager = \PluginManager::getInstance();
-        if ($plugin_manager->getPlugin('OpenCast') == NULL) {
-            return array('opencast' => false);
+        if (!$plugin_manager->getPlugin('OpenCast')) {
+            return array('opencast_installed' => $opencast_installed);
+        } else {
+            $opencast_installed = true;
+            $plugin_info = $plugin_manager->getPluginInfo('OpenCast');
+            if (!$plugin_manager->isPluginActivated($plugin_info['id'], $this->getModel()->seminar_id)) {
+                return array('opencast_installed' => $opencast_installed, 'opencast_active' => $opencast_active);
+            } else {
+                $opencast_active = true;
+            }
         }
         $url = $plugin_manager->getPlugin('OpenCast')->getPluginURL();
         $course_id = $this->container['cid'];
@@ -100,6 +124,8 @@ class OpenCastBlock extends Block
         }
 
         return array_merge($this->getAttrArray(), array(
+            'opencast_installed' => $opencast_installed,
+            'opencast_active' => $opencast_active,
             'episodes' => $episodes,
             'opencastid' => $opencastid,
             'useplayer' => $useplayer,
