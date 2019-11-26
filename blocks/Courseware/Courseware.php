@@ -62,6 +62,7 @@ class Courseware extends Block
         $tree = $this->getPrunedChapterNodes(list($courseware, $chapter, $subchapter, $section) = $this->getSelectedPath($lastSelected));
 
         $active_section = array();
+        $user_can_edit_section = false;
         if ($section && $this->getCurrentUser()->canRead($section)) {
             $active_section_block = $this->getBlockFactory()->makeBlock($section);
             $active_section = array(
@@ -70,6 +71,7 @@ class Courseware extends Block
                 'parent_id' => $subchapter->id,
                 'html' => $active_section_block->render('student', $context),
             );
+            $user_can_edit_section = $this->getCurrentUser()->canUpdate(DbBlock::find($active_section['id'])) || $this->getCurrentUser()->canUpdate($this->_model);
         }
 
         $section_nav = null;
@@ -79,24 +81,25 @@ class Courseware extends Block
 
         // prepare active chapter data
         $active_chapter = null;
+        $user_can_edit_chapter = false;
         if ($chapter) {
             $active_chapter = $chapter->toArray();
             $active_chapter['aside_section'] = $this->findAsideSection($chapter);
+            $user_can_edit_chapter = $this->getCurrentUser()->canUpdate(DbBlock::find($active_chapter['id'])) || $this->getCurrentUser()->canUpdate($this->_model);
         }
 
         // prepare active subchapter data
         $active_subchapter = null;
+        $user_can_edit_subchapter = false;
         if ($subchapter) {
             $active_subchapter = $subchapter->toArray();
             $active_subchapter['aside_section'] = $this->findAsideSection($subchapter);
+            $user_can_edit_subchapter = $this->getCurrentUser()->canUpdate(DbBlock::find($active_subchapter['id'])) || $this->getCurrentUser()->canUpdate($this->_model);
         }
 
         $this->branchComplete($tree);
         $cid = $this->container['cid'];
 
-        $user_can_edit_chapter = $this->getCurrentUser()->canUpdate(DbBlock::find($active_chapter['id'])) || $this->getCurrentUser()->canUpdate($this->_model);
-        $user_can_edit_subchapter = $this->getCurrentUser()->canUpdate(DbBlock::find($active_subchapter['id'])) || $this->getCurrentUser()->canUpdate($this->_model);
-        $user_can_edit_section = $this->getCurrentUser()->canUpdate(DbBlock::find($active_section['id'])) || $this->getCurrentUser()->canUpdate($this->_model);
 
         return array_merge($tree, array(
             'user_is_nobody'        => $this->getCurrentUser()->isNobody(),
