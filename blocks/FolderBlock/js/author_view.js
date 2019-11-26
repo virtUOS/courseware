@@ -21,7 +21,7 @@ export default AuthorView.extend({
   },
 
   postRender() {
-    var $stored_folder = this.$el.find('.cw-folder-stored-folder').val();
+    var $stored_folder = this.$('.cw-folder-stored-folder').val();
     this.$('.cw-folder-select-folder').select2({
       templateResult: state => {
         if (!state.id) { return state.text; }

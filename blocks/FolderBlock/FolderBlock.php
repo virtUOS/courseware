@@ -133,7 +133,8 @@ class FolderBlock extends Block
         $folderarray = [];
         foreach($folders as $folder) {
             $folder = $folder->getTypedFolder();
-            $folderarray[] = array('id' => $folder->id,
+            $folderarray[] = array(
+            'id' => $folder->id,
             'name' => $folder->name,
             'folder_type' => $folder->folder_type,
             'size' => sizeOf($folder->getFiles()),
