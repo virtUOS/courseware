@@ -31,38 +31,41 @@ export default AuthorView.extend({
   },
 
   postRender() {
-    var $view = this;
-    var $folders = $view.$el.find('.gallery-folder option');
-    var $stored_folder = $view.$el.find('.gallery-stored-folder').val();
-    $folders.each(function () {
-      if($(this).attr('folder_id') == $stored_folder) {
-        $(this).prop('selected', true);
+    var $stored_folder = this.$('.gallery-stored-folder').val();
+    this.$('.gallery-folder').select2({
+      templateResult: state => {
+        if (!state.id) { return state.text; }
+        var $state = $(
+          '<span class="' + state.element.className + '"></span><span>' + state.text + '</span>'
+        );
+        return $state;
       }
     });
-    var $stored_autoplay = $view.$el.find('.gallery-stored-autoplay').val();
-    var $stored_hidenav = $view.$el.find('.gallery-stored-hidenav').val();
-    var $stored_show_names = $view.$el.find('.gallery-stored-show-names').val();
+    this.$('.gallery-folder').val($stored_folder).trigger('change');
+
+    var $stored_autoplay = this.$('.gallery-stored-autoplay').val();
+    var $stored_hidenav = this.$('.gallery-stored-hidenav').val();
+    var $stored_show_names = this.$('.gallery-stored-show-names').val();
 
     if ($stored_autoplay == 1) {
-      $view.$el.find('input[name="gallery-autoplay"]').prop( 'checked', true);
+      this.$('input[name="gallery-autoplay"]').prop( 'checked', true);
     }
     if ($stored_hidenav == 1) {
-      $view.$el.find('input[name="gallery-hidenav"]').prop( 'checked', true);
+      this.$('input[name="gallery-hidenav"]').prop( 'checked', true);
     }
     if ($stored_show_names == 1) {
-      $view.$el.find('input[name="gallery-show-names"]').prop( 'checked', true);
+      this.$('input[name="gallery-show-names"]').prop( 'checked', true);
     }
   },
 
   onSave(event) {
     var view = this;
-    var $folder = this.$el.find('.gallery-folder');
-    var $autoplay = this.$el.find('input[name="gallery-autoplay"]').prop( 'checked') ? 1 : 0;
-    var $autoplaytimer = this.$el.find('input[name="gallery-autoplay-timer"]').val();
-    var $height = this.$el.find('input[name="gallery-height"]').val();
-    var $hidenav = this.$el.find('input[name="gallery-hidenav"]').prop( 'checked') ? 1 : 0;
-    var $showNames = this.$el.find('input[name="gallery-show-names"]').prop( 'checked') ? 1 : 0;
-    var $gallery_folder_id = $folder.find('option:selected').attr('folder_id');
+    var $autoplay = this.$('input[name="gallery-autoplay"]').prop( 'checked') ? 1 : 0;
+    var $autoplaytimer = this.$('input[name="gallery-autoplay-timer"]').val();
+    var $height = this.$('input[name="gallery-height"]').val();
+    var $hidenav = this.$('input[name="gallery-hidenav"]').prop( 'checked') ? 1 : 0;
+    var $showNames = this.$('input[name="gallery-show-names"]').prop( 'checked') ? 1 : 0;
+    var $gallery_folder_id = this.$('.gallery-folder').val();
     helper
       .callHandler(this.model.id, 'save', {
         gallery_folder_id: $gallery_folder_id,

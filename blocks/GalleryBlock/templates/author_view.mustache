@@ -7,12 +7,12 @@
 <select type="text" class="gallery-folder" name="folder">
     <optgroup label="{{#i18n}}Ordner dieser Veranstaltung{{/i18n}}">
         {{#folders}}
-            <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
+            <option value="{{id}}" class="cw-gallery-folder{{#has_images}} cw-gallery-folder-full{{/has_images}}">{{name}}</option>
         {{/folders}}
     </optgroup>
     <optgroup label="Ordner im eigenen Dateibereich">
         {{#user_folders}}
-            <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
+            <option value="{{id}}" class="cw-gallery-folder{{#has_images}} cw-gallery-folder-full{{/has_images}}">{{name}}</option>
         {{/user_folders}}
     </optgroup>
 </select>

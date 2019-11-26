@@ -55,6 +55,9 @@ class GalleryBlock extends Block
         $folders =  \Folder::findBySQL('range_id = ? AND (folder_type = ? OR folder_type = ?)', array($this->container['cid'], 'StandardFolder', 'CoursePublicFolder'));
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
 
+        $folders = $this->buildFoldersArray($folders);
+        $user_folders = $this->buildFoldersArray($user_folders);
+
         return array_merge($this->getAttrArray(), array("folders" => $folders, "user_folders" => $user_folders));
     }
 
@@ -104,6 +107,33 @@ class GalleryBlock extends Block
         $this->setGalleryFiles();
 
         return;
+    }
+
+    private function buildFoldersArray($folders)
+    {
+        $folders_array = [];
+        foreach($folders as $folder){
+            $folder = $folder->getTypedFolder();
+            $response = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            $counter = 0;
+            foreach ($response as $item) {
+                if (!$item->terms_of_use->fileIsDownloadable($item, false)) {
+                    continue;
+                }
+                if ($item->isImage()) {
+                    $counter++;
+                }
+            }
+            $folders_array[] = array(
+                'id' => $folder->id,
+                'name' => $folder->name,
+                'folder_type' => $folder->folder_type,
+                'size' => $counter,
+                'has_images' => $counter > 0
+            );
+        }
+
+        return $folders_array;
     }
 
     private function showFiles($folder_id)
