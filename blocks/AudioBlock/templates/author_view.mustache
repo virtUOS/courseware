@@ -24,28 +24,28 @@
     {{^no_audio_files}}
     <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
         {{#audio_files_course}}
-            <option value="{{name}}" file-id="{{id}}">{{name}}</option>
+            <option value="{{id}}" data-audiofile="{{name}}">{{name}}</option>
         {{/audio_files_course}}
         {{^audio_files_course}}
-            <option value="">{{#i18n}}keine Audiodatei verfügbar{{/i18n}}</option>
+            <option value="" disabled>{{#i18n}}keine Audiodatei verfügbar{{/i18n}}</option>
         {{/audio_files_course}}
     </optgroup>
     <optgroup label="{{#i18n}}Dateien im eigenen Dateibereich{{/i18n}}">
         {{#audio_files_user}}
-            <option value="{{name}}" file-id="{{id}}">{{name}}</option>
+            <option value="{{id}}" data-audiofile="{{name}}">{{name}}</option>
         {{/audio_files_user}}
         {{^audio_files_user}}
-            <option value="">{{#i18n}}keine Audiodatei verfügbar{{/i18n}}</option>
+            <option value="" disabled>{{#i18n}}keine Audiodatei verfügbar{{/i18n}}</option>
         {{/audio_files_user}}
     </optgroup>
     {{#other_user_file}}
         <optgroup label="{{#i18n}}Datei im Dateibereich eines anderen Nutzers{{/i18n}}">
-                <option value="{{name}}" file-id="{{id}}">{{name}}</option>
+                <option value="{{id}}" data-audiofile="{{name}}">{{name}}</option>
         </optgroup>
     {{/other_user_file}}
     {{/no_audio_files}}
     {{#no_audio_files}}
-        <option value="" selected>{{#i18n}}keine Audiodatei verfügbar{{/i18n}}</option>
+        <option value="" selected disabled>{{#i18n}}keine Audiodatei verfügbar{{/i18n}}</option>
     {{/no_audio_files}}
 </select>
 <button class="cw-audioblock-file-select-info cw-info" data-title="{{#i18n}}Hier werden alle Audiodateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>

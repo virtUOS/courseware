@@ -37,9 +37,19 @@ export default AuthorView.extend({
         case 'cw':
             $view.$('input.cw-audioblock-file').hide();
             $view.$('.cw-audioblock-file-input-info').hide();
-            $view.$('.cw-audioblock-file option[file-id="'+$view.$('.cw-audioblock-id-stored').val()+'"]').prop('selected', true);
+            //$view.$('.cw-audioblock-file option[file-id="'+$view.$('.cw-audioblock-id-stored').val()+'"]').prop('selected', true);
             $view.$('.cw-audioblock-source option[value="cw"]').prop('selected', true);
-            $view.$('select.cw-audioblock-file').show();
+            $view.$('select.cw-audioblock-file').select2({
+              templateResult: state => {
+                if (!state.id) { return state.text; }
+                var $state = $(
+                  '<span data-audiofile="' + state.element.dataset.audiofile +'">' + state.text + '</span>'
+                );
+                return $state;
+              }
+            }
+            ).show();
+            this.$('select.cw-audioblock-file').val($view.$('.cw-audioblock-id-stored').val()).trigger('change');
             $view.$('.cw-audioblock-file-select-info').show();
             break;
         case 'webaudio':
@@ -90,13 +100,12 @@ export default AuthorView.extend({
     var $view = this;
     var $audiodescription = $view.$('.cw-audioblock-description').val();
     var $audiosource = $view.$('.cw-audioblock-source').val();
-    var $audiofile, $audioid, $audio_file_name;
+    var $audiofile, $audioid;
 
     switch ($audiosource) {
         case 'cw':
-            $audiofile = $view.$('select.cw-audioblock-file').val();
-            $audioid = $view.$('select.cw-audioblock-file option:selected').attr('file-id');
-            $audio_file_name = $view.$('select.cw-audioblock-file option:selected').attr('filename');
+            $audiofile = $view.$('select.cw-audioblock-file').find(":selected").data("audiofile");;
+            $audioid = $view.$('select.cw-audioblock-file').val();
             break;
         case 'webaudio':
             $audiofile = $view.$('input.cw-audioblock-file').val();
