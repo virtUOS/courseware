@@ -50,6 +50,16 @@ export default AuthorView.extend({
     postRender() {
         let view = this;
 
+        this.$('.cw-image-map-file').select2({
+            templateResult: state => {
+              if (!state.id) { return state.text; }
+              var $state = $(
+                '<span data-filename="' + state.element.dataset.filename +'">' + state.text + '</span>'
+              );
+              return $state;
+            }
+        });
+
         // set colors
         this.$('.cw-image-map-color').each(function(index) {
             let color = $(this).val();
@@ -67,22 +77,16 @@ export default AuthorView.extend({
         if (content != '') {
             content = JSON.parse(content);
             this.shapes = content.shapes;
-            this.$('.cw-image-map-file option[file-id="'+content.image_id+'"]').prop('selected', true);
+            //this.$('.cw-image-map-file option[file-id="'+content.image_id+'"]').prop('selected', true);
+            this.$('.cw-image-map-file').val(content.image_id).trigger('change');
             this.$('.cw-image-map-source option[value="cw"]').prop('selected', true);
 
         } else {
             this.shapes = [];
         }
-
         this.setFormContent();
+        this.selectFile();
 
-        // load background image
-        let $original_img = this.$('.cw-image-map-original-img');
-        this.buildCanvas($original_img);
-
-        $original_img.on('load', function(){
-            view.buildCanvas($original_img);
-        });
 
         return this;
     },
@@ -542,30 +546,9 @@ export default AuthorView.extend({
         }
     },
 
-    selectSource() {
-        let selection = this.$('.cw-image-map-source').val();
-        this.$('input.cw-image-map-file').hide();
-        this.$('.cw-image-map-file-input-info').hide();
-        this.$('select.cw-image-map-file').hide();
-        this.$('.cw-image-map-file-select-info').hide();
-
-        switch (selection) {
-            case 'cw':
-                this.$('select.cw-image-map-file').show();
-                this.$('.cw-image-map-file-select-info').show();
-                break;
-            case 'web':
-                this.$('input.cw-image-map-file').show();
-                this.$('.cw-image-map-file-input-info').show();
-                break;
-        }
-
-        return;
-    },
-
     selectFile() {
         let view = this;
-        let url = this.$('.cw-image-map-file option:selected').data('url');
+        let url = this.$('.cw-image-map-file ').find(':selected').data('url');
 
         this.$('.cw-image-map-original-img').attr('src', url);
         let $original_img = this.$('.cw-image-map-original-img');
@@ -608,8 +591,8 @@ export default AuthorView.extend({
         let content = {};
         content.shapes = this.shapes;
         content.image_url = '';
-        content.image_id = this.$('select.cw-image-map-file option:selected').attr('file-id');
-        content.image_name = this.$('select.cw-image-map-file option:selected').attr('filename');
+        content.image_id = this.$('select.cw-image-map-file').val();
+        content.image_name = this.$('select.cw-image-map-file').find(':selected').data('filename');
         if (content.image_id != '') {
             content.image = true;  
         } else {
