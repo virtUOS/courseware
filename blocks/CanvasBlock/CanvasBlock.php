@@ -182,7 +182,7 @@ class CanvasBlock extends Block
         foreach ($course_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if (($ref->isImage()) && (!$ref->isLink())) {
+                if (($ref->isImage()) && (!$ref->isLink()) && (strpos($ref->mime_type, 'svg') === false)) {
                     $coursefilesarray[] = $ref;
                 }
                 if($ref->id == $file_id) {

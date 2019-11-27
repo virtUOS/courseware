@@ -23,6 +23,18 @@ export default AuthorView.extend({
   postRender() {
     var $view = this;
     var stored_content = this.$('.cw-canvasblock-content-stored').val();
+
+
+    $view.$('select.cw-canvasblock-file').select2({
+      templateResult: state => {
+        if (!state.id) { return state.text; }
+        var $state = $(
+          '<span data-filename="' + state.element.dataset.filename +'">' + state.text + '</span>'
+        );
+        return $state;
+      }
+    });
+
     if (stored_content == '') {
         $view.$('input.cw-canvasblock-file').hide();
         $view.$('.cw-canvasblock-file-input-info').hide();
@@ -38,7 +50,7 @@ export default AuthorView.extend({
         case 'cw':
             $view.$('input.cw-canvasblock-file').hide();
             $view.$('.cw-canvasblock-file-input-info').hide();
-            $view.$('.cw-canvasblock-file option[file-id="'+content.image_id+'"]').prop('selected', true);
+            $view.$('select.cw-canvasblock-file').val(content.image_id).trigger('change');
             $view.$('.cw-canvasblock-source option[value="cw"]').prop('selected', true);
             $view.$('select.cw-canvasblock-file').show();
             $view.$('.cw-canvasblock-file-select-info').show();
@@ -108,8 +120,8 @@ export default AuthorView.extend({
             break;
         case 'cw':
             content.image_url = '';
-            content.image_id = $view.$('select.cw-canvasblock-file option:selected').attr('file-id');
-            content.image_name = $view.$('select.cw-canvasblock-file option:selected').attr('filename');
+            content.image_id = $view.$('select.cw-canvasblock-file').val();
+            content.image_name = $view.$('select.cw-canvasblock-file').find(":selected").data("filename");
             if (content.image_id != '') {
               content.image = true;  
             } else {
@@ -160,12 +172,12 @@ export default AuthorView.extend({
     var $selection = $view.$('.cw-canvasblock-source').val();
     $view.$('input.cw-canvasblock-file').hide();
     $view.$('.cw-canvasblock-file-input-info').hide();
-    $view.$('select.cw-canvasblock-file').hide();
+    $view.$('select.cw-canvasblock-file').select2().next().hide();
     $view.$('.cw-canvasblock-file-select-info').hide();
 
     switch ($selection) {
         case 'cw':
-            $view.$('select.cw-canvasblock-file').show();
+            $view.$('select.cw-canvasblock-file').select2().next().show();
             $view.$('.cw-canvasblock-file-select-info').show();
             break;
         case 'web':

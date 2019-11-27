@@ -104,7 +104,7 @@ export default AuthorView.extend({
 
     switch ($audiosource) {
         case 'cw':
-            $audiofile = $view.$('select.cw-audioblock-file').find(":selected").data("audiofile");;
+            $audiofile = $view.$('select.cw-audioblock-file').find(":selected").data("audiofile");
             $audioid = $view.$('select.cw-audioblock-file').val();
             break;
         case 'webaudio':

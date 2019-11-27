@@ -14,23 +14,23 @@
     {{^no_image_files}}
         <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
             {{#image_files_course}}
-                <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
+                <option value="{{id}}" data-filename="{{name}}" data-mime-type="{{mime_type}}">{{name}}</option>
             {{/image_files_course}}
             {{^image_files_course}}
-                <option value="" file-id="" filename="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                <option disabled>{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
             {{/image_files_course}}
         </optgroup>
         <optgroup label="{{#i18n}}Dateien im eigenen Dateibereich{{/i18n}}">
             {{#image_files_user}}
-                <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
+                <option value="{{id}}" data-filename="{{name}}" data-mime-type="{{mime_type}}">{{name}}</option>
             {{/image_files_user}}
             {{^image_files_user}}
-                <option value="" file-id="" filename="">{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
+                <option disabled>{{#i18n}}keine Bilddatei verfügbar{{/i18n}}</option>
             {{/image_files_user}}
         </optgroup>
         {{#other_user_file}}
             <optgroup label="{{#i18n}}Datei im Dateibereich eines anderen Nutzers{{/i18n}}">
-                    <option value="" file-id="{{id}}" filename="{{name}}" mime-type="{{mime_type}}">{{name}}</option>
+                    <option value="{{id}}" data-filename="{{name}}" data-mime-type="{{mime_type}}">{{name}}</option>
             </optgroup>
         {{/other_user_file}}
     {{/no_image_files}}
