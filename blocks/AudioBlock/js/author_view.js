@@ -37,7 +37,6 @@ export default AuthorView.extend({
         case 'cw':
             $view.$('input.cw-audioblock-file').hide();
             $view.$('.cw-audioblock-file-input-info').hide();
-            //$view.$('.cw-audioblock-file option[file-id="'+$view.$('.cw-audioblock-id-stored').val()+'"]').prop('selected', true);
             $view.$('.cw-audioblock-source option[value="cw"]').prop('selected', true);
             $view.$('select.cw-audioblock-file').select2({
               templateResult: state => {

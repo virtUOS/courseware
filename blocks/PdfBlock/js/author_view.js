@@ -20,9 +20,18 @@ export default AuthorView.extend({
     },
 
     postRender() {
-        var $view = this;
-        if ($view.$('.cw-pdf-file-stored').val() != '') {
-            $view.$('.cw-pdf-set-file option[file_id="'+$view.$('.cw-pdf-file-id-stored').val()+'"]').prop('selected', true);
+        this.$('.cw-pdf-set-file').select2({
+            templateResult: state => {
+              if (!state.id) { return state.text; }
+              var $state = $(
+                '<span data-filename="' + state.element.dataset.filename +'">' + state.text + '</span>'
+              );
+              return $state;
+            }
+        });
+        let storedFile = this.$('.cw-pdf-file-id-stored').val();
+        if (storedFile != '') {
+            this.$('.cw-pdf-set-file').val(storedFile).trigger('change');
         }
 
         return this;
@@ -56,10 +65,10 @@ export default AuthorView.extend({
     },
 
     onSave(event) {
-        var $view = this;
-        var $pdf_file_id  = $view.$('.cw-pdf-set-file option:selected').attr('file_id');
-        var $pdf_filename = $view.$('.cw-pdf-set-file option:selected').attr('file_name');
-        var $pdf_title    = $view.$('.cw-pdf-set-title').val();
+        var view = this;
+        var $pdf_file_id  = this.$('.cw-pdf-set-file').val();
+        var $pdf_filename = this.$('.cw-pdf-set-file').find(':selected').data('filename');
+        var $pdf_title    = this.$('.cw-pdf-set-title').val();
         if ($pdf_title == "") {
             $pdf_title = $pdf_filename;
         }
@@ -73,7 +82,7 @@ export default AuthorView.extend({
                 // success
                 function () {
                   $(event.target).addClass('accept');
-                  $view.switchBack();
+                  view.switchBack();
                   helper.reload();
                 },
                 // error
@@ -83,10 +92,10 @@ export default AuthorView.extend({
                   console.log(errorMessage, arguments);
                 }
             );
-      },
+    },
 
-      onCancel() {
+    onCancel() {
         this.switchBack();
         helper.reload();
-      }
+    }
 });

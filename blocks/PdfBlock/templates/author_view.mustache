@@ -8,23 +8,23 @@
     {{^no_pdf_files}}
         <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
             {{#course_pdf_files}}
-                <option file_id="{{id}}" file_name="{{name}}">{{name}}</option>
+                <option value="{{id}}" data-filename="{{name}}">{{name}}</option>
             {{/course_pdf_files}}
             {{^course_pdf_files}}
-                <option value="">{{#i18n}}keine PDF-Datei verfügbar{{/i18n}}</option>
+                <option value="" disabled>{{#i18n}}keine PDF-Datei verfügbar{{/i18n}}</option>
             {{/course_pdf_files}}
         </optgroup>
         <optgroup label="{{#i18n}}Dateien im eigenen Dateibereich{{/i18n}}">
             {{#user_pdf_files}}
-                <option file_id="{{id}}" file_name="{{name}}">{{name}}</option>
+                <option value="{{id}}" data-filename="{{name}}">{{name}}</option>
             {{/user_pdf_files}}
             {{^user_pdf_files}}
-                <option value="">{{#i18n}}keine PDF-Datei verfügbar{{/i18n}}</option>
+                <option value="" disabled>{{#i18n}}keine PDF-Datei verfügbar{{/i18n}}</option>
             {{/user_pdf_files}}
         </optgroup>
         {{#other_user_file}}
             <optgroup label="{{#i18n}}Datei im Dateibereich eines anderen Nutzers{{/i18n}}">
-                <option file_id="{{id}}" file_name="{{name}}">{{name}}</option>
+                <option value="{{id}}" data-filename="{{name}}">{{name}}</option>
             </optgroup>
         {{/other_user_file}}
     {{/no_pdf_files}}
