@@ -18,14 +18,34 @@ class BeforeAfterBlock extends Block
     public function student_view()
     {
         $this->setGrade(1.0);
-        $before_file = \FileRef::find(json_decode($this->ba_before)->file_id);
-        if ($before_file) {
-            $ba_img_before = $before_file->getDownloadURL();
+        $ba_img_before = '';
+        if ($this->ba_before != '') {
+            $before = json_decode($this->ba_before);
+            if ($before->source == 'url') {
+                $ba_img_before = $before->url;
+            }
+            if ($before->source == 'file') {
+                $before_file = \FileRef::find(json_decode($this->ba_before)->file_id);
+                if ($before_file) {
+                    $ba_img_before = $before_file->getDownloadURL();
+                }
+            }
         }
-        $after_file = \FileRef::find(json_decode($this->ba_after)->file_id);
-        if ($after_file) {
-            $ba_img_after = $after_file->getDownloadURL();
+
+        $ba_img_after = '';
+        if ($this->ba_after != '') {
+            $after = json_decode($this->ba_after);
+            if ($after->source == 'url') {
+                $ba_img_after = $after->url;
+            }
+            if ($after->source == 'file') {
+                $after_file = \FileRef::find(json_decode($this->ba_after)->file_id);
+                if ($after_file) {
+                    $ba_img_after = $after_file->getDownloadURL();
+                }
+            }
         }
+
         $ba_enable = (($ba_img_before != '') && ($ba_img_after != '')) ? true : false;
 
         return array(
@@ -210,7 +230,7 @@ class BeforeAfterBlock extends Block
         foreach ($course_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if (($ref->isImage()) && (!$ref->isLink())) {
+                if (($ref->isImage()) && (!$ref->isLink()) && (strpos($ref->mime_type, 'svg') === false)) {
                     $coursefilesarray[] = $ref;
                 }
                 if($ref->id == $before_file_id){
@@ -225,7 +245,7 @@ class BeforeAfterBlock extends Block
         foreach ($user_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if (($ref->isImage()) && (!$ref->isLink())) {
+                if (($ref->isImage()) && (!$ref->isLink()) && (strpos($ref->mime_type, 'svg') === false)) {
                     $userfilesarray[] = $ref;
                 }
                 if($ref->id == $before_file_id){

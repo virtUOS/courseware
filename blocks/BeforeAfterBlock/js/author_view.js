@@ -21,23 +21,27 @@ export default AuthorView.extend({
     },
 
     postRender() {
+
+        this.$('.cw-ba-source-before-file').select2();
+
         if (this.$('.cw-ba-source-before').val() == 'url') {
             this.$('.cw-ba-source-before-url').show();
             this.$('.cw-ba-source-before-url-info').show();
-            this.$('.cw-ba-source-before-file').hide();
+            this.$('.cw-ba-source-before-file').next().hide();
             this.$('.cw-ba-source-before-file-info').hide();
         } else {
             let img_before = this.$('.cw-ba-stored-file-id-before').val();
             let select_before = this.$('.cw-ba-source-before-file');
             this.$('.cw-ba-source-before-url').hide();
-            select_before.show();
-            select_before.find('option[file-id="'+img_before+'"]').prop('selected', true);
+            select_before.val(img_before).trigger('change');
         }
+
+        this.$('.cw-ba-source-after-file').select2();
 
         if (this.$('.cw-ba-source-after').val() == 'url') {
             this.$('.cw-ba-source-after-url').show();
             this.$('.cw-ba-source-after-url-info').show();
-            this.$('.cw-ba-source-after-file').hide();
+            this.$('.cw-ba-source-after-file').next().hide();
             this.$('.cw-ba-source-after-file-info').hide();
         } else {
             let img_after = this.$('.cw-ba-stored-file-id-after').val();
@@ -45,8 +49,7 @@ export default AuthorView.extend({
             this.$('.cw-ba-source-after-url').hide();
             this.$('.cw-ba-source-after-url-info').hide();
             this.$('.cw-ba-source-after-file-info').show();
-            select_after.show();
-            select_after.find('option[file-id="'+img_after+'"]').prop('selected', true);
+            select_after.val(img_after).trigger('change');
         }
 
         return this;
@@ -88,18 +91,18 @@ export default AuthorView.extend({
         if ($before.source == 'url') {
             $before.url = this.$('.cw-ba-source-before-url').val();
         } else {
-            $before.url = this.$('.cw-ba-source-before-file option:selected').attr('file-url');
-            $before.file_id = this.$('.cw-ba-source-before-file option:selected').attr('file-id');
-            $before.file_name = this.$('.cw-ba-source-before-file option:selected').attr('filename');
+            $before.url = this.$('.cw-ba-source-before-file').find(':selected').data('file_url');
+            $before.file_id = this.$('.cw-ba-source-before-file').val();
+            $before.file_name = this.$('.cw-ba-source-before-file').find(':selected').data('filename');
         }
 
         $after.source = this.$('.cw-ba-source-after').val();
         if ($after.source == 'url') {
             $after.url = this.$('.cw-ba-source-after-url').val();
         } else {
-            $after.url = this.$('.cw-ba-source-after-file option:selected').attr('file-url');
-            $after.file_id = this.$('.cw-ba-source-after-file option:selected').attr('file-id');
-            $after.file_name = this.$('.cw-ba-source-after-file option:selected').attr('filename');
+            $after.url = this.$('.cw-ba-source-after-file').find(':selected').data('file_url');
+            $after.file_id = this.$('.cw-ba-source-after-file').val();
+            $after.file_name = this.$('.cw-ba-source-after-file').find(':selected').data('filename');
         }
 
         $before = JSON.stringify($before);
@@ -138,11 +141,11 @@ export default AuthorView.extend({
         if ($(event.currentTarget).val() == 'url') {
             this.$('.cw-ba-source-'+type+'-url').show();
             this.$('.cw-ba-source-'+type+'-url-info').show();
-            this.$('.cw-ba-source-'+type+'-file').hide();
+            this.$('.cw-ba-source-'+type+'-file').next().hide();
             this.$('.cw-ba-source-'+type+'-file-info').hide();
         } 
         if ($(event.currentTarget).val() == 'file') {
-            this.$('.cw-ba-source-'+type+'-file').show();
+            this.$('.cw-ba-source-'+type+'-file').next().show();
             this.$('.cw-ba-source-'+type+'-file-info').show();
             this.$('.cw-ba-source-'+type+'-url').hide();
             this.$('.cw-ba-source-'+type+'-url-info').hide();
