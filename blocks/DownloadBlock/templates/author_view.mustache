@@ -5,17 +5,17 @@
 <select type="text" class="download-folder" name="folder">
     <optgroup label="{{#i18n}}Ordner dieser Veranstaltung{{/i18n}}">
     {{#folders}}
-        <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
+        <option value="{{id}}" data-foldername="{{name}}">{{name}}</option>
     {{/folders}}
     </optgroup>
     <optgroup label="Ordner im eigenen Dateibereich">
         {{#user_folders}}
-            <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
+            <option value="{{id}}" data-foldername="{{name}}">{{name}}</option>
         {{/user_folders}}
     </optgroup>
     {{#other_user_folder}}
     <optgroup label="Ordner im Dateibereich eines anderen Nutzers">
-        <option value="{{name}}" folder_id="{{id}}">{{name}}</option>
+        <option value="{{id}}" data-foldername="{{name}}">{{name}}</option>
     </optgroup>
     {{/other_user_folder}}
 </select>
@@ -24,7 +24,7 @@
 <label for="download-file">{{#i18n}}Eine Datei auswählen{{/i18n}}:</label>
 <select type="text" class="download-file" name="file">
     {{#allfiles}}
-        <option value="{{name}}" file_id="{{id}}">{{name}}</option>
+        <option value="{{id}}" data-filename="{{name}}">{{name}}</option>
     {{/allfiles}}
 </select>
 <br>

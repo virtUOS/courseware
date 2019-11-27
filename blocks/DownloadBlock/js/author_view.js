@@ -21,15 +21,18 @@ export default AuthorView.extend({
   },
 
   postRender() {
-    var $view = this;
-    var $folders = $view.$el.find('.download-folder option');
-    var $stored_folder = $view.$el.find('.download-stored-folder').val();
-    $folders.each(function () {
-      if($(this).attr('folder_id') == $stored_folder) {
-        $(this).prop('selected', true);
+    var stored_folder = this.$('.download-stored-folder').val();
+    this.$('.download-folder').select2({
+      templateResult: state => {
+        if (!state.id) { return state.text; }
+        var $state = $(
+          '<span data-foldername="' + state.element.dataset.foldername +'">' + state.text + '</span>'
+        );
+        return $state;
       }
     });
-    $view.selectFolder();
+    this.$('.download-folder').val(stored_folder).trigger('change');
+    this.selectFolder();
   },
 
   onNavigate(event) {
@@ -61,12 +64,12 @@ export default AuthorView.extend({
 
   onSave(event) {
     var view = this;
-    var $file = this.$el.find('.download-file');
-    var $folder = this.$el.find('.download-folder');
+    var $file = this.$('.download-file');
+    var $folder = this.$('.download-folder');
     var $file_val = $file.val();
     var $file_id = $file.find('option:selected').attr('file_id');
     var $file_name = $file.find('option:selected').attr('file_name');
-    var $folder_id = $folder.find('option:selected').attr('folder_id');
+    var $folder_id = $folder.val();
     var $download_title = this.$('input[name="download-title"]').val();
     var $download_info = this.$('input[name="download-info"]').val();
     var $download_success = this.$('input[name="download-success"]').val();
@@ -93,8 +96,8 @@ export default AuthorView.extend({
 
   selectFolder() {
     var view = this;
-    var $folder = this.$el.find('.download-folder').find('option:selected').val();
-    var $folder_id = this.$el.find('.download-folder').find('option:selected').attr('folder_id');
+    var $folder = this.$('.download-folder').find(':selected').data('filename');
+    var $folder_id = this.$('.download-folder').val();
     helper
       .callHandler(this.model.id, 'setfolder', { folder: $folder, folder_id: $folder_id })
       .then(function (event) {
@@ -110,8 +113,9 @@ export default AuthorView.extend({
   },
 
   showFiles($allfiles) {
-    var $files = this.$el.find('.download-file');
-    var $stored_file = this.$el.find('.download-stored-file').val();
+    var $files = this.$('.download-file');
+    var $stored_file = this.$('.download-stored-file').val();
+
     $files.find('option').remove();
     if ($allfiles.length == 0) {
         $files.append($('<option>', {
@@ -130,6 +134,7 @@ export default AuthorView.extend({
       }));
     });
     $files.prop('disabled', false);
+    $files.select2();
     return true;
   }
 });
