@@ -21,11 +21,9 @@ export default AuthorView.extend({
   },
 
   postRender() {
-    var $view = this;
     var stored_content = this.$('.cw-canvasblock-content-stored').val();
 
-
-    $view.$('select.cw-canvasblock-file').select2({
+    this.$('select.cw-canvasblock-file').select2({
       templateResult: state => {
         if (!state.id) { return state.text; }
         var $state = $(
@@ -36,11 +34,11 @@ export default AuthorView.extend({
     });
 
     if (stored_content == '') {
-        $view.$('input.cw-canvasblock-file').hide();
-        $view.$('.cw-canvasblock-file-input-info').hide();
-        $view.$('select.cw-canvasblock-file').show();
-        $view.$('.cw-canvasblock-file-select-info').show();
-        $view.$('.cw-canvasblock-source option[value="cw"]').prop('selected', true);
+        this.$('input.cw-canvasblock-file').hide();
+        this.$('.cw-canvasblock-file-input-info').hide();
+        this.$('select.cw-canvasblock-file').show();
+        this.$('.cw-canvasblock-file-select-info').show();
+        this.$('.cw-canvasblock-source option[value="cw"]').prop('selected', true);
 
         return;
     }
@@ -48,30 +46,30 @@ export default AuthorView.extend({
 
     switch (content.source) {
         case 'cw':
-            $view.$('input.cw-canvasblock-file').hide();
-            $view.$('.cw-canvasblock-file-input-info').hide();
-            $view.$('select.cw-canvasblock-file').val(content.image_id).trigger('change');
-            $view.$('.cw-canvasblock-source option[value="cw"]').prop('selected', true);
-            $view.$('select.cw-canvasblock-file').show();
-            $view.$('.cw-canvasblock-file-select-info').show();
+            this.$('input.cw-canvasblock-file').hide();
+            this.$('.cw-canvasblock-file-input-info').hide();
+            this.$('select.cw-canvasblock-file').val(content.image_id).trigger('change');
+            this.$('.cw-canvasblock-source option[value="cw"]').prop('selected', true);
+            this.$('select.cw-canvasblock-file').show();
+            this.$('.cw-canvasblock-file-select-info').show();
             break;
         case 'web':
-            $view.$('select.cw-canvasblock-file').hide();
-            $view.$('.cw-canvasblock-file-select-info').hide();
-            $view.$('input.cw-canvasblock-file').val(content.image_url);
-            $view.$('.cw-canvasblock-source option[value="web"]').prop('selected', true);
-            $view.$('.cw-canvasblock-file-input-info').show();
+            this.$('select.cw-canvasblock-file').hide();
+            this.$('.cw-canvasblock-file-select-info').hide();
+            this.$('input.cw-canvasblock-file').val(content.image_url);
+            this.$('.cw-canvasblock-source option[value="web"]').prop('selected', true);
+            this.$('.cw-canvasblock-file-input-info').show();
             break;
         case 'none':
-            $view.$('input.cw-canvasblock-file').hide();
-            $view.$('.cw-canvasblock-file-input-info').hide();
-            $view.$('select.cw-canvasblock-file').hide();
-            $view.$('.cw-canvasblock-file-select-info').hide();
-            $view.$('.cw-canvasblock-source option[value="none"]').prop('selected', true);
+            this.$('input.cw-canvasblock-file').hide();
+            this.$('.cw-canvasblock-file-input-info').hide();
+            this.$('select.cw-canvasblock-file').hide();
+            this.$('.cw-canvasblock-file-select-info').hide();
+            this.$('.cw-canvasblock-source option[value="none"]').prop('selected', true);
             break;
     }
-    $view.$('.cw-canvasblock-upload-folder option[folder-id="'+content.upload_folder_id+'"]').prop('selected', true);
-    $view.$('.cw-canvasblock-show-userdata option[value="'+content.show_userdata+'"]').prop('selected', true);
+    this.$('.cw-canvasblock-upload-folder option[folder-id="' + content.upload_folder_id + '"]').prop('selected', true);
+    this.$('.cw-canvasblock-show-userdata option[value="' + content.show_userdata + '"]').prop('selected', true);
 
     this.$('.cw-canvasblock-description').val(content.description);
   },
@@ -104,13 +102,13 @@ export default AuthorView.extend({
   },
 
   onSave(event) {
-    var $view = this;
+    var view = this;
     var content = {};
 
     content.source = this.$('.cw-canvasblock-source').val();
     switch (content.source){
         case 'web':
-            content.image_url = $view.$('input.cw-canvasblock-file').val();
+            content.image_url = this.$('input.cw-canvasblock-file').val();
             if(content.image_url != '') {
               content.image = true;
             } else {
@@ -120,8 +118,8 @@ export default AuthorView.extend({
             break;
         case 'cw':
             content.image_url = '';
-            content.image_id = $view.$('select.cw-canvasblock-file').val();
-            content.image_name = $view.$('select.cw-canvasblock-file').find(":selected").data("filename");
+            content.image_id = this.$('select.cw-canvasblock-file').val();
+            content.image_name = this.$('select.cw-canvasblock-file').find(':selected').data('filename');
             if (content.image_id != '') {
               content.image = true;  
             } else {
@@ -135,17 +133,17 @@ export default AuthorView.extend({
             break;
     }
 
-    content.description = $view.$('.cw-canvasblock-description').val();
+    content.description = this.$('.cw-canvasblock-description').val();
 
-    content.upload_folder_name = $view.$('.cw-canvasblock-upload-folder').val();
-    content.upload_folder_id = $view.$('.cw-canvasblock-upload-folder option:selected').attr('folder-id');
+    content.upload_folder_name = this.$('.cw-canvasblock-upload-folder').val();
+    content.upload_folder_id = this.$('.cw-canvasblock-upload-folder option:selected').attr('folder-id');
     if ((content.upload_folder_name == '') || (content.upload_folder_id == '')) {
       content.upload_enabled = false;
     } else {
       content.upload_enabled = true;
     }
 
-    content.show_userdata = $view.$('.cw-canvasblock-show-userdata').val();
+    content.show_userdata = this.$('.cw-canvasblock-show-userdata').val();
 
     content = JSON.stringify(content);
     helper
@@ -156,7 +154,7 @@ export default AuthorView.extend({
         // success
         function () {
           $(event.target).addClass('accept');
-          $view.switchBack();
+          view.switchBack();
         },
 
         // error
@@ -168,21 +166,20 @@ export default AuthorView.extend({
   },
 
   selectSource() {
-    var $view = this;
-    var $selection = $view.$('.cw-canvasblock-source').val();
-    $view.$('input.cw-canvasblock-file').hide();
-    $view.$('.cw-canvasblock-file-input-info').hide();
-    $view.$('select.cw-canvasblock-file').select2().next().hide();
-    $view.$('.cw-canvasblock-file-select-info').hide();
+    var $selection = this.$('.cw-canvasblock-source').val();
+    this.$('input.cw-canvasblock-file').hide();
+    this.$('.cw-canvasblock-file-input-info').hide();
+    this.$('select.cw-canvasblock-file').select2().next().hide();
+    this.$('.cw-canvasblock-file-select-info').hide();
 
     switch ($selection) {
         case 'cw':
-            $view.$('select.cw-canvasblock-file').select2().next().show();
-            $view.$('.cw-canvasblock-file-select-info').show();
+            this.$('select.cw-canvasblock-file').select2().next().show();
+            this.$('.cw-canvasblock-file-select-info').show();
             break;
         case 'web':
-            $view.$('input.cw-canvasblock-file').show();
-            $view.$('.cw-canvasblock-file-input-info').show();
+            this.$('input.cw-canvasblock-file').show();
+            this.$('.cw-canvasblock-file-input-info').show();
             break;
     }
 
