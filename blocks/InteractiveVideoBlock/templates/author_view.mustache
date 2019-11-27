@@ -58,26 +58,26 @@
         {{^no_video_files}}
             <optgroup label="{{#i18n}}Dateien dieser Veranstaltung{{/i18n}}">
                 {{#course_video_files}}
-                    <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    <option value="{{id}}" data-file_name="{{name}}" data-file_url="{{download_url}}">{{name}}</option>
                 {{/course_video_files}}
                 {{^course_video_files}}
-                    <option value="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
+                    <option value="" disabled>{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
                 {{/course_video_files}}
             </optgroup>
             <optgroup label="{{#i18n}}Dateien im eigenen Dateibereich{{/i18n}}">
                 {{#user_video_files}}
-                    <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    <option value="{{id}}" data-file_name="{{name}}" data-file_url="{{download_url}}">{{name}}</option>
                 {{/user_video_files}}
                 {{^user_video_files}}
-                    <option value="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
+                    <option value="" disabled>{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
                 {{/user_video_files}}
             </optgroup>
             <optgroup label="{{#i18n}}Dateien im Dateibereich anderer Nutzer{{/i18n}}">
                 {{#other_user_files}}
-                    <option file_id="{{id}}" file_name="{{name}}" file_url="{{download_url}}">{{name}}</option>
+                    <option value="{{id}}" data-file_name="{{name}}" data-file_url="{{download_url}}">{{name}}</option>
                 {{/other_user_files}}
                 {{^other_user_files}}
-                    <option file_id="" file_name="" file_url="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
+                    <option value="" data-file_name="" data-file_url="">{{#i18n}}keine Videodatei verfügbar{{/i18n}}</option>
                 {{/other_user_files}}
             </optgroup>
         {{/no_video_files}}

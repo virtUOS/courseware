@@ -59,13 +59,14 @@ export default AuthorView.extend({
             return ;
         }
         //$view.$(".cw-iav-url").val($view.$(".cw-iav-url-stored").val());
-        
+        this.$('.cw-iav-video-file').select2();
         if (source_data != '') {
             var source_data = JSON.parse(source_data);
             if (source_data.external) {
                 this.$('.cw-iav-url').val(source_data.url);
             } else {
-                this.$('.cw-iav-video-file option[file_id="'+source_data.file_id+'"]').prop('selected', true);
+                // this.$('.cw-iav-video-file option[file_id="'+source_data.file_id+'"]').prop('selected', true);
+                this.$('.cw-iav-video-file').val(source_data.file_id).trigger('change');
             }
         }
 
@@ -116,6 +117,7 @@ export default AuthorView.extend({
         $view.$('.cw-iav-overlay-edit-item').hide();
         $view.$('.cw-iav-stop-edit-item').hide();
         this.toggleSource();
+        this.videoPreview();
 
         return this;
     },
@@ -177,8 +179,8 @@ export default AuthorView.extend({
             iav_source.url = this.$(".cw-iav-url").val();
             iav_source.external = true;
         } else {
-            iav_source.file_id = this.$('.cw-iav-video-file option:selected').attr('file_id');
-            iav_source.file_name = this.$('.cw-iav-video-file option:selected').attr('file_name');
+            iav_source.file_id = this.$('.cw-iav-video-file').val();
+            iav_source.file_name = this.$('.cw-iav-video-file').find('.selected').data('file_name');
             iav_source.external = false;
         }
         iav_source = JSON.stringify(iav_source);
@@ -255,7 +257,7 @@ export default AuthorView.extend({
         if (this.$('.cw-iav-source').val() == 'url') {
             $player.find('source').attr('src' , this.$('.cw-iav-url').val());
         } else {
-            $player.find('source').attr('src' , this.$('.cw-iav-video-file option:selected').attr('file_url'));
+            $player.find('source').attr('src' , this.$('.cw-iav-video-file').find(':selected').data('file_url'));
         }
         $player.get(0).load();
         this.$('.cw-iav-wrapper').show();
@@ -709,12 +711,12 @@ export default AuthorView.extend({
 
     toggleSource() {
         if (this.$('.cw-iav-source').val() == 'url') {
-            this.$('.cw-iav-video-file').hide();
+            this.$('.cw-iav-video-file').next().hide();
             this.$('.cw-iav-url').show();
 
         } else {
             this.$('.cw-iav-url').hide();
-            this.$('.cw-iav-video-file').show();
+            this.$('.cw-iav-video-file').next().show();
         }
         
     },
