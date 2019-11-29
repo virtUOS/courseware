@@ -1,1 +1,13 @@
 <p class="VideoBlock-preview-title">{{videoTitle}}</p>
+{{#url}}
+    <iframe src="{{.}}" scrolling="no" allowfullscreen></iframe>
+{{/url}}
+{{^url}}
+    {{#webvideo}}
+        <video width="100%" {{webvideosettings}}>
+            {{#webvideo}}
+                <source src="{{src}}" type="video/{{type}}" media="{{media}}" >
+            {{/webvideo}}
+        </video>
+    {{/webvideo}}
+{{/url}}

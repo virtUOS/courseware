@@ -84,8 +84,7 @@ class VideoBlock extends Block
 
     public function preview_view()
     {
-
-        return array('videoTitle' => $this->videoTitle);
+        return $this->student_view();
     }
 
     public function save_handler($data)
