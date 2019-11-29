@@ -209,6 +209,7 @@ export default {
             fileError: false,
             loading: false,
             storeLock: false,
+            errorOccurred: [],
             coursewareExportURL: COURSEWARE.data.courseware_export_url
         };
     },
@@ -402,14 +403,19 @@ export default {
                         view.cleanLists();
                         view.courseware = JSON.parse(response.data.courseware);
                         view.storeLock = false;
+                        view.showChangeError();
                     })
                     .catch(error => {
                         if (error.response) {
                             // The request was made and the server responded with a status code
                             // that falls out of the range of 2xx
-                            console.log(error.response.data);
+                            // console.log(error.response.data);
                             console.log(error.response.status);
-                            console.log(error.response.headers);
+                            // console.log(error.response.headers);
+                            if (error.response.status == 500) {
+                                view.storeLock = false;
+                                errorOccurred.push(500);
+                            }
                         } else if (error.request) {
                             // The request was made but no response was received
                             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -465,7 +471,6 @@ export default {
                         view.fileError = true;
                         return;
                     }
-
                     text = unziped.extractAsText('data.xml');
                     parser = new DOMParser();
                     xmlDoc = parser.parseFromString(text, 'text/xml');
@@ -538,7 +543,7 @@ export default {
                                                         id: node.getAttribute('uuid'),
                                                         isPublished: true,
                                                         isImport: true,
-                                                        preview: view.getContent(node),
+                                                        preview: view.getContent(node, unziped),
                                                         readable_name: view.blockMap[node.getAttribute('type')]
                                                     });
                                                 }

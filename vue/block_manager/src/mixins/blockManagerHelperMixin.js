@@ -13,13 +13,20 @@ export default {
                 datetime.getFullYear()
             );
         },
-        getContent(node) {
+        getContent(node, unziped) {
             var json = {};
             switch (node.getAttribute('type')) {
                 case 'AssortBlock':
                     return '';
                 case 'AudioBlock':
-                    return node.getAttribute('audio:audio_file_name');
+                    var filename = node.getAttribute('audio:audio_file_name');
+                    var file_id = node.getAttribute('audio:audio_id');
+                    if (file_id != '') {
+                        var audio_blob = this.getAudioBlob(unziped, filename);
+                        return '<p>'+filename+'</p><audio controls width="100%"><source src="'+audio_blob+'"/></audio>';
+                    }
+                    return '<p>'+filename+'</p><audio controls width="100%"><source src="'+filename+'"/></audio>';
+
                 case 'AudioGalleryBlock':
                     return '';
                 case 'BeforeAfterBlock':
@@ -27,7 +34,9 @@ export default {
                     if (json.source == 'url') {
                         return json.url;
                     }
-                    return json.file_name;
+                    var image = new Image;
+                    image.src = this.getImageBlob(unziped, json.file_name);
+                    return image.outerHTML;
                 case 'BlubberBlock':
                     return '';
                 case 'CanvasBlock':
@@ -42,7 +51,7 @@ export default {
                 case 'ChartBlock':
                     return node.getAttribute('chart:chart_type');
                 case 'CodeBlock':
-                    return node.getAttribute('code:code_content');
+                    return this.escapeHtml(node.getAttribute('code:code_content'));
                 case 'ConfirmBlock':
                     return node.getAttribute('title');
                 case 'DateBlock':
@@ -62,15 +71,19 @@ export default {
                 case 'GalleryBlock':
                     return node.getAttribute('gallery:gallery_folder_name');
                 case 'HtmlBlock':
-                    return node.textContent;
+                    return this.escapeHtml(node.textContent);
                 case 'IFrameBlock':
                     return node.getAttribute('iframe:url');
                 case 'ImageMapBlock':
-                    return JSON.parse(node.getAttribute('imagemap:image_map_content')).image_name;
+                    var image_name = JSON.parse(node.getAttribute('imagemap:image_map_content')).image_name;
+                    var image = new Image;
+                    image.src = this.getImageBlob(unziped, image_name);
+                    return image.outerHTML;
                 case 'InteractiveVideoBlock':
-                    return JSON.parse(node.getAttribute('interactivevideo:iav_source')).file_name;
+                    var video_blob = this.getVideoBlob(unziped, JSON.parse(node.getAttribute('interactivevideo:iav_source')).file_name);
+                    return '<video controls width="100%"><source src="'+video_blob+'"/></video>';
                 case 'KeyPointBlock':
-                    return node.getAttribute('keypoint:keypoint_content');
+                    return this.escapeHtml(node.getAttribute('keypoint:keypoint_content'));
                 case 'LinkBlock':
                     return node.getAttribute('link:link_target');
                 case 'OpenCastBlock':
@@ -88,20 +101,95 @@ export default {
                     return xmlDoc.firstElementChild.children[0].textContent;
                 case 'TypewriterBlock':
                     json = JSON.parse(node.getAttribute('typewriter:typewriter_json'));
-                    return json.content;
+                    return this.escapeHtml(json.content);
                 case 'VideoBlock':
                     if (node.getAttribute('video:webvideo') != '') {
                         json = JSON.parse(node.getAttribute('video:webvideo'))[0];
                         if (json.source == 'url') {
                             return json.src;
                         } else {
-                            return json.file_name;
+                            var video_blob = this.getVideoBlob(unziped, json.file_name);
+                            return '<video controls width="100%"><source src="'+video_blob+'"/></video>';
                         }
                     }
                     return node.getAttribute('video:url');
                 default:
                     return '';
             }
+        },
+        getImageBlob(unziped, filename) {
+            var keys = Object.keys(unziped.files);
+            var image = '';
+            keys.forEach((value, key) => {
+                if (value.indexOf(filename) > -1) {
+                    if (value.indexOf('png') > -1) {
+                        image = unziped.extractAsBlobUrl(value, 'image/png');
+                    }
+                    else if (value.indexOf('gif') > -1) {
+                        image = unziped.extractAsBlobUrl(value, 'image/gif');
+                    }
+                    else if ((value.indexOf('jpg') > -1) || (value.indexOf('jpeg') > -1)){
+                        image = unziped.extractAsBlobUrl(value, 'image/jpeg');
+                    }
+                    return;
+                }
+            });
+            return image;
+        },
+        getVideoBlob(unziped, filename) {
+            var keys = Object.keys(unziped.files);
+            var video = '';
+            keys.forEach((value, key) => {
+                if (value.indexOf(filename) > -1) {
+                    if (value.indexOf('mp4') > -1) {
+                        video = unziped.extractAsBlobUrl(value, 'video/mp4');
+                    }
+                    else if (value.indexOf('ogg') > -1) {
+                        video = unziped.extractAsBlobUrl(value, 'video/ogg');
+                    }
+                    else if (value.indexOf('webm') > -1) {
+                        video = unziped.extractAsBlobUrl(value, 'video/webm');
+                    }
+                    else if ((value.indexOf('mpg') > -1) || (value.indexOf('mpeg') > -1)|| (value.indexOf('mpe') > -1)){
+                        video = unziped.extractAsBlobUrl(value, 'video/mpeg');
+                    }
+                    return;
+                }
+            });
+            return video;
+        },
+        getAudioBlob(unziped, filename) {
+            var keys = Object.keys(unziped.files);
+            var audio = '';
+            keys.forEach((value, key) => {
+                if (value.indexOf(filename) > -1) {
+                    if (value.indexOf('mp3') > -1) {
+                        audio = unziped.extractAsBlobUrl(value, 'audio/mpeg');
+                    }
+                    else if (value.indexOf('mp4') > -1) {
+                        audio = unziped.extractAsBlobUrl(value, 'audio/mp4');
+                    }
+                    else if (value.indexOf('ogg') > -1) {
+                        audio = unziped.extractAsBlobUrl(audio, 'audio/ogg');
+                    }
+                    else if (value.indexOf('wav') > -1) {
+                        audio = unziped.extractAsBlobUrl(audio, 'audio/wav');
+                    }
+                    return;
+                }
+            });
+            return audio;
+        },
+        escapeHtml(text) {
+            var map = {
+              '&': '&amp;',
+              '<': '&lt;',
+              '>': '&gt;',
+              '"': '&quot;',
+              "'": '&#039;'
+            };
+          
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
         }
     }
 };
