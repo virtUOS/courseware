@@ -1,1 +1,7 @@
-<p class="AudioBlock-preview-audio-file">{{audio_file}}</p>
+{{#audio_file}}
+    <p class="AudioBlock-preview-audio-description">{{audio_description}}</p>
+    <p class="AudioBlock-preview-audio-filename">{{audio_filename}}</p>
+    <audio controls width="100%">
+        <source src="{{audio_file}}"/>
+    </audio>
+{{/audio_file}}

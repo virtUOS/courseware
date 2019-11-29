@@ -24,8 +24,9 @@ class AudioBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
-
+        $file_name = '';
         if ($this->audio_source == "cw") {
+            $file_name = $this->audio_file;
             $file = \FileRef::find($this->audio_id);
             if ($file) {
                 $audio_file = $file->getDownloadURL();
@@ -43,6 +44,7 @@ class AudioBlock extends Block
                 'audio_played' => $this->container['current_user']->isNobody() ? 1 : $this->getProgress()['grade'],
                 'audio_access' => $access,
                 'audio_file' => $audio_file,
+                'audio_filename' => $file_name
             )
         );
     }
@@ -74,8 +76,7 @@ class AudioBlock extends Block
 
     public function preview_view()
     {
-
-        return array('audio_file' => $this->audio_file);
+        return $this->student_view();
     }
 
     public function save_handler(array $data)
