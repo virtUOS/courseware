@@ -198,7 +198,7 @@ class BlockManagerController extends CoursewareStudipController
         $this->render_text(json_encode($users_json));
     }
 
-    public function get_course_groups_action($cid)
+    public function get_course_groups_action()
     {
         $cid = Request::get('cid');
         $groups = Statusgruppen::findAllByRangeId($cid);
