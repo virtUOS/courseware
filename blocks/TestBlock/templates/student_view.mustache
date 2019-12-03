@@ -29,7 +29,7 @@
                                         {{#tryagain}}{{#tries_left}}
                                             <div class="messagebox messagebox_error">{{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal. {{#tries_left}}Sie haben noch {{tries_left}} Versuch{{#tries_pl}}e{{/tries_pl}}.{{/tries_left}}{{/i18n}}</div>
                                             {{#corrector_comment}}
-                                                <div class="messagebox messagebox_info answerinfo exercise-corrector-comment">{{corrector_comment}}</div>
+                                                <div class="messagebox messagebox_info answerinfo exercise-corrector-comment">{{{corrector_comment}}}</div>
                                             {{/corrector_comment}}
                                         {{/tries_left}}{{/tryagain}}
                                         {{#correct}}
@@ -92,7 +92,7 @@
                                     <div class="cw-test-buttons-wrapper">
                                         <button class="button" name="exercise-hint-button" exercise-data="{{exercise_index}}">Hinweis anzeigen</button>
                                     </div>
-                                    <div class="exercise-hint" style="display: none;" id="exercise-hint-{{exercise_index}}">{{exercise_hint}}</div>
+                                    <div class="exercise-hint" style="display: none;" id="exercise-hint-{{exercise_index}}">{{{exercise_hint}}}</div>
                                 {{/exercise_hint}}
                                 {{#tryagain}}
                                     {{#sample_solution}}{{^self_test}}
