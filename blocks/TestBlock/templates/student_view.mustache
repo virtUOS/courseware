@@ -42,6 +42,9 @@
                                         {{^correct}}
                                             {{^tries_left}}
                                                 <div class="messagebox messagebox_error">{{#i18n}}Ihre Lösung ist nicht korrekt!{{/i18n}}</div>
+                                                {{#corrector_comment}}
+                                                    <div class="messagebox messagebox_info answerinfo exercise-corrector-comment">{{{corrector_comment}}}</div>
+                                                {{/corrector_comment}}
                                             {{/tries_left}}
                                         {{/correct}}
                                     {{/has_solution}}
