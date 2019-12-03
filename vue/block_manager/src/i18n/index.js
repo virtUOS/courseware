@@ -42,7 +42,12 @@ const messages = {
             exportingButton: 'Export',
             importingButton: 'Import complete archive',
             noRemoteCoursesAvailable: 'There are no courses available for import',
-            invalidArchiveFile: 'The archive does not contain courseware data'
+            invalidArchiveFile: 'The archive does not contain courseware data',
+            messages: 'Messages',
+            error_unknown: 'An unknown error has occurred',
+            error_reload: 'Courseware data has been reloaded',
+            error_import: 'The import of courseware data may have failed, please check the content', 
+            error_500: 'The server could not process the data (500)'
         }
     },
     de_DE: {
@@ -86,7 +91,12 @@ const messages = {
             exportingButton: 'Exportieren',
             importingButton: 'Komplettes Archiv importieren',
             noRemoteCoursesAvailable: 'Es sind keine Veranstaltungen für den Import verfügbar',
-            invalidArchiveFile: 'Das Archiv enthält keine Coursewaredaten'
+            invalidArchiveFile: 'Das Archiv enthält keine Coursewaredaten',
+            messages: 'Meldungen',
+            error_unknown: 'Ein unbekannter Fehler ist aufgetreten',
+            error_reload: 'Courseware-Daten wurden neu geladen',
+            error_import: 'Der Import von Courseware-Daten ist möglicherweise fehlgeschlagen, bitte prüfen Sie den Inhalt',
+            error_500: 'Der Server konnte die Daten nicht verarbeiten (500)'
         }
     }
 };

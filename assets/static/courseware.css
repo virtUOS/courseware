@@ -1124,6 +1124,18 @@ button.cw-reset-progress-button:hover {
   width: 626px;
   min-width: 626px;
 }
+#block_manager-index .cw-blockmanager-wrapper#errorbox {
+  border-color: #d60000;
+  width: 1270px;
+  min-width: 626px;
+}
+#block_manager-index .cw-blockmanager-wrapper#errorbox ul {
+  list-style: none;
+  padding: 0.5em 0 0 0;
+}
+#block_manager-index .cw-blockmanager-wrapper#errorbox ul li {
+  padding: 0 1em 0.5em 1em;
+}
 #block_manager-index .cw-blockmanager-wrapper .cw-blockmanager-title {
   border-top: solid thin #28497c;
   border-bottom: solid thin #28497c;
@@ -1150,6 +1162,13 @@ button.cw-reset-progress-button:hover {
 }
 #block_manager-index .cw-blockmanager-wrapper .cw-blockmanager-title#cw-export-title {
   border-bottom: none;
+}
+#block_manager-index .cw-blockmanager-wrapper .cw-blockmanager-title#cw-error-title {
+  border-color: #d60000;
+  background-color: #d60000;
+}
+#block_manager-index .cw-blockmanager-wrapper .cw-blockmanager-title#cw-error-title p {
+  color: #fff;
 }
 #block_manager-index .cw-blockmanager-wrapper #cw-file-upload-import {
   display: none;
@@ -1383,7 +1402,7 @@ button.cw-reset-progress-button:hover {
 #block_manager-index .subchapter-list .subchapter-description.full-width,
 #block_manager-index .section-list .subchapter-description.full-width,
 #block_manager-index .block-list .subchapter-description.full-width {
-  width: 528px;
+  width: 524px;
 }
 #block_manager-index .chapter-list .section-description,
 #block_manager-index .subchapter-list .section-description,
@@ -2201,8 +2220,10 @@ button.cw-reset-progress-button:hover {
   background-image: url("../../../../assets/images/icons/blue/folder-full.svg");
   background-image: url("../../../../../assets/images/icons/blue/folder-full.svg");
 }
-#courseware-news .cw-news-list-blocks .cw-news-item-block img {
-  max-height: 175px;
+#courseware-news .cw-news-list-blocks .cw-news-item-block img,
+#courseware-news .cw-news-list-blocks .cw-news-item-block audio,
+#courseware-news .cw-news-list-blocks .cw-news-item-block video {
+  max-width: 236px;
 }
 .btn-base {
   width: 20px;
@@ -6014,6 +6035,19 @@ section.BlubberBlock input[type=submit] {
   color: #888;
   font-style: italic;
   margin-top: 0.75em;
+}
+.cw-gallery-folder {
+  height: 16px;
+  width: 16px;
+  padding-left: 1em;
+  display: inline-block;
+  vertical-align: top;
+  background-repeat: no-repeat;
+  border: none;
+  background-image: url("../../../../../assets/images/icons/blue/folder-empty.svg");
+}
+.cw-gallery-folder.cw-gallery-folder-full {
+  background-image: url("../../../../../assets/images/icons/blue/folder-full2.svg");
 }
 .btn-base {
   width: 20px;

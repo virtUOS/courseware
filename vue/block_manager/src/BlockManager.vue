@@ -163,6 +163,14 @@
                 <div style="clear: both;"></div>
             </div>
         </div>
+        <div id="errorbox" class="cw-blockmanager-wrapper" v-if="errorOccurred.length > 0">
+            <div id="cw-error-title" class="cw-blockmanager-title">
+                <p>{{ $t('message.messages') }}</p>
+            </div>
+            <ul>
+                <li v-for="(error, errorkey) in errorOccurred" :key="errorkey">{{error.date}} | {{error.text}} </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -401,9 +409,42 @@ export default {
                         view.importData = false;
                         view.remoteData = false;
                         view.cleanLists();
-                        view.courseware = JSON.parse(response.data.courseware);
+                        try {
+                            view.courseware = JSON.parse(response.data.courseware);
+                            let errors = response.data.errors;
+                            console.log(errors);
+                            errors.forEach(error => {
+                                view.addError(error);
+                            });
+                        }
+                        catch(e) {
+                            console.log(e);
+                            console.log('try to reload courseware data');
+                            view.addError(view.$i18n.t('message.error_unknown'));
+                            view.addError(view.$i18n.t('message.error_import'));
+                            axios
+                            .post('get_courseware', {
+                                cid: COURSEWARE.config.cid
+                            })
+                            .then(response => {
+                                view.courseware = JSON.parse(response.data.courseware);
+                                view.addError(view.$i18n.t('message.error_reload'));
+                            })
+                            .catch(error => {
+                                if (error.response) {
+                                    console.log(error.response.status);
+                                    if (error.response.status == 500) {
+                                        view.addError(view.$i18n.t('message.error_500'));
+                                    }
+                                } else if (error.request) {
+                                    console.log(error.request);
+                                } else {
+                                    console.log(error.message);
+                                }
+                                console.log(error.config);
+                            });
+                        }
                         view.storeLock = false;
-                        view.showChangeError();
                     })
                     .catch(error => {
                         if (error.response) {
@@ -414,7 +455,7 @@ export default {
                             // console.log(error.response.headers);
                             if (error.response.status == 500) {
                                 view.storeLock = false;
-                                errorOccurred.push(500);
+                                view.addError(view.$i18n.t('message.error_500'));
                             }
                         } else if (error.request) {
                             // The request was made but no response was received
@@ -423,7 +464,7 @@ export default {
                             console.log(error.request);
                         } else {
                             // Something happened in setting up the request that triggered an Error
-                            console.log('Error', error.message);
+                            console.log(error.message);
                         }
                         console.log(error.config);
                     });
@@ -617,6 +658,19 @@ export default {
                         console.log(error);
                     });
             });
+        },
+        addError(error)
+        {
+            let today = new Date();
+            let date = this.setDateZero(today.getDay()) + '.' + this.setDateZero(today.getMonth()) + '.' + today.getFullYear() + ' ' + this.setDateZero(today.getHours()) + ':' +this.setDateZero(today.getMinutes())+ ':' + this.setDateZero(today.getSeconds());
+            this.errorOccurred.push({text: error, date: date});
+        },
+        setDateZero(date){
+            return date < 10 ? '0' + date : date;
+        },
+        clearErrors()
+        {
+            this.errorOccurred = [];
         }
     }
 };

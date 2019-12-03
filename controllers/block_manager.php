@@ -64,9 +64,11 @@ class BlockManagerController extends CoursewareStudipController
         $this->courseware_export_url = PluginEngine::getURL('courseware/export', compact('cid'), true);
     }
 
-    public function courseware_vue_action()
+    public function get_courseware_action()
     {
-        $cid = Request::get('cid');
+        $request = trim(file_get_contents("php://input"));
+        $decoded_request = json_decode($request, true);
+        $cid = $decoded_request['cid'];
         $this->lang = getUserLanguage($this->container['current_user']->id);
         $grouped = $this->getGrouped($cid);
         $courseware = current($grouped['']);
@@ -567,7 +569,7 @@ class BlockManagerController extends CoursewareStudipController
                 $tempDirFiles = $this->extractArchive($tempDirZip.'/'.$file_data['name']);
                 $this->deleteRecursively($tempDirZip);
                 if (!$tempDirFiles) {
-                    var_dump('no files');
+                    $this->errors[] = _cw('Das Import-Archiv enthält keine Dateien');
                     return false;
                 }
 
@@ -784,6 +786,7 @@ class BlockManagerController extends CoursewareStudipController
                 return true;
             }
         }
+        $this->errors[] = _cw('Sortierung ist fehlgeschlagen');
 
         return false;
     }
@@ -795,6 +798,7 @@ class BlockManagerController extends CoursewareStudipController
                 return true;
             }
         }
+        $this->errors[] = _cw('Kapitelsortierung ist fehlgeschlagen');
 
         return false;
     }
@@ -808,6 +812,7 @@ class BlockManagerController extends CoursewareStudipController
                 }
             }
         }
+        $this->errors[] = _cw('Block Id konnte nicht aktuallisiert werden');
 
         return false;
     }

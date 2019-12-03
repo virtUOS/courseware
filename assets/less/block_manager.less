@@ -22,6 +22,21 @@
         width: 626px;
         min-width: 626px;
 
+        &#errorbox{
+            border-color: #d60000;
+            width: 1270px;
+            min-width: 626px;
+
+            ul {
+                list-style: none;
+                padding: 0.5em 0 0 0;
+
+                li {
+                    padding: 0 1em 0.5em 1em;
+                }
+            }
+        }
+
         .cw-blockmanager-title {
             border-top: solid thin #28497c;
             border-bottom: solid thin #28497c;
@@ -48,6 +63,14 @@
             }
             &#cw-export-title {
                 border-bottom: none;
+            }
+            &#cw-error-title {
+                border-color: #d60000;
+                background-color: #d60000;
+
+                p{
+                    color: #fff;
+                }
             }
         }
         #cw-file-upload-import {
@@ -285,7 +308,7 @@
             width: 496px;
 
             &.full-width {
-                width: 528px;
+                width: 524px;
             }
         }
         .section-description {
