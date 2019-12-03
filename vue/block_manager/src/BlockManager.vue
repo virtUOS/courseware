@@ -412,10 +412,11 @@ export default {
                         try {
                             view.courseware = JSON.parse(response.data.courseware);
                             let errors = response.data.errors;
-                            console.log(errors);
-                            errors.forEach(error => {
-                                view.addError(error);
-                            });
+                            if (errors != null) {
+                                errors.forEach(error => {
+                                    view.addError(error);
+                                });
+                            }
                         }
                         catch(e) {
                             console.log(e);
