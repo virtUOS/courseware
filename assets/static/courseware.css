@@ -2224,6 +2224,7 @@ button.cw-reset-progress-button:hover {
 #courseware-news .cw-news-list-blocks .cw-news-item-block audio,
 #courseware-news .cw-news-list-blocks .cw-news-item-block video {
   max-width: 236px;
+  max-height: 180px;
 }
 .btn-base {
   width: 20px;
@@ -10851,5 +10852,3 @@ section#courseware button.cw-videoblock-recorder-reset {
 .cw-webvideo-source-file {
   display: none;
 }
-
-/*# sourceMappingURL=courseware.css.map*/
