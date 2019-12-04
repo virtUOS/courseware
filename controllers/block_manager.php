@@ -634,11 +634,11 @@ class BlockManagerController extends CoursewareStudipController
                             foreach($xml->getElementsByTagName('section') as $xml_section) {
                                 if ($xml_section->getAttribute('temp-id') == $section_tempid) {
                                     $section_title = $xml_section->getAttribute('title');
+                                    $icon = $xml_section->getAttribute('icon');
                                 }
                             }
                             $data = array('title' => $section_title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $block = $this->createAnyBlock($parent_id, 'Section', $data);
-                            $icon = $xml_section->getAttribute('icon');
                             $uiSection = $this->plugin->getBlockFactory()->makeBlock($block);
                             if (in_array($icon, $uiSection->allowed_icons())) {
                                 $uiSection->icon = $icon;
