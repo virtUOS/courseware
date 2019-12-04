@@ -36,8 +36,8 @@ class CodeBlock extends Block
     public function preview_view()
     {
         $code_content = \STUDIP\Markup::purifyHtml($this->code_content);
-        if (strlen($code_content) > 160){
-            $code_content = substr($code_content, 0, 160).'…';
+        if (strlen($code_content) > 240){
+            $code_content = substr($code_content, 0, 240).'…';
         }
 
         return array(

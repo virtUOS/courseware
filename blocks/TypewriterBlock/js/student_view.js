@@ -37,7 +37,7 @@ export default StudentView.extend({
         }
         typewriter = JSON.parse(typewriter);
         this.$('.cw-typewriter').addClass(typewriter.font).addClass(typewriter.size);
-        var spans = '<span>' + typewriter.content.split('').join('</span><span>').replace(/(?:\r\n|\r|\n)/g, '<br>').replace(/\s/g, '&nbsp;') + '</span>';
+        var spans = '<span>' + typewriter.content.split('').join('</span><span>') + '</span>';
         var speed = [200,100,50,25];
         $(spans).hide().appendTo(this.$('.cw-typewriter')).each(function (i) {
             $(this).delay(speed[typewriter.speed] * i).css({

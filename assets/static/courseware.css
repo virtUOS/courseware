@@ -10605,6 +10605,9 @@ textarea.cw-typewriter-content {
   vertical-align: baseline;
   margin-left: 1em;
 }
+.cw-typewriter {
+  white-space: pre-wrap;
+}
 .cw-typewriter.font-typewriter {
   font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
 }

@@ -31,8 +31,11 @@ class TypewriterBlock extends Block
     public function preview_view()
     {
         $content = json_decode($this->typewriter_json, true)['content'];
+        if (strlen($content) > 240){
+            $content = substr($content, 0, 240).'…';
+        }
 
-        return array('content' => substr($content, 0, 160));
+        return array('content' => $content);
     }
 
     public function save_handler(array $data)
