@@ -122,7 +122,7 @@ class PdfBlock extends Block
         if (isset ($data['pdf_filename'])) {
             $this->pdf_filename = $data['pdf_filename'];
         }
-        if (isset ($data['pdf_file_id'])) {
+        if (isset ($data['pdf_file_id']) && ($data['pdf_file_id'] != '')) {
             $this->pdf_file_id = $data['pdf_file_id'];
             $file_ref = new \FileRef($this->pdf_file_id);
             $this->pdf_file = $file_ref->getDownloadURL();
