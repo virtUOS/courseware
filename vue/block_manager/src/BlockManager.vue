@@ -653,6 +653,12 @@ export default {
                         view.remoteData = false;
                         view.cleanLists();
                         view.courseware = JSON.parse(response.data.courseware);
+                        let errors = response.data.errors;
+                        if (errors != null) {
+                            errors.forEach(error => {
+                                view.addError(error);
+                            });
+                        }
                         view.storeLock = false;
                     })
                     .catch(error => {

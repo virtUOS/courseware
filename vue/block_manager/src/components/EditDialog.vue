@@ -11,7 +11,14 @@
                     </header>
                     <section class="modal-body">
                         <label for="editDialogElementTitle">{{ $t('message.title') }}:</label>
-                        <input type="text" name="editDialogElementTitle" v-model="title" />
+                        <input
+                            type="text"
+                            name="editDialogElementTitle"
+                            ref="editDialogElementTitle"
+                            v-model="title"
+                            @keyup.enter="edit"
+                            @keyup.esc="close"
+                        />
                         <br />
                         <div v-if="isChapter">
                             <label for="publication_date">{{ $t('message.visibleFrom') }}:</label>
@@ -20,10 +27,18 @@
                                 name="publication_date"
                                 v-model="publicationDate"
                                 :max="maxPublicationDate"
+                                @keyup.enter="edit"
+                                @keyup.esc="close"
                             />
                             <br />
                             <label for="withdraw_date">{{ $t('message.invisibleFrom') }}:</label>
-                            <input type="date" name="withdraw_date" v-model="withdrawDate" :min="minWithdrawDate" />
+                            <input type="date"
+                                name="withdraw_date"
+                                v-model="withdrawDate"
+                                :min="minWithdrawDate"
+                                @keyup.enter="edit"
+                                @keyup.esc="close"
+                            />
                         </div>
                     </section>
                     <footer class="modal-footer">
@@ -142,6 +157,11 @@ export default {
     watch: {
         DialogVisible: function() {
             this.visible = this.DialogVisible;
+            this.$nextTick(() => {
+                if (this.$refs.editDialogElementTitle) {
+                    this.$refs.editDialogElementTitle.focus();
+                }
+            });
         },
         publicationDate: function() {
             this.minWithdrawDate = this.convertTimestampToDate(this.publicationDate);
