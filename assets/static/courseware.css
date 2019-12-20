@@ -2222,7 +2222,8 @@ button.cw-reset-progress-button:hover {
 }
 #courseware-news .cw-news-list-blocks .cw-news-item-block img,
 #courseware-news .cw-news-list-blocks .cw-news-item-block audio,
-#courseware-news .cw-news-list-blocks .cw-news-item-block video {
+#courseware-news .cw-news-list-blocks .cw-news-item-block video,
+#courseware-news .cw-news-list-blocks .cw-news-item-block iframe {
   max-width: 236px;
   max-height: 180px;
 }
