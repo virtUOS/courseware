@@ -40,7 +40,12 @@ class Section extends Block
         'literature', 'news', 'notification2', 'place',
         'print', 'ranking', 'refresh', 'resources',
         'staple', 'star', 'stat', 'studygroup',
-        'tag', 'wizard', 'youtube', 'light-bulb'
+        'tag', 'wizard', 'youtube', 'light-bulb',
+        'accept', 'campusnavi', 'filter', 'globe',
+        'group4', 'institute', 'phone', 'span-empty',
+        'span-1quarter', 'span-2quarter', 'span-3quarter',
+        'span-full', 'sport', 'tools', 'vote', 'lock-locked',
+        'lock-unlocked'
     );
 
     // mapping of block types to icons

@@ -2714,6 +2714,12 @@ section#courseware ol.active-subchapter li > a[data-icon="action"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li > a[data-icon="accept"] {
+  background-image: url("../../../../../assets/images/icons/blue/accept.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li > a[data-icon="admin"] {
   background-image: url("../../../../../assets/images/icons/blue/admin.svg");
   background-size: 24px;
@@ -2722,6 +2728,12 @@ section#courseware ol.active-subchapter li > a[data-icon="admin"] {
 }
 section#courseware ol.active-subchapter li > a[data-icon="billboard"] {
   background-image: url("../../../../../assets/images/icons/blue/billboard.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li > a[data-icon="campusnavi"] {
+  background-image: url("../../../../../assets/images/icons/blue/campusnavi.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -2786,14 +2798,32 @@ section#courseware ol.active-subchapter li > a[data-icon="file"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li > a[data-icon="filter"] {
+  background-image: url("../../../../../assets/images/icons/blue/filter.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li > a[data-icon="folder-empty2"] {
   background-image: url("../../../../../assets/images/icons/blue/folder-empty2.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li > a[data-icon="globe"] {
+  background-image: url("../../../../../assets/images/icons/blue/globe.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li > a[data-icon="group2"] {
   background-image: url("../../../../../assets/images/icons/blue/group2.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li > a[data-icon="group4"] {
+  background-image: url("../../../../../assets/images/icons/blue/group4.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -2806,6 +2836,12 @@ section#courseware ol.active-subchapter li > a[data-icon="guestbook"] {
 }
 section#courseware ol.active-subchapter li > a[data-icon="home"] {
   background-image: url("../../../../../assets/images/icons/blue/home.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li > a[data-icon="institute"] {
+  background-image: url("../../../../../assets/images/icons/blue/institute.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -2828,6 +2864,18 @@ section#courseware ol.active-subchapter li > a[data-icon="license"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li > a[data-icon="lock-locked"] {
+  background-image: url("../../../../../assets/images/icons/blue/lock-locked.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li > a[data-icon="lock-unlocked"] {
+  background-image: url("../../../../../assets/images/icons/blue/lock-unlocked.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li > a[data-icon="news"] {
   background-image: url("../../../../../assets/images/icons/blue/news.svg");
   background-size: 24px;
@@ -2836,6 +2884,12 @@ section#courseware ol.active-subchapter li > a[data-icon="news"] {
 }
 section#courseware ol.active-subchapter li > a[data-icon="notification2"] {
   background-image: url("../../../../../assets/images/icons/blue/notification2.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li > a[data-icon="phone"] {
+  background-image: url("../../../../../assets/images/icons/blue/phone.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -2876,6 +2930,42 @@ section#courseware ol.active-subchapter li > a[data-icon="resources"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li > a[data-icon="span-empty"] {
+  background-image: url("../../../../../assets/images/icons/blue/span-empty.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li > a[data-icon="span-1quarter"] {
+  background-image: url("../../../../../assets/images/icons/blue/span-1quarter.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li > a[data-icon="span-2quarter"] {
+  background-image: url("../../../../../assets/images/icons/blue/span-2quarter.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li > a[data-icon="span-3quarter"] {
+  background-image: url("../../../../../assets/images/icons/blue/span-3quarter.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li > a[data-icon="span-full"] {
+  background-image: url("../../../../../assets/images/icons/blue/span-full.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li > a[data-icon="sport"] {
+  background-image: url("../../../../../assets/images/icons/blue/sport.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li > a[data-icon="staple"] {
   background-image: url("../../../../../assets/images/icons/blue/staple.svg");
   background-size: 24px;
@@ -2902,6 +2992,18 @@ section#courseware ol.active-subchapter li > a[data-icon="studygroup"] {
 }
 section#courseware ol.active-subchapter li > a[data-icon="tag"] {
   background-image: url("../../../../../assets/images/icons/blue/tag.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li > a[data-icon="tools"] {
+  background-image: url("../../../../../assets/images/icons/blue/tools.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li > a[data-icon="vote"] {
+  background-image: url("../../../../../assets/images/icons/blue/vote.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -3000,6 +3102,12 @@ section#courseware ol.active-subchapter li:hover > a[data-icon="action"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li:hover > a[data-icon="accept"] {
+  background-image: url("../../../../../assets/images/icons/white/accept.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li:hover > a[data-icon="admin"] {
   background-image: url("../../../../../assets/images/icons/white/admin.svg");
   background-size: 24px;
@@ -3008,6 +3116,12 @@ section#courseware ol.active-subchapter li:hover > a[data-icon="admin"] {
 }
 section#courseware ol.active-subchapter li:hover > a[data-icon="billboard"] {
   background-image: url("../../../../../assets/images/icons/white/billboard.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a[data-icon="campusnavi"] {
+  background-image: url("../../../../../assets/images/icons/white/campusnavi.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -3072,14 +3186,32 @@ section#courseware ol.active-subchapter li:hover > a[data-icon="file"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li:hover > a[data-icon="filter"] {
+  background-image: url("../../../../../assets/images/icons/white/filter.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li:hover > a[data-icon="folder-empty2"] {
   background-image: url("../../../../../assets/images/icons/white/folder-empty2.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li:hover > a[data-icon="globe"] {
+  background-image: url("../../../../../assets/images/icons/white/globe.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li:hover > a[data-icon="group2"] {
   background-image: url("../../../../../assets/images/icons/white/group2.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a[data-icon="group4"] {
+  background-image: url("../../../../../assets/images/icons/white/group4.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -3092,6 +3224,12 @@ section#courseware ol.active-subchapter li:hover > a[data-icon="guestbook"] {
 }
 section#courseware ol.active-subchapter li:hover > a[data-icon="home"] {
   background-image: url("../../../../../assets/images/icons/white/home.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a[data-icon="institute"] {
+  background-image: url("../../../../../assets/images/icons/white/institute.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -3114,6 +3252,18 @@ section#courseware ol.active-subchapter li:hover > a[data-icon="license"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li:hover > a[data-icon="lock-locked"] {
+  background-image: url("../../../../../assets/images/icons/white/lock-locked.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a[data-icon="lock-unlocked"] {
+  background-image: url("../../../../../assets/images/icons/white/lock-unlocked.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li:hover > a[data-icon="news"] {
   background-image: url("../../../../../assets/images/icons/white/news.svg");
   background-size: 24px;
@@ -3122,6 +3272,12 @@ section#courseware ol.active-subchapter li:hover > a[data-icon="news"] {
 }
 section#courseware ol.active-subchapter li:hover > a[data-icon="notification2"] {
   background-image: url("../../../../../assets/images/icons/white/notification2.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a[data-icon="phone"] {
+  background-image: url("../../../../../assets/images/icons/white/phone.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -3162,6 +3318,42 @@ section#courseware ol.active-subchapter li:hover > a[data-icon="resources"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li:hover > a[data-icon="span-empty"] {
+  background-image: url("../../../../../assets/images/icons/white/span-empty.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a[data-icon="span-1quarter"] {
+  background-image: url("../../../../../assets/images/icons/white/span-1quarter.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a[data-icon="span-2quarter"] {
+  background-image: url("../../../../../assets/images/icons/white/span-2quarter.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a[data-icon="span-3quarter"] {
+  background-image: url("../../../../../assets/images/icons/white/span-3quarter.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a[data-icon="span-full"] {
+  background-image: url("../../../../../assets/images/icons/white/span-full.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a[data-icon="sport"] {
+  background-image: url("../../../../../assets/images/icons/white/sport.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li:hover > a[data-icon="staple"] {
   background-image: url("../../../../../assets/images/icons/white/staple.svg");
   background-size: 24px;
@@ -3188,6 +3380,18 @@ section#courseware ol.active-subchapter li:hover > a[data-icon="studygroup"] {
 }
 section#courseware ol.active-subchapter li:hover > a[data-icon="tag"] {
   background-image: url("../../../../../assets/images/icons/white/tag.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a[data-icon="tools"] {
+  background-image: url("../../../../../assets/images/icons/white/tools.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a[data-icon="vote"] {
+  background-image: url("../../../../../assets/images/icons/white/vote.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -3292,6 +3496,12 @@ section#courseware ol.active-subchapter li.selected > a[data-icon="action"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li.selected > a[data-icon="accept"] {
+  background-image: url("../../../../../assets/images/icons/white/accept.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li.selected > a[data-icon="admin"] {
   background-image: url("../../../../../assets/images/icons/white/admin.svg");
   background-size: 24px;
@@ -3300,6 +3510,12 @@ section#courseware ol.active-subchapter li.selected > a[data-icon="admin"] {
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon="billboard"] {
   background-image: url("../../../../../assets/images/icons/white/billboard.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="campusnavi"] {
+  background-image: url("../../../../../assets/images/icons/white/campusnavi.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -3364,14 +3580,32 @@ section#courseware ol.active-subchapter li.selected > a[data-icon="file"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li.selected > a[data-icon="filter"] {
+  background-image: url("../../../../../assets/images/icons/white/filter.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li.selected > a[data-icon="folder-empty2"] {
   background-image: url("../../../../../assets/images/icons/white/folder-empty2.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li.selected > a[data-icon="globe"] {
+  background-image: url("../../../../../assets/images/icons/white/globe.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li.selected > a[data-icon="group2"] {
   background-image: url("../../../../../assets/images/icons/white/group2.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="group4"] {
+  background-image: url("../../../../../assets/images/icons/white/group4.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -3384,6 +3618,12 @@ section#courseware ol.active-subchapter li.selected > a[data-icon="guestbook"] {
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon="home"] {
   background-image: url("../../../../../assets/images/icons/white/home.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="institute"] {
+  background-image: url("../../../../../assets/images/icons/white/institute.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -3406,6 +3646,18 @@ section#courseware ol.active-subchapter li.selected > a[data-icon="license"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li.selected > a[data-icon="lock-locked"] {
+  background-image: url("../../../../../assets/images/icons/white/lock-locked.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="lock-unlocked"] {
+  background-image: url("../../../../../assets/images/icons/white/lock-unlocked.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li.selected > a[data-icon="news"] {
   background-image: url("../../../../../assets/images/icons/white/news.svg");
   background-size: 24px;
@@ -3414,6 +3666,12 @@ section#courseware ol.active-subchapter li.selected > a[data-icon="news"] {
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon="notification2"] {
   background-image: url("../../../../../assets/images/icons/white/notification2.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="phone"] {
+  background-image: url("../../../../../assets/images/icons/white/phone.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -3454,6 +3712,42 @@ section#courseware ol.active-subchapter li.selected > a[data-icon="resources"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li.selected > a[data-icon="span-empty"] {
+  background-image: url("../../../../../assets/images/icons/white/span-empty.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="span-1quarter"] {
+  background-image: url("../../../../../assets/images/icons/white/span-1quarter.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="span-2quarter"] {
+  background-image: url("../../../../../assets/images/icons/white/span-2quarter.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="span-3quarter"] {
+  background-image: url("../../../../../assets/images/icons/white/span-3quarter.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="span-full"] {
+  background-image: url("../../../../../assets/images/icons/white/span-full.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="sport"] {
+  background-image: url("../../../../../assets/images/icons/white/sport.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li.selected > a[data-icon="staple"] {
   background-image: url("../../../../../assets/images/icons/white/staple.svg");
   background-size: 24px;
@@ -3480,6 +3774,18 @@ section#courseware ol.active-subchapter li.selected > a[data-icon="studygroup"] 
 }
 section#courseware ol.active-subchapter li.selected > a[data-icon="tag"] {
   background-image: url("../../../../../assets/images/icons/white/tag.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="tools"] {
+  background-image: url("../../../../../assets/images/icons/white/tools.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li.selected > a[data-icon="vote"] {
+  background-image: url("../../../../../assets/images/icons/white/vote.svg");
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -7056,6 +7362,9 @@ section#courseware button.button.overlay-adder:hover {
 .cw-keypoint-icon-option.cw-keypoint-icon-plugin {
   background-image: url("../../../../../assets/images/icons/blue/plugin.svg");
 }
+.cw-keypoint-icon-option.cw-keypoint-icon-question {
+  background-image: url("../../../../../assets/images/icons/blue/question.svg");
+}
 .cw-keypoint-icon-option.cw-keypoint-icon-ranking {
   background-image: url("../../../../../assets/images/icons/blue/ranking.svg");
 }
@@ -7235,6 +7544,9 @@ section#courseware button.button.overlay-adder:hover {
 }
 .cw-keypoint-red.cw-keypoint-icon-plugin {
   background-image: url("../../../../../assets/images/icons/red/plugin.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-question {
+  background-image: url("../../../../../assets/images/icons/red/question.svg");
 }
 .cw-keypoint-red.cw-keypoint-icon-ranking {
   background-image: url("../../../../../assets/images/icons/red/ranking.svg");
@@ -7416,6 +7728,9 @@ section#courseware button.button.overlay-adder:hover {
 .cw-keypoint-blue.cw-keypoint-icon-plugin {
   background-image: url("../../../../../assets/images/icons/blue/plugin.svg");
 }
+.cw-keypoint-blue.cw-keypoint-icon-question {
+  background-image: url("../../../../../assets/images/icons/blue/question.svg");
+}
 .cw-keypoint-blue.cw-keypoint-icon-ranking {
   background-image: url("../../../../../assets/images/icons/blue/ranking.svg");
 }
@@ -7595,6 +7910,9 @@ section#courseware button.button.overlay-adder:hover {
 }
 .cw-keypoint-green.cw-keypoint-icon-plugin {
   background-image: url("../../../../../assets/images/icons/green/plugin.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-question {
+  background-image: url("../../../../../assets/images/icons/green/question.svg");
 }
 .cw-keypoint-green.cw-keypoint-icon-ranking {
   background-image: url("../../../../../assets/images/icons/green/ranking.svg");
@@ -7776,6 +8094,9 @@ section#courseware button.button.overlay-adder:hover {
 .cw-keypoint-grey.cw-keypoint-icon-plugin {
   background-image: url("../../../../../assets/images/icons/grey/plugin.svg");
 }
+.cw-keypoint-grey.cw-keypoint-icon-question {
+  background-image: url("../../../../../assets/images/icons/grey/question.svg");
+}
 .cw-keypoint-grey.cw-keypoint-icon-ranking {
   background-image: url("../../../../../assets/images/icons/grey/ranking.svg");
 }
@@ -7955,6 +8276,9 @@ section#courseware button.button.overlay-adder:hover {
 }
 .cw-keypoint-yellow.cw-keypoint-icon-plugin {
   background-image: url("../../../../../assets/images/icons/yellow/plugin.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-question {
+  background-image: url("../../../../../assets/images/icons/yellow/question.svg");
 }
 .cw-keypoint-yellow.cw-keypoint-icon-ranking {
   background-image: url("../../../../../assets/images/icons/yellow/ranking.svg");
@@ -10518,6 +10842,12 @@ section#courseware .active-section .edit-section .cw-section-icon-selection-labe
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-graph {
   background-image: url("../../../../../assets/images/icons/white/graph.svg");
 }
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-accept,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-accept,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-accept,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-accept {
+  background-image: url("../../../../../assets/images/icons/white/accept.svg");
+}
 section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-admin,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-admin,
 section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-admin,
@@ -10529,6 +10859,12 @@ section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .
 section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-billboard,
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-billboard {
   background-image: url("../../../../../assets/images/icons/white/billboard.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-campusnavi,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-campusnavi,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-campusnavi,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-campusnavi {
+  background-image: url("../../../../../assets/images/icons/white/campusnavi.svg");
 }
 section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-category,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-category,
@@ -10578,17 +10914,35 @@ section#courseware .active-section .edit-section .cw-section-icon-selection-labe
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-file {
   background-image: url("../../../../../assets/images/icons/white/file.svg");
 }
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-filter,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-filter,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-filter,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-filter {
+  background-image: url("../../../../../assets/images/icons/white/filter.svg");
+}
 section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-folder-empty2,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-folder-empty2,
 section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-folder-empty2,
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-folder-empty2 {
   background-image: url("../../../../../assets/images/icons/white/folder-empty2.svg");
 }
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-globe,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-globe,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-globe,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-globe {
+  background-image: url("../../../../../assets/images/icons/white/globe.svg");
+}
 section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-group2,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-group2,
 section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-group2,
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-group2 {
   background-image: url("../../../../../assets/images/icons/white/group2.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-group4,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-group4,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-group4,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-group4 {
+  background-image: url("../../../../../assets/images/icons/white/group4.svg");
 }
 section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-guestbook,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-guestbook,
@@ -10601,6 +10955,12 @@ section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .
 section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-home,
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-home {
   background-image: url("../../../../../assets/images/icons/white/home.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-institute,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-institute,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-institute,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-institute {
+  background-image: url("../../../../../assets/images/icons/white/institute.svg");
 }
 section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-key,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-key,
@@ -10620,6 +10980,18 @@ section#courseware .active-section .edit-section .cw-section-icon-selection-labe
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-license {
   background-image: url("../../../../../assets/images/icons/white/license.svg");
 }
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-lock-locked,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-lock-locked,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-lock-locked,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-lock-locked {
+  background-image: url("../../../../../assets/images/icons/white/lock-locked.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-lock-unlocked,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-lock-unlocked,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-lock-unlocked,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-lock-unlocked {
+  background-image: url("../../../../../assets/images/icons/white/lock-unlocked.svg");
+}
 section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-news,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-news,
 section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-news,
@@ -10631,6 +11003,12 @@ section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .
 section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-notification2,
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-notification2 {
   background-image: url("../../../../../assets/images/icons/white/notification2.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-phone,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-phone,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-phone,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-phone {
+  background-image: url("../../../../../assets/images/icons/white/phone.svg");
 }
 section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-place,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-place,
@@ -10662,6 +11040,42 @@ section#courseware .active-section .edit-section .cw-section-icon-selection-labe
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-resources {
   background-image: url("../../../../../assets/images/icons/white/resources.svg");
 }
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-empty,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-empty,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-empty,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-empty {
+  background-image: url("../../../../../assets/images/icons/white/span-empty.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-1quarter,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-1quarter,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-1quarter,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-1quarter {
+  background-image: url("../../../../../assets/images/icons/white/span-1quarter.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-2quarter,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-2quarter,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-2quarter,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-2quarter {
+  background-image: url("../../../../../assets/images/icons/white/span-2quarter.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-3quarter,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-3quarter,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-3quarter,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-3quarter {
+  background-image: url("../../../../../assets/images/icons/white/span-3quarter.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-full,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-full,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-full,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-span-full {
+  background-image: url("../../../../../assets/images/icons/white/span-full.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-sport,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-sport,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-sport,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-sport {
+  background-image: url("../../../../../assets/images/icons/white/sport.svg");
+}
 section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-staple,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-staple,
 section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-staple,
@@ -10691,6 +11105,18 @@ section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .
 section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-tag,
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-tag {
   background-image: url("../../../../../assets/images/icons/white/tag.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-tools,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-tools,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-tools,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-tools {
+  background-image: url("../../../../../assets/images/icons/white/tools.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-vote,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-vote,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-vote,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-vote {
+  background-image: url("../../../../../assets/images/icons/white/vote.svg");
 }
 section#courseware .active-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-wizard,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label > .cw-section-icon-selection:checked + .cw-section-icon-selection-wizard,
@@ -10794,6 +11220,12 @@ section#courseware .active-section .edit-section .cw-section-icon-selection-labe
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-graph {
   background-image: url("../../../../../assets/images/icons/blue/graph.svg");
 }
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-accept,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-accept,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-accept,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-accept {
+  background-image: url("../../../../../assets/images/icons/blue/accept.svg");
+}
 section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-admin,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-admin,
 section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-admin,
@@ -10805,6 +11237,12 @@ section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw
 section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-billboard,
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-billboard {
   background-image: url("../../../../../assets/images/icons/blue/billboard.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-campusnavi,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-campusnavi,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-campusnavi,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-campusnavi {
+  background-image: url("../../../../../assets/images/icons/blue/campusnavi.svg");
 }
 section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-category,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-category,
@@ -10854,17 +11292,35 @@ section#courseware .active-section .edit-section .cw-section-icon-selection-labe
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-file {
   background-image: url("../../../../../assets/images/icons/blue/file.svg");
 }
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-filter,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-filter,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-filter,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-filter {
+  background-image: url("../../../../../assets/images/icons/blue/filter.svg");
+}
 section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-folder-empty2,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-folder-empty2,
 section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-folder-empty2,
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-folder-empty2 {
   background-image: url("../../../../../assets/images/icons/blue/folder-empty2.svg");
 }
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-globe,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-globe,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-globe,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-globe {
+  background-image: url("../../../../../assets/images/icons/blue/globe.svg");
+}
 section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-group2,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-group2,
 section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-group2,
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-group2 {
   background-image: url("../../../../../assets/images/icons/blue/group2.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-group4,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-group4,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-group4,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-group4 {
+  background-image: url("../../../../../assets/images/icons/blue/group4.svg");
 }
 section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-guestbook,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-guestbook,
@@ -10877,6 +11333,12 @@ section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw
 section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-home,
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-home {
   background-image: url("../../../../../assets/images/icons/blue/home.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-institute,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-institute,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-institute,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-institute {
+  background-image: url("../../../../../assets/images/icons/blue/institute.svg");
 }
 section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-key,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-key,
@@ -10896,6 +11358,18 @@ section#courseware .active-section .edit-section .cw-section-icon-selection-labe
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-license {
   background-image: url("../../../../../assets/images/icons/blue/license.svg");
 }
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-lock-locked,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-lock-locked,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-lock-locked,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-lock-locked {
+  background-image: url("../../../../../assets/images/icons/blue/lock-locked.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-lock-unlocked,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-lock-unlocked,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-lock-unlocked,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-lock-unlocked {
+  background-image: url("../../../../../assets/images/icons/blue/lock-unlocked.svg");
+}
 section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-news,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-news,
 section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-news,
@@ -10907,6 +11381,12 @@ section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw
 section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-notification2,
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-notification2 {
   background-image: url("../../../../../assets/images/icons/blue/notification2.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-phone,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-phone,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-phone,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-phone {
+  background-image: url("../../../../../assets/images/icons/blue/phone.svg");
 }
 section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-place,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-place,
@@ -10938,6 +11418,42 @@ section#courseware .active-section .edit-section .cw-section-icon-selection-labe
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-resources {
   background-image: url("../../../../../assets/images/icons/blue/resources.svg");
 }
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-span-empty,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-span-empty,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-span-empty,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-span-empty {
+  background-image: url("../../../../../assets/images/icons/blue/span-empty.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-span-1quarter,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-span-1quarter,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-span-1quarter,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-span-1quarter {
+  background-image: url("../../../../../assets/images/icons/blue/span-1quarter.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-span-2quarter,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-span-2quarter,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-span-2quarter,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-span-2quarter {
+  background-image: url("../../../../../assets/images/icons/blue/span-2quarter.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-span-3quarter,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-span-3quarter,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-span-3quarter,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-span-3quarter {
+  background-image: url("../../../../../assets/images/icons/blue/span-3quarter.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-span-full,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-span-full,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-span-full,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-span-full {
+  background-image: url("../../../../../assets/images/icons/blue/span-full.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-sport,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-sport,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-sport,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-sport {
+  background-image: url("../../../../../assets/images/icons/blue/sport.svg");
+}
 section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-staple,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-staple,
 section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-staple,
@@ -10967,6 +11483,18 @@ section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw
 section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-tag,
 section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-tag {
   background-image: url("../../../../../assets/images/icons/blue/tag.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-tools,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-tools,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-tools,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-tools {
+  background-image: url("../../../../../assets/images/icons/blue/tools.svg");
+}
+section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-vote,
+section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-vote,
+section#courseware .active-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-vote,
+section#courseware .aside-section .edit-section .cw-section-icon-selection-label .cw-section-icon-selection-vote {
+  background-image: url("../../../../../assets/images/icons/blue/vote.svg");
 }
 section#courseware .active-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-wizard,
 section#courseware .aside-section .add-icon .cw-section-icon-selection-label .cw-section-icon-selection-wizard,
