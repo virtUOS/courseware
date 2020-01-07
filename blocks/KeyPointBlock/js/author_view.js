@@ -8,6 +8,9 @@ export default AuthorView.extend({
     events: {
         'click button[name=save]':   'onSave',
         'click button[name=cancel]': 'switchBack',
+        'change .cw-keypoint-icons' : 'setIcon',
+        'keyup input[name=cw-keypoint-content]' : 'setContent',
+        'change input[name=cw-keypoint-color]' : 'setColor'
     },
 
     initialize() {
@@ -20,12 +23,21 @@ export default AuthorView.extend({
     },
 
     postRender() {
-        var $view = this;
-        if($view.$(".cw-keypoint-stored-icon").val() != "") {
-            $view.$('.cw-keypoint-input-icon[value="'+$view.$('.cw-keypoint-stored-icon').val()+'"]').attr('checked', 'checked');
+        if(this.$(".cw-keypoint-stored-color").val() != "") {
+            this.$('.cw-keypoint-input-color[value="' + this.$('.cw-keypoint-stored-color').val()+'"]').attr('checked', 'checked');
         }
-        if($view.$(".cw-keypoint-stored-color").val() != "") {
-            $view.$('.cw-keypoint-input-color[value="'+$view.$('.cw-keypoint-stored-color').val()+'"]').attr('checked', 'checked');
+
+        this.$('.cw-keypoint-icons').select2({
+            templateResult: state => {
+                if (!state.id) {return state.text;}
+                var $state = $(
+                    '<span class="cw-keypoint-icon-option cw-keypoint-icon-'+ state.element.value +'"></span><span>'+ state.element.text +'</span>'
+                );
+                return $state;
+            }
+        });
+        if(this.$(".cw-keypoint-stored-icon").val() != "") {
+            this.$('.cw-keypoint-icons').val(this.$('.cw-keypoint-stored-icon').val()).trigger('change');
         }
 
         return this;
@@ -60,9 +72,9 @@ export default AuthorView.extend({
 
     onSave(event) {
         var $view = this;
-        var $keypoint_content = $view.$('.cw-keypoint-set-content').val();
-        var $keypoint_color = $view.$('input[name=cw-keypoint-color]:checked').val();
-        var $keypoint_icon = $view.$('input[name=cw-keypoint-icon]:checked').val();
+        var $keypoint_content = this.$('.cw-keypoint-set-content').val();
+        var $keypoint_color = this.$('input[name=cw-keypoint-color]:checked').val();
+        var $keypoint_icon = this.$('.cw-keypoint-icons').val();
 
         helper
             .callHandler(this.model.id, 'save', {
@@ -83,5 +95,24 @@ export default AuthorView.extend({
                     console.log(errorMessage, arguments);
                 }
             );
-  }
+    },
+
+    setIcon(){
+        let keypointBox = this.$('.cw-keypoint');
+        keypointBox.removeClass (function (index, className) {
+            return (className.match (/(^|\s)cw-keypoint-icon-\S+/g) || []).join(' ');
+        });
+        keypointBox.addClass('cw-keypoint-icon-' + this.$('.cw-keypoint-icons').val());
+    },
+
+    setContent(){
+        this.$('.cw-keypoint-sentence').text(this.$('.cw-keypoint-set-content').val());
+    },
+
+    setColor(){
+        let keypointBox = this.$('.cw-keypoint');
+        keypointBox.removeClass('cw-keypoint-red cw-keypoint-green cw-keypoint-grey cw-keypoint-blue cw-keypoint-yellow');
+        keypointBox.addClass('cw-keypoint-' + this.$('input[name=cw-keypoint-color]:checked').val());
+    }
+
 });

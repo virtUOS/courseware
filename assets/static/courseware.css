@@ -6922,50 +6922,367 @@ section#courseware button.button.overlay-adder:hover {
 .btn-base:hover {
   cursor: pointer;
 }
+.cw-keypoint-icon-option {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  padding-right: 0.5em;
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-accept {
+  background-image: url("../../../../../assets/images/icons/blue/accept.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-add {
+  background-image: url("../../../../../assets/images/icons/blue/add.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-admin {
+  background-image: url("../../../../../assets/images/icons/blue/admin.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-billboard {
+  background-image: url("../../../../../assets/images/icons/blue/billboard.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-campusnavi {
+  background-image: url("../../../../../assets/images/icons/blue/campusnavi.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-chat2 {
+  background-image: url("../../../../../assets/images/icons/blue/chat2.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-code {
+  background-image: url("../../../../../assets/images/icons/blue/code.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-community {
+  background-image: url("../../../../../assets/images/icons/blue/community.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-computer {
+  background-image: url("../../../../../assets/images/icons/blue/computer.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-crown {
+  background-image: url("../../../../../assets/images/icons/blue/crown.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-consultation {
+  background-image: url("../../../../../assets/images/icons/blue/consultation.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-date {
+  background-image: url("../../../../../assets/images/icons/blue/date.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-decline {
+  background-image: url("../../../../../assets/images/icons/blue/decline.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-doctoral_cap {
+  background-image: url("../../../../../assets/images/icons/blue/doctoral_cap.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-dropbox {
+  background-image: url("../../../../../assets/images/icons/blue/dropbox.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-edit {
+  background-image: url("../../../../../assets/images/icons/blue/edit.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-exclaim {
+  background-image: url("../../../../../assets/images/icons/blue/exclaim.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-favorite {
+  background-image: url("../../../../../assets/images/icons/blue/favorite.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-filter {
+  background-image: url("../../../../../assets/images/icons/blue/filter.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-globe {
+  background-image: url("../../../../../assets/images/icons/blue/globe.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-graph {
+  background-image: url("../../../../../assets/images/icons/blue/graph.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-group2 {
+  background-image: url("../../../../../assets/images/icons/blue/group2.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-group3 {
+  background-image: url("../../../../../assets/images/icons/blue/group3.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-group4 {
+  background-image: url("../../../../../assets/images/icons/blue/group4.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-headache {
+  background-image: url("../../../../../assets/images/icons/blue/headache.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-info {
+  background-image: url("../../../../../assets/images/icons/blue/info.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-install {
+  background-image: url("../../../../../assets/images/icons/blue/install.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-institute {
+  background-image: url("../../../../../assets/images/icons/blue/institute.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-key {
+  background-image: url("../../../../../assets/images/icons/blue/key.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-learnmodule {
+  background-image: url("../../../../../assets/images/icons/blue/learnmodule.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-literature {
+  background-image: url("../../../../../assets/images/icons/blue/literature.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-lock-locked {
+  background-image: url("../../../../../assets/images/icons/blue/lock-locked.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-lock-unlocked {
+  background-image: url("../../../../../assets/images/icons/blue/lock-unlocked.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-mail {
+  background-image: url("../../../../../assets/images/icons/blue/mail.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-medal {
+  background-image: url("../../../../../assets/images/icons/blue/medal.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-metro {
+  background-image: url("../../../../../assets/images/icons/blue/metro.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-notification {
+  background-image: url("../../../../../assets/images/icons/blue/notification.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-notification2 {
+  background-image: url("../../../../../assets/images/icons/blue/notification2.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-outer-space {
+  background-image: url("../../../../../assets/images/icons/blue/outer-space.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-phone {
+  background-image: url("../../../../../assets/images/icons/blue/phone.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-place {
+  background-image: url("../../../../../assets/images/icons/blue/place.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-plugin {
+  background-image: url("../../../../../assets/images/icons/blue/plugin.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-ranking {
+  background-image: url("../../../../../assets/images/icons/blue/ranking.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-remove {
+  background-image: url("../../../../../assets/images/icons/blue/remove.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-resources {
+  background-image: url("../../../../../assets/images/icons/blue/resources.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-roles {
+  background-image: url("../../../../../assets/images/icons/blue/roles.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-settings {
+  background-image: url("../../../../../assets/images/icons/blue/settings.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-span-empty {
+  background-image: url("../../../../../assets/images/icons/blue/span-empty.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-span-1quarter {
+  background-image: url("../../../../../assets/images/icons/blue/span-1quarter.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-span-2quarter {
+  background-image: url("../../../../../assets/images/icons/blue/span-2quarter.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-span-3quarter {
+  background-image: url("../../../../../assets/images/icons/blue/span-3quarter.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-span-full {
+  background-image: url("../../../../../assets/images/icons/blue/span-full.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-staple {
+  background-image: url("../../../../../assets/images/icons/blue/staple.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-star {
+  background-image: url("../../../../../assets/images/icons/blue/star.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-tools {
+  background-image: url("../../../../../assets/images/icons/blue/tools.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-topic {
+  background-image: url("../../../../../assets/images/icons/blue/topic.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-visibility-visible {
+  background-image: url("../../../../../assets/images/icons/blue/visibility-visible.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-vote {
+  background-image: url("../../../../../assets/images/icons/blue/vote.svg");
+}
+.cw-keypoint-icon-option.cw-keypoint-icon-light-bulb {
+  background-image: url("../images/icons/blue/light_bulb.svg");
+}
 .cw-keypoint-red {
   border-color: #cb1800;
 }
 .cw-keypoint-red.cw-keypoint-icon-accept {
   background-image: url("../../../../../assets/images/icons/red/accept.svg");
 }
-.cw-keypoint-red.cw-keypoint-icon-decline {
-  background-image: url("../../../../../assets/images/icons/red/decline.svg");
-}
 .cw-keypoint-red.cw-keypoint-icon-add {
   background-image: url("../../../../../assets/images/icons/red/add.svg");
 }
-.cw-keypoint-red.cw-keypoint-icon-remove {
-  background-image: url("../../../../../assets/images/icons/red/remove.svg");
+.cw-keypoint-red.cw-keypoint-icon-admin {
+  background-image: url("../../../../../assets/images/icons/red/admin.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-billboard {
+  background-image: url("../../../../../assets/images/icons/red/billboard.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-campusnavi {
+  background-image: url("../../../../../assets/images/icons/red/campusnavi.svg");
 }
 .cw-keypoint-red.cw-keypoint-icon-chat2 {
   background-image: url("../../../../../assets/images/icons/red/chat2.svg");
 }
-.cw-keypoint-red.cw-keypoint-icon-exclaim {
-  background-image: url("../../../../../assets/images/icons/red/exclaim.svg");
-}
-.cw-keypoint-red.cw-keypoint-icon-info {
-  background-image: url("../../../../../assets/images/icons/red/info.svg");
-}
-.cw-keypoint-red.cw-keypoint-icon-visible {
-  background-image: url("../../../../../assets/images/icons/red/visible.svg");
-}
-.cw-keypoint-red.cw-keypoint-icon-date {
-  background-image: url("../../../../../assets/images/icons/red/date.svg");
-}
-.cw-keypoint-red.cw-keypoint-icon-doctoral_cap {
-  background-image: url("../../../../../assets/images/icons/red/doctoral_cap.svg");
+.cw-keypoint-red.cw-keypoint-icon-code {
+  background-image: url("../../../../../assets/images/icons/red/code.svg");
 }
 .cw-keypoint-red.cw-keypoint-icon-community {
   background-image: url("../../../../../assets/images/icons/red/community.svg");
 }
+.cw-keypoint-red.cw-keypoint-icon-computer {
+  background-image: url("../../../../../assets/images/icons/red/computer.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-crown {
+  background-image: url("../../../../../assets/images/icons/red/crown.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-consultation {
+  background-image: url("../../../../../assets/images/icons/red/consultation.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-date {
+  background-image: url("../../../../../assets/images/icons/red/date.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-decline {
+  background-image: url("../../../../../assets/images/icons/red/decline.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-doctoral_cap {
+  background-image: url("../../../../../assets/images/icons/red/doctoral_cap.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-dropbox {
+  background-image: url("../../../../../assets/images/icons/red/dropbox.svg");
+}
 .cw-keypoint-red.cw-keypoint-icon-edit {
   background-image: url("../../../../../assets/images/icons/red/edit.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-exclaim {
+  background-image: url("../../../../../assets/images/icons/red/exclaim.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-favorite {
+  background-image: url("../../../../../assets/images/icons/red/favorite.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-filter {
+  background-image: url("../../../../../assets/images/icons/red/filter.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-globe {
+  background-image: url("../../../../../assets/images/icons/red/globe.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-graph {
+  background-image: url("../../../../../assets/images/icons/red/graph.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-group2 {
+  background-image: url("../../../../../assets/images/icons/red/group2.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-group3 {
+  background-image: url("../../../../../assets/images/icons/red/group3.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-group4 {
+  background-image: url("../../../../../assets/images/icons/red/group4.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-headache {
+  background-image: url("../../../../../assets/images/icons/red/headache.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-info {
+  background-image: url("../../../../../assets/images/icons/red/info.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-install {
+  background-image: url("../../../../../assets/images/icons/red/install.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-institute {
+  background-image: url("../../../../../assets/images/icons/red/institute.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-key {
+  background-image: url("../../../../../assets/images/icons/red/key.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-learnmodule {
+  background-image: url("../../../../../assets/images/icons/red/learnmodule.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-literature {
+  background-image: url("../../../../../assets/images/icons/red/literature.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-lock-locked {
+  background-image: url("../../../../../assets/images/icons/red/lock-locked.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-lock-unlocked {
+  background-image: url("../../../../../assets/images/icons/red/lock-unlocked.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-mail {
+  background-image: url("../../../../../assets/images/icons/red/mail.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-medal {
+  background-image: url("../../../../../assets/images/icons/red/medal.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-metro {
+  background-image: url("../../../../../assets/images/icons/red/metro.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-notification {
+  background-image: url("../../../../../assets/images/icons/red/notification.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-notification2 {
+  background-image: url("../../../../../assets/images/icons/red/notification2.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-outer-space {
+  background-image: url("../../../../../assets/images/icons/red/outer-space.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-phone {
+  background-image: url("../../../../../assets/images/icons/red/phone.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-place {
+  background-image: url("../../../../../assets/images/icons/red/place.svg");
 }
 .cw-keypoint-red.cw-keypoint-icon-plugin {
   background-image: url("../../../../../assets/images/icons/red/plugin.svg");
 }
-.cw-keypoint-red.cw-keypoint-icon-graph {
-  background-image: url("../../../../../assets/images/icons/red/graph.svg");
+.cw-keypoint-red.cw-keypoint-icon-ranking {
+  background-image: url("../../../../../assets/images/icons/red/ranking.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-remove {
+  background-image: url("../../../../../assets/images/icons/red/remove.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-resources {
+  background-image: url("../../../../../assets/images/icons/red/resources.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-roles {
+  background-image: url("../../../../../assets/images/icons/red/roles.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-settings {
+  background-image: url("../../../../../assets/images/icons/red/settings.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-span-empty {
+  background-image: url("../../../../../assets/images/icons/red/span-empty.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-span-1quarter {
+  background-image: url("../../../../../assets/images/icons/red/span-1quarter.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-span-2quarter {
+  background-image: url("../../../../../assets/images/icons/red/span-2quarter.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-span-3quarter {
+  background-image: url("../../../../../assets/images/icons/red/span-3quarter.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-span-full {
+  background-image: url("../../../../../assets/images/icons/red/span-full.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-staple {
+  background-image: url("../../../../../assets/images/icons/red/staple.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-star {
+  background-image: url("../../../../../assets/images/icons/red/star.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-tools {
+  background-image: url("../../../../../assets/images/icons/red/tools.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-topic {
+  background-image: url("../../../../../assets/images/icons/red/topic.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-visibility-visible {
+  background-image: url("../../../../../assets/images/icons/red/visibility-visible.svg");
+}
+.cw-keypoint-red.cw-keypoint-icon-vote {
+  background-image: url("../../../../../assets/images/icons/red/vote.svg");
 }
 .cw-keypoint-red.cw-keypoint-icon-light-bulb {
   background-image: url("../images/icons/red/light_bulb.svg");
@@ -6976,44 +7293,176 @@ section#courseware button.button.overlay-adder:hover {
 .cw-keypoint-blue.cw-keypoint-icon-accept {
   background-image: url("../../../../../assets/images/icons/blue/accept.svg");
 }
-.cw-keypoint-blue.cw-keypoint-icon-decline {
-  background-image: url("../../../../../assets/images/icons/blue/decline.svg");
-}
 .cw-keypoint-blue.cw-keypoint-icon-add {
   background-image: url("../../../../../assets/images/icons/blue/add.svg");
 }
-.cw-keypoint-blue.cw-keypoint-icon-remove {
-  background-image: url("../../../../../assets/images/icons/blue/remove.svg");
+.cw-keypoint-blue.cw-keypoint-icon-admin {
+  background-image: url("../../../../../assets/images/icons/blue/admin.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-billboard {
+  background-image: url("../../../../../assets/images/icons/blue/billboard.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-campusnavi {
+  background-image: url("../../../../../assets/images/icons/blue/campusnavi.svg");
 }
 .cw-keypoint-blue.cw-keypoint-icon-chat2 {
   background-image: url("../../../../../assets/images/icons/blue/chat2.svg");
 }
-.cw-keypoint-blue.cw-keypoint-icon-exclaim {
-  background-image: url("../../../../../assets/images/icons/blue/exclaim.svg");
-}
-.cw-keypoint-blue.cw-keypoint-icon-info {
-  background-image: url("../../../../../assets/images/icons/blue/info.svg");
-}
-.cw-keypoint-blue.cw-keypoint-icon-visible {
-  background-image: url("../../../../../assets/images/icons/blue/visible.svg");
-}
-.cw-keypoint-blue.cw-keypoint-icon-date {
-  background-image: url("../../../../../assets/images/icons/blue/date.svg");
-}
-.cw-keypoint-blue.cw-keypoint-icon-doctoral_cap {
-  background-image: url("../../../../../assets/images/icons/blue/doctoral_cap.svg");
+.cw-keypoint-blue.cw-keypoint-icon-code {
+  background-image: url("../../../../../assets/images/icons/blue/code.svg");
 }
 .cw-keypoint-blue.cw-keypoint-icon-community {
   background-image: url("../../../../../assets/images/icons/blue/community.svg");
 }
+.cw-keypoint-blue.cw-keypoint-icon-computer {
+  background-image: url("../../../../../assets/images/icons/blue/computer.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-crown {
+  background-image: url("../../../../../assets/images/icons/blue/crown.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-consultation {
+  background-image: url("../../../../../assets/images/icons/blue/consultation.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-date {
+  background-image: url("../../../../../assets/images/icons/blue/date.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-decline {
+  background-image: url("../../../../../assets/images/icons/blue/decline.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-doctoral_cap {
+  background-image: url("../../../../../assets/images/icons/blue/doctoral_cap.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-dropbox {
+  background-image: url("../../../../../assets/images/icons/blue/dropbox.svg");
+}
 .cw-keypoint-blue.cw-keypoint-icon-edit {
   background-image: url("../../../../../assets/images/icons/blue/edit.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-exclaim {
+  background-image: url("../../../../../assets/images/icons/blue/exclaim.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-favorite {
+  background-image: url("../../../../../assets/images/icons/blue/favorite.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-filter {
+  background-image: url("../../../../../assets/images/icons/blue/filter.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-globe {
+  background-image: url("../../../../../assets/images/icons/blue/globe.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-graph {
+  background-image: url("../../../../../assets/images/icons/blue/graph.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-group2 {
+  background-image: url("../../../../../assets/images/icons/blue/group2.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-group3 {
+  background-image: url("../../../../../assets/images/icons/blue/group3.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-group4 {
+  background-image: url("../../../../../assets/images/icons/blue/group4.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-headache {
+  background-image: url("../../../../../assets/images/icons/blue/headache.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-info {
+  background-image: url("../../../../../assets/images/icons/blue/info.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-install {
+  background-image: url("../../../../../assets/images/icons/blue/install.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-institute {
+  background-image: url("../../../../../assets/images/icons/blue/institute.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-key {
+  background-image: url("../../../../../assets/images/icons/blue/key.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-learnmodule {
+  background-image: url("../../../../../assets/images/icons/blue/learnmodule.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-literature {
+  background-image: url("../../../../../assets/images/icons/blue/literature.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-lock-locked {
+  background-image: url("../../../../../assets/images/icons/blue/lock-locked.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-lock-unlocked {
+  background-image: url("../../../../../assets/images/icons/blue/lock-unlocked.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-mail {
+  background-image: url("../../../../../assets/images/icons/blue/mail.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-medal {
+  background-image: url("../../../../../assets/images/icons/blue/medal.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-metro {
+  background-image: url("../../../../../assets/images/icons/blue/metro.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-notification {
+  background-image: url("../../../../../assets/images/icons/blue/notification.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-notification2 {
+  background-image: url("../../../../../assets/images/icons/blue/notification2.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-outer-space {
+  background-image: url("../../../../../assets/images/icons/blue/outer-space.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-phone {
+  background-image: url("../../../../../assets/images/icons/blue/phone.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-place {
+  background-image: url("../../../../../assets/images/icons/blue/place.svg");
 }
 .cw-keypoint-blue.cw-keypoint-icon-plugin {
   background-image: url("../../../../../assets/images/icons/blue/plugin.svg");
 }
-.cw-keypoint-blue.cw-keypoint-icon-graph {
-  background-image: url("../../../../../assets/images/icons/blue/graph.svg");
+.cw-keypoint-blue.cw-keypoint-icon-ranking {
+  background-image: url("../../../../../assets/images/icons/blue/ranking.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-remove {
+  background-image: url("../../../../../assets/images/icons/blue/remove.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-resources {
+  background-image: url("../../../../../assets/images/icons/blue/resources.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-roles {
+  background-image: url("../../../../../assets/images/icons/blue/roles.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-settings {
+  background-image: url("../../../../../assets/images/icons/blue/settings.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-span-empty {
+  background-image: url("../../../../../assets/images/icons/blue/span-empty.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-span-1quarter {
+  background-image: url("../../../../../assets/images/icons/blue/span-1quarter.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-span-2quarter {
+  background-image: url("../../../../../assets/images/icons/blue/span-2quarter.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-span-3quarter {
+  background-image: url("../../../../../assets/images/icons/blue/span-3quarter.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-span-full {
+  background-image: url("../../../../../assets/images/icons/blue/span-full.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-staple {
+  background-image: url("../../../../../assets/images/icons/blue/staple.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-star {
+  background-image: url("../../../../../assets/images/icons/blue/star.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-tools {
+  background-image: url("../../../../../assets/images/icons/blue/tools.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-topic {
+  background-image: url("../../../../../assets/images/icons/blue/topic.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-visibility-visible {
+  background-image: url("../../../../../assets/images/icons/blue/visibility-visible.svg");
+}
+.cw-keypoint-blue.cw-keypoint-icon-vote {
+  background-image: url("../../../../../assets/images/icons/blue/vote.svg");
 }
 .cw-keypoint-blue.cw-keypoint-icon-light-bulb {
   background-image: url("../images/icons/blue/light_bulb.svg");
@@ -7024,44 +7473,176 @@ section#courseware button.button.overlay-adder:hover {
 .cw-keypoint-green.cw-keypoint-icon-accept {
   background-image: url("../../../../../assets/images/icons/green/accept.svg");
 }
-.cw-keypoint-green.cw-keypoint-icon-decline {
-  background-image: url("../../../../../assets/images/icons/green/decline.svg");
-}
 .cw-keypoint-green.cw-keypoint-icon-add {
   background-image: url("../../../../../assets/images/icons/green/add.svg");
 }
-.cw-keypoint-green.cw-keypoint-icon-remove {
-  background-image: url("../../../../../assets/images/icons/green/remove.svg");
+.cw-keypoint-green.cw-keypoint-icon-admin {
+  background-image: url("../../../../../assets/images/icons/green/admin.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-billboard {
+  background-image: url("../../../../../assets/images/icons/green/billboard.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-campusnavi {
+  background-image: url("../../../../../assets/images/icons/green/campusnavi.svg");
 }
 .cw-keypoint-green.cw-keypoint-icon-chat2 {
   background-image: url("../../../../../assets/images/icons/green/chat2.svg");
 }
-.cw-keypoint-green.cw-keypoint-icon-exclaim {
-  background-image: url("../../../../../assets/images/icons/green/exclaim.svg");
-}
-.cw-keypoint-green.cw-keypoint-icon-info {
-  background-image: url("../../../../../assets/images/icons/green/info.svg");
-}
-.cw-keypoint-green.cw-keypoint-icon-visible {
-  background-image: url("../../../../../assets/images/icons/green/visible.svg");
-}
-.cw-keypoint-green.cw-keypoint-icon-date {
-  background-image: url("../../../../../assets/images/icons/green/date.svg");
-}
-.cw-keypoint-green.cw-keypoint-icon-doctoral_cap {
-  background-image: url("../../../../../assets/images/icons/green/doctoral_cap.svg");
+.cw-keypoint-green.cw-keypoint-icon-code {
+  background-image: url("../../../../../assets/images/icons/green/code.svg");
 }
 .cw-keypoint-green.cw-keypoint-icon-community {
   background-image: url("../../../../../assets/images/icons/green/community.svg");
 }
+.cw-keypoint-green.cw-keypoint-icon-computer {
+  background-image: url("../../../../../assets/images/icons/green/computer.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-crown {
+  background-image: url("../../../../../assets/images/icons/green/crown.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-consultation {
+  background-image: url("../../../../../assets/images/icons/green/consultation.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-date {
+  background-image: url("../../../../../assets/images/icons/green/date.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-decline {
+  background-image: url("../../../../../assets/images/icons/green/decline.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-doctoral_cap {
+  background-image: url("../../../../../assets/images/icons/green/doctoral_cap.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-dropbox {
+  background-image: url("../../../../../assets/images/icons/green/dropbox.svg");
+}
 .cw-keypoint-green.cw-keypoint-icon-edit {
   background-image: url("../../../../../assets/images/icons/green/edit.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-exclaim {
+  background-image: url("../../../../../assets/images/icons/green/exclaim.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-favorite {
+  background-image: url("../../../../../assets/images/icons/green/favorite.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-filter {
+  background-image: url("../../../../../assets/images/icons/green/filter.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-globe {
+  background-image: url("../../../../../assets/images/icons/green/globe.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-graph {
+  background-image: url("../../../../../assets/images/icons/green/graph.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-group2 {
+  background-image: url("../../../../../assets/images/icons/green/group2.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-group3 {
+  background-image: url("../../../../../assets/images/icons/green/group3.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-group4 {
+  background-image: url("../../../../../assets/images/icons/green/group4.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-headache {
+  background-image: url("../../../../../assets/images/icons/green/headache.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-info {
+  background-image: url("../../../../../assets/images/icons/green/info.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-install {
+  background-image: url("../../../../../assets/images/icons/green/install.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-institute {
+  background-image: url("../../../../../assets/images/icons/green/institute.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-key {
+  background-image: url("../../../../../assets/images/icons/green/key.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-learnmodule {
+  background-image: url("../../../../../assets/images/icons/green/learnmodule.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-literature {
+  background-image: url("../../../../../assets/images/icons/green/literature.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-lock-locked {
+  background-image: url("../../../../../assets/images/icons/green/lock-locked.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-lock-unlocked {
+  background-image: url("../../../../../assets/images/icons/green/lock-unlocked.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-mail {
+  background-image: url("../../../../../assets/images/icons/green/mail.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-medal {
+  background-image: url("../../../../../assets/images/icons/green/medal.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-metro {
+  background-image: url("../../../../../assets/images/icons/green/metro.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-notification {
+  background-image: url("../../../../../assets/images/icons/green/notification.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-notification2 {
+  background-image: url("../../../../../assets/images/icons/green/notification2.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-outer-space {
+  background-image: url("../../../../../assets/images/icons/green/outer-space.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-phone {
+  background-image: url("../../../../../assets/images/icons/green/phone.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-place {
+  background-image: url("../../../../../assets/images/icons/green/place.svg");
 }
 .cw-keypoint-green.cw-keypoint-icon-plugin {
   background-image: url("../../../../../assets/images/icons/green/plugin.svg");
 }
-.cw-keypoint-green.cw-keypoint-icon-graph {
-  background-image: url("../../../../../assets/images/icons/green/graph.svg");
+.cw-keypoint-green.cw-keypoint-icon-ranking {
+  background-image: url("../../../../../assets/images/icons/green/ranking.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-remove {
+  background-image: url("../../../../../assets/images/icons/green/remove.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-resources {
+  background-image: url("../../../../../assets/images/icons/green/resources.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-roles {
+  background-image: url("../../../../../assets/images/icons/green/roles.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-settings {
+  background-image: url("../../../../../assets/images/icons/green/settings.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-span-empty {
+  background-image: url("../../../../../assets/images/icons/green/span-empty.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-span-1quarter {
+  background-image: url("../../../../../assets/images/icons/green/span-1quarter.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-span-2quarter {
+  background-image: url("../../../../../assets/images/icons/green/span-2quarter.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-span-3quarter {
+  background-image: url("../../../../../assets/images/icons/green/span-3quarter.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-span-full {
+  background-image: url("../../../../../assets/images/icons/green/span-full.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-staple {
+  background-image: url("../../../../../assets/images/icons/green/staple.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-star {
+  background-image: url("../../../../../assets/images/icons/green/star.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-tools {
+  background-image: url("../../../../../assets/images/icons/green/tools.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-topic {
+  background-image: url("../../../../../assets/images/icons/green/topic.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-visibility-visible {
+  background-image: url("../../../../../assets/images/icons/green/visibility-visible.svg");
+}
+.cw-keypoint-green.cw-keypoint-icon-vote {
+  background-image: url("../../../../../assets/images/icons/green/vote.svg");
 }
 .cw-keypoint-green.cw-keypoint-icon-light-bulb {
   background-image: url("../images/icons/green/light_bulb.svg");
@@ -7072,44 +7653,176 @@ section#courseware button.button.overlay-adder:hover {
 .cw-keypoint-grey.cw-keypoint-icon-accept {
   background-image: url("../../../../../assets/images/icons/grey/accept.svg");
 }
-.cw-keypoint-grey.cw-keypoint-icon-decline {
-  background-image: url("../../../../../assets/images/icons/grey/decline.svg");
-}
 .cw-keypoint-grey.cw-keypoint-icon-add {
   background-image: url("../../../../../assets/images/icons/grey/add.svg");
 }
-.cw-keypoint-grey.cw-keypoint-icon-remove {
-  background-image: url("../../../../../assets/images/icons/grey/remove.svg");
+.cw-keypoint-grey.cw-keypoint-icon-admin {
+  background-image: url("../../../../../assets/images/icons/grey/admin.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-billboard {
+  background-image: url("../../../../../assets/images/icons/grey/billboard.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-campusnavi {
+  background-image: url("../../../../../assets/images/icons/grey/campusnavi.svg");
 }
 .cw-keypoint-grey.cw-keypoint-icon-chat2 {
   background-image: url("../../../../../assets/images/icons/grey/chat2.svg");
 }
-.cw-keypoint-grey.cw-keypoint-icon-exclaim {
-  background-image: url("../../../../../assets/images/icons/grey/exclaim.svg");
-}
-.cw-keypoint-grey.cw-keypoint-icon-info {
-  background-image: url("../../../../../assets/images/icons/grey/info.svg");
-}
-.cw-keypoint-grey.cw-keypoint-icon-visible {
-  background-image: url("../../../../../assets/images/icons/grey/visible.svg");
-}
-.cw-keypoint-grey.cw-keypoint-icon-date {
-  background-image: url("../../../../../assets/images/icons/grey/date.svg");
-}
-.cw-keypoint-grey.cw-keypoint-icon-doctoral_cap {
-  background-image: url("../../../../../assets/images/icons/grey/doctoral_cap.svg");
+.cw-keypoint-grey.cw-keypoint-icon-code {
+  background-image: url("../../../../../assets/images/icons/grey/code.svg");
 }
 .cw-keypoint-grey.cw-keypoint-icon-community {
   background-image: url("../../../../../assets/images/icons/grey/community.svg");
 }
+.cw-keypoint-grey.cw-keypoint-icon-computer {
+  background-image: url("../../../../../assets/images/icons/grey/computer.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-crown {
+  background-image: url("../../../../../assets/images/icons/grey/crown.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-consultation {
+  background-image: url("../../../../../assets/images/icons/grey/consultation.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-date {
+  background-image: url("../../../../../assets/images/icons/grey/date.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-decline {
+  background-image: url("../../../../../assets/images/icons/grey/decline.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-doctoral_cap {
+  background-image: url("../../../../../assets/images/icons/grey/doctoral_cap.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-dropbox {
+  background-image: url("../../../../../assets/images/icons/grey/dropbox.svg");
+}
 .cw-keypoint-grey.cw-keypoint-icon-edit {
   background-image: url("../../../../../assets/images/icons/grey/edit.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-exclaim {
+  background-image: url("../../../../../assets/images/icons/grey/exclaim.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-favorite {
+  background-image: url("../../../../../assets/images/icons/grey/favorite.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-filter {
+  background-image: url("../../../../../assets/images/icons/grey/filter.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-globe {
+  background-image: url("../../../../../assets/images/icons/grey/globe.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-graph {
+  background-image: url("../../../../../assets/images/icons/grey/graph.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-group2 {
+  background-image: url("../../../../../assets/images/icons/grey/group2.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-group3 {
+  background-image: url("../../../../../assets/images/icons/grey/group3.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-group4 {
+  background-image: url("../../../../../assets/images/icons/grey/group4.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-headache {
+  background-image: url("../../../../../assets/images/icons/grey/headache.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-info {
+  background-image: url("../../../../../assets/images/icons/grey/info.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-install {
+  background-image: url("../../../../../assets/images/icons/grey/install.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-institute {
+  background-image: url("../../../../../assets/images/icons/grey/institute.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-key {
+  background-image: url("../../../../../assets/images/icons/grey/key.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-learnmodule {
+  background-image: url("../../../../../assets/images/icons/grey/learnmodule.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-literature {
+  background-image: url("../../../../../assets/images/icons/grey/literature.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-lock-locked {
+  background-image: url("../../../../../assets/images/icons/grey/lock-locked.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-lock-unlocked {
+  background-image: url("../../../../../assets/images/icons/grey/lock-unlocked.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-mail {
+  background-image: url("../../../../../assets/images/icons/grey/mail.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-medal {
+  background-image: url("../../../../../assets/images/icons/grey/medal.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-metro {
+  background-image: url("../../../../../assets/images/icons/grey/metro.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-notification {
+  background-image: url("../../../../../assets/images/icons/grey/notification.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-notification2 {
+  background-image: url("../../../../../assets/images/icons/grey/notification2.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-outer-space {
+  background-image: url("../../../../../assets/images/icons/grey/outer-space.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-phone {
+  background-image: url("../../../../../assets/images/icons/grey/phone.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-place {
+  background-image: url("../../../../../assets/images/icons/grey/place.svg");
 }
 .cw-keypoint-grey.cw-keypoint-icon-plugin {
   background-image: url("../../../../../assets/images/icons/grey/plugin.svg");
 }
-.cw-keypoint-grey.cw-keypoint-icon-graph {
-  background-image: url("../../../../../assets/images/icons/grey/graph.svg");
+.cw-keypoint-grey.cw-keypoint-icon-ranking {
+  background-image: url("../../../../../assets/images/icons/grey/ranking.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-remove {
+  background-image: url("../../../../../assets/images/icons/grey/remove.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-resources {
+  background-image: url("../../../../../assets/images/icons/grey/resources.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-roles {
+  background-image: url("../../../../../assets/images/icons/grey/roles.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-settings {
+  background-image: url("../../../../../assets/images/icons/grey/settings.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-span-empty {
+  background-image: url("../../../../../assets/images/icons/grey/span-empty.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-span-1quarter {
+  background-image: url("../../../../../assets/images/icons/grey/span-1quarter.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-span-2quarter {
+  background-image: url("../../../../../assets/images/icons/grey/span-2quarter.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-span-3quarter {
+  background-image: url("../../../../../assets/images/icons/grey/span-3quarter.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-span-full {
+  background-image: url("../../../../../assets/images/icons/grey/span-full.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-staple {
+  background-image: url("../../../../../assets/images/icons/grey/staple.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-star {
+  background-image: url("../../../../../assets/images/icons/grey/star.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-tools {
+  background-image: url("../../../../../assets/images/icons/grey/tools.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-topic {
+  background-image: url("../../../../../assets/images/icons/grey/topic.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-visibility-visible {
+  background-image: url("../../../../../assets/images/icons/grey/visibility-visible.svg");
+}
+.cw-keypoint-grey.cw-keypoint-icon-vote {
+  background-image: url("../../../../../assets/images/icons/grey/vote.svg");
 }
 .cw-keypoint-grey.cw-keypoint-icon-light-bulb {
   background-image: url("../images/icons/grey/light_bulb.svg");
@@ -7120,44 +7833,176 @@ section#courseware button.button.overlay-adder:hover {
 .cw-keypoint-yellow.cw-keypoint-icon-accept {
   background-image: url("../../../../../assets/images/icons/yellow/accept.svg");
 }
-.cw-keypoint-yellow.cw-keypoint-icon-decline {
-  background-image: url("../../../../../assets/images/icons/yellow/decline.svg");
-}
 .cw-keypoint-yellow.cw-keypoint-icon-add {
   background-image: url("../../../../../assets/images/icons/yellow/add.svg");
 }
-.cw-keypoint-yellow.cw-keypoint-icon-remove {
-  background-image: url("../../../../../assets/images/icons/yellow/remove.svg");
+.cw-keypoint-yellow.cw-keypoint-icon-admin {
+  background-image: url("../../../../../assets/images/icons/yellow/admin.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-billboard {
+  background-image: url("../../../../../assets/images/icons/yellow/billboard.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-campusnavi {
+  background-image: url("../../../../../assets/images/icons/yellow/campusnavi.svg");
 }
 .cw-keypoint-yellow.cw-keypoint-icon-chat2 {
   background-image: url("../../../../../assets/images/icons/yellow/chat2.svg");
 }
-.cw-keypoint-yellow.cw-keypoint-icon-exclaim {
-  background-image: url("../../../../../assets/images/icons/yellow/exclaim.svg");
-}
-.cw-keypoint-yellow.cw-keypoint-icon-info {
-  background-image: url("../../../../../assets/images/icons/yellow/info.svg");
-}
-.cw-keypoint-yellow.cw-keypoint-icon-visible {
-  background-image: url("../../../../../assets/images/icons/yellow/visible.svg");
-}
-.cw-keypoint-yellow.cw-keypoint-icon-date {
-  background-image: url("../../../../../assets/images/icons/yellow/date.svg");
-}
-.cw-keypoint-yellow.cw-keypoint-icon-doctoral_cap {
-  background-image: url("../../../../../assets/images/icons/yellow/doctoral_cap.svg");
+.cw-keypoint-yellow.cw-keypoint-icon-code {
+  background-image: url("../../../../../assets/images/icons/yellow/code.svg");
 }
 .cw-keypoint-yellow.cw-keypoint-icon-community {
   background-image: url("../../../../../assets/images/icons/yellow/community.svg");
 }
+.cw-keypoint-yellow.cw-keypoint-icon-computer {
+  background-image: url("../../../../../assets/images/icons/yellow/computer.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-crown {
+  background-image: url("../../../../../assets/images/icons/yellow/crown.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-consultation {
+  background-image: url("../../../../../assets/images/icons/yellow/consultation.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-date {
+  background-image: url("../../../../../assets/images/icons/yellow/date.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-decline {
+  background-image: url("../../../../../assets/images/icons/yellow/decline.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-doctoral_cap {
+  background-image: url("../../../../../assets/images/icons/yellow/doctoral_cap.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-dropbox {
+  background-image: url("../../../../../assets/images/icons/yellow/dropbox.svg");
+}
 .cw-keypoint-yellow.cw-keypoint-icon-edit {
   background-image: url("../../../../../assets/images/icons/yellow/edit.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-exclaim {
+  background-image: url("../../../../../assets/images/icons/yellow/exclaim.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-favorite {
+  background-image: url("../../../../../assets/images/icons/yellow/favorite.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-filter {
+  background-image: url("../../../../../assets/images/icons/yellow/filter.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-globe {
+  background-image: url("../../../../../assets/images/icons/yellow/globe.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-graph {
+  background-image: url("../../../../../assets/images/icons/yellow/graph.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-group2 {
+  background-image: url("../../../../../assets/images/icons/yellow/group2.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-group3 {
+  background-image: url("../../../../../assets/images/icons/yellow/group3.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-group4 {
+  background-image: url("../../../../../assets/images/icons/yellow/group4.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-headache {
+  background-image: url("../../../../../assets/images/icons/yellow/headache.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-info {
+  background-image: url("../../../../../assets/images/icons/yellow/info.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-install {
+  background-image: url("../../../../../assets/images/icons/yellow/install.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-institute {
+  background-image: url("../../../../../assets/images/icons/yellow/institute.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-key {
+  background-image: url("../../../../../assets/images/icons/yellow/key.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-learnmodule {
+  background-image: url("../../../../../assets/images/icons/yellow/learnmodule.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-literature {
+  background-image: url("../../../../../assets/images/icons/yellow/literature.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-lock-locked {
+  background-image: url("../../../../../assets/images/icons/yellow/lock-locked.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-lock-unlocked {
+  background-image: url("../../../../../assets/images/icons/yellow/lock-unlocked.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-mail {
+  background-image: url("../../../../../assets/images/icons/yellow/mail.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-medal {
+  background-image: url("../../../../../assets/images/icons/yellow/medal.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-metro {
+  background-image: url("../../../../../assets/images/icons/yellow/metro.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-notification {
+  background-image: url("../../../../../assets/images/icons/yellow/notification.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-notification2 {
+  background-image: url("../../../../../assets/images/icons/yellow/notification2.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-outer-space {
+  background-image: url("../../../../../assets/images/icons/yellow/outer-space.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-phone {
+  background-image: url("../../../../../assets/images/icons/yellow/phone.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-place {
+  background-image: url("../../../../../assets/images/icons/yellow/place.svg");
 }
 .cw-keypoint-yellow.cw-keypoint-icon-plugin {
   background-image: url("../../../../../assets/images/icons/yellow/plugin.svg");
 }
-.cw-keypoint-yellow.cw-keypoint-icon-graph {
-  background-image: url("../../../../../assets/images/icons/yellow/graph.svg");
+.cw-keypoint-yellow.cw-keypoint-icon-ranking {
+  background-image: url("../../../../../assets/images/icons/yellow/ranking.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-remove {
+  background-image: url("../../../../../assets/images/icons/yellow/remove.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-resources {
+  background-image: url("../../../../../assets/images/icons/yellow/resources.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-roles {
+  background-image: url("../../../../../assets/images/icons/yellow/roles.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-settings {
+  background-image: url("../../../../../assets/images/icons/yellow/settings.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-span-empty {
+  background-image: url("../../../../../assets/images/icons/yellow/span-empty.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-span-1quarter {
+  background-image: url("../../../../../assets/images/icons/yellow/span-1quarter.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-span-2quarter {
+  background-image: url("../../../../../assets/images/icons/yellow/span-2quarter.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-span-3quarter {
+  background-image: url("../../../../../assets/images/icons/yellow/span-3quarter.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-span-full {
+  background-image: url("../../../../../assets/images/icons/yellow/span-full.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-staple {
+  background-image: url("../../../../../assets/images/icons/yellow/staple.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-star {
+  background-image: url("../../../../../assets/images/icons/yellow/star.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-tools {
+  background-image: url("../../../../../assets/images/icons/yellow/tools.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-topic {
+  background-image: url("../../../../../assets/images/icons/yellow/topic.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-visibility-visible {
+  background-image: url("../../../../../assets/images/icons/yellow/visibility-visible.svg");
+}
+.cw-keypoint-yellow.cw-keypoint-icon-vote {
+  background-image: url("../../../../../assets/images/icons/yellow/vote.svg");
 }
 .cw-keypoint-yellow.cw-keypoint-icon-light-bulb {
   background-image: url("../images/icons/yellow/light_bulb.svg");
