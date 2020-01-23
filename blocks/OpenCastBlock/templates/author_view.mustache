@@ -1,42 +1,54 @@
-{{#opencast}}
-    <input type="hidden" class="cw-opencast-stored-id" value="{{opencastid}}">
-    <input type="hidden" class="cw-opencast-stored-player" value="{{useplayer}}">
-    
-    <label for="cw-opencast-content">{{#i18n}}Opencast Video{{/i18n}}:</label>
-    
-    <select name="cw-opencast-content" class="cw-opencast-content">
-        {{#episodes}}
-            <option 
-                data-urlmp4="{{url_mp4}}" 
-                data-urlopencasttheodul="{{url_opencast_theodul}}" 
-                data-urlopencastpaella="{{url_opencast_paella}}"
-                data-opencastid="{{id}}">
-                {{title}}
-            </option>
-        {{/episodes}}
-    </select>
-    <br>
-    <label for="cw-opencast-useocplayer">{{#i18n}}Opencast Player{{/i18n}}</label>
-    <div class="cw-opencast-useocplayer-wrapper">
-        <input type="radio" class="cw-opencast-useocplayer" name="cw-opencast-useocplayer" value="theodul"> 
-        <span class="bold">Theodul</span> <span>- einfacher Player der entweder Video 1 oder Video 2 abspielt</span>
+{{#opencast_installed}}
+    {{#opencast_active}}
+        <input type="hidden" class="cw-opencast-stored-id" value="{{opencastid}}">
+        <input type="hidden" class="cw-opencast-stored-player" value="{{useplayer}}">
+
+        <label for="cw-opencast-content">{{#i18n}}Opencast Video{{/i18n}}:</label>
+
+        <select name="cw-opencast-content" class="cw-opencast-content">
+            {{#episodes}}
+                <option
+                    data-urlmp4="{{url_mp4}}"
+                    data-urlopencasttheodul="{{url_opencast_theodul}}"
+                    data-urlopencastpaella="{{url_opencast_paella}}"
+                    data-opencastid="{{id}}">
+                    {{title}}
+                </option>
+            {{/episodes}}
+        </select>
         <br>
-        <input type="radio" class="cw-opencast-useocplayer" name="cw-opencast-useocplayer" value="paella">
-        <span class="bold">Paella</span> <span>- umfangreicher Player der beide Videos parallel abspielt.</span>
-        <br>
-        <input type="radio" class="cw-opencast-useocplayer" name="cw-opencast-useocplayer" value="false"> 
-        <span class="bold">Nicht verwenden</span> <span>- Video 1  wird mit dem Videoplayer des Browsers abgespielt</span>
+        <label for="cw-opencast-useocplayer">{{#i18n}}Opencast Player{{/i18n}}</label>
+        <div class="cw-opencast-useocplayer-wrapper">
+            <input type="radio" class="cw-opencast-useocplayer" name="cw-opencast-useocplayer" value="theodul">
+            <span class="bold">Theodul</span> <span>- einfacher Player der entweder Video 1 oder Video 2 abspielt</span>
+            <br>
+            <input type="radio" class="cw-opencast-useocplayer" name="cw-opencast-useocplayer" value="paella">
+            <span class="bold">Paella</span> <span>- umfangreicher Player der beide Videos parallel abspielt.</span>
+            <!--
+            <br>
+            <input type="radio" class="cw-opencast-useocplayer" name="cw-opencast-useocplayer" value="false">
+            <span class="bold">Nicht verwenden</span> <span>- Video 1  wird mit dem Videoplayer des Browsers abgespielt</span>
+            -->
+        </div>
+        <div class="cw-button-box">
+            <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
+            <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
+        </div>
+    {{/opencast_active}}
+    {{^opencast_active}}
+        <div class="messagebox messagebox_info">
+        {{#i18n}}Das Opencast Plugin ist in dieser Veranstaltung nicht aktiviert. Sie können das Plugin über den Navigationspunkt &ldquor;mehr&hellip;&rdquo; aktivieren.{{/i18n}}
     </div>
     <div class="cw-button-box">
-        <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>
         <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
     </div>
-{{/opencast}}
-{{^opencast}}
+    {{/opencast_active}}
+{{/opencast_installed}}
+{{^opencast_installed}}
     <div class="messagebox messagebox_info">
         {{#i18n}}Das Opencast Plugin ist nicht installiert. Bitte wenden Sie sich an Ihren Administrator.{{/i18n}}
     </div>
     <div class="cw-button-box">
         <button name="cancel" class="button">{{#i18n}}Abbrechen{{/i18n}}</button>
     </div>
-{{/opencast}}
+{{/opencast_installed}}
