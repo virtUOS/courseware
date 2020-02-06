@@ -74,6 +74,8 @@ export default AuthorView.extend({
         let $opencast_content = {};
         $opencast_content.id = this.$(".cw-opencast-content option:selected").attr('data-opencastid');
         $opencast_content.useplayer = this.$('.cw-opencast-useocplayer:checked').val();
+        $opencast_content.title = this.$(".cw-opencast-content option:selected").attr('data-episodetitle');
+
         switch($opencast_content.useplayer) {
             case 'theodul':
             default:

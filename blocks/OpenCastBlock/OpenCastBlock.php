@@ -152,8 +152,8 @@ class OpenCastBlock extends Block
 
     public function preview_view()
     {
-
-        return;
+        $content = json_decode($this->opencast_content);
+        return array('content' => ($content->title ?: 'Video-ID: ' . $content->id));
     }
 
     private function getAttrArray()
