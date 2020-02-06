@@ -84,7 +84,7 @@ class OpenCastBlock extends Block
                 'url_opencast' => $url_opencast,
                 'useplayer'    => $useplayer,
                 'url_isset'    =>  ($url_opencast != ''),
-                'lti_data'     => json_encode($lti_data),
+                'lti_data'     => $lti_data,
                 'search_url'   => $lti_url
             )
         );
