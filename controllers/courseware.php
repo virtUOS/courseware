@@ -57,7 +57,7 @@ class CoursewareController extends CoursewareStudipController
             return $this->redirect('courseware/settings');
         }
     }
-    
+
     public function news_action()
     {
         PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
@@ -72,7 +72,7 @@ class CoursewareController extends CoursewareStudipController
                 seminar_id = :cid
             AND
                 chdate >= :last_visit
-            AND 
+            AND
 				type NOT IN ('Courseware', 'Chapter', 'Subchapter', 'Section')
         ");
         $stmt->bindParam(":cid", $this->container['cid']);
@@ -86,7 +86,7 @@ class CoursewareController extends CoursewareStudipController
         if ($plugin_manager->getPluginInfo('VipsPlugin') == null){
             $vips = false;
         }
-        if($plugin_manager->getPlugin('VipsPlugin')){ 
+        if($plugin_manager->getPlugin('VipsPlugin')){
             $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
             if (version_compare('1.3',$version) > 0) {
                 $vips = false;
@@ -99,20 +99,20 @@ class CoursewareController extends CoursewareStudipController
             // getting all tests
             $db = DBManager::get();
             $stmt = $db->prepare("
-                SELECT 
-                    json_data 
-                FROM 
+                SELECT
+                    json_data
+                FROM
                     mooc_blocks
-                JOIN 
-                    mooc_fields 
-                ON 
-                    mooc_blocks.id = mooc_fields.block_id 
-                WHERE 
+                JOIN
+                    mooc_fields
+                ON
+                    mooc_blocks.id = mooc_fields.block_id
+                WHERE
                     mooc_blocks.type = 'TestBlock'
                 AND
                     mooc_blocks.seminar_id = :cid
-                AND 
-                    mooc_fields.name = 'test_id' 
+                AND
+                    mooc_fields.name = 'test_id'
             ");
             $stmt->bindParam(":cid", $this->container['cid']);
             $stmt->execute();
@@ -166,7 +166,7 @@ class CoursewareController extends CoursewareStudipController
             $subchapter = $block->parent->parent->title;
             $section = $block->parent->title;
             if (!$block->isVisible()) {continue;}
-            $class_name = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
+            $class_name = 'Mooc\UI\\'.$block->type.'\\'.$block->type;
             $name_constant = $class_name.'::NAME';
 
             if (defined($name_constant)) {
@@ -176,13 +176,13 @@ class CoursewareController extends CoursewareStudipController
             }
             $ui_block = $this->plugin->getBlockFactory()->makeBlock($block);
             $this->new_content[$chapter][$subchapter][$section][$block->id] = array(
-                'title' => $title, 
+                'title' => $title,
                 'type' => $block->type,
                 'id' => $block->id,
-                'ui_block' => $ui_block 
+                'ui_block' => $ui_block
             );
         }
-        
+
         return true;
     }
 
@@ -196,7 +196,26 @@ class CoursewareController extends CoursewareStudipController
     {
         $templates = array();
 
-        foreach (glob($this->plugin->getPluginPath() . '/blocks/*/templates/*.mustache') as $file) {
+        // add templates and load less files from block plugins
+        $plugin_template_files = array();
+
+        foreach (\Courseware::$registered_blocks as $path) {
+            $plugin_template_files = array_merge(
+                $plugin_template_files,
+                glob($path . '/*/templates/*.mustache')
+            );
+
+            foreach (glob($path . '/*/css/*.less') as $source) {
+                PageLayout::addHeadElement('style',
+                    ['type' => 'text/less'], file_get_contents($source));
+            }
+        }
+
+        // add base templates, integrating plugin templates
+        foreach (array_merge(
+            glob($this->plugin->getPluginPath() . '/blocks/*/templates/*.mustache'),
+            $plugin_template_files
+        ) as $file) {
             preg_match('|blocks/([^/]+)/templates/([^/]+).mustache$|', $file, $matches);
 
             list(, $block, $name) = $matches;
@@ -263,7 +282,7 @@ class CoursewareController extends CoursewareStudipController
         //   Scrollytelling   //
         ////////////////////////
         $this->storeScrollytelling(isset($courseware_settings['scrollytelling']) ? true : false);
-        
+
         ////////////////////////
         // EDITING PERMISSION //
         ////////////////////////
@@ -320,7 +339,7 @@ class CoursewareController extends CoursewareStudipController
             // TODO: send a message back
         }
     }
-    
+
     private function storeVipsTabVisible($active)
     {
         if (!$this->courseware_block->setVipsTabVisible($active)) {
