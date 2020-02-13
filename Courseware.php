@@ -542,8 +542,13 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         return $exec;
     }
 
-    public static function addBlockPath($path_to_block)
+    public static function addBlock($plugin_name, $rel_path)
     {
-        self::$registered_blocks[] = $path_to_block;
+        $path = PluginEngine::getPlugin($plugin_name)->getPluginPath();
+
+        self::$registered_blocks[] = [
+            'plugin'   => $plugin_name,
+            'path'     => $path .'/'. $rel_path,
+        ];
     }
 }
