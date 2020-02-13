@@ -46,11 +46,11 @@ class BlockFactory {
         if (!isset($classes)) {
             $classes = array_map("basename", glob($this->getPluginDir() . '/blocks/*'));
 
-            foreach (\Courseware::$registered_blocks as $path) {
-                $classes = array_merge($classes,  array_map("basename", glob($path . '/*')));
+            foreach (\Courseware::$registered_blocks as $block) {
+                $classes[] = basename($block['path']);
 
                 // load classes in blocks
-                foreach (glob($path . '/*/*.php') as $class) {
+                foreach (glob($block['path'] . '/*.php') as $class) {
                     require_once($class);
                 }
             }

@@ -199,16 +199,26 @@ class CoursewareController extends CoursewareStudipController
         // add templates and load less files from block plugins
         $plugin_template_files = array();
 
-        foreach (\Courseware::$registered_blocks as $path) {
+        foreach (\Courseware::$registered_blocks as $block) {
             $plugin_template_files = array_merge(
                 $plugin_template_files,
-                glob($path . '/*/templates/*.mustache')
+                glob($block['path'] . '/templates/*.mustache')
             );
 
-            foreach (glob($path . '/*/css/*.less') as $source) {
-                PageLayout::addHeadElement('style',
-                    ['type' => 'text/less'], file_get_contents($source));
+            // add stylesheets for block to page
+            foreach (glob($block['path'] . '/css/*.less') as $source) {
+                PageLayout::addHeadElement('link', [
+                    'rel'  => 'stylesheet/less',
+                    'type' => 'text/css',
+                    'href' => UrlHelper::getURL($source,  ['cid' => null])
+                ]);
             }
+
+            // add base js for block to page
+            PageLayout::addHeadElement('script', [
+                'src'  => URLHelper::getUrl($block['path'] .'/js/'. basename($block['path']) .'.js'),
+                'type' => 'module'
+            ], '');
         }
 
         // add base templates, integrating plugin templates
