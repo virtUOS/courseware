@@ -206,9 +206,9 @@ class CoursewareController extends CoursewareStudipController
             );
 
             // add stylesheets for block to page
-            foreach (glob($block['path'] . '/css/*.less') as $source) {
+            foreach (glob($block['path'] . '/css/*.css') as $source) {
                 PageLayout::addHeadElement('link', [
-                    'rel'  => 'stylesheet/less',
+                    'rel'  => 'stylesheet',
                     'type' => 'text/css',
                     'href' => UrlHelper::getURL($source,  ['cid' => null])
                 ]);

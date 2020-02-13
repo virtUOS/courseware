@@ -27,6 +27,8 @@ class BlockFactory {
      */
     public function makeBlock($sorm_block)
     {
+        $this->getBlockClasses();
+
         $class = 'Mooc\\UI\\'.$sorm_block->type.'\\'.$sorm_block->type;
 
         // there is no class describing a UI for that kind of block
@@ -45,18 +47,20 @@ class BlockFactory {
 
         if (!isset($classes)) {
             $classes = array_map("basename", glob($this->getPluginDir() . '/blocks/*'));
+        }
 
-            foreach (\Courseware::$registered_blocks as $block) {
-                $classes[] = basename($block['path']);
+        $dyn_classes = [];
 
-                // load classes in blocks
-                foreach (glob($block['path'] . '/*.php') as $class) {
-                    require_once($class);
-                }
+        foreach (\Courseware::$registered_blocks as $block) {
+            $dyn_classes[] = basename($block['path']);
+
+            // load classes in blocks
+            foreach (glob($block['path'] . '/*.php') as $class) {
+                require_once($class);
             }
         }
 
-        return $classes;
+        return array_merge($classes, $dyn_classes);
     }
 
     // TODO
