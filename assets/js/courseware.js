@@ -3,6 +3,9 @@ import $ from 'jquery'
 import Backbone from 'backbone'
 import helper from './url'
 import BlockModel from './block_model'
+import block_types from './block_types';
+import AuthorView from 'js/author_view'
+import StudentView from 'js/student_view'
 
 import '../less/courseware.less'
 
@@ -31,7 +34,6 @@ import 'ImageMapBlock/js/ImageMapBlock'
 import 'InteractiveVideoBlock/js/InteractiveVideoBlock'
 import 'KeyPointBlock/js/KeyPointBlock'
 import 'LinkBlock/js/LinkBlock'
-import 'OpenCastBlock/js/OpenCastBlock'
 import 'PdfBlock/js/PdfBlock'
 import 'PostBlock/js/PostBlock'
 import 'ScrollyBlock/js/ScrollyBlock'
@@ -103,3 +105,5 @@ function patchBackbone() {
     return (xhr !== false) ? xhr : Promise.reject(new Error('ModelError'));
   };
 }
+
+export {$, Backbone, AuthorView, StudentView, helper, block_types };
