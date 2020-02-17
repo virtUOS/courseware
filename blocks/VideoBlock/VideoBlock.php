@@ -56,6 +56,7 @@ class VideoBlock extends Block
             }
 
         }
+        $array['isAuthor'] = $this->getUpdateAuthorization();
 
         return $array;
     }

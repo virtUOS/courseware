@@ -17,28 +17,32 @@ class DialogCardsBlock extends Block
     public function student_view()
     {
         $this->setGrade(1.0);
-        $cards = json_decode($this->dialogcards_content, true);
-        foreach($cards as &$card) {
-            if ($card['front_img_file_id']) {
-                $file_front = \FileRef::find($card['front_img_file_id']);
-                if ($file_front) {
-                    $card['front_img'] = ($file_front->terms_of_use->fileIsDownloadable($file_front, false)) ? $file_front->getDownloadURL() : '';
-                } else {
-                    $card['front_img'] = '';
+        $cards = [];
+        if(!empty($this->dialogcards_content)) {
+            $cards = json_decode($this->dialogcards_content, true);
+            foreach($cards as &$card) {
+                if ($card['front_img_file_id']) {
+                    $file_front = \FileRef::find($card['front_img_file_id']);
+                    if ($file_front) {
+                        $card['front_img'] = ($file_front->terms_of_use->fileIsDownloadable($file_front, false)) ? $file_front->getDownloadURL() : '';
+                    } else {
+                        $card['front_img'] = '';
+                    }
                 }
-            }
-            if ($card['back_img_file_id']) {
-                $file_back = \FileRef::find($card['back_img_file_id']);
-                if ($file_back) {
-                    $card['back_img'] = ($file_back->terms_of_use->fileIsDownloadable($file_back, false)) ? $file_back->getDownloadURL() : '';
-                } else {
-                    $card['back_img'] = '';
+                if ($card['back_img_file_id']) {
+                    $file_back = \FileRef::find($card['back_img_file_id']);
+                    if ($file_back) {
+                        $card['back_img'] = ($file_back->terms_of_use->fileIsDownloadable($file_back, false)) ? $file_back->getDownloadURL() : '';
+                    } else {
+                        $card['back_img'] = '';
+                    }
                 }
             }
         }
 
         return array_merge($this->getAttrArray(), array(
-            'cards' => $cards
+            'cards' => $cards,
+            'isAuthor' => $this->getUpdateAuthorization()
         ));
     }
 

@@ -44,9 +44,15 @@
     <button class="cw-canvasblock-tool cw-canvasblock-tool-text" value="text" data-title="{{#i18n}}Textwerkzeug{{/i18n}}">T</button>
     </div>
 </div>
+
 <img src="{{image_url}}" class="cw-canvasblock-original-img">
 <canvas class="cw-canvasblock-canvas"></canvas>
 
+<div class="cw-canvasblock-hints">
+    <div class="messagebox messagebox_info cw-canvasblock-text-info">
+        {{#i18n}}Texteingabe mit Enter-Taste bestätigen{{/i18n}}
+    </div>
+</div>
 {{/inactive}}
 {{#inactive}}
     <div class="messagebox messagebox_info">

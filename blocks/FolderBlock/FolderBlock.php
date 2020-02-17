@@ -26,6 +26,7 @@ class FolderBlock extends Block
         }
 
         if ($folder) {
+            $folder_available = true;
             $folder_hidden = false;
             $folder_homework = false;
             $folder_group = false;
@@ -65,7 +66,6 @@ class FolderBlock extends Block
 
             if($typed_folder->isVisible($user->id)) {
                 $viewable = true;
-                $folder_available = true;
                 $folder_name = $folder->name;
 
                 if($typed_folder->isReadable($user->id)) {
@@ -92,6 +92,7 @@ class FolderBlock extends Block
             $files = array();
             $allow_upload = false;
             $homework_files = false;
+            $no_folder = true;
         }
 
         return array_merge($this->getAttrArray(), array(
@@ -108,7 +109,9 @@ class FolderBlock extends Block
             'folder_group' => $folder_group,
             'folder_timed' => $folder_timed,
             'user_is_authorized' => $user_is_authorized,
-            'file_counter' => sizeOf($files)
+            'file_counter' => sizeOf($files),
+            'isAuthor' => $this->getUpdateAuthorization(),
+            'no_folder' => $no_folder
         ));
     }
 

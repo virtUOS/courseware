@@ -21,7 +21,6 @@ class AssortBlock extends Block
             return array('inactive' => true);
         }
         $this->setGrade(1.0);
-        
 
         return array('assortblocks' => $this->sortByBlockOrder(), 'assorttype' => $this->assorttype);
     }
@@ -61,9 +60,11 @@ class AssortBlock extends Block
     private function sortByBlockOrder()
     {
         $assortblocks = [];
-        foreach ( json_decode($this->assortblocks, false) as $assortblock) {
-            $block = json_decode(json_encode($assortblock), true);
-            $assortblocks[$block['id']] = $assortblock;
+        if(!empty($this->assortblocks)) {
+            foreach ( json_decode($this->assortblocks, false) as $assortblock) {
+                $block = json_decode(json_encode($assortblock), true);
+                $assortblocks[$block['id']] = $assortblock;
+            }
         }
 
         $ordered_array = [];

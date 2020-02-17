@@ -19,7 +19,9 @@
 </div>
 {{#cards}}<button class="cw-dialogcards-next cw-dialogcards-navbutton" data-title="{{#i18n}}nächste Karte{{/i18n}}"></button>{{/cards}}
 {{^cards}}
-    <div class="messagebox messagebox_info">
-        {{#i18n}}Es wurden noch keine Karten angelegt{{/i18n}}
-    </div>
+  {{#isAuthor}}
+      <div class="messagebox messagebox_info">
+          {{#i18n}}Es wurden noch keine Lernkarten angelegt.{{/i18n}}
+      </div>
+  {{/isAuthor}}
 {{/cards}}

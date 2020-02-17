@@ -87,7 +87,15 @@
         <input type="hidden" name="folder_title" value="{{folder_title}}" />
         <input type="hidden" name="allow_upload" value="{{allow_upload}}" />
         <input type="hidden" name="file_counter" value="{{{file_counter}}}" />
-
+    {{/viewable}}
+    {{^viewable}}
+        {{#no_folder}}
+            {{#isAuthor}}
+                    <div class="messagebox messagebox_info">
+                        {{#i18n}}Es wurde kein Ordner ausgewählt.{{/i18n}}
+                    </div>
+            {{/isAuthor}}
+        {{/no_folder}}
     {{/viewable}}
 {{/inactive}}
 {{#inactive}}

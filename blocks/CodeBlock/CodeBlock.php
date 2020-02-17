@@ -21,6 +21,9 @@ class CodeBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
+        if($this->code_content == '') {
+            return array('empty' => true, 'isAuthor' => $this->getUpdateAuthorization());
+        }
         $this->setGrade(1.0);
 
         return array_merge($this->getAttrArray());

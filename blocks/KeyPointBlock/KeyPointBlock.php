@@ -21,6 +21,9 @@ class KeyPointBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
+        if(($this->keypoint_content == '')) {
+            return array('keypoint' => false, 'empty' => true, isAuthor => $this->getUpdateAuthorization());
+        }
         $this->setGrade(1.0);
 
         return array_merge($this->getAttrArray());
@@ -36,6 +39,7 @@ class KeyPointBlock extends Block
     private function getAttrArray() 
     {
         return array(
+            'keypoint' => true,
             'keypoint_content' => $this->keypoint_content,
             'keypoint_color'   => $this->keypoint_color,
             'keypoint_icon'    => $this->keypoint_icon

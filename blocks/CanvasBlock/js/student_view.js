@@ -360,6 +360,7 @@ export default StudentView.extend({
         this.clickTool.length = 0;
         this.Text.length = 0;
         this.$('input.cw-canvasblock-text-input').remove();
+        this.$('.cw-canvasblock-text-info').hide();
         this.paint = false;
         this.write = false;
         this.redraw();
@@ -395,6 +396,7 @@ export default StudentView.extend({
             this.clickSize.pop();
             this.clickTool.pop();
             this.$('input.cw-canvasblock-text-input').remove();
+            this.$('.cw-canvasblock-text-info').hide();
             this.write = false;
         }
         this.$('.cw-canvasblock-tool').removeClass('selected-tool');
@@ -430,6 +432,7 @@ export default StudentView.extend({
             if (key === 'Enter' || key === 13) {
                 $view.Text.push($input.val());
                 $view.$('input.cw-canvasblock-text-input').remove();
+                $view.$('.cw-canvasblock-text-info').hide();
                 $view.write = false;
                 $view.redraw();
             }
@@ -441,10 +444,11 @@ export default StudentView.extend({
                 $view.clickSize.pop();
                 $view.clickTool.pop();
                 $view.$('input.cw-canvasblock-text-input').remove();
+                $view.$('.cw-canvasblock-text-info').hide();
                 $view.write = false;
             }
         }, false);
-
+        this.$('.cw-canvasblock-text-info').show();
     },
 
     downloadImage() {
@@ -491,6 +495,7 @@ export default StudentView.extend({
         this.clickTool.pop();
         if (this.write) {
             this.$('input.cw-canvasblock-text-input').remove();
+            this.$('.cw-canvasblock-text-info').hide();
             this.write = false;
         } else {
             this.Text.pop('');

@@ -30,6 +30,9 @@ class EmbedBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
+        if(($this->embed_source == '')||($this->embed_url == '')) {
+            return array('oembed' => false, 'empty' => true, isAuthor => $this->getUpdateAuthorization());
+        }
         $this->setGrade(1.0);
         $json_url = $this->build_request($this->embed_source, $this->embed_url);
         if(!function_exists('curl_init')) {

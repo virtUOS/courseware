@@ -25,7 +25,10 @@ export default AuthorView.extend({
     postRender() {
         if(this.$(".cw-keypoint-stored-color").val() != "") {
             this.$('.cw-keypoint-input-color[value="' + this.$('.cw-keypoint-stored-color').val()+'"]').attr('checked', 'checked');
+        } else {
+            this.$('.cw-keypoint-input-color[value="blue"]').attr('checked', 'checked');
         }
+        this.setColor();
 
         this.$('.cw-keypoint-icons').select2({
             templateResult: state => {
@@ -38,6 +41,8 @@ export default AuthorView.extend({
         });
         if(this.$(".cw-keypoint-stored-icon").val() != "") {
             this.$('.cw-keypoint-icons').val(this.$('.cw-keypoint-stored-icon').val()).trigger('change');
+        } else {
+            this.$('.cw-keypoint-icons').val('info').trigger('change');
         }
 
         return this;

@@ -44,7 +44,8 @@ class AudioBlock extends Block
                 'audio_played' => $this->container['current_user']->isNobody() ? 1 : $this->getProgress()['grade'],
                 'audio_access' => $access,
                 'audio_file' => $audio_file,
-                'audio_filename' => $file_name
+                'audio_filename' => $file_name,
+                'isAuthor' => $this->getUpdateAuthorization()
             )
         );
     }

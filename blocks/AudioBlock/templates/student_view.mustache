@@ -22,9 +22,11 @@
     {{/audio_file}}
 
     {{^audio_file}}
-        <div class="messagebox messagebox_info">
-            {{#i18n}}Es wurde keine Audiodatei ausgewählt{{/i18n}}
-        </div>
+        {{#isAuthor}}
+            <div class="messagebox messagebox_info">
+                {{#i18n}}Es wurde keine Audiodatei ausgewählt{{/i18n}}
+            </div>
+        {{/isAuthor}}
     {{/audio_file}}
 {{/inactive}}
 {{#inactive}}

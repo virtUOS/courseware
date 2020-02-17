@@ -19,21 +19,16 @@ class GalleryBlock extends Block
         $this->defineField('gallery_autoplay_timer', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('gallery_hidenav', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('gallery_height', \Mooc\SCOPE_BLOCK, '600');
-        $this->defineField('gallery_show_names', \Mooc\SCOPE_BLOCK, false);
-    }
+        $this->defineField('gallery_show_names', \Mooc\SCOPE_BLOCK, '0');
+    }   
 
     public function student_view()
     {
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
+
         $this->setGrade(1.0);
-        $user = $this->container['current_user'];
-        if ($user->hasPerm($this->container['cid'], 'tutor')) {
-            $user_is_authorized = true;
-        } else {
-            $user_is_authorized = false;
-        }
         $files = $this->showFiles($this->gallery_folder_id);
         $gallery_has_files = sizeOf($files) > 0;
         $folder_type = \Folder::find($this->gallery_folder_id)->folder_type;
@@ -42,8 +37,9 @@ class GalleryBlock extends Block
             $this->getAttrArray(), 
             array(
                 'showFiles' => $files,
-                'userIsAuthorized' => $user_is_authorized,
+                'userIsAuthorized' => $this->getUpdateAuthorization(),
                 'galleryHasFiles' => $gallery_has_files,
+                'noFolder' => $this->gallery_folder_id == '',
                 'folderIsPublic' => in_array($folder_type, array("StandardFolder","CoursePublicFolder"), true)
             )
         );
@@ -147,7 +143,7 @@ class GalleryBlock extends Block
             if (!$item->terms_of_use->fileIsDownloadable($item, false)) {
                 continue;
             }
-            if ($item->isImage()) {
+            if ($item->isImage() && $item->mime_type != 'image/svg+xml') {
                 $filesarray[] = array(
                     "id"    => $item->id,
                     "name"  => $item->name,
@@ -155,6 +151,9 @@ class GalleryBlock extends Block
                 );
             }
         }
+        usort($filesarray, function($a, $b) {
+            return strcmp($a['name'], $b['name']);
+        });
 
         return $filesarray;
     }

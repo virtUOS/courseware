@@ -5,29 +5,37 @@
     <input type="hidden" name="gallery-height" value="{{gallery_height}}">
     <input type="hidden" name="gallery_show_names" value="{{gallery_show_names}}">
     <input type="hidden" name="gallery_has_files" value="{{galleryHasFiles}}">
-    
-    <div class="cw-gallery" >
-        {{#showFiles}}
-            <div class="cw-gallery-image-wrapper">
-                <img class="cw-gallery-image" src="{{url}}">
-                {{#gallery_show_names}}<p class="cw-gallery-image-name">{{name}}</p>{{/gallery_show_names}}
-            </div>
-        {{/showFiles}}
-    </div>
-    {{#userIsAuthorized}}
-        {{#folderIsPublic}}
-            {{^galleryHasFiles}}
-                <div class="messagebox messagebox_info answerinfo">
-                    {{#i18n}}In dem ausgewählten Ordner befinden sich keine Bilder.{{/i18n}} 
+    {{^noFolder}}
+        <div class="cw-gallery" >
+            {{#showFiles}}
+                <div class="cw-gallery-image-wrapper">
+                    <img class="cw-gallery-image" src="{{url}}">
+                    {{#gallery_show_names}}<p class="cw-gallery-image-name">{{name}}</p>{{/gallery_show_names}}
                 </div>
-            {{/galleryHasFiles}}
-        {{/folderIsPublic}}
-        {{^folderIsPublic}}
-            <div class="messagebox messagebox_info answerinfo">
-                {{#i18n}}Der ausgewählte Ordner ist zugriffsbeschränkt. Die Galerie wird nicht dargestellt.{{/i18n}} 
-            </div>
-        {{/folderIsPublic}}
-    {{/userIsAuthorized}}
+            {{/showFiles}}
+        </div>
+        {{#userIsAuthorized}}
+            {{#folderIsPublic}}
+                {{^galleryHasFiles}}
+                    <div class="messagebox messagebox_info">
+                        {{#i18n}}In dem ausgewählten Ordner befinden sich keine Bilder.{{/i18n}} 
+                    </div>
+                {{/galleryHasFiles}}
+            {{/folderIsPublic}}
+            {{^folderIsPublic}}
+                <div class="messagebox messagebox_info">
+                    {{#i18n}}Der ausgewählte Ordner ist zugriffsbeschränkt. Die Galerie wird nicht dargestellt.{{/i18n}} 
+                </div>
+            {{/folderIsPublic}}
+        {{/userIsAuthorized}}
+    {{/noFolder}}
+    {{#noFolder}}
+        {{#userIsAuthorized}}
+                <div class="messagebox messagebox_info">
+                    {{#i18n}}Es wurde kein Ordner ausgewählt.{{/i18n}} 
+                </div>
+        {{/userIsAuthorized}}
+    {{/noFolder}}
 {{/inactive}}
 {{#inactive}}
     <div class="messagebox messagebox_info">

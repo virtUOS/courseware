@@ -22,6 +22,11 @@
                     {{#i18n}}Der Inhalt konnte beim Anbieter nicht gefunden werden{{/i18n}}
                 </div>
             {{/not_found}}
+            {{#empty}}
+                <div class="messagebox messagebox_info">
+                    {{#i18n}}Es wurde noch kein Inhalt zum einbetten ausgewählt{{/i18n}}
+                </div>
+            {{/empty}}
         {{/isAuthor}}
     {{/oembed}}
 {{/inactive}}

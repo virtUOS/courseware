@@ -5099,6 +5099,9 @@ section#courseware .block-content:not([data-view="student"]) select.cw-canvasblo
   width: 14em;
   margin-right: 1em;
 }
+.cw-canvasblock-text-info {
+  display: none;
+}
 .btn-base {
   width: 20px;
   height: 20px;
@@ -12117,7 +12120,6 @@ textarea.cw-typewriter-content {
   display: none;
 }
 .block-content .video-wrapper {
-  margin-bottom: 2em;
   background-color: #ccc;
   position: relative;
   padding-top: 0px;

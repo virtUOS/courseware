@@ -51,7 +51,8 @@ class BeforeAfterBlock extends Block
         return array(
             'beforeafter_img_before' => $ba_img_before,
             'beforeafter_img_after' => $ba_img_after,
-            'ba_enable' => $ba_enable
+            'ba_enable' => $ba_enable,
+            'isAuthor' => $this->getUpdateAuthorization()
         );
     }
 

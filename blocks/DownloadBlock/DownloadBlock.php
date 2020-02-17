@@ -56,7 +56,8 @@ class DownloadBlock extends Block
                   'url' => $url,
                   'icon' => $icon,
                   'download_access' => $access,
-                  'file_available'=> $file_available
+                  'file_available'=> $file_available,
+                  'isAuthor' => $this->getUpdateAuthorization()
             )
         );
     }

@@ -13,6 +13,9 @@ export default StudentView.extend({
   },
 
   postRender() {
-    hljs.highlightBlock(this.$('.code-content > pre > code')[0]);
+    let code = this.$('.code-content > pre > code')[0];
+    if (code) {
+      hljs.highlightBlock(code);
+    }
   }
 });
