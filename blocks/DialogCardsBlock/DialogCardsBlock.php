@@ -17,8 +17,7 @@ class DialogCardsBlock extends Block
     public function student_view()
     {
         $this->setGrade(1.0);
-        $cards = [];
-        if(!empty($this->dialogcards_content)) {
+        if($this->dialogcards_content != '') {
             $cards = json_decode($this->dialogcards_content, true);
             foreach($cards as &$card) {
                 if ($card['front_img_file_id']) {
@@ -38,6 +37,8 @@ class DialogCardsBlock extends Block
                     }
                 }
             }
+        } else {
+            $cards = [];
         }
 
         return array_merge($this->getAttrArray(), array(
