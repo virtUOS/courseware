@@ -60,7 +60,7 @@ class AssortBlock extends Block
     private function sortByBlockOrder()
     {
         $assortblocks = [];
-        if(!empty($this->assortblocks)) {
+        if($this->assortblocks != '') {
             foreach ( json_decode($this->assortblocks, false) as $assortblock) {
                 $block = json_decode(json_encode($assortblock), true);
                 $assortblocks[$block['id']] = $assortblock;
