@@ -43,17 +43,15 @@ export default AuthorView.extend({
 
   onSave(event) {
     var view = this;
-    var $content = '';
-    var $textarea = this.$('textarea');
-    if (typeof(CKEDITOR) !== 'undefined') {
-      var wysiwyg_editor = CKEDITOR.instances[$textarea.get(0).id]; 
-      wysiwyg_editor.setData(STUDIP.wysiwyg.markAsHtml(wysiwyg_editor.getData())); 
-      wysiwyg_editor.updateElement();
+    var content = this.$('textarea').val();
+
+    if(STUDIP.editor_enabled){
+      content = STUDIP.wysiwyg.markAsHtml(content);
     }
     $content = $textarea.val();
 
     helper
-      .callHandler(this.model.id, 'save', { content: $content })
+      .callHandler(this.model.id, 'save', { content: content })
       .then(function (success) {
         jQuery(event.target).addClass('accept');
         view.switchBack();
