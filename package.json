@@ -1,6 +1,6 @@
 {
   "name": "courseware",
-  "version": "4.5.1",
+  "version": "4.5.2",
   "description": "Interaktive multimediale Lernmodule erstellen und bereitstellen",
   "repository": "git@github.com:virtUOS/courseware.git",
   "author": "Zentrum virtUOS / ELAN e.V.",
@@ -19,7 +19,7 @@
     "css-loader": "3.4.0",
     "dateformat": "3.0.3",
     "extract-text-webpack-plugin": "3.0.2",
-    "highlight.js": "9.17.1",
+    "highlight.js": "^9.18.1",
     "jquery.scrollto": "2.1.2",
     "less": "3.10.3",
     "less-loader": "5.0.0",

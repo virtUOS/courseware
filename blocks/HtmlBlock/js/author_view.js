@@ -43,12 +43,13 @@ export default AuthorView.extend({
 
   onSave(event) {
     var view = this;
-    var content = this.$('textarea').val();
 
     if(STUDIP.editor_enabled){
-      content = STUDIP.wysiwyg.markAsHtml(content);
+      var wysiwyg_editor = CKEDITOR.instances[this.$('textarea').get(0).id]; 
+      wysiwyg_editor.setData(STUDIP.wysiwyg.markAsHtml(wysiwyg_editor.getData())); 
+      wysiwyg_editor.updateElement();
     }
-    $content = $textarea.val();
+    var content = this.$('textarea').val();
 
     helper
       .callHandler(this.model.id, 'save', { content: content })
