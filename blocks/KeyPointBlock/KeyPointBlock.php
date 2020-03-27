@@ -22,7 +22,7 @@ class KeyPointBlock extends Block
             return array('inactive' => true);
         }
         if(($this->keypoint_content == '')) {
-            return array('keypoint' => false, 'empty' => true, isAuthor => $this->getUpdateAuthorization());
+            return array('keypoint' => false, 'empty' => true, 'isAuthor' => $this->getUpdateAuthorization());
         }
         $this->setGrade(1.0);
 
