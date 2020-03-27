@@ -155,6 +155,7 @@ export default AuthorView.extend({
   },
 
   selectSource() {
+    let view = this;
     var $selection = this.$('.cw-audioblock-source').val();
     this.$('input.cw-audioblock-file').hide();
     this.$('.cw-audioblock-file-input-info').hide();
