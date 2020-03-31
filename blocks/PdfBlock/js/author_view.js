@@ -66,9 +66,10 @@ export default AuthorView.extend({
 
     onSave(event) {
         var view = this;
-        var $pdf_file_id  = this.$('.cw-pdf-set-file').val();
+        var $pdf_file_id = this.$('.cw-pdf-set-file').val();
         var $pdf_filename = this.$('.cw-pdf-set-file').find(':selected').data('filename');
-        var $pdf_title    = this.$('.cw-pdf-set-title').val();
+        var $pdf_title = this.$('.cw-pdf-set-title').val();
+        var $pdf_disable_download = this.$('.cw-pdf-disable-download').is(':checked');
         if ($pdf_title == "") {
             $pdf_title = $pdf_filename;
         }
@@ -76,7 +77,8 @@ export default AuthorView.extend({
             .callHandler(this.model.id, 'save', {
                 pdf_filename: $pdf_filename,
                 pdf_file_id: $pdf_file_id,
-                pdf_title: $pdf_title
+                pdf_title: $pdf_title,
+                pdf_disable_download: $pdf_disable_download
             })
             .then(
                 // success

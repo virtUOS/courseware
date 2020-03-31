@@ -34,6 +34,9 @@
 </select>
 <button class="cw-pdf-file-select-info cw-info" data-title="{{#i18n}}Hier werden alle PDF-Dateien aus dem Dateibereich aufgelistet.{{/i18n}}"></button>
 <br>
+<label for="cw-pdf-disable-download">{{#i18n}}Download deaktivieren{{/i18n}}:</label>
+<input type="checkbox" class="cw-pdf-disable-download" name="cw-pdf-disable-download" {{#pdf_disable_download}}checked{{/pdf_disable_download}} >
+<br>
 
 <div class="cw-button-box">
     <button name="save" class="button">{{#i18n}}Speichern{{/i18n}}</button>

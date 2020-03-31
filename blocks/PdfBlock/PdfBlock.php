@@ -15,6 +15,7 @@ class PdfBlock extends Block
         $this->defineField('pdf_filename', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('pdf_file_id', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('pdf_title', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('pdf_disable_download', \Mooc\SCOPE_BLOCK, false);
     }
 
     public function student_view()
@@ -56,27 +57,27 @@ class PdfBlock extends Block
         return array_merge(
             $this->getAttrArray(),
             array(
-                'user_pdf_files' => $files_arr['userfilesarray'],
-                'course_pdf_files' => $files_arr['coursefilesarray'],
-                'no_pdf_files' => $no_files,
-                'other_user_file' => $other_user_file
+                'user_pdf_files'    => $files_arr['userfilesarray'],
+                'course_pdf_files'  => $files_arr['coursefilesarray'],
+                'no_pdf_files'      => $no_files,
+                'other_user_file'   => $other_user_file
             )
         );
     }
 
     public function preview_view()
     {
-
         return array('pdf_filename' => $this->pdf_filename);
     }
 
     private function getAttrArray()
     {
         return array(
-            'pdf_file'      => $this->pdf_file,
-            'pdf_filename'  => $this->pdf_filename,
-            'pdf_file_id'   => $this->pdf_file_id,
-            'pdf_title'     => $this->pdf_title
+            'pdf_file'              => $this->pdf_file,
+            'pdf_filename'          => $this->pdf_filename,
+            'pdf_file_id'           => $this->pdf_file_id,
+            'pdf_title'             => $this->pdf_title,
+            'pdf_disable_download'  => $this->pdf_disable_download
         );
     }
 
@@ -121,6 +122,9 @@ class PdfBlock extends Block
 
         if (isset ($data['pdf_filename'])) {
             $this->pdf_filename = $data['pdf_filename'];
+        }
+        if (isset ($data['pdf_disable_download'])) {
+            $this->pdf_disable_download = $data['pdf_disable_download'];
         }
         if (isset ($data['pdf_file_id']) && ($data['pdf_file_id'] != '')) {
             $this->pdf_file_id = $data['pdf_file_id'];
@@ -176,6 +180,11 @@ class PdfBlock extends Block
         }
         if (isset($properties['pdf_filename'])) {
             $this->pdf_filename = $properties['pdf_filename'];
+        }
+        if (isset($properties['pdf_disable_download'])) {
+            $this->pdf_disable_download = $properties['pdf_disable_download'];
+        } else {
+            $this->pdf_disable_download = false;
         }
 
         $this->save();
