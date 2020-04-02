@@ -98,6 +98,7 @@ export default AuthorView.extend({
     onSave(event) {
     var view    = this;
     var $url    = this.$('input.urlinput').val();
+    var $header = this.$('input.headerinput').val();
     var show_cc = this.$(".iframe-cc-switch").is( ":checked");
     if (show_cc) {
         var cc_infos = new Array();
@@ -121,6 +122,7 @@ export default AuthorView.extend({
     helper
         .callHandler(this.model.id, 'save', {
             url: $url,
+            header: $header,
             height: view.$('input.heightinput').val(),
             width: view.$('input.widthinput').val(),
             salt: view.$('.salt').val(), 

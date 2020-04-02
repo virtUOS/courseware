@@ -25,6 +25,8 @@
     <div class="iframe-data">
         <label>URL:</label><input class="urlinput" type=text size=32 value={{url}}>
         <br>
+        <label>{{#i18n}}Titel{{/i18n}}:</label><input class="headerinput" type=text value="{{header}}">
+        <br>
         <label>{{#i18n}}Höhe{{/i18n}}:</label><input class="heightinput" type=number min=20 max=3000 value={{height}}> {{#i18n}}Pixel{{/i18n}}
         <br>
         <label>{{#i18n}}Breite{{/i18n}}:</label><input class="widthinput" type=number min=5 max=100 value={{#width}}{{width}}{{/width}}{{^width}}100{{/width}}> {{#i18n}}%{{/i18n}}

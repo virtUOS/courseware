@@ -11,13 +11,14 @@ class IFrameBlock extends Block
 
     public function initialize()
     {
-        $this->defineField('url',    \Mooc\SCOPE_BLOCK, "https://studip.de");
+        $this->defineField('url',    \Mooc\SCOPE_BLOCK, '');
         $this->defineField('height', \Mooc\SCOPE_BLOCK, 600);
         $this->defineField('width', \Mooc\SCOPE_BLOCK, 100);
         $this->defineField('submit_user_id', \Mooc\SCOPE_BLOCK, false);
-        $this->defineField('submit_param', \Mooc\SCOPE_BLOCK, "uid");
+        $this->defineField('submit_param', \Mooc\SCOPE_BLOCK, 'uid');
         $this->defineField('salt', \Mooc\SCOPE_BLOCK, md5(uniqid('', true)));
-        $this->defineField('cc_infos',    \Mooc\SCOPE_BLOCK, "");
+        $this->defineField('cc_infos',    \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('header', \Mooc\SCOPE_BLOCK, '');
     }
 
     private function array_rep($url = "")
@@ -31,7 +32,8 @@ class IFrameBlock extends Block
             'submit_user_id'    => $this->submit_user_id,
             'submit_param'      => $this->submit_param,
             'salt'              => $this->salt,
-            'cc_infos'          => $this->cc_infos
+            'cc_infos'          => $this->cc_infos,
+            'header'             => $this->header
         );
     }
 
@@ -99,6 +101,7 @@ class IFrameBlock extends Block
         $this->submit_param     = $data['submit_param'];
         $this->salt             = $data['salt'];
         $this->cc_infos         = $data['cc_infos'];
+        $this->header           = \STUDIP\Markup::purifyHtml((string) $data['header']);
 
         return $this->array_rep();
     }
@@ -107,16 +110,8 @@ class IFrameBlock extends Block
      * {@inheritdoc}
      */
     public function exportProperties()
-    {
-        return array(
-            'url'               => $this->url, 
-            'height'            => $this->height,
-            'width'             => $this->width, 
-            'submit_user_id'    => $this->submit_user_id, 
-            'submit_param'      => $this->submit_param, 
-            'salt'              => $this->salt,
-            'cc_infos'          => $this->cc_infos
-        );
+    {        
+        return $this->array_rep();
     }
 
     /**
@@ -166,6 +161,10 @@ class IFrameBlock extends Block
 
         if (isset($properties['cc_infos'])) {
             $this->cc_infos = $properties['cc_infos'];
+        }
+
+        if (isset($properties['header'])) {
+            $this->header = $properties['header'];
         }
 
         $this->save();

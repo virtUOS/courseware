@@ -5,6 +5,7 @@
     elementFormDefault="qualified"
 >
     <xsd:attribute name="url" type="xsd:string" />
+    <xsd:attribute name="header" type="xsd:string" />
     <xsd:attribute name="height" type="xsd:string" />
     <xsd:attribute name="width" type="xsd:string" />
     <xsd:attribute name="submit_user_id" type="xsd:string" />
