@@ -32,7 +32,6 @@ class BlockManagerController extends CoursewareStudipController
         $this->errors = [];
         $this->warnings = [];
         $this->successes = [];
-
         $this->remote_courses = [];
         $plugin_manager = PluginManager::getInstance();
 
@@ -40,7 +39,7 @@ class BlockManagerController extends CoursewareStudipController
             if ($this->cid != $seminar_user_obj->Seminar_id) {
                 $remote_course = Course::find($seminar_user_obj->Seminar_id);
                 if($remote_course != null) {
-                    $plugin_info = $plugin_manager->getPluginInfo('Courseware');
+                    $plugin_info = $plugin_manager->getPluginInfo($this->plugin->getPluginName());
                     if ($plugin_manager->isPluginActivated($plugin_info['id'], $seminar_user_obj->Seminar_id)) {
                         $semester = Semester::findOneBySQL('beginn = ?', array($remote_course->start_time));
                         if(!isset($this->remote_courses[$semester->name])) {
