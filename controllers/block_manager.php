@@ -106,6 +106,10 @@ class BlockManagerController extends CoursewareStudipController
         ));
 
         $block->store();
+        $block->setData(array(
+            'approval' => $block->parent->approval
+        ));
+        $block->store();
         $block = $block->toArray();
         $block['childType'] = $this->getSubElement($block['type']);
         $block['isStrucutalElement'] = true;
@@ -756,7 +760,8 @@ class BlockManagerController extends CoursewareStudipController
             'title' => $data['title'],
             'publication_date' => $data['publication_date'],
             'withdraw_date' => $data['withdraw_date'],
-            'position' => $block->getNewPosition($parent_id)
+            'position' => $block->getNewPosition($parent_id),
+            'approval' => $parent->approval
         ));
 
         $block->store();

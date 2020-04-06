@@ -653,7 +653,8 @@ class Courseware extends Block
             'title' => $data['title'],
             'publication_date' => $data['publication_date'],
             'withdraw_date' => $data['withdraw_date'],
-            'position' => $block->getNewPosition($parent_id)
+            'position' => $block->getNewPosition($parent_id),
+            'approval' => $parent->approval
         ));
 
         $block->store();
