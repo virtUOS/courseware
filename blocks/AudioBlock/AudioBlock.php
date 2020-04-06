@@ -25,17 +25,32 @@ class AudioBlock extends Block
             return array('inactive' => true);
         }
         $file_name = '';
+        $folder_warning = false;
+        $access = true;
         if ($this->audio_source == "cw") {
             $file_name = $this->audio_file;
             $file = \FileRef::find($this->audio_id);
             if ($file) {
                 $audio_file = $file->getDownloadURL();
                 $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
+
+                if (get_class($file->getFolderType()) == 'HiddenFolder' || 'HomeworkFolder') {
+                    $folder_warning = true;
+                    $access = false;
+                }
+                if (get_class($file->getFolderType()) == 'TimedFolder') {
+                    $folder_warning = true;
+                    $folder = $file->getFolderType();
+                    $now = time();
+                    $folder_visible =  ($folder->start_time == 0 || $folder->start_time <= $now) && ($folder->end_time == 0 || $folder->end_time >= $now);
+                    if(!$folder_visible) {
+                        $access = false;
+                    }
+                }
             }
 
         } else {
             $audio_file = $this->audio_file;
-            $access = true;
         }
 
         return array_merge(
@@ -43,6 +58,7 @@ class AudioBlock extends Block
             array(
                 'audio_played' => $this->container['current_user']->isNobody() ? 1 : $this->getProgress()['grade'],
                 'audio_access' => $access,
+                'audio_folder_warning' => $folder_warning,
                 'audio_file' => $audio_file,
                 'audio_filename' => $file_name,
                 'isAuthor' => $this->getUpdateAuthorization()
@@ -174,6 +190,9 @@ class AudioBlock extends Block
         $audio_id_found = false;
 
         foreach ($course_folders as $folder) {
+            if(in_array(get_class($folder->getTypedFolder()), array('HiddenFolder', 'TimedFolder','HomeworkFolder'))) {
+                    continue;
+            }
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
                 if (($ref->isAudio()) && (!$ref->isLink())) {

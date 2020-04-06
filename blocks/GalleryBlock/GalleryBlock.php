@@ -48,8 +48,8 @@ class GalleryBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-        $folders =  \Folder::findBySQL('range_id = ? AND (folder_type = ? OR folder_type = ?)', array($this->container['cid'], 'StandardFolder', 'CoursePublicFolder'));
-        $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
+        $folders = \Folder::findBySQL('range_id = ? AND folder_type NOT IN (?)', array($this->container['cid'], array('RootFolder','HiddenFolder', 'HomeworkFolder')));
+        $user_folders = \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
 
         $folders = $this->buildFoldersArray($folders);
         $user_folders = $this->buildFoldersArray($user_folders);

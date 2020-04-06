@@ -31,7 +31,7 @@ class ImageMapBlock extends Block
 
             foreach($content->shapes as $shape) {
                 if ($shape->link_type == "internal") {
-                    $shape->target = "courseware?cid=".$this->container['cid']."&selected=".$this->getTargetId($shape->target);
+                    $shape->target = "courseware?cid=".$this->container['cid']."&selected=".$this->getTargetId($shape->target)['id'];
                 }
             }
             $content = json_encode($content);
@@ -83,8 +83,8 @@ class ImageMapBlock extends Block
             'inthischapter'         => $inthischapter, 
             'inotherchapters'       => $inotherchapters,
             'hasinternal'           => $hasinternal, 
-            'hasnext'               => $this->getTargetId("next") != null,
-            'hasprev'               => $this->getTargetId("prev") != null
+            'hasnext'               => $this->getTargetId("next")['id'] != null,
+            'hasprev'               => $this->getTargetId("prev")['id'] != null
         ));
     }
 
@@ -112,6 +112,7 @@ class ImageMapBlock extends Block
             return '';
         }
         $id = '';
+        $type = '';
         $section = $this->getModel()->parent;
         $subchapter = $section->parent;
         $chapter = $subchapter->parent;
@@ -119,15 +120,18 @@ class ImageMapBlock extends Block
 
         if ($target == 'next') {
             $id = $courseware->getNeighborSections($section)['next']['id'];
+            $type = $courseware->getNeighborSections($section)['next']['type'];
         }
 
         if ($target == 'prev') {
             $id = $courseware->getNeighborSections($section)['prev']['id'];
+            $type = $courseware->getNeighborSections($section)['prev']['type'];
         }
 
         if (strpos($target, 'sibling') > -1) {
             $num = (int)substr($target, 7);
             $id = $this->getModel()->parent->parent->parent->children[$num]['id'];
+            $type = $this->getModel()->parent->parent->parent->children[$num]['type'];
         }
 
         if (strpos($target, 'other') > -1) {
@@ -147,9 +151,10 @@ class ImageMapBlock extends Block
 
             $chatper = $allchapters[$this_chapter_pos + $chapter_pos];
             $id = $chatper->children[$subchapter_pos]['id'];
+            $type = $chatper->children[$subchapter_pos]['type'];
         }
 
-        return $id;
+        return array('id' => $id, 'type' => $type);
     }
 
     private function getThisChapterSiblings()
@@ -214,8 +219,8 @@ class ImageMapBlock extends Block
     {
         $coursefilesarray = array();
         $userfilesarray = array();
-        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
-        $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
+        $course_folders = \Folder::findBySQL('range_id = ? AND folder_type NOT IN (?)', array($this->container['cid'], array('HiddenFolder', 'HomeworkFolder')));
+        $user_folders = \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
         $image_id_found = false;
 
         foreach ($course_folders as $folder) {

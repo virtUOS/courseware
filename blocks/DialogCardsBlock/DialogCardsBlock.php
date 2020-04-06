@@ -92,8 +92,8 @@ class DialogCardsBlock extends Block
     {
         $coursefilesarray = array();
         $userfilesarray = array();
-        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
-        $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
+        $course_folders = \Folder::findBySQL('range_id = ? AND folder_type NOT IN (?)', array($this->container['cid'], array('HiddenFolder', 'HomeworkFolder')));
+        $user_folders = \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
         $other_user_files = array();
 
         foreach ($course_folders as $folder) {

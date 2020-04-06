@@ -3,6 +3,7 @@
         <source src="{{audio_file}}" type="audio/mpeg" />
     </audio>
     {{#audio_file}}
+	
         {{#audio_access}}
             {{#audio_description}}<h1 class="cw-audio-description">{{audio_description}}</h1>{{/audio_description}}
             <div class="cw-audio-container">
@@ -14,11 +15,22 @@
                 </div>
             </div>
         {{/audio_access}}
+	{{^audio_folder_warning}}
         {{^audio_access}}
+          {{#isAuthor}}
             <div class="messagebox messagebox_info">
-                {{#i18n}}Wegen des gewählten Lizenzstatus können Sie diese Audiodatei nicht abspielen.{{/i18n}}
+                {{#i18n}}Wegen des gewählten Lizenzstatus kann diese Audiodatei nicht abgespielt werden.{{/i18n}}
             </div>
+	  {{/isAuthor}}
         {{/audio_access}}
+	{{/audio_folder_warning}}
+	{{#audio_folder_warning}}
+            {{#isAuthor}}
+                <div class="messagebox messagebox_info">
+                     {{#i18n}}Die Audiodatei befindet sich in einem Ordner der möglicherweise die Wiedergabe für Teilnehmer*innen verhindert.{{/i18n}}
+                </div>
+            {{/isAuthor}}
+	{{/audio_folder_warning}}
     {{/audio_file}}
 
     {{^audio_file}}

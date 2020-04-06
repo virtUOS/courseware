@@ -26,22 +26,8 @@ class DownloadBlock extends Block
         if ($file) { 
             $url = $file->getDownloadURL('force');
             $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
-            
-            if ($file->isAudio()) {
-                $icon = 'audio';
-            } else if ($file->isImage()) {
-                $icon = 'pic';
-            } else if ($file->isVideo()) {
-                $icon = 'video';
-            } else if (mb_strpos($file->mime_type, 'pdf') > -1) {
-                $icon = 'pdf';
-            } else if (mb_strpos($file->mime_type, 'zip') > -1) {
-                $icon = 'archive';
-            } else if ((mb_strpos($file->mime_type, 'txt') > -1) || (mb_strpos($file->mime_type, 'document') > -1) || (mb_strpos($file->mime_type, 'msword') > -1) || (mb_strpos($file->mime_type, 'text') > -1)){
-                $icon = 'text';
-            } else if ((mb_strpos($file->mime_type, 'powerpoint') > -1) || (mb_strpos($file->mime_type, 'presentation') > -1) ){
-                $icon = 'ppt';
-            }
+            $icon = $this->getIcon($file);
+
             $file_available = true;
         } else { 
             $url = '';
@@ -71,7 +57,7 @@ class DownloadBlock extends Block
         
         $this->authorizeUpdate();
         $allfiles = $this->showFiles($folder_id);
-        $folders =  \Folder::findBySQL('range_id = ? AND folder_type != ?', array($this->container['cid'], 'RootFolder'));
+        $folders =  \Folder::findBySQL('range_id = ? AND folder_type NOT IN (?)', array($this->container['cid'], array('RootFolder', 'HomeworkFolder', 'HiddenFolder')));
         $root_folder = \Folder::findOneBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'RootFolder'));
         $root_folder->name = 'Hauptordner';
         array_unshift($folders, $root_folder);
@@ -251,6 +237,29 @@ class DownloadBlock extends Block
             }
         }
 
+    }
+
+    private function getIcon($file)
+    {
+        $icon = '';
+
+        if ($file->isAudio()) {
+            $icon = 'audio';
+        } else if ($file->isImage()) {
+            $icon = 'pic';
+        } else if ($file->isVideo()) {
+            $icon = 'video';
+        } else if (mb_strpos($file->mime_type, 'pdf') > -1) {
+            $icon = 'pdf';
+        } else if (mb_strpos($file->mime_type, 'zip') > -1) {
+            $icon = 'archive';
+        } else if ((mb_strpos($file->mime_type, 'txt') > -1) || (mb_strpos($file->mime_type, 'document') > -1) || (mb_strpos($file->mime_type, 'msword') > -1) || (mb_strpos($file->mime_type, 'text') > -1)){
+            $icon = 'text';
+        } else if ((mb_strpos($file->mime_type, 'powerpoint') > -1) || (mb_strpos($file->mime_type, 'presentation') > -1) ){
+            $icon = 'ppt';
+        }
+
+        return $icon;
     }
 
 }
