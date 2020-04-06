@@ -43,12 +43,13 @@
 </div>
 <div class="cw-iav-author-tabs">
   <ul>
-    <li><a href="#tabs-{{block_id}}-1" class="cw-iav-tabs-settings">{{#i18n}}Quelle{{/i18n}}</a></li>
+    <li><a href="#tabs-{{block_id}}-1" class="cw-iav-tabs-settings">{{#i18n}}Grunddaten{{/i18n}}</a></li>
     <li><a href="#tabs-{{block_id}}-2" class="cw-iav-tabs-overlays">{{#i18n}}Einblendungen{{/i18n}}</a></li>
     <li><a href="#tabs-{{block_id}}-3" class="cw-iav-tabs-stops">{{#i18n}}Haltepunkte{{/i18n}}</a></li>
     <li><a href="#tabs-{{block_id}}-4" class="cw-iav-tabs-tests">{{#i18n}}Aufgaben{{/i18n}}</a></li>
   </ul>
   <div id="tabs-{{block_id}}-1">
+    <span>{{#i18n}}Quelle{{/i18n}}:</span>
     <select class="cw-iav-source">
         <option value="file">{{#i18n}}Dateibereich{{/i18n}}:</option>
         <option value="url" {{#external_file}}selected{{/external_file}}>{{#i18n}}webVideo (URL){{/i18n}}:</option>
@@ -86,6 +87,9 @@
         {{/no_video_files}}
     </select>
     <button name="video-preview" class="button">{{#i18n}}Vorschau{{/i18n}}</button>
+    <br>
+        <label for="cw-iav-range-inactive" class="cw-iav-range-inactive-label">{{#i18n}}Schieberegler deaktivieren{{/i18n}}:</label>
+        <input type="checkbox" name="cw-iav-range-inactive" class="cw-iav-range-inactive" {{#range_inactive}} checked {{/range_inactive}}>
   </div>
   <div id="tabs-{{block_id}}-2">
         <ul class="cw-iav-overlays-list">

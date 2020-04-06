@@ -185,8 +185,17 @@ export default AuthorView.extend({
         }
         iav_source = JSON.stringify(iav_source);
 
+        let range_inactive = $view.$('input[name="cw-iav-range-inactive"]').is(':checked');
+
         helper
-            .callHandler(this.model.id, "save", {iav_source: iav_source, iav_overlays: overlay_json, iav_stops: stop_json, iav_tests: tests_json, assignment_id: $assignment_id}) 
+            .callHandler(this.model.id, "save", {
+                iav_source: iav_source,
+                iav_overlays: overlay_json,
+                iav_stops: stop_json,
+                iav_tests: tests_json,
+                assignment_id: $assignment_id,
+                range_inactive: range_inactive
+            }) 
             .then(
                 // success
                 function () {

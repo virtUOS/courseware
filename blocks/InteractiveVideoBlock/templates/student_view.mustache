@@ -59,7 +59,8 @@
     </div>
 </div>
 <div class="cw-iav-controls">
-    <div class="cw-iav-range" ></div>
+    {{^range_inactive}}<div class="cw-iav-range" ></div>{{/range_inactive}}
+    {{#range_inactive}}<br>{{/range_inactive}}
     <span class="cw-iav-time"></span>
     <button class="cw-iav-playbutton" name="play" ></button> 
     <button class="cw-iav-stopbutton" name="stop" ></button> 

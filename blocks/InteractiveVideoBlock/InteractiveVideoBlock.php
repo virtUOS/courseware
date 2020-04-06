@@ -12,11 +12,12 @@ class InteractiveVideoBlock extends Block
 
     public function initialize()
     {
-        $this->defineField('iav_source', \Mooc\SCOPE_BLOCK, "");
-        $this->defineField('iav_overlays', \Mooc\SCOPE_BLOCK, "");
-        $this->defineField('iav_stops', \Mooc\SCOPE_BLOCK, "");
+        $this->defineField('iav_source', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('iav_overlays', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('iav_stops', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('assignment_id', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('iav_tests', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('range_inactive', \Mooc\SCOPE_BLOCK, false);
     }
 
     public function student_view()
@@ -167,6 +168,7 @@ class InteractiveVideoBlock extends Block
         $this->iav_stops = $data['iav_stops']; // json
         $this->iav_tests = $data['iav_tests']; // json
         $this->assignment_id = $data['assignment_id'];
+        $this->range_inactive = $data['range_inactive'];
 
         return $this->getAttrArray();
     }
@@ -222,7 +224,8 @@ class InteractiveVideoBlock extends Block
             'iav_overlays'  => $this->iav_overlays,
             'iav_stops'     => $this->iav_stops,
             'iav_tests'     => $this->iav_tests,
-            'assignment_id' => $this->assignment_id
+            'assignment_id' => $this->assignment_id,
+            'range_inactive' => $this->range_inactive
         );
     }
 
@@ -230,8 +233,8 @@ class InteractiveVideoBlock extends Block
     {
         $coursefilesarray = array();
         $userfilesarray = array();
-        $course_folders =  \Folder::findBySQL('range_id = ?', array($this->container['cid']));
-        $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
+        $course_folders = \Folder::findBySQL('range_id = ? AND folder_type NOT IN (?)', array($this->container['cid'], array('HiddenFolder', 'HomeworkFolder')));
+        $user_folders = \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
         $other_user_files = array();
 
         foreach ($course_folders as $folder) {
@@ -341,6 +344,9 @@ class InteractiveVideoBlock extends Block
         }
         if (isset($properties['iav_tests'])) {
             $this->iav_tests = $properties['iav_tests'];
+        }
+        if (isset($properties['range_inactive'])) {
+            $this->range_inactive = $properties['range_inactive'];
         }
         if (isset($properties['vips_xml'])) {
             $xml = $properties['vips_xml'];
