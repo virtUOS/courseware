@@ -33,15 +33,18 @@ export default Backbone.View.extend({
 
   makeSticky() {
     const nav = this.$el;
+    const placeholder = nav.parent().find('.active-subchapter-nav-placeholder');
     const nav_offset = nav.offset();
 
     jQuery(window).scroll(function () {
       // if we scrolled a bit and are not an author! the scrollbar should be stuck to the window
-      if (jQuery(this).scrollTop() -128 > nav_offset.top && (window.location.href.indexOf('author') == -1)) {
+      if (jQuery(this).scrollTop() > nav_offset.top && (window.location.href.indexOf('author') == -1)) {
         var activeSection = jQuery('section.active-section');
+        placeholder.show();
         nav.addClass('stuck');
         nav.css({ left: activeSection.offset().left });
       } else {
+        placeholder.hide();
         nav.removeClass('stuck');
         nav.css({ left: '' });
       }
