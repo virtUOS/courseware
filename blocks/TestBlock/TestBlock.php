@@ -308,7 +308,10 @@ class TestBlock extends Block
         }
 
         if($test == null) {
-            return null;
+            $progress->max_grade = 1;
+            $progress->grade = 1;
+
+            return $progress;
         }
         $progress = $this->getProgress();
         $progress->max_grade = $test->getExerciseCount();
