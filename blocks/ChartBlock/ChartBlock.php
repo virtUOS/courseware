@@ -41,8 +41,11 @@ class ChartBlock extends Block
 
     public function preview_view()
     {
+        $array = $this->getAttrArray();
 
-        return $this->getAttrArray();
+        $array['chart_type'] = $this->getChartTypeName($array['chart_type']);
+
+        return $array;
     }
 
     public function save_handler(array $data)
@@ -90,5 +93,33 @@ class ChartBlock extends Block
         }
 
         $this->save();
+    }
+
+    private function getChartTypeName($type)
+    {
+        switch ($type) {
+            case 'bar':
+                $name = 'Säulendiagramm';
+                break;
+            case 'horizontalBar':
+                $name = 'Balkendiagramm';
+                break;
+            case 'pie':
+                $name = 'Kreisdiagramm';
+                break;
+            case 'doughnut':
+                $name = 'Ringdiagramm';
+                break;
+            case 'polarArea':
+                $name = 'Polardiagramm';
+                break;
+            case 'line':
+                $name = 'Liniendiagramm';
+                break;
+            default:
+                $name = '';
+        }
+
+        return $name;
     }
 }
