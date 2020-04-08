@@ -40,7 +40,7 @@ class GalleryBlock extends Block
                 'userIsAuthorized' => $this->getUpdateAuthorization(),
                 'galleryHasFiles' => $gallery_has_files,
                 'noFolder' => $this->gallery_folder_id == '',
-                'folderIsPublic' => in_array($folder_type, array("StandardFolder","CoursePublicFolder"), true)
+                'folderIsPublic' => in_array($folder_type, array('StandardFolder','CoursePublicFolder', 'MaterialFolder', 'PublicFolder'), true)
             )
         );
     }
@@ -48,7 +48,7 @@ class GalleryBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-        $folders = \Folder::findBySQL('range_id = ? AND folder_type NOT IN (?)', array($this->container['cid'], array('RootFolder','HiddenFolder', 'HomeworkFolder')));
+        $folders = \Folder::findBySQL('range_id = ? AND folder_type IN (?)', array($this->container['cid'], array('StandardFolder','CoursePublicFolder', 'MaterialFolder')));
         $user_folders = \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
 
         $folders = $this->buildFoldersArray($folders);
@@ -135,7 +135,7 @@ class GalleryBlock extends Block
     private function showFiles($folder_id)
     {
         $filesarray = array();
-        if (!in_array(\Folder::find($this->gallery_folder_id)->folder_type, array("StandardFolder","CoursePublicFolder"), true)) {
+        if (!in_array(\Folder::find($this->gallery_folder_id)->folder_type, array('StandardFolder','CoursePublicFolder', 'MaterialFolder', 'PublicFolder'), true)) {
             return $filesarray;
         }
         $response = \FileRef::findBySQL('folder_id = ?', array($folder_id));
