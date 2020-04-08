@@ -42,10 +42,11 @@ class BlockManagerController extends CoursewareStudipController
                     $plugin_info = $plugin_manager->getPluginInfo($this->plugin->getPluginName());
                     if ($plugin_manager->isPluginActivated($plugin_info['id'], $seminar_user_obj->Seminar_id)) {
                         $semester = Semester::findOneBySQL('beginn = ?', array($remote_course->start_time));
-                        if(!isset($this->remote_courses[$semester->name])) {
-                            $this->remote_courses[$semester->name] = [];
+                        $sem_name = (string)$semester->name;
+                        if(!isset($this->remote_courses[$sem_name])) {
+                            $this->remote_courses[$sem_name] = [];
                         } 
-                        array_push($this->remote_courses[$semester->name], array('id' => $seminar_user_obj->Seminar_id, 'name' => $remote_course->getFullname()));
+                        array_push($this->remote_courses[$sem_name], array('id' => $seminar_user_obj->Seminar_id, 'name' => (string) $remote_course->getFullname()));
                     }
                 }
             }
@@ -209,7 +210,7 @@ class BlockManagerController extends CoursewareStudipController
         $groups = Statusgruppen::findAllByRangeId($cid);
         $json_groups = [];
         foreach($groups as $group) {
-            array_push($json_groups, ['id'=>$group->id, 'name'=> $group->name]);
+            array_push($json_groups, ['id'=>$group->id, 'name'=> (string)$group->name]);
         }
         usort($json_groups, function($a, $b) { return strcmp($a['name'], $b['name']);});
 
