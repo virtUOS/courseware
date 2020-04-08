@@ -98,7 +98,7 @@ class CpoController extends CoursewareStudipController
             $thread = array(
                 'thread_id' => $thread_id, 
                 'thread_title' => \Mooc\DB\Post::findPost($thread_id, 0, $this->cid)['content'],
-                'thread_posts' => \Mooc\DB\Post::findPosts($thread_id, $this->cid, $this->container['current_user']['id'], true)
+                'thread_posts' => \Mooc\DB\Post::findPosts($thread_id, $this->cid, $this->container['current_user']['id'])
             );
             array_push($this->threads, $thread);
         }

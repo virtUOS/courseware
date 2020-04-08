@@ -57,7 +57,7 @@ class Post extends \SimpleORMap
         return $stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
     }
 
-    public function findPosts($thread_id, $cid, $uid, $show_hidden = false)
+    public function findPosts($thread_id, $cid, $uid)
     {
         $db = \DBManager::get();
         $stmt = $db->prepare("
@@ -78,10 +78,6 @@ class Post extends \SimpleORMap
         $timestamp = 0;
         array_shift($posts);
         foreach($posts as $key => &$post){
-            if (!$show_hidden && $post['hidden']) {
-                unset($posts[$key]);
-                continue;
-            }
             $user = \User::find($post['user_id']);
             if ($user){
                 $post['user_name'] = $user->getFullName();
