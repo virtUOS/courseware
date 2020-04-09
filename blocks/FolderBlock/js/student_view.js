@@ -5,7 +5,6 @@ import templates from 'js/templates'
 
 export default StudentView.extend({
   events: {
-    'click button[name=download]': 'onDownload',
     'click button[name=upload]': 'fileUpload',
     'click button[name=Speichern]': 'saveLicenses',
     'click a.cancel.button': 'cancelLicenses',
@@ -30,20 +29,6 @@ export default StudentView.extend({
       this.$('.cw-folder-title').hide();
       this.$('.cw-folder').hide();
     }
-  },
-
-  onDownload() {
-    this.setupModel()
-    this.$el.html(templates('FolderBlock', 'student_view', { ...this.model.attributes }));
-    helper
-      .callHandler(this.model.id, 'download', {})
-      .catch(function (error) {
-        if (error.responseText) {
-          var errorMessage = 'Could not update the block: ' + $.parseJSON(error.responseText).reason;
-          alert(errorMessage);
-          console.log(errorMessage, arguments);
-        }
-      });
   },
 
   fileUpload() {

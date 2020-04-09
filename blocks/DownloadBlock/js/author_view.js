@@ -73,6 +73,7 @@ export default AuthorView.extend({
     var $download_title = this.$('input[name="download-title"]').val();
     var $download_info = this.$('input[name="download-info"]').val();
     var $download_success = this.$('input[name="download-success"]').val();
+    var $download_grade = this.$('input[name="download-grade"]').is(':checked');
 
     helper
       .callHandler(this.model.id, 'save', {
@@ -82,7 +83,8 @@ export default AuthorView.extend({
         folder_id: $folder_id,
         download_title: $download_title,
         download_info: $download_info,
-        download_success: $download_success
+        download_success: $download_success,
+        download_grade: $download_grade
       })
       .then(function () {
         $(event.target).addClass('accept');

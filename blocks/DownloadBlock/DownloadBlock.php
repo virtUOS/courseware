@@ -18,6 +18,7 @@ class DownloadBlock extends Block
         $this->defineField('download_title', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('download_info', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('download_success', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('download_grade', \Mooc\SCOPE_BLOCK, false);
     }
 
     public function student_view()
@@ -34,6 +35,10 @@ class DownloadBlock extends Block
             $icon = '';
             $file_available = false;
             $access = true;
+        }
+
+        if (!$this->download_grade) {
+            $this->setGrade(1.0);
         }
 
         return array_merge(
@@ -98,6 +103,7 @@ class DownloadBlock extends Block
             $this->download_title = \STUDIP\Markup::purifyHtml((string) $data['download_title']);
             $this->download_info = \STUDIP\Markup::purifyHtml((string) $data['download_info']);
             $this->download_success = \STUDIP\Markup::purifyHtml((string) $data['download_success']);
+            $this->download_grade = $data['download_grade'];
         }
 
         return;
@@ -141,21 +147,14 @@ class DownloadBlock extends Block
             'folder_id' => $this->folder_id,
             'download_title' => $this->download_title,
             'download_info' => $this->download_info,
-            'download_success' => $this->download_success
+            'download_success' => $this->download_success,
+            'download_grade'=> $this->download_grade
         );
     }
 
     public function exportProperties()
     {
-       return array(
-            'file' => $this->file,
-            'file_id' => $this->file_id,
-            'file_name' => $this->file_name,
-            'folder_id' => $this->folder_id,
-            'download_title' => $this->download_title,
-            'download_info' => $this->download_info,
-            'download_success' => $this->download_success
-       );
+       return $this->getAttrArray();
     }
 
     public function getFiles()
@@ -218,6 +217,12 @@ class DownloadBlock extends Block
 
         if (isset($properties['download_success'])) {
             $this->download_success = $properties['download_success'];
+        }
+
+        if (isset($properties['download_grade'])) {
+            $this->download_grade = $properties['download_grade'];
+        } else {
+            $this->download_grade = false;
         }
 
         $this->save();

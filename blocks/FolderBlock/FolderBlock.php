@@ -95,6 +95,8 @@ class FolderBlock extends Block
             $no_folder = true;
         }
 
+        $this->setGrade(1.0);
+
         return array_merge($this->getAttrArray(), array(
             'folder_available'=> $folder_available,
             'folder_name' => $folder_name,
@@ -180,13 +182,6 @@ class FolderBlock extends Block
         }
 
         return;
-    }
-
-    public function download_handler($data)
-    {
-        $this->setGrade(1.0);
-
-        return ;
     }
 
     private function showFiles($folder_id)
