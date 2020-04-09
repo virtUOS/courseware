@@ -2066,6 +2066,48 @@ button.cw-reset-progress-button:hover {
 #block_manager-index .ghost {
   opacity: 0.5;
 }
+#block_manager-index .cw-blockmanager-title.cw-blockmanager-help {
+  background-image: url("../../../../../assets/images/icons/blue/arr_1right.svg");
+  background-size: 16px;
+  background-position: 6px 18px;
+  background-repeat: no-repeat;
+  padding-left: 1em;
+  border-bottom: none;
+}
+#block_manager-index .cw-blockmanager-title.cw-blockmanager-help.unfolded {
+  background-image: url("../../../../../assets/images/icons/blue/arr_1down.svg");
+  border-bottom: solid thin #28497c;
+  color: #28497c;
+}
+#block_manager-index .helpbox {
+  border: solid thin #28497c;
+  margin: 0.5em 1em;
+  overflow: hidden;
+}
+#block_manager-index .helpbox .helpbox-title {
+  width: 554px;
+  margin: 0;
+  color: #28497c;
+  font-weight: 400;
+  font-size: 1em;
+  cursor: pointer;
+  background-image: url("../../../../../assets/images/icons/blue/arr_1right.svg");
+  background-size: 16px;
+  background-position: 6px 10px;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  border: none;
+  padding: 0.75em 1em 0.75em 2em;
+  display: inline-block;
+}
+#block_manager-index .helpbox .helpbox-title.unfolded {
+  background-image: url("../../../../../assets/images/icons/blue/arr_1down.svg");
+  background-color: #e7ebf1;
+  color: #28497c;
+}
+#block_manager-index .helpbox .helpbox-content {
+  padding: 1em;
+}
 #courseware-news .cw-news-list-sections {
   margin-top: 0.5em;
   padding-left: 0;
@@ -2614,6 +2656,10 @@ section#courseware .activate-aside-section {
 }
 section#courseware li.selected ~ li.controls .activate-aside-section {
   display: inline-block;
+}
+section#courseware .active-subchapter-nav-placeholder {
+  height: 64px;
+  display: none;
 }
 section#courseware ol.active-subchapter {
   background-color: white;
@@ -6378,6 +6424,13 @@ section.HtmlBlock .controls button.no-sorting {
 section.HtmlBlock textarea {
   width: 100%;
 }
+section.HtmlBlock .ckplaceholder {
+  height: 0 !important;
+}
+section.HtmlBlock .cktoolbar {
+  top: 0 !important;
+  position: relative !important;
+}
 section.HtmlBlock .cke_editable {
   min-height: 12em;
 }
@@ -6420,8 +6473,28 @@ section.HtmlBlock div.content:after {
 .btn-base:hover {
   cursor: pointer;
 }
+.iframe-title {
+  min-width: 10%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  font-style: normal;
+  font-weight: 600;
+  color: #28497c;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 10px 20px;
+  position: relative;
+  margin: 0;
+  text-align: center;
+  border: solid thin #ccc;
+  background-color: #fcfcfc;
+  border-bottom: none;
+}
 .content iframe {
   border: solid thin #ccc;
+  max-width: 868px;
 }
 .iframe-author-view,
 .iframe-data {
@@ -7178,6 +7251,9 @@ section#courseware .block-content:not([data-view="student"]) .cw-iav-test-conten
 }
 section#courseware .block-content:not([data-view="student"]) select.cw-iav-source {
   width: 14em;
+}
+section#courseware .block-content:not([data-view="student"]) label.cw-iav-range-inactive-label {
+  padding: 1em 0;
 }
 section#courseware button.button[name=video-preview] {
   padding: 0.5em;
