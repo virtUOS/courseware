@@ -34,7 +34,7 @@ class AudioBlock extends Block
                 $audio_file = $file->getDownloadURL();
                 $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
 
-                if (get_class($file->getFolderType()) == 'HiddenFolder' || 'HomeworkFolder') {
+                if (in_array(get_class($file->getFolderType()) , array('HiddenFolder','HomeworkFolder'))) {
                     $folder_warning = true;
                     $access = false;
                 }
