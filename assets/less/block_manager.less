@@ -802,4 +802,53 @@
         opacity: 0.5;
     }
 
+    .cw-blockmanager-title.cw-blockmanager-help {
+        background-image: url("../@{blocks-icons-dir}/blue/arr_1right.svg");
+        background-size: 16px;
+        background-position: 6px 18px;
+        background-repeat: no-repeat;
+        padding-left: 1em;
+        border-bottom: none;
+
+        &.unfolded {
+            background-image: url("../@{blocks-icons-dir}/blue/arr_1down.svg");
+            border-bottom: solid thin #28497c;
+            color: #28497c;
+        }
+    }
+
+    .helpbox {
+
+        border: solid thin #28497c;
+        margin: 0.5em 1em;
+        overflow: hidden;
+
+        .helpbox-title {
+            width: 554px;
+            margin: 0;
+            color: #28497c;
+            font-weight: 400;
+            font-size: 1em;
+            cursor: pointer;
+            background-image: url("../@{blocks-icons-dir}/blue/arr_1right.svg");
+            background-size: 16px;
+            background-position: 6px 10px;
+            background-repeat: no-repeat;
+            background-color: #fff;
+            border: none;
+            padding: 0.75em 1em 0.75em 2em;
+            display: inline-block;
+            &.unfolded {
+                background-image: url("../@{blocks-icons-dir}/blue/arr_1down.svg");
+                background-color: #e7ebf1;
+                color: #28497c;
+            }
+
+        }
+
+        .helpbox-content {
+            padding: 1em;
+        }
+    }
+
 }

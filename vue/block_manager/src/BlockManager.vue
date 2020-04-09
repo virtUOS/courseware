@@ -163,6 +163,20 @@
                 <div style="clear: both;"></div>
             </div>
         </div>
+         <div class="cw-blockmanager-wrapper">
+            <div class="cw-blockmanager-title cw-blockmanager-help" :class="{unfolded: helpUnfolded}" @click="helpUnfolded = !helpUnfolded">
+                <p>{{ $t('message.help') }}</p>
+            </div>
+            <div class="helpboxes" v-show="helpUnfolded">
+                <HelpBox :title="$t('message.help_about_title')" :content="$t('message.help_about_content')" />
+                <HelpBox :title="$t('message.help_sort_title')" :content="$t('message.help_sort_content')" />
+                <HelpBox :title="$t('message.help_approval_title')" :content="$t('message.help_approval_content')" />
+                <HelpBox :title="$t('message.help_add_and_delete_title')" :content="$t('message.help_add_and_delete_content')" />
+                <HelpBox :title="$t('message.help_import_title')" :content="$t('message.help_import_content')" />
+                <HelpBox :title="$t('message.help_remote_import_title')" :content="$t('message.help_remote_import_content')" />
+                <HelpBox :title="$t('message.help_export_title')" :content="$t('message.help_export_content')" />
+            </div>
+        </div>
         <div id="errorbox" class="cw-blockmanager-wrapper" v-if="errorOccurred.length > 0">
             <div id="cw-error-title" class="cw-blockmanager-title">
                 <p>{{ $t('message.messages') }}</p>
@@ -178,6 +192,7 @@
 import ChapterItem from './components/ChapterItem.vue';
 import SemesterItem from './components/SemesterItem.vue';
 import ActionMenuItem from './components/ActionMenuItem.vue';
+import HelpBox from './components/HelpBox.vue';
 import blockManagerHelperMixin from './mixins/blockManagerHelperMixin.js';
 
 import { SpringSpinner } from 'epic-spinners';
@@ -191,7 +206,8 @@ export default {
         SemesterItem,
         draggable,
         ActionMenuItem,
-        SpringSpinner
+        SpringSpinner,
+        HelpBox
     },
     data() {
         return {
@@ -207,7 +223,7 @@ export default {
             subchapterList: {},
             sectionList: {},
             blockList: {},
-            actionTitle: this.$i18n.t('message.actions'),
+            actionTitle: this.$i18n.t('message.imAndExport'),
             courseImportText: this.$i18n.t('message.importFromCourse'),
             remoteData: false,
             importData: false,
@@ -218,7 +234,8 @@ export default {
             loading: false,
             storeLock: false,
             errorOccurred: [],
-            coursewareExportURL: COURSEWARE.data.courseware_export_url
+            coursewareExportURL: COURSEWARE.data.courseware_export_url,
+            helpUnfolded: false
         };
     },
     created() {
@@ -359,7 +376,7 @@ export default {
             this.showExportCourseware = true;
         },
         resetActionMenu() {
-            this.actionTitle = this.$i18n.t('message.actions');
+            this.actionTitle = this.$i18n.t('message.imAndExport');
             this.fileError = false;
             this.remoteCourseware = null;
             this.importCourseware = null;
