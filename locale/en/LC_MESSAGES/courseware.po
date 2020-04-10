@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Courseware\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-0314 08:47+0200\n"
-"PO-Revision-Date: 2019-11-22 12:00+0100\n"
+"PO-Revision-Date: 2020-04-10 13:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: ELAN e.V. <lucke@elan-ev.de>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: views/import/index.php:37
@@ -128,10 +128,10 @@ msgid "auswerten"
 msgstr "evaluate"
 
 msgid "Autoplay"
-msgstr "autoplay"
+msgstr "Autoplay"
 
 msgid "Autoplay-Timer (in Sekunden)"
-msgstr "autoplay timer (in seconds)"
+msgstr "Autoplay timer (in seconds)"
 
 msgid "Autor"
 msgstr "Author"
@@ -260,7 +260,7 @@ msgid "Dateityp"
 msgstr "file type"
 
 msgid "Datenbezeichnung"
-msgstr "data description"
+msgstr "Data description"
 
 msgid "Datensatz"
 msgstr "record"
@@ -278,7 +278,7 @@ msgid "Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozent
 msgstr "The exercise type has changed. Please contact your course lecturer."
 
 msgid "Diagrammtyp"
-msgstr "chart type"
+msgstr "Chart type"
 
 msgid "Die angegebene URL scheint nicht zu der gewählten Plattform zu gehören. Bitte überprüfen Sie Ihre Eingabe."
 msgstr "The specified URL does not seem to belong to the selected platform. Please check your entry."
@@ -446,7 +446,7 @@ msgid "Für Videos von Plattformen wie YouTube oder vimeo nutzen Sie bitte den E
 msgstr "For videos from platforms like YouTube or vimeo, please use the embed block"
 
 msgid "Farbe"
-msgstr "color"
+msgstr "Color"
 
 msgid "Farbschema"
 msgstr "color scheme"
@@ -757,7 +757,7 @@ msgid "Name des Übergabeparameters"
 msgstr "Title of transfer parameter"
 
 msgid "Navigation verbergen"
-msgstr "hide navigation"
+msgstr "Hide navigation"
 
 msgid "nein"
 msgstr "no"
@@ -966,7 +966,7 @@ msgid "Titel"
 msgstr "Title"
 
 msgid "Titel des Blocks"
-msgstr "Name of HTML-Block"
+msgstr "Block header"
 
 msgid "Titel des Unterkapitels bearbeiten"
 msgstr "Edit title of sub-chapter"
@@ -1077,7 +1077,7 @@ msgid "Werk"
 msgstr "Product"
 
 msgid "Wert"
-msgstr "value"
+msgstr "Value"
 
 msgid "Zeitpunkt"
 msgstr "moment"
@@ -1920,3 +1920,81 @@ msgstr "Enter source code"
 
 msgid "Datei auswählen"
 msgstr "Choose a file"
+
+msgid "Schieberegler deaktivieren"
+msgstr "Deactivate range slider"
+
+msgid "Schließen Sie ein Mikrofon an um etwas aufzunehmen"
+msgstr "Connect a microphone to record something"
+
+msgid "Bitte schließen Sie ein Mikrofon und eine Kamera an um eine Videodatei aufzunehmen"
+msgstr "Please connect a microphone and a camera to record a video file"
+
+msgid "Dateien im Dateibereich anderer Nutzer"
+msgstr "Files in file system of another user"
+
+msgid "Dateinamen anzeigen"
+msgstr "Show file name"
+
+msgid "Der ausgewählte Ordner enthält keine Dateien"
+msgstr "The selected folder contains no files"
+
+msgid "Download deaktivieren"
+msgstr "disable download"
+
+msgid "Es wurde kein Ordner ausgewählt."
+msgstr "No folder has been selected yet."
+
+msgid "eigenes Bild anzeigen"
+msgstr "show own picture"
+
+msgid "Es wurde keine Datei ausgewählt."
+msgstr "No file has been selected yet."
+
+msgid "Es wurde kein Merksatz angegeben"
+msgstr "No keypoint was given"
+
+msgid "Es wurden noch keine Lernkarten angelegt."
+msgstr "No dialog cards have been created yet."
+
+msgid "Es wurde noch kein Inhalt zum einbetten ausgewählt"
+msgstr "No content to embed has yet been selected yet"
+
+msgid "Es wurde noch kein Quellcode eingetragen."
+msgstr "No source code was given."
+
+msgid "Es wurde noch kein Video aufgezeichnet."
+msgstr "No video has been recorded yet."
+
+msgid "Fortschritt erst beim Herunterladen"
+msgstr "Progress only when downloading"
+
+msgid "Grunddaten"
+msgstr "Basic details"
+
+msgid "hochladen"
+msgstr "upload"
+
+msgid "im Dateibereich speichern"
+msgstr "save in file system"
+
+msgid "Kamera freigeben um etwas aufzunehmen"
+msgstr "Allow camera access to record something"
+
+msgid "klein"
+msgstr "small"
+
+msgid "Objekt entfernen"
+msgstr "delete object"
+
+msgid "Opencast Player"
+msgstr "Opencast player"
+
+msgid "Polardiagramm"
+msgstr "polar area chart"
+
+msgid "Sortierung ist fehlgeschlagen"
+msgstr "Sorting failed"
+
+msgid "Kapitelsortierung ist fehlgeschlagen"
+msgstr "Chapter sorting failed"
