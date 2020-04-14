@@ -239,16 +239,15 @@ class AudioBlock extends Block
 
     public function getFiles()
     {
-        
         if ($this->audio_source != 'cw') {
-            return;
+            return array();
         }
         if ($this->audio_id == '') {
-            return;
+            return array();
         }
         $file_ref = new \FileRef($this->audio_id);
         $file = new \File($file_ref->file_id);
-        
+
         $files[] = array(
             'id' => $this->audio_id,
             'name' => $file_ref->name,
