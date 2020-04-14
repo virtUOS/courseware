@@ -145,8 +145,9 @@ class PdfBlock extends Block
 
     public function getFiles()
     {
+        $files = array();
         if ($this->pdf_file_id == '') {
-            return array();
+            return $files;
         }
         $file_ref = new \FileRef($this->pdf_file_id);
         $file = new \File($file_ref->file_id);

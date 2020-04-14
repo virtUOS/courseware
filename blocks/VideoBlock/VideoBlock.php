@@ -222,8 +222,9 @@ class VideoBlock extends Block
 
     public function getFiles()
     {
+        $files = array();
         if ($this->webvideo == '') {
-            return array();
+            return $files;
         }
         $sources = json_decode($this->webvideo);
         foreach ($sources as $source) {
@@ -248,9 +249,6 @@ class VideoBlock extends Block
                 );
             }
         }
-    if (empty($files)) {
-        $files = array();
-    }
 
         return $files;
     }

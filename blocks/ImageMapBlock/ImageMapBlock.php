@@ -263,23 +263,25 @@ class ImageMapBlock extends Block
 
     public function getFiles()
     {
+        $files = array();
         $content = json_decode($this->image_map_content);
+        if($content) {
+            if ($content->image_id == '') {
+                return $files;
+            }
+            $file_ref = new \FileRef($content->image_id);
+            $file = new \File($file_ref->file_id);
 
-        if ($content->image_id == '') {
-            return;
+            $files[] = array(
+                'id' => $content->image_id,
+                'name' => $file_ref->name,
+                'description' => $file_ref->description,
+                'filename' => $file->name,
+                'filesize' => $file->size,
+                'url' => $file->getURL(),
+                'path' => $file->getPath()
+            );
         }
-        $file_ref = new \FileRef($content->image_id);
-        $file = new \File($file_ref->file_id);
-
-        $files[] = array(
-            'id' => $content->image_id,
-            'name' => $file_ref->name,
-            'description' => $file_ref->description,
-            'filename' => $file->name,
-            'filesize' => $file->size,
-            'url' => $file->getURL(),
-            'path' => $file->getPath()
-        );
 
         return $files;
     }
