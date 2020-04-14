@@ -159,8 +159,9 @@ class DownloadBlock extends Block
 
     public function getFiles()
     {
+        $files = array();
         if ($this->file_id == '') {
-            return;
+            return $files;
         }
         $file_ref = new \FileRef($this->file_id);
         $file = new \File($file_ref->file_id);
