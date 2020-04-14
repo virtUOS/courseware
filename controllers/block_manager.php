@@ -761,7 +761,7 @@ class BlockManagerController extends CoursewareStudipController
             'publication_date' => $data['publication_date'],
             'withdraw_date' => $data['withdraw_date'],
             'position' => $block->getNewPosition($parent_id),
-            'approval' => $parent->approval
+            'approval' => ($parent->approval == null) ? '' : $parent->approval
         ));
 
         $block->store();
