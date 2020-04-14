@@ -9,7 +9,7 @@
         </div>
     {{/url}}
     {{^url}}
-    {{#webvideo}}
+    {{#webvideo_set}}
         <div class="video-wrapper {{aspect}}">
             <video width="100%" {{webvideosettings}}>
                 {{#webvideo}}
@@ -17,14 +17,14 @@
                 {{/webvideo}}
             </video>
         </div>
-    {{/webvideo}}
-    {{^webvideo}}
+    {{/webvideo_set}}
+    {{^webvideo_set}}
         {{#isAuthor}}
             <div class="messagebox messagebox_info">
                 {{#i18n}}Es wurde noch kein Video eingetragen.{{/i18n}}
             </div>
         {{/isAuthor}}
-    {{/webvideo}}
+    {{/webvideo_set}}
     {{/url}}
 {{/inactive}}
 {{#inactive}}

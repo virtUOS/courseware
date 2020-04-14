@@ -39,10 +39,10 @@ class VideoBlock extends Block
         }
         $this->setGrade(1.0);
         $array = $this->array_rep();
-
+        $array['webvideo_set'] = false;
         if ($array['webvideo'] != '') {
             $array['webvideo'] = json_decode($array['webvideo'], true);
-            if (is_array($array['webvideo']) > 0) {
+            if (is_array($array['webvideo']) > 0 && sizeof($array['webvideo']) > 0) {
                 foreach($array['webvideo'] as &$webvideo) {
                     if($webvideo['source'] == 'file') {
                         $file = \FileRef::find($webvideo['file_id']);
@@ -53,6 +53,8 @@ class VideoBlock extends Block
                         }
                     }
                 }
+                
+                $array['webvideo_set'] = true;
             }
 
         }
