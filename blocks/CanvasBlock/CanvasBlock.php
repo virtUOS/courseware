@@ -221,14 +221,15 @@ class CanvasBlock extends Block
 
     public function getFiles()
     {
+        $files = array();
         $content = json_decode($this->canvas_content);
 
         if ($content->source != 'cw') {
-            return;
+            return $files;
         }
 
         if ($content->image_id == '') {
-            return;
+            return $files;
         }
         $file_ref = new \FileRef($content->image_id);
         $file = new \File($file_ref->file_id);

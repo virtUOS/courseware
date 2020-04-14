@@ -141,6 +141,7 @@ class BeforeAfterBlock extends Block
     public function getFiles()
     {
         $ba_files = [];
+        $files = array();
         $before = json_decode($this->ba_before);
         $after = json_decode($this->ba_after);
         

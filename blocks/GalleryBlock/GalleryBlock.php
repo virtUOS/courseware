@@ -171,26 +171,24 @@ class GalleryBlock extends Block
         $file_ids = json_decode($this->gallery_file_ids);
 
         $files = array();
+        if ($file_ids) {
+            foreach ($file_ids as $file_id) {
+                if ($file_id == '') {
+                    continue;
+                }
+                $file_ref = new \FileRef($file_id);
+                $file = new \File($file_ref->file_id);
 
-        foreach ($file_ids as $file_id) {
-            if ($file_id == '') {
-                continue;
+                array_push( $files, array (
+                    'id' => $file_ref->id,
+                    'name' => $file_ref->name,
+                    'description' => $file_ref->description,
+                    'filename' => $file->name,
+                    'filesize' => $file->size,
+                    'url' => $file->getURL(),
+                    'path' => $file->getPath()
+                ));
             }
-            $file_ref = new \FileRef($file_id);
-            $file = new \File($file_ref->file_id);
-
-            array_push( $files, array (
-                'id' => $file_ref->id,
-                'name' => $file_ref->name,
-                'description' => $file_ref->description,
-                'filename' => $file->name,
-                'filesize' => $file->size,
-                'url' => $file->getURL(),
-                'path' => $file->getPath()
-            ));
-        }
-        if (empty($files)) {
-            return;
         }
 
         return $files;
