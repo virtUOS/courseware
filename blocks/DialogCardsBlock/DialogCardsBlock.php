@@ -154,35 +154,36 @@ class DialogCardsBlock extends Block
         $cards = json_decode($this->dialogcards_content);
 
         $files = array();
+        if ($cards) {
+            foreach ($cards as $card) {
+                if ((!$card->front_external_file) && (!empty($card->front_img_file_id))) {
+                    $file_ref = new \FileRef($card->front_img_file_id);
+                    $file = new \File($file_ref->file_id);
 
-        foreach ($cards as $card) {
-            if ((!$card->front_external_file) && (!empty($card->front_img_file_id))) {
-                $file_ref = new \FileRef($card->front_img_file_id);
-                $file = new \File($file_ref->file_id);
+                    array_push( $files, array (
+                        'id' => $file_ref->id,
+                        'name' => $file_ref->name,
+                        'description' => $file_ref->description,
+                        'filename' => $file->name,
+                        'filesize' => $file->size,
+                        'url' => $file->getURL(),
+                        'path' => $file->getPath()
+                    ));
+                }
+                if ((!$card->back_external_file) && (!empty($card->back_img_file_id))) {
+                    $file_ref = new \FileRef($card->back_img_file_id);
+                    $file = new \File($file_ref->file_id);
 
-                array_push( $files, array (
-                    'id' => $file_ref->id,
-                    'name' => $file_ref->name,
-                    'description' => $file_ref->description,
-                    'filename' => $file->name,
-                    'filesize' => $file->size,
-                    'url' => $file->getURL(),
-                    'path' => $file->getPath()
-                ));
-            }
-            if ((!$card->back_external_file) && (!empty($card->back_img_file_id))) {
-                $file_ref = new \FileRef($card->back_img_file_id);
-                $file = new \File($file_ref->file_id);
-
-                array_push( $files, array (
-                    'id' => $file_ref->id,
-                    'name' => $file_ref->name,
-                    'description' => $file_ref->description,
-                    'filename' => $file->name,
-                    'filesize' => $file->size,
-                    'url' => $file->getURL(),
-                    'path' => $file->getPath()
-                ));
+                    array_push( $files, array (
+                        'id' => $file_ref->id,
+                        'name' => $file_ref->name,
+                        'description' => $file_ref->description,
+                        'filename' => $file->name,
+                        'filesize' => $file->size,
+                        'url' => $file->getURL(),
+                        'path' => $file->getPath()
+                    ));
+                }
             }
         }
 
@@ -212,28 +213,29 @@ class DialogCardsBlock extends Block
     {
         $cards = json_decode($this->dialogcards_content);
         $used_files = array();
-
-        foreach ($cards as $key => $card) {
-            foreach($files as $file){
-                if($file->name == '') {
-                    continue;
+        if($cards) {
+            foreach ($cards as $key => $card) {
+                foreach($files as $file){
+                    if($file->name == '') {
+                        continue;
+                    }
+                    if ($card->front_img_file_name == $file->name) {
+                        $card->front_img_file_id = $file->id;
+                        $card->front_img = $file->getDownloadURL();
+                        array_push($used_files, $file->id);
+                    }
+                    if ($card->back_img_file_name == $file->name) {
+                        $card->back_img_file_id = $file->id;
+                        $card->back_img = $file->getDownloadURL();
+                        array_push($used_files, $file->id);
+                    }
                 }
-                if ($card->front_img_file_name == $file->name) {
-                    $card->front_img_file_id = $file->id;
-                    $card->front_img = $file->getDownloadURL();
-                    array_push($used_files, $file->id);
-                }
-                if ($card->back_img_file_name == $file->name) {
-                    $card->back_img_file_id = $file->id;
-                    $card->back_img = $file->getDownloadURL();
-                    array_push($used_files, $file->id);
-                }
+                $cards[$key] = $card;
             }
-            $cards[$key] = $card;
-        }
-        $this->dialogcards_content = json_encode($cards);
+            $this->dialogcards_content = json_encode($cards);
 
-        $this->save();
+            $this->save();
+        }
         return $used_files;
     }
 }
