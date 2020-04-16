@@ -265,15 +265,20 @@ class FolderBlock extends Block
     public function exportProperties()
     {
         $folder_content = json_decode($this->folder_content);
-        $file_infos = $this->getFileInfos();
-        $folder_content->file_ids = $file_infos['id'];
-        $folder_content->file_names = $file_infos['name'];
-        $folder = \Folder::find($folder_content->folder_id);
-        if ($folder == null) {
-            $folder_content->folder_type = '';
+        if($folder_content) {
+            $file_infos = $this->getFileInfos();
+            $folder_content->file_ids = $file_infos['id'];
+            $folder_content->file_names = $file_infos['name'];
+            $folder = \Folder::find($folder_content->folder_id);
+            if ($folder == null) {
+                $folder_content->folder_type = '';
+            } else {
+                $typed_folder = $folder->getTypedFolder();
+                $folder_content->folder_type = $typed_folder->folder_type;
+                $folder_content->folder_name = $folder->name;
+            }
         } else {
-            $typed_folder = $folder->getTypedFolder();
-            $folder_content->folder_type = $typed_folder->folder_type;
+           return;
         }
 
         return array(
@@ -284,7 +289,6 @@ class FolderBlock extends Block
     public function getFiles()
     {
         $files = array();
-        $folder_content = json_decode($this->folder_content);
         $file_ids = $this->getFileInfos()['id'];
 
         foreach ($file_ids as $file_id) {
@@ -303,9 +307,6 @@ class FolderBlock extends Block
                 'url' => $file->getURL(),
                 'path' => $file->getPath()
             ));
-        }
-        if (empty($files)) {
-            return;
         }
 
         return $files;
@@ -329,10 +330,10 @@ class FolderBlock extends Block
         $parent_folder = \FileManager::getTypedFolder($courseware_folder->id);
         if($folder_name == '') {$folder_name = $this->id;}
         $request = array('name' => $folder_name, 'description' => 'gallery folder');
-        if ($folder_type == 'HomeworkFolder') {
-            $new_folder = new \HomeworkFolder();
+        if ($folder_type == '') {
+            $new_folder = new StandardFolder();
         } else {
-            $new_folder = new \StandardFolder();
+            $new_folder = new $folder_type();
         }
         $new_folder->setDataFromEditTemplate($request);
         $new_folder->user_id = $user->id;
@@ -345,7 +346,7 @@ class FolderBlock extends Block
     {
         if (isset($properties['folder_content'])) {
             $folder_content = json_decode($properties['folder_content']);
-            $folder_content->folder_id = $this->createFolder($folder_content->folder_title, $folder_content->folder_type);
+            $folder_content->folder_id = $this->createFolder($folder_content->folder_name, $folder_content->folder_type);
             $this->folder_content = json_encode($folder_content);
         }
 
@@ -366,27 +367,29 @@ class FolderBlock extends Block
 
     public function importContents($contents, array $files)
     {
-        $folder_content = json_decode($this->folder_content);
-
-        $file_ids = array();
         $used_files = array();
+        $folder_content = json_decode($this->folder_content);
+        if ($folder_content) {
+            $file_ids = array();
 
-        foreach($files as $file){
-            if ($file->name == '') {
-                continue;
+            foreach($files as $file){
+                if ($file->name == '') {
+                    continue;
+                }
+                if(in_array($file->name, $folder_content->file_names)) {
+                    array_push($file_ids , array($file->id));
+                    array_push($used_files , $file->id);
+                }
             }
-            if(in_array($file->name, $folder_content->file_names)) {
-                array_push($file_ids , array($file->id));
-                array_push($used_files , $file->id);
-            }
+            $folder_content->file_ids = $file_ids;
+            $this->folder_content = json_encode($folder_content);
+            $this->save();
+
+            $this->moveFiles();
+
+            $this->save();
         }
-        $folder_content->file_ids = $file_ids;
-        $this->folder_content = json_encode($folder_content);
-        $this->save();
 
-        $this->moveFiles();
-
-        $this->save();
         return $used_files;
     }
 }
