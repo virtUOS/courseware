@@ -190,8 +190,13 @@ class AudioBlock extends Block
         $audio_id_found = false;
 
         foreach ($course_folders as $folder) {
-            if(in_array(get_class($folder->getTypedFolder()), array('HiddenFolder', 'TimedFolder','HomeworkFolder'))) {
+            if(in_array(get_class($folder->getTypedFolder()), array('TimedFolder','HomeworkFolder'))) {
                     continue;
+            }
+            if($folder->folder_type == 'HiddenFolder') {
+                if($folder->data_content['download_allowed'] != 1) {
+                    continue;
+                }
             }
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){

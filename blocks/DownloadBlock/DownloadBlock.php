@@ -63,6 +63,8 @@ class DownloadBlock extends Block
         $this->authorizeUpdate();
         $allfiles = $this->showFiles($folder_id);
         $folders =  \Folder::findBySQL('range_id = ? AND folder_type NOT IN (?)', array($this->container['cid'], array('RootFolder', 'HomeworkFolder', 'HiddenFolder')));
+        $hidden_folders = $this->getHiddenFolders();
+        $folders = array_merge($folders, $hidden_folders);
         $root_folder = \Folder::findOneBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'RootFolder'));
         $root_folder->name = 'Hauptordner';
         array_unshift($folders, $root_folder);
@@ -84,6 +86,21 @@ class DownloadBlock extends Block
         }
 
         return array_merge($this->getAttrArray(), array('allfiles' => $allfiles, 'folders' => $folders, 'user_folders' => $user_folders, 'other_user_folder' => $other_user_folder));
+    }
+
+    private function getHiddenFolders()
+    {
+        $folders = array();
+
+        $hidden_folders = \Folder::findBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'HiddenFolder'));
+
+        foreach ($hidden_folders as $hidden_folder) {
+            if($hidden_folder->data_content['download_allowed'] == 1) {
+                array_push($folders, $hidden_folder);
+            }
+        }
+
+        return $folders;
     }
 
     public function preview_view()

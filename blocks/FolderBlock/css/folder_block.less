@@ -167,11 +167,18 @@ section#courseware .block-content:not([data-view="student"]){
         }
     }
     &.HiddenFolder {
-        .assets-bg-icon("grey/visibility-invisible/folder-lock-empty.svg");
+        .assets-bg-icon("blue/visibility-invisible/folder-lock-empty.svg");
         &.full{
-            .assets-bg-icon("grey/visibility-invisible/folder-lock-full.svg");
+            .assets-bg-icon("blue/visibility-invisible/folder-lock-full.svg");
         }
     }
+    &.CourseDateFolder {
+        .assets-bg-icon("blue/folder-topic-empty.svg");
+        &.full {
+            .assets-bg-icon("blue/folder-topic-empty.svg");
+        }
+    }
+    
 }
 
 .cw-folder-upload {

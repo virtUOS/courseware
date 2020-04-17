@@ -31,7 +31,14 @@ class GalleryBlock extends Block
         $this->setGrade(1.0);
         $files = $this->showFiles($this->gallery_folder_id);
         $gallery_has_files = sizeOf($files) > 0;
-        $folder_type = \Folder::find($this->gallery_folder_id)->folder_type;
+        $current_folder = \Folder::find($this->gallery_folder_id);
+        $folder_is_public = in_array($current_folder->folder_type, array('StandardFolder','CoursePublicFolder', 'MaterialFolder', 'PublicFolder'), true);
+
+        if ($current_folder->folder_type == 'HiddenFolder') {
+            if ($current_folder->data_content['download_allowed'] == 1) {
+                $folder_is_public = true;
+            }
+        }
 
         return array_merge(
             $this->getAttrArray(), 
@@ -40,7 +47,7 @@ class GalleryBlock extends Block
                 'userIsAuthorized' => $this->getUpdateAuthorization(),
                 'galleryHasFiles' => $gallery_has_files,
                 'noFolder' => $this->gallery_folder_id == '',
-                'folderIsPublic' => in_array($folder_type, array('StandardFolder','CoursePublicFolder', 'MaterialFolder', 'PublicFolder'), true)
+                'folderIsPublic' => $folder_is_public
             )
         );
     }
@@ -48,13 +55,30 @@ class GalleryBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-        $folders = \Folder::findBySQL('range_id = ? AND folder_type IN (?)', array($this->container['cid'], array('StandardFolder','CoursePublicFolder', 'MaterialFolder')));
+        $course_folders = \Folder::findBySQL('range_id = ? AND folder_type IN (?)', array($this->container['cid'], array('StandardFolder','CoursePublicFolder', 'MaterialFolder')));
+        $hidden_folders = $this->getHiddenFolders();
+        $course_folders = array_merge($course_folders, $hidden_folders);
         $user_folders = \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
 
-        $folders = $this->buildFoldersArray($folders);
+        $folders = $this->buildFoldersArray($course_folders);
         $user_folders = $this->buildFoldersArray($user_folders);
 
         return array_merge($this->getAttrArray(), array("folders" => $folders, "user_folders" => $user_folders));
+    }
+
+    private function getHiddenFolders()
+    {
+        $folders = array();
+
+        $hidden_folders = \Folder::findBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'HiddenFolder'));
+
+        foreach ($hidden_folders as $hidden_folder) {
+            if($hidden_folder->data_content['download_allowed'] == 1) {
+                array_push($folders, $hidden_folder);
+            }
+        }
+
+        return $folders;
     }
 
     public function preview_view()
@@ -108,25 +132,27 @@ class GalleryBlock extends Block
     private function buildFoldersArray($folders)
     {
         $folders_array = [];
-        foreach($folders as $folder){
-            $folder = $folder->getTypedFolder();
-            $response = \FileRef::findBySQL('folder_id = ?', array($folder->id));
-            $counter = 0;
-            foreach ($response as $item) {
-                if (!$item->terms_of_use->fileIsDownloadable($item, false)) {
-                    continue;
+        if ($folders) {
+            foreach($folders as $folder){
+                $folder = $folder->getTypedFolder();
+                $response = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+                $counter = 0;
+                foreach ($response as $item) {
+                    if (!$item->terms_of_use->fileIsDownloadable($item, false)) {
+                        continue;
+                    }
+                    if ($item->isImage()) {
+                        $counter++;
+                    }
                 }
-                if ($item->isImage()) {
-                    $counter++;
-                }
+                $folders_array[] = array(
+                    'id' => $folder->id,
+                    'name' => $folder->name,
+                    'folder_type' => $folder->folder_type,
+                    'size' => $counter,
+                    'has_images' => $counter > 0
+                );
             }
-            $folders_array[] = array(
-                'id' => $folder->id,
-                'name' => $folder->name,
-                'folder_type' => $folder->folder_type,
-                'size' => $counter,
-                'has_images' => $counter > 0
-            );
         }
 
         return $folders_array;
@@ -134,10 +160,18 @@ class GalleryBlock extends Block
 
     private function showFiles($folder_id)
     {
+        $current_folder = \Folder::find($folder_id);
         $filesarray = array();
-        if (!in_array(\Folder::find($this->gallery_folder_id)->folder_type, array('StandardFolder','CoursePublicFolder', 'MaterialFolder', 'PublicFolder'), true)) {
+        if (!in_array($current_folder->folder_type, array('StandardFolder','CoursePublicFolder', 'MaterialFolder', 'HiddenFolder', 'PublicFolder'), true)) {
             return $filesarray;
         }
+
+        if ($current_folder->folder_type == 'HiddenFolder'){
+            if($current_folder->data_content['download_allowed'] != 1) {
+                return $filesarray;
+            }
+        }
+
         $response = \FileRef::findBySQL('folder_id = ?', array($folder_id));
         foreach ($response as $item) {
             if (!$item->terms_of_use->fileIsDownloadable($item, false)) {
@@ -157,6 +191,7 @@ class GalleryBlock extends Block
 
         return $filesarray;
     }
+
 
     public function exportProperties()
     {

@@ -224,7 +224,9 @@ class BeforeAfterBlock extends Block
     {
         $coursefilesarray = array();
         $userfilesarray = array();
-        $course_folders =  \Folder::findBySQL('range_id = ? AND folder_type NOT IN (?)', array($this->container['cid'], array('HiddenFolder', 'HomeworkFolder')));
+        $course_folders = \Folder::findBySQL('range_id = ? AND folder_type NOT IN (?)', array($this->container['cid'], array('HiddenFolder','HomeworkFolder')));
+        $hidden_folders = $this->getHiddenFolders();
+        $course_folders = array_merge($course_folders, $hidden_folders);
         $user_folders =  \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
         $before_file_id_found = false;
         $after_file_id_found = false;
@@ -264,5 +266,20 @@ class BeforeAfterBlock extends Block
             'userfilesarray' => $userfilesarray,
             'before_file_id_found' => $before_file_id_found,
             'after_file_id_found' => $after_file_id_found);
+    }
+
+    private function getHiddenFolders()
+    {
+        $folders = array();
+
+        $hidden_folders = \Folder::findBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'HiddenFolder'));
+
+        foreach ($hidden_folders as $hidden_folder) {
+            if($hidden_folder->data_content['download_allowed'] == 1) {
+                array_push($folders, $hidden_folder);
+            }
+        }
+
+        return $folders;
     }
 }

@@ -35,7 +35,9 @@ class FolderBlock extends Block
             $folder_type = $typed_folder->folder_type;
             switch ($folder_type) {
                 case 'HiddenFolder':
-                    $folder_hidden = true;
+                    if($folder->data_content['download_allowed'] != 1) {
+                        $folder_hidden = true;
+                    }
                     break;
                 case  'HomeworkFolder':
                     $folder_content->allow_upload = true;
@@ -138,12 +140,19 @@ class FolderBlock extends Block
         $folderarray = [];
         foreach($folders as $folder) {
             $folder = $folder->getTypedFolder();
+            $disabled = '';
+            if($folder->folder_type == 'HiddenFolder') {
+                if($folder->data_content['download_allowed'] != 1) {
+                    $disabled = 'disabled';
+                }
+            }
             $folderarray[] = array(
-            'id' => $folder->id,
-            'name' => $folder->name,
-            'folder_type' => $folder->folder_type,
-            'size' => sizeOf($folder->getFiles()),
-            'disabled' => ($folder->folder_type == 'HiddenFolder') ? 'disabled' : '' );
+                'id' => $folder->id,
+                'name' => $folder->name,
+                'folder_type' => $folder->folder_type,
+                'size' => sizeOf($folder->getFiles()),
+                'disabled' => $disabled
+            );
         }
 
         $root_folder = \Folder::findOneBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'RootFolder'));
@@ -334,6 +343,9 @@ class FolderBlock extends Block
             $new_folder = new StandardFolder();
         } else {
             $new_folder = new $folder_type();
+        }
+        if ($folder_type == 'HiddenFolder') {
+            $request['hidden_folder_download_allowed'] = 1;
         }
         $new_folder->setDataFromEditTemplate($request);
         $new_folder->user_id = $user->id;

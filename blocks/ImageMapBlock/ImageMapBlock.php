@@ -220,6 +220,8 @@ class ImageMapBlock extends Block
         $coursefilesarray = array();
         $userfilesarray = array();
         $course_folders = \Folder::findBySQL('range_id = ? AND folder_type NOT IN (?)', array($this->container['cid'], array('HiddenFolder', 'HomeworkFolder')));
+        $hidden_folders = $this->getHiddenFolders();
+        $course_folders = array_merge($course_folders, $hidden_folders);
         $user_folders = \Folder::findBySQL('range_id = ? AND folder_type = ? ', array($this->container['current_user_id'], 'PublicFolder'));
         $image_id_found = false;
 
@@ -254,6 +256,21 @@ class ImageMapBlock extends Block
         }
 
         return array('coursefilesarray' => $coursefilesarray, 'userfilesarray' => $userfilesarray, 'image_id_found' => $image_id_found);
+    }
+
+    private function getHiddenFolders()
+    {
+        $folders = array();
+
+        $hidden_folders = \Folder::findBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'HiddenFolder'));
+
+        foreach ($hidden_folders as $hidden_folder) {
+            if($hidden_folder->data_content['download_allowed'] == 1) {
+                array_push($folders, $hidden_folder);
+            }
+        }
+
+        return $folders;
     }
 
     public function exportProperties()
