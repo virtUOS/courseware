@@ -156,9 +156,13 @@ class CoursewareController extends CoursewareStudipController
         foreach ($this->new_ones as $item){
             $block = new Mooc\DB\Block($item["id"]);
             if ( (strpos($item["title"], "AsideSection") >-1) || (in_array($block->type , array("Chapter", "Subchapter", "Section"))) ){continue;}
-            if (!$block->parent->parent->parent->isPublished() || !$block->parent->parent->parent->isVisible()) {continue;}
+            if($block->parent->parent->parent != null) {
+                if (!$block->parent->parent->parent->isPublished() || !$block->parent->parent->parent->isVisible()) {continue;}
+            }
             $chapter = $block->parent->parent->parent->title;
-            if (!$block->parent->parent->isPublished() || !$block->parent->parent->isVisible()) {continue;}
+            if($block->parent->parent != null) {
+                if (!$block->parent->parent->isPublished() || !$block->parent->parent->isVisible()) {continue;}
+            }
             $subchapter = $block->parent->parent->title;
             $section = $block->parent->title;
             if (!$block->isVisible()) {continue;}
