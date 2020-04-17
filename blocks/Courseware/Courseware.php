@@ -139,7 +139,10 @@ class Courseware extends Block
             foreach ($section->children as $block) {
                 $bid = $block->id;
                 $progress = UserProgress::findOneBySQL('block_id = ? AND user_id = ?', array($bid, $uid));
-                if (!$progress || ($progress->grade / $progress->max_grade != 1)) {
+                if (!$progress) {
+                    return false;
+                }
+                if ($progress->max_grade != 0 && ($progress->grade / $progress->max_grade != 1)) {
                     return false;
                 }
             }
@@ -154,7 +157,10 @@ class Courseware extends Block
         foreach ($sectionblock->children as $block) {
             $bid = $block->id;
             $progress = UserProgress::findOneBySQL('block_id = ? AND user_id = ?', array($bid, $uid));
-            if (!$progress || ($progress->grade / $progress->max_grade != 1)) {
+            if (!$progress) {
+                return false;
+            }
+            if ($progress->max_grade != 0 && ($progress->grade / $progress->max_grade != 1)) {
                 return false;
             }
         }

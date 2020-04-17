@@ -251,7 +251,7 @@ class CpoController extends CoursewareStudipController
                 if (array_sum($maxGrades) > 0) {
                     $root['progress'] = array_sum($grades) / array_sum($maxGrades);
                 } else {
-                    $root['progress'] = 0;
+                    $root['progress'] = 1;
                 }
             }
             else {
