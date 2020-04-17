@@ -6122,10 +6122,16 @@ section#courseware .block-content:not([data-view="student"]) .select2-container 
   background-image: url("../../../../../assets/images/icons/blue/folder-date-full2.svg");
 }
 .cw-folder-icon.HiddenFolder {
-  background-image: url("../../../../../assets/images/icons/grey/visibility-invisible/folder-lock-empty.svg");
+  background-image: url("../../../../../assets/images/icons/blue/visibility-invisible/folder-lock-empty.svg");
 }
 .cw-folder-icon.HiddenFolder.full {
-  background-image: url("../../../../../assets/images/icons/grey/visibility-invisible/folder-lock-full.svg");
+  background-image: url("../../../../../assets/images/icons/blue/visibility-invisible/folder-lock-full.svg");
+}
+.cw-folder-icon.CourseDateFolder {
+  background-image: url("../../../../../assets/images/icons/blue/folder-topic-empty.svg");
+}
+.cw-folder-icon.CourseDateFolder.full {
+  background-image: url("../../../../../assets/images/icons/blue/folder-topic-empty.svg");
 }
 .cw-folder-upload {
   margin-top: 1em;
