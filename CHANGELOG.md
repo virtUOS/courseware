@@ -1,5 +1,38 @@
 CHANGELOG
 =========
+
+4.5.2
+-----
+* fix HtmlBlock: CKEditor layout issues
+* fix HtmlBlock: store without CKEditor
+* fix AudioBlock: recording
+* enhance PdfBlock: optional download button
+* fix news: do not show hidden content
+* enchance IFrameBlock: add header
+* fix ForumBlock: import issue
+* fix approval issues
+* fix all blocks with files: do not show hidden folders
+* enhance IAV-Block: disable range slider (optional)
+* fix ChartBlock: naming
+* fix Section: nav stuck position
+* fix TestBlock: set grade 1 if no sheet is selected
+* fix GalleryBlock: use more folder types
+* fix PostBlock: hidden post issue
+* fix block mananger: i18n issue with sem names
+* enhance block mananger: add help box
+* fix VideoBlock: multiple video tag issue
+* fix copy empty blocks issue
+* enhance FolderBlock: keep folder type and name on copy
+* fix some other details 
+
+
+4.5.1
+-----
+* select2 in KeyPointBlock
+* more icons in KeyPointBlock
+* fix LTI issues in OpenCastBlock
+* some minor layout fixes
+
 4.5.0
 -----
 * excitingly enhanced block manager build with vue.js
