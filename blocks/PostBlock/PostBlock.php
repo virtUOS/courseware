@@ -178,7 +178,8 @@ class PostBlock extends Block
                     'seminar_id' => $this->container['cid'],
                     'user_id' => $this->container['current_user_id'],
                     'content' => $properties['post_title'],
-                    'mkdate' => (new \DateTime())->format('Y-m-d H:i:s')
+                    'mkdate' => (new \DateTime())->format('Y-m-d H:i:s'),
+                    'chdate' => (new \DateTime())->format('Y-m-d H:i:s')
                 );
                 POST::create($data);
         }
