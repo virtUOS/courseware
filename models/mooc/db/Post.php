@@ -85,6 +85,7 @@ class Post extends \SimpleORMap
                 if ($timestamp < strtotime($post['mkdate'])) {$timestamp = strtotime($post['mkdate']);}
                 $post['date'] = date('H:i', strtotime($post['mkdate'])).' Uhr, am '.date('d.m.Y', strtotime($post['mkdate']));
                 if ($post['user_id'] == $uid) {$post['own_post'] = true;} else {$post['own_post'] = false;} 
+                $post['hidden'] == 1 ? $post['hidden'] = true : $post['hidden'] = false;
             }
             else  {
                 unset($posts[$key]);

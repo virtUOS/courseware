@@ -30,6 +30,7 @@ class PostBlock extends Block
         if(!$this->has_to_post){
             $this->setGrade(1.0);
         }
+
         return array_merge(
             $this->getAttrArray(),
             Post::findPosts($this->thread_id, $this->container['cid'], $this->container['current_user_id']),
