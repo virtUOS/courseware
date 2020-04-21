@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+4.5.3
+-----
+* fix DownloadBlock: fix import
+* fix PostBlock: fix update handler
+
 4.5.2
 -----
 * fix HtmlBlock: CKEditor layout issues
