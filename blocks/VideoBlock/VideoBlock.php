@@ -316,6 +316,9 @@ class VideoBlock extends Block
     public function importContents($contents, array $files)
     {
         $webvideo = json_decode($this->webvideo);
+        if(!$webvideo) {
+            return ;
+        }
         foreach($files as $file){
             if ($file->name == '') {
                 continue;
