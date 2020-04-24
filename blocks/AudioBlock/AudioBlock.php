@@ -33,19 +33,30 @@ class AudioBlock extends Block
             if ($file) {
                 $audio_file = $file->getDownloadURL();
                 $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
-
-                if (in_array(get_class($file->getFolderType()) , array('HiddenFolder','HomeworkFolder'))) {
-                    $folder_warning = true;
-                    $access = false;
-                }
-                if (get_class($file->getFolderType()) == 'TimedFolder') {
-                    $folder_warning = true;
-                    $folder = $file->getFolderType();
-                    $now = time();
-                    $folder_visible =  ($folder->start_time == 0 || $folder->start_time <= $now) && ($folder->end_time == 0 || $folder->end_time >= $now);
-                    if(!$folder_visible) {
+                $folder = $file->getFolderType();
+                switch(get_class($file->getFolderType())) {
+                    case 'HomeworkFolder':
+                        $folder_warning = true;
                         $access = false;
-                    }
+                        break;
+                    case 'HiddenFolder':
+                        if($folder->data_content['download_allowed'] == 1){
+                            $folder_warning = false;
+                            $access = true;
+                        }
+                        else{
+                            $folder_warning = true;
+                            $access = false;
+                        }
+                        break;
+                    case 'TimedFolder':
+                        $folder_warning = true;
+                        $now = time();
+                        $folder_visible =  ($folder->start_time == 0 || $folder->start_time <= $now) && ($folder->end_time == 0 || $folder->end_time >= $now);
+                        if(!$folder_visible) {
+                            $access = false;
+                        }
+                        break;
                 }
             }
 
