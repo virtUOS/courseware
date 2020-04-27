@@ -652,6 +652,7 @@ class Courseware extends Block
     {
         $block = new \Mooc\DB\Block();
         $parent_id = is_object($parent) ? $parent->id : $parent;
+        $parent != null ? $approval = $parent->approval : $approval = '';
         $block->setData(array(
             'seminar_id' => $this->_model->seminar_id,
             'parent_id' => $parent_id,
@@ -660,7 +661,7 @@ class Courseware extends Block
             'publication_date' => $data['publication_date'],
             'withdraw_date' => $data['withdraw_date'],
             'position' => $block->getNewPosition($parent_id),
-            'approval' => $parent->approval
+            'approval' => $approval
         ));
 
         $block->store();
