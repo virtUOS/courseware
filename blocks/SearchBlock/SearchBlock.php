@@ -196,7 +196,7 @@ class SearchBlock extends Block
                             $html = "<li>".$chapter." &rarr; ".$subchapter." &rarr; ".$title." &rarr; <a href='".$link."'>".$type."</a></li>";
                             break;
                         default:
-                            continue;
+                            continue 2;
                     }
                 }
 
