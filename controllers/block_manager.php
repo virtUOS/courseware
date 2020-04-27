@@ -291,7 +291,8 @@ class BlockManagerController extends CoursewareStudipController
 
     public function import_complete_archive_action()
     {
-        require_once 'public/plugins_packages/core/Forum/models/ForumEntry.php';
+        PluginEngine::getPlugin('CoreForum');
+
         $request = trim(file_get_contents("php://input"));
         $decoded_request = json_decode($request, true);
         $cid = $decoded_request['cid'];
@@ -418,7 +419,8 @@ class BlockManagerController extends CoursewareStudipController
 
     public function store_changes_vue_action()
     {
-        require_once 'public/plugins_packages/core/Forum/models/ForumEntry.php';
+        PluginEngine::getPlugin('CoreForum');
+
         $request = trim(file_get_contents("php://input"));
         $decoded_request = json_decode($request, true);
         $cid = $decoded_request['cid'];
