@@ -282,6 +282,17 @@ class CoursewareController extends CoursewareStudipController
             $this->storeMaxCount($courseware_settings['max-tries']);
         }
 
+        ///////////////////////
+        // MAX COUNT FOR IAV //
+        ///////////////////////
+        $try3 = isset($courseware_settings['max-tries-iav-infinity']);
+        $try4 = isset($courseware_settings['max-tries-iav']);
+        if (isset($courseware_settings['max-tries-iav-infinity'])) {
+            $this->storeMaxCountIAV(-1);
+        } else if(isset($courseware_settings['max-tries-iav'])) {
+            $this->storeMaxCountIAV($courseware_settings['max-tries-iav']);
+        }
+
         $this->courseware_block->save();
     }
 
@@ -359,6 +370,13 @@ class CoursewareController extends CoursewareStudipController
     private function storeMaxCount($count)
     {
         if(!$this->courseware_block->setMaxTries($count)) {
+            // TODO: send a message back
+        }
+    }
+
+    private function storeMaxCountIAV($count)
+    {
+        if(!$this->courseware_block->setMaxTriesIAV($count)) {
             // TODO: send a message back
         }
     }

@@ -35,12 +35,17 @@
                             <input type="hidden" class="cw-iav-test-correct" value="true">
                             <div class="messagebox messagebox_success">{{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}</div>
                             <div class="cw-iav-test-content-question">{{{solution}}}</div>
-                            
                         {{/correct}}
                         {{^correct}}
-                            <div class="messagebox messagebox_error">{{#i18n}}Ihre Lösung ist nicht korrekt!{{/i18n}}</div>
-                            <div class="cw-iav-test-content-question">{{{question}}}</div>
-                            <button name="submit-exercise" class="button" style="display: inline-block">{{#i18n}}Abschicken{{/i18n}}</button>
+                            <div class="messagebox messagebox_error">{{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. {{#tries_left}} Versuchen Sie es bitte nochmal. Sie haben noch {{tries_left}} Versuch{{#tries_pl}}e{{/tries_pl}}.{{/tries_left}}{{/i18n}}</div>
+                            {{^no_more_tries}}
+                                <div class="cw-iav-test-content-question">{{{question}}}</div>
+                                <button name="submit-exercise" class="button" style="display: inline-block">{{#i18n}}Abschicken{{/i18n}}</button>
+                            {{/no_more_tries}}
+                            {{#no_more_tries}}
+                                <input type="hidden" class="cw-iav-test-correct" value="true">
+                                <div class="cw-iav-test-content-question">{{{solution}}}</div>
+                            {{/no_more_tries}}
                         {{/correct}}
                     {{/has_solution}}
                     {{^has_solution}}
@@ -52,6 +57,11 @@
                 {{#has_solution}}
                     {{#correct}}
                         <button class="button cw-iav-test-button-continue" data-testid="{{id}}">weiter</button>
+                    {{/correct}}
+                    {{^correct}}
+                        {{#no_more_tries}}
+                            <button class="button cw-iav-test-button-continue" data-testid="{{id}}">weiter</button>
+                        {{/no_more_tries}}
                     {{/correct}}
                 {{/has_solution}}
             </div>

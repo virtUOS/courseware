@@ -18,6 +18,7 @@ class InteractiveVideoBlock extends Block
         $this->defineField('assignment_id', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('iav_tests', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('range_inactive', \Mooc\SCOPE_BLOCK, false);
+        $this->defineField('tries',   \Mooc\SCOPE_USER, array()); // Field to count the tries
     }
 
     public function student_view()
@@ -32,6 +33,8 @@ class InteractiveVideoBlock extends Block
         $active = $courseware->vipsActivated();
         $version = $courseware->vipsVersion();
         $exercises = array();
+
+        $max_counter = $courseware->getMaxTriesIAV();
         if($installed && $active && $version && ($this->assignment_id != '')) {
             $selected_assignment = \VipsAssignment::find($this->assignment_id);
             $testmap = array();
@@ -41,6 +44,13 @@ class InteractiveVideoBlock extends Block
             if(!empty($selected_assignment->test->exercises)) {
                 foreach ($selected_assignment->test->exercises as $exercise) {
                     if ($testmap[$exercise->getId()]) {
+                        if(!$this->tries) {
+                            $local_tries = array();
+                        } else {
+                            $local_tries = $this->tries;
+                        }
+                        $try_counter = $local_tries[$exercise->getId()];
+
                         $solution = \VipsSolution::findOneBySQL('exercise_id = ? AND user_id = ?', array($exercise->id, $user->id));
                         $has_solution = $solution != null;
                         $correct = false;
@@ -48,6 +58,25 @@ class InteractiveVideoBlock extends Block
                             $evaluation = $exercise->evaluate($solution);
                             $correct = $evaluation['percent'] == 1;
                         }
+
+                        if($max_counter != -1) {
+                            $tries_left = $max_counter - $try_counter;
+                            if ($tries_left < 1) {
+                                $tries_left = false;
+                            }
+                            if ($correct || $tries_left < 1) {
+                                $local_tries[$exercise->getId()] = 0;
+                                $this->tries = $local_tries;
+                            }
+                            $no_more_tries = $try_counter >= $max_counter;
+                            if ($try_counter == 0) {
+                                $has_solution = false;
+                            }
+                        } else {
+                            $tries_left = false;
+                            $no_more_tries = false;
+                        }
+
                         $exercises[] = array(
                             'question'              => $exercise->getSolveTemplate($solution, $assignment, $user->id)->render(),
                             'question_description'  => formatReady($exercise->description),
@@ -56,6 +85,9 @@ class InteractiveVideoBlock extends Block
                             'correct'               => $correct,
                             'has_solution'          => $has_solution,
                             'solution'              => $exercise->getCorrectionTemplate($solution)->render(),
+                            'no_more_tries'         => $no_more_tries,
+                            'tries_left'            => $tries_left,
+                            'tries_pl'              => $tries_left != 1
                         );
                     }
                 }
@@ -193,6 +225,17 @@ class InteractiveVideoBlock extends Block
             throw new \Exception(_cw('Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden.'));
         }
         $solution = $exercise->getSolutionFromRequest($requestParams);
+
+        if(!$this->tries) {
+            $local_tries = array();
+        } else {
+            $local_tries = $this->tries;
+        }
+        if(!$local_tries[$exercise_id]) {
+            $local_tries[$exercise_id] = 0;
+        }
+        $local_tries[$exercise_id] ++;
+        $this->tries = $local_tries;
 
         return $assignment->storeSolution($solution);
     }

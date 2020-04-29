@@ -119,9 +119,9 @@ if ($flash['success']) {
             <tr>
                 <td>
                     <label for="max-tries">
-                        <?= _cw('Anzahl Versuche') ?><br>
+                        <?= _cw('Anzahl Versuche: Quiz (Selbsttest)') ?><br>
                         <dfn id="courseware-max-tries-description">
-                            <?= _cw('Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben eines Selbsttests hat, bevor die Lösung der Aufgabe angezeigt wird.'); ?>
+                            <?= _cw('Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben in einem Quiz vom Type Selbsttest hat, bevor die Lösung der Aufgabe angezeigt wird.'); ?>
                         </dfn>
                     </label>
                 </td>
@@ -141,6 +141,35 @@ if ($flash['success']) {
                     <script>
                         document.getElementById('max-tries-infinity').onchange = function() {
                             document.getElementById('max-tries').disabled = this.checked;
+                        }
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="max-tries-iav">
+                        <?= _cw('Anzahl Versuche: Interactive Video') ?><br>
+                        <dfn id="courseware-max-tries-iav-description">
+                            <?= _cw('Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben in einem interaktiven Video hat, bevor die Lösung der Aufgabe angezeigt wird.'); ?>
+                        </dfn>
+                    </label>
+                </td>
+                <td>
+                    <input id="max-tries-iav" type="number" min="0" name="courseware[max-tries-iav]" value="<?= htmlReady($courseware_block->max_tries_iav) ?>" aria-describedby="courseware-max-tries-description">
+                    <label style="margin-left: 20px;" for="num-counts-infinity">
+                        <?= _cw('Unbegrenzt') ?>
+                        <input id="max-tries-iav-infinity" type="checkbox" name="courseware[max-tries-iav-infinity]" aria-describedby="courseware-max-tries-iav-description">
+                    </label>
+                    <? if ($courseware_block->max_tries_iav === -1): ?>
+                        <script>
+                            document.getElementById('max-tries-iav-infinity').checked = true;
+                            document.getElementById('max-tries-iav').value = 0;
+                            document.getElementById('max-tries-iav').disabled = true;
+                        </script>
+                    <? endif ?>
+                    <script>
+                        document.getElementById('max-tries-iav-infinity').onchange = function() {
+                            document.getElementById('max-tries-iav').disabled = this.checked;
                         }
                     </script>
                 </td>

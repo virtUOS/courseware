@@ -41,6 +41,8 @@ class Courseware extends Block
         // FIXME: this must be stored somewhere else, see https://github.com/virtUOS/courseware/issues/16
         $this->defineField('max_tries', \Mooc\SCOPE_BLOCK, 3); // -1 = infinity
 
+        $this->defineField('max_tries_iav', \Mooc\SCOPE_BLOCK, 3); // -1 = infinity
+
         $this->defineField('show_section_nav', \Mooc\SCOPE_BLOCK, true);
 
         $this->defineField('sections_as_chapters', \Mooc\SCOPE_BLOCK, false);
@@ -368,6 +370,16 @@ class Courseware extends Block
     public function getMaxTries()
     {
         return $this->max_tries;
+    }
+
+    public function setMaxTriesIAV($tries)
+    {
+        $this->max_tries_iav = $tries;
+    }
+
+    public function getMaxTriesIAV()
+    {
+        return $this->max_tries_iav;
     }
 
     public function setVipsTabVisible($active)

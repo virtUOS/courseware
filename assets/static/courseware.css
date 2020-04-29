@@ -7111,14 +7111,14 @@ section#courseware .block-content:not([data-view="student"]) .cw-iav-test-conten
   border-color: #fff;
   position: absolute;
   width: 94%;
-  height: 60%;
+  height: 75%;
   resize: both;
   padding: 1em;
   border-width: thick;
   border-style: solid;
-  top: 15%;
+  top: 5%;
   left: 1%;
-  overflow-y: scroll;
+  overflow-y: auto;
   /* vips 1.3 rh_exercise */
   /* vips 1.4 rh_exercise */
 }
@@ -7160,7 +7160,7 @@ section#courseware .block-content:not([data-view="student"]) .cw-iav-test-conten
 section#courseware .block-content:not([data-view="student"]) .cw-iav-test-content p img,
 .cw-iav-test-content p img {
   margin-top: 12px;
-  margin-bttom: 12px;
+  margin-bottom: 12px;
 }
 section#courseware .block-content:not([data-view="student"]) .cw-iav-test-content textarea,
 .cw-iav-test-content textarea {
