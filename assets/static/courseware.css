@@ -1000,8 +1000,14 @@
 .post-overview-thread.post-overview-thread-selected {
   border: solid 4px #28497c;
 }
-.post-overview-thread .edit-thread-title-button {
+.post-overview-thread .edit-thread-title-button,
+.post-overview-thread .remove-thread-button {
   cursor: pointer;
+}
+.post-overview-thread .remove-thread-button {
+  border: none;
+  background-color: #fff;
+  padding: 0;
 }
 .post-overview-thread .edit-thread-button {
   cursor: pointer;

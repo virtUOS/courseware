@@ -144,6 +144,22 @@ class Post extends \SimpleORMap
         $stmt->execute();
     }
 
+    public function removeThread($thread_id, $cid)
+    {
+        $db = \DBManager::get();
+        $stmt = $db->prepare("
+            DELETE FROM
+                mooc_posts
+            WHERE
+                thread_id = :thread_id
+            AND
+                seminar_id = :cid
+        ");
+        $stmt->bindParam(":thread_id", $thread_id);
+        $stmt->bindParam(":cid", $cid);
+        $stmt->execute();
+    }
+
     public function getNextPostId($thread_id, $cid)
     {
         $db = \DBManager::get();

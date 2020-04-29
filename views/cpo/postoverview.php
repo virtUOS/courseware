@@ -17,6 +17,13 @@
                     <span class="thread-title-content">
                         <?= $thread["thread_title"]?> (id = <?= $thread["thread_id"]?>)
                         <span class="edit-thread-title-button"><?= Icon::create('edit', 'clickable'); ?></span>
+                        <? if (!array_key_exists($thread["thread_id"], ($thrads_in_blocks))) :?>
+                            <form class="remove-thread" action="remove_thread" style="display: inline">
+                                <input type="hidden" value="<?= $thread["thread_id"]?>" name="thread_id">
+                                <input type="hidden" name="cid" value="<?= $cid ?>">
+                                <button class="remove-thread-button" type="submit"><?= Icon::create('trash'); ?></button>
+                            </form>
+                        <? endif; ?>
                     </span>
                     <form class="edit-thread-title" action="edit_title" style="display:none;">
                         <input type="hidden" value="<?= $thread["thread_id"]?>" name="thread_id">

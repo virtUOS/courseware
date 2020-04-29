@@ -25,6 +25,11 @@ $(document).ready(function(){
         $(this).parent().hide();
         $(this).parent().siblings("form").show();
     });
+    $('.remove-thread-button').click(function(event){
+        if(!confirm('Möchten Sie diese Diskussion wirklich löschen?')) {
+            event.preventDefault();
+        }
+    });
     $('.edit-reset').click(function(event){
         $(this).parent().hide();
         $(this).parent().siblings(".thread-title-content").show();

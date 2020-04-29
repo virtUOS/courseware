@@ -164,6 +164,19 @@ class CpoController extends CoursewareStudipController
         return $this->redirect('cpo/postoverview?update=true&thread_id='.$thread_id);
     }
 
+    public function remove_thread_action()
+    {
+        if (Request::get('thread_id') != '') { 
+            $thread_id = Request::get('thread_id');
+            $cid = $this->plugin->getCourseId();
+        } else {
+            return $this->redirect('cpo/postoverview?remove=false');
+        }
+        Post::removeThread($thread_id, $cid);
+
+        return $this->redirect('cpo/postoverview?remove=true&thread_id='.$thread_id);
+    }
+
     private function getThreadsInBlocks()
     {
         $db = \DBManager::get();
