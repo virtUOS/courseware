@@ -137,10 +137,15 @@ class User extends \User
         }
         $approval = false;
         if (!$block->isStructuralBlock()) {
-            $approval = $this->hasApproval($block->parent);
+            if($block->parent != null) {
+                $approval = $this->hasApproval($block->parent);
+            }
         } else {
-            $approval = $this->hasApproval($block);
+            if($block != null) {
+                $approval = $this->hasApproval($block);
+            }
         }
+
         return $this->hasPerm($block->seminar_id, $courseware->getEditingPermission()) || $approval;
     }
 }
