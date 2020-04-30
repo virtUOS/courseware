@@ -11,6 +11,15 @@ section#courseware button.button {
         }
     }
 
+    &.cw-audio-gallery-record-button-enable {
+        background-image: url("../images/icons/blue/microphone.svg");
+        margin-left: 1em;
+        background-position: 6px center;
+        padding-left: 2em;
+        &:hover {
+            background-image: url("../images/icons/white/microphone.svg");
+        }
+    }
     &.cw-audio-gallery-record-button-start {
         .assets-bg-icon("blue/span-full.svg");
         margin-left: 1em;
@@ -18,6 +27,26 @@ section#courseware button.button {
         padding-left: 2em;
         &:hover {
             .assets-bg-icon("white/span-full.svg");
+        }
+    }
+
+    &.cw-audio-gallery-record-button-restart {
+        .assets-bg-icon("blue/refresh.svg");
+        margin-left: 1em;
+        background-position: 6px center;
+        padding-left: 2em;
+        &:hover {
+            .assets-bg-icon("white/refresh.svg");
+        }
+    }
+
+    &.cw-audio-gallery-record-button-store {
+        .assets-bg-icon("blue/upload.svg");
+        margin-left: 1em;
+        background-position: 6px center;
+        padding-left: 2em;
+        &:hover {
+            .assets-bg-icon("white/upload.svg");
         }
     }
 
@@ -62,7 +91,7 @@ section#courseware button.button {
 
                 audio {
                     margin: auto;
-                    width: 400px;
+                    width: 330px;
                     display: inline-block;
                     vertical-align: top;
                 }
@@ -125,7 +154,18 @@ section#courseware button.button {
     }
 }
 
-
+.cw-audio-gallery-record-usermedia-info,
 .cw-audio-gallery-record-browser-info {
     display: none;
+}
+
+button.button {
+    &.cw-audio-gallery-record-button-stop,
+    &.cw-audio-gallery-record-button-start,
+    &.cw-audio-gallery-record-button-restart,
+    &.cw-audio-gallery-record-button-store,
+    &.cw-audio-gallery-recording-info,
+    &.cw-audio-gallery-record-button-delete.user-record-delete {
+        display: none;
+    }
 }

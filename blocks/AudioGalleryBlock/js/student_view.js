@@ -6,8 +6,11 @@ import helper from 'js/url'
 
 export default StudentView.extend({
   events: {
+        'click .cw-audio-gallery-record-button-enable': 'enableRecorder',
         'click .cw-audio-gallery-record-button-start' : 'startRecording',
+        'click .cw-audio-gallery-record-button-restart' : 'restartRecording',
         'click .cw-audio-gallery-record-button-stop' : 'stopRecording', 
+        'click .cw-audio-gallery-record-button-store' : 'storeRecording',
         'click .cw-audio-gallery-record-button-delete' : 'deleteRecord'
       },
 
@@ -41,37 +44,48 @@ export default StudentView.extend({
       var width = $('.cw-audio-gallery-carousel-nav .slick-slide')[0].offsetWidth - 20;
       this.$('.slick-slide').find('.cw-audio-gallery-nav-slide').css('width', width+'px');
 
-      // hide all buttons 
-      this.$('.cw-audio-gallery-recording-info').hide();
-      this.$('.cw-audio-gallery-record-button-stop').hide();
-      this.$('.cw-audio-gallery-record-button-start').hide();
-      this.$('.cw-audio-gallery-record-button-delete.user-record-delete').hide();
-
       if (!window.MediaRecorder) {
         $view.$('.cw-audio-gallery-record-browser-info').show();
-        $view.$('.cw-audio-gallery-record-usermedia-info').hide();
+        $view.$('.cw-audio-gallery-record-button-enable').hide();
         return;
       }
 
-      navigator.mediaDevices.getUserMedia({audio: true}).then(_stream => {
-        let stream = _stream;
-        $view.recorder = new MediaRecorder(stream);
-        $view.$('.cw-audio-gallery-record-button-start').show();
-        $view.$('.cw-audio-gallery-record-usermedia-info').hide();
 
-        $view.recorder.ondataavailable = e => {
-          $view.chunks.push(e.data);
-          if($view.recorder.state == 'inactive')  $view.makeBlob();
-        };
-      });
 
       if (this.$('.cw-audio-gallery-record-button-delete.user-record-delete').siblings('.cw-audio-gallery-player').length > 0) {
           this.$('.cw-audio-gallery-record-button-delete.user-record-delete').show();
       }
   },
 
+  enableRecorder() {
+
+    let $view = this;
+
+    this.$('.cw-audio-gallery-record-button-enable').hide();
+    this.$('.cw-audio-gallery-record-usermedia-info').show();
+
+    navigator.mediaDevices.getUserMedia({audio: true}).then(_stream => {
+      let stream = _stream;
+      $view.recorder = new MediaRecorder(stream);
+
+      if($view.$('.cw-audio-gallery-userhasrecord').val() == 'true') {
+        $view.$('.cw-audio-gallery-record-button-restart').show();
+      }
+      if($view.$('.cw-audio-gallery-userhasrecord').val() == 'false') {
+        $view.$('.cw-audio-gallery-record-button-start').show();
+      }
+
+      $view.$('.cw-audio-gallery-record-usermedia-info').hide();
+
+      $view.recorder.ondataavailable = e => {
+        $view.chunks.push(e.data);
+        if($view.recorder.state == 'inactive')  $view.makeBlob();
+      };
+    });
+
+  },
+
   startRecording() {
-      var $view = this;
       if (!window.MediaRecorder) {
         return;
       }
@@ -86,10 +100,20 @@ export default StudentView.extend({
       this.setTimer();
   },
 
+  restartRecording() {
+    if (!window.MediaRecorder) {
+      return;
+    }
+    this.$('.cw-audio-gallery-record-button-restart').hide();
+    this.$('.cw-audio-gallery-record-button-store').hide();
+    this.resetRecorder();
+    this.startRecording();
+  },
+
   stopRecording() {
       this.$('.cw-audio-gallery-recording-info').hide();
-      this.$('.cw-audio-gallery-record-button-start').show();
-      this.$('.cw-audio-gallery-record-button-delete').show();
+      this.$('.cw-audio-gallery-record-button-restart').show();
+      this.$('.cw-audio-gallery-record-button-store').show();
       this.$('.cw-audio-gallery-record-button-stop').hide();
       this.recorder.stop();
   },
@@ -116,7 +140,6 @@ export default StudentView.extend({
       reader.readAsDataURL($view.blob);
       reader.onloadend = function() {
          $view.blob.base64data = reader.result.toString();
-         $view.storeRecording();
      }
 
   }, 
@@ -155,6 +178,8 @@ export default StudentView.extend({
 
   storeRecording() {
     var $view = this;
+    this.$('.cw-audio-gallery-record-button-store').hide();
+    this.$('.cw-audio-gallery-record-button-delete').show();
 
     helper
       .callHandler(this.model.id, 'store_recording', {
@@ -187,8 +212,9 @@ export default StudentView.extend({
         function () {
             $del_button.siblings('.cw-audio-gallery-player').remove();
             $del_button.hide();
-            if (!$del_button.hasClass('user-record-delete')){
-                $('<p>Aufnahme wurde gelöscht.</p>').insertBefore($del_button);
+            $view.$('.cw-audio-gallery-record-button-restart').hide();
+            if($view.recorder) {
+                $view.$('.cw-audio-gallery-record-button-start').show();
             }
         },
         // error

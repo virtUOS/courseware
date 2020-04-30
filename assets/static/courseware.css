@@ -4849,6 +4849,15 @@ section#courseware button.button.cw-audio-gallery-record-button-delete {
 section#courseware button.button.cw-audio-gallery-record-button-delete:hover {
   background-image: url("../../../../../assets/images/icons/white/trash.svg");
 }
+section#courseware button.button.cw-audio-gallery-record-button-enable {
+  background-image: url("../images/icons/blue/microphone.svg");
+  margin-left: 1em;
+  background-position: 6px center;
+  padding-left: 2em;
+}
+section#courseware button.button.cw-audio-gallery-record-button-enable:hover {
+  background-image: url("../images/icons/white/microphone.svg");
+}
 section#courseware button.button.cw-audio-gallery-record-button-start {
   background-image: url("../../../../../assets/images/icons/blue/span-full.svg");
   margin-left: 1em;
@@ -4857,6 +4866,24 @@ section#courseware button.button.cw-audio-gallery-record-button-start {
 }
 section#courseware button.button.cw-audio-gallery-record-button-start:hover {
   background-image: url("../../../../../assets/images/icons/white/span-full.svg");
+}
+section#courseware button.button.cw-audio-gallery-record-button-restart {
+  background-image: url("../../../../../assets/images/icons/blue/refresh.svg");
+  margin-left: 1em;
+  background-position: 6px center;
+  padding-left: 2em;
+}
+section#courseware button.button.cw-audio-gallery-record-button-restart:hover {
+  background-image: url("../../../../../assets/images/icons/white/refresh.svg");
+}
+section#courseware button.button.cw-audio-gallery-record-button-store {
+  background-image: url("../../../../../assets/images/icons/blue/upload.svg");
+  margin-left: 1em;
+  background-position: 6px center;
+  padding-left: 2em;
+}
+section#courseware button.button.cw-audio-gallery-record-button-store:hover {
+  background-image: url("../../../../../assets/images/icons/white/upload.svg");
 }
 section#courseware button.button.cw-audio-gallery-recording-info {
   background-image: url("../../../../../assets/images/icons/red/span-full.svg");
@@ -4894,7 +4921,7 @@ section#courseware button.button.cw-audio-gallery-record-button-stop:hover {
 }
 .AudioGalleryBlock .block-content .cw-audio-gallery-carousel-for div.cw-audio-gallery-content-slide div.cw-audio-gallery-content-slide-control audio {
   margin: auto;
-  width: 400px;
+  width: 330px;
   display: inline-block;
   vertical-align: top;
 }
@@ -4945,7 +4972,16 @@ section#courseware button.button.cw-audio-gallery-record-button-stop:hover {
 .AudioGalleryBlock .block-content .cw-audio-gallery-carousel-nav .slick-list.draggable {
   margin: 0 auto 1em;
 }
+.cw-audio-gallery-record-usermedia-info,
 .cw-audio-gallery-record-browser-info {
+  display: none;
+}
+button.button.cw-audio-gallery-record-button-stop,
+button.button.cw-audio-gallery-record-button-start,
+button.button.cw-audio-gallery-record-button-restart,
+button.button.cw-audio-gallery-record-button-store,
+button.button.cw-audio-gallery-recording-info,
+button.button.cw-audio-gallery-record-button-delete.user-record-delete {
   display: none;
 }
 .cw-beforeafter-slider {
@@ -12322,5 +12358,3 @@ section#courseware button.cw-videoblock-recorder-reset {
 .cw-webvideo-source-file {
   display: none;
 }
-
-/*# sourceMappingURL=courseware.css.map*/

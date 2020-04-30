@@ -9,8 +9,12 @@
                     <source  src="{{file_url}}">
                 </audio>
                 {{/file_url}}
+                <input type="hidden" class="cw-audio-gallery-userhasrecord" value="{{#file_url}}true{{/file_url}}{{^file_url}}false{{/file_url}}">
                 <button class="button cw-audio-gallery-record-button-delete user-record-delete" data-uid={{user_id}}>{{#i18n}}Aufnahme löschen{{/i18n}}</button>
                 <button class="button cw-audio-gallery-record-button-start">{{#i18n}}Aufnahme starten{{/i18n}}</button>
+                <button class="button cw-audio-gallery-record-button-restart">{{#i18n}}Aufnahme widerholen{{/i18n}}</button>
+                <button class="button cw-audio-gallery-record-button-enable">{{#i18n}}Aufnahme aktivieren{{/i18n}}</button>
+                <button class="button cw-audio-gallery-record-button-store">{{#i18n}}Aufnahme speichern{{/i18n}}</button>
                 
                 <button class="button cw-audio-gallery-recording-info">
                     {{#i18n}}Aufnahme läuft{{/i18n}}:
