@@ -21,6 +21,26 @@ export default StudentView.extend({
         var $view =  this,
         $player_element = $view.$('.cw-iav-player').get(0);
 
+        let mathjaxP;
+
+        if (window.MathJax && window.MathJax.Hub) {
+          mathjaxP = Promise.resolve(window.MathJax);
+        } else if (window.STUDIP && window.STUDIP.loadChunk) {
+          mathjaxP = window.STUDIP.loadChunk('mathjax');
+        }
+    
+        mathjaxP && mathjaxP
+          .then(({ Hub }) => {
+            Hub.Queue(['Typeset', Hub, this.el]);
+          })
+          .catch(() => {
+            console.log('Warning: Could not load MathJax.');
+          });
+
+        if (this.$('.numexes').val() == 1) {
+            this.$('.exercisenavbutton').hide();
+        }
+
         if (typeof $player_element !== 'undefined') {
             if ($player_element.readyState >= 2) {      //if firefox
                 $view.setupVideo();

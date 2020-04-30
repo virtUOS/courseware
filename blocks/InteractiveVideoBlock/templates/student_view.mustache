@@ -28,16 +28,19 @@
                         <input type="hidden" name="subaction" value="submit_exercise">
                         <input type="hidden" name="submit_exercise" value="1">
                         <input type="hidden" name="exercise_id" value="{{id}}">
-                    <h2 class="cw-iav-test-content-title">{{title}}</h2>
                     <input type="hidden" class="cw-iav-test-content-test-id" value="{{id}}">
                     {{#has_solution}}
                         {{#correct}}
                             <input type="hidden" class="cw-iav-test-correct" value="true">
                             <div class="messagebox messagebox_success">{{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}</div>
+                            <h2 class="cw-iav-test-content-title">{{title}}</h2>
+                            <p class="cw-iav-test-content-question-description">{{{question_description}}}</p>
                             <div class="cw-iav-test-content-question">{{{solution}}}</div>
                         {{/correct}}
                         {{^correct}}
                             <div class="messagebox messagebox_error">{{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. {{#tries_left}} Versuchen Sie es bitte nochmal. Sie haben noch {{tries_left}} Versuch{{#tries_pl}}e{{/tries_pl}}.{{/tries_left}}{{/i18n}}</div>
+                             <h2 class="cw-iav-test-content-title">{{title}}</h2>
+                            <p class="cw-iav-test-content-question-description">{{{question_description}}}</p>
                             {{^no_more_tries}}
                                 <div class="cw-iav-test-content-question">{{{question}}}</div>
                                 <button name="submit-exercise" class="button" style="display: inline-block">{{#i18n}}Abschicken{{/i18n}}</button>
@@ -49,6 +52,7 @@
                         {{/correct}}
                     {{/has_solution}}
                     {{^has_solution}}
+                        <h2 class="cw-iav-test-content-title">{{title}}</h2>
                         <p class="cw-iav-test-content-question-description">{{{question_description}}}</p>
                         <div class="cw-iav-test-content-question">{{{question}}}</div>
                         <button name="submit-exercise" class="button" style="display: inline-block">{{#i18n}}Abschicken{{/i18n}}</button>
