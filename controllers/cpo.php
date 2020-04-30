@@ -275,11 +275,7 @@ class CpoController extends CoursewareStudipController
 
     private function addChildren($grouped, &$parent)
     {
-        $parent['children'] = array_filter(
-            isset($grouped[$parent['id']]) ? $grouped[$parent['id']] : array(),
-            function ($item) {
-                return ($item['publication_date'] <= time()) && ($item['visible'] == 1) && ($item['withdraw_date'] >= time() || $item['withdraw_date'] == null);
-            });
+        $parent['children'] = $grouped[$parent['id']];
         usort($parent['children'], function($a, $b) {
             return $a['position'] - $b['position'];
         });
