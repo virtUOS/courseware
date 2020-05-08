@@ -276,9 +276,11 @@ class CpoController extends CoursewareStudipController
     private function addChildren($grouped, &$parent)
     {
         $parent['children'] = $grouped[$parent['id']];
-        usort($parent['children'], function($a, $b) {
-            return $a['position'] - $b['position'];
-        });
+        if ($parent['children']) {
+			usort($parent['children'], function($a, $b) {
+					return $a['position'] - $b['position'];
+			});
+        }
 
         return $parent['children'];
     }
@@ -304,14 +306,16 @@ class CpoController extends CoursewareStudipController
         }
 
         $date = date('');
-        foreach ($block['children'] as $section) {
-            foreach($section['children']as $blocks) {
-               if ($b = $progress[$blocks['id']]) {
-                    if ($date < date($b['date'])){ 
-                        $date = date($b['date']);
+	foreach ($block['children'] as $section) {
+	    if ($section['children']) {
+                foreach($section['children']as $blocks) {
+                   if ($b = $progress[$blocks['id']]) {
+                        if ($date < date($b['date'])){ 
+                            $date = date($b['date']);
+                        }
                     }
                 }
-            }
+	    }
         }
 
         return $date;
