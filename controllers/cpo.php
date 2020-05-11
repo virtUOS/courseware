@@ -104,6 +104,40 @@ class CpoController extends CoursewareStudipController
         }
     }
 
+    public function download_thread_action()
+    {
+        if ((Request::get('thread_id') != '') && (Request::get('cid') != '')) { 
+            $thread_id = Request::get('thread_id');
+            $cid = Request::get('cid');
+        } else {
+            return $this->redirect('cpo/postoverview?download=false');
+        }
+
+        $thread = array(
+            'thread_id' => $thread_id, 
+            'thread_title' => \Mooc\DB\Post::findPost($thread_id, 0, $cid)['content'],
+            'thread_posts' => \Mooc\DB\Post::findPosts($thread_id, $cid, $GLOBALS['user']->id)['posts']
+        );
+
+        $f = fopen('php://output', 'w');
+
+        $csv_header = array('user_name','date','content');
+        fputcsv($f, $csv_header, ',');
+
+        foreach($thread['thread_posts'] as $post) {
+            $line = array($post['user_name'], $post['date'] , $post['content']);
+           fputcsv($f, $line, ',');
+
+        }
+
+        $filename = $thread['thread_title'];
+
+        header('Content-Type: application/csv');
+        header('Content-Disposition: attachment; filename="'.$filename.'";');
+        fpassthru($f);
+        exit();
+    }
+
     public function answer_action()
     {
         if ((Request::get('thread_id') != '') && (Request::get('content') != '') && (Request::get('cid') != '')) { 
@@ -123,7 +157,8 @@ class CpoController extends CoursewareStudipController
                 'seminar_id' => $cid,
                 'user_id' => $GLOBALS['user']->id,
                 'content' => $content,
-                'mkdate' => (new \DateTime())->format('Y-m-d H:i:s')
+                'mkdate' => (new \DateTime())->format('Y-m-d H:i:s'),
+                'chdate' => (new \DateTime())->format('Y-m-d H:i:s')
             );
 
         if (Post::create($data)) {

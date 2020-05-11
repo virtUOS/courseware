@@ -57,6 +57,11 @@
                         echo '<p><b>' . _cw('Es gibt ') . $counter . _cw(' neue Beiträge') . '</b></p>';
                 }?>
                 <button class="button show-thread-button" name="show_thread_<?= $thread['thread_id']?>" data-showthread="<?= $thread['thread_id']?>"><?= _cw('Beiträge anzeigen') ?></button>
+                <form class="download-thread" action="download_thread" style="display: inline-block;">
+                        <input type="hidden" value="<?= $thread["thread_id"]?>" name="thread_id">
+                        <input type="hidden" name="cid" value="<?= $cid ?>">
+                        <button class="button download-thread-button" type="submit"> <?= _cw('Beiträge herunterladen') ?> </button>
+                </form>
             </li>
         <? endforeach;?>
     </ul>
