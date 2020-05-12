@@ -21,7 +21,6 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>
                 <? foreach ($courseware['children'] as $chapter) : ?>
                     <li class="course-box" data-course="chapter-<?= $chapter['id'] ?>">
                         <p><?= htmlReady($chapter['title']) ?></p>
-                        <? if (sizeof($chapter['children'])) : ?>
                             <div style="margin:0 auto;" class="progress-circle p<?= $progress($chapter) ?> <? if($progress($chapter) > 50):?>over50 <? endif?>">
                                <span><?= $progress($chapter, "%") ?></span>
                                <div class="left-half-clipper">
@@ -29,7 +28,6 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>
                                   <div class="value-bar"></div>
                                </div>
                             </div>
-                        <? endif ?>
                     </li>
                 <? endforeach ?>
             </ul>
@@ -42,45 +40,51 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>
     <div id="chapter-<?= $chapter['id'] ?>" class="overview-chapter-details">
         <h1><?= htmlReady($chapter['title']) ?></h1>
         <table class="chapters">
-            <? foreach ($chapter['children'] as $subchapter) : ?>
-              <tr class=subchapter>
-                <th class="subchapter-description">
-                    <a href="<?= $controller->url_for('courseware', array('selected' => $subchapter['id'])) ?>">
-                    <?= htmlReady($subchapter['title']) ?>
-                    </a>
-                    <? if (sizeof($subchapter['children'])) : ?>
+            <? if($chapter['children']): ?>
+                <? foreach ($chapter['children'] as $subchapter) : ?>
+                <tr class=subchapter>
+                    <th class="subchapter-description">
+                        <a href="<?= $controller->url_for('courseware', array('selected' => $subchapter['id'])) ?>">
+                        <?= htmlReady($subchapter['title']) ?>
+                        </a>
                         <p data-progress="<?= $progress($subchapter) ?>">
                             <progress value=<?= $progress($subchapter) ?> max=100></progress>
                         </p>
-                    <? endif ?>
-                </th>
-                <td>
-                  <ol class=sections>
-                    <? foreach ($subchapter['children'] as $section) : ?>
-                      <li <? if (sizeof($section['children']) == 0):?>class="no-children" title="<?= _cw('Dieser Abschnitt enthält keine Blöcke');?>" <?endif?>>
-                        <a href="<?= $controller->url_for('courseware', array('selected' => $section['id'])) ?>"
-                           data-progress="<?= $progress($section) ?>"><span class="progress-section-title">
-                                <?  $title = htmlReady($section['title']);
-                                    if(strlen($title) > 16) { $title =  substr($title, 0, 12) . "...";}
-                                    echo $title;
-                                ?>
-                            </span>
-                          <progress value=<?= $progress($section) ?> max=100></progress>
-                        </a>
-                      </li>
-                    <? endforeach ?>
-                  </ol>
-                </td>
-                <td>
-                    <? if($subchapter['date'] != ''):?>
-                    <div class="overview-date" title="zuletzt genutzt am: <?= date('d.m.Y h:i', strtotime($subchapter['date']))?> Uhr">
-                        <p class="overview-date-month"><?= $monate[date('n', strtotime($subchapter['date']))]?></p>
-                        <p class="overview-date-day"><?= date('d', strtotime($subchapter['date']))?></p>
-                        <p class="overview-date-time"><?= date('H:i', strtotime($subchapter['date']))?></p>
-                    </div>
-                    <? endif?></td>
-              </tr>
-            <? endforeach ?>
+                    </th>
+                    <td>
+                    <ol class=sections>
+                        <? if($subchapter['children']): ?>
+                            <? foreach ($subchapter['children'] as $section) : ?>
+                            <li <? if (sizeof($section['children']) == 0):?>class="no-children" title="<?= _cw('Dieser Abschnitt enthält keine Blöcke');?>" <?endif?>>
+                                <a href="<?= $controller->url_for('courseware', array('selected' => $section['id'])) ?>"
+                                data-progress="<?= $progress($section) ?>"><span class="progress-section-title">
+                                        <?  $title = htmlReady($section['title']);
+                                            if(strlen($title) > 16) { $title =  substr($title, 0, 12) . "...";}
+                                            echo $title;
+                                        ?>
+                                    </span>
+                                <progress value=<?= $progress($section) ?> max=100></progress>
+                                </a>
+                            </li>
+                            <? endforeach ?>
+                        <? else: ?>
+                            <?= _cw('Dieses Unterkatpitel ist leer.')?>
+                        <? endif ?>
+                    </ol>
+                    </td>
+                    <td>
+                        <? if($subchapter['date'] != ''):?>
+                        <div class="overview-date" title="zuletzt genutzt am: <?= date('d.m.Y h:i', strtotime($subchapter['date']))?> Uhr">
+                            <p class="overview-date-month"><?= $monate[date('n', strtotime($subchapter['date']))]?></p>
+                            <p class="overview-date-day"><?= date('d', strtotime($subchapter['date']))?></p>
+                            <p class="overview-date-time"><?= date('H:i', strtotime($subchapter['date']))?></p>
+                        </div>
+                        <? endif?></td>
+                </tr>
+                <? endforeach ?>
+            <? else: ?>
+                <?= _cw('Dieses Katpitel ist leer.')?>
+            <? endif ?>
         </table>
     </div>
 <? endforeach ?>

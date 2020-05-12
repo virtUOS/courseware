@@ -272,8 +272,10 @@ class CpoController extends CoursewareStudipController
     {
         $this->addChildren($grouped, $root);
         if ($root['type'] !== 'Section') {
-            foreach($root['children'] as &$child) {
-                $this->buildTree($grouped, $progress, $child);
+            if($root['children']) {
+                foreach($root['children'] as &$child) {
+                    $this->buildTree($grouped, $progress, $child);
+                }
             }
             $root['progress'] = $this->computeProgress($root);
             $root['date'] = $this->setDate($progress, $root);
@@ -303,7 +305,7 @@ class CpoController extends CoursewareStudipController
                 }
             }
             else {
-                $root['progress'] = 0;
+                $root['progress'] = 1;
             }
         }
     }
@@ -323,7 +325,7 @@ class CpoController extends CoursewareStudipController
     private function computeProgress(&$block)
     {
         if (!sizeof($block['children'])) {
-            return 0;
+            return 1;
         }
 
         return array_sum(

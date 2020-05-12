@@ -112,7 +112,7 @@ class ProgressController extends CoursewareStudipController
     private function computeProgress(&$block)
     {
         if (!sizeof($block['children'])) {
-            return 0;
+            return 1;
         }
 
         return array_sum(
