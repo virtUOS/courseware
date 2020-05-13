@@ -71,6 +71,13 @@ export default AuthorView.extend({
         if ($('.removemediatype').length <= 1) {
             $('.removemediatype').hide();
         }
+
+        if(this.$('.webvideosettingsdata').val().indexOf('autoplay') > -1) {
+            this.$('.videoautostart').attr('checked', true)
+        }
+        if(this.$('.webvideosettingsdata').val().indexOf('oncontextmenu') > -1) {
+            this.$('.videodisablecontext').attr('checked', true)
+        }
     },
 
     saveVideo() {
@@ -120,6 +127,9 @@ export default AuthorView.extend({
                 });
                 if (view.$('.videoautostart').is(':checked')) {
                     webvideosettings += 'autoplay ';
+                }
+                if (view.$('.videodisablecontext').is(':checked')) {
+                    webvideosettings += "oncontextmenu='return false;' ";
                 }
                 webvideo = JSON.stringify(webvideo);
                 break;

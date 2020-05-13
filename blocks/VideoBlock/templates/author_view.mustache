@@ -1,7 +1,7 @@
 <input type="hidden" class="cw-videoblock-stored-url" value="{{url}}">
 <input type="hidden" class="cw-videoblock-stored-aspect" value="{{aspect}}">
 <input type="hidden" class="webvideodata" value="{{webvideo}}">
-<input type="hidden" class="webvideosettingsdata" value="{{webvideosettings}}">
+<input type="hidden" class="webvideosettingsdata" value="{{{webvideosettings}}}">
 
 <div class="video-wrapper {{aspect}}">
   <iframe src="{{url}}" scrolling="no" allowfullscreen></iframe>
@@ -29,6 +29,14 @@
         <option value="aspect-169">16:9</option>
         <option value="aspect-43">4:3</option>
     </select>
+    <div class="cw-webvideo-settings">
+        <label for="videoautostart">{{#i18n}}Video automatisch starten{{/i18n}}:</label>
+        <input type="checkbox" name="videoautostart" class="videoautostart">
+        <br>
+        <label for="videodisablecontext">{{#i18n}}Rechtsklick verhindern{{/i18n}}:</label>
+        <input type="checkbox" name="videodisablecontext" class="videodisablecontext">
+        <button class="cw-webvideo-context-info cw-info" data-title="{{#i18n}}Ist diese Option aktiv wird durch einen Rechtsklick auf das Video kein Menü mehr angezeigt. Ein direkter Download des Videos kann so verhindert werden.{{/i18n}}"></button>
+    </div>
     <div class="videosource videosource-url">
         <input type="hidden" class="videourl" value= "{{url}}">
         <label class="videosrcname">{{#i18n}}Quelle{{/i18n}}:</label>
