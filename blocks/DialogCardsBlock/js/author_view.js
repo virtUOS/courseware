@@ -9,7 +9,9 @@ export default AuthorView.extend({
         'click button[name=cancel]': 'switchBack',
         'click button[name=addcard]': 'addCard',
         'click button[name=removecard]': 'removeCard',
-        'change select.cw-dialogcards-source': 'toggleSource'
+        'change select.cw-dialogcards-source': 'toggleSource',
+        'click button[name=lowercard]': 'lowerCard',
+        'click button[name=raisecard]': 'raiseCard'
     },
 
     initialize() {
@@ -22,8 +24,15 @@ export default AuthorView.extend({
     },
 
     postRender() {
-        var $cards = this.$('.cw-dialogcards-card-content');
-        $.each($cards, function(index) {
+        let cards = this.$('.cw-dialogcards-card-content');
+        $.each(cards, function() {
+            let card_index = $(this).attr('data-index');
+            if (card_index == 0) {
+                $(this).find('.raisecard').hide();
+            }
+            if (card_index == cards.length - 1) {
+                $(this).find('.lowercard').hide();
+            }
             switch ($(this).find('.cw-dialogcards-source-front').val()) {
                 case 'url':
                     $(this).find('.cw-dialogcards-front-img').show();
@@ -36,7 +45,6 @@ export default AuthorView.extend({
                     $(this).find('.cw-dialogcards-front-img-file option[file_id="'+file_id+'"]').prop('selected', true);
                     break;
                 case 'none':
-                    
                     break;
             }
             switch ($(this).find('.cw-dialogcards-source-back').val()) {
@@ -51,11 +59,10 @@ export default AuthorView.extend({
                     $(this).find('.cw-dialogcards-back-img-file option[file_id="'+file_id+'"]').prop('selected', true);
                     break;
                 case 'none':
-                    
                     break;
             }
         });
-        if($cards.length == 0) {
+        if(cards.length == 0) {
             this.addCard();
         }
 
@@ -90,10 +97,10 @@ export default AuthorView.extend({
     },
 
     onSave(event) {
-        var $view = this;
-        var $cards = $view.$('.cw-dialogcards-card-content');
-        var dialogcards_content = [];
-        $.each($cards, function(index){
+        let view = this;
+        let cards = this.$('.cw-dialogcards-card-content');
+        let dialogcards_content = [];
+        $.each(cards, function(){
             var card_content = {};
             switch ($(this).find('.cw-dialogcards-source-front').val()) {
                 case 'url': 
@@ -131,9 +138,17 @@ export default AuthorView.extend({
                     card_content.back_img = false;
             }
             card_content.back_text = $(this).find('.cw-dialogcards-back-text').val();
-            card_content.index = index;
+            card_content.index = $(this).attr('data-index');
             dialogcards_content.push(card_content);
         });
+
+        dialogcards_content.sort((a,b) => {
+            if (a.index > b.index) return 1;
+            if (a.index < b.index) return -1;
+
+            return 0;
+        });
+
         dialogcards_content = JSON.stringify(dialogcards_content);
         helper
         .callHandler(this.model.id, 'save', {
@@ -143,7 +158,7 @@ export default AuthorView.extend({
             // success
             function () {
                 $(event.target).addClass('accept');
-                $view.switchBack();
+                view.switchBack();
             },
 
             // error
@@ -154,81 +169,146 @@ export default AuthorView.extend({
     },
 
     addCard() {
-        var $view = this;
-        var $card = $view.$('.cw-dialogcards-card-content-default').clone();
-        var index = $view.$('.cw-dialogcards-card-content').length;
-        var $last = $view.$('.cw-dialogcards-card-content').last();
-        $card.removeClass('cw-dialogcards-card-content-default').addClass('cw-dialogcards-card-content');
-        if ($last.length == 0) {
-            $card.find('.cw-dialogcards-card-content-legend').html('Karte 0');
-            $card.insertAfter($view.$('.cw-dialogcards-card-content-default'));
+        let card = this.$('.cw-dialogcards-card-content-default').clone();
+        let index = this.$('.cw-dialogcards-card-content').length;
+        let last = this.$('.cw-dialogcards-card-content').last();
+        let title = this.$('.cw-dialogcards-card-content-default .cw-dialogcards-card-content-legend').text();
+        card.removeClass('cw-dialogcards-card-content-default').addClass('cw-dialogcards-card-content');
+        if (last.length == 0) {
+            card.find('.cw-dialogcards-card-content-legend').html(title + ' 0');
+            card.insertAfter(this.$('.cw-dialogcards-card-content-default'));
         } else {
-            $card.find('.cw-dialogcards-card-content-legend').html('Karte '+ index);
-            $card.insertAfter($last);
+            card.find('.cw-dialogcards-card-content-legend').html(title + ' '+ index);
+            card.insertAfter(last);
+            last.find('.lowercard').show();
         }
-        $card.find('.cw-dialogcards-front-img-file').show();
-        $card.find('.cw-dialogcards-front-img-file-info').show();
-        $card.find('.cw-dialogcards-back-img-file').show();
-        $card.find('.cw-dialogcards-back-img-file-info').show();
+        card.attr('data-index', index);
+        card.find('.cw-dialogcards-front-img-file').show();
+        card.find('.cw-dialogcards-front-img-file-info').show();
+        card.find('.cw-dialogcards-back-img-file').show();
+        card.find('.cw-dialogcards-back-img-file-info').show();
+        card.find('.lowercard').hide();
     },
 
     removeCard(event) {
-        var $view = this;
-        var fieldset = this.$(event.target).closest('.cw-dialogcards-card-content');
+        let fieldset = this.$(event.target).closest('.cw-dialogcards-card-content');
+        let title = this.$('.cw-dialogcards-card-content-default .cw-dialogcards-card-content-legend').text();
         fieldset.remove();
-        var $title = $view.$('.cw-dialogcards-card-content-default .cw-dialogcards-card-content-legend').text();
-        var $datasets = $view.$('.cw-dialogcards-card-content').not('.cw-dialogcards-card-content-default');
-        $.each($datasets, function(i){
-            $(this).find('.cw-dialogcards-card-content-legend').text($title+' '+i);
+
+        let datasets = this.$('.cw-dialogcards-card-content').not('.cw-dialogcards-card-content-default');
+        $.each(datasets, function(i){
+            $(this).find('.cw-dialogcards-card-content-legend').text(title+' '+i);
+            $(this).attr('data-index', i);
+            if (i == 0) {
+                $(this).find('.raisecard').hide();
+            }
+            if (i == datasets.length - 1) {
+                $(this).find('.lowercard').hide();
+            }
         });
     },
 
     toggleSource(event) {
-        var select = this.$(event.target);
-        var $card = select.closest('.cw-dialogcards-card-content');
+        let select = this.$(event.target);
+        let card = select.closest('.cw-dialogcards-card-content');
         if (select.hasClass('cw-dialogcards-source-front')) {
             switch (select.val()) {
                 case 'url':
-                    $card.find('.cw-dialogcards-front-img').show();
-                    $card.find('.cw-dialogcards-front-img-info').show();
-                    $card.find('.cw-dialogcards-front-img-file').hide();
-                    $card.find('.cw-dialogcards-front-img-file-info').hide();
+                    card.find('.cw-dialogcards-front-img').show();
+                    card.find('.cw-dialogcards-front-img-info').show();
+                    card.find('.cw-dialogcards-front-img-file').hide();
+                    card.find('.cw-dialogcards-front-img-file-info').hide();
                     break;
                 case 'file':
-                    $card.find('.cw-dialogcards-front-img').hide();
-                    $card.find('.cw-dialogcards-front-img-info').hide();
-                    $card.find('.cw-dialogcards-front-img-file').show();
-                    $card.find('.cw-dialogcards-front-img-file-info').show();
+                    card.find('.cw-dialogcards-front-img').hide();
+                    card.find('.cw-dialogcards-front-img-info').hide();
+                    card.find('.cw-dialogcards-front-img-file').show();
+                    card.find('.cw-dialogcards-front-img-file-info').show();
                     break;
                 case 'none':
-                    $card.find('.cw-dialogcards-front-img-file').hide();
-                    $card.find('.cw-dialogcards-front-img-file-info').hide();
-                    $card.find('.cw-dialogcards-front-img').hide();
-                    $card.find('.cw-dialogcards-front-img-info').hide();
+                    card.find('.cw-dialogcards-front-img-file').hide();
+                    card.find('.cw-dialogcards-front-img-file-info').hide();
+                    card.find('.cw-dialogcards-front-img').hide();
+                    card.find('.cw-dialogcards-front-img-info').hide();
                     break;
             }
         }
         if (select.hasClass('cw-dialogcards-source-back')) {
             switch (select.val()) {
                 case 'url':
-                    $card.find('.cw-dialogcards-back-img').show();
-                    $card.find('.cw-dialogcards-back-img-info').show();
-                    $card.find('.cw-dialogcards-back-img-file').hide();
-                    $card.find('.cw-dialogcards-back-img-file-info').hide();
+                    card.find('.cw-dialogcards-back-img').show();
+                    card.find('.cw-dialogcards-back-img-info').show();
+                    card.find('.cw-dialogcards-back-img-file').hide();
+                    card.find('.cw-dialogcards-back-img-file-info').hide();
                     break;
                 case 'file':
-                    $card.find('.cw-dialogcards-back-img').hide();
-                    $card.find('.cw-dialogcards-back-img-info').hide();
-                    $card.find('.cw-dialogcards-back-img-file').show();
-                    $card.find('.cw-dialogcards-back-img-file-info').show();
+                    card.find('.cw-dialogcards-back-img').hide();
+                    card.find('.cw-dialogcards-back-img-info').hide();
+                    card.find('.cw-dialogcards-back-img-file').show();
+                    card.find('.cw-dialogcards-back-img-file-info').show();
                     break;
                 case 'none':
-                    $card.find('.cw-dialogcards-back-img').hide();
-                    $card.find('.cw-dialogcards-back-img-info').hide();
-                    $card.find('.cw-dialogcards-back-img-file').hide();
-                    $card.find('.cw-dialogcards-back-img-file-info').hide();
+                    card.find('.cw-dialogcards-back-img').hide();
+                    card.find('.cw-dialogcards-back-img-info').hide();
+                    card.find('.cw-dialogcards-back-img-file').hide();
+                    card.find('.cw-dialogcards-back-img-file-info').hide();
                     break;
             }
         }
+    },
+
+    lowerCard(event) {
+        let card = this.$(event.target).closest('.cw-dialogcards-card-content');
+        let card_index = card.attr('data-index');
+        let next_card = card.next();
+        let next_card_index = next_card.attr('data-index');
+        let datasets = this.$('.cw-dialogcards-card-content').not('.cw-dialogcards-card-content-default');
+        let title = this.$('.cw-dialogcards-card-content-default .cw-dialogcards-card-content-legend').text();
+
+        card.attr('data-index', next_card_index);
+        card.find('.cw-dialogcards-card-content-legend').text(title + ' ' + next_card_index);
+        card.find('.lowercard').show();
+        card.find('.raisecard').show();
+        if(next_card_index == datasets.length - 1) {
+            card.find('.lowercard').hide();
+        }
+
+        next_card.attr('data-index', card_index);
+        next_card.find('.cw-dialogcards-card-content-legend').text(title + ' ' + card_index);
+        next_card.find('.lowercard').show();
+        next_card.find('.raisecard').show();
+        if(card_index == 0) {
+            next_card.find('.raisecard').hide();
+        }
+
+        card.insertAfter(next_card);
+
+    },
+
+    raiseCard(event) {
+        let card = this.$(event.target).closest('.cw-dialogcards-card-content');
+        let card_index = card.attr('data-index');
+        let prev_card = card.prev();
+        let prev_card_index = prev_card.attr('data-index');
+        let datasets = this.$('.cw-dialogcards-card-content').not('.cw-dialogcards-card-content-default');
+        let title = this.$('.cw-dialogcards-card-content-default .cw-dialogcards-card-content-legend').text();
+
+        card.attr('data-index', prev_card_index);
+        card.find('.cw-dialogcards-card-content-legend').text(title + ' ' + prev_card_index);
+        card.find('.lowercard').show();
+        card.find('.raisecard').show();
+        if(prev_card_index == 0) {
+            card.find('.raisecard').hide();
+        }
+
+        prev_card.attr('data-index', card_index);
+        prev_card.find('.cw-dialogcards-card-content-legend').text(title + ' ' + card_index);
+        prev_card.find('.lowercard').show();
+        prev_card.find('.raisecard').show();
+        if(card_index == datasets.length - 1) {
+            prev_card.find('.lowercard').hide();
+        }
+
+        card.insertBefore(prev_card);
     }
 });

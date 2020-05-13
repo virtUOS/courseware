@@ -124,17 +124,28 @@
         right: 0;
     }
 }
-
-button[name="removecard"] {
-    width: 20px;
-    height: 20px;
-    color: transparent;
-    border: none;
-    background: url("../@{blocks-icons-dir}/blue/trash.svg") no-repeat;
-    cursor: pointer;
+.cw-dialogcards-card-buttons {
     float: right;
-    margin-top: 20px;
+    margin-top: -0.5em;
+
+    button {
+        width: 20px;
+        height: 20px;
+        color: transparent;
+        border: none;
+        cursor: pointer;
+        &[name="removecard"] {
+            background: url("../@{blocks-icons-dir}/blue/trash.svg") no-repeat;
+        }
+        &[name="raisecard"] {
+            background: url("../@{blocks-icons-dir}/yellow/arr_2up.svg") no-repeat;
+        }
+        &[name="lowercard"] {
+            background: url("../@{blocks-icons-dir}/yellow/arr_2down.svg") no-repeat;
+        }
+    }
 }
+
 
 .cw-dialogcards-front-img,
 .cw-dialogcards-front-img-file,
