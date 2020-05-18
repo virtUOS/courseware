@@ -24,20 +24,19 @@ class SearchBlock extends Block
         // on view: grade with 100%
         $this->setGrade(1.0);
 
-        return array('searchtitle' => $this->searchtitle);
+        return $this->getAttrArray();
     }
 
     public function author_view()
     {
         $this->authorizeUpdate();
 
-        return array('searchtitle' => $this->searchtitle);
+        return $this->getAttrArray();
     }
 
     public function preview_view()
     {
-
-        return array('searchtitle' => $this->searchtitle);
+        return $this->getAttrArray();
     }
 
     public function save_handler(array $data)
@@ -45,6 +44,11 @@ class SearchBlock extends Block
         $this->authorizeUpdate();
         $this->searchtitle = \STUDIP\Markup::purifyHtml((string) $data['searchtitle']);
 
+        return $this->getAttrArray();
+    }
+
+    private function getAttrArray()
+    {
         return array('searchtitle' => $this->searchtitle);
     }
 
@@ -53,7 +57,12 @@ class SearchBlock extends Block
      */
     public function exportProperties()
     {
-        return array('searchtitle' => $this->searchtitle);
+        return $this->getAttrArray();
+    }
+
+    public function getHtmlExportData()
+    {
+        return $this->getAttrArray();
     }
 
     /**

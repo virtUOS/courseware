@@ -98,4 +98,9 @@ class BlubberBlock extends Block
         $plugin_info = $plugin_manager->getPluginInfo('Blubber');
         return $plugin_manager->isPluginActivated($plugin_info['id'], $block->getModel()->seminar_id);
     }
+
+    public function getHtmlExportData()
+    {
+        return;
+    }
 }

@@ -520,6 +520,11 @@ class TestBlock extends Block
         );
     }
 
+    public function getHtmlExportData()
+    {
+        return array();
+    }
+
     /**
      * {@inheritdoc}
      */

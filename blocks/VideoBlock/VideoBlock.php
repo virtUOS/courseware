@@ -237,6 +237,16 @@ class VideoBlock extends Block
         return $this->array_rep();
     }
 
+    public function getHtmlExportData()
+    {
+        $array = $this->array_rep();
+        if ($array['webvideo'] != '') {
+            $array['webvideo'] = json_decode($array['webvideo'], true);
+        }
+        
+        return $array;
+    }
+
     public function getFiles()
     {
         $files = array();

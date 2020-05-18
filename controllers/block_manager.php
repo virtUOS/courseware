@@ -62,6 +62,7 @@ class BlockManagerController extends CoursewareStudipController
         $this->remote_courses_json = json_encode($this->remote_courses);
         $this->lang = getUserLanguage($this->container['current_user']->id);
         $this->courseware_export_url = PluginEngine::getURL('courseware/export', compact('cid'), true);
+        $this->courseware_export_html_url = PluginEngine::getURL('courseware/cwp_export', compact('cid'), true);
     }
 
     public function get_courseware_action()

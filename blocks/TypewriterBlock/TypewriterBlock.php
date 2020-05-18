@@ -54,6 +54,11 @@ class TypewriterBlock extends Block
        return array('typewriter_json' => $this->typewriter_json);
     }
 
+    public function getHtmlExportData()
+    {
+        return $this->exportProperties();
+    }
+
     public function getXmlNamespace()
     {
         return 'http://moocip.de/schema/block/typewriter/';

@@ -181,6 +181,14 @@ class PdfBlock extends Block
         return $files;
     }
 
+    public function getHtmlExportData()
+    {
+        $array = $this->getAttrArray();
+        $array['pdf_file'] = './' . $array['pdf_file_id'] . '/' . $array['pdf_filename'];
+
+        return $array;
+    }
+
     public function getXmlNamespace()
     {
         return 'http://moocip.de/schema/block/pdf/';

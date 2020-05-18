@@ -52,4 +52,9 @@ class ConfirmBlock extends Block
 
         return array();
     }
+
+    public function getHtmlExportData()
+    {
+        return ;
+    }
 }

@@ -114,6 +114,14 @@ class IFrameBlock extends Block
         return $this->array_rep();
     }
 
+    public function getHtmlExportData()
+    {
+        $array = $this->array_rep();
+        $array['cc_infos'] = json_decode($array['cc_infos'], true)[0];
+
+        return $array;
+    }
+
     /**
      * {@inheritdoc}
      */

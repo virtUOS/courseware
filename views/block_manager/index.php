@@ -6,6 +6,7 @@
             remote_courses: <?=json_encode($remote_courses_json)?>,
             block_map: <?=json_encode($block_map)?>,
             lang: '<?= $lang ?>',
-            courseware_export_url: '<?= $courseware_export_url ?>'
+            courseware_export_url: '<?= $courseware_export_url ?>',
+            courseware_export_html_url: '<?= $courseware_export_html_url ?>'
         }
     }</script><div id=block_mananger_content></div><script src=../../../plugins_packages/virtUOS/Courseware/views/block_manager/../../assets/vue/js/chunk-vendors.js></script><script src=../../../plugins_packages/virtUOS/Courseware/views/block_manager/../../assets/vue/js/index.js></script>

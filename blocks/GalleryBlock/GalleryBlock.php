@@ -201,6 +201,21 @@ class GalleryBlock extends Block
         return array_merge($this->getAttrArray() , array( 'gallery_folder_name' => $folder_name) );
     }
 
+    public function getHtmlExportData()
+    {
+        //todo map files
+        $gallery_file_paths = [];
+        $file_ids = json_decode($this->gallery_file_ids);
+
+        foreach ($file_ids as $file_id) {
+            $file_ref = new \FileRef($file_id);
+            $file = new \File($file_ref->file_id);
+            array_push($gallery_file_paths, './' . $file_id[0] . '/' . $file->name);
+        }
+
+        return array_merge($this->getAttrArray(), array('gallery_file_paths' => $gallery_file_paths));
+    }
+
     public function getFiles()
     {
         $file_ids = json_decode($this->gallery_file_ids);

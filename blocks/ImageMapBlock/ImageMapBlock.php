@@ -278,6 +278,22 @@ class ImageMapBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function getHtmlExportData()
+    {
+        $content = json_decode($this->image_map_content);
+        if ($content != null) {
+            foreach($content->shapes as $shape) {
+                if ($shape->link_type == "internal") {
+                    $shape->target = $this->getTargetId($shape->target);
+                }
+            }
+        } else {
+            $content = '';
+        }
+
+        return $content;
+    }
+
     public function getFiles()
     {
         $files = array();

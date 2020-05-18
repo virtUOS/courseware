@@ -236,6 +236,16 @@ class CanvasBlock extends Block
        return array('canvas_content' => $this->canvas_content);
     }
 
+    public function getHtmlExportData()
+    {
+        $content = json_decode($this->canvas_content);
+        if ($content->source == 'cw') {
+            $content->url = './' . $content->image_id . '/' . $content->image_name;
+        }
+        
+        return  $content;
+    }
+
     public function getFiles()
     {
         $files = array();

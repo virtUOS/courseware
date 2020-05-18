@@ -49,6 +49,11 @@ class DateBlock extends Block
         return;
     }
 
+    private function getAttrArray()
+    {
+        return array('date_content' => $this->date_content);
+    }
+
     public function exportProperties()
     {
        return array('date_content' => $this->date_content);

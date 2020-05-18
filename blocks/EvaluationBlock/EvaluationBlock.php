@@ -38,8 +38,12 @@ class EvaluationBlock extends Block
 
     public function preview_view()
     {
+        return array();
+    }
 
-        return;
+    public function getHtmlExportData()
+    {
+        return array();
     }
 
     /**

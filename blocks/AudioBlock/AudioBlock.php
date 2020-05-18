@@ -253,6 +253,27 @@ class AudioBlock extends Block
         );
     }
 
+    public function getHtmlExportData()
+    {
+        $audio_path =  '';
+
+        if ($this->audio_source == 'cw') {
+            $file_ref = new \FileRef($this->audio_id);
+            $file = new \File($file_ref->file_id);
+            $audio_path = './' . $this->audio_id . '/' . $file->name;
+        }
+        if ($this->audio_source == 'webaudio') {
+            $audio_path = $this->audio_file_name;
+        }
+
+        return array_merge(
+            $this->getAttrArray(),
+            array(
+                'audio_path' => $audio_path
+            )
+        );
+    }
+
     public function getFiles()
     {
         if ($this->audio_source != 'cw') {

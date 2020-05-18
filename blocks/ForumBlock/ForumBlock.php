@@ -84,7 +84,11 @@ class ForumBlock extends Block
 
     public function preview_view()
     {
+        return;
+    }
 
+    public function getHtmlExportData()
+    {
         return;
     }
 

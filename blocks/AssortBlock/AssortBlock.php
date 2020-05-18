@@ -86,7 +86,7 @@ class AssortBlock extends Block
         foreach($children as $child)
         {
             if (in_array($child["type"], 
-                array("HtmlBlock", "VideoBlock", "IFrameBlock", "DownloadBlock", "KeyPointBlock", "LinkBlock", "EmbedBlock")
+                array("HtmlBlock", "VideoBlock", "IFrameBlock", "DownloadBlock", "KeyPointBlock", "LinkBlock", "EmbedBlock", "FolderBlock")
             )){
                 $className = '\Mooc\UI\\'.$child["type"].'\\'.$child["type"];
                 $blocks[] = array('blockid' =>$child->id, 'blocktype'=> $child->type, 'blockname' => _cw(constant($className.'::NAME')));
@@ -145,6 +145,11 @@ class AssortBlock extends Block
     public function exportProperties()
     {
        return array('assortblocks' => $this->assortblocks, 'assorttype' => $this->assorttype);
+    }
+
+    public function getHtmlExportData()
+    {
+        return $this->getAttrArray();
     }
 
     /**

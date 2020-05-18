@@ -163,6 +163,11 @@ class OpenCastBlock extends Block
         );
     }
 
+    public function getHtmlExportData()
+    {
+        return;
+    }
+
     public function save_handler(array $data)
     {
         $this->authorizeUpdate();

@@ -301,6 +301,17 @@ class FolderBlock extends Block
         );
     }
 
+    public function getHtmlExportData()
+    {
+        $folder_content = json_decode($this->folder_content);
+        $filesarray = $this->showFiles($folder_content->folder_id);
+        foreach($filesarray as &$file) {
+            $file['path'] = './' . $file['id'] . '/' . $file['name'];
+        }
+
+        return array_merge($this->getAttrArray(), array('files' => $filesarray));
+    }
+
     public function getFiles()
     {
         $files = array();

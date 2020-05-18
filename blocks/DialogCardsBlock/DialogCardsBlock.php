@@ -166,6 +166,22 @@ class DialogCardsBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function getHtmlExportData()
+    {
+        //TODO collect files
+        $cards = json_decode($this->dialogcards_content);
+        foreach ($cards as &$card) {
+            if (!$card->front_external_file) {
+                $card->front_img = './' . $card->front_img_file_id . '/' . $card->front_img_file_name;
+            }
+            if (!$card->back_external_file) {
+                $card->back_img = './' . $card->back_img_file_id . '/' . $card->back_img_file_name;
+            }
+        }
+
+        return array('dialogcards_content' => $cards);
+    }
+
     public function getFiles()
     {
         $cards = json_decode($this->dialogcards_content);

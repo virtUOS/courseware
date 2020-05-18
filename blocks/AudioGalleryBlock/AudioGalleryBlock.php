@@ -180,6 +180,11 @@ class AudioGalleryBlock extends Block
         );
     }
 
+    public function getHtmlExportData()
+    {
+        return $this->getAttrArray();
+    }
+
     /**
      * {@inheritdoc}
      */

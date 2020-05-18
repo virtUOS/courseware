@@ -79,6 +79,11 @@ class ScrollyBlock extends Block
         );
     }
 
+    public function getHtmlExportData()
+    {
+        return $this->getAttrArray();
+    }
+
     /**
      * {@inheritdoc}
      */

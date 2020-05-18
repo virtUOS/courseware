@@ -73,6 +73,11 @@ class KeyPointBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function getHtmlExportData()
+    {
+        return $this->getAttrArray();
+    }
+
     public function getXmlNamespace()
     {
         return 'http://moocip.de/schema/block/keypoint/';

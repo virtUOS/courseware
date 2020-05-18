@@ -75,6 +75,11 @@ class CodeBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function getHtmlExportData()
+    {
+        return $this->getAttrArray();
+    }
+
     public function importProperties(array $properties)
     {
         if (isset($properties['code_content'])) {

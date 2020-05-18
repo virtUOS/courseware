@@ -11,7 +11,8 @@
             remote_courses: <?=json_encode($remote_courses_json)?>,
             block_map: <?=json_encode($block_map)?>,
             lang: '<?= $lang ?>',
-            courseware_export_url: '<?= $courseware_export_url ?>'
+            courseware_export_url: '<?= $courseware_export_url ?>',
+            courseware_export_html_url: '<?= $courseware_export_html_url ?>'
         }
     }
 </script>

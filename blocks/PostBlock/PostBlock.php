@@ -148,6 +148,11 @@ class PostBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function getHtmlExportData()
+    {
+        return;
+    }
+
     /**
      * {@inheritdoc}
      */

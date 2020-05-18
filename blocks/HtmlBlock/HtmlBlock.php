@@ -196,6 +196,51 @@ class HtmlBlock extends Block
         return $files;
     }
 
+    public function getHtmlExportData()
+    {
+        if (strlen($this->content) === 0) {
+            return '';
+        }
+
+        $document = new \DOMDocument();
+        $encoding = '<?xml encoding="utf-8" ?>';
+        $pos = strrpos($this->content, $encoding);
+        if ($pos === false) {
+            $content = $encoding.$this->content;
+        } else { 
+            $content = $this->content;
+        }
+        $document->loadHTML($content);
+
+        $anchorElements = $document->getElementsByTagName('a');
+        foreach ($anchorElements as $element) {
+            if (!$element instanceof \DOMElement || !$element->hasAttribute('href')) {
+                continue;
+            }
+            $block = $this;
+            $this->applyCallbackOnInternalUrl($element->getAttribute('href'), function ($components) use ($block, $element) {
+                $url_comp = parse_url($element->getAttribute('src'));
+                $query = parse_str($url_comp['query'], $params);
+                $element->setAttribute('href', './'. $params['file_id'] .'/'. $params['file_name']);
+            });
+        }
+
+        $imageElements = $document->getElementsByTagName('img');
+        foreach ($imageElements as $element) {
+            if (!$element instanceof \DOMElement || !$element->hasAttribute('src')) {
+                continue;
+            }
+            $block = $this;
+            $this->applyCallbackOnInternalUrl($element->getAttribute('src'), function ($components) use ($block, $element) {
+                $url_comp = parse_url($element->getAttribute('src'));
+                $query = parse_str($url_comp['query'], $params);
+                $element->setAttribute('src', './'. $params['file_id'] .'/'. $params['file_name']);
+            });
+        }
+
+        return $document->saveHTML();
+    }
+
     /**
      * {@inheritdoc}
      */

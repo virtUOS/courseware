@@ -215,6 +215,19 @@ class LinkBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function getHtmlExportData()
+    {
+        $array = $this->getAttrArray();
+        if($this->link_type ==  'internal') {
+            $array['target_id'] = $this->getTargetId($this->link_target);
+            $courseware = $this->container['current_courseware'];
+            $block = DBBlock::find($array['target_id']);
+            $array['target_type'] = $block->type;
+        }
+
+        return $array;
+    }
+
     public function getXmlNamespace()
     {
         return 'http://moocip.de/schema/block/link/';

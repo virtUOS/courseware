@@ -134,6 +134,14 @@
                         </div>
                     </a>
                 </li>
+                <li>
+                    <a :href="coursewareExportHtmlURL">
+                        <div id="cw-export-html-download" class="cw-action-menu-button" :title="$t('message.exportHtmlExplain')">
+                            <!-- @click="showExport" -->
+                            <p>{{ $t('message.exportHtmlButton') }}</p>
+                        </div>
+                    </a>
+                </li>
             </ul>
             <div v-if="(showRemoteCourseware || showImportCourseware) && loading">
                 <spring-spinner :animation-duration="3000" :size="65" :color="'#28497c'" class="cw-action-loading" />
@@ -235,6 +243,7 @@ export default {
             storeLock: false,
             errorOccurred: [],
             coursewareExportURL: COURSEWARE.data.courseware_export_url,
+            coursewareExportHtmlURL: COURSEWARE.data.courseware_export_html_url,
             helpUnfolded: false
         };
     },

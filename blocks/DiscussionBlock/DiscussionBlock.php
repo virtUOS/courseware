@@ -196,4 +196,9 @@ class DiscussionBlock extends Block
         $plugin_info = $plugin_manager->getPluginInfo('CoursewareObserver');
         return $plugin_info["enabled"];
     }
+
+    public function getHtmlExportData()
+    {
+        return;
+    }
 }
