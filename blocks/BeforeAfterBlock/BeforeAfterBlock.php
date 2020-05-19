@@ -130,6 +130,22 @@ class BeforeAfterBlock extends Block
         return;
     }
 
+    public function getHtmlExportData()
+    {
+        $before = json_decode($this->ba_before);
+        $after = json_decode($this->ba_after);
+        if ($before->source == 'file') {
+            $before->url = './' . $before->file_id . '/' . $before->file_name;
+        }
+        if ($after->source == 'file') {
+            $after->url = './' . $after->file_id . '/' . $after->file_name;
+        }
+        return array(
+            'ba_before' => $before,
+            'ba_after' => $after
+        );
+    }
+
     public function exportProperties()
     { 
        return array(

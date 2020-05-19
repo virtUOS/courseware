@@ -169,6 +169,18 @@ class DownloadBlock extends Block
         );
     }
 
+    public function getHtmlExportData()
+    {
+        $file_ref = new \FileRef($this->file_id);
+        $file = new \File($file_ref->file_id);
+        $icon = $this->getIcon($file_ref);
+
+        return array_merge($this->getAttrArray(), array(
+            'href' => './' .$this->file_id . '/' . $file->name,
+            'icon' => $icon
+        ));
+    }
+
     public function exportProperties()
     {
        return $this->getAttrArray();
