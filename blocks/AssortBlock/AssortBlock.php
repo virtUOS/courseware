@@ -149,7 +149,7 @@ class AssortBlock extends Block
 
     public function getHtmlExportData()
     {
-        return $this->getAttrArray();
+        return array('assortblocks' => json_decode($this->assortblocks), 'assorttype' => $this->assorttype);
     }
 
     /**
