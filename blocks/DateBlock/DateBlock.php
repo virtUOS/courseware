@@ -59,6 +59,11 @@ class DateBlock extends Block
        return array('date_content' => $this->date_content);
     }
 
+    public function getHtmlExportData()
+    {
+        return json_decode($this->date_content);
+    }
+
     public function getXmlNamespace()
     {
         return 'http://moocip.de/schema/block/date/';
