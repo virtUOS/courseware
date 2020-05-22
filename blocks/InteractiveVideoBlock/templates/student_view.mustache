@@ -60,11 +60,11 @@
                 </form>
                 {{#has_solution}}
                     {{#correct}}
-                        <button class="button cw-iav-test-button-continue" data-testid="{{id}}">weiter</button>
+                        <button class="button cw-iav-test-button-continue" data-testid="{{id}}">{{#i18n}}weiter{{/i18n}}</button>
                     {{/correct}}
                     {{^correct}}
                         {{#no_more_tries}}
-                            <button class="button cw-iav-test-button-continue" data-testid="{{id}}">weiter</button>
+                            <button class="button cw-iav-test-button-continue" data-testid="{{id}}">{{#i18n}}weiter{{/i18n}}</button>
                         {{/no_more_tries}}
                     {{/correct}}
                 {{/has_solution}}
