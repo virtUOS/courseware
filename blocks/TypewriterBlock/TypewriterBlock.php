@@ -56,7 +56,7 @@ class TypewriterBlock extends Block
 
     public function getHtmlExportData()
     {
-        return $this->exportProperties();
+        return json_decode($this->typewriter_json);
     }
 
     public function getXmlNamespace()
