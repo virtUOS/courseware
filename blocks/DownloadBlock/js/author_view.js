@@ -33,6 +33,10 @@ export default AuthorView.extend({
     });
     this.$('.download-folder').val(stored_folder).trigger('change');
     this.selectFolder();
+
+    if (this.$('.download-grade-stored').val() == '1') {
+      this.$('input[name="download-grade"]').attr('checked', true);
+    }
   },
 
   onNavigate(event) {
