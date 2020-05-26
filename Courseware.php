@@ -57,7 +57,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
     {
         //PageLayout::setTitle($_SESSION['SessSemName']['header_line'] . ' - ' . $this->getPluginname());
         // setTitle -> courseware_controller.php
-        PageLayout::setHelpKeyword('MoocIP.Courseware'); // Hilfeseite im Hilfewiki
+        PageLayout::setHelpKeyword('Basis/Courseware'); // Hilfeseite im Hilfewiki
         $this->getHelpbarContent();
     }
 
