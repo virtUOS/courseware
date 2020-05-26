@@ -1316,11 +1316,13 @@ button.cw-reset-progress-button:hover {
   background-image: url("../../../../assets/images/icons/white/file.svg");
   background-image: url("../../../../../assets/images/icons/white/file.svg");
 }
-#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-download {
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-download,
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-html-download {
   background-image: url("../../../../assets/images/icons/blue/download.svg");
   background-image: url("../../../../../assets/images/icons/blue/download.svg");
 }
-#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-download:hover {
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-download:hover,
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-html-download:hover {
   background-image: url("../../../../assets/images/icons/white/download.svg");
   background-image: url("../../../../../assets/images/icons/white/download.svg");
 }
@@ -5593,15 +5595,25 @@ section.ConfirmBlock span.confirm-title {
   background-image: url("../../../../../assets/images/icons/white/arr_1right.svg");
   right: 0;
 }
-button[name="removecard"] {
+.cw-dialogcards-card-buttons {
+  float: right;
+  margin-top: -0.5em;
+}
+.cw-dialogcards-card-buttons button {
   width: 20px;
   height: 20px;
   color: transparent;
   border: none;
-  background: url("../../../../../assets/images/icons/blue/trash.svg") no-repeat;
   cursor: pointer;
-  float: right;
-  margin-top: 20px;
+}
+.cw-dialogcards-card-buttons button[name="removecard"] {
+  background: url("../../../../../assets/images/icons/blue/trash.svg") no-repeat;
+}
+.cw-dialogcards-card-buttons button[name="raisecard"] {
+  background: url("../../../../../assets/images/icons/yellow/arr_2up.svg") no-repeat;
+}
+.cw-dialogcards-card-buttons button[name="lowercard"] {
+  background: url("../../../../../assets/images/icons/yellow/arr_2down.svg") no-repeat;
 }
 .cw-dialogcards-front-img,
 .cw-dialogcards-front-img-file,
