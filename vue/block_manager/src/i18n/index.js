@@ -66,6 +66,8 @@ const messages = {
             help_remote_import_content: 'In order to import content from another course in which you are entered under the lecturers, select "Import from Course" under Import & Export. A list of semesters is displayed. Clicking on a semester shows the available courses. Select a course to display the courseware content of it. Content can be copied into the current course using drag & drop. You may have to expand the courseware elements to be able to copy elements.',
             help_export_title: 'Export Archive',
             help_export_content: 'A courseware archive is a zip file that contains a description of the courseware (data.xml) and all the included files. The zip file can be read in via the import in order to use content in other Stud.IP installations. To copy content from another course, please use "Import from event".',
+            help_html_export_title: 'Export HTML',
+            help_html_export_content: 'The HTML export delivers the content of Coursware and the Courseware Player. With the Courseware Player, it is possible to play the content with a browser directly from the file system of a computer. The Courseware Player can also be used on a web server. Please note that not all blocks are available in the Courseware Player. Audio gallery, confirmation, forum, bubbler, discussion & comments, search, quiz and OpenCast cannot be played at the moment. Tasks that were included in the interactive video can also not be played back.',
         }
     },
     de_DE: {
@@ -133,6 +135,8 @@ const messages = {
             help_remote_import_content: 'Um Inhalte aus einer anderen Veranstaltung, in der Sie unter den Lehrenden eingetragen sind, zu importieren, wählen Sie unter Import & Export „Aus Veranstaltung importieren“. Eine Liste von Semestern wird angezeigt. Mit einem Klick auf ein Semester werden die verfügbaren Veranstaltungen dargestellt. Wählen Sie eine Veranstaltung aus um sich die Courseware-Inhalte dieser Veranstaltung anzeigen zu lassen. Inhalte können per Drag&Drop in die aktuelle Veranstaltung kopiert werden. Gegebenenfalls müssen Sie die Elemente der Courseware aufklappen um Elemente kopieren zu können.',
             help_export_title: 'Archiv exportieren',
             help_export_content: 'Ein Courseware Archiv ist eine Zip-Datei die eine Beschreibung der Courseware (data.xml) sowie alle eingebundenen Dateien enthält. Die Zip-Datei kann über den Import eingelesen werden um Inhalte in anderen Stud.IP Installationen zu verwenden. Für das Kopieren von Inhalten aus einer anderen Veranstaltung nutzen Sie bitte „Aus Veranstaltung importieren“.',
+            help_html_export_title: 'HTML exportieren',
+            help_html_export_content: 'Der HTML Export liefert die Inhalte von Coursware sowie den Courseware Player aus. Mit dem Courseware Player ist es möglich die Inhalte mit einem Browser direkt aus dem Dateisystem eines Rechners wiederzugeben. Der Courseware Player kann auch auf einem Webserver verwendet werden. Bitte beachten Sie das nicht alle Blöcke im Courseware Player verfügbar sind. Audio Galerie, Bestätigung, Forum, Blubber, Diskussion & Kommentare, Suche, Quiz und OpenCast können im Moment noch nicht wiedergegeben werden. Aufgaben die im interactive Video eingebunden wurden können auch nicht wiedergegeben werden.',
         }
     }
 };

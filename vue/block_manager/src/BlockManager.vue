@@ -183,6 +183,7 @@
                 <HelpBox :title="$t('message.help_import_title')" :content="$t('message.help_import_content')" />
                 <HelpBox :title="$t('message.help_remote_import_title')" :content="$t('message.help_remote_import_content')" />
                 <HelpBox :title="$t('message.help_export_title')" :content="$t('message.help_export_content')" />
+                <HelpBox :title="$t('message.help_html_export_title')" :content="$t('message.help_html_export_content')" />
             </div>
         </div>
         <div id="errorbox" class="cw-blockmanager-wrapper" v-if="errorOccurred.length > 0">
