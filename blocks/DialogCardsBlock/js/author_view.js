@@ -177,6 +177,8 @@ export default AuthorView.extend({
         if (last.length == 0) {
             card.find('.cw-dialogcards-card-content-legend').html(title + ' 0');
             card.insertAfter(this.$('.cw-dialogcards-card-content-default'));
+            card.find('.raisecard').hide();
+            card.find('.lowercard').hide();
         } else {
             card.find('.cw-dialogcards-card-content-legend').html(title + ' '+ index);
             card.insertAfter(last);
