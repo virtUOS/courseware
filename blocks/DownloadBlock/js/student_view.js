@@ -34,7 +34,9 @@ export default StudentView.extend({
           window.location = (view.$('.cw-download-link').attr('href'));
           view.confirmed = true;
           view.$('.cw-download-info-box').hide();
-          view.$('.cw-download-success-box').show();
+          if(view.$('.cw-download-success-content').val()){
+            view.$('.cw-download-success-box').show();
+          }
         })
         .catch(function (error) {
           if (error.responseText) {
