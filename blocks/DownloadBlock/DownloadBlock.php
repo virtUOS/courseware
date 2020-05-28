@@ -141,7 +141,7 @@ class DownloadBlock extends Block
     {
         $this->setGrade(1.0);
 
-        return ;
+        return true;
     }
 
     private function showFiles($folder_id)

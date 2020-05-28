@@ -1,11 +1,10 @@
 import $ from 'jquery'
 import StudentView from 'js/student_view'
 import helper from 'js/url'
-import templates from 'js/templates'
 
 export default StudentView.extend({
   events: {
-    'click button[name=download]': 'onDownload'
+    'click .cw-download-link': 'onDownload'
   },
 
   initialize() {
@@ -16,29 +15,34 @@ export default StudentView.extend({
   },
 
   postRender() {
+    this.confirmed =  this.$('input[name="download_confirmed"]').val() == true;
+    if (this.confirmed && this.$('.cw-download-success-content').val()) {
+      this.$('.cw-download-success-box').show();
+    }
+    if (!this.confirmed && this.$('.cw-download-info-content').val()) {
+      this.$('.cw-download-info-box').show();
+    }
   },
 
-  onDownload() {
-    this.model.set('confirmed', true);
-    this.model.set('file', this.$('input[name="file"]').val());
-    this.model.set('file_name', this.$('input[name="file_name"]').val());
-    this.model.set('file_id', this.$('input[name="file_id"]').val());
-    this.model.set('download_title', this.$('input[name="download_title"]').val());
-    this.model.set('download_info', this.$('input[name="download_info"]').val());
-    this.model.set('download_success', this.$('input[name="download_success"]').val());
-    this.model.set('download_access', this.$('input[name="download_access"]').val());
-    this.model.set('icon', this.$('input[name="icon"]').val());
-    this.model.set('file_available', true);
-
-    this.$el.html(templates('DownloadBlock', 'student_view', { ...this.model.attributes }));
-    helper
-      .callHandler(this.model.id, 'download', {})
-      .catch(function (error) {
-        if (error.responseText) {
-            var errorMessage = 'Could not update the block: ' + $.parseJSON(error.responseText).reason;
-            alert(errorMessage);
-            console.log(errorMessage, arguments);
-        }
-      });
+  onDownload(event) {
+    if (!this.confirmed) {
+      event.preventDefault();
+      let view = this;
+      helper
+        .callHandler(this.model.id, 'download', {})
+        .then (function() {
+          window.location = (view.$('.cw-download-link').attr('href'));
+          view.confirmed = true;
+          view.$('.cw-download-info-box').hide();
+          view.$('.cw-download-success-box').show();
+        })
+        .catch(function (error) {
+          if (error.responseText) {
+              var errorMessage = 'Could not update the block: ' + $.parseJSON(error.responseText).reason;
+              alert(errorMessage);
+              console.log(errorMessage, arguments);
+          }
+        });
+    }
   }
 });

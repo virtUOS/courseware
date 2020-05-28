@@ -5,26 +5,19 @@
     {{#file_available}}
         <div class="cw-download-file">
             {{#download_access}}
-                {{#confirmed}}
-                    {{#download_success}}
-                        <div class="messagebox messagebox_success">
-                            {{download_success}}
-                        </div>
-                        <br>
-                    {{/download_success}}
-                {{/confirmed}}
-                
-                {{^confirmed}}
-                    {{#download_info}}
-                        <div class="messagebox messagebox_info">
-                            {{download_info}}
-                        </div>
-                        <br>
-                    {{/download_info}}
-                {{/confirmed}}
+                <input type="hidden" value="{{confirmed}}" class="cw-download-confirmed" name="download_confirmed">
+                <input type="hidden" value="{{download_success}}" class="cw-download-success-content" >
+                <input type="hidden" value="{{download_info}}" class="cw-download-info-content">
+                <div class="messagebox messagebox_success cw-download-success-box">
+                    {{download_success}}
+                </div>
+                <div class="messagebox messagebox_info cw-download-info-box">
+                    {{download_info}}
+                </div>
+                <br>
                 <div class="cw-download-info cw-fileicon-{{icon}}" > &nbsp; {{file}} </div>
                 <div class="cw-download-button-wrapper">
-                    <a href="{{url}}"> 
+                    <a href="{{url}}" class="cw-download-link"> 
                         <button name="download" class="cw-download-button" style="display: inline-block;">{{#i18n}}Herunterladen{{/i18n}}</button>
                     </a> 
                 </div>
