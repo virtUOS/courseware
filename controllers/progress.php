@@ -35,7 +35,7 @@ class ProgressController extends CoursewareStudipController
             array());
 
         $grouped = array_reduce(
-            \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId())),
+            \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position, id', array($this->plugin->getCourseId())),
             function ($memo, $item) {
                 $memo[$item->parent_id][] = $item->toArray();
 
