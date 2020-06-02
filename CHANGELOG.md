@@ -1,6 +1,27 @@
 CHANGELOG
 =========
 
+4.6.0
+-----
+* Add vue.js based HTML-Export
+* Post overview add download option for threads
+* DialogCards: add sort function
+* VideoBlock: disable context menu (optional)
+* interactive Video: disable context menu
+* change Stud.IP help link
+* DownloadBlock: fix set grade
+* some minor fixes
+
+4.5.4
+-----
+* FolderBlock: fix php 5.x issue
+* Enhance discussion overview: delete threads
+* TestBlock: fix LaTex issue
+* AudioGalleryBlock: enhance usability
+* InteractivVideoBlock: add try limiter
+* Progress overview for teachers: show hidden chapters
+* some minor fixes
+
 4.5.3
 -----
 * fix DownloadBlock: fix import
