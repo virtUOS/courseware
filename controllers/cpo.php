@@ -130,10 +130,10 @@ class CpoController extends CoursewareStudipController
 
         }
 
-        $filename = $thread['thread_title'];
+        $filename = str_replace(' ', '_', $thread['thread_title']);
 
         header('Content-Type: application/csv');
-        header('Content-Disposition: attachment; filename="'.$filename.'";');
+        header('Content-Disposition: attachment; filename="'.$filename.'.csv";');
         fpassthru($f);
         exit();
     }
