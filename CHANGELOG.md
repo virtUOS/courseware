@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+4.6.1
+-----
+* PostBlock thread download: fix missing file extension
+* fix highlight.js version
+
 4.6.0
 -----
 * Add vue.js based HTML-Export
