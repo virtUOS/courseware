@@ -439,17 +439,38 @@ class Block extends \SimpleORMap implements \Serializable
         if (!$this->isStructuralBlock()) {
             return false;
         }
+
         $approval_json = json_decode($this->approval, true);
         $new_list = json_decode($json, true);
+
         if ($approval_json === NULL) {
             $approval_json = array();
         }
+
+        // deduplicate and make sure read perms go along with write perms
+        foreach (['users', 'group'] as $type) {
+            foreach ($new_list[$type]['write'] as $user_id) {
+                if (!$new_list[$type]['read'] || in_array($user_id, $new_list[$type]['read']) === false) {
+                    $new_list[$type]['read'][] = $user_id;
+                }
+            }
+
+            if ($new_list[$type]['write']) {
+                $new_list[$type]['write'] = \array_unique($new_list[$type]['write']);
+            }
+
+            if ($new_list[$type]['read']) {
+                $new_list[$type]['read'] = \array_unique($new_list[$type]['read']);
+            }
+        }
+
         $old_list = $approval_json;
-        if($new_list['users'] !== NULL){
+        if ($new_list['users'] !== NULL){
             $approval_json['users'] = $new_list['users'];
             $updateType = 'users';
         }
-        if($new_list['groups'] !== NULL){
+
+        if ($new_list['groups'] !== NULL){
             $approval_json['groups'] = $new_list['groups'];
             $updateType = 'groups';
         }
