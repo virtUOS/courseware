@@ -61,7 +61,7 @@ class User extends \User
             }
 
             if (!$perm) {
-                $perm = $this->hasWriteApproval($model);
+                $perm = $this->hasReadApproval($model);
             }
 
             return $model->isPublished() && $model->isVisible() && $perm;
