@@ -94,7 +94,7 @@ const messages = {
             addSubelement: 'Unterelement hinzufügen',
             editElement: 'Element bearbeiten',
             deleteElement: 'Element löschen',
-            setStudentsPermissions: 'Lese- und Schreibrechte für Studierenden festlegen',
+            setStudentsPermissions: 'Lese- und Schreibrechte für Studierende festlegen',
             setGroupsPermissions: 'Lese- und Schreibrechte für Gruppen festlegen',
             editDialogTitle: '{0} bearbeiten',
             deleteDialogTitle: '{0} löschen',
