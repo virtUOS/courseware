@@ -11,11 +11,37 @@
                     </header>
                     <section class="modal-body">
                         <ul class="groups-permissions-list">
-                            <li v-for="group in groups" :key="group.id">
-                                <label>
-                                    <input type="checkbox" :value="group.id" v-model="checkedGroups" /> {{ group.name }}
-                                </label>
-                            </li>
+                            <table class="students-permissions-list">
+                                <thead>
+                                    <th>
+                                        Lesen
+                                    </th>
+                                    <th>
+                                        Schreiben
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="group in groups" :key="group.id">
+                                        <td class="perm">
+                                            <input type="checkbox"
+                                                :id="group.id + `_read`"
+                                                :value="group.id"
+                                                v-model="checkedGroupsRead"
+                                            />
+                                        </td>
+                                        <td class="perm">
+                                            <input type="checkbox" :value="group.id" v-model="checkedGroupsWrite" />
+                                        </td>
+
+                                        <td>
+                                            <label :for="group.id + `_read`">
+                                                {{ group.name }}
+                                            </label>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
                         </ul>
                     </section>
                     <footer class="modal-footer">
@@ -47,7 +73,8 @@ export default {
             visible: this.DialogVisible,
             currentElement: this.element,
             groups: this.$store.state.courseGroups,
-            checkedGroups: []
+            checkedGroupsRead: [],
+            checkedGroupsWrite: []
         };
     },
     methods: {
@@ -59,7 +86,10 @@ export default {
         set() {
             let bid = this.element.id;
             let list = {};
-            list.groups = this.checkedGroups;
+            list.groups = {
+                read: this.checkedGroupsRead,
+                write: this.checkedGroupsWrite
+            };
             axios
                 .post('set_element_approval_list', { bid: bid, list: JSON.stringify(list) })
                 .then(response => {
@@ -78,7 +108,8 @@ export default {
                 .post('get_element_approval_list', { bid: bid, type: 'groups' })
                 .then(response => {
                     if (response.data != null) {
-                        view.checkedGroups = response.data;
+                        view.checkedGroupsRead = response.data.read ? response.data.read : [];
+                        view.checkedGroupsWrite = response.data.write ? response.data.write : [];
                     }
                 })
                 .catch(error => {
@@ -93,7 +124,24 @@ export default {
             if (this.visible) {
                 this.getApprovalList();
             } else {
-                this.checkedGroups = [];
+                this.checkedGroupsRead = [];
+                this.checkedGroupsWrite = [];
+            }
+        },
+
+        checkedGroupsWrite: function(data) {
+            for (var i = 0; i < data.length; i++) {
+                if (!this.checkedGroupsRead.includes(data[i])) {
+                    this.checkedGroupsRead.push(data[i]);
+                }
+            }
+        },
+
+        checkedGroupsRead: function(data) {
+            for (var i = 0; i < this.checkedGroupsWrite.length; i++) {
+                if (!this.checkedGroupsRead.includes(data[i])) {
+                    this.checkedGroupsWrite.splice(i, 1);
+                }
             }
         }
     }

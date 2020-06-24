@@ -10,16 +10,39 @@
                         </slot>
                     </header>
                     <section class="modal-body">
-                        <ul class="students-permissions-list">
-                            <li v-for="user in users" :key="user.id">
-                                <label>
-                                    <input type="checkbox" :value="user.user_id" v-model="checkedUsers" />
-                                    {{ user.firstname }}
-                                    {{ user.lastname }}
-                                    <i>{{ user.username }}</i>
-                                </label>
-                            </li>
-                        </ul>
+                        <table class="students-permissions-list">
+                            <thead>
+                                <th>
+                                    Lesen
+                                </th>
+                                <th>
+                                    Schreiben
+                                </th>
+                            </thead>
+                            <tbody>
+                                <tr v-for="user in users" :key="user.user_id">
+                                    <td class="perm">
+                                        <input type="checkbox"
+                                            :id="user.user_id + `_read`"
+                                            :value="user.user_id"
+                                            v-model="checkedUsersRead"
+                                        />
+                                    </td>
+                                    <td class="perm">
+                                        <input type="checkbox" :value="user.user_id" v-model="checkedUsersWrite" />
+                                    </td>
+
+                                    <td>
+                                        <label :for="user.user_id + `_read`">
+                                            {{ user.firstname }}
+                                            {{ user.lastname }}
+                                            <i>{{ user.username }}</i>
+                                        </label>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
                     </section>
                     <footer class="modal-footer">
                         <slot name="footer">
@@ -51,7 +74,8 @@ export default {
             visible: this.DialogVisible,
             currentElement: this.element,
             users: this.$store.state.courseUsers,
-            checkedUsers: []
+            checkedUsersRead: [],
+            checkedUsersWrite: []
         };
     },
 
@@ -64,7 +88,11 @@ export default {
         set() {
             let bid = this.element.id;
             let list = {};
-            list.users = this.checkedUsers;
+            list.users = {
+                read: this.checkedUsersRead,
+                write: this.checkedUsersWrite
+            };
+
             axios
                 .post('set_element_approval_list', { bid: bid, list: JSON.stringify(list) })
                 .then(response => {
@@ -83,7 +111,8 @@ export default {
                 .post('get_element_approval_list', { bid: bid, type: 'users' })
                 .then(response => {
                     if (response.data != null) {
-                        view.checkedUsers = response.data;
+                        view.checkedUsersRead  = response.data.read  ? response.data.read  : [];
+                        view.checkedUsersWrite = response.data.write ? response.data.write : [];
                     }
                 })
                 .catch(error => {
@@ -98,7 +127,24 @@ export default {
             if (this.visible) {
                 this.getApprovalList();
             } else {
-                this.checkedUsers = [];
+                this.checkedUsersRead = [];
+                this.checkedUsersWrite = [];
+            }
+        },
+
+        checkedUsersWrite: function(data) {
+            for (var i = 0; i < data.length; i++) {
+                if (!this.checkedUsersRead.includes(data[i])) {
+                    this.checkedUsersRead.push(data[i]);
+                }
+            }
+        },
+
+        checkedUsersRead: function(data) {
+            for (var i = 0; i < this.checkedUsersWrite.length; i++) {
+                if (!this.checkedUsersRead.includes(this.checkedUsersWrite[i])) {
+                    this.checkedUsersWrite.splice(i, 1);
+                }
             }
         }
     }

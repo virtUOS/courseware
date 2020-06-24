@@ -60,6 +60,10 @@ class User extends \User
                 $perm = $this->hasPerm($model->seminar_id, 'user');
             }
 
+            if (!$perm) {
+                $perm = $this->hasWriteApproval($model);
+            }
+
             return $model->isPublished() && $model->isVisible() && $perm;
         }
 
@@ -110,9 +114,14 @@ class User extends \User
         return $GLOBALS['perm']->get_studip_perm($cid, $this->id);
     }
 
-    public function hasApproval(DbBlock $block)
+    public function hasReadApproval(DbBlock $block)
     {
-        return $block->hasApproval($this->id);
+        return $block->hasReadApproval($this->id);
+    }
+
+    public function hasWriteApproval(DbBlock $block)
+    {
+        return $block->hasWriteApproval($this->id);
     }
 
     public function isNobody()
@@ -138,11 +147,11 @@ class User extends \User
         $approval = false;
         if (!$block->isStructuralBlock()) {
             if($block->parent != null) {
-                $approval = $this->hasApproval($block->parent);
+                $approval = $this->hasWriteApproval($block->parent);
             }
         } else {
             if($block != null) {
-                $approval = $this->hasApproval($block);
+                $approval = $this->hasWriteApproval($block);
             }
         }
 

@@ -375,37 +375,45 @@ class Block extends \SimpleORMap implements \Serializable
                        substr($hash, 20, 12)
         );
     }
-    
+
     public function belongesToCourse($cid)
     {
         return $this->seminar_id == $cid;
     }
 
-    public function hasApproval($uid)
+    public function hasReadApproval($uid)
     {
         if (!$this->isStructuralBlock()) {
             return false;
         }
-        return $this->hasUserApproval($uid) || $this->hasGroupApproval($uid);
+        return $this->hasUserApproval($uid, 'read') || $this->hasGroupApproval($uid, 'read');
     }
 
-    private function hasUserApproval($uid)
+    public function hasWriteApproval($uid)
+    {
+        if (!$this->isStructuralBlock()) {
+            return false;
+        }
+        return $this->hasUserApproval($uid, 'write') || $this->hasGroupApproval($uid, 'write');
+    }
+
+    private function hasUserApproval($uid, $type = 'read')
     {
         $approval_json = json_decode($this->approval, true);
         if ($approval_json !== FALSE && !empty($approval_json)) {
-            if(!empty($approval_json['users'])) {
-                return in_array($uid, $approval_json['users']);
+            if (!empty($approval_json['users'])) {
+                return in_array($uid, $approval_json['users'][$type]);
             }
         }
         return false;
     }
 
-    private function hasGroupApproval($uid)
+    private function hasGroupApproval($uid, $type = 'read')
     {
         $approval_json = json_decode($this->approval, true);
         if ($approval_json !== FALSE && !empty($approval_json)) {
-            if(!empty($approval_json['groups'])) {
-                foreach($approval_json['groups'] as $group_id){
+            if (!empty($approval_json['groups'])) {
+                foreach($approval_json['groups'][$type] as $group_id){
                     $group = \Statusgruppen::find($group_id);
                     if ($group->isMember($uid)) {
                         return true;
