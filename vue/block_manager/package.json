@@ -46,7 +46,9 @@
     },
     "rules": {
       "no-console": "off",
-      "tabWidth": 4
+      "prettier/prettier": {
+          "tabWidth": 4
+      }
     },
     "globals": {
       "COURSEWARE": false,
