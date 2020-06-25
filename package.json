@@ -36,7 +36,7 @@
     "safari >= 7"
   ],
   "scripts": {
-    "build:dev": "webpack",
+    "build:dev": "webpack --watch",
     "build:prod": "NODE_ENV=production webpack",
     "wds": "webpack-dev-server",
     "locales": "php buildLocales.php",
