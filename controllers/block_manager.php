@@ -45,7 +45,7 @@ class BlockManagerController extends CoursewareStudipController
                         $sem_name = (string)$semester->name;
                         if(!isset($this->remote_courses[$sem_name])) {
                             $this->remote_courses[$sem_name] = [];
-                        } 
+                        }
                         array_push($this->remote_courses[$sem_name], array('id' => $seminar_user_obj->Seminar_id, 'name' => (string) $remote_course->getFullname()));
                     }
                 }
@@ -227,6 +227,16 @@ class BlockManagerController extends CoursewareStudipController
 
         $block = dbBlock::find($bid);
         $list = $block->getApprovalList($type);
+
+        if (!isset($list['users'])) {
+            // prefill with user read permissions
+            $course_members = CourseMember::findByCourseAndStatus($cid, 'autor');
+            
+            foreach($course_members as $member) {
+                $list['users']['read'][] = $member->user_id;
+            }
+        }
+
         $this->response->add_header('Content-Type', 'application/json');
         $this->render_text(json_encode($list));
     }
@@ -451,7 +461,7 @@ class BlockManagerController extends CoursewareStudipController
                             $block->store();
                         }
                     }
-                    if($parent != null) { 
+                    if($parent != null) {
                         $parent->updateChildPositions($value);
                         $changes = true;
                     }
@@ -522,14 +532,14 @@ class BlockManagerController extends CoursewareStudipController
                             $remote_block_id = str_replace('remote_', '', $block_id);
                             $remote_db_block = dbBlock::find($remote_block_id);
                             $remote_ui_block = $this->plugin->getBlockFactory()->makeBlock($remote_db_block);
-    
+
                             $data = array('title' => $remote_db_block->title, 'cid' => $cid, 'publication_date' => null, 'withdraw_date' => null);
                             $new_block = $this->createAnyBlock($parent_id, $remote_db_block->type, $data, $remote_db_block->sub_type);
                             $this->updateBlockId($block_list, $block_id, $new_block->id);
                             $block_id = intval($new_block->id);
 
                             $new_ui_block = $this->plugin->getBlockFactory()->makeBlock($new_block);
-                            if (gettype($new_ui_block) != 'object') { 
+                            if (gettype($new_ui_block) != 'object') {
                                 $new_block->delete();
                                 unset($block_list[$block_id]);
                                 $this->errors[] = _cw('Daten wurden nicht importiert');
@@ -543,7 +553,7 @@ class BlockManagerController extends CoursewareStudipController
 
                                 if ($remote_file != null) {
                                     $file = FileManager::copyFileRef($remote_file, $import_folder, \User::findCurrent());
-                                    
+
                                 }
                             }
 
@@ -682,7 +692,7 @@ class BlockManagerController extends CoursewareStudipController
                             $this->updateBlockId($block_list, $block_id, $block->id);
                             $block_id = $block->id;
                             $uiBlock = $this->plugin->getBlockFactory()->makeBlock($block);
-                            if (gettype($uiBlock) != 'object') { 
+                            if (gettype($uiBlock) != 'object') {
                                 $block->delete();
                                 unset($block_list[$block_id]);
                                 $this->errors[] = _cw('Daten wurden nicht importiert');
@@ -693,11 +703,11 @@ class BlockManagerController extends CoursewareStudipController
 
                             $properties = array();
                             foreach ($block_node->attributes as $attribute) {
-    
+
                                 if (!$attribute instanceof DOMAttr) {
                                     continue;
                                 }
-    
+
                                 if ($attribute->namespaceURI !== null) {
                                     $properties[$attribute->name] = $attribute->value;
                                 }

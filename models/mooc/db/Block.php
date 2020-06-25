@@ -400,11 +400,18 @@ class Block extends \SimpleORMap implements \Serializable
     private function hasUserApproval($uid, $type = 'read')
     {
         $approval_json = json_decode($this->approval, true);
-        if ($approval_json !== FALSE && !empty($approval_json)) {
-            if (!empty($approval_json['users'])) {
-                return in_array($uid, $approval_json['users'][$type]);
+
+        if ($approval_json !== FALSE
+            && !empty($approval_json)
+            && !empty($approval_json['users'])
+        ) {
+            return in_array($uid, $approval_json['users'][$type]);
+        } else {
+            if ($GLOBALS['perm']->have_studip_perm('user', $his->seminar_id, $uid)) {
+                return true;
             }
         }
+
         return false;
     }
 

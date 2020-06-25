@@ -57,10 +57,6 @@ class User extends \User
                 $course = \Course::find($model->seminar_id);
                 $perm = get_config('ENABLE_FREE_ACCESS') && $course->lesezugriff == 0;
             } else {
-                $perm = $this->hasPerm($model->seminar_id, 'user');
-            }
-
-            if (!$perm) {
                 $perm = $this->hasReadApproval($model);
             }
 
