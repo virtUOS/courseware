@@ -107,6 +107,8 @@ export default {
             axios
                 .post('get_element_approval_list', { bid: bid, type: 'groups' })
                 .then(response => {
+                    view.groups = view.$store.state.courseGroups;
+
                     if (response.data != null) {
                         view.checkedGroupsRead = response.data.read ? response.data.read : [];
                         view.checkedGroupsWrite = response.data.write ? response.data.write : [];
@@ -120,7 +122,7 @@ export default {
     watch: {
         DialogVisible: function() {
             this.visible = this.DialogVisible;
-            this.groups = this.$store.state.courseGroups;
+            this.groups = [];
             if (this.visible) {
                 this.getApprovalList();
             } else {

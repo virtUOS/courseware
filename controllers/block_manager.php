@@ -226,14 +226,14 @@ class BlockManagerController extends CoursewareStudipController
         $type = $decoded_request['type'];
 
         $block = dbBlock::find($bid);
-        $list = $block->getApprovalList($type);
+        $list = $block->getApprovalList($type) ?: [];
 
-        if (!isset($list['users'])) {
+        if (!isset($list['users']) || empty($list['users'])) {
             // prefill with user read permissions
-            $course_members = CourseMember::findByCourseAndStatus($cid, 'autor');
-            
+            $course_members = CourseMember::findByCourseAndStatus($block->seminar_id, 'autor');
+
             foreach($course_members as $member) {
-                $list['users']['read'][] = $member->user_id;
+                $list['read'][] = $member->user_id;
             }
         }
 
@@ -248,6 +248,13 @@ class BlockManagerController extends CoursewareStudipController
         $list = $decoded_request['list'];
 
         $block = dbBlock::find($bid);
+
+        // check, if all course members have read permissions. Clear the list if this is the case
+        /*if (isset($list['users']) || !empty($list['users'])) {
+            $course_members = CourseMember::findByCourseAndStatus($block->seminar_id, 'autor');
+
+        }*/
+
         $block->setApprovalList($list);
         $this->response->add_header('Content-Type', 'application/json');
         $this->render_text(true);

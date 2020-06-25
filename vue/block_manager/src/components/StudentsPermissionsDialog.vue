@@ -110,6 +110,8 @@ export default {
             axios
                 .post('get_element_approval_list', { bid: bid, type: 'users' })
                 .then(response => {
+                    view.users = view.$store.state.courseUsers;
+
                     if (response.data != null) {
                         view.checkedUsersRead  = response.data.read  ? response.data.read  : [];
                         view.checkedUsersWrite = response.data.write ? response.data.write : [];
@@ -120,10 +122,12 @@ export default {
                 });
         }
     },
+
     watch: {
         DialogVisible: function() {
             this.visible = this.DialogVisible;
-            this.users = this.$store.state.courseUsers;
+            this.users = [];
+
             if (this.visible) {
                 this.getApprovalList();
             } else {
