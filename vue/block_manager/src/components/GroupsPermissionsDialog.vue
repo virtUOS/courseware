@@ -14,23 +14,30 @@
                             <table class="students-permissions-list">
                                 <thead>
                                     <th>
-                                        Lesen
+                                        {{ $t('message.readPerms') }}
                                     </th>
                                     <th>
-                                        Schreiben
+                                        {{ $t('message.readWritePerms') }}
                                     </th>
+                                    <th></th>
                                 </thead>
                                 <tbody>
                                     <tr v-for="group in groups" :key="group.id">
                                         <td class="perm">
                                             <input type="checkbox"
                                                 :id="group.id + `_read`"
-                                                :value="group.id"
-                                                v-model="checkedGroupsRead"
+                                                true-value="read"
+                                                false-value="none"
+                                                v-model="perms[group.id]"
                                             />
                                         </td>
+
                                         <td class="perm">
-                                            <input type="checkbox" :value="group.id" v-model="checkedGroupsWrite" />
+                                            <input type="checkbox"
+                                                true-value="write"
+                                                false-value="none"
+                                                v-model="perms[group.id]"
+                                            />
                                         </td>
 
                                         <td>
@@ -68,28 +75,27 @@ export default {
         DialogVisible: Boolean,
         element: Object
     },
+
     data() {
         return {
             visible: this.DialogVisible,
             currentElement: this.element,
             groups: this.$store.state.courseGroups,
-            checkedGroupsRead: [],
-            checkedGroupsWrite: []
+            perms: {}
         };
     },
+
     methods: {
         close() {
             if (!this.deleting) {
                 this.$emit('close');
             }
         },
+
         set() {
             let bid = this.element.id;
             let list = {};
-            list.groups = {
-                read: this.checkedGroupsRead,
-                write: this.checkedGroupsWrite
-            };
+            list.groups = this.perms;
             axios
                 .post('set_element_approval_list', { bid: bid, list: JSON.stringify(list) })
                 .then(response => {
@@ -101,6 +107,7 @@ export default {
                     this.$emit('close');
                 });
         },
+
         getApprovalList() {
             let bid = this.element.id;
             let view = this;
@@ -109,9 +116,8 @@ export default {
                 .then(response => {
                     view.groups = view.$store.state.courseGroups;
 
-                    if (response.data != null) {
-                        view.checkedGroupsRead = response.data.read ? response.data.read : [];
-                        view.checkedGroupsWrite = response.data.write ? response.data.write : [];
+                    if (response.data !== null && response.data.groups !== undefined) {
+                        view.perms = response.data.groups;
                     }
                 })
                 .catch(error => {
@@ -119,6 +125,7 @@ export default {
                 });
         }
     },
+
     watch: {
         DialogVisible: function() {
             this.visible = this.DialogVisible;
@@ -126,24 +133,7 @@ export default {
             if (this.visible) {
                 this.getApprovalList();
             } else {
-                this.checkedGroupsRead = [];
-                this.checkedGroupsWrite = [];
-            }
-        },
-
-        checkedGroupsWrite: function(data) {
-            for (var i = 0; i < data.length; i++) {
-                if (!this.checkedGroupsRead.includes(data[i])) {
-                    this.checkedGroupsRead.push(data[i]);
-                }
-            }
-        },
-
-        checkedGroupsRead: function(data) {
-            for (var i = 0; i < this.checkedGroupsWrite.length; i++) {
-                if (!this.checkedGroupsRead.includes(data[i])) {
-                    this.checkedGroupsWrite.splice(i, 1);
-                }
+                this.perms = {};
             }
         }
     }
