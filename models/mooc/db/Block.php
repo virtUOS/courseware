@@ -401,6 +401,17 @@ class Block extends \SimpleORMap implements \Serializable
     {
         $approval_json = json_decode($this->approval, true);
 
+        $default = false;
+
+        if ($type == 'read' &&
+            (
+                !isset($approval_json['settings']['defaultRead'])
+                || $approval_json['settings']['defaultRead']
+            )
+        ) {
+            $default = true;
+        }
+
         if ($approval_json !== FALSE
             && !empty($approval_json)
             && !empty($approval_json['users'])
@@ -414,19 +425,12 @@ class Block extends \SimpleORMap implements \Serializable
 
                 return $approval_json['users'][$uid] == $type;
             } else {
-                // otherwise use default permissions for this block
-                if ($type == 'read' &&
-                    (
-                        !isset($approval_json['settings']['defaultRead'])
-                        || $approval_json['settings']['defaultRead']
-                    )
-                ) {
-                    return true;
-                }
+                // otherwise use default permissions
+                return $default;
             }
         }
 
-        return false;
+        return $default;
     }
 
     private function hasGroupApproval($uid, $type = 'read')
