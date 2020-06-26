@@ -405,10 +405,24 @@ class Block extends \SimpleORMap implements \Serializable
             && !empty($approval_json)
             && !empty($approval_json['users'])
         ) {
-            return in_array($uid, $approval_json['users'][$type]);
-        } else {
-            if ($GLOBALS['perm']->have_studip_perm('user', $his->seminar_id, $uid)) {
-                return true;
+            // if there are permissions for this user, check them
+            if (isset($approval_json['users'][$uid])) {
+                // write permission includes read permissions
+                if ($approval_json['users'][$uid] == 'write') {
+                    return true;
+                }
+
+                return $approval_json['users'][$uid] == $type;
+            } else {
+                // otherwise use default permissions for this block
+                if ($type == 'read' &&
+                    (
+                        !isset($approval_json['settings']['defaultRead'])
+                        || $approval_json['settings']['defaultRead']
+                    )
+                ) {
+                    return true;
+                }
             }
         }
 
@@ -420,9 +434,12 @@ class Block extends \SimpleORMap implements \Serializable
         $approval_json = json_decode($this->approval, true);
         if ($approval_json !== FALSE && !empty($approval_json)) {
             if (!empty($approval_json['groups'])) {
-                foreach($approval_json['groups'][$type] as $group_id){
+                foreach($approval_json['groups'] as $group_id => $perm) {
                     $group = \Statusgruppen::find($group_id);
-                    if ($group->isMember($uid)) {
+
+                    if ($group && $group->isMember($uid)
+                        && ($perm == 'write' || $perm == $type)
+                    ) {
                         return true;
                     }
                 }
@@ -436,7 +453,8 @@ class Block extends \SimpleORMap implements \Serializable
         return json_decode($this->approval, true);
     }
 
-    public function setApprovalList($json) {
+    public function setApprovalList($json)
+    {
         if (!$this->isStructuralBlock()) {
             return false;
         }
@@ -470,30 +488,34 @@ class Block extends \SimpleORMap implements \Serializable
         $this->addApprovalToChildren($old_list, $new_list, $updateType);
     }
 
-    public function addApprovalToChildren($oldList, $newList, $updateType) {
-
-        if(empty($oldList)) {
+    public function addApprovalToChildren($oldList, $newList, $updateType)
+    {
+        if (empty($oldList)) {
             $oldList[$updateType] = array();
         }
 
-        $rm_arr = array_diff($oldList[$updateType], $newList[$updateType]);
-        $add_arr = array_diff($newList[$updateType], $oldList[$updateType]);
+        $rm_arr = array_diff_assoc($oldList[$updateType], $newList[$updateType]);
+        $add_arr = array_diff_assoc($newList[$updateType], $oldList[$updateType]);
 
         foreach($this->getStructuralChildren() as $element) {
-            if(!$element->isStructuralBlock()) {return;}
+            if (!$element->isStructuralBlock()) {
+                return;
+            }
+
             $elementList = $element->getApprovalList();
+            $elementList = $elementList[$updateType];
+
             if($elementList === NULL) {
                 $elementList = [];
             }
 
-            foreach($add_arr as $add) {
-                if (!in_array($add, $elementList)){
-                    $elementList[] = $add;
-                }
+            foreach ($add_arr as $id => $perm) {
+                $elementList[$id] = $perm;
             }
 
-            foreach($elementList as $key => $value) {
-                if (in_array($value, $rm_arr)) {
+            foreach($rm_arr as $key => $value) {
+                // only remove user from perm list if this is a real remove and not just a perm change
+                if (!$add_arr[$key] && $elementList[$key]) {
                     unset($elementList[$key]);
                 }
             }

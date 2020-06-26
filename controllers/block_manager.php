@@ -205,6 +205,8 @@ class BlockManagerController extends CoursewareStudipController
             ]);
         }
 
+        usort($users_json, function($a, $b) { return strcmp($a['lastname'], $b['lastname']);});
+
         $this->response->add_header('Content-Type', 'application/json');
         $this->render_text(json_encode($users_json));
     }
