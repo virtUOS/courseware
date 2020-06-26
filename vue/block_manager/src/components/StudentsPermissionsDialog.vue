@@ -18,7 +18,7 @@
                             {{ $t('message.newUserReadPerms') }}
                         </label>
 
-                        <table class="default students-permissions-list">
+                        <table class="default students-permissions-list" v-if="autor_members.length">
                             <caption>
                                 {{ this.settings.caption_autor }}
                             </caption>
@@ -78,7 +78,7 @@
                             </tbody>
                         </table>
 
-                        <table class="default students-permissions-list">
+                        <table class="default students-permissions-list" v-if="user_members.length">
                             <caption>
                                 {{ this.settings.caption_user }}
                             </caption>

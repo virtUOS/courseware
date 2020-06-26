@@ -10,7 +10,7 @@
                         </slot>
                     </header>
                     <section class="modal-body">
-                        <table class="default groups-permissions-list">
+                        <table class="default groups-permissions-list" v-if="groups.length">
                             <colgroup>
                                 <col width="20%">
                                 <col width="20%">
