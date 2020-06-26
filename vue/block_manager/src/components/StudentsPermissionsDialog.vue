@@ -30,9 +30,19 @@
                             <thead>
                                 <th>
                                     {{ $t('message.readPerms') }}
+                                    <br />
+                                    <input type="checkbox"
+                                        v-model="toggled.autor.read"
+                                        @change="toggleAll('autor', 'read')"
+                                    />
                                 </th>
                                 <th>
                                     {{ $t('message.readWritePerms') }}
+                                    <br />
+                                    <input type="checkbox"
+                                        v-model="toggled.autor.write"
+                                        @change="toggleAll('autor', 'write')"
+                                    />
                                 </th>
                                 <th></th>
                             </thead>
@@ -44,6 +54,7 @@
                                             true-value="read"
                                             false-value="none"
                                             v-model="user_perms[user.user_id]"
+                                            @change="updateToggleStatus"
                                         />
                                     </td>
                                     <td class="perm">
@@ -51,6 +62,7 @@
                                             true-value="write"
                                             false-value="none"
                                             v-model="user_perms[user.user_id]"
+                                            @change="updateToggleStatus"
                                         />
                                     </td>
 
@@ -78,6 +90,11 @@
                             <thead>
                                 <th>
                                     {{ $t('message.readPerms') }}
+                                    <br />
+                                    <input type="checkbox"
+                                        v-model="toggled.user.read"
+                                        @change="toggleAll('user', 'read')"
+                                    />
                                 </th>
                                 <th></th>
                                 <th></th>
@@ -90,6 +107,7 @@
                                             true-value="read"
                                             false-value="none"
                                             v-model="user_perms[user.user_id]"
+                                            @change="updateToggleStatus"
                                         />
                                     </td>
                                     <td class="perm">
@@ -144,6 +162,15 @@ export default {
                 defaultRead: true,
                 caption_autor: 'Studierende',
                 caption_user:  'Leser/innen'
+            },
+            toggled: {
+                autor: {
+                    read: false,
+                    rite: false
+                },
+                user: {
+                    read: true
+                }
             }
         };
     },
@@ -220,6 +247,51 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
+        },
+
+        toggleAll(type, perm) {
+            let current = this.toggled[type][perm];
+            let new_perms = { ...this.user_perms };
+            let members;
+
+            if (type === 'autor') {
+                members = this.autor_members;
+                if (perm == 'write') {
+                    this.toggled.autor.read = false;
+                } else {
+                    this.toggled.autor.write = false;
+                }
+            } else {
+                members = this.user_members
+            }
+
+            for (let key in members) {
+                new_perms[members[key].user_id] = current ? perm : 'none';
+            }
+
+            this.user_perms = new_perms;
+        },
+
+        updateToggleStatus() {
+            this.toggled.autor.read = true;
+            this.toggled.autor.write = true;
+            this.toggled.user.read = true;
+
+            for (let key in this.autor_members) {
+                if (this.user_perms[this.autor_members[key].user_id] !== 'read') {
+                    this.toggled.autor.read = false;
+                }
+                if (this.user_perms[this.autor_members[key].user_id] !== 'write') {
+                    this.toggled.autor.write = false;
+                }
+            }
+
+
+            for (let key in this.user_members) {
+                if (this.user_perms[this.user_members[key].user_id] !== 'read') {
+                    this.toggled.user.read = false;
+                }
+            }
         }
     },
 
@@ -253,6 +325,7 @@ export default {
             }
 
             this.user_perms = new_perms;
+            this.updateToggleStatus();
         },
 
         user_members: function() {
@@ -270,6 +343,11 @@ export default {
             }
 
             this.user_perms = new_perms;
+            this.updateToggleStatus();
+        },
+
+        user_perms: function() {
+            this.updateToggleStatus();
         }
     }
 };
