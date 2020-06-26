@@ -431,15 +431,9 @@ class Block extends \SimpleORMap implements \Serializable
         return false;
     }
 
-    public function getApprovalList($type)
+    public function getApprovalList()
     {
-        $approval_json = json_decode($this->approval, true);
-        switch ($type) {
-            case 'users':
-                return $approval_json['users'];
-            case 'groups':
-                return $approval_json['groups'];
-        }
+        return json_decode($this->approval, true);
     }
 
     public function setApprovalList($json) {
@@ -498,9 +492,9 @@ class Block extends \SimpleORMap implements \Serializable
 
         foreach($this->getStructuralChildren() as $element) {
             if(!$element->isStructuralBlock()) {return;}
-            $elementList = $element->getApprovalList($updateType);
+            $elementList = $element->getApprovalList();
             if($elementList === NULL) {
-                $elementList = array();
+                $elementList = [];
             }
 
             foreach($add_arr as $add) {

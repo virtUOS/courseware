@@ -10,26 +10,90 @@
                         </slot>
                     </header>
                     <section class="modal-body">
-                        <table class="students-permissions-list">
+                        <label>
+                            <input type="checkbox" class="default"
+                                value="read"
+                                v-model="settings.defaultRead"
+                            />
+                            {{ $t('message.newUserReadPerms') }}
+                        </label>
+
+                        <table class="default students-permissions-list">
+                            <caption>
+                                {{ this.settings.caption_autor }}
+                            </caption>
+                            <colgroup>
+                                <col width="15%">
+                                <col width="15%">
+                                <col width="70%">
+                            </colgroup>
                             <thead>
                                 <th>
-                                    Lesen
+                                    {{ $t('message.readPerms') }}
                                 </th>
                                 <th>
-                                    Schreiben
+                                    {{ $t('message.readWritePerms') }}
                                 </th>
+                                <th></th>
                             </thead>
                             <tbody>
-                                <tr v-for="user in users" :key="user.user_id">
+                                <tr v-for="user in autor_members" :key="user.user_id">
                                     <td class="perm">
                                         <input type="checkbox"
                                             :id="user.user_id + `_read`"
-                                            :value="user.user_id"
-                                            v-model="checkedUsersRead"
+                                            true-value="read"
+                                            false-value="none"
+                                            v-model="user_perms[user.user_id]"
                                         />
                                     </td>
                                     <td class="perm">
-                                        <input type="checkbox" :value="user.user_id" v-model="checkedUsersWrite" />
+                                        <input type="checkbox"
+                                            true-value="write"
+                                            false-value="none"
+                                            v-model="user_perms[user.user_id]"
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <label :for="user.user_id + `_read`">
+                                            {{ user.firstname }}
+                                            {{ user.lastname }}
+                                            <i>{{ user.username }}</i>
+                                        </label>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="default students-permissions-list">
+                            <caption>
+                                {{ this.settings.caption_user }}
+                            </caption>
+                            <colgroup>
+                                <col width="15%">
+                                <col width="15%">
+                                <col width="70%">
+                            </colgroup>
+                            <thead>
+                                <th>
+                                    {{ $t('message.readPerms') }}
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <tr v-for="user in user_members" :key="user.user_id">
+                                    <td class="perm">
+                                        <input type="checkbox"
+                                            :id="user.user_id + `_read`"
+                                            true-value="read"
+                                            false-value="none"
+                                            v-model="user_perms[user.user_id]"
+                                        />
+                                    </td>
+                                    <td class="perm">
+
                                     </td>
 
                                     <td>
@@ -69,14 +133,45 @@ export default {
         DialogVisible: Boolean,
         element: Object
     },
+
     data() {
         return {
             visible: this.DialogVisible,
             currentElement: this.element,
             users: this.$store.state.courseUsers,
-            checkedUsersRead: [],
-            checkedUsersWrite: []
+            user_perms: {},
+            settings: {
+                defaultRead: true,
+                caption_autor: 'Studierende',
+                caption_user:  'Leser/innen'
+            }
         };
+    },
+
+    computed: {
+        autor_members() {
+            if (Object.keys(this.users).length === 0 && this.users.constructor === Object) {
+                return [];
+            }
+
+            let members = this.users.filter(function(user) {
+                return user.perm == 'autor';
+            });
+
+            return members;
+        },
+
+        user_members() {
+            if (Object.keys(this.users).length === 0 && this.users.constructor === Object) {
+                return [];
+            }
+
+            let members = this.users.filter(function(user) {
+                return user.perm == 'user';
+            });
+
+            return members;
+        }
     },
 
     methods: {
@@ -86,12 +181,11 @@ export default {
             }
         },
         set() {
-            let bid = this.element.id;
-            let list = {};
-            list.users = {
-                read: this.checkedUsersRead,
-                write: this.checkedUsersWrite
-            };
+            let bid  = this.element.id;
+            let list = {
+                users:    this.user_perms,
+                settings: this.settings
+            }
 
             axios
                 .post('set_element_approval_list', { bid: bid, list: JSON.stringify(list) })
@@ -104,6 +198,7 @@ export default {
                     this.$emit('close');
                 });
         },
+
         getApprovalList() {
             let bid = this.element.id;
             let view = this;
@@ -113,8 +208,13 @@ export default {
                     view.users = view.$store.state.courseUsers;
 
                     if (response.data != null) {
-                        view.checkedUsersRead  = response.data.read  ? response.data.read  : [];
-                        view.checkedUsersWrite = response.data.write ? response.data.write : [];
+                        if (response.data.users !== undefined) {
+                            view.user_perms = response.data.users;
+                        }
+
+                        if (response.data.settings !== undefined) {
+                            view.settings   = response.data.settings;
+                        }
                     }
                 })
                 .catch(error => {
@@ -131,25 +231,45 @@ export default {
             if (this.visible) {
                 this.getApprovalList();
             } else {
-                this.checkedUsersRead = [];
-                this.checkedUsersWrite = [];
-            }
-        },
-
-        checkedUsersWrite: function(data) {
-            for (var i = 0; i < data.length; i++) {
-                if (!this.checkedUsersRead.includes(data[i])) {
-                    this.checkedUsersRead.push(data[i]);
+                this.user_perms = {};
+                this.settings = {
+                    defaultRead: true
                 }
             }
         },
 
-        checkedUsersRead: function(data) {
-            for (var i = 0; i < this.checkedUsersWrite.length; i++) {
-                if (!this.checkedUsersRead.includes(this.checkedUsersWrite[i])) {
-                    this.checkedUsersWrite.splice(i, 1);
+        autor_members: function() {
+            let new_perms = { ...this.user_perms };
+
+            // per default, give new users read permissions
+            for (let key in this.autor_members) {
+                if (this.user_perms[this.autor_members[key].user_id] === undefined) {
+                    if (this.settings.defaultRead) {
+                        new_perms[this.autor_members[key].user_id] = 'read';
+                    } else {
+                        new_perms[this.autor_members[key].user_id] = 'none';
+                    }
                 }
             }
+
+            this.user_perms = new_perms;
+        },
+
+        user_members: function() {
+            let new_perms = { ...this.user_perms };
+
+            // per default, give new users read permissions
+            for (let key in this.user_members) {
+                if (this.user_perms[this.user_members[key].user_id] === undefined) {
+                    if (this.settings.defaultRead) {
+                        new_perms[this.user_members[key].user_id] = 'read';
+                    } else {
+                        new_perms[this.user_members[key].user_id] = 'none';
+                    }
+                }
+            }
+
+            this.user_perms = new_perms;
         }
     }
 };

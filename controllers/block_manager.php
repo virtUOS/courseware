@@ -190,14 +190,18 @@ class BlockManagerController extends CoursewareStudipController
     public function get_course_users_action()
     {
         $cid = Request::get('cid');
-        $course_members = CourseMember::findByCourseAndStatus($cid, 'autor');
+        $course_members =
+            CourseMember::findByCourseAndStatus($cid, 'user') +
+            CourseMember::findByCourseAndStatus($cid, 'autor');
+
         $users_json = [];
         foreach($course_members as $member) {
            array_push($users_json, [
-               'user_id' => $member->user_id,
+               'user_id'   => $member->user_id,
                'firstname' => $member->vorname,
-               'lastname' => $member->nachname,
-               'username' => $member->username
+               'lastname'  => $member->nachname,
+               'username'  => $member->username,
+               'perm'      => $member->status
             ]);
         }
 
@@ -226,15 +230,15 @@ class BlockManagerController extends CoursewareStudipController
         $type = $decoded_request['type'];
 
         $block = dbBlock::find($bid);
-        $list = $block->getApprovalList($type) ?: [];
+        $list = $block->getApprovalList() ?: [];
 
-        if (!isset($list['users']) || empty($list['users'])) {
-            // prefill with user read permissions
-            $course_members = CourseMember::findByCourseAndStatus($block->seminar_id, 'autor');
-
-            foreach($course_members as $member) {
-                $list['read'][] = $member->user_id;
-            }
+        // create default settings if necessary
+        if (!$list['settings']) {
+            $list['settings'] = [
+                'defaultRead'   => true,
+                'caption_autor' => get_title_for_status('autor', 1),
+                'caption_user'  => get_title_for_status('user', 1)
+            ];
         }
 
         $this->response->add_header('Content-Type', 'application/json');
@@ -248,12 +252,6 @@ class BlockManagerController extends CoursewareStudipController
         $list = $decoded_request['list'];
 
         $block = dbBlock::find($bid);
-
-        // check, if all course members have read permissions. Clear the list if this is the case
-        /*if (isset($list['users']) || !empty($list['users'])) {
-            $course_members = CourseMember::findByCourseAndStatus($block->seminar_id, 'autor');
-
-        }*/
 
         $block->setApprovalList($list);
         $this->response->add_header('Content-Type', 'application/json');

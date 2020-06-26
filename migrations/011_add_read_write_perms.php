@@ -31,14 +31,14 @@ class AddReadWritePerms extends Migration
                 && !$app['users']['read']
                 && !$app['users']['write']
             ) {
-                $new_app['users']['write'] = $app['users'];
+                $new_app['users'][$app['users']] = 'write';
             }
 
             if ($app['groups']
                 && !$app['groups']['read']
                 && !$app['groups']['write']
             ) {
-                $new_app['groups']['write'] = $app['groups'];
+                $new_app['groups'][$app['groups']] = 'write';
             }
 
             if (!empty($new_app)) {
