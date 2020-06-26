@@ -445,14 +445,7 @@ class Block extends \SimpleORMap implements \Serializable
         $new_list = json_decode($json, true);
 
         if ($approval_json === NULL) {
-            $approval_json = array();
-        }
-
-        // deduplicate
-        foreach (['users', 'group'] as $type) {
-            if ($new_list[$type]) {
-                $new_list[$type] = \array_unique($new_list[$type]);
-            }
+            $approval_json = [];
         }
 
         $old_list = $approval_json;
@@ -464,6 +457,12 @@ class Block extends \SimpleORMap implements \Serializable
         if ($new_list['groups'] !== NULL){
             $approval_json['groups'] = $new_list['groups'];
             $updateType = 'groups';
+        }
+
+        if (isset($new_list['settings']['defaultRead'])) {
+            $approval_json['settings'] = [
+                'defaultRead' => $new_list['settings']['defaultRead'] ? true : false
+            ];
         }
 
         $this->approval = json_encode($approval_json);

@@ -235,11 +235,12 @@ class BlockManagerController extends CoursewareStudipController
         // create default settings if necessary
         if (!$list['settings']) {
             $list['settings'] = [
-                'defaultRead'   => true,
-                'caption_autor' => get_title_for_status('autor', 1),
-                'caption_user'  => get_title_for_status('user', 1)
+                'defaultRead'   => true
             ];
         }
+
+        $list['settings']['caption_autor'] = get_title_for_status('autor', 2);
+        $list['settings']['caption_user']  = get_title_for_status('user', 2);
 
         $this->response->add_header('Content-Type', 'application/json');
         $this->render_text(json_encode($list));
