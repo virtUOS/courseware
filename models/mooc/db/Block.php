@@ -448,20 +448,10 @@ class Block extends \SimpleORMap implements \Serializable
             $approval_json = array();
         }
 
-        // deduplicate and make sure read perms go along with write perms
+        // deduplicate
         foreach (['users', 'group'] as $type) {
-            foreach ($new_list[$type]['write'] as $user_id) {
-                if (!$new_list[$type]['read'] || in_array($user_id, $new_list[$type]['read']) === false) {
-                    $new_list[$type]['read'][] = $user_id;
-                }
-            }
-
-            if ($new_list[$type]['write']) {
-                $new_list[$type]['write'] = \array_unique($new_list[$type]['write']);
-            }
-
-            if ($new_list[$type]['read']) {
-                $new_list[$type]['read'] = \array_unique($new_list[$type]['read']);
+            if ($new_list[$type]) {
+                $new_list[$type] = \array_unique($new_list[$type]);
             }
         }
 
