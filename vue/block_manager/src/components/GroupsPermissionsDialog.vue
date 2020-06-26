@@ -10,46 +10,61 @@
                         </slot>
                     </header>
                     <section class="modal-body">
-                        <ul class="groups-permissions-list">
-                            <table class="students-permissions-list">
-                                <thead>
-                                    <th>
-                                        {{ $t('message.readPerms') }}
-                                    </th>
-                                    <th>
-                                        {{ $t('message.readWritePerms') }}
-                                    </th>
-                                    <th></th>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="group in groups" :key="group.id">
-                                        <td class="perm">
-                                            <input type="checkbox"
-                                                :id="group.id + `_read`"
-                                                true-value="read"
-                                                false-value="none"
-                                                v-model="perms[group.id]"
-                                            />
-                                        </td>
+                        <table class="default groups-permissions-list">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="60%">
+                            </colgroup>
+                            <thead>
+                                <th>
+                                    {{ $t('message.readPerms') }}
+                                    <br />
+                                    <input type="checkbox"
+                                        v-model="toggled.read"
+                                        @change="toggleAll('read')"
+                                    />
+                                </th>
+                                <th>
+                                    {{ $t('message.readWritePerms') }}
+                                    <br />
+                                    <input type="checkbox"
+                                        v-model="toggled.write"
+                                        @change="toggleAll('write')"
+                                    />
+                                </th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <tr v-for="group in groups" :key="group.id">
+                                    <td class="perm">
+                                        <input type="checkbox"
+                                            :id="group.id + `_read`"
+                                            true-value="read"
+                                            false-value="none"
+                                            v-model="perms[group.id]"
+                                            @change="updateToggleStatus"
+                                        />
+                                    </td>
 
-                                        <td class="perm">
-                                            <input type="checkbox"
-                                                true-value="write"
-                                                false-value="none"
-                                                v-model="perms[group.id]"
-                                            />
-                                        </td>
+                                    <td class="perm">
+                                        <input type="checkbox"
+                                            true-value="write"
+                                            false-value="none"
+                                            v-model="perms[group.id]"
+                                            @change="updateToggleStatus"
+                                        />
+                                    </td>
 
-                                        <td>
-                                            <label :for="group.id + `_read`">
-                                                {{ group.name }}
-                                            </label>
-                                        </td>
+                                    <td>
+                                        <label :for="group.id + `_read`">
+                                            {{ group.name }}
+                                        </label>
+                                    </td>
 
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </ul>
+                                </tr>
+                            </tbody>
+                        </table>
                     </section>
                     <footer class="modal-footer">
                         <slot name="footer">
@@ -81,7 +96,11 @@ export default {
             visible: this.DialogVisible,
             currentElement: this.element,
             groups: this.$store.state.courseGroups,
-            perms: {}
+            perms: {},
+            toggled: {
+                read: false,
+                write: false
+            }
         };
     },
 
@@ -123,6 +142,40 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
+        },
+
+        toggleAll(perm) {
+            let current = this.toggled[perm];
+            let new_perms = { ...this.perms };
+            let groups = this.groups;
+
+            if (perm == 'write') {
+                this.toggled.read = false;
+            } else {
+                this.toggled.write = false;
+            }
+
+            for (let key in groups) {
+                new_perms[groups[key].id] = current ? perm : 'none';
+            }
+
+            this.perms = new_perms;
+        },
+
+        updateToggleStatus() {
+            this.toggled.read = true;
+            this.toggled.write = true;
+
+            for (let key in this.groups) {
+                if (this.perms[this.groups[key].id] !== 'read') {
+                    this.toggled.read = false;
+                }
+
+                if (this.perms[this.groups[key].id] !== 'write') {
+                    this.toggled.write = false;
+                }
+
+            }
         }
     },
 

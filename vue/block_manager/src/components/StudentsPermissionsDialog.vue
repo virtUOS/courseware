@@ -166,7 +166,7 @@ export default {
             toggled: {
                 autor: {
                     read: false,
-                    rite: false
+                    write: false
                 },
                 user: {
                     read: true
