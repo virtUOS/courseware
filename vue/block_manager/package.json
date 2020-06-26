@@ -45,7 +45,10 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "no-console": "off"
+      "no-console": "off",
+      "prettier": {
+          "tabWidth": 4
+      }
     },
     "globals": {
       "COURSEWARE": false,
