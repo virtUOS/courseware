@@ -65,6 +65,10 @@
                                 </tr>
                             </tbody>
                         </table>
+
+                        <span v-else>
+                            {{ $t('message.noGroupsInSeminar') }}
+                        </span>
                     </section>
                     <footer class="modal-footer">
                         <slot name="footer">
