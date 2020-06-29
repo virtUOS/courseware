@@ -397,7 +397,7 @@ class Block extends \SimpleORMap implements \Serializable
         return $this->hasUserApproval($uid, 'write') || $this->hasGroupApproval($uid, 'write');
     }
 
-    private function hasUserApproval($uid, $type = 'read')
+    public function hasUserApproval($uid, $type = 'read')
     {
         $approval_json = json_decode($this->approval, true);
 
@@ -433,7 +433,7 @@ class Block extends \SimpleORMap implements \Serializable
         return $default;
     }
 
-    private function hasGroupApproval($uid, $type = 'read')
+    public function hasGroupApproval($uid, $type = 'read')
     {
         $approval_json = json_decode($this->approval, true);
         if ($approval_json !== FALSE && !empty($approval_json)) {
