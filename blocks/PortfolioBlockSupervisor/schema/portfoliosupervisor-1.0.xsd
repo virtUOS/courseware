@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/portfoliosupervisor/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/portfoliosupervisor/"
+    elementFormDefault="qualified"
+>
+    <xsd:attribute name="content" type="xsd:string" />
+    <xsd:attribute name="supervisorcontent" type="xsd:string" />
+</xsd:schema>

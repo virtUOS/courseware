@@ -23,13 +23,19 @@ class HtmlBlock extends Block
             return array('inactive' => true);
         }
         $this->setGrade(1.0);
-        
+
         $content = $this->content;
         if (strpos($content, "<!DOCTYPE html") == 0 ) {
             $content = \STUDIP\Markup::markAsHtml($content);
         }
 
         $content = formatReady($content);
+
+        $encoding = '&lt;?xml encoding="utf-8" ?&gt;';
+
+        if (strrpos($content, $encoding) !== false) {
+            $content = \str_replace($content, $encoding);
+        }
 
         return array('content' => $content);
     }
@@ -49,6 +55,13 @@ class HtmlBlock extends Block
             $content = \STUDIP\Markup::markAsHtml($content);
         }
         $content = strip_tags(formatReady($content));
+
+        $encoding = '&lt;?xml encoding="utf-8" ?&gt;';
+
+        if (strrpos($content, $encoding) !== false) {
+            $content = \str_replace($content, $encoding);
+        }
+        
         if (strlen($content) > 240){
             $content = substr($content, 0, 240).'…';
         }
@@ -100,7 +113,7 @@ class HtmlBlock extends Block
         $pos = strrpos($this->content, $encoding);
         if ($pos === false) {
             $content = $encoding.$this->content;
-        } else { 
+        } else {
             $content = $this->content;
         }
         $document->loadHTML($content);
@@ -145,7 +158,7 @@ class HtmlBlock extends Block
         $pos = strrpos($this->content, $encoding);
         if ($pos === false) {
             $content = $encoding.$this->content;
-        } else { 
+        } else {
             $content = $this->content;
         }
         $document->loadHTML($content);
@@ -208,7 +221,7 @@ class HtmlBlock extends Block
         $pos = strrpos($this->content, $encoding);
         if ($pos === false) {
             $content = $encoding.$this->content;
-        } else { 
+        } else {
             $content = $this->content;
         }
         $document->loadHTML($content);
@@ -253,7 +266,7 @@ class HtmlBlock extends Block
         $pos = strrpos($contents, $encoding);
         if ($pos === false) {
             $content = $encoding.$contents;
-        } else { 
+        } else {
             $content = $contents;
         }
         $document->loadHTML($content);
