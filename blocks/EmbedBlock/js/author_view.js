@@ -142,12 +142,17 @@ export default AuthorView.extend({
         var url = url_input.val();
         var $embed_source = this.$('select.cw-embedblock-source option:selected').val();
         if (url != '') {
-            if((url.includes($embed_source)) || (($embed_source == 'youtube')&&(url.includes('youtu.be'))) ) {
+            url_input.addClass('cw-embedblock-wrong-plattform');
+            this.$('.cw-embedblock-url-info-wrong-plattform').show();
+
+            if(
+                (url.includes($embed_source)) && (!url.includes('sway')) 
+                || (($embed_source == 'youtube')&&(url.includes('youtu.be'))) 
+                || (($embed_source == 'sway.office')&&(url.includes('sway.office')))
+                || (($embed_source == 'sway')&&(!url.includes('sway.office')))
+            ) {
                 url_input.removeClass('cw-embedblock-wrong-plattform');
                 this.$('.cw-embedblock-url-info-wrong-plattform').hide();
-            } else {
-                url_input.addClass('cw-embedblock-wrong-plattform');
-                this.$('.cw-embedblock-url-info-wrong-plattform').show();
             }
         } else {
             url_input.removeClass('cw-embedblock-wrong-plattform');
@@ -164,6 +169,7 @@ export default AuthorView.extend({
             'giphy',
             'flickr',
             'sway',
+            'sway.office',
             'spotify',
             'deviantart',
             'sketchfab',

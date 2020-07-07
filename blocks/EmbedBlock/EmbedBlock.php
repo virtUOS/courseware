@@ -167,6 +167,7 @@ class EmbedBlock extends Block
             'giphy' => 'https://giphy.com/services/oembed',
             'flickr' => 'https://www.flickr.com/services/oembed/',
             'sway' => 'https://sway.com/api/v1.0/oembed',
+            'sway.office' => 'https://sway.office.com/api/v1.0/oembed',
             'spotify' => 'https://embed.spotify.com/oembed/',
             'deviantart' => 'https://backend.deviantart.com/oembed',
             'sketchfab' => 'https://sketchfab.com/oembed',
@@ -191,6 +192,7 @@ class EmbedBlock extends Block
                 return $endpoints[$embed_source] . '?url=' . rawurlencode($embed_url);
             case 'flickr':
             case 'sway':
+            case 'sway.office':
             case 'codepen':
             case 'codesandbox':
             case 'ethfiddle':
@@ -217,7 +219,8 @@ class EmbedBlock extends Block
         $sources[] = array('name' => 'giphy', 'fullname' => 'GIPHY', 'url'=> 'https://giphy.com/');
         $sources[] = array('name' => 'kidoju', 'fullname' => 'Kidoju', 'url'=> 'https://www.kidoju.com/');
         $sources[] = array('name' => 'learningapps', 'fullname' => 'LearningApps', 'url'=> 'https://learningapps.org/');
-        $sources[] = array('name' => 'sway', 'fullname' => 'Microsoft Sway', 'url'=> 'https://sway.com/');
+        $sources[] = array('name' => 'sway', 'fullname' => 'Microsoft Sway (sway.com)', 'url'=> 'https://sway.com/');
+        $sources[] = array('name' => 'sway.office', 'fullname' => 'Microsoft Sway (sway.office.com)', 'url'=> 'https://sway.office.com/');
         $sources[] = array('name' => 'sketchfab', 'fullname' => 'Sketchfab', 'url'=> 'https://sketchfab.com/');
         $sources[] = array('name' => 'slideshare', 'fullname' => 'SlideShare', 'url'=> 'https://www.slideshare.net/');
         $sources[] = array('name' => 'soundcloud', 'fullname' => 'SoundCloud', 'url'=> 'https://www.soundcloud.com/');
