@@ -375,39 +375,75 @@ class Block extends \SimpleORMap implements \Serializable
                        substr($hash, 20, 12)
         );
     }
-    
+
     public function belongesToCourse($cid)
     {
         return $this->seminar_id == $cid;
     }
 
-    public function hasApproval($uid)
+    public function hasReadApproval($uid)
     {
         if (!$this->isStructuralBlock()) {
             return false;
         }
-        return $this->hasUserApproval($uid) || $this->hasGroupApproval($uid);
+        return $this->hasUserApproval($uid, 'read') || $this->hasGroupApproval($uid, 'read');
     }
 
-    private function hasUserApproval($uid)
+    public function hasWriteApproval($uid)
+    {
+        if (!$this->isStructuralBlock()) {
+            return false;
+        }
+        return $this->hasUserApproval($uid, 'write') || $this->hasGroupApproval($uid, 'write');
+    }
+
+    public function hasUserApproval($uid, $type = 'read')
     {
         $approval_json = json_decode($this->approval, true);
-        if ($approval_json !== FALSE && !empty($approval_json)) {
-            if(!empty($approval_json['users'])) {
-                return in_array($uid, $approval_json['users']);
+
+        $default = false;
+
+        if ($type == 'read' &&
+            (
+                !isset($approval_json['settings']['defaultRead'])
+                || $approval_json['settings']['defaultRead']
+            )
+        ) {
+            $default = true;
+        }
+
+        if ($approval_json !== FALSE
+            && !empty($approval_json)
+            && !empty($approval_json['users'])
+        ) {
+            // if there are permissions for this user, check them
+            if (isset($approval_json['users'][$uid])) {
+                // write permission includes read permissions
+                if ($approval_json['users'][$uid] == 'write') {
+                    return true;
+                }
+
+                return $approval_json['users'][$uid] == $type;
+            } else {
+                // otherwise use default permissions
+                return $default;
             }
         }
-        return false;
+
+        return $default;
     }
 
-    private function hasGroupApproval($uid)
+    public function hasGroupApproval($uid, $type = 'read')
     {
         $approval_json = json_decode($this->approval, true);
         if ($approval_json !== FALSE && !empty($approval_json)) {
-            if(!empty($approval_json['groups'])) {
-                foreach($approval_json['groups'] as $group_id){
+            if (!empty($approval_json['groups'])) {
+                foreach($approval_json['groups'] as $group_id => $perm) {
                     $group = \Statusgruppen::find($group_id);
-                    if ($group->isMember($uid)) {
+
+                    if ($group && $group->isMember($uid)
+                        && ($perm == 'write' || $perm == $type)
+                    ) {
                         return true;
                     }
                 }
@@ -416,34 +452,40 @@ class Block extends \SimpleORMap implements \Serializable
         return false;
     }
 
-    public function getApprovalList($type)
+    public function getApprovalList()
     {
-        $approval_json = json_decode($this->approval, true);
-        switch ($type) {
-            case 'users':
-                return $approval_json['users'];
-            case 'groups':
-                return $approval_json['groups'];
-        }
+        return json_decode($this->approval, true);
     }
 
-    public function setApprovalList($json) {
+    public function setApprovalList($json)
+    {
         if (!$this->isStructuralBlock()) {
             return false;
         }
+
         $approval_json = json_decode($this->approval, true);
         $new_list = json_decode($json, true);
+
         if ($approval_json === NULL) {
-            $approval_json = array();
+            $approval_json = [];
         }
+
         $old_list = $approval_json;
-        if($new_list['users'] !== NULL){
+        if ($new_list['users'] !== NULL){
             $approval_json['users'] = $new_list['users'];
             $updateType = 'users';
         }
-        if($new_list['groups'] !== NULL){
+
+        if ($new_list['groups'] !== NULL){
             $approval_json['groups'] = $new_list['groups'];
             $updateType = 'groups';
+        }
+
+        if (isset($new_list['settings']['defaultRead'])) {
+            $approval_json['settings'] = [
+                'defaultRead' => $new_list['settings']['defaultRead'] ? true : false
+            ];
+            $updateType = 'settings';
         }
 
         $this->approval = json_encode($approval_json);
@@ -451,30 +493,34 @@ class Block extends \SimpleORMap implements \Serializable
         $this->addApprovalToChildren($old_list, $new_list, $updateType);
     }
 
-    public function addApprovalToChildren($oldList, $newList, $updateType) {
-
-        if(empty($oldList)) {
+    public function addApprovalToChildren($oldList, $newList, $updateType)
+    {
+        if (empty($oldList)) {
             $oldList[$updateType] = array();
         }
 
-        $rm_arr = array_diff($oldList[$updateType], $newList[$updateType]);
-        $add_arr = array_diff($newList[$updateType], $oldList[$updateType]);
+        $rm_arr = array_diff_assoc($oldList[$updateType], $newList[$updateType]);
+        $add_arr = array_diff_assoc($newList[$updateType], $oldList[$updateType]);
 
         foreach($this->getStructuralChildren() as $element) {
-            if(!$element->isStructuralBlock()) {return;}
-            $elementList = $element->getApprovalList($updateType);
+            if (!$element->isStructuralBlock()) {
+                return;
+            }
+
+            $elementList = $element->getApprovalList();
+            $elementList = $elementList[$updateType];
+
             if($elementList === NULL) {
-                $elementList = array();
+                $elementList = [];
             }
 
-            foreach($add_arr as $add) {
-                if (!in_array($add, $elementList)){
-                    $elementList[] = $add;
-                }
+            foreach ($add_arr as $id => $perm) {
+                $elementList[$id] = $perm;
             }
 
-            foreach($elementList as $key => $value) {
-                if (in_array($value, $rm_arr)) {
+            foreach($rm_arr as $key => $value) {
+                // only remove user from perm list if this is a real remove and not just a perm change
+                if (!$add_arr[$key] && $elementList[$key]) {
                     unset($elementList[$key]);
                 }
             }

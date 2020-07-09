@@ -1,2 +1,4 @@
 /vendor
 node_modules
+views/block_manager/*-update.js*
+assets/static/*

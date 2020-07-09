@@ -55,9 +55,14 @@ class User extends \User
             $perm = false;
             if ($this->isNobody()) {
                 $course = \Course::find($model->seminar_id);
-                $perm = get_config('ENABLE_FREE_ACCESS') && $course->lesezugriff == 0;
+                if (get_config('ENABLE_FREE_ACCESS') && $course->lesezugriff == 0) {
+                    // only allow access to blocks which are readable by default
+                    $perm = $this->hasReadApproval($model);
+                } else {
+                    $perm = false;
+                }
             } else {
-                $perm = $this->hasPerm($model->seminar_id, 'user');
+                $perm = $this->hasReadApproval($model);
             }
 
             return $model->isPublished() && $model->isVisible() && $perm;
@@ -110,9 +115,14 @@ class User extends \User
         return $GLOBALS['perm']->get_studip_perm($cid, $this->id);
     }
 
-    public function hasApproval(DbBlock $block)
+    public function hasReadApproval(DbBlock $block)
     {
-        return $block->hasApproval($this->id);
+        return $block->hasReadApproval($this->id);
+    }
+
+    public function hasWriteApproval(DbBlock $block)
+    {
+        return $block->hasWriteApproval($this->id);
     }
 
     public function isNobody()
@@ -138,11 +148,11 @@ class User extends \User
         $approval = false;
         if (!$block->isStructuralBlock()) {
             if($block->parent != null) {
-                $approval = $this->hasApproval($block->parent);
+                $approval = $this->hasWriteApproval($block->parent);
             }
         } else {
             if($block != null) {
-                $approval = $this->hasApproval($block);
+                $approval = $this->hasWriteApproval($block);
             }
         }
 
