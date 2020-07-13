@@ -77,14 +77,19 @@ class InteractiveVideoBlock extends Block
                             $no_more_tries = false;
                         }
 
+                        $rendered_solution = '';
+                        if($solution != null) {
+                            $rendered_solution = $exercise->getCorrectionTemplate($solution)->render();
+                        }
+
                         $exercises[] = array(
-                            'question'              => $exercise->getSolveTemplate($solution, $assignment, $user->id)->render(),
+                            'question'              => $exercise->getSolveTemplate($solution, $selected_assignment, $user->id)->render(),
                             'question_description'  => formatReady($exercise->description),
                             'title'                 => $exercise->title,
                             'id'                    => $exercise->getId(),
                             'correct'               => $correct,
                             'has_solution'          => $has_solution,
-                            'solution'              => $exercise->getCorrectionTemplate($solution)->render(),
+                            'solution'              => $rendered_solution,
                             'no_more_tries'         => $no_more_tries,
                             'tries_left'            => $tries_left,
                             'tries_pl'              => $tries_left != 1
