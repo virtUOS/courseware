@@ -384,7 +384,7 @@ class Block extends \SimpleORMap implements \Serializable
     public function hasReadApproval($uid)
     {
         if (!$this->isStructuralBlock()) {
-            return false;
+            return true;
         }
         return $this->hasUserApproval($uid, 'read') || $this->hasGroupApproval($uid, 'read');
     }
