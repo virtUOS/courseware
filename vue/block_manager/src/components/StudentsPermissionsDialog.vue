@@ -24,25 +24,23 @@
                             </caption>
                             <colgroup>
                                 <col width="15%">
-                                <col width="15%">
-                                <col width="70%">
+                                <col width="30%">
+                                <col width="55%">
                             </colgroup>
                             <thead>
                                 <th>
-                                    {{ $t('message.readPerms') }}
-                                    <br />
                                     <input type="checkbox"
                                         v-model="toggled.autor.read"
                                         @change="toggleAll('autor', 'read')"
                                     />
+                                    {{ $t('message.readPerms') }}
                                 </th>
                                 <th>
-                                    {{ $t('message.readWritePerms') }}
-                                    <br />
                                     <input type="checkbox"
                                         v-model="toggled.autor.write"
                                         @change="toggleAll('autor', 'write')"
                                     />
+                                    {{ $t('message.readWritePerms') }}
                                 </th>
                                 <th></th>
                             </thead>
@@ -84,17 +82,16 @@
                             </caption>
                             <colgroup>
                                 <col width="15%">
-                                <col width="15%">
-                                <col width="70%">
+                                <col width="30%">
+                                <col width="55%">
                             </colgroup>
                             <thead>
                                 <th>
-                                    {{ $t('message.readPerms') }}
-                                    <br />
                                     <input type="checkbox"
                                         v-model="toggled.user.read"
                                         @change="toggleAll('user', 'read')"
                                     />
+                                    {{ $t('message.readPerms') }}
                                 </th>
                                 <th></th>
                                 <th></th>
@@ -177,6 +174,7 @@ export default {
 
     computed: {
         autor_members() {
+
             if (Object.keys(this.users).length === 0 && this.users.constructor === Object) {
                 return [];
             }

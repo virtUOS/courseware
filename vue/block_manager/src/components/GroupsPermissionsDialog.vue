@@ -13,25 +13,23 @@
                         <table class="default groups-permissions-list" v-if="groups.length">
                             <colgroup>
                                 <col width="20%">
-                                <col width="20%">
-                                <col width="60%">
+                                <col width="40%">
+                                <col width="55%">
                             </colgroup>
                             <thead>
                                 <th>
-                                    {{ $t('message.readPerms') }}
-                                    <br />
                                     <input type="checkbox"
                                         v-model="toggled.read"
                                         @change="toggleAll('read')"
                                     />
+                                    {{ $t('message.readPerms') }}
                                 </th>
                                 <th>
-                                    {{ $t('message.readWritePerms') }}
-                                    <br />
                                     <input type="checkbox"
                                         v-model="toggled.write"
                                         @change="toggleAll('write')"
                                     />
+                                    {{ $t('message.readWritePerms') }}
                                 </th>
                                 <th></th>
                             </thead>
