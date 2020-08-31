@@ -227,7 +227,7 @@ export default {
             showRemoteCourseware: false,
             showImportCourseware: false,
             showExportCourseware: false,
-            chapters: {},
+            chapters: [],
             chapterList: [],
             subchapterList: {},
             sectionList: {},
@@ -259,7 +259,11 @@ export default {
     },
     watch: {
         courseware: function() {
-            this.chapters = this.courseware.children;
+            if (this.courseware.children != null) {
+                this.chapters = this.courseware.children;
+            } else {
+                this.chapters = [];
+            }
         }
     },
     methods: {
