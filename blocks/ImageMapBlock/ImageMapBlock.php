@@ -39,6 +39,8 @@ class ImageMapBlock extends Block
             $content = '';
         }
 
+        $this->setGrade(1.0);
+
         return array_merge($this->getAttrArray(), array(
             'image_url' => $image_url,
             'content' => $content
