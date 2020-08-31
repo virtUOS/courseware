@@ -42,6 +42,9 @@ class LinkBlock extends Block
             if ($og_url->is_opengraph == 1) {
                 $open_graph = $og_url->toArray(['image', 'site_name', 'title', 'description']);
             }
+            if($open_graph['title'] == '' && $open_graph['site_name'] == '') {
+                $open_graph = false;
+            }
         }
 
         $this->setGrade(1.0);
