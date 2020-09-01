@@ -4,6 +4,7 @@
     targetNamespace="http://moocip.de/schema/block/keypoint/"
     elementFormDefault="qualified"
 >
+    <xsd:attribute name="keypoint" type="xsd:string" />
     <xsd:attribute name="keypoint_content" type="xsd:string" />
     <xsd:attribute name="keypoint_color" type="xsd:string" />
     <xsd:attribute name="keypoint_icon" type="xsd:string" />
