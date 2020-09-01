@@ -1316,6 +1316,14 @@ button.cw-reset-progress-button:hover {
   background-image: url("../../../../assets/images/icons/white/file.svg");
   background-image: url("../../../../../assets/images/icons/white/file.svg");
 }
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-import-link {
+  background-image: url("../../../../assets/images/icons/blue/link-intern.svg");
+  background-image: url("../../../../../assets/images/icons/blue/link-intern.svg");
+}
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-import-link:hover {
+  background-image: url("../../../../assets/images/icons/white/link-intern.svg");
+  background-image: url("../../../../../assets/images/icons/white/link-intern.svg");
+}
 #block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-download,
 #block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-html-download {
   background-image: url("../../../../assets/images/icons/blue/download.svg");
@@ -1967,6 +1975,7 @@ button.cw-reset-progress-button:hover {
       -ms-flex-direction: column;
           flex-direction: column;
   padding: 0.2em;
+  max-height: 98vh;
 }
 #block_manager-index .modal .modal-header,
 #block_manager-index .modal .modal-footer {
@@ -2003,13 +2012,14 @@ button.cw-reset-progress-button:hover {
   color: #000;
   position: relative;
   padding: 20px 10px;
+  overflow-y: scroll;
 }
 #block_manager-index .modal .modal-body label {
   display: inline-block;
   min-width: 8em;
   margin-bottom: 0.5em;
 }
-#block_manager-index .modal .modal-body input {
+#block_manager-index .modal .modal-body input:not([class="default"]) {
   border: solid thin #ccc;
   min-width: 14em;
   padding: 0.5em;
@@ -2020,6 +2030,14 @@ button.cw-reset-progress-button:hover {
   overflow-y: auto;
   list-style: none;
   padding: 0 0 0 1em;
+}
+#block_manager-index .modal .modal-body .students-permissions-list .perm,
+#block_manager-index .modal .modal-body .groups-permissions-list .perm {
+  padding-bottom: 1em;
+}
+#block_manager-index .modal .modal-body .students-permissions-list th,
+#block_manager-index .modal .modal-body .groups-permissions-list th {
+  vertical-align: bottom;
 }
 #block_manager-index .modal .modal-body .students-permissions-list input[type="checkbox"],
 #block_manager-index .modal .modal-body .groups-permissions-list input[type="checkbox"] {
@@ -12370,5 +12388,3 @@ section#courseware button.cw-videoblock-recorder-reset {
 .cw-webvideo-source-file {
   display: none;
 }
-
-/*# sourceMappingURL=courseware.css.map*/

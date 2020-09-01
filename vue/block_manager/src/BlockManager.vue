@@ -117,6 +117,13 @@
                     </label>
                 </li>
                 <li>
+                    <a :href="coursewareImportURL">
+                        <div id="cw-import-link" class="cw-action-menu-button" :title="$t('message.importExplain')">
+                            <p>{{ $t('message.importButton') }}</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
                     <div
                         id="cw-import-from-course"
                         class="cw-action-menu-button"
@@ -244,6 +251,7 @@ export default {
             storeLock: false,
             errorOccurred: [],
             coursewareExportURL: COURSEWARE.data.courseware_export_url,
+            coursewareImportURL: COURSEWARE.data.courseware_import_url,
             coursewareExportHtmlURL: COURSEWARE.data.courseware_export_html_url,
             helpUnfolded: false
         };

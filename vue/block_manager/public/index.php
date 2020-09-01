@@ -12,6 +12,7 @@
             block_map: <?=json_encode($block_map)?>,
             lang: '<?= $lang ?>',
             courseware_export_url: '<?= $courseware_export_url ?>',
+            courseware_import_url: '<?= $courseware_import_url ?>',
             courseware_export_html_url: '<?= $courseware_export_html_url ?>'
         }
     }
