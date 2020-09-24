@@ -485,11 +485,12 @@ class Block extends \SimpleORMap implements \Serializable
             $approval_json['settings'] = [
                 'defaultRead' => $new_list['settings']['defaultRead'] ? true : false
             ];
-            $updateType = 'settings';
         }
 
         $this->approval = json_encode($approval_json);
         $this->store();
+
+        $this->addApprovalToChildren($old_list, $new_list, 'settings');
         $this->addApprovalToChildren($old_list, $new_list, $updateType);
     }
 
