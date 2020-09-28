@@ -36,9 +36,6 @@ class LinkBlock extends Block
                 $link_href = "http://".$link_href;
             }
             $og_url = \OpenGraphURL::fromURL($link_href);
-            if ($og_url) {
-                $og_url->store();
-            }
             if ($og_url->is_opengraph == 1) {
                 $open_graph = $og_url->toArray(['image', 'site_name', 'title', 'description']);
             }
