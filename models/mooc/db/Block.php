@@ -473,25 +473,24 @@ class Block extends \SimpleORMap implements \Serializable
         $old_list = $approval_json;
         if ($new_list['users'] !== NULL){
             $approval_json['users'] = $new_list['users'];
-            $updateType = 'users';
+            $this->addApprovalToChildren($old_list, $new_list, 'users');
         }
 
         if ($new_list['groups'] !== NULL){
             $approval_json['groups'] = $new_list['groups'];
-            $updateType = 'groups';
+            $this->addApprovalToChildren($old_list, $new_list, 'groups');
         }
 
         if (isset($new_list['settings']['defaultRead'])) {
             $approval_json['settings'] = [
                 'defaultRead' => $new_list['settings']['defaultRead'] ? true : false
             ];
+            $this->addApprovalToChildren($old_list, $new_list, 'settings');
         }
 
         $this->approval = json_encode($approval_json);
         $this->store();
 
-        $this->addApprovalToChildren($old_list, $new_list, 'settings');
-        $this->addApprovalToChildren($old_list, $new_list, $updateType);
     }
 
     public function addApprovalToChildren($oldList, $newList, $updateType)
