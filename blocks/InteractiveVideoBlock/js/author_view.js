@@ -333,6 +333,8 @@ export default AuthorView.extend({
           $playbutton.removeClass('playing');
           $player.prop('currentTime', 0);
         }, false);
+
+        $view.stopVideo();
     },
 
     displayTimer($current, $duration) {
@@ -493,7 +495,7 @@ export default AuthorView.extend({
         $range.slider('enable');
         $view.$('.cw-iav-overlay-content').hide();
         $view.$('.cw-iav-stop-content').hide();
-        $player.prop('currentTime', 0);
+        $player.prop('currentTime', 0.5);
         $playbutton.removeClass('playing').show();
     },
 

@@ -348,7 +348,7 @@ export default StudentView.extend({
         $range.slider('enable');
         $view.$('.cw-iav-overlay-content').hide();
         $view.$('.cw-iav-stop-content').hide();
-        $player.prop('currentTime', 0);
+        $player.prop('currentTime', 0.5);
         $playbutton.removeClass('playing').show();
         if ($view.$('.stop-json').val() != "") {
             var stop_json = JSON.parse($view.$('.stop-json').val());

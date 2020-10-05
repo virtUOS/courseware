@@ -5,8 +5,8 @@
 <input type="hidden" class="test-json" value="{{iav_tests}}">
 
 <div class="cw-iav-wrapper">
-    <video class="cw-iav-player" id="video">
-        <source src="{{iav_url}}" type="video/mp4">
+    <video class="cw-iav-player" id="video" preload="metadata">
+        <source src="{{iav_url}}#t=0.5" type="video/mp4">
     </video>
     <div class="cw-iav-overlay-wrapper">
         <div class="cw-iav-overlay-content cw-iav-overlay-content-default" data-overlayid="">
