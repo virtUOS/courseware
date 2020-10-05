@@ -17,7 +17,8 @@ module.exports = {
     chunkFilename: '[name].chunk.js',
     filename: '[name].js',
     pathinfo: !isProd,
-    publicPath: !isProd ? 'http://localhost:8081/' : undefined
+    publicPath: !isProd ? 'http://localhost:8081/' : undefined,
+    library: '[name]'
   },
   module: {
     rules: [
