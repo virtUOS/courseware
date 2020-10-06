@@ -38,7 +38,7 @@ export default StudentView.extend({
   initialize() {
     this._initializeChildren();
 
-    if (getHash(this.el) === '#author') {
+    if (getHash(this.el) === '#author' && this.$el.hasClass('user-may-author')) {
       this.switchToAuthorMode();
     }
     this.postRender();
