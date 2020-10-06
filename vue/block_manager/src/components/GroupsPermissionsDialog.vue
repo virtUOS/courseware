@@ -139,6 +139,10 @@ export default {
 
                     if (response.data !== null && response.data.groups !== undefined) {
                         view.perms = response.data.groups;
+                    } else {
+                        for (let key in view.groups) {
+                            view.perms[this.groups[key].id] = "none";
+                        }
                     }
                 })
                 .catch(error => {
