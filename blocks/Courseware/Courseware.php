@@ -527,7 +527,7 @@ class Courseware extends Block
     private function getSelectedPath($selected)
     {
         $block = $selected instanceof \Mooc\DB\Block ? $selected : \Mooc\DB\Block::find($selected);
-        if (!($block && $this->hasMatchingCID($block))) {
+        if (!($block && $this->hasMatchingCID($block) && $this->canReadBlock($block))) {
             return $this->getDefaultPath();
         }
 
@@ -539,6 +539,23 @@ class Courseware extends Block
         return $ancestors;
     }
 
+    // check if parent blocks can be read
+    private function canReadBlock($block)
+    {
+        if (!$block->isStructuralBlock()) {
+            return $this->canReadBlock($block->parent);
+        }
+
+        while ($block) {
+            if (!$this->getCurrentUser()->canRead($block)) {
+                return false;
+            }
+            $block = $block->parent;
+        }
+
+        return true;
+    }
+
     private function getDefaultPath()
     {
         $ancestors = array();
@@ -548,21 +565,21 @@ class Courseware extends Block
         $ancestors[] = $courseware;
 
         // chapter
-        $chapter = $courseware->children->first();
+        $chapter = $this->getFirstChild($courseware);
         if (!$chapter) {
             return $ancestors;
         }
         $ancestors[] = $chapter;
 
         // subchapter
-        $subchapter = $chapter->children->first();
+        $subchapter = $this->getFirstChild($chapter);
         if (!$subchapter) {
             return $ancestors;
         }
         $ancestors[] = $subchapter;
 
         // section
-        $section = $subchapter->children->first();
+        $section = $this->getFirstChild($subchapter);
         if (!$section) {
             return $ancestors;
         }
@@ -579,7 +596,7 @@ class Courseware extends Block
     private function getLastStructuralNode($block)
     {
         // got it!
-        if ($block->type === 'Section') {
+        if ($block->type === 'Section' && $this->getCurrentUser()->canRead($block)) {
             // normal section
             if ($block->parent_id) {
                 return $block;
@@ -602,13 +619,23 @@ class Courseware extends Block
 
         // searching downwards... which is actually complicated as
         // there may be no such thing.
-        $first_born = $block->children->first();
+        $first_child = $this->getFirstChild($block);
 
-        if (!$first_born) {
+        if (!$first_child) {
             return $block;
         }
 
-        return $this->getLastStructuralNode($first_born);
+        return $this->getLastStructuralNode($first_child);
+    }
+
+    private function getFirstChild($block)
+    {
+        foreach ($block->children as $child) {
+            if ($this->getCurrentUser()->canRead($child)) {
+                return $child;
+            }
+        }
+        return null;
     }
 
     private function hasMatchingCID($block)
@@ -690,16 +717,26 @@ class Courseware extends Block
     public function getNeighborSections($active_section)
     {
         // next
-        for ($node = $active_section; !$next && $node; $node = $node->parent) {
-            $next = $node->nextSibling();
+      $next = null;
+      for ($node = $active_section; !$next && $node; $node = $node->parent) {
+            for ($sibling = $node->nextSibling(); !$next && $sibling; $sibling = $sibling->nextSibling()) {
+                if ($this->getCurrentUser()->canRead($sibling)) {
+                    $next = $sibling;
+                }
+            }
         }
         if (isset($next)) {
             $next = $next->toArray();
         }
 
         // prev
-        for ($node = $active_section; !$prev && $node; $node = $node->parent) {
-            $prev = $node->previousSibling();
+      $prev = null;
+      for ($node = $active_section; !$prev && $node; $node = $node->parent) {
+            for ($sibling = $node->previousSibling(); !$prev && $sibling; $sibling = $sibling->previousSibling()) {
+                if ($this->getCurrentUser()->canRead($sibling)) {
+                    $prev = $sibling;
+                }
+            }
         }
         if (isset($prev)) {
             $prev = $prev->toArray();
