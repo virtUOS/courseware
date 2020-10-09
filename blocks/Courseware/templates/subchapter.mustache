@@ -15,9 +15,12 @@
               {{/sections}}
               <div class="clear"></div>
               <li class=no-content></li>
-              <li class=controls>
-                <button class=add-section>{{#i18n}}Abschnitt einfügen{{/i18n}}</button>
-              </li>
+
+              {{#user_can_edit_subchapter}}
+                <li class=controls>
+                  <button class=add-section>{{#i18n}}Abschnitt einfügen{{/i18n}}</button>
+                </li>
+              {{/user_can_edit_subchapter}}
             </ol>
         {{/selected}}
     {{/sections_as_chapters}}

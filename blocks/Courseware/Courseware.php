@@ -518,6 +518,7 @@ class Courseware extends Block
             $json['unpublished'] = true;
         }
 
+        $json['user_can_edit_block'] = $this->getCurrentUser()->canUpdate($child) || $this->getCurrentUser()->canUpdate($this->_model);
 
         $json['selected'] = $selected == $child->id;
 
