@@ -500,7 +500,13 @@ class Block extends \SimpleORMap implements \Serializable
         }
 
         $rm_arr = array_diff_assoc($oldList[$updateType], $newList[$updateType]);
-        $add_arr = array_diff_assoc($newList[$updateType], $oldList[$updateType]);
+
+        // if there has been no setting for this type before, take it all
+        if (!isset($oldList[$updateType])) {
+            $add_arr = $newList[$updateType];
+        } else {
+            $add_arr = array_diff_assoc($newList[$updateType], $oldList[$updateType]);
+        }
 
         foreach($this->getStructuralChildren() as $element) {
             if (!$element->isStructuralBlock()) {
