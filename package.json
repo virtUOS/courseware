@@ -37,6 +37,7 @@
   ],
   "scripts": {
     "build:dev": "webpack --watch",
+    "prebuild:prod": "cd vue/block_manager && npm install && npm run build",
     "build:prod": "NODE_ENV=production webpack",
     "wds": "webpack-dev-server",
     "locales": "php buildLocales.php",
