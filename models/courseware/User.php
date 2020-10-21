@@ -47,6 +47,11 @@ class User extends \User
             $model = $model->getModel();
         }
 
+        // the most upper block must alwazs be readable!
+        if ($model->type == 'Courseware') {
+            return true;
+        }
+
         if ($this->canUpdate($model)) {
             return true;
         }
