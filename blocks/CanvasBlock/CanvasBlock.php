@@ -148,6 +148,7 @@ class CanvasBlock extends Block
             'tmp_name' => $tempDir.'/'.$file_name,
             'size'     => filesize($tempDir.'/'.$file_name),
             'user_id'  => $user->id,
+            'content_terms_of_use_id' => 'SELFMADE_NONPUB',
             'error'    => ""
         ];
 
