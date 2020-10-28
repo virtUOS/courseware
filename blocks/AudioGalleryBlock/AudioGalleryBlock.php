@@ -127,11 +127,12 @@ class AudioGalleryBlock extends Block
         
         // create studip file
         $audio_file = [
-                'name'     => $filename,
-                'type'     => 'audio/ogg',
-                'tmp_name' => $tempDir.'/'.$filename,
-                'size'     => filesize($tempDir.'/'.$filename),
-                'user_id'  => $user->id
+                'name'                      => $filename,
+                'type'                      => 'audio/ogg',
+                'tmp_name'                  => $tempDir.'/'.$filename,
+                'size'                      => filesize($tempDir.'/'.$filename),
+                'content_terms_of_use_id'   => 'SELFMADE_NONPUB',
+                'user_id'                   => $user->id
             ];
         
         $new_reference = $folder->createFile($audio_file);

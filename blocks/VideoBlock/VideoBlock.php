@@ -143,11 +143,12 @@ class VideoBlock extends Block
         $folder = \FileManager::getTypedFolder($cw_folder->id);
         // create studip file
         $video_file = [
-                'name'     => $filename,
-                'type'     => 'video/webm',
-                'tmp_name' => $tempDir.'/'.$filename,
-                'size'     => filesize($tempDir.'/'.$filename),
-                'user_id'  => $user->id
+                'name'                      => $filename,
+                'type'                      => 'video/webm',
+                'tmp_name'                  => $tempDir.'/'.$filename,
+                'size'                      => filesize($tempDir.'/'.$filename),
+                'content_terms_of_use_id'   => 'SELFMADE_NONPUB',
+                'user_id'                   => $user->id
             ];
         
         $new_reference = $folder->createFile($video_file);
