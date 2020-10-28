@@ -35,11 +35,11 @@ export default StudentView.extend({
                 $block = this.$el.parent();
 
             let files = [];
-            if (this.$('input[name="upload"]').length > 0) {
-                files.push(this.$('input[name="upload"]')[0].files[0]); //Files[0] = 1st file
+            if ($form.find('input[name="upload"]').length > 0) {
+                files.push($form.find('input[name="upload"]')[0].files[0]); //Files[0] = 1st file
             }
-            if (this.$('input[name="upload[]"]').length > 0) {
-                files = this.$('input[name="upload[]"]')[0].files; 
+            if ($form.find('input[name="upload[]"]').length > 0) {
+                files = $form.find('input[name="upload[]"]')[0].files; 
             }
             let files_array = [];
             let promises = [];
@@ -72,7 +72,14 @@ export default StudentView.extend({
                     let key = split[1].split(']')[0];
                     indexed_array['answer'][key] =  this.value;
                 } else {
-                    indexed_array[this.name] = this.value;
+                    if(this.name === 'file_ids[]') {
+                        if(!('file_ids' in indexed_array)) {
+                            indexed_array['file_ids'] = [];
+                        }
+                        indexed_array['file_ids'].push(this.value)
+                    }else {
+                        indexed_array[this.name] = this.value;
+                    }
                 }
             });
 
