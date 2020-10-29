@@ -9,6 +9,8 @@ class ProgressController extends CoursewareStudipController
         if ($this->container['current_user']->isNobody()) {
             return false;
         }
+
+        $this->user = $this->container['current_user'];
     }
 
     public function index_action()
@@ -37,7 +39,7 @@ class ProgressController extends CoursewareStudipController
         $grouped = array_reduce(
             \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position, id', array($this->plugin->getCourseId())),
             function ($memo, $item) {
-                $memo[$item->parent_id][] = $item->toArray();
+                $arr = $memo[$item->parent_id][] = array_merge($item->toArray(), ['db_block'=> $item]);
 
                 return $memo;
             },
@@ -103,7 +105,9 @@ class ProgressController extends CoursewareStudipController
         $parent['children'] = array_filter(
             isset($grouped[$parent['id']]) ? $grouped[$parent['id']] : array(),
             function ($item) {
-                return ($item['publication_date'] <= time()) && ($item['visible'] == 1) && ($item['withdraw_date'] >= time() || $item['withdraw_date'] == null);
+                $db_block = $item['db_block'];
+
+                return $db_block->isPublished() && $db_block->isVisible() && $this->user->canRead($db_block);
             });
 
         return $parent['children'];

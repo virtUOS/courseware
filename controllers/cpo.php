@@ -314,9 +314,9 @@ class CpoController extends CoursewareStudipController
     {
         $parent['children'] = $grouped[$parent['id']];
         if ($parent['children']) {
-			usort($parent['children'], function($a, $b) {
-					return $a['position'] - $b['position'];
-			});
+            usort($parent['children'], function($a, $b) {
+                    return $a['position'] - $b['position'];
+            });
         }
 
         return $parent['children'];
