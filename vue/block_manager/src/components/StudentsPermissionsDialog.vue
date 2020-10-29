@@ -2,7 +2,7 @@
     <div v-if="this.visible" class="cw-dialog">
         <transition name="modal-fade">
             <div class="modal-backdrop">
-                <div class="modal" role="dialog">
+                <div class="modal cw-permission-modal" role="dialog">
                     <header class="modal-header">
                         <slot name="header">
                             {{ $t('message.setStudentsPermissions') }}
@@ -10,7 +10,7 @@
                         </slot>
                     </header>
                     <section class="modal-body">
-                        <label>
+                        <label class="students-permissions-new-users-label">
                             <input type="checkbox" class="default"
                                 value="read"
                                 v-model="settings.defaultRead"
@@ -24,8 +24,8 @@
                             </caption>
                             <colgroup>
                                 <col width="15%">
-                                <col width="30%">
-                                <col width="55%">
+                                <col width="40%">
+                                <col width="45%">
                             </colgroup>
                             <thead>
                                 <th>

@@ -2,7 +2,7 @@
     <div v-if="this.visible" class="cw-dialog">
         <transition name="modal-fade">
             <div class="modal-backdrop">
-                <div class="modal" role="dialog">
+                <div class="modal cw-permission-modal" role="dialog">
                     <header class="modal-header" ref="modalHeader">
                         <slot name="header">
                             {{ $t('message.setGroupsPermissions') }}
@@ -12,9 +12,9 @@
                     <section class="modal-body">
                         <table class="default groups-permissions-list" v-if="groups.length">
                             <colgroup>
-                                <col width="20%">
+                                <col width="15%">
                                 <col width="40%">
-                                <col width="55%">
+                                <col width="45%">
                             </colgroup>
                             <thead>
                                 <th>

@@ -487,7 +487,7 @@ export default StudentView.extend({
             let $button = '<button class=set-visible data-title="Block zeigen">sichtbar</button>';
             $block.find('button.author').after($button);
             $block.find('button.set-invisible').remove();
-            let $info = '<span class="not-visible-info">(für Studierende nicht sichtbar)</span>';
+            let $info = '<span class="not-visible-info">(für Teilnehmende ohne Schreibrecht nicht sichtbar)</span>';
             $block.find('span.type').append($info);
             $block.removeClass('not-visible');
         },
