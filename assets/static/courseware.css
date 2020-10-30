@@ -2012,7 +2012,7 @@ button.cw-reset-progress-button:hover {
   color: #000;
   position: relative;
   padding: 20px 10px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 #block_manager-index .modal .modal-body label {
   display: inline-block;
@@ -2023,6 +2023,9 @@ button.cw-reset-progress-button:hover {
   border: solid thin #ccc;
   min-width: 14em;
   padding: 0.5em;
+}
+#block_manager-index .modal .modal-body .students-permissions-new-users-label {
+  margin-left: 5px;
 }
 #block_manager-index .modal .modal-body .students-permissions-list,
 #block_manager-index .modal .modal-body .groups-permissions-list {
@@ -2085,6 +2088,9 @@ button.cw-reset-progress-button:hover {
 }
 #block_manager-index .modal .modal-progress:hover {
   background-color: #fff;
+}
+#block_manager-index .cw-permission-modal {
+  width: 500px;
 }
 #block_manager-index .cw-action-loading {
   margin: 6em auto;
@@ -6310,6 +6316,10 @@ section#courseware .block-content:not([data-view="student"]) .select2-container 
 }
 .cw-sidebar .FolderBlock .cw-upload-checkbox .cw-upload-label {
   margin-left: auto;
+}
+/* AssortBlock special */
+.assortblock-content div .cw-folder-upload {
+  display: none;
 }
 .btn-base {
   width: 20px;
@@ -12388,3 +12398,5 @@ section#courseware button.cw-videoblock-recorder-reset {
 .cw-webvideo-source-file {
   display: none;
 }
+
+/*# sourceMappingURL=courseware.css.map*/
