@@ -48,8 +48,9 @@ class HtmlBlock extends Block
         if (strpos($content, "<!DOCTYPE html") == 0 ) {
             $content = \STUDIP\Markup::markAsHtml($content);
         }
+        $content = strip_tags(formatReady($content));
         if (strlen($content) > 240){
-            $content = substr(strip_tags(formatReady($content)), 0, 240).'…';
+            $content = substr($content, 0, 240).'…';
         }
         return array('content' => $content);
     }
