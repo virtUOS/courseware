@@ -12,26 +12,28 @@
                     <section class="modal-body">
                         <table class="default groups-permissions-list" v-if="groups.length">
                             <colgroup>
-                                <col width="15%">
-                                <col width="40%">
+                                <col width="20%">
+                                <col width="35%">
                                 <col width="45%">
                             </colgroup>
                             <thead>
-                                <th>
-                                    <input type="checkbox"
-                                        v-model="toggled.read"
-                                        @change="toggleAll('read')"
-                                    />
-                                    {{ $t('message.readPerms') }}
-                                </th>
-                                <th>
-                                    <input type="checkbox"
-                                        v-model="toggled.write"
-                                        @change="toggleAll('write')"
-                                    />
-                                    {{ $t('message.readWritePerms') }}
-                                </th>
-                                <th></th>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox"
+                                            v-model="toggled.read"
+                                            @change="toggleAll('read')"
+                                        />
+                                        {{ $t('message.readPerms') }}
+                                    </th>
+                                    <th>
+                                        <input type="checkbox"
+                                            v-model="toggled.write"
+                                            @change="toggleAll('write')"
+                                        />
+                                        {{ $t('message.readWritePerms') }}
+                                    </th>
+                                    <th>{{ $t('message.groupname') }}</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="group in groups" :key="group.id">

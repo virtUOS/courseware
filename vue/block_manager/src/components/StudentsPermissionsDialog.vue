@@ -23,26 +23,28 @@
                                 {{ this.settings.caption_autor }}
                             </caption>
                             <colgroup>
-                                <col width="15%">
-                                <col width="40%">
+                                <col width="20%">
+                                <col width="35%">
                                 <col width="45%">
                             </colgroup>
                             <thead>
-                                <th>
-                                    <input type="checkbox"
-                                        v-model="toggled.autor.read"
-                                        @change="toggleAll('autor', 'read')"
-                                    />
-                                    {{ $t('message.readPerms') }}
-                                </th>
-                                <th>
-                                    <input type="checkbox"
-                                        v-model="toggled.autor.write"
-                                        @change="toggleAll('autor', 'write')"
-                                    />
-                                    {{ $t('message.readWritePerms') }}
-                                </th>
-                                <th></th>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox"
+                                            v-model="toggled.autor.read"
+                                            @change="toggleAll('autor', 'read')"
+                                        />
+                                        {{ $t('message.readPerms') }}
+                                    </th>
+                                    <th>
+                                        <input type="checkbox"
+                                            v-model="toggled.autor.write"
+                                            @change="toggleAll('autor', 'write')"
+                                        />
+                                        {{ $t('message.readWritePerms') }}
+                                    </th>
+                                    <th>{{ $t('message.name') }}</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="user in autor_members" :key="user.user_id">
