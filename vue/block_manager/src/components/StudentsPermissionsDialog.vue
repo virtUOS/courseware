@@ -5,7 +5,7 @@
                 <div class="modal cw-permission-modal" role="dialog">
                     <header class="modal-header">
                         <slot name="header">
-                            {{ $t('message.setStudentsPermissions') }}
+                            Lese- und Schreibrechte für Studierende festlegen
                             <span class="modal-close-button" @click="close"></span>
                         </slot>
                     </header>
@@ -15,7 +15,7 @@
                                 value="read"
                                 v-model="settings.defaultRead"
                             />
-                            {{ $t('message.newUserReadPerms') }}
+                            Neue Nutzer/-innen bekommen Leserechte
                         </label>
 
                         <table class="default students-permissions-list" v-if="autor_members.length">
@@ -34,16 +34,16 @@
                                             v-model="toggled.autor.read"
                                             @change="toggleAll('autor', 'read')"
                                         />
-                                        {{ $t('message.readPerms') }}
+                                        Lesen
                                     </th>
                                     <th>
                                         <input type="checkbox"
                                             v-model="toggled.autor.write"
                                             @change="toggleAll('autor', 'write')"
                                         />
-                                        {{ $t('message.readWritePerms') }}
+                                        Lesen und Schreiben
                                     </th>
-                                    <th>{{ $t('message.name') }}</th>
+                                    <th>Name</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,7 +93,7 @@
                                         v-model="toggled.user.read"
                                         @change="toggleAll('user', 'read')"
                                     />
-                                    {{ $t('message.readPerms') }}
+                                    Lesen
                                 </th>
                                 <th></th>
                                 <th></th>
@@ -128,11 +128,11 @@
                     <footer class="modal-footer">
                         <slot name="footer">
                             <button type="button" class="button accept" @click="set">
-                                {{ $t('message.ButtonLabelSave') }}
+                                speichern
                             </button>
 
                             <button type="button" class="button cancel" @click="close">
-                                {{ $t('message.ButtonLabelClose') }}
+                                abbrechen
                             </button>
                         </slot>
                     </footer>
@@ -148,15 +148,16 @@ export default {
     name: 'StudentsPermissionsDialog',
     props: {
         DialogVisible: Boolean,
-        element: Object
+        element: Object,
+        users: Array
     },
 
     data() {
         return {
             visible: this.DialogVisible,
             currentElement: this.element,
-            users: this.$store.state.courseUsers,
-            user_perms: {},
+            // users: this.$store.state.courseUsers,
+            user_perms: [],
             settings: {
                 defaultRead: true,
                 caption_autor: 'Studierende',
@@ -176,8 +177,7 @@ export default {
 
     computed: {
         autor_members() {
-
-            if (Object.keys(this.users).length === 0 && this.users.constructor === Object) {
+            if ((this.users).length === 0) {
                 return [];
             }
 
@@ -189,7 +189,7 @@ export default {
         },
 
         user_members() {
-            if (Object.keys(this.users).length === 0 && this.users.constructor === Object) {
+            if ((this.users).length === 0) {
                 return [];
             }
 
@@ -199,6 +199,10 @@ export default {
 
             return members;
         }
+    },
+
+    mounted() {
+        this.updateAutorMembers();
     },
 
     methods: {
@@ -232,7 +236,7 @@ export default {
             axios
                 .post('get_element_approval_list', { bid: bid, type: 'users' })
                 .then(response => {
-                    view.users = view.$store.state.courseUsers;
+                    // view.users = view.$store.state.courseUsers;
 
                     if (response.data != null) {
                         if (response.data.users !== undefined) {
@@ -292,26 +296,11 @@ export default {
                     this.toggled.user.read = false;
                 }
             }
-        }
-    },
-
-    watch: {
-        DialogVisible: function() {
-            this.visible = this.DialogVisible;
-            this.users = [];
-
-            if (this.visible) {
-                this.getApprovalList();
-            } else {
-                this.user_perms = {};
-                this.settings = {
-                    defaultRead: true
-                }
-            }
         },
 
-        autor_members: function() {
+        updateAutorMembers() {
             let new_perms = { ...this.user_perms };
+            let view = this;
 
             // per default, give new users read permissions
             for (let key in this.autor_members) {
@@ -323,12 +312,10 @@ export default {
                     }
                 }
             }
-
             this.user_perms = new_perms;
-            this.updateToggleStatus();
         },
 
-        user_members: function() {
+        updateUserMembers() {
             let new_perms = { ...this.user_perms };
 
             // per default, give new users read permissions
@@ -343,7 +330,23 @@ export default {
             }
 
             this.user_perms = new_perms;
-            this.updateToggleStatus();
+        }
+
+    },
+
+    watch: {
+        DialogVisible: function() {
+            this.visible = this.DialogVisible;
+            // this.users = [];
+
+            if (this.visible) {
+                this.getApprovalList();
+            } else {
+                this.user_perms = [];
+                this.settings = {
+                    defaultRead: true
+                }
+            }
         },
 
         user_perms: function() {

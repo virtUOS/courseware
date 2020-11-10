@@ -5,7 +5,7 @@
                 <div class="modal cw-permission-modal" role="dialog">
                     <header class="modal-header" ref="modalHeader">
                         <slot name="header">
-                            {{ $t('message.setGroupsPermissions') }}
+                            Lese- und Schreibrechte für Gruppen festlegen
                             <span class="modal-close-button" @click="close"></span>
                         </slot>
                     </header>
@@ -23,16 +23,16 @@
                                             v-model="toggled.read"
                                             @change="toggleAll('read')"
                                         />
-                                        {{ $t('message.readPerms') }}
+                                        Lesen
                                     </th>
                                     <th>
                                         <input type="checkbox"
                                             v-model="toggled.write"
                                             @change="toggleAll('write')"
                                         />
-                                        {{ $t('message.readWritePerms') }}
+                                        Lesen und Schreiben
                                     </th>
-                                    <th>{{ $t('message.groupname') }}</th>
+                                    <th>Gruppenname</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,17 +67,17 @@
                         </table>
 
                         <span v-else>
-                            {{ $t('message.noGroupsInSeminar') }}
+                            In dieser Veranstaltung gibt es bisher keine Grupppen!
                         </span>
                     </section>
                     <footer class="modal-footer">
                         <slot name="footer">
                             <button type="button" class="button accept" @click="set">
-                                {{ $t('message.ButtonLabelSave') }}
+                                speichern
                             </button>
 
                             <button type="button" class="button cancel" @click="close">
-                                {{ $t('message.ButtonLabelClose') }}
+                                abbrechen
                             </button>
                         </slot>
                     </footer>
@@ -92,14 +92,15 @@ export default {
     name: 'GroupsPermissionsDialog',
     props: {
         DialogVisible: Boolean,
-        element: Object
+        element: Object,
+        groups: Array
     },
 
     data() {
         return {
             visible: this.DialogVisible,
             currentElement: this.element,
-            groups: this.$store.state.courseGroups,
+            // groups: this.$store.state.courseGroups,
             perms: {},
             toggled: {
                 read: false,
@@ -137,7 +138,7 @@ export default {
             axios
                 .post('get_element_approval_list', { bid: bid, type: 'groups' })
                 .then(response => {
-                    view.groups = view.$store.state.courseGroups;
+                    //view.groups = view.$store.state.courseGroups;
 
                     if (response.data !== null && response.data.groups !== undefined) {
                         view.perms = response.data.groups;
@@ -190,7 +191,6 @@ export default {
     watch: {
         DialogVisible: function() {
             this.visible = this.DialogVisible;
-            this.groups = [];
             if (this.visible) {
                 this.getApprovalList();
             } else {

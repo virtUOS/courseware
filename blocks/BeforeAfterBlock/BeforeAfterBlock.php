@@ -27,7 +27,7 @@ class BeforeAfterBlock extends Block
             if ($before->source == 'file') {
                 $before_file = \FileRef::find(json_decode($this->ba_before)->file_id);
                 if ($before_file) {
-                    $ba_img_before = $before_file->getDownloadURL();
+                    $ba_img_before = $this->getFileURL($before_file);
                 }
             }
         }
@@ -41,7 +41,7 @@ class BeforeAfterBlock extends Block
             if ($after->source == 'file') {
                 $after_file = \FileRef::find(json_decode($this->ba_after)->file_id);
                 if ($after_file) {
-                    $ba_img_after = $after_file->getDownloadURL();
+                    $ba_img_after = $this->getFileURL($after_file);
                 }
             }
         }
@@ -178,7 +178,7 @@ class BeforeAfterBlock extends Block
                 'description' => $file_ref->description,
                 'filename' => $file->name,
                 'filesize' => $file->size,
-                'url' => $file->getURL(),
+                'url' => $this->isFileAnURL($file_ref),
                 'path' => $file->getPath()
             );
         }

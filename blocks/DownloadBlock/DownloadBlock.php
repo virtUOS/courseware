@@ -23,11 +23,11 @@ class DownloadBlock extends Block
 
     public function student_view()
     {
-        $file = \FileRef::find($this->file_id);
-        if ($file) { 
-            $url = $file->getDownloadURL('force');
-            $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
-            $icon = $this->getIcon($file);
+        $file_ref = \FileRef::find($this->file_id);
+        if ($file_ref) { 
+            $url = $this->getFileURL($file_ref);
+            $access = $this->isFileDownloadable($file_ref);
+            $icon = $this->getIcon($file_ref);
 
             $file_available = true;
         } else { 
@@ -201,7 +201,7 @@ class DownloadBlock extends Block
             'description' => $file_ref->description,
             'filename' => $file->name,
             'filesize' => $file->size,
-            'url' => $file->getURL(),
+            'url' => $this->isFileAnURL($file_ref),
             'path' => $file->getPath()
         );
 

@@ -5,12 +5,12 @@
                 <div class="modal" role="dialog">
                     <header class="modal-header">
                         <slot name="header">
-                            {{ $t('message.editDialogTitle', [this.title]) }}
+                            {{ this.title }} bearbeiten
                             <span class="modal-close-button" @click="close"></span>
                         </slot>
                     </header>
                     <section class="modal-body">
-                        <label for="editDialogElementTitle">{{ $t('message.title') }}:</label>
+                        <label for="editDialogElementTitle">Titel:</label>
                         <input
                             type="text"
                             name="editDialogElementTitle"
@@ -21,7 +21,7 @@
                         />
                         <br />
                         <div v-if="isChapter">
-                            <label for="publication_date">{{ $t('message.visibleFrom') }}:</label>
+                            <label for="publication_date">sichtbar ab:</label>
                             <input
                                 type="date"
                                 name="publication_date"
@@ -31,7 +31,7 @@
                                 @keyup.esc="close"
                             />
                             <br />
-                            <label for="withdraw_date">{{ $t('message.invisibleFrom') }}:</label>
+                            <label for="withdraw_date">unsichtbar ab:</label>
                             <input type="date"
                                 name="withdraw_date"
                                 v-model="withdrawDate"
@@ -44,11 +44,11 @@
                     <footer class="modal-footer">
                         <slot name="footer">
                             <button type="button" class="button accept" @click="edit">
-                                {{ $t('message.ButtonLabelSave') }}
+                                speichern
                             </button>
 
                             <button type="button" class="button cancel" @click="close">
-                                {{ $t('message.ButtonLabelClose') }}
+                                abbrechen
                             </button>
                         </slot>
                     </footer>

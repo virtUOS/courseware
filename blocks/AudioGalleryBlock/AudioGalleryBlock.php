@@ -117,7 +117,7 @@ class AudioGalleryBlock extends Block
         // create courseware upload folder
         if ($cw_folder == null) {
             $request = array('name' => 'Courseware-Upload', 'description' => 'folder for courseware content');
-            $new_folder = new \PublicFolder();
+            $new_folder = new \StandardFolder();
             $new_folder->setDataFromEditTemplate($request);
             $new_folder->user_id = $user->id;
             $cw_folder = $parent_folder->createSubfolder($new_folder);
@@ -134,12 +134,13 @@ class AudioGalleryBlock extends Block
                 'content_terms_of_use_id'   => 'SELFMADE_NONPUB',
                 'user_id'                   => $user->id
             ];
-        
-        $new_reference = $folder->createFile($audio_file);
+
+        $standard_file = \StandardFile::create($audio_file);
+        $new_reference = $folder->addFile($standard_file);
         $this->audio_gallery_user_recording = array(
             'file_ref_id' => $new_reference->id,
             'file_name' => $new_reference->name,
-            'file_url' => $new_reference->getDownloadURL(),
+            'file_url' =>  $this->getFileURL($new_reference),
             'audio_length' => $data['audio_length'],
             'user_id' => $user->id,
             'user_name' => $user->vorname.' '.$user->nachname,

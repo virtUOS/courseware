@@ -99,7 +99,8 @@ class XmlImport implements ImportInterface
                         'user_id'  => $user->id,
                         'error'    => ""
                     ];
-            $new_reference = $folder->createFile($file);
+            $standard_file = \StandardFile::create($file);
+            $new_reference = $folder->addFile($standard_file);
         } else {
             $new_reference = $stored_file;
         }

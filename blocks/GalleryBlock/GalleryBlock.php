@@ -138,7 +138,7 @@ class GalleryBlock extends Block
                 $response = \FileRef::findBySQL('folder_id = ?', array($folder->id));
                 $counter = 0;
                 foreach ($response as $item) {
-                    if (!$item->terms_of_use->fileIsDownloadable($item, false)) {
+                    if (!$this->isFileDownloadable($item)) {
                         continue;
                     }
                     if ($item->isImage()) {
@@ -174,14 +174,14 @@ class GalleryBlock extends Block
 
         $response = \FileRef::findBySQL('folder_id = ?', array($folder_id));
         foreach ($response as $item) {
-            if (!$item->terms_of_use->fileIsDownloadable($item, false)) {
+            if (!$this->isFileDownloadable($item)) {
                 continue;
             }
             if ($item->isImage() && $item->mime_type != 'image/svg+xml') {
                 $filesarray[] = array(
                     "id"    => $item->id,
                     "name"  => $item->name,
-                    "url"   => $item->getDownloadURL()
+                    "url"   => $this->getFileURL($item)
                 );
             }
         }
@@ -235,7 +235,7 @@ class GalleryBlock extends Block
                     'description' => $file_ref->description,
                     'filename' => $file->name,
                     'filesize' => $file->size,
-                    'url' => $file->getURL(),
+                    'url' => $this->isFileAnURL($file_ref),
                     'path' => $file->getPath()
                 ));
             }
@@ -296,7 +296,8 @@ class GalleryBlock extends Block
         $gallery_folder = \FileManager::getTypedFolder($this->gallery_folder_id);
         foreach ($file_ids as $file_id) {
             $file_ref = new \FileRef($file_id);
-            \FileManager::moveFileRef($file_ref, $gallery_folder, $current_user);
+            $file_type = new \StandardFile($file_ref);
+            \FileManager::moveFile($file_type, $gallery_folder, $current_user);
         }
     }
 

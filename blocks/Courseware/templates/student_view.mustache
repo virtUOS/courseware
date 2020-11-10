@@ -16,7 +16,15 @@
   </nav>
 
   <aside class="cw-sidebar">
-    <div class="cw-sidebar-image"></div>
+    <div class="cw-sidebar-image">
+      <div class="cw-sidebar-course-avatar">
+        <img src="{{course_avatar}}">
+      </div>
+      <div class="cw-sidebar-title">
+        {{cw_title}}
+      </div>
+
+    </div>
     <nav class="cw-navigation">
         {{#user_is_teacher}}
           <ul class="cw-navigation-teacher">
@@ -159,8 +167,11 @@
   {{/user_may_author}}
   
   {{#active_section}}
-        {{> active_section}}
-      {{/active_section}}
+    {{> active_section}}
+  {{/active_section}}
+  {{^active_section}}
+    {{> no_section}}
+  {{/active_section}}
 
   <div class="clear"></div>
 </section>

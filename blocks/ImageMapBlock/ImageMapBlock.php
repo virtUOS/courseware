@@ -25,8 +25,8 @@ class ImageMapBlock extends Block
         if ($content != null) {
             $file = \FileRef::find($content->image_id);
             if ($file) {
-                $image_url = $file->getDownloadURL();
-                $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
+                $image_url = $this->getFileURL($file);
+                $access = $this->isFileDownloadable($file);
             }
 
             foreach($content->shapes as $shape) {
@@ -62,10 +62,10 @@ class ImageMapBlock extends Block
         }
 
         
-        $file = \FileRef::find($content->image_id);
-        if ($file) {
-           $image_url = $file->getDownloadURL();
-            $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
+        $file_ref = \FileRef::find($content->image_id);
+        if ($file_ref) {
+           $image_url = $this->getFileURL($file_ref);
+            $access = $this->isFileDownloadable($file_ref);
         }
 
         if (strpos($this->getModel()->parent->title, "AsideSection") > -1) {
@@ -95,7 +95,7 @@ class ImageMapBlock extends Block
         $content = json_decode($this->image_map_content);
         $file = \FileRef::find($content->image_id);
         if ($file) {
-            $image_url = $file->getDownloadURL();
+            $image_url = $this->getFileURL($file);
         }
 
         return array('image_url' => $image_url);
@@ -231,7 +231,7 @@ class ImageMapBlock extends Block
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
                 if (($ref->isImage()) && (!$ref->isLink()) && (strpos($ref->mime_type, 'svg') === false)) {
-                    $url = $ref->getDownloadURL();
+                    $url = $this->getFileURL($ref);
                     $ref = $ref->toArray();
                     $ref['url'] = $url;
                     $coursefilesarray[] = $ref;
@@ -246,7 +246,7 @@ class ImageMapBlock extends Block
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
                 if (($ref->isImage()) && (!$ref->isLink())) {
-                    $url = $ref->getDownloadURL();
+                    $url = $this->getFileURL($ref);
                     $ref = $ref->toArray();
                     $ref['url'] = $url;
                     $userfilesarray[] = $ref;
@@ -313,7 +313,7 @@ class ImageMapBlock extends Block
                 'description' => $file_ref->description,
                 'filename' => $file->name,
                 'filesize' => $file->size,
-                'url' => $file->getURL(),
+                'url' => $this->getFileURL($file_ref),
                 'path' => $file->getPath()
             );
         }

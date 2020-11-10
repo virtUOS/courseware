@@ -27,10 +27,10 @@ class CanvasBlock extends Block
         $content = json_decode($this->canvas_content);
         $bg_image = $content->image ? 1 : 0;
         if ($content->source == "cw") {
-            $file = \FileRef::find($content->image_id);
-            if ($file) {
-                $image_url = $file->getDownloadURL();
-                $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
+            $file_ref = \FileRef::find($content->image_id);
+            if ($file_ref) {
+                $image_url =$this->getFileURL($file_ref);
+                $access = $this->isFileDownloadable($file_ref);
             }
         } else {
             $image_url = $content->image_url;
@@ -93,10 +93,10 @@ class CanvasBlock extends Block
     {
         $content = json_decode($this->canvas_content);
         if ($content->source == "cw") {
-            $file = \FileRef::find($content->image_id);
-            if ($file) {
-                $image_url = $file->getDownloadURL();
-                $access = ($file->terms_of_use->download_condition == 0) ? true : false;
+            $file_ref = \FileRef::find($content->image_id);
+            if ($file_ref) {
+                $image_url = $this->getFileURL($file_ref);
+                $access = $this->isFileDownloadable($file_ref);
             }
         } else {
             $image_url = $content->image_url;
@@ -152,7 +152,8 @@ class CanvasBlock extends Block
             'error'    => ""
         ];
 
-        $new_reference = $upload_folder->createFile($file);
+        $standard_file = \StandardFile::create($file);
+        $new_reference = $upload_folder->addFile($standard_file);
         $this->deleteRecursively($tempDir);
 
         return $new_reference;
@@ -268,7 +269,7 @@ class CanvasBlock extends Block
             'description' => $file_ref->description,
             'filename' => $file->name,
             'filesize' => $file->size,
-            'url' => $file->getURL(),
+            'url' => $this->isFileAnURL($file_ref),
             'path' => $file->getPath()
         );
 

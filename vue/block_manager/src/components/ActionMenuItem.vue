@@ -8,7 +8,7 @@
             </a>
             <div class="action-menu-content">
                 <div class="action-menu-title">
-                    {{ $t('message.actions') }}
+                    Aktionen
                 </div>
                 <ul class="action-menu-list">
                     <li v-if="this.users_button" class="action-menu-item">
@@ -20,7 +20,7 @@
                                 $refs.actionMenu.classList.remove('active');
                             "
                         >
-                            {{ $t('message.setStudentsPermissions') }}
+                            Lese- und Schreibrechte für Studierende festlegen
                         </a>
                     </li>
                     <li v-if="this.groups_button" class="action-menu-item">
@@ -32,7 +32,7 @@
                                 $refs.actionMenu.classList.remove('active');
                             "
                         >
-                            {{ $t('message.setGroupsPermissions') }}
+                            Lese- und Schreibrechte für Gruppen festlegen
                         </a>
                     </li>
                     <li v-if="this.edit_button" class="action-menu-item">
@@ -44,7 +44,7 @@
                                 $refs.actionMenu.classList.remove('active');
                             "
                         >
-                            {{ $t('message.editElement') }}
+                            Element bearbeiten
                         </a>
                     </li>
                     <li v-if="this.remove_button" class="action-menu-item">
@@ -56,7 +56,7 @@
                                 $refs.actionMenu.classList.remove('active');
                             "
                         >
-                            {{ $t('message.deleteElement') }}
+                            Element löschen
                         </a>
                     </li>
                     <li v-if="this.add_child_button" class="action-menu-item">
@@ -68,37 +68,44 @@
                                 $refs.actionMenu.classList.remove('active');
                             "
                         >
-                            {{ $t('message.addSubelement') }}
+                            Unterelement hinzufügen
                         </a>
                     </li>
                 </ul>
             </div>
         </nav>
         <StudentsPermissionsDialog
+            v-if="this.users_button"
             :DialogVisible="this.setStudentsPermissionsDialogVisible"
             :element="this.element"
+            :users="courseUsers"
             @close="setStudentsPermissionsDialogVisible = false"
             @set="setStudentsPermissionsAction"
         />
         <GroupsPermissionsDialog
+            v-if="this.groups_button"
             :DialogVisible="this.setGroupsPermissionsDialogVisible"
             :element="this.element"
+            :groups="courseGroups"
             @close="setGroupsPermissionsDialogVisible = false"
             @set="setGroupsPermissionsAction"
         />
         <EditDialog
+            v-if="this.edit_button"
             :DialogVisible="this.editDialogVisible"
             :element="this.element"
             @close="editDialogVisible = false"
             @edit="editDialogAction"
         />
         <RemoveDialog
+            v-if="this.remove_button"
             :DialogVisible="this.removeDialogVisible"
             :element="this.element"
             @close="removeDialogVisible = false"
             @remove="$emit('remove')"
         />
         <AddChildDialog
+            v-if="this.add_child_button"
             :DialogVisible="this.addChildDialogVisible"
             :element="this.element"
             @close="addChildDialogVisible = false"
@@ -115,7 +122,9 @@ import GroupsPermissionsDialog from './GroupsPermissionsDialog.vue';
 export default {
     props: {
         buttons: Array,
-        element: Object
+        element: Object,
+        courseUsers: Array,
+        courseGroups: Array
     },
     components: { RemoveDialog, EditDialog, AddChildDialog, StudentsPermissionsDialog, GroupsPermissionsDialog },
     data() {

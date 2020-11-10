@@ -29,12 +29,12 @@ class AudioBlock extends Block
         $access = true;
         if ($this->audio_source == "cw") {
             $file_name = $this->audio_file;
-            $file = \FileRef::find($this->audio_id);
-            if ($file) {
-                $audio_file = $file->getDownloadURL();
-                $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
-                $folder = $file->getFolderType();
-                switch(get_class($file->getFolderType())) {
+            $file_ref = \FileRef::find($this->audio_id);
+            if ($file_ref) {
+                $audio_file = $this->getFileURL($file_ref);
+                $access = $this->isFileDownloadable($file_ref);
+                $folder = $file_ref->getFolderType();
+                switch(get_class($file_ref->getFolderType())) {
                     case 'HomeworkFolder':
                         $folder_warning = true;
                         $access = false;
@@ -168,7 +168,7 @@ class AudioBlock extends Block
         // create courseware upload folder
         if ($cw_folder == null) {
             $request = array('name' => 'Courseware-Upload', 'description' => 'folder for courseware content');
-            $new_folder = new \CoursePublicFolder();
+            $new_folder = new \StandardFolder();
             $new_folder->setDataFromEditTemplate($request);
             $new_folder->user_id = $user->id;
             $cw_folder = $parent_folder->createSubfolder($new_folder);
@@ -183,8 +183,9 @@ class AudioBlock extends Block
                 'content_terms_of_use_id'   => 'SELFMADE_NONPUB',
                 'user_id'                   => $user->id
             ];
-        
-        $new_reference = $folder->createFile($audio_file);
+
+        $standard_file = \StandardFile::create($audio_file);
+        $new_reference = $folder->addFile($standard_file);
 
         $this->audio_source = 'cw';
         $this->audio_id = $new_reference->id;
@@ -292,7 +293,7 @@ class AudioBlock extends Block
             'description' => $file_ref->description,
             'filename' => $file->name,
             'filesize' => $file->size,
-            'url' => $file->getURL(),
+            'url' => $this->isFileAnURL($file_ref),
             'path' => $file->getPath()
         );
 

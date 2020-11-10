@@ -653,4 +653,23 @@ abstract class Block {
             unlink($path);
         }
     }
+
+    protected function getFileURL($file_ref)
+    {
+        return $file_ref->getDownloadURL();
+    }
+
+    protected function isFileAnURL($file_ref)
+    {
+        $file_type = $file_ref->getFileType();
+
+        return get_class($file_type) == 'URLFile';
+    }
+
+    protected function isFileDownloadable($file_ref)
+    {
+        $file_type = $file_ref->getFileType();
+
+        return $file_type->isDownloadable($GLOBALS['user']->id);
+    }
 }

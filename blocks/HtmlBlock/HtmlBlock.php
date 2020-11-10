@@ -163,7 +163,7 @@ class HtmlBlock extends Block
                         'description' => $file_ref->description,
                         'filename' => $file->name,
                         'filesize' => $file->size,
-                        'url' => $file->getURL(),
+                        'url' => $this->isFileAnURL($file_ref),
                         'path' => $file->getPath()
                     );
                 }

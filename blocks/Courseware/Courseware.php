@@ -78,7 +78,13 @@ class Courseware extends Block
 
         $section_nav = null;
         if ($subchapter) {
-            $section_nav = $this->getNeighborSections($section);
+            if($section) {
+                $section_nav = $this->getNeighborSections($section);
+            } else {
+                $section_nav = $this->getNeighborSections($subchapter);
+            }
+        } else {
+            $section_nav = $this->getNeighborSections($chapter);
         }
 
         // prepare active chapter data
@@ -102,6 +108,7 @@ class Courseware extends Block
         $this->branchComplete($tree);
         $cid = $this->container['cid'];
 
+        $avatar = \CourseAvatar::getAvatar($cid);
 
         return array_merge($tree, array(
             'user_is_nobody'        => $this->getCurrentUser()->isNobody(),
@@ -119,6 +126,7 @@ class Courseware extends Block
             'isSequential'          => $this->progression == 'seq',
             'active_section'        => $active_section, 
             'cw_title'              => $courseware->title,
+            'course_avatar'         => $avatar->getURL('medium'),
             'vips_url'              => $this->getVipsURL(),
             'vips_path'             => dirname(\PluginEngine::getURL('vipsplugin'))
             )

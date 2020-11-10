@@ -23,9 +23,9 @@ class PdfBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
-        $file = \FileRef::find($this->pdf_file_id);
-        if ($file) {
-            $access = ($file->terms_of_use->fileIsDownloadable($file, false)) ? true : false;
+        $file_ref = \FileRef::find($this->pdf_file_id);
+        if ($file_ref) {
+            $access = $this->isFileDownloadable($file_ref);;
         } else {
             $access = true;
         }
@@ -146,7 +146,7 @@ class PdfBlock extends Block
         if (isset ($data['pdf_file_id']) && ($data['pdf_file_id'] != '')) {
             $this->pdf_file_id = $data['pdf_file_id'];
             $file_ref = new \FileRef($this->pdf_file_id);
-            $this->pdf_file = $file_ref->getDownloadURL();
+            $this->pdf_file = $this->getFileURL($file_ref);
         }
         if (isset ($data['pdf_title'])) {
             $this->pdf_title = \STUDIP\Markup::purifyHtml($data['pdf_title']);
@@ -174,7 +174,7 @@ class PdfBlock extends Block
             'description' => $file_ref->description,
             'filename' => $file->name,
             'filesize' => $file->size,
-            'url' => $file->getURL(),
+            'url' => $this->isFileAnURL($file_ref),
             'path' => $file->getPath()
         );
 
@@ -224,7 +224,7 @@ class PdfBlock extends Block
             }
             if($this->pdf_filename == $file->name) {
                 $this->pdf_file_id = $file->id;
-                $this->pdf_file = $file->getDownloadURL();
+                $this->pdf_file = $this->getFileURL($file);
 
                 $this->save();
                 return array($file->id);

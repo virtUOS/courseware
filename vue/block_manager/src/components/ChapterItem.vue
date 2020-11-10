@@ -25,7 +25,7 @@
                         'published-info': isPublished && (publication_date || withdraw_date)
                     }"
                 >
-                    {{ $t('message.chapter') }}
+                    Kapitel
                 </span>
                 <span
                     v-if="publication_date && !this.importContent && !this.remoteContent"
@@ -33,7 +33,7 @@
                         'unpublished-info': !isPublished,
                         'published-info': isPublished
                     }"
-                    >| {{ $t('message.visibleFrom') }}: {{ publication_date_readable }}</span
+                    >| sichtbar ab: {{ publication_date_readable }}</span
                 >
                 <span
                     v-if="withdraw_date && !this.importContent && !this.remoteContent"
@@ -42,7 +42,7 @@
                         'published-info': isPublished
                     }"
                 >
-                    | {{ $t('message.invisibleFrom') }}: {{ withdraw_date_readable }}</span
+                    | unsichtbar ab: {{ withdraw_date_readable }}</span
                 >
             </p>
         </div>
@@ -50,6 +50,8 @@
             v-if="!this.importContent && !this.remoteContent"
             :buttons="['edit', 'remove', 'groups', 'users', 'add-child']"
             :element="this.element"
+            :courseUsers="courseUsers"
+            :courseGroups="courseGroups"
             @edit="editElement"
             @remove="removeElement"
             @add-child="addChild"
@@ -74,14 +76,16 @@
                 :importContent="importContent"
                 :remoteContent="remoteContent"
                 :storeLock="storeLock"
+                :courseUsers="courseUsers"
+                :courseGroups="courseGroups"
                 @listUpdate="updateList"
                 @remove-subchapter="removeSubchapter"
                 @isRemote="isRemoteAction"
                 @isImport="isImportAction"
             />
             <p v-if="subchapters.length == 0">
-                {{ $t('message.emptyChapter') }}.
-                <span v-if="!importContent">{{ $t('message.emptyChapterInfo') }}.</span>
+                Dieses Kapitel ist leer.
+                <span v-if="!importContent">Sie können hier ein Unterkapitel ablegen oder ein neues hinzufügen.</span>
             </p>
         </draggable>
     </li>
@@ -99,7 +103,9 @@ export default {
         element: Object,
         importContent: Boolean,
         remoteContent: Boolean,
-        storeLock: Boolean
+        storeLock: Boolean,
+        courseUsers: Array,
+        courseGroups: Array
     },
     data() {
         return {

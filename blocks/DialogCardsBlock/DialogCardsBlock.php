@@ -23,7 +23,7 @@ class DialogCardsBlock extends Block
                 if ($card['front_img_file_id']) {
                     $file_front = \FileRef::find($card['front_img_file_id']);
                     if ($file_front) {
-                        $card['front_img'] = ($file_front->terms_of_use->fileIsDownloadable($file_front, false)) ? $file_front->getDownloadURL() : '';
+                        $card['front_img'] = $this->isFileDownloadable($file_front) ? $this->getFileURL($file_front) : '';
                     } else {
                         $card['front_img'] = '';
                     }
@@ -31,7 +31,7 @@ class DialogCardsBlock extends Block
                 if ($card['back_img_file_id']) {
                     $file_back = \FileRef::find($card['back_img_file_id']);
                     if ($file_back) {
-                        $card['back_img'] = ($file_back->terms_of_use->fileIsDownloadable($file_back, false)) ? $file_back->getDownloadURL() : '';
+                        $card['back_img'] = $this->isFileDownloadable($file_back) ? $this->getFileURL($file_back) : '';
                     } else {
                         $card['back_img'] = '';
                     }
@@ -199,7 +199,7 @@ class DialogCardsBlock extends Block
                         'description' => $file_ref->description,
                         'filename' => $file->name,
                         'filesize' => $file->size,
-                        'url' => $file->getURL(),
+                        'url' => $this->isFileAnURL($file_ref),
                         'path' => $file->getPath()
                     ));
                 }
@@ -213,7 +213,7 @@ class DialogCardsBlock extends Block
                         'description' => $file_ref->description,
                         'filename' => $file->name,
                         'filesize' => $file->size,
-                        'url' => $file->getURL(),
+                        'url' => $this->isFileAnURL($file_ref),
                         'path' => $file->getPath()
                     ));
                 }
@@ -254,12 +254,12 @@ class DialogCardsBlock extends Block
                     }
                     if ($card->front_img_file_name == $file->name) {
                         $card->front_img_file_id = $file->id;
-                        $card->front_img = $file->getDownloadURL();
+                        $card->front_img = $this->getFileURL($file);
                         array_push($used_files, $file->id);
                     }
                     if ($card->back_img_file_name == $file->name) {
                         $card->back_img_file_id = $file->id;
-                        $card->back_img = $file->getDownloadURL();
+                        $card->back_img = $this->getFileURL($file);
                         array_push($used_files, $file->id);
                     }
                 }

@@ -47,7 +47,7 @@ class VideoBlock extends Block
                     if($webvideo['source'] == 'file') {
                         $file = \FileRef::find($webvideo['file_id']);
                         if($file) {
-                            $webvideo['src'] = ($file->terms_of_use->fileIsDownloadable($file, false)) ? $file->getDownloadURL() : '';
+                            $webvideo['src'] = $this->isFileDownloadable($file) ? $this->getFileURL($file) : '';
                         } else {
                             $webvideo['src'] = '';
                         }
@@ -150,8 +150,9 @@ class VideoBlock extends Block
                 'content_terms_of_use_id'   => 'SELFMADE_NONPUB',
                 'user_id'                   => $user->id
             ];
-        
-        $new_reference = $folder->createFile($video_file);
+
+            $standard_file = \StandardFile::create($video_file);
+        $new_reference = $folder->addFile($standard_file);
 
         $webvideo = [
             'src'       => $new_reference->download_url,
@@ -181,7 +182,7 @@ class VideoBlock extends Block
         foreach ($course_folders as $folder) {
             $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
             foreach($file_refs as $ref){
-                if (($ref->isVideo()) && (!$ref->isLink())) {
+                if (($ref->isVideo()) && (!$this->isFileAnURL($ref))) {
                     $coursefilesarray[] = $ref;
                 }
                 $key = array_search($ref->id, $file_ids);
@@ -272,7 +273,7 @@ class VideoBlock extends Block
                     'description' => $file_ref->description,
                     'filename' => $file->name,
                     'filesize' => $file->size,
-                    'url' => $file->getURL(),
+                    'url' => $this->isFileAnURL($file_ref),
                     'path' => $file->getPath()
                 );
             }
@@ -344,7 +345,7 @@ class VideoBlock extends Block
 
                 if($source_filename == $file_name) {
                     $source->file_id = $file->id;
-                    $source->src = $file->getDownloadURL();
+                    $source->src = $this->getFileURL($file);
                     $source->file_name = $file->name;
                     $this->webvideo = json_encode($webvideo);
 

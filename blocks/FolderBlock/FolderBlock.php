@@ -194,7 +194,7 @@ class FolderBlock extends Block
     }
 
     private function showFiles($folder_id)
-    {        
+    {
         $folder = \Folder::find($folder_id);
         $filesarray = array();
         if ($folder) {
@@ -208,12 +208,11 @@ class FolderBlock extends Block
             if($folder->folder_type === 'HomeworkFolder') {
                 $user = \User::find($item->user_id)->getFullname();
             }
-
-            $filesarray[] = array('id' => $item->id,
-                            'name' => $item->name, 
-                            'icon' => $this->getIcon($item->id), 
-                            'url' => $item->getDownloadURL('force'),
-                            'downloadable' => $item->terms_of_use->fileIsDownloadable($item, false),
+            $filesarray[] = array('id' => $item->getId(),
+                            'name' => $item->getFilename(), 
+                            'icon' => $this->getIcon($item->getId()), 
+                            'url' => $this->getFileURL($item),
+                            'downloadable' => $item->isDownloadable($GLOBALS['user']->id),
                             'user' => $user);
         }
         return $filesarray;
@@ -330,7 +329,7 @@ class FolderBlock extends Block
                 'description' => $file_ref->description,
                 'filename' => $file->name,
                 'filesize' => $file->size,
-                'url' => $file->getURL(),
+                'url' => $this->isFileAnURL($file_ref),
                 'path' => $file->getPath()
             ));
         }
@@ -390,7 +389,8 @@ class FolderBlock extends Block
         $folder = \FileManager::getTypedFolder($folder_content->folder_id);
         foreach ($file_ids as $file_id) {
             $file_ref = new \FileRef($file_id);
-            \FileManager::moveFileRef($file_ref, $folder, $current_user);
+            $file_type = new \StandardFile($file_ref);
+            \FileManager::moveFile($file_type, $folder, $current_user);
         }
     }
 

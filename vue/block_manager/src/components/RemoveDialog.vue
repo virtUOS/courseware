@@ -5,20 +5,20 @@
                 <div class="modal alert" role="dialog">
                     <header class="modal-header">
                         <slot name="header">
-                            {{ $t('message.deleteDialogTitle', [this.title]) }}
+                            {{ this.title }} löschen
                             <span class="modal-close-button" @click="close"></span>
                         </slot>
                     </header>
                     <section class="modal-body">
                         <p v-if="this.currentElement.isStrucutalElement">
-                            {{ $t('message.deleteDialogQuestionElement') }}?
+                            Möchten Sie dieses Element und alle darunter liegenden Elemente wirklich löschen?
                         </p>
-                        <p v-if="this.currentElement.isBlock">{{ $t('message.deleteDialogQuestionBlock') }}?</p>
+                        <p v-if="this.currentElement.isBlock">Möchten Sie dieses Element wirklich löschen?</p>
                     </section>
                     <footer class="modal-footer">
                         <slot name="footer">
                             <button type="button" class="button accept" @click="remove" v-if="!deleting">
-                                {{ $t('message.ButtonLabelYes') }}
+                                Ja
                             </button>
                             <button type="button" class="button modal-progress" v-else>
                                 <spring-spinner
@@ -35,7 +35,7 @@
                                 :class="{ 'button-inactive': deleting }"
                                 @click="close"
                             >
-                                {{ $t('message.ButtonLabelNo') }}
+                                Nein
                             </button>
                         </slot>
                     </footer>
