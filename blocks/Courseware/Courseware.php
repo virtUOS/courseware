@@ -78,7 +78,13 @@ class Courseware extends Block
 
         $section_nav = null;
         if ($subchapter) {
-            $section_nav = $this->getNeighborSections($section);
+            if($section) {
+                $section_nav = $this->getNeighborSections($section);
+            } else {
+                $section_nav = $this->getNeighborSections($subchapter);
+            }
+        } else {
+            $section_nav = $this->getNeighborSections($chapter);
         }
 
         // prepare active chapter data

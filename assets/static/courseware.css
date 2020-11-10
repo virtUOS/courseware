@@ -2696,6 +2696,10 @@ section#courseware .active-subchapter-nav-placeholder {
 section#courseware ol.active-subchapter {
   background-color: white;
   padding: 10px 10px 10px 0;
+  height: 37px;
+}
+section#courseware ol.active-subchapter.active-subchapter-nav-disabled {
+  display: none;
 }
 section#courseware ol.active-subchapter li {
   display: block;
@@ -3098,6 +3102,12 @@ section#courseware ol.active-subchapter li > a[data-icon="youtube"] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+section#courseware ol.active-subchapter li > a[data-icon="disabled"] {
+  background-image: url("../../../../../assets/images/icons/blue/decline-circle.svg");
+  background-size: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 section#courseware ol.active-subchapter li:hover > a {
   background-color: #28497c;
   outline: 0;
@@ -3485,6 +3495,10 @@ section#courseware ol.active-subchapter li:hover > a[data-icon="youtube"] {
   background-size: 24px;
   background-position: center center;
   background-repeat: no-repeat;
+}
+section#courseware ol.active-subchapter li:hover > a.disabled {
+  background-color: #fff;
+  cursor: not-allowed;
 }
 section#courseware ol.active-subchapter li.selected > a {
   background-color: #28497c;
@@ -9399,7 +9413,6 @@ section#courseware.scrollyware section.block.ScrollyBlock ul .cw-scrolly-blocks 
 section#courseware .active-section,
 section#courseware .aside-section {
   clear: both;
-  padding-top: 1em;
   width: 100%;
   max-width: 870px;
 }

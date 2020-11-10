@@ -159,8 +159,11 @@
   {{/user_may_author}}
   
   {{#active_section}}
-        {{> active_section}}
-      {{/active_section}}
+    {{> active_section}}
+  {{/active_section}}
+  {{^active_section}}
+    {{> no_section}}
+  {{/active_section}}
 
   <div class="clear"></div>
 </section>

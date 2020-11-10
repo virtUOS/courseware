@@ -1,5 +1,7 @@
 <div class="active-subchapter-nav-placeholder"></div>
-<ol class=active-subchapter
+<ol class="active-subchapter 
+  {{^show_section_nav}} active-subchapter-nav-disabled {{/show_section_nav}}
+  {{#sections_as_chapters}} active-subchapter-nav-disabled {{/sections_as_chapters}}"
   data-blockid={{active_subchapter.id}}
   data-type=Subchapter>
 
@@ -32,6 +34,9 @@
 
       {{#sections}}
         {{> section}}
+      {{/sections}}
+      {{^sections}}
+        {{> section_empty}}
       {{/sections}}
 
       <li class=no-content>{{#i18n}}Keine Abschnitte{{/i18n}}</li>
