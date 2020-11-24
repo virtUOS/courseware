@@ -59,7 +59,15 @@ export default AuthorView.extend({
             return ;
         }
         //$view.$(".cw-iav-url").val($view.$(".cw-iav-url-stored").val());
-        this.$('.cw-iav-video-file').select2();
+        this.$('.cw-iav-video-file').select2({
+            templateResult: state => {
+              if (!state.id) { return state.text; }
+              var $state = $(
+                '<span data-file_name="' + state.element.dataset.file_name +'" data-file_url="'+state.element.dataset.file_url+'">' + state.text + '</span>'
+              );
+              return $state;
+            }
+        });
         if (source_data != '') {
             var source_data = JSON.parse(source_data);
             if (source_data.external) {
@@ -180,7 +188,7 @@ export default AuthorView.extend({
             iav_source.external = true;
         } else {
             iav_source.file_id = this.$('.cw-iav-video-file').val();
-            iav_source.file_name = this.$('.cw-iav-video-file').find('.selected').data('file_name');
+            iav_source.file_name = this.$('.cw-iav-video-file').find(':selected').data('file_name');
             iav_source.external = false;
         }
         iav_source = JSON.stringify(iav_source);
