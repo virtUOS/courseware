@@ -16,14 +16,12 @@
             @click="toggleContent"
         >
             <p class="section-title" :title="title">{{ shortTitle }}</p>
-            <p class="header-info-wrapper">Abschnitt</p>
+            <p class="header-info-wrapper">{{ $t('message.section') }}</p>
         </div>
         <ActionMenuItem
             v-if="!this.importContent && !this.remoteContent"
             :buttons="['groups', 'users', 'edit', 'remove']"
             :element="this.element"
-            :courseUsers="courseUsers"
-            :courseGroups="courseGroups"
             @edit="editSection"
             @remove="removeElement"
             :class="{ unfolded: unfolded }"
@@ -50,8 +48,8 @@
                 @isRemote="isRemoteAction"
             />
             <p v-if="blocks.length == 0">
-                Dieser Abschnitt ist leer.
-                <span v-if="!importContent">Sie können einen Block in Courseware hinzufügen oder hier einen ablegen.</span>
+                {{ $t('message.emptySection') }}.
+                <span v-if="!importContent">{{ $t('message.emptySectionInfo') }}.</span>
             </p>
         </draggable>
     </li>
@@ -85,9 +83,7 @@ export default {
         element: Object,
         importContent: Boolean,
         remoteContent: Boolean,
-        storeLock: Boolean,
-        courseUsers: Array,
-        courseGroups: Array
+        storeLock: Boolean
     },
     created() {
         if (this.blocks == null) {
@@ -147,10 +143,7 @@ export default {
         },
         toggleContent() {
             this.unfolded = !this.unfolded;
-        },
-        isRemoteAction() {
-            this.$emit('isRemote');
-        },
+        }
     },
     computed: {
         dragOptions() {

@@ -23,7 +23,7 @@
                         'published-info': isPublished && (publication_date || withdraw_date)
                     }"
                 >
-                    Unterkapitel
+                    {{ $t('message.subchapter') }}
                 </span>
                 <span
                     v-if="publication_date && !this.importContent && !this.remoteContent"
@@ -32,7 +32,7 @@
                         'published-info': isPublished
                     }"
                 >
-                    | sichtbar ab: {{ publication_date_readable }}</span
+                    | {{ $t('message.visibleFrom') }}: {{ publication_date_readable }}</span
                 >
                 <span
                     v-if="withdraw_date && !this.importContent && !this.remoteContent"
@@ -41,7 +41,7 @@
                         'published-info': isPublished
                     }"
                 >
-                    | unsichtbar ab: {{ withdraw_date_readable }}</span
+                    | {{ $t('message.invisibleFrom') }}: {{ withdraw_date_readable }}</span
                 >
             </p>
         </div>
@@ -49,8 +49,6 @@
             v-if="!this.importContent && !this.remoteContent"
             :buttons="['edit', 'remove', 'groups', 'users', 'add-child']"
             :element="this.element"
-            :courseUsers="courseUsers"
-            :courseGroups="courseGroups"
             @edit="editElement"
             @remove="removeElement"
             @add-child="addChild"
@@ -76,16 +74,14 @@
                 :importContent="importContent"
                 :remoteContent="remoteContent"
                 :storeLock="storeLock"
-                :courseUsers="courseUsers"
-                :courseGroups="courseGroups"
                 @listUpdate="updateList"
                 @remove-section="removeSection"
                 @isRemote="isRemoteAction"
                 @isImport="isImportAction"
             />
             <p v-if="sections.length == 0">
-                Dieses Unterkapitel ist leer.
-                <span v-if="!importContent">Sie können hier einen Abschnitt ablegen oder einen neuen hinzufügen.</span>
+                {{ $t('message.emptySubchapter') }}.
+                <span v-if="!importContent">{{ $t('message.emptySubchapterInfo') }}.</span>
             </p>
         </draggable>
     </li>
@@ -124,9 +120,7 @@ export default {
         element: Object,
         importContent: Boolean,
         remoteContent: Boolean,
-        storeLock: Boolean,
-        courseUsers: Array,
-        courseGroups: Array
+        storeLock: Boolean
     },
     created() {
         if (this.sections == null) {

@@ -6,7 +6,7 @@
                 <div class="cw-blockmanager-title-loading">
                     <spring-spinner :animation-duration="1000" :size="30" :color="'#28497c'" v-if="storeLock" />
                 </div>
-                <ActionMenuItem :buttons="['add-child']" :element="this.courseware" :courseUsers="courseUsers" :courseGroups="courseGroups" @add-child="addChild" />
+                <ActionMenuItem :buttons="['add-child']" :element="this.courseware" @add-child="addChild" />
             </div>
             <draggable
                 tag="ul"
@@ -25,8 +25,6 @@
                     :importContent="false"
                     :remoteContent="false"
                     :storeLock="storeLock"
-                    :courseUsers="courseUsers"
-                    :courseGroups="courseGroups"
                     @listUpdate="updateList"
                     @remove-chapter="removeChapter"
                     @isRemote="isRemoteAction"
@@ -39,7 +37,7 @@
                 <p>{{ actionTitle }}</p>
             </div>
             <div class="messagebox messagebox_error" v-if="fileError">
-                Das Archiv enthält keine Coursewaredaten
+                {{ $t('message.invalidArchiveFile') }}
             </div>
             <div v-if="showRemoteCourseware && !remoteCourseware && !loading" id="user-course-list">
                 <ul class="semester-list">
@@ -51,7 +49,7 @@
                         @course-selected="getRemoteCourse"
                     />
                     <div v-if="this.remoteCourses.length == 0" class="messagebox messagebox_info">
-                        Es sind keine Veranstaltungen für den Import verfügbar
+                        {{ $t('message.noRemoteCoursesAvailable') }}
                     </div>
                 </ul>
             </div>
@@ -105,7 +103,7 @@
                         for="cw-file-upload-import"
                         id="cw-file-upload-import-label"
                         class="cw-action-menu-button"
-                        title="importFromArchiveExplain"
+                        :title="$t('message.importFromArchiveExplain')"
                     >
                         <input
                             type="file"
@@ -115,13 +113,13 @@
                             accept=".zip"
                             @change="setImport"
                         />
-                        <p>Courseware-Archiv importieren</p>
+                        <p>{{ $t('message.importFromArchiveButton') }}</p>
                     </label>
                 </li>
                 <li>
                     <a :href="coursewareImportURL">
-                        <div id="cw-import-link" class="cw-action-menu-button" title="importExplain">
-                            <p>Courseware-Archiv importieren (alte Version)</p>
+                        <div id="cw-import-link" class="cw-action-menu-button" :title="$t('message.importExplain')">
+                            <p>{{ $t('message.importButton') }}</p>
                         </div>
                     </a>
                 </li>
@@ -129,7 +127,7 @@
                     <div
                         id="cw-import-from-course"
                         class="cw-action-menu-button"
-                        title="importFromCourseExplain"
+                        :title="$t('message.importFromCourseExplain')"
                         @click="importFromCourse"
                     >
                         <p>{{ courseImportText }}</p>
@@ -137,15 +135,17 @@
                 </li>
                 <li>
                     <a :href="coursewareExportURL">
-                        <div id="cw-export-download" class="cw-action-menu-button" title="exportExplain">
-                            <p>Export-Archiv herunterladen</p>
+                        <div id="cw-export-download" class="cw-action-menu-button" :title="$t('message.exportExplain')">
+                            <!-- @click="showExport" -->
+                            <p>{{ $t('message.exportButton') }}</p>
                         </div>
                     </a>
                 </li>
                 <li>
                     <a :href="coursewareExportHtmlURL">
-                        <div id="cw-export-html-download" class="cw-action-menu-button" title="exportHtmlExplain">
-                            <p>Html-Export herunterladen</p>
+                        <div id="cw-export-html-download" class="cw-action-menu-button" :title="$t('message.exportHtmlExplain')">
+                            <!-- @click="showExport" -->
+                            <p>{{ $t('message.exportHtmlButton') }}</p>
                         </div>
                     </a>
                 </li>
@@ -160,7 +160,7 @@
                     id="cw-reset-action-menu"
                     @click="resetActionMenu"
                 >
-                    zurück zur Auswahl
+                    {{ $t('message.tasksBackButton') }}
                 </button>
                 <button
                     id="cw-import"
@@ -168,11 +168,11 @@
                     v-if="showImportCourseware && !fileError && !loading"
                     @click="importCompleteArchive"
                 >
-                    Komplettes Archiv importieren
+                    {{ $t('message.importingButton') }}
                 </button>
                 <a :href="coursewareExportURL" v-if="showExportCourseware">
                     <button id="cw-export" class="button">
-                        Exportieren
+                        {{ $t('message.exportingButton') }}
                     </button>
                 </a>
                 <div style="clear: both;"></div>
@@ -180,105 +180,22 @@
         </div>
          <div class="cw-blockmanager-wrapper">
             <div class="cw-blockmanager-title cw-blockmanager-help" :class="{unfolded: helpUnfolded}" @click="helpUnfolded = !helpUnfolded">
-                <p>Hilfe</p>
+                <p>{{ $t('message.help') }}</p>
             </div>
             <div class="helpboxes" v-show="helpUnfolded">
-                <HelpBox 
-                    title="Courseware Verwaltung" 
-                    content="Unter Verwaltung können Kapitel, Unterkapitel, 
-                    Abschnitte und Blöcke sortiert werden. Im Gegensatz zum 
-                    Bearbeitungsmodus, in der die Reihenfolge der Elemente 
-                    bearbeitet werden kann, können hier Elemente in andere 
-                    übergeordnete Elemente einsortiert werden. Mit einem Klick 
-                    öffnen Sie das Element, die enthaltenen Elemente werden 
-                    dargestellt. Hinter den drei Punkten verbirgt sich das 
-                    Aktionsmenü, Hinzufügen, Löschen, Bearbeiten und das 
-                    Vergeben von Schreibrechten ist hier möglich."
-                />
-                <HelpBox 
-                    title="Sortieren und Verschieben" 
-                    content="Elemente lassen sich einfach per Drag&Drop 
-                    verschieben. Hierbei ist es auch möglich ein Element 
-                    in ein anderes übergeordnetes Element zu verschieben. 
-                    Eine Verschiebung ist immer nur auf der passenden Ebene 
-                    möglich. Es ist z.B. nicht möglich einen Abschnitt neben 
-                    ein Unterkapitel zu verschieben." 
-                />
-                <HelpBox 
-                    title="Freigaben für Teilnehmende" 
-                    content="Ein weiterer Schritt in Richtung kollaboratives 
-                    Lernen macht Courseware mit Freigaben für Teilnehmende 
-                    und Gruppen. Ein gleichzeitiges Bearbeiten von Blöcken 
-                    ist derzeit noch nicht verfügbar, daher sollten die 
-                    Freigaben entsprechend gewählt werden. Freigegeben werden 
-                    können Kapitel und Unterkapitel, dies kann über das 
-                    Aktionsmenü (am Element hinter den drei Punkten) geschehen. 
-                    Untergeordnete Elemente werden automatisch freigegeben. 
-                    Teilnehmende können dann innerhalb des freigegeben Elements 
-                    Inhalte erstellen und Unterelemente erzeugen. Verwaltung, 
-                    Einstellungen und Diskussionsübersicht sind für Teilnehmende 
-                    nicht sichtbar." 
-                />
-                <HelpBox 
-                    title="Hinzufügen und Löschen" 
-                    content="Über das Aktionsmenü (verbirgt sich hinter den drei Punkten) 
-                    eines Elementes können Unterelemente hinzugefügt werden, 
-                    Blöcke können allerdings nur im Bearbeitungsmodus der 
-                    Courseware hinzugefügt werden. Löschen lassen sich alle 
-                    Elemente über das Aktionsmenü."
-                />
-                <HelpBox 
-                    title="Archiv importieren"
-                    content="Ein zuvor exportiertes Archiv kann über Courseware-Archiv 
-                    importieren“ eingelesen werden. Nachdem die Daten geladen wurden 
-                    wird die Struktur der Courseware dargestellt. Per Drag&Drop lassen 
-                    sich einzelne Elemente importieren. Über die Schaltfläche 
-                    „Komplettes Archiv importieren“ können Sie den gesamten Inhalt 
-                    importieren. Die Kapitel werden dann an das Ende der bestehenden 
-                    Inhalte gesetzt. Bitte beachten Sie das der Upload von großen 
-                    Archiven unter Umständen viel Zeit in Anspruch nehmen kann. Für 
-                    das Kopieren von Inhalten aus einer anderen Veranstaltung nutzen 
-                    Sie bitte „Aus Veranstaltung importieren“."
-                />
-                <HelpBox 
-                    title="Aus Veranstaltung importieren"
-                    content="Um Inhalte aus einer anderen Veranstaltung, in der Sie 
-                    unter den Lehrenden eingetragen sind, zu importieren, wählen 
-                    Sie unter Import & Export „Aus Veranstaltung importieren“. Eine 
-                    Liste von Semestern wird angezeigt. Mit einem Klick auf ein Semester 
-                    werden die verfügbaren Veranstaltungen dargestellt. Wählen Sie 
-                    eine Veranstaltung aus um sich die Courseware-Inhalte dieser 
-                    Veranstaltung anzeigen zu lassen. Inhalte können per Drag&Drop 
-                    in die aktuelle Veranstaltung kopiert werden. Gegebenenfalls 
-                    müssen Sie die Elemente der Courseware aufklappen um Elemente 
-                    kopieren zu können." 
-                />
-                <HelpBox 
-                    title="Archiv exportieren" 
-                    content="Ein Courseware Archiv ist eine Zip-Datei die eine 
-                    Beschreibung der Courseware (data.xml) sowie alle eingebundenen 
-                    Dateien enthält. Die Zip-Datei kann über den Import eingelesen 
-                    werden um Inhalte in anderen Stud.IP Installationen zu verwenden. 
-                    Für das Kopieren von Inhalten aus einer anderen Veranstaltung 
-                    nutzen Sie bitte „Aus Veranstaltung importieren“."
-                />
-                <HelpBox 
-                    title="HTML exportieren" 
-                    content="'Der HTML Export liefert die Inhalte von Coursware sowie 
-                    den Courseware Player aus. Mit dem Courseware Player ist es möglich 
-                    die Inhalte mit einem Browser direkt aus dem Dateisystem eines 
-                    Rechners wiederzugeben. Der Courseware Player kann auch auf einem 
-                    Webserver verwendet werden. Bitte beachten Sie das nicht alle Blöcke 
-                    im Courseware Player verfügbar sind. Audio Galerie, Bestätigung, Forum, 
-                    Blubber, Diskussion & Kommentare, Suche, Quiz und OpenCast können im 
-                    Moment noch nicht wiedergegeben werden. Aufgaben die im interactive 
-                    Video eingebunden wurden können auch nicht wiedergegeben werden."
-                />
+                <HelpBox :title="$t('message.help_about_title')" :content="$t('message.help_about_content')" />
+                <HelpBox :title="$t('message.help_sort_title')" :content="$t('message.help_sort_content')" />
+                <HelpBox :title="$t('message.help_approval_title')" :content="$t('message.help_approval_content')" />
+                <HelpBox :title="$t('message.help_add_and_delete_title')" :content="$t('message.help_add_and_delete_content')" />
+                <HelpBox :title="$t('message.help_import_title')" :content="$t('message.help_import_content')" />
+                <HelpBox :title="$t('message.help_remote_import_title')" :content="$t('message.help_remote_import_content')" />
+                <HelpBox :title="$t('message.help_export_title')" :content="$t('message.help_export_content')" />
+                <HelpBox :title="$t('message.help_html_export_title')" :content="$t('message.help_html_export_content')" />
             </div>
         </div>
         <div id="errorbox" class="cw-blockmanager-wrapper" v-if="errorOccurred.length > 0">
             <div id="cw-error-title" class="cw-blockmanager-title">
-                Meldungen
+                <p>{{ $t('message.messages') }}</p>
             </div>
             <ul>
                 <li v-for="(error, errorkey) in errorOccurred" :key="errorkey">{{error.date}} | {{error.text}} </li>
@@ -322,8 +239,8 @@ export default {
             subchapterList: {},
             sectionList: {},
             blockList: {},
-            actionTitle: 'Import & Export',
-            courseImportText: 'Aus Veranstaltung importieren',
+            actionTitle: this.$i18n.t('message.imAndExport'),
+            courseImportText: this.$i18n.t('message.importFromCourse'),
             remoteData: false,
             importData: false,
             importXML: '',
@@ -336,10 +253,7 @@ export default {
             coursewareExportURL: COURSEWARE.data.courseware_export_url,
             coursewareImportURL: COURSEWARE.data.courseware_import_url,
             coursewareExportHtmlURL: COURSEWARE.data.courseware_export_html_url,
-            helpUnfolded: false,
-
-            courseUsers: [],
-            courseGroups: []
+            helpUnfolded: false
         };
     },
     created() {
@@ -370,7 +284,7 @@ export default {
                     }
                 })
                 .then(function(response) {
-                    view.courseUsers = response.data;
+                    view.$store.state.courseUsers = response.data;
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -386,7 +300,7 @@ export default {
                     }
                 })
                 .then(function(response) {
-                    view.courseGroups = response.data;
+                    view.$store.state.courseGroups = response.data;
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -464,12 +378,7 @@ export default {
             }
         },
         addChild(data) {
-            let chapters = [];
-            this.chapters.forEach(element => {
-                    chapters.push(element);
-            });
-            chapters.push(data);
-            this.chapters = chapters;
+            this.chapters.push(data);
         },
         removeChapter(data) {
             let chapters = [];
@@ -485,11 +394,11 @@ export default {
             this.showRemoteCourseware = true;
         },
         showExport() {
-            this.actionTitle = 'Export-Archiv herunterladen';
+            this.actionTitle = this.$i18n.t('message.exportButton');
             this.showExportCourseware = true;
         },
         resetActionMenu() {
-            this.actionTitle = 'Import & Export';
+            this.actionTitle = this.$i18n.t('message.imAndExport');
             this.fileError = false;
             this.remoteCourseware = null;
             this.importCourseware = null;
@@ -551,21 +460,21 @@ export default {
                         catch(e) {
                             console.log(e);
                             console.log('try to reload courseware data');
-                            view.addError('Ein unbekannter Fehler ist aufgetreten');
-                            view.addError('Der Import von Courseware-Daten ist möglicherweise fehlgeschlagen, bitte prüfen Sie den Inhalt');
+                            view.addError(view.$i18n.t('message.error_unknown'));
+                            view.addError(view.$i18n.t('message.error_import'));
                             axios
                             .post('get_courseware', {
                                 cid: COURSEWARE.config.cid
                             })
                             .then(response => {
                                 view.courseware = JSON.parse(response.data.courseware);
-                                view.addError('Der Import von Courseware-Daten ist möglicherweise fehlgeschlagen, bitte prüfen Sie den Inhalt');
+                                view.addError(view.$i18n.t('message.error_reload'));
                             })
                             .catch(error => {
                                 if (error.response) {
                                     console.log(error.response.status);
                                     if (error.response.status == 500) {
-                                        view.addError('Der Server konnte die Daten nicht verarbeiten (500)');
+                                        view.addError(view.$i18n.t('message.error_500'));
                                     }
                                 } else if (error.request) {
                                     console.log(error.request);
@@ -586,7 +495,7 @@ export default {
                             // console.log(error.response.headers);
                             if (error.response.status == 500) {
                                 view.storeLock = false;
-                                view.addError('Der Server konnte die Daten nicht verarbeiten (500)');
+                                view.addError(view.$i18n.t('message.error_500'));
                             }
                         } else if (error.request) {
                             // The request was made but no response was received
