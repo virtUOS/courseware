@@ -19,7 +19,7 @@ export default StudentView.extend({
     postRender() {
         this.$('.scene').first().addClass('is-displayed');
         tooltip(this.$el, '.card');
-        document.documentElement.lang = "de"; // we need this for hyphens
+        this.$el.attr('lang', 'de'); // we need this for hyphens
         return this;
     },
 
