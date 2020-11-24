@@ -1,6 +1,10 @@
 <?php
 
 require_once __DIR__.'/vendor/autoload.php';
+use Mooc\DB\Block as dbBlock;
+use Mooc\DB\Field as dbField;
+use Mooc\DB\UserProgress as dbUserProgress;
+use Mooc\DB\Post as dbPost;
 
 /**
  * Observes posted Notifications from the NotificationCenter to
@@ -27,6 +31,59 @@ class CoursewareObserver extends StudIPPlugin implements SystemPlugin
 
         $this->observeBlubber();
         $this->observePersonalNotifications();
+        $this->observeUserDidMigrate();
+    }
+
+    // observe UserDidMigrate
+    private function observeUserDidMigrate()
+    {
+        NotificationCenter::addObserver('afterUserMigrate', 'UserDidMigrate');
+    }
+
+    private function afterUserMigrate($old_id, $new_id)
+    {
+        //blocks
+        $blocks = dbBlock::findBySQL('approval LIKE ?', array('%'.$old_id.'%'));
+        foreach($blocks as $block) {
+            $aproval = json_decode($block->approval, true);
+            $aproval['users'] = $this->replaceArrayKey($aproval['users'], $old_id, $new_id);
+            $block->approval = json_encode($aproval);
+
+            $block->store();
+        }
+
+        //fields
+        $fields = dbField::findBySQL('user_id = ?', array($old_id));
+        foreach($fields as $field) {
+            $field->user_id = $new_id;
+            $field->store();
+        }
+
+        //userprogress
+        $userprogress = dbUserProgress::findBySQL('user_id = ?', array($old_id));
+        foreach($userprogress as $progress) {
+            $progress->user_id = $new_id;
+            $progress->store();
+        }
+
+        //posts Post
+        $posts = dbPost::findBySQL('user_id = ?', array($old_id));
+        foreach($posts as $post) {
+            $post->user_id = $new_id;
+            $post->store();
+        }
+    }
+
+    private function replaceArrayKey($array, $oldKey, $newKey){
+        if(!isset($array[$oldKey])){
+            return $array;
+        }
+        $arrayKeys = array_keys($array);
+        $oldKeyIndex = array_search($oldKey, $arrayKeys);
+        $arrayKeys[$oldKeyIndex] = $newKey;
+        $newArray =  array_combine($arrayKeys, $array);
+
+        return $newArray;
     }
 
     // observe PostingHasSaved
