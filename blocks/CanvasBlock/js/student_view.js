@@ -126,6 +126,7 @@ export default StudentView.extend({
 
     mouseUp(e) {
         this.paint = false;
+        this.store();
     },
 
     touchStart(e) {
@@ -159,6 +160,7 @@ export default StudentView.extend({
 
     touchEnd(e) {
         this.paint = false;
+        this.store();
     },
 
     getTouchPos(canvasDom, touchEvent) {
@@ -317,7 +319,6 @@ export default StudentView.extend({
         if (bg == 0) {
             $(outlineImage).trigger('load');
         }
-        this.store();
     },
 
     store(){
@@ -364,6 +365,7 @@ export default StudentView.extend({
         this.paint = false;
         this.write = false;
         this.redraw();
+        this.store();
     },
 
     changeColor(e) {
@@ -435,6 +437,7 @@ export default StudentView.extend({
                 $view.$('.cw-canvasblock-text-info').hide();
                 $view.write = false;
                 $view.redraw();
+                $view.store();
             }
             if (key === 'Escape' || key === 'Esc' || key === 27) {
                 $view.clickX.pop();
