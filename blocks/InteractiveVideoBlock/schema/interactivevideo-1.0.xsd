@@ -10,4 +10,6 @@
     <xsd:attribute name="iav_tests" type="xsd:string" />
     <xsd:attribute name="assignment_id" type="xsd:string" />
     <xsd:attribute name="vips_xml" type="xsd:string" />
+    <xsd:attribute name="range_inactive" type="xsd:string" />
+    <xsd:attribute name="tries" type="xsd:string" />
 </xsd:schema>
