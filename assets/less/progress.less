@@ -238,7 +238,7 @@ th.subchapter-description {
   .overview-chapter-nav-arrow {
     border: solid thin #ccc;
     width: 60px;
-    height: 196px;
+    height: 226px;
     float: left;
     margin-right: 2px;
     background-size: 48px;
@@ -268,7 +268,6 @@ th.subchapter-description {
   #chapter-container{
     float: left;
     overflow: hidden;
-    height: 200px;
     margin-right: 2px;
 
     #chapter-list{
@@ -278,7 +277,7 @@ th.subchapter-description {
         li.course-box{
           border: solid thin #28497c;
           width: 190px;
-          height: 190px;
+          height: 220px;
           float: left;
           margin: 3px;
           cursor: pointer;
@@ -288,14 +287,21 @@ th.subchapter-description {
             margin: 0 3px 0 0;
           }
 
-
           p {
-            padding: 1em 0 0.5em 0;
+            display: -webkit-box;
+            height: 2.75em;
+            padding: 1em 0 1em 0;
             text-align: center;
+            vertical-align: middle;
             font-weight: 600;
-            font-size: 1.25em
-
+            font-size: 1.25em;
+            line-height: 1.25em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
           }
+
           div.progress-circle {
             margin: 0 auto;
           }
