@@ -11,8 +11,8 @@ export default StudentView.extend({
         'mousedown .cw-canvasblock-canvas' :'mouseDown',
         'mousemove .cw-canvasblock-canvas': 'mouseMove',
         'mouseup .cw-canvasblock-canvas' :'mouseUp',
-        'mouseout .cw-canvasblock-canvas' :'mouseUp',
-        'mouseleave .cw-canvasblock-canvas' :'mouseUp',
+        'mouseout .cw-canvasblock-canvas' :'mouseOut',
+        'mouseleave .cw-canvasblock-canvas' :'mouseOut',
 
         'click .cw-canvasblock-reset': 'reset',
         'click .cw-canvasblock-color': 'changeColor',
@@ -127,6 +127,12 @@ export default StudentView.extend({
     mouseUp(e) {
         this.paint = false;
         this.store();
+    },
+
+    mouseOut(e) {
+        if (this.paint) {
+            this.mouseUp(e);
+        }
     },
 
     touchStart(e) {

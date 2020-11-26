@@ -217,7 +217,6 @@ export default {
             axios
                 .post('set_element_approval_list', { bid: bid, list: JSON.stringify(list) })
                 .then(response => {
-                    console.log(response);
                     this.$emit('close');
                 })
                 .catch(error => {
