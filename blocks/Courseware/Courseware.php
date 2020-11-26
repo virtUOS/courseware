@@ -108,7 +108,12 @@ class Courseware extends Block
         $this->branchComplete($tree);
         $cid = $this->container['cid'];
 
-        $avatar = \CourseAvatar::getAvatar($cid);
+        if($this->vipsInstalled()) {
+            $vips_url = $this->getVipsURL();
+        } else {
+            $vips_url = false;
+        }
+
 
         return array_merge($tree, array(
             'user_is_nobody'        => $this->getCurrentUser()->isNobody(),
@@ -126,8 +131,7 @@ class Courseware extends Block
             'isSequential'          => $this->progression == 'seq',
             'active_section'        => $active_section, 
             'cw_title'              => $courseware->title,
-            'course_avatar'         => $avatar->getURL('medium'),
-            'vips_url'              => $this->getVipsURL(),
+            'vips_url'              => $vips_url,
             'vips_path'             => dirname(\PluginEngine::getURL('vipsplugin'))
             )
         );
@@ -776,47 +780,5 @@ class Courseware extends Block
         }
 
         return $files;
-    }
-
-    public function vipsActivated() 
-    {
-        if ($this->vipsInstalled()) {
-            $plugin_manager = \PluginManager::getInstance();
-            $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
-
-            return $plugin_manager->isPluginActivated($plugin_info['id'], $this->getModel()->seminar_id);
-        } else {
-            return false;
-        }
-    }
-
-    public function vipsVersion($version = '1.3')
-    {
-        if ($this->vipsInstalled()) {
-            $plugin_manager = \PluginManager::getInstance();
-            $installed_version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
-
-            return version_compare($version, $installed_version) <= 0;
-        } else {
-            return false;
-        }
-    }
-
-    public function vipsInstalled()
-    {
-        $plugin_manager = \PluginManager::getInstance();
-
-        return $plugin_manager->getPlugin('VipsPlugin') != null ? true : false;
-    }
-
-    public function getVipsURL()
-    {
-        if ($this->vipsInstalled()) {
-            $plugin_manager = \PluginManager::getInstance();
-
-            return $plugin_manager->getPlugin('VipsPlugin')->getPluginURL();
-        } else {
-            return false;
-        }
     }
 }

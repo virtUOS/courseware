@@ -34,14 +34,13 @@ class TestBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
-        $courseware = $this->container['current_courseware'];
-        if (!$installed = $courseware->vipsInstalled()) {
+        if (!$installed = $this->vipsInstalled()) {
             return compact('installed');
         }
-        if (!$active = $courseware->vipsActivated()) {
+        if (!$active = $this->vipsActivated()) {
             return array('active' => $active, 'installed'=> $installed);
         }
-        if (!$version = $courseware->vipsVersion()) {
+        if (!$version = $this->vipsVersion()) {
             return array('active' => $active, 'version'=> $version, 'installed'=> $installed);
         }
         $this->calcGrades();
@@ -65,7 +64,7 @@ class TestBlock extends Block
                 'active'        => $active, 
                 'version'       => $version,
                 'installed'     => $installed,
-                'vips14'        => $courseware->vipsVersion('1.4')
+                'vips14'        => $this->vipsVersion('1.4')
             );
         }
         if ($type_mismatch) {
@@ -75,7 +74,7 @@ class TestBlock extends Block
                 'active'        => $active, 
                 'version'       => $version,
                 'installed'     => $installed,
-                'vips14'        => $courseware->vipsVersion('1.4')
+                'vips14'        => $this->vipsVersion('1.4')
             );
         }
 
@@ -83,21 +82,20 @@ class TestBlock extends Block
             'active' => $active,
             'version' => $version,
             'installed' => $installed,
-            'vips14' => $courseware->vipsVersion('1.4')
+            'vips14' => $this->vipsVersion('1.4')
         ), $this->buildExercises());
     }
 
     public function author_view()
     {
         $this->authorizeUpdate();
-        $courseware = $this->container['current_courseware'];
-        if (!$installed = $courseware->vipsInstalled()) {
+        if (!$installed = $this->vipsInstalled()) {
             return compact('installed');
         }
-        if (!$active = $courseware->vipsActivated()) {
+        if (!$active = $this->vipsActivated()) {
             return array('active' => $active, 'installed'=> $installed);
         }
-        if (!$version = $courseware->vipsVersion()) {
+        if (!$version = $this->vipsVersion()) {
             return array('active' => $active, 'version'=> $version, 'installed'=> $installed);
         }
         $subtype =  $this->_model->sub_type;
@@ -127,8 +125,7 @@ class TestBlock extends Block
 
     public function preview_view()
     {
-        $courseware = $this->container['current_courseware'];
-        if ($courseware->vipsInstalled() && $courseware->vipsActivated()) {
+        if ($this->vipsInstalled() && $this->vipsActivated()) {
             $assignment = \VipsAssignment::find($this->assignment_id);
             $type = $this->getSubTypes()[$this->_model->sub_type];
 
@@ -389,8 +386,7 @@ class TestBlock extends Block
                  $solved_completely = false;
             }
             $tries_left = -1;
-            $courseware_block = $this->container['current_courseware'];
-            $max_counter = $courseware_block->getMaxTries();
+            $max_counter = $this->container['current_courseware']->getMaxTries();
             if(!$max_counter) {
                 // no max counter, do as before
                 $show_corrected_solution = $correct;
@@ -505,24 +501,27 @@ class TestBlock extends Block
 
     public function exportProperties()
     {
-        if ($this->assignment_id == "") {
-            $courseware = $this->container['current_courseware'];
-            if ( ($this->test_id == "") || !($courseware->vipsVersion()) ){
-                return;
+        $xml = '';
+        if ($this->vipsInstalled()) {
+            if ($this->assignment_id == "") {
+                if ( ($this->test_id == "") || !($this->vipsVersion()) ){
+                    return;
+                }
+                $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
+            } else {
+                $assignment = \VipsAssignment::find($this->assignment_id);
             }
-            $assignment = \VipsAssignment::findOneBySQL('test_id = ?', array($this->test_id));
-        } else {
-            $assignment = \VipsAssignment::find($this->assignment_id);
-        }
 
-        if ($assignment == null) {
-                return;
+            if ($assignment == null) {
+                    return;
+            }
+            $xml = $assignment->exportXML();
         }
-        $xml = $assignment->exportXML();
 
         return array(
             'xml' => $xml
         );
+        
     }
 
     public function getHtmlExportData()
@@ -551,7 +550,7 @@ class TestBlock extends Block
      */
     public function importProperties(array $properties)
     {
-        if (isset($properties['xml'])) {
+        if (isset($properties['xml'])&& $this->vipsInstalled()) {
             $xml = $properties['xml'];
             $result = \VipsAssignment::importXML($xml, $this->container['current_user_id'] , $this->container['cid']);
             $this->assignment_id = $result->id;
