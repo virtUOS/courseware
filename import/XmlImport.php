@@ -207,6 +207,8 @@ class XmlImport implements ImportInterface
             }
         }
 
+        $uiSection->set_icon_handler(array('icon'=> $node->getAttribute('icon')));
+
         $uiSection->save();
     }
 
