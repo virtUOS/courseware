@@ -108,6 +108,8 @@ class Courseware extends Block
         $this->branchComplete($tree);
         $cid = $this->container['cid'];
 
+        $avatar = \CourseAvatar::getAvatar($cid);
+
         if($this->vipsInstalled()) {
             $vips_url = $this->getVipsURL();
         } else {
