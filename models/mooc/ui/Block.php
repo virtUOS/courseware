@@ -653,4 +653,46 @@ abstract class Block {
             unlink($path);
         }
     }
+
+    public function vipsActivated() 
+    {
+        if ($this->vipsInstalled()) {
+            $plugin_manager = \PluginManager::getInstance();
+            $plugin_info = $plugin_manager->getPluginInfo('VipsPlugin');
+
+            return $plugin_manager->isPluginActivated($plugin_info['id'], $this->getModel()->seminar_id);
+        } else {
+            return false;
+        }
+    }
+
+    public function vipsVersion($version = '1.3')
+    {
+        if ($this->vipsInstalled()) {
+            $plugin_manager = \PluginManager::getInstance();
+            $installed_version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
+
+            return version_compare($version, $installed_version) <= 0;
+        } else {
+            return false;
+        }
+    }
+
+    public function vipsInstalled()
+    {
+        $plugin_manager = \PluginManager::getInstance();
+
+        return $plugin_manager->getPlugin('VipsPlugin') != null ? true : false;
+    }
+
+    public function getVipsURL()
+    {
+        if ($this->vipsInstalled()) {
+            $plugin_manager = \PluginManager::getInstance();
+
+            return $plugin_manager->getPlugin('VipsPlugin')->getPluginURL();
+        } else {
+            return false;
+        }
+    }
 }

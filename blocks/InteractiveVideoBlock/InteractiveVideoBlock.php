@@ -28,13 +28,12 @@ class InteractiveVideoBlock extends Block
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
-        $courseware = $this->container['current_courseware'];
-        $installed = $courseware->vipsInstalled();
-        $active = $courseware->vipsActivated();
-        $version = $courseware->vipsVersion();
+        $installed = $this->vipsInstalled();
+        $active = $this->vipsActivated();
+        $version = $this->vipsVersion();
         $exercises = array();
 
-        $max_counter = $courseware->getMaxTriesIAV();
+        $max_counter = $this->container['current_courseware']->getMaxTriesIAV();
         if($installed && $active && $version && ($this->assignment_id != '')) {
             $selected_assignment = \VipsAssignment::find($this->assignment_id);
             $testmap = array();
@@ -117,7 +116,7 @@ class InteractiveVideoBlock extends Block
         return array_merge($this->getAttrArray(), array(
             'exercises'  => $exercises,
             'iav_url'    => $iav_url,
-            'vips14'     => $courseware->vipsVersion('1.4')
+            'vips14'     => $this->vipsVersion('1.4')
         ));
     }
 
@@ -125,10 +124,9 @@ class InteractiveVideoBlock extends Block
     {
         global $user;
         $this->authorizeUpdate();
-        $courseware = $this->container['current_courseware'];
-        $installed = $courseware->vipsInstalled();
-        $active = $courseware->vipsActivated();
-        $version = $courseware->vipsVersion();
+        $installed = $this->vipsInstalled();
+        $active = $this->vipsActivated();
+        $version = $this->vipsVersion();
 
         $assignments = array();
         if($installed && $active && $version) {
@@ -344,7 +342,7 @@ class InteractiveVideoBlock extends Block
      */
     public function exportProperties()
     {
-        if ($this->assignment_id != "") {
+        if ($this->vipsInstalled() && $this->assignment_id != "") {
             $assignment = \VipsAssignment::find($this->assignment_id);
             $vips_xml = $assignment->exportXML();
 
@@ -432,7 +430,7 @@ class InteractiveVideoBlock extends Block
         if (isset($properties['range_inactive'])) {
             $this->range_inactive = $properties['range_inactive'];
         }
-        if (isset($properties['vips_xml'])) {
+        if (isset($properties['vips_xml']) && $this->vipsInstalled()) {
             $xml = $properties['vips_xml'];
             $result = \VipsAssignment::importXML($xml, $this->container['current_user_id'] , $this->container['cid']);
             $this->assignment_id = $result->id;
