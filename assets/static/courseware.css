@@ -356,7 +356,7 @@
 #overview-chapter-nav .overview-chapter-nav-arrow {
   border: solid thin #ccc;
   width: 60px;
-  height: 196px;
+  height: 226px;
   float: left;
   margin-right: 2px;
   background-size: 48px;
@@ -384,7 +384,6 @@
 #overview-chapter-nav #chapter-container {
   float: left;
   overflow: hidden;
-  height: 200px;
   margin-right: 2px;
 }
 #overview-chapter-nav #chapter-container #chapter-list {
@@ -394,7 +393,7 @@
 #overview-chapter-nav #chapter-container #chapter-list li.course-box {
   border: solid thin #28497c;
   width: 190px;
-  height: 190px;
+  height: 220px;
   float: left;
   margin: 3px;
   cursor: pointer;
@@ -405,10 +404,18 @@
   margin: 0 3px 0 0;
 }
 #overview-chapter-nav #chapter-container #chapter-list li.course-box p {
-  padding: 1em 0 0.5em 0;
+  display: -webkit-box;
+  height: 2.75em;
+  padding: 1em 0 1em 0;
   text-align: center;
+  vertical-align: middle;
   font-weight: 600;
   font-size: 1.25em;
+  line-height: 1.25em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 #overview-chapter-nav #chapter-container #chapter-list li.course-box div.progress-circle {
   margin: 0 auto;
@@ -2303,6 +2310,9 @@ button.cw-reset-progress-button:hover {
 }
 #courseware-news .cw-news-list-blocks .cw-news-item-block p {
   word-break: break-all;
+}
+#courseware-news .cw-news-list-blocks .cw-news-item-block .messagebox {
+  display: none;
 }
 .btn-base {
   width: 20px;
@@ -5634,6 +5644,9 @@ section.ConfirmBlock span.confirm-title {
   overflow-y: auto;
   max-height: 12em;
   text-align: justify;
+  -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
 }
 .cw-dialogcards .card__face--front {
   background-color: #fff;
