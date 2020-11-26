@@ -133,6 +133,7 @@ class Courseware extends Block
             'isSequential'          => $this->progression == 'seq',
             'active_section'        => $active_section, 
             'cw_title'              => $courseware->title,
+            'course_avatar'         => $avatar->getURL('medium'),
             'vips_url'              => $vips_url,
             'vips_path'             => dirname(\PluginEngine::getURL('vipsplugin'))
             )
