@@ -134,6 +134,9 @@ export default {
             });
             this.blocks = blocks;
         },
+        isRemoteAction() {
+            this.$emit('isRemote');
+        },
         removeElement() {
             this.$emit('remove-section', this.element);
         },

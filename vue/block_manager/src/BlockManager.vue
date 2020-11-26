@@ -62,7 +62,6 @@
                     ghost-class="ghost"
                     handle=".chapter-handle"
                     v-bind="storeLock ? { disabled: true } : { disabled: false, animation: 200, sort: false }"
-                    @clone="cloning"
                 >
                     <ChapterItem
                         v-for="remote_chapter in this.remoteCourseware.children"
@@ -409,7 +408,6 @@ export default {
         },
         storeChanges() {
             if (this.storeLock) {
-                console.log('storeLock');
                 return;
             }
             this.storeLock = true;
