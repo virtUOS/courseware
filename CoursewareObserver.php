@@ -37,7 +37,7 @@ class CoursewareObserver extends StudIPPlugin implements SystemPlugin
     // observe UserDidMigrate
     private function observeUserDidMigrate()
     {
-        NotificationCenter::addObserver('afterUserMigrate', 'UserDidMigrate');
+        NotificationCenter::addObserver($this, 'afterUserMigrate', 'UserDidMigrate');
     }
 
     private function afterUserMigrate($old_id, $new_id)
