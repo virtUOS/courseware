@@ -79,10 +79,10 @@ module.exports = {
       options: {
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      comments: !isProd,
-      sourceMap: true
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   comments: !isProd,
+    //   sourceMap: true
+    // }),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(nodeEnv) }
     }),
