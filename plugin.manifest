@@ -1,8 +1,9 @@
 pluginname=Courseware
+displayname=Courseware
 pluginclassname=Courseware
 pluginclassname=CoursewareObserver
 origin=virtUOS
-version=4.7.3
+version=4.7.4
 category=Inhalte und Aufgabenstellungen
 icon=../../../assets/images/icons/black/group3.svg
 homepage=https://hilfe.studip.de/help/4.0/de/Basis/Courseware
