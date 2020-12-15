@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-1118 14:19+0200\n"
+"POT-Creation-Date: 2020-12-1215 10:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,9 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "Abbrechen"
-msgstr ""
-
-msgid "ablehnen"
 msgstr ""
 
 msgid "Abschicken"
@@ -38,16 +35,10 @@ msgstr ""
 msgid "Absenken"
 msgstr ""
 
-msgid "absolvieren"
-msgstr ""
-
 msgid "Accordion"
 msgstr ""
 
 msgid "Achtung! PHP-CURL ist nicht installiert. Ohne PHP-CURL funktioniert dieser Block nicht"
-msgstr ""
-
-msgid "akzeptieren"
 msgstr ""
 
 msgid "Alarm"
@@ -104,6 +95,9 @@ msgstr ""
 msgid "Aufnahme"
 msgstr ""
 
+msgid "Aufnahme aktivieren"
+msgstr ""
+
 msgid "Aufnahme beenden"
 msgstr ""
 
@@ -113,13 +107,13 @@ msgstr ""
 msgid "Aufnahme läuft"
 msgstr ""
 
+msgid "Aufnahme speichern"
+msgstr ""
+
 msgid "Aufnahme starten"
 msgstr ""
 
-msgid "ausrufen"
-msgstr ""
-
-msgid "auswerten"
+msgid "Aufnahme widerholen"
 msgstr ""
 
 msgid "Autoplay"
@@ -144,9 +138,6 @@ msgid "Beschreibung"
 msgstr ""
 
 msgid "Beschriftung"
-msgstr ""
-
-msgid "betrachten"
 msgstr ""
 
 msgid "Bewegen Sie den Cursor über das Informations-Icon des gewünschten Blocks um die Block-Id zu erfahren."
@@ -239,9 +230,6 @@ msgstr ""
 msgid "CC Lizenztyp angeben:"
 msgstr ""
 
-msgid "chatten"
-msgstr ""
-
 msgid "Countdown"
 msgstr ""
 
@@ -252,6 +240,9 @@ msgid "Danke! Sie haben alle Aufgaben gelöst und können nun mit dem nächsten 
 msgstr ""
 
 msgid "Danke! Sie können nun mit dem nächsten Abschnitt fortfahren."
+msgstr ""
+
+msgid "Das Opencast Plugin ist in dieser Veranstaltung nicht aktiviert. Sie können das Plugin über den Navigationspunkt &ldquor;mehr&hellip;&rdquo; aktivieren."
 msgstr ""
 
 msgid "Das Opencast Plugin ist nicht installiert. Bitte wenden Sie sich an Ihren Administrator."
@@ -269,7 +260,19 @@ msgstr ""
 msgid "Dateien dieser Veranstaltung"
 msgstr ""
 
-msgid "Dateien zum hochladen auswählen"
+msgid "Dateien im Dateibereich anderer Nutzer"
+msgstr ""
+
+msgid "Dateien im eigenen Dateibereich"
+msgstr ""
+
+msgid "Dateien zum Hochladen auswählen"
+msgstr ""
+
+msgid "Datei hochladen"
+msgstr ""
+
+msgid "Datei im Dateibereich eines anderen Nutzers"
 msgstr ""
 
 msgid "Dateinamen anzeigen"
@@ -293,6 +296,9 @@ msgstr ""
 msgid "Datum"
 msgstr ""
 
+msgid "deaktiviert"
+msgstr ""
+
 msgid "Der Aufgabentyp hat sich geändert. Bitte wenden Sie sich an Ihren Dozenten."
 msgstr ""
 
@@ -312,6 +318,9 @@ msgid "Diagrammtyp"
 msgstr ""
 
 msgid "Die angegebene URL scheint nicht zu der gewählten Plattform zu gehören. Bitte überprüfen Sie Ihre Eingabe."
+msgstr ""
+
+msgid "Die Audiodatei befindet sich in einem Ordner der möglicherweise die Wiedergabe für Teilnehmer*innen verhindert."
 msgstr ""
 
 msgid "Die Evaluationen müssen im System aktiviert sein."
@@ -353,7 +362,7 @@ msgstr ""
 msgid "Dieser Test ist zurzeit nicht verfügbar."
 msgstr ""
 
-msgid "Dieser Text wird angezeigt, wenn der Mauszeiger über die Form bewegt wird."
+msgid "Dieser Text wird angezeigt, wenn der Mauszeiger über die Form bewegt wird"
 msgstr ""
 
 msgid "Dies ist ein Gruppenordner"
@@ -371,13 +380,7 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-msgid "Download: Es wurde keine Datei ausgewählt"
-msgstr ""
-
-msgid "Durch das Anklicken der Checkbox wird es den Studenten erlaubt, direkt über die Courseware Dateien in den ausgewählten Ordner hochzuladen."
-msgstr ""
-
-msgid "editieren"
+msgid "Download deaktivieren"
 msgstr ""
 
 msgid "eigenes Bild anzeigen"
@@ -413,7 +416,7 @@ msgstr ""
 msgid "Ende"
 msgstr ""
 
-msgid "entfernen"
+msgid "Endpunkt wählen"
 msgstr ""
 
 msgid "erstellt am"
@@ -437,16 +440,31 @@ msgstr ""
 msgid "Es wurde keine Audiodatei ausgewählt"
 msgstr ""
 
+msgid "Es wurde keine Datei ausgewählt."
+msgstr ""
+
 msgid "Es wurde keine PDF-Datei ausgewählt."
+msgstr ""
+
+msgid "Es wurde kein Merksatz angegeben"
 msgstr ""
 
 msgid "Es wurde kein OpenCast-Video ausgewählt."
 msgstr ""
 
-msgid "Es wurden noch keine Karten angelegt"
+msgid "Es wurde kein Ordner ausgewählt."
+msgstr ""
+
+msgid "Es wurden noch keine Lernkarten angelegt."
 msgstr ""
 
 msgid "Es wurde noch keine Videodatei ausgewählt."
+msgstr ""
+
+msgid "Es wurde noch kein Inhalt zum einbetten ausgewählt"
+msgstr ""
+
+msgid "Es wurde noch kein Quellcode eingetragen."
 msgstr ""
 
 msgid "Es wurde noch kein Video aufgezeichnet."
@@ -459,6 +477,9 @@ msgid "Export"
 msgstr ""
 
 msgid "externer Link"
+msgstr ""
+
+msgid "für alle"
 msgstr ""
 
 msgid "für alle Displaygrö�?en"
@@ -488,7 +509,7 @@ msgstr ""
 msgid "für kleine Displays"
 msgstr ""
 
-msgid "(für Studierende nicht sichtbar)"
+msgid "(für Teilnehmende ohne Schreibrecht nicht sichtbar)"
 msgstr ""
 
 msgid "Für Videos von Plattformen wie YouTube oder vimeo nutzen Sie bitte den Embed-Block"
@@ -509,13 +530,16 @@ msgstr ""
 msgid "Folgende Blocktypen können in diesen Block eingebunden werden:"
 msgstr ""
 
+msgid "Fortschritt erst beim Herunterladen"
+msgstr ""
+
 msgid "Fortschrittsübersicht"
 msgstr ""
 
 msgid "Frage"
 msgstr ""
 
-msgid "Freitext, Video, externer Inhalt (iframe), Download, Merksatz, Link, Embed"
+msgid "Freitext, Video, externer Inhalt (iframe), Download, Merksatz, Link, Embed, Dateiordner (ohne Upload-Funktion)"
 msgstr ""
 
 msgid "Geben Sie das Mikrofon frei um eine Aufnahme zu ermöglichen"
@@ -551,6 +575,9 @@ msgstr ""
 msgid "gro�?"
 msgstr ""
 
+msgid "Grunddaten"
+msgstr ""
+
 msgid "Höhe"
 msgstr ""
 
@@ -584,9 +611,6 @@ msgstr ""
 msgid "Hier werden alle Videodateien aus dem Dateibereich aufgelistet."
 msgstr ""
 
-msgid "hinzufügen"
-msgstr ""
-
 msgid "Hoch"
 msgstr ""
 
@@ -614,6 +638,9 @@ msgstr ""
 msgid "Ihre Lösung wurde eingetragen."
 msgstr ""
 
+msgid "Ihr Lösungsversuch war noch nicht korrekt."
+msgstr ""
+
 msgid "Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal."
 msgstr ""
 
@@ -624,6 +651,9 @@ msgid "im Dateibereich speichern"
 msgstr ""
 
 msgid "Import"
+msgstr ""
+
+msgid "Im- und Export dieses Blocks erzeugt nur einen leeren Opencast-Block. Das gewählte Video wird nicht kopiert oder verknüpft"
 msgstr ""
 
 msgid "in anderen Kapiteln"
@@ -647,9 +677,6 @@ msgstr ""
 msgid "Infobox vor Download"
 msgstr ""
 
-msgid "informieren"
-msgstr ""
-
 msgid "Inhalt"
 msgstr ""
 
@@ -663,6 +690,9 @@ msgid "invertiert"
 msgstr ""
 
 msgid "Invertiert"
+msgstr ""
+
+msgid "Ist diese Option aktiv wird durch einen Rechtsklick auf das Video kein Menü mehr angezeigt. Ein direkter Download des Videos kann so verhindert werden."
 msgstr ""
 
 msgid "ja"
@@ -683,6 +713,9 @@ msgstr ""
 msgid "Karte"
 msgstr ""
 
+msgid "Karte entfernen"
+msgstr ""
+
 msgid "Karte hinzufügen"
 msgstr ""
 
@@ -692,10 +725,10 @@ msgstr ""
 msgid "kein Bild"
 msgstr ""
 
-msgid "kein Bild ausgewählt"
+msgid "Keine Abschnitte"
 msgstr ""
 
-msgid "Keine Abschnitte"
+msgid "keine Abschnitte vorhanden"
 msgstr ""
 
 msgid "keine Audiodatei verfügbar"
@@ -741,9 +774,6 @@ msgid "klicken um Karte umzudrehen"
 msgstr ""
 
 msgid "Kommentiere dies"
-msgstr ""
-
-msgid "kooperieren"
 msgstr ""
 
 msgid "Kreis"
@@ -839,10 +869,16 @@ msgstr ""
 msgid "normal"
 msgstr ""
 
+msgid "nur für Lehrende"
+msgstr ""
+
 msgid "Nutzerfortschritt anzeigen"
 msgstr ""
 
 msgid "Nutzer muss Beitrag verfassen um Fortschitt zu erreichen"
+msgstr ""
+
+msgid "Nutzern erlauben, direkt über die Courseware Dateien in den ausgewählten Ordner hochzuladen"
 msgstr ""
 
 msgid "Nutzerspezifische ID übergeben"
@@ -881,22 +917,19 @@ msgstr ""
 msgid "Oval"
 msgstr ""
 
-msgid "planen"
-msgstr ""
-
 msgid "Plattform"
 msgstr ""
 
-msgid "Polar-Area Diagram"
+msgid "Polardiagramm"
 msgstr ""
 
 msgid "Position"
 msgstr ""
 
-msgid "puz­zeln"
+msgid "Quellcode"
 msgstr ""
 
-msgid "Quellcode"
+msgid "Quellcode eingeben"
 msgstr ""
 
 msgid "Quelle"
@@ -932,6 +965,9 @@ msgstr ""
 msgid "rechts klein"
 msgstr ""
 
+msgid "Rechtsklick verhindern"
+msgstr ""
+
 msgid "rechts mittel"
 msgstr ""
 
@@ -945,6 +981,9 @@ msgid "rot"
 msgstr ""
 
 msgid "Säulendiagramm"
+msgstr ""
+
+msgid "Schieberegler deaktivieren"
 msgstr ""
 
 msgid "Schlie�?en Sie ein Mikrofon an um etwas aufzunehmen"
@@ -1019,6 +1058,9 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
+msgid "Startpunkt wählen"
+msgstr ""
+
 msgid "Stellen Sie eine Frage oder kommentieren Sie..."
 msgstr ""
 
@@ -1050,6 +1092,9 @@ msgid "Termin herunterladen"
 msgstr ""
 
 msgid "Text"
+msgstr ""
+
+msgid "Texteingabe mit Enter-Taste bestätigen"
 msgstr ""
 
 msgid "Textwerkzeug"
@@ -1094,7 +1139,7 @@ msgstr ""
 msgid "Unterkapitel sortieren"
 msgstr ""
 
-msgid "Upload erlauben?"
+msgid "Upload erlauben"
 msgstr ""
 
 msgid "URL"
@@ -1106,16 +1151,19 @@ msgstr ""
 msgid "verfügbare Sprachen"
 msgstr ""
 
-msgid "verstehen"
-msgstr ""
-
 msgid "Verwaltung"
 msgstr ""
 
 msgid "Video aufnehmen"
 msgstr ""
 
+msgid "Video automatisch starten"
+msgstr ""
+
 msgid "Video-Typ:"
+msgstr ""
+
+msgid "Vips ist nicht aktiviert"
 msgstr ""
 
 msgid "Vips ist nicht aktiviert."
@@ -1166,10 +1214,10 @@ msgstr ""
 msgid "Webvideo (URL)"
 msgstr ""
 
-msgid "Wegen des gewählten Lizenzstatus kann diese PDF-Datei nicht angezeigt werden."
+msgid "Wegen des gewählten Lizenzstatus kann diese Audiodatei nicht abgespielt werden."
 msgstr ""
 
-msgid "Wegen des gewählten Lizenzstatus können Sie diese Audiodatei nicht abspielen."
+msgid "Wegen des gewählten Lizenzstatus kann diese PDF-Datei nicht angezeigt werden."
 msgstr ""
 
 msgid "Wegen des gewählten Lizenzstatus können Sie diese Datei nicht herunterladen."
@@ -1206,6 +1254,30 @@ msgid "zurück"
 msgstr ""
 
 msgid "Zurücksetzen"
+msgstr ""
+
+msgid "Neuer Abschnitt"
+msgstr ""
+
+msgid "Neues Kapitel"
+msgstr ""
+
+msgid "Neues Unterkapitel"
+msgstr ""
+
+msgid "Sichtbar ab"
+msgstr ""
+
+msgid "Wollen Sie den Block wirklich l�schen?"
+msgstr ""
+
+msgid "Wollen Sie den gesamten Abschnitt wirklich l�schen?"
+msgstr ""
+
+msgid "Wollen Sie wirklich l�schen? S�mtliche enthaltenen Abschnitte und Bl�cke werden unwiderruflich entfernt!"
+msgstr ""
+
+msgid "Wollen Sie wirklich l�schen? S�mtliche enthaltenen Bl�cke werden unwiderruflich entfernt!"
 msgstr ""
 
 msgid "Best�tigung"

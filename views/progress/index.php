@@ -83,7 +83,7 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>
                 </tr>
                 <? endforeach ?>
             <? else: ?>
-                <?= _cw('Dieses Katpitel ist leer.')?>
+                <?= _cw('Dieses Kapitel ist leer.')?>
             <? endif ?>
         </table>
     </div>
