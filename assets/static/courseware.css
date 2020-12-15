@@ -9537,6 +9537,12 @@ section#courseware .aside-section section.block {
   display: block;
   margin-bottom: 3em;
 }
+section#courseware .active-section section.block .cke,
+section#courseware .aside-section section.block .cke,
+section#courseware .active-section section.block .cktoolbar,
+section#courseware .aside-section section.block .cktoolbar {
+  width: 100% !important;
+}
 section#courseware .active-section section.block::before,
 section#courseware .aside-section section.block::before {
   color: #ccc;
@@ -11847,6 +11853,10 @@ section#courseware.view-student .aside-section .no-content {
 }
 section.TestBlock div.description {
   margin-bottom: 20px;
+}
+section.TestBlock .cke,
+section.TestBlock .cktoolbar {
+  width: 100% !important;
 }
 .question_title {
   font-size: 12pt;
