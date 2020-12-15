@@ -1,7 +1,7 @@
 <div class="active-subchapter-nav-placeholder"></div>
 <ol class="active-subchapter 
-  {{^show_section_nav}} active-subchapter-nav-disabled {{/show_section_nav}}
-  {{#sections_as_chapters}} active-subchapter-nav-disabled {{/sections_as_chapters}}"
+  {{^show_section_nav}} {{^scrollytelling}}active-subchapter-nav-disabled {{/scrollytelling}}{{/show_section_nav}}
+  {{#sections_as_chapters}} {{^scrollytelling}} active-subchapter-nav-disabled {{/scrollytelling}} {{/sections_as_chapters}}"
   data-blockid={{active_subchapter.id}}
   data-type=Subchapter>
 
@@ -11,8 +11,7 @@
      </li>
   {{/scrollytelling}}
 
-  {{#show_section_nav}}
-    {{^sections_as_chapters}}
+
       {{#section_nav}}
         {{#prev}}
           <li class="prev">
@@ -32,15 +31,19 @@
         {{/prev}}
       {{/section_nav}}
 
-      {{#sections}}
-        {{> section}}
-      {{/sections}}
-      {{^sections}}
-        {{> section_empty}}
-      {{/sections}}
+      {{#show_section_nav}}
+        {{^sections_as_chapters}}
 
-      <li class=no-content>{{#i18n}}Keine Abschnitte{{/i18n}}</li>
+        {{#sections}}
+          {{> section}}
+        {{/sections}}
+        {{^sections}}
+          {{> section_empty}}
+        {{/sections}}
 
+        <li class=no-content>{{#i18n}}Keine Abschnitte{{/i18n}}</li>
+          {{/sections_as_chapters}}
+        {{/show_section_nav}}
       {{#section_nav}}
         {{#next}}
           <li class="next">
@@ -60,6 +63,8 @@
         {{/next}}
       {{/section_nav}}
 
+  {{#show_section_nav}}
+    {{^sections_as_chapters}}
       {{#user_can_edit_subchapter}}
         <li class=controls>
           <button class=add-section>{{#i18n}}Abschnitt einfügen{{/i18n}}</button>

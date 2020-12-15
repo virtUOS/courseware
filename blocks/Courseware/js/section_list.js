@@ -28,7 +28,9 @@ export default Backbone.View.extend({
 
   postRender() {
     tooltip(this.$el, 'li.prev,li.section,li.next', function () { return jQuery(this).find('a').attr('data-title') });
-    this.makeSticky();
+    if (!this.$el.hasClass('active-subchapter-nav-disabled')) {
+      this.makeSticky();
+    }
   },
 
   makeSticky() {
