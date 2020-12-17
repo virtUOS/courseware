@@ -43131,7 +43131,9 @@ function clearHash(el) {
     Object(__WEBPACK_IMPORTED_MODULE_6_js_tooltip__["a" /* default */])(this.$el, 'li.prev,li.section,li.next', function () {
       return __WEBPACK_IMPORTED_MODULE_0_jquery___default()(this).find('a').attr('data-title');
     });
-    this.makeSticky();
+    if (!this.$el.hasClass('active-subchapter-nav-disabled')) {
+      this.makeSticky();
+    }
   },
   makeSticky: function makeSticky() {
     var nav = this.$el;
@@ -106079,7 +106081,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_js_student_view__["a" /* default */].extend({
   events: {
     'click button[name=upload]': 'fileUpload',
-    'click button[name=Speichern]': 'saveLicenses',
+    'click button.button[type=submit]': 'saveLicenses',
     'click a.cancel.button': 'cancelLicenses',
     'click button[name=unzip]': 'unzipFile',
     'click button[name=dontunzip]': 'dontunzipFile',
@@ -106098,6 +106100,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     if (fileCounter == 0 && allowUpload != 1) {
       this.$('.cw-folder-title').hide();
       this.$('.cw-folder').hide();
+    }
+    var dummy = this.$('.documents.dummy-table').get(0);
+    if (dummy) {
+      dummy.config = {};
+      dummy.config.sortList = {};
     }
   },
   fileUpload: function fileUpload() {
@@ -106146,14 +106153,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
       }).done(function (json) {
         view.$('.file_upload_window .uploadbar').css('background-size', '100% 100%');
-
         if (json.redirect) {
           __WEBPACK_IMPORTED_MODULE_0_jquery___default.a.get(json.redirect, function (data) {
             view.$el.find('.cw-folder').html(data);
           });
-        } else {
+        }
+        if (json.message) {
           view.$('.errorbox').show().html(json.message);
           view.$('.file_upload_window .uploadbar').hide();
+        }
+        if (json.added_files) {
+          view.reloadFiles();
         }
       });
     }
@@ -106195,6 +106205,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     });
     return files;
   },
+  reloadFiles: function reloadFiles() {
+    var view = this;
+    __WEBPACK_IMPORTED_MODULE_2_js_url__["a" /* default */].callHandler(this.model.id, 'reload', {}).then(function (response) {
+      view.model.set('files', response.files);
+      view.model.set('homework_files', response.homework_files);
+      view.$el.html(Object(__WEBPACK_IMPORTED_MODULE_3_js_templates__["a" /* default */])('FolderBlock', 'student_view', _extends({}, view.model.attributes)));
+      view.postRender();
+    }).catch(function (error) {
+      console.log(error);
+    });
+  },
   unzipEvent: function unzipEvent(unzip) {
     var data = new FormData(),
         form = this.$('form')[0],
@@ -106233,29 +106254,33 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       contentType: false,
       processData: false
     }).done(function (data) {
-      view.updateView(data['html']);
+      view.reloadFiles();
+      //view.updateView(data['html']);
     });
   },
-  updateView: function updateView(data) {
-    var view = this,
-        files = [];
-    data.forEach(function (entry) {
-      var file = {
-        'id': entry.match(/id="fileref_(.*)\"/)[1],
-        'name': entry.match(/<td data-sort-value=\"(.*)\">/)[1],
-        'icon': entry.match(/alt=\"file-(.*?)\"/)[1],
-        'url': entry.match(/<a href=\"(.*?)\"/)[1].replace(/&amp;/g, '&').replace('sendfile.php?', 'sendfile.php?force_download=1&'),
-        'downloadable': '1'
-      };
-      files.push(file);
-    });
-    files = this.model.get('files').concat(files);
-    files.sort(function (a, b) {
-      return a['name'].localeCompare(b['name']);
-    });
-    this.model.set('files', files);
-    this.$el.html(Object(__WEBPACK_IMPORTED_MODULE_3_js_templates__["a" /* default */])('FolderBlock', 'student_view', _extends({}, this.model.attributes)));
-  },
+
+
+  // updateView(data) {
+  //   var view = this,
+  //       files = [];
+  //   data.forEach(function (entry) {
+  //     var file = {
+  //       'id': entry.match(/id="fileref_(.*)\"/)[1],
+  //       'name': entry.match(/<td data-sort-value=\"(.*)\">/)[1],
+  //       'icon': entry.match(/alt=\"file-(.*?)\"/)[1],
+  //       'url': entry.match(/<a href=\"(.*?)\"/)[1].replace(/&amp;/g,'&').replace('sendfile.php?', 'sendfile.php?force_download=1&'),
+  //       'downloadable': '1'
+  //     };
+  //     files.push(file);
+  //   });
+  //   files = this.model.get('files').concat(files);
+  //   files.sort(function (a,b) {
+  //     return a['name'].localeCompare(b['name'])
+  //   })
+  //   this.model.set('files', files);
+  //   this.$el.html(templates('FolderBlock', 'student_view', { ...this.model.attributes }));
+  // },
+
   triggerFileSelector: function triggerFileSelector() {
     this.$('.cw-folder-file-upload').click();
   },

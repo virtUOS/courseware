@@ -6344,6 +6344,9 @@ section#courseware .block-content:not([data-view="student"]) .select2-container 
 .cw-sidebar .FolderBlock .cw-upload-checkbox .cw-upload-label {
   margin-left: auto;
 }
+.documents.dummy-table {
+  display: none;
+}
 /* AssortBlock special */
 .assortblock-content div .cw-folder-upload {
   display: none;
@@ -9075,7 +9078,9 @@ section#courseware .PostBlock .cw-postblock-messagebox .button.cw-postblock-send
   cursor: pointer;
 }
 section#courseware.scrollyware ol.active-subchapter.stuck {
-  position: unset;
+  border: solid thin #ccc;
+  padding-left: 12px;
+  left: 0 !important;
 }
 section#courseware.scrollyware section.block.HtmlBlock,
 section#courseware.scrollyware section.block.TypewriterBlock {
