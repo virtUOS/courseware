@@ -87,6 +87,9 @@
         <input type="hidden" name="folder_title" value="{{folder_title}}" />
         <input type="hidden" name="allow_upload" value="{{allow_upload}}" />
         <input type="hidden" name="file_counter" value="{{{file_counter}}}" />
+
+        <table class="documents dummy-table">
+        </table>
     {{/viewable}}
     {{^viewable}}
         {{#no_folder}}
