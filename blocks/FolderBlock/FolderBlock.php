@@ -193,6 +193,44 @@ class FolderBlock extends Block
         return;
     }
 
+    public function reload_handler()
+    {
+        $user = $this->container['current_user'];
+        $files = array();
+        $folder_content = json_decode($this->folder_content);
+        $folder = \Folder::find($folder_content->folder_id);
+
+        if ($folder){
+            $typed_folder = $folder->getTypedFolder();
+            $folder_type = $typed_folder->folder_type;
+            if($typed_folder->isVisible($user->id)) {
+                $folder_name = $folder->name;
+
+                if($typed_folder->isReadable($user->id)) {
+                    $files = $this->showFiles($folder_content->folder_id);
+                    $homework_files = false;
+                } else {
+                    if($folder_type === 'HomeworkFolder') {
+                        foreach ($typed_folder->getFiles() as $file) {
+                            if($file->user_id == $user->id) {
+                                $homework_files['details'][] = array('name' => $file->name,
+                                'date' => strftime('%x %X', $file->chdate));
+                            }
+                        }
+                    }
+                    $files = array();
+                }
+                $allow_upload = ($folder_content->allow_upload && $typed_folder->isWritable($user->id));
+            }
+
+        }
+
+        return array(
+            'files' => $files,
+            'homework_files' => $homework_files
+        );
+    }
+
     private function showFiles($folder_id)
     {
         $folder = \Folder::find($folder_id);
@@ -206,14 +244,19 @@ class FolderBlock extends Block
         }
         foreach ($files as $item) {
             if($folder->folder_type === 'HomeworkFolder') {
-                $user = \User::find($item->user_id)->getFullname();
+               $user = \User::find($item->user_id);
+               if($user) {
+                   $user_name = $user->getFullname();
+               } else {
+                   $user_name = '';
+               }
             }
             $filesarray[] = array('id' => $item->getId(),
                             'name' => $item->getFilename(), 
                             'icon' => $this->getIcon($item->getId()), 
                             'url' => $this->getFileURL($item),
                             'downloadable' => $item->isDownloadable($GLOBALS['user']->id),
-                            'user' => $user);
+                            'user' => $user_name);
         }
         return $filesarray;
     }

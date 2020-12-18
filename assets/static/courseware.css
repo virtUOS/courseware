@@ -6388,6 +6388,9 @@ section#courseware .block-content:not([data-view="student"]) .select2-container 
 .cw-sidebar .FolderBlock .cw-upload-checkbox .cw-upload-label {
   margin-left: auto;
 }
+.documents.dummy-table {
+  display: none;
+}
 /* AssortBlock special */
 .assortblock-content div .cw-folder-upload {
   display: none;
@@ -9119,7 +9122,9 @@ section#courseware .PostBlock .cw-postblock-messagebox .button.cw-postblock-send
   cursor: pointer;
 }
 section#courseware.scrollyware ol.active-subchapter.stuck {
-  position: unset;
+  border: solid thin #ccc;
+  padding-left: 12px;
+  left: 0 !important;
 }
 section#courseware.scrollyware section.block.HtmlBlock,
 section#courseware.scrollyware section.block.TypewriterBlock {
@@ -9580,6 +9585,12 @@ section#courseware .aside-section section.block {
   line-height: 20px;
   display: block;
   margin-bottom: 3em;
+}
+section#courseware .active-section section.block .cke,
+section#courseware .aside-section section.block .cke,
+section#courseware .active-section section.block .cktoolbar,
+section#courseware .aside-section section.block .cktoolbar {
+  width: 100% !important;
 }
 section#courseware .active-section section.block::before,
 section#courseware .aside-section section.block::before {
@@ -11891,6 +11902,10 @@ section#courseware.view-student .aside-section .no-content {
 }
 section.TestBlock div.description {
   margin-bottom: 20px;
+}
+section.TestBlock .cke,
+section.TestBlock .cktoolbar {
+  width: 100% !important;
 }
 .question_title {
   font-size: 12pt;

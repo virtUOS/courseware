@@ -6,7 +6,7 @@ import templates from 'js/templates'
 export default StudentView.extend({
   events: {
     'click button[name=upload]': 'fileUpload',
-    'click button[name=Speichern]': 'saveLicenses',
+    'click button.button[type=submit]': 'saveLicenses',
     'click a.cancel.button': 'cancelLicenses',
     'click button[name=unzip]': 'unzipFile',
     'click button[name=dontunzip]': 'dontunzipFile',
@@ -29,6 +29,14 @@ export default StudentView.extend({
       this.$('.cw-folder-title').hide();
       this.$('.cw-folder').hide();
     }
+    let dummy = this.$('.documents.dummy-table').get(0);
+    if (dummy) {
+      dummy.config = {};
+      dummy.config.sortList = {};
+    }
+    STUDIP.Files.filesapp = {};
+    STUDIP.Files.filesapp.files = {};
+    STUDIP.Files.filesapp.files = [];
   },
 
   fileUpload() {
@@ -37,7 +45,7 @@ export default StudentView.extend({
         folder_id = this.$('input[name="folder_id"]').val(),
         data = new FormData(),
         view = this;
-    
+
     $.each(filelist, function (index, file) {
       if (STUDIP.Files.validateUpload(file)) {
         data.append('file[]', file, file.name);
@@ -46,7 +54,7 @@ export default StudentView.extend({
         alert(file.name + 'ist zu groß oder hat eine nicht erlaubte Endung.')
       }
     });
-    
+
     if(files > 0) {
       this.setupModel();
       $.get(STUDIP.URLHelper.getURL('dispatch.php/file/upload_window'), function (data) {
@@ -77,19 +85,22 @@ export default StudentView.extend({
         }
       }).done(function (json) {
         view.$('.file_upload_window .uploadbar').css('background-size', '100% 100%');
-        
         if (json.redirect) {
           $.get(json.redirect,function (data) {
             view.$el.find('.cw-folder').html(data);
           })
-        } else {
-          view.$('.errorbox').show().html(json.message)
-          view.$('.file_upload_window .uploadbar').hide()
+        } 
+        if(json.message) {
+          view.$('.errorbox').show().html(json.message);
+          view.$('.file_upload_window .uploadbar').hide();
+        }
+        if(json.added_files) {
+          view.reloadFiles();
         }
       });
     }
   },
-  
+
   unzipFile(event) {
     event.preventDefault();
     this.unzipEvent(true);
@@ -133,6 +144,20 @@ export default StudentView.extend({
     return files;
   },
 
+  reloadFiles() {
+    let view = this;
+    helper
+      .callHandler(this.model.id, 'reload', { })
+      .then(function (response) {
+        view.model.set('files', response.files);
+        view.model.set('homework_files', response.homework_files);
+        view.$el.html(templates('FolderBlock', 'student_view', { ...view.model.attributes }));
+        view.postRender();
+      }).catch(function (error) {
+        console.log(error);
+      });
+  },
+
   unzipEvent(unzip) {
     var data = new FormData(),
         form = this.$('form')[0],
@@ -162,7 +187,7 @@ export default StudentView.extend({
     $('form input[name="file_refs[]"]').each(function () {
       data.append('file_refs[]', this.value)
     })
-    
+
     data.append('content_terms_of_use_id', set_license ? this.$('input[name="content_terms_of_use_id"]:checked').val() : 'UNDEF_LICENSE')
     $.ajax({
       type: 'POST',
@@ -172,30 +197,31 @@ export default StudentView.extend({
       contentType: false,
       processData: false
     }).done(function (data) {
-      view.updateView(data['html']);
+      view.reloadFiles();
+      //view.updateView(data['html']);
     });
   },
 
-  updateView(data) {
-    var view = this,
-        files = [];
-    data.forEach(function (entry) {
-      var file = {
-        'id': entry.match(/id="fileref_(.*)\"/)[1],
-        'name': entry.match(/<td data-sort-value=\"(.*)\">/)[1],
-        'icon': entry.match(/alt=\"file-(.*?)\"/)[1],
-        'url': entry.match(/<a href=\"(.*?)\"/)[1].replace(/&amp;/g,'&').replace('sendfile.php?', 'sendfile.php?force_download=1&'),
-        'downloadable': '1'
-      };
-      files.push(file);
-    });
-    files = this.model.get('files').concat(files);
-    files.sort(function (a,b) {
-      return a['name'].localeCompare(b['name'])
-    })
-    this.model.set('files', files);
-    this.$el.html(templates('FolderBlock', 'student_view', { ...this.model.attributes }));
-  },
+  // updateView(data) {
+  //   var view = this,
+  //       files = [];
+  //   data.forEach(function (entry) {
+  //     var file = {
+  //       'id': entry.match(/id="fileref_(.*)\"/)[1],
+  //       'name': entry.match(/<td data-sort-value=\"(.*)\">/)[1],
+  //       'icon': entry.match(/alt=\"file-(.*?)\"/)[1],
+  //       'url': entry.match(/<a href=\"(.*?)\"/)[1].replace(/&amp;/g,'&').replace('sendfile.php?', 'sendfile.php?force_download=1&'),
+  //       'downloadable': '1'
+  //     };
+  //     files.push(file);
+  //   });
+  //   files = this.model.get('files').concat(files);
+  //   files.sort(function (a,b) {
+  //     return a['name'].localeCompare(b['name'])
+  //   })
+  //   this.model.set('files', files);
+  //   this.$el.html(templates('FolderBlock', 'student_view', { ...this.model.attributes }));
+  // },
 
   triggerFileSelector() {
     this.$('.cw-folder-file-upload').click();
