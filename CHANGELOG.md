@@ -1,5 +1,38 @@
 CHANGELOG
 =========
+4.7.4
+-----
+* fix FolderBlock upload issues
+* fix cke layout issue
+* add i18n for metadata
+* update highlight.js
+* update i18n
+* fix Courseware Observer
+* disable uglifyer 
+
+4.7.3
+-----
+fix some issues:
+* if vips is not installed
+* import custom section icons
+* CanvasBlock too many requests
+* Layout DialogCardsBlock
+* user migration
+* import IAV
+
+4.7.1
+-----
+* fix layout for empty chapters and subchapters
+* add download attribute to download links in download-block and folder-block
+* this release contains all features as 4.8.1 for Stud.IP 4.6
+
+4.7.0
+-----
+* individual read permissions for users and groups
+* ready for vips 1.7
+* files created in Courseware get correct licence type
+* some minor fixes
+
 
 4.6.1
 -----
