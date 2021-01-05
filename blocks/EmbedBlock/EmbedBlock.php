@@ -31,7 +31,7 @@ class EmbedBlock extends Block
             return array('inactive' => true);
         }
         if(($this->embed_source == '')||($this->embed_url == '')) {
-            return array('oembed' => false, 'empty' => true, isAuthor => $this->getUpdateAuthorization());
+            return array('oembed' => false, 'empty' => true, 'isAuthor' => $this->getUpdateAuthorization());
         }
         $this->setGrade(1.0);
         $json_url = $this->build_request($this->embed_source, $this->embed_url);
@@ -40,10 +40,10 @@ class EmbedBlock extends Block
         }
         $request = $this->curl_get($json_url);
         if($request == 'Unauthorized') {
-            return array('oembed' => false, 'unauthorized' => true, isAuthor => $this->getUpdateAuthorization());
+            return array('oembed' => false, 'unauthorized' => true, 'isAuthor' => $this->getUpdateAuthorization());
         }
         if($request == 'Not Found') {
-            return array('oembed' => false, 'not_found' => true, isAuthor => $this->getUpdateAuthorization());
+            return array('oembed' => false, 'not_found' => true, 'isAuthor' => $this->getUpdateAuthorization());
         }
         $oembed = json_decode($request);
         $img_class = 'cw-embedblock-image';
