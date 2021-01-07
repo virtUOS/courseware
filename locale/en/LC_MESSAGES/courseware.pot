@@ -137,7 +137,7 @@ msgstr ""
 msgid "Aufnahme starten"
 msgstr ""
 
-msgid "Aufnahme widerholen"
+msgid "Aufnahme wiederholen"
 msgstr ""
 
 msgid "Autoplay"

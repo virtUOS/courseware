@@ -121,7 +121,7 @@ msgstr "store recording"
 msgid "Aufnahme starten"
 msgstr "start recording"
 
-msgid "Aufnahme widerholen"
+msgid "Aufnahme wiederholen"
 msgstr "restart recording"
 
 msgid "Autoplay"
