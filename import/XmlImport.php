@@ -207,7 +207,7 @@ class XmlImport implements ImportInterface
             }
         }
 
-        $uiSection->set_icon_handler(array('icon'=> $node->getAttribute('icon')));
+        $uiSection->set_icon_handler(array('icon'=> $node->getAttribute('icon')), true);
 
         $uiSection->save();
     }
@@ -276,7 +276,7 @@ class XmlImport implements ImportInterface
         /** @var \Mooc\UI\Block $uiBlock */
         $uiBlock = $this->blockFactory->makeBlock($block);
 
-        if (gettype($uiBlock) != 'object') { 
+        if (gettype($uiBlock) != 'object') {
             $block->delete();
 
             return false;
@@ -306,7 +306,7 @@ class XmlImport implements ImportInterface
         } else {
             $uiBlock->importContents(trim($node->textContent), $files);
         }
-        
+
         return true;
     }
 

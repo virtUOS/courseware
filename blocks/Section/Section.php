@@ -95,7 +95,7 @@ class Section extends Block
                 $json = $child->toJSON();
                 $json['block_content'] = $child->render('student', $context);
                 $json['view_name'] = 'student';
-                
+
                 if (!$child->getModel()->isVisible()) {
                     $json['invisible'] = true;
                 } else  {
@@ -118,7 +118,7 @@ class Section extends Block
         $content_block_types_favorite = $block_types['favorite_blocks'];
 
         return compact(
-            'blocks', 
+            'blocks',
             'content_block_types_function',
             'content_block_types_interaction',
             'content_block_types_layout',
@@ -126,7 +126,7 @@ class Section extends Block
             'content_block_types_all',
             'content_block_types_favorite',
             'icon',
-            'title', 
+            'title',
             'visited',
             'can_update'
         );
@@ -216,9 +216,9 @@ class Section extends Block
         return;
     }
 
-    public function set_icon_handler($data)
+    public function set_icon_handler($data, $import = false)
     {
-        if (!$this->container['current_user']->canUpdate($this)) {
+        if (!$import && !$this->container['current_user']->canUpdate($this)) {
             throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
         }
         $this->custom_icon = true;
@@ -343,7 +343,7 @@ class Section extends Block
             if (!class_exists($className)) {
                 continue;
             }
-            
+
             if ($type == 'EvaluationBlock') {
                 continue;
             }
