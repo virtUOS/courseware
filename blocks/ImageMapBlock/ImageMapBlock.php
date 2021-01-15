@@ -4,7 +4,7 @@ namespace Mooc\UI\ImageMapBlock;
 use Mooc\UI\Block;
 use Mooc\DB\Block as DBBlock;
 
-class ImageMapBlock extends Block 
+class ImageMapBlock extends Block
 {
     const NAME = 'Verweissensitive Grafik';
     const BLOCK_CLASS = 'interaction';
@@ -61,7 +61,7 @@ class ImageMapBlock extends Block
             $other_user_file = false;
         }
 
-        
+
         $file = \FileRef::find($content->image_id);
         if ($file) {
            $image_url = $file->getDownloadURL();
@@ -77,14 +77,14 @@ class ImageMapBlock extends Block
         $inotherchapters= $this->getOtherSubchapters();
 
         return array_merge($this->getAttrArray(), array(
-            'image_files_user'      => $files_arr['userfilesarray'], 
-            'image_files_course'    => $files_arr['coursefilesarray'], 
-            'no_image_files'        => $no_files, 
+            'image_files_user'      => $files_arr['userfilesarray'],
+            'image_files_course'    => $files_arr['coursefilesarray'],
+            'no_image_files'        => $no_files,
             'other_user_file'       => $other_user_file,
             'image_url'             => $image_url,
-            'inthischapter'         => $inthischapter, 
+            'inthischapter'         => $inthischapter,
             'inotherchapters'       => $inotherchapters,
-            'hasinternal'           => $hasinternal, 
+            'hasinternal'           => $hasinternal,
             'hasnext'               => $this->getTargetId("next")['id'] != null,
             'hasprev'               => $this->getTargetId("prev")['id'] != null
         ));
@@ -101,7 +101,7 @@ class ImageMapBlock extends Block
         return array('image_url' => $image_url);
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'image_map_content' => $this->image_map_content
@@ -188,7 +188,7 @@ class ImageMapBlock extends Block
         }
 
         foreach($allchapters as $key => $chapter) {
-            if ($key == $this_chapter_pos) { 
+            if ($key == $this_chapter_pos) {
                 continue;
             }
             $relativ_chapter_pos = $key - $this_chapter_pos;
@@ -196,7 +196,7 @@ class ImageMapBlock extends Block
             $i = 0;
             foreach ($subchapters as $subchapter) {
                 array_push($inotherchapters, array(
-                    'value' => 'other_cpos'.$relativ_chapter_pos.'_item'.$i, 
+                    'value' => 'other_cpos'.$relativ_chapter_pos.'_item'.$i,
                     'title' => $chapter->title.' -> '.$subchapter->title
                 ));
                 $i++;
@@ -212,7 +212,7 @@ class ImageMapBlock extends Block
 
         if (isset ($data['image_map_content'])) {
             $this->image_map_content = (string) $data['image_map_content'];
-        } 
+        }
 
         return;
     }
@@ -344,12 +344,15 @@ class ImageMapBlock extends Block
     {
         $content = json_decode($this->image_map_content);
 
-        foreach($files as $file){
+        foreach ($files as $file) {
             if ($file->name == '') {
                 continue;
             }
-            if($content->image_name == $file->name) {
+
+            if ($content->image_name == $file->name) {
                 $content->image_id = $file->id;
+
+                $this->image_map_content = json_encode($content);
                 $this->save();
 
                 return array($file->id);

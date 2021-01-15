@@ -725,8 +725,11 @@ class BlockManagerController extends CoursewareStudipController
                             if (count($properties) > 0) {
                                 $uiBlock->importProperties($properties);
                             }
-                            if (is_array($uiBlock->importContents(trim($block_node->textContent), $files))) {
-                                $used_files = array_merge($used_files, $uiBlock->importContents(trim($block_node->textContent), $files));
+
+                            $import_files = $uiBlock->importContents(trim($block_node->textContent), $files);
+
+                            if (is_array($import_files)) {
+                                $used_files = array_merge($used_files, $import_files);
                             }
                         }
                     }
