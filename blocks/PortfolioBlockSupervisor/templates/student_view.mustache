@@ -1,0 +1,36 @@
+{{#show_note}}
+    <div style="border-left: 3px solid #cccccc; padding-left: 20px;" class="eportfolio-note-header">
+
+        <div class="header-left">
+            <h3>Notiz für Dozent*innen</h3>
+        </div>
+
+        <div class="header-right">
+            <div id="eportfolioblock-block" class="eportfolio-note-header-icon">
+
+            </div>
+        </div>
+
+        <div class="" style="clear:both;"></div>
+
+
+        {{^supervisor}}
+            <div class="eportfolioBlock">{{{content}}}</div>
+            <h4>Feedback:</h4>
+            <div class="eportfolioBlock ePortfolioContentSupervisor">{{{supervisorcontent}}}</div>
+        {{/supervisor}}
+        {{#supervisor}}
+            <div class="eportfolioBlock ePortfolioContent">{{{content}}}</div>
+
+            {{#supervisorcontentstored}}
+                <div class="messagebox messagebox_success supervisorcontentstored">Notiz gespeichert</div>
+            {{/supervisorcontentstored}}
+
+            <textarea class="add_toolbar wysiwyg"
+                name=supervisorcontent
+                placeholder="Geben Sie hier Ihren Text ein">{{{supervisorcontent}}}</textarea>
+            <div class="cw-button-box">
+            <button name=save class=button>Speichern</button>
+        {{/supervisor}}
+    </div>
+{{/show_note}}
