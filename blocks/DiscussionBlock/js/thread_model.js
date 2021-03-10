@@ -20,7 +20,7 @@ export default Backbone.Model.extend({
     var self = this;
 
     return helper.ajax({
-      url: window.STUDIP.ABSOLUTE_URI_STUDIP + 'plugins.php/blubber/streams/more_comments',
+      url: STUDIP.ABSOLUTE_URI_STUDIP + "api.php/blubber/threads/" + this.id,
       data: {
         thread_id: this.id,
         cid: this.get('courseid'),
@@ -29,11 +29,11 @@ export default Backbone.Model.extend({
       dataType: 'json',
       type: 'GET'
     }).then(function (response) {
-      var comments = _(response.comments).chain().pluck('content').map(transformComment).value();
+      var comments = _(response.comments).chain().pluck('content').value();
 
       self.set({
         '$loading': false,
-        'comments': comments.reverse()
+        'comments': comments
       });
     }).catch(function (error) {
       self.set('$error', error);
@@ -42,6 +42,6 @@ export default Backbone.Model.extend({
   },
 
   addComment(comment) {
-    this.set('comments', [ ...this.get('comments'), transformComment(comment)]);
+    this.set('comments', [ ...this.get('comments'), comment]);
   }
 });

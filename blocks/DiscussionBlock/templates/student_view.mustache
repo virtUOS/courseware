@@ -1,7 +1,7 @@
 {{^inactive_block}}
     {{^inactive}}
       {{#threads}}
-        <article class="thread loading" id="{{thread.topic_id}}" data-courseid="{{cid}}">
+        <article class="thread loading" id="{{thread.thread_id}}" data-courseid="{{cid}}">
           <header>
             <a href="javascript:void(0)">
               <h1>{{thread.description}}</h1>
@@ -16,15 +16,15 @@
         {{/isNobody}}
         </article>
       {{/threads}}
-    
+
       {{^threads}}
         <div class="messagebox messagebox_success">
           Sie wurden noch keiner Gruppe zugeordnet. Bitte wenden Sie sich an Ihren Dozenten.
         </div>
       {{/threads}}
-    
+
     {{/inactive}}
-    
+
     {{#inactive}}
     <div class="messagebox messagebox_info">
         {{#i18n}}Für diesen Diskussionsblock muss "Blubber" in dieser Veranstaltung eingeschaltet werden..{{/i18n}}

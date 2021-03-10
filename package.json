@@ -43,6 +43,5 @@
     "locales": "php buildLocales.php",
     "prezip": "npm run build:prod",
     "zip": "zip -r courseware-v$npm_package_version.zip assets blocks controllers cronjobs export import locale migrations models vendor views LICENSE Courseware.php CoursewareObserver.php plugin.manifest README.md"
-  },
-  "dependencies": {}
+  }
 }

@@ -81,7 +81,7 @@ export default StudentView.extend({
       if (files > 0) {
         jQuery(textarea).addClass('uploading');
         jQuery.ajax({
-          'url': window.STUDIP.ABSOLUTE_URI_STUDIP + 'plugins.php/blubber/streams'
+          'url': window.STUDIP.ABSOLUTE_URI_STUDIP + 'api.php/blubber/threads/'
             + '/post_files?context=' + context_id
             + '&context_type=' + context_type
             + (context_type === 'course' ? '&cid=' + context_id : ''),
@@ -146,8 +146,9 @@ export default StudentView.extend({
     $textarea.val('');
 
     helper.ajax({
-      url: window.STUDIP.ABSOLUTE_URI_STUDIP + 'plugins.php/blubber/streams/comment',
+      url: window.STUDIP.ABSOLUTE_URI_STUDIP + 'api.php/blubber/threads/' + thread_id + '/comments',
       data: {
+        cid:      courseid,
         context:      courseid,
         context_type: 'course',
         thread:       thread_id,
