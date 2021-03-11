@@ -9,30 +9,40 @@ export default Backbone.Model.extend({
     fetchComments() {
         var self = this;
         let content = "";
-        STUDIP.jsonapi.GET(`blubber-threads/${this.id}/comments `).done((thread) => {
-            if (thread.data.length) {
-                $.each(thread.data, function (i, comment) {
-                    STUDIP.jsonapi.GET(`users/${comment.relationships.author.data.id}`).done((user) => {
-                        content += "<li>";
-                        content += "<p><strong>" + user.data.attributes['formatted-name'] + "</strong></p>";
-                        content += comment.attributes['content-html'];
-                        content += "</li>";
-                        self.set({
-                            '$loading': false,
-                            'comments': content
+        $.ajax({
+            url: STUDIP.ABSOLUTE_URI_STUDIP + `jsonapi.php/v1/blubber-threads/${this.id}/comments`,
+            type: 'GET',
+            success: thread => {
+                if (thread.data.length) {
+                    $.each(thread.data, function (i, comment) {
+                        $.ajax({
+                            url: STUDIP.ABSOLUTE_URI_STUDIP + `jsonapi.php/v1/users/${comment.relationships.author.data.id}`,
+                            type: 'GET',
+                            success: user => {
+                                content += "<li>";
+                                content += "<p><strong>" + user.data.attributes['formatted-name'] + "</strong></p>";
+                                content += comment.attributes['content-html'];
+                                content += "</li>";
+                                self.set({
+                                    '$loading': false,
+                                    'comments': content
+                                });
+                            },
+                            error: error => {
+                                console.log(error);
+                            }
                         });
-                    }).catch(function (error) {
-                        console.log(error);
+                    })
+                } else {
+                    self.set({
+                        '$loading': false,
+                        'comments': content
                     });
-                })
-            } else {
-                self.set({
-                    '$loading': false,
-                    'comments': content
-                });
+                }
+            },
+            error: error => {
+                console.log(error);
             }
-        }).catch(function (error) {
-            console.log(error);
         });
     },
 

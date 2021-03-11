@@ -86,41 +86,47 @@ export default StudentView.extend({
         this.alreadyWriting = true;
         $textarea.val('');
 
-        STUDIP.jsonapi.POST(`blubber-threads/${thread_id}/comments`, {
-            data: {
+
+        $.ajax({
+            url: STUDIP.ABSOLUTE_URI_STUDIP + `jsonapi.php/v1/blubber-threads/${thread_id}/comments`,
+            type: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
                 data: {
                     attributes: {
                         content: comment,
                     }
                 }
-            }
-        }).done((comment) => {
-            var content = "<li>";
-            self.alreadyWriting = false;
-            STUDIP.jsonapi.GET(`users/${comment.data.relationships.author.data.id}`).done((user) => {
-                content += "<p><strong>" + user.data.attributes['formatted-name'] + "</strong></p>";
-                content += comment.data.attributes['content-html'];
-                content += "</li>";
-                var thread = self.threads.findWhere({id: thread_id});
-                thread.addComment(content);
-            }).catch(function (error) {
+            }),
+            success: comment => {
+                var content = "<li>";
+                self.alreadyWriting = false;
+                $.ajax({
+                    url: STUDIP.ABSOLUTE_URI_STUDIP + `jsonapi.php/v1/users/${comment.data.relationships.author.data.id}`,
+                    type: 'GET',
+                    success: user => {
+                        content += "<p><strong>" + user.data.attributes['formatted-name'] + "</strong></p>";
+                        content += comment.data.attributes['content-html'];
+                        content += "</li>";
+                        var thread = self.threads.findWhere({id: thread_id});
+                        thread.addComment(content);
+                    },
+                    error: error => {
+                        console.log(error);
+                    }
+                });
+            },
+            error: error => {
+                self.alreadyWriting = false;
+                $textarea.val(comment);
+        
                 console.log(error);
-            });
+                alert('Could not send comment');
+            }
+        });
 
-        }).catch(function (error) {
-            self.alreadyWriting = false;
-            $textarea.val(comment);
-
-            console.log(error)
-            debugger
-
-            var errorMessage = [
-                'Could not send comment:',
-                jQuery.parseJSON(error.responseText).reason
-            ].join('');
-            alert(errorMessage);
-            console.log(errorMessage, arguments);
-        })
     },
 
     expandOrCollapseThread(event) {
