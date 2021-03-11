@@ -62,7 +62,6 @@ class Courseware extends Block
         /** @var \Mooc\DB\Block $chapter */
         /** @var \Mooc\DB\Block $subchapter */
         $tree = $this->getPrunedChapterNodes(list($courseware, $chapter, $subchapter, $section) = $this->getSelectedPath($lastSelected));
-
         $active_section = array();
         $user_can_edit_section = false;
         if ($section && $this->getCurrentUser()->canRead($section)) {
@@ -115,6 +114,7 @@ class Courseware extends Block
         } else {
             $vips_url = false;
         }
+
 
 
         return array_merge($tree, array(

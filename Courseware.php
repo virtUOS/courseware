@@ -411,9 +411,12 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         //        ist definitiv falsch.
         $courseware = $this->container['current_courseware'];
 
+
         // hide blubber tab if the discussion block is active
         if ($courseware->getDiscussionBlockActivation()) {
-            Navigation::removeItem('/course/blubberforum');
+            if (mb_stripos(get_route(), 'api.php/blubber') === false) {
+                Navigation::removeItem('/course/blubber');
+            }
         }
 
         // deactivate Vips-Plugin for students if this course is capture by the mooc-plugin

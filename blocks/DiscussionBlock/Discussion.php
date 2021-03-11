@@ -32,7 +32,7 @@ abstract class Discussion
 
     private function findOrCreateBlubberThread()
     {
-        if (!$thread = \BlubberPosting::find($this->generateMD5())) {
+        if (!$thread = \BlubberThread::find($this->generateMD5())) {
             $thread = $this->createBlubberThread();
         }
 
@@ -43,16 +43,16 @@ abstract class Discussion
     private function createBlubberThread()
     {
         $thread_id = $this->generateMD5();
-        $thread = new \BlubberPosting($thread_id);
+        $thread = new \BlubberThread($thread_id);
 
         $data = array(
             'context_type' => 'course',
-            'root_id'      => $thread_id,
-            'parent_id'    => 0,
-            'seminar_id'   => $this->cid,
+            'thread_id'      => $thread_id,
+            //'parent_id'    => 0,
+            'context_id'   => $this->cid,
             'user_id'      => $this->user->id,
-            'name'         => $this->getDefaultName(),
-            'description'  => $this->getDefaultDescription()
+            //'name'         => $this->getDefaultName(),
+            //'description'  => $this->getDefaultDescription()
         );
         array_walk($data, function ($val, $key) use ($thread) { $thread[$key] = $val; });
 
