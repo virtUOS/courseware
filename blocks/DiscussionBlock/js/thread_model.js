@@ -10,7 +10,7 @@ export default Backbone.Model.extend({
         var self = this;
         let content = "";
         STUDIP.jsonapi.GET(`blubber-threads/${this.id}/comments `).done((thread) => {
-            if (thread) {
+            if (thread.data.length) {
                 $.each(thread.data, function (i, comment) {
                     STUDIP.jsonapi.GET(`users/${comment.relationships.author.data.id}`).done((user) => {
                         content += "<li>";
@@ -25,6 +25,11 @@ export default Backbone.Model.extend({
                         console.log(error);
                     });
                 })
+            } else {
+                self.set({
+                    '$loading': false,
+                    'comments': content
+                });
             }
         }).catch(function (error) {
             console.log(error);

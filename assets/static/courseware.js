@@ -33341,7 +33341,7 @@ module.exports = hljs;
         var self = this;
         var content = "";
         STUDIP.jsonapi.GET('blubber-threads/' + this.id + '/comments ').done(function (thread) {
-            if (thread) {
+            if (thread.data.length) {
                 __WEBPACK_IMPORTED_MODULE_1_jquery___default.a.each(thread.data, function (i, comment) {
                     STUDIP.jsonapi.GET('users/' + comment.relationships.author.data.id).done(function (user) {
                         content += "<li>";
@@ -33355,6 +33355,11 @@ module.exports = hljs;
                     }).catch(function (error) {
                         console.log(error);
                     });
+                });
+            } else {
+                self.set({
+                    '$loading': false,
+                    'comments': content
                 });
             }
         }).catch(function (error) {
