@@ -91,7 +91,7 @@ export default StudentView.extend({
             url: STUDIP.ABSOLUTE_URI_STUDIP + `jsonapi.php/v1/blubber-threads/${thread_id}/comments`,
             type: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/vnd.api+json'
             },
             data: JSON.stringify({
                 data: {
