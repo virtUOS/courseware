@@ -5,7 +5,7 @@ import helper from 'js/url'
 export default StudentView.extend({
     events: {
     },
-   
+
     initialize() { },
 
     render() {
@@ -13,8 +13,8 @@ export default StudentView.extend({
     },
 
     postRender() {
-        if (typeof PDFJS === 'undefined') {
-            console.log("ERROR: PDFJS not found!");
+        if (typeof pdfjsLib === 'undefined') {
+            console.log("ERROR: pdfjsLib not found!");
             return;
         }
 
@@ -26,20 +26,18 @@ export default StudentView.extend({
             return;
         }
 
-        PDFJS.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
         var pdfDoc = null,
             pageNum = 1,
             pageRendering = false,
             pageNumPending = null,
             scale = 2,
-            canvas = document.getElementById('the-canvas'),
             canvas = $view.$('.cw-pdf-canvas')[0],
             ctx = canvas.getContext('2d');
 
         function renderPage(num) {
             pageRendering = true;
             pdfDoc.getPage(num).then(function(page) {
-                var viewport = page.getViewport(scale);
+                var viewport = page.getViewport({ scale });
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
 
@@ -75,7 +73,7 @@ export default StudentView.extend({
             }
             pageNum--;
             queueRenderPage(pageNum);
-            if(pageNum > 1) { 
+            if(pageNum > 1) {
                 $view.$(".cw-pdf-button-prev").prop('title', 'Seite '+(pageNum-1));
             }
             else {
@@ -90,11 +88,11 @@ export default StudentView.extend({
           }
           pageNum++;
           queueRenderPage(pageNum);
-            if (pageNum < pdfDoc.numPages) { 
-                $view.$(".cw-pdf-button-next").prop('title', 'Seite '+(pageNum+1)); 
+            if (pageNum < pdfDoc.numPages) {
+                $view.$(".cw-pdf-button-next").prop('title', 'Seite '+(pageNum+1));
             }
-            else { 
-              $view.$(".cw-pdf-button-next").prop('title', ''); 
+            else {
+              $view.$(".cw-pdf-button-next").prop('title', '');
             }
             $view.$(".cw-pdf-button-prev").prop('title', 'Seite '+(pageNum-1));
         }
@@ -104,7 +102,7 @@ export default StudentView.extend({
                 return;
             }
             var key = e.key || e.keyCode;
-            if(key === 'ArrowRight' || key === 37) { 
+            if(key === 'ArrowRight' || key === 37) {
                 prevPage();
             }
             if(key === 'ArrowLeft' || key === 38) {
@@ -120,7 +118,7 @@ export default StudentView.extend({
             prevPage();
         });
 
-        PDFJS.getDocument(url).then(function(pdfDoc_) {
+        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
             pdfDoc = pdfDoc_;
             $view.$(".cw-pdf-page-count").html(pdfDoc.numPages);
             renderPage(pageNum);
