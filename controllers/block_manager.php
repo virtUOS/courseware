@@ -561,7 +561,7 @@ class BlockManagerController extends CoursewareStudipController
                                 $remote_file = FileRef::find($file['id']);
 
                                 if ($remote_file != null) {
-                                    $file = FileManager::copyFileRef($remote_file, $import_folder, \User::findCurrent());
+                                    $file = FileManager::copyFile($remote_file->getFiletype(), $import_folder, \User::findCurrent());
 
                                 }
                             }
