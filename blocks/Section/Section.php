@@ -4,6 +4,7 @@ namespace Mooc\UI\Section;
 
 use Mooc\UI\Block;
 use Mooc\UI\Errors\BadRequest;
+use Mooc\UI\Errors\AccessDenied;
 use Mooc\UI\Courseware\Courseware;
 
 /**
@@ -135,7 +136,7 @@ class Section extends Block
     public function add_content_block_handler($data)
     {
         if (!$this->container['current_user']->canCreate($this)) {
-            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt Blöcke anzulegen.'));
+            throw new AccessDenied(_cw('Sie sind nicht berechtigt Blöcke anzulegen.'));
         }
 
         if (!isset($data['type'])) {
@@ -180,7 +181,7 @@ class Section extends Block
     public function remove_content_block_handler($data)
     {
         if (!$this->container['current_user']->canUpdate($this)) {
-            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt Blöcke zu löschen.'));
+            throw new AccessDenied(_cw('Sie sind nicht berechtigt Blöcke zu löschen.'));
         }
 
         if (!isset($data['child_id'])) {
@@ -204,7 +205,7 @@ class Section extends Block
     public function add_favorites_handler($data)
     {
         if (!$this->container['current_user']->canUpdate($this)) {
-            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
+            throw new AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
         }
         if (!isset($data['favorites'])) {
             throw new BadRequest('Type required.');
@@ -219,7 +220,7 @@ class Section extends Block
     public function set_icon_handler($data)
     {
         if (!$this->container['current_user']->canUpdate($this)) {
-            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
+            throw new AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
         }
         $this->custom_icon = true;
         if (in_array($data['icon'], $this->allowed_icons())) {
@@ -239,7 +240,7 @@ class Section extends Block
     public function visibility_handler($data)
     {
         if (!$this->container['current_user']->canUpdate($this)) {
-            throw new Errors\AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
+            throw new AccessDenied(_cw('Sie sind nicht berechtigt diese Änderung vorzunehmen.'));
         }
         $child = $this->_model->children->findOneBy('id', (int) $data['block_id']); //Mooc\DB\Block
 
