@@ -13,12 +13,10 @@ section.TestBlock {
 
 .question_title {
     font-size: 12pt;
-    margin-left: 0.25em;
 }
 
 .question_description {
     padding: 1em 0 1em 0;
-    margin-left: 0.5em;
 }
 
 ul.exercise {
@@ -28,10 +26,6 @@ ul.exercise {
 
     li.exercise-item {
         border: solid thin #ccc;
-    }
-
-    .cw-test-content {
-        padding: 10px;
     }
 
     &:not(#exercise1) {
@@ -45,7 +39,7 @@ ul.exercise {
         border: none;
         border-bottom: solid thin #ccc;
         
-        .exercisenavbutton{
+        .exercisenavbutton {
             position: absolute;
             border: none;
             height: 20px;
@@ -68,7 +62,7 @@ ul.exercise {
     }
 
     .cw-test-content {
-        padding: 0 10px;
+        padding: 10px;
 
         .exercise-title {
             text-align: center;
@@ -81,17 +75,16 @@ ul.exercise {
           font-weight: 400;
         }
 
-        .answer, label {
+        .answer, label:not(.undecorated) {
             font-size: 14px;
             font-weight: normal;
-            line-height: 32px;
-            padding-left: 7px;
+            margin-top: 1.5ex;
             text-transform: none;
             display: block;
         }
 
-        .label_text{
-            margin-left: 7px;
+        .label_text, .label-text {
+            margin-top: 1.5ex;
         }
 
         select {
@@ -104,7 +97,7 @@ ul.exercise {
 
         p img {
           margin-top: 12px;
-          margin-bttom: 12px;
+          margin-bottom: 12px;
         }
 
         textarea {
@@ -297,8 +290,6 @@ ul.exercise {
             font-weight: 600;
         }
 
-        p {
-        }
     }
 
 }

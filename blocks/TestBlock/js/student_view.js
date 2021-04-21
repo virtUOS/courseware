@@ -221,7 +221,7 @@ export default StudentView.extend({
                     jQuery(this).removeClass('hover');
                 },
                 receive: function(event, ui) {
-                    var sortable = jQuery(this);
+                    var sortable = jQuery(this).not('.multiple');
                     var container = sortable.closest('tbody').find('.answer_container');
         
                     // default answer container can have more items
@@ -236,6 +236,42 @@ export default StudentView.extend({
                     }
                 }
             });
+            this.$('.cloze_item').draggable({
+                revert: 'invalid'
+            });
+
+            this.$('.cloze_drop').droppable({
+                accept: '.cloze_item',
+                tolerance: 'pointer',
+                classes: {
+                    'ui-droppable-hover': 'hover'
+                },
+                drop: function(event, ui) {
+                    var container = jQuery(this).closest('fieldset').find('.cloze_items');
+
+                    if (!jQuery(this).is(container)) {
+                        jQuery(this).find('.cloze_item').detach().appendTo(container)
+                        .css('opacity', 0).animate({opacity: 1})
+                    }
+
+                    ui.draggable.closest('.cloze_drop').find('input').val('');
+                    ui.draggable.detach().css({top: 0, left: 0}).appendTo(this);
+                    jQuery(this).find('input').val(ui.draggable.text());
+                }
+            });
+
+            $('.vips_tabs').each(function() {
+                if ($(this).hasClass('edit-hidden')) {
+                    jQuery(this).tabs({
+                        active: 1
+                     });
+                } else {
+                    jQuery(this).tabs({
+                        active: 0
+                     });
+                 
+                }
+            })
         } else {
             this.$('.rh_list').sortable({
                 axis: 'y',
