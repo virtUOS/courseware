@@ -324,7 +324,7 @@ class CpoController extends CoursewareStudipController
 
     private function computeProgress(&$block)
     {
-        if (!sizeof($block['children'])) {
+        if (!($block['children'])) {
             return 1;
         }
 
@@ -338,7 +338,7 @@ class CpoController extends CoursewareStudipController
 
     private function setDate($progress, &$block)
     {
-        if (!sizeof($block['children'])) {
+        if (!($block['children'])) {
             return null;
         }
 
