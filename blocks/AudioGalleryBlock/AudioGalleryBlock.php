@@ -117,7 +117,7 @@ class AudioGalleryBlock extends Block
         // create courseware upload folder
         if ($cw_folder == null) {
             $request = array('name' => 'Courseware-Upload', 'description' => 'folder for courseware content');
-            $new_folder = new \StandardFolder();
+            $new_folder = new \PublicFolder();
             $new_folder->setDataFromEditTemplate($request);
             $new_folder->user_id = $user->id;
             $cw_folder = $parent_folder->createSubfolder($new_folder);
