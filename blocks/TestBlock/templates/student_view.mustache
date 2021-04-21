@@ -86,9 +86,9 @@
                                 {{#show_solution}}
                                     {{> _solution}}
                                     {{#self_test}}
-                                        {{#solving_allowed}}
+                                        {{#reset_allowed}}
                                             {{> _reset_exercise}}
-                                        {{/solving_allowed}}
+                                        {{/reset_allowed}}
                                     {{/self_test}}
                                 {{/show_solution}}
                                 {{#exercise_hint}}
@@ -112,7 +112,7 @@
                 {{#skip_entry}}
                     {{#correction_available}}
                         <ul class="exercise" id="exercise{{exercise_index}}">
-                            <li>
+                            <li class="exercise-item">
                                 <div class="exercisetitle">
                                     <button name="exercisenav" class="exercisenavbutton exercisenavback" button-data='{"id":"{{exercise_index}}", "numexes": "{{number_of_exercises}}", "direction": "back" }'></button>
                                     {{#i18n}}Frage{{/i18n}} {{exercise_index}} / {{number_of_exercises}}

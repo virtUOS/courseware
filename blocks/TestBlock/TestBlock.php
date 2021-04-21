@@ -31,6 +31,8 @@ class TestBlock extends Block
 
     public function student_view()
     {
+        global $user;
+
         if (!$this->isAuthorized()) {
             return array('inactive' => true);
         }
@@ -77,6 +79,8 @@ class TestBlock extends Block
                 'vips14'        => $this->vipsVersion('1.4')
             );
         }
+
+        $assignment->recordAssignmentAttempt($user->id);
 
         return array_merge($this->getAttrArray(), array(
             'active' => $active,
@@ -357,7 +361,14 @@ class TestBlock extends Block
         $solving_allowed = ($now >= $start) && ($now <= $end);
         $solved_completely = true;
 
-        foreach ($test->getExercises() as $exercise){
+        if (method_exists($assignment, 'releaseStatus')) {
+            $released = $assignment->releaseStatus($user->id);
+        } else {
+            // use the same scale here as Vips 1.8 would use
+            $released = $assignment->options['released'] * 2;
+        }
+
+        foreach ($test->getExercises() as $exercise) {
             $solution = \VipsSolution::findOneBySQL('exercise_id = ? AND user_id = ?', array($exercise->id, $user->id));
             $has_solution = $solution != null;
             $correct = false;
@@ -386,7 +397,7 @@ class TestBlock extends Block
                  $solved_completely = false;
             }
             $tries_left = -1;
-            $max_counter = $this->container['current_courseware']->getMaxTries();
+            $max_counter = $assignment->options['max_tries'] ?: $this->container['current_courseware']->getMaxTries();
             if(!$max_counter) {
                 // no max counter, do as before
                 $show_corrected_solution = $correct;
@@ -424,7 +435,7 @@ class TestBlock extends Block
             }
 
             if ($solution != null) {
-                $rendered_solution = $exercise->getCorrectionTemplate($solution)->render();
+                $rendered_solution = $exercise->getCorrectionTemplate($solution)->render(['show_solution' => $released == 4 || $show_corrected_solution]);
             } else {
                 $rendered_solution = '';
             }
@@ -447,6 +458,7 @@ class TestBlock extends Block
                 'has_solution'        => $has_solution,
                 'solution'            => $rendered_solution,
                 'solving_allowed'     => $solving_allowed,
+                'reset_allowed'       => $this->vipsVersion('1.8') ? $solving_allowed && $assignment->isResetAllowed() : $solving_allowed, // isResetAllowed() since vips 1.8
                 'number_of_exercises' => $numberofex,
                 'exercise_index'      => $exindex++,
                 'correct'             => $correct,
@@ -454,7 +466,8 @@ class TestBlock extends Block
                 'exercise_hint'       => $exercise->options['hint'],
                 'corrector_comment'   => $corrector_comment, 
                 'sample_solution'     => $sample_solution,
-                'is_corrected'        => $solution['corrected'] && ($assignment->options['released'] == 2),
+                'is_corrected'        => $solution['corrected'] && ($released >= 3),
+                'released'            => $released,
                 'tries_left'          => $tries_left, 
                 'tries_pl'            => $tries_pl,
                 'character_picker'    => $character_picker
