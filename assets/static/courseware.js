@@ -8149,7 +8149,7 @@ module.exports = function (it) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return nonEnumerableProps; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return MAX_ARRAY_INDEX; });
 // Current version.
-var VERSION = '1.12.0';
+var VERSION = '1.13.1';
 
 // Establish the root object, `window` (`self`) in the browser, `global`
 // on the server, or `this` in some virtual machines. We use `self`
@@ -10772,7 +10772,7 @@ function matcher(attrs) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__restArguments_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__executeBound_js__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__executeBound_js__ = __webpack_require__(211);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__underscore_js__ = __webpack_require__(26);
 
 
@@ -11929,13 +11929,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "times", function() { return __WEBPACK_IMPORTED_MODULE_50__times_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__random_js__ = __webpack_require__(207);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "random", function() { return __WEBPACK_IMPORTED_MODULE_51__random_js__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__now_js__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__now_js__ = __webpack_require__(141);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "now", function() { return __WEBPACK_IMPORTED_MODULE_52__now_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__escape_js__ = __webpack_require__(598);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "escape", function() { return __WEBPACK_IMPORTED_MODULE_53__escape_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__unescape_js__ = __webpack_require__(599);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "unescape", function() { return __WEBPACK_IMPORTED_MODULE_54__unescape_js__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__templateSettings_js__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__templateSettings_js__ = __webpack_require__(210);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "templateSettings", function() { return __WEBPACK_IMPORTED_MODULE_55__templateSettings_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__template_js__ = __webpack_require__(601);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "template", function() { return __WEBPACK_IMPORTED_MODULE_56__template_js__["a"]; });
@@ -11949,13 +11949,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "iteratee", function() { return __WEBPACK_IMPORTED_MODULE_60__iteratee_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_61__partial_js__ = __webpack_require__(100);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "partial", function() { return __WEBPACK_IMPORTED_MODULE_61__partial_js__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__bind_js__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__bind_js__ = __webpack_require__(212);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "bind", function() { return __WEBPACK_IMPORTED_MODULE_62__bind_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_63__bindAll_js__ = __webpack_require__(605);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "bindAll", function() { return __WEBPACK_IMPORTED_MODULE_63__bindAll_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_64__memoize_js__ = __webpack_require__(606);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "memoize", function() { return __WEBPACK_IMPORTED_MODULE_64__memoize_js__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_65__delay_js__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_65__delay_js__ = __webpack_require__(213);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "delay", function() { return __WEBPACK_IMPORTED_MODULE_65__delay_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_66__defer_js__ = __webpack_require__(607);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "defer", function() { return __WEBPACK_IMPORTED_MODULE_66__defer_js__["a"]; });
@@ -12097,9 +12097,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Named Exports
 // =============
 
-//     Underscore.js 1.12.0
+//     Underscore.js 1.13.1
 //     https://underscorejs.org
-//     (c) 2009-2020 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+//     (c) 2009-2021 Jeremy Ashkenas, Julian Gonggrijp, and DocumentCloud and Investigative Reporters & Editors
 //     Underscore may be freely distributed under the MIT license.
 
 // Baseline setup.
@@ -12497,16 +12497,10 @@ function property(path) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__restArguments_js__ = __webpack_require__(25);
-
-
-// Delays a function for the given number of milliseconds, and then calls
-// it with the arguments supplied.
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_0__restArguments_js__["a" /* default */])(function(func, wait, args) {
-  return setTimeout(function() {
-    return func.apply(null, args);
-  }, wait);
-}));
+// A (possibly faster) way to get the current timestamp as an integer.
+/* harmony default export */ __webpack_exports__["a"] = (Date.now || function() {
+  return new Date().getTime();
+});
 
 
 /***/ }),
@@ -14038,17 +14032,6 @@ function random(min, max) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// A (possibly faster) way to get the current timestamp as an integer.
-/* harmony default export */ __webpack_exports__["a"] = (Date.now || function() {
-  return new Date().getTime();
-});
-
-
-/***/ }),
-/* 209 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = createEscaper;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__keys_js__ = __webpack_require__(18);
 
@@ -14071,7 +14054,7 @@ function createEscaper(map) {
 
 
 /***/ }),
-/* 210 */
+/* 209 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14087,7 +14070,7 @@ function createEscaper(map) {
 
 
 /***/ }),
-/* 211 */
+/* 210 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14104,7 +14087,7 @@ function createEscaper(map) {
 
 
 /***/ }),
-/* 212 */
+/* 211 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14127,13 +14110,13 @@ function executeBound(sourceFunc, boundFunc, context, callingContext, args) {
 
 
 /***/ }),
-/* 213 */
+/* 212 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__restArguments_js__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isFunction_js__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__executeBound_js__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__executeBound_js__ = __webpack_require__(211);
 
 
 
@@ -14146,6 +14129,23 @@ function executeBound(sourceFunc, boundFunc, context, callingContext, args) {
     return Object(__WEBPACK_IMPORTED_MODULE_2__executeBound_js__["a" /* default */])(func, bound, context, this, args.concat(callArgs));
   });
   return bound;
+}));
+
+
+/***/ }),
+/* 213 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__restArguments_js__ = __webpack_require__(25);
+
+
+// Delays a function for the given number of milliseconds, and then calls
+// it with the arguments supplied.
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_0__restArguments_js__["a" /* default */])(function(func, wait, args) {
+  return setTimeout(function() {
+    return func.apply(null, args);
+  }, wait);
 }));
 
 
@@ -33340,30 +33340,40 @@ module.exports = hljs;
     fetchComments: function fetchComments() {
         var self = this;
         var content = "";
-        STUDIP.jsonapi.GET('blubber-threads/' + this.id + '/comments ').done(function (thread) {
-            if (thread.data.length) {
-                __WEBPACK_IMPORTED_MODULE_1_jquery___default.a.each(thread.data, function (i, comment) {
-                    STUDIP.jsonapi.GET('users/' + comment.relationships.author.data.id).done(function (user) {
-                        content += "<li>";
-                        content += "<p><strong>" + user.data.attributes['formatted-name'] + "</strong></p>";
-                        content += comment.attributes['content-html'];
-                        content += "</li>";
-                        self.set({
-                            '$loading': false,
-                            'comments': content
+        __WEBPACK_IMPORTED_MODULE_1_jquery___default.a.ajax({
+            url: STUDIP.ABSOLUTE_URI_STUDIP + ('jsonapi.php/v1/blubber-threads/' + this.id + '/comments'),
+            type: 'GET',
+            success: function success(thread) {
+                if (thread.data.length) {
+                    __WEBPACK_IMPORTED_MODULE_1_jquery___default.a.each(thread.data, function (i, comment) {
+                        __WEBPACK_IMPORTED_MODULE_1_jquery___default.a.ajax({
+                            url: STUDIP.ABSOLUTE_URI_STUDIP + ('jsonapi.php/v1/users/' + comment.relationships.author.data.id),
+                            type: 'GET',
+                            success: function success(user) {
+                                content += "<li>";
+                                content += "<p><strong>" + user.data.attributes['formatted-name'] + "</strong></p>";
+                                content += comment.attributes['content-html'];
+                                content += "</li>";
+                                self.set({
+                                    '$loading': false,
+                                    'comments': content
+                                });
+                            },
+                            error: function error(_error) {
+                                console.log(_error);
+                            }
                         });
-                    }).catch(function (error) {
-                        console.log(error);
                     });
-                });
-            } else {
-                self.set({
-                    '$loading': false,
-                    'comments': content
-                });
+                } else {
+                    self.set({
+                        '$loading': false,
+                        'comments': content
+                    });
+                }
+            },
+            error: function error(_error2) {
+                console.log(_error2);
             }
-        }).catch(function (error) {
-            console.log(error);
         });
     },
     addComment: function addComment(comment) {
@@ -39642,8 +39652,8 @@ function times(n, iteratee, context) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createEscaper_js__ = __webpack_require__(209);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__escapeMap_js__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createEscaper_js__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__escapeMap_js__ = __webpack_require__(209);
 
 
 
@@ -39656,7 +39666,7 @@ function times(n, iteratee, context) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createEscaper_js__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createEscaper_js__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__unescapeMap_js__ = __webpack_require__(600);
 
 
@@ -39671,7 +39681,7 @@ function times(n, iteratee, context) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__invert_js__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__escapeMap_js__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__escapeMap_js__ = __webpack_require__(209);
 
 
 
@@ -39687,7 +39697,7 @@ function times(n, iteratee, context) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = template;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defaults_js__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__underscore_js__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templateSettings_js__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templateSettings_js__ = __webpack_require__(210);
 
 
 
@@ -39713,6 +39723,13 @@ var escapeRegExp = /\\|'|\r|\n|\u2028|\u2029/g;
 function escapeChar(match) {
   return '\\' + escapes[match];
 }
+
+// In order to prevent third-party code injection through
+// `_.templateSettings.variable`, we test it against the following regular
+// expression. It is intentionally a bit more liberal than just matching valid
+// identifiers, but still prevents possible loopholes through defaults or
+// destructuring assignment.
+var bareIdentifier = /^\s*(\w|\$)+\s*$/;
 
 // JavaScript micro-templating, similar to John Resig's implementation.
 // Underscore templating handles arbitrary delimiters, preserves whitespace,
@@ -39749,8 +39766,17 @@ function template(text, settings, oldSettings) {
   });
   source += "';\n";
 
-  // If a variable is not specified, place data values in local scope.
-  if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
+  var argument = settings.variable;
+  if (argument) {
+    // Insure against third-party code injection. (CVE-2021-23358)
+    if (!bareIdentifier.test(argument)) throw new Error(
+      'variable is not a bare identifier: ' + argument
+    );
+  } else {
+    // If a variable is not specified, place data values in local scope.
+    source = 'with(obj||{}){\n' + source + '}\n';
+    argument = 'obj';
+  }
 
   source = "var __t,__p='',__j=Array.prototype.join," +
     "print=function(){__p+=__j.call(arguments,'');};\n" +
@@ -39758,7 +39784,7 @@ function template(text, settings, oldSettings) {
 
   var render;
   try {
-    render = new Function(settings.variable || 'obj', '_', source);
+    render = new Function(argument, '_', source);
   } catch (e) {
     e.source = source;
     throw e;
@@ -39769,7 +39795,6 @@ function template(text, settings, oldSettings) {
   };
 
   // Provide the compiled source as a convenience for precompilation.
-  var argument = settings.variable || 'obj';
   template.source = 'function(' + argument + '){\n' + source + '}';
 
   return template;
@@ -39847,7 +39872,7 @@ function chain(obj) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__restArguments_js__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__flatten_js__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bind_js__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bind_js__ = __webpack_require__(212);
 
 
 
@@ -39895,7 +39920,7 @@ function memoize(func, hasher) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partial_js__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__delay_js__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__delay_js__ = __webpack_require__(213);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__underscore_js__ = __webpack_require__(26);
 
 
@@ -39912,7 +39937,7 @@ function memoize(func, hasher) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = throttle;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__now_js__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__now_js__ = __webpack_require__(141);
 
 
 // Returns a function, that, when invoked, will only be triggered at most once
@@ -39969,7 +39994,7 @@ function throttle(func, wait, options) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = debounce;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__restArguments_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__delay_js__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__now_js__ = __webpack_require__(141);
 
 
 
@@ -39978,29 +40003,34 @@ function throttle(func, wait, options) {
 // parameter. If `immediate` is passed, the argument function will be
 // triggered at the beginning of the sequence instead of at the end.
 function debounce(func, wait, immediate) {
-  var timeout, result;
+  var timeout, previous, args, result, context;
 
-  var later = function(context, args) {
-    timeout = null;
-    if (args) result = func.apply(context, args);
+  var later = function() {
+    var passed = Object(__WEBPACK_IMPORTED_MODULE_1__now_js__["a" /* default */])() - previous;
+    if (wait > passed) {
+      timeout = setTimeout(later, wait - passed);
+    } else {
+      timeout = null;
+      if (!immediate) result = func.apply(context, args);
+      // This check is needed because `func` can recursively invoke `debounced`.
+      if (!timeout) args = context = null;
+    }
   };
 
-  var debounced = Object(__WEBPACK_IMPORTED_MODULE_0__restArguments_js__["a" /* default */])(function(args) {
-    if (timeout) clearTimeout(timeout);
-    if (immediate) {
-      var callNow = !timeout;
+  var debounced = Object(__WEBPACK_IMPORTED_MODULE_0__restArguments_js__["a" /* default */])(function(_args) {
+    context = this;
+    args = _args;
+    previous = Object(__WEBPACK_IMPORTED_MODULE_1__now_js__["a" /* default */])();
+    if (!timeout) {
       timeout = setTimeout(later, wait);
-      if (callNow) result = func.apply(this, args);
-    } else {
-      timeout = Object(__WEBPACK_IMPORTED_MODULE_1__delay_js__["a" /* default */])(later, wait, this, args);
+      if (immediate) result = func.apply(context, args);
     }
-
     return result;
   });
 
   debounced.cancel = function() {
     clearTimeout(timeout);
-    timeout = null;
+    timeout = args = context = null;
   };
 
   return debounced;
@@ -105206,36 +105236,44 @@ module.exports = __webpack_amd_options__;
         this.alreadyWriting = true;
         $textarea.val('');
 
-        STUDIP.jsonapi.POST('blubber-threads/' + thread_id + '/comments', {
-            data: {
+        $.ajax({
+            url: STUDIP.ABSOLUTE_URI_STUDIP + ('jsonapi.php/v1/blubber-threads/' + thread_id + '/comments'),
+            type: 'POST',
+            headers: {
+                'Content-Type': 'application/vnd.api+json'
+            },
+            data: JSON.stringify({
                 data: {
                     attributes: {
                         content: comment
                     }
                 }
+            }),
+            success: function success(comment) {
+                var content = "<li>";
+                self.alreadyWriting = false;
+                $.ajax({
+                    url: STUDIP.ABSOLUTE_URI_STUDIP + ('jsonapi.php/v1/users/' + comment.data.relationships.author.data.id),
+                    type: 'GET',
+                    success: function success(user) {
+                        content += "<p><strong>" + user.data.attributes['formatted-name'] + "</strong></p>";
+                        content += comment.data.attributes['content-html'];
+                        content += "</li>";
+                        var thread = self.threads.findWhere({ id: thread_id });
+                        thread.addComment(content);
+                    },
+                    error: function error(_error) {
+                        console.log(_error);
+                    }
+                });
+            },
+            error: function error(_error2) {
+                self.alreadyWriting = false;
+                $textarea.val(comment);
+
+                console.log(_error2);
+                alert('Could not send comment');
             }
-        }).done(function (comment) {
-            var content = "<li>";
-            self.alreadyWriting = false;
-            STUDIP.jsonapi.GET('users/' + comment.data.relationships.author.data.id).done(function (user) {
-                content += "<p><strong>" + user.data.attributes['formatted-name'] + "</strong></p>";
-                content += comment.data.attributes['content-html'];
-                content += "</li>";
-                var thread = self.threads.findWhere({ id: thread_id });
-                thread.addComment(content);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        }).catch(function (error) {
-            self.alreadyWriting = false;
-            $textarea.val(comment);
-
-            console.log(error);
-            debugger;
-
-            var errorMessage = ['Could not send comment:', __WEBPACK_IMPORTED_MODULE_0_jquery___default.a.parseJSON(error.responseText).reason].join('');
-            alert(errorMessage);
-            console.log(errorMessage, arguments);
         });
     },
     expandOrCollapseThread: function expandOrCollapseThread(event) {
@@ -109970,8 +110008,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         return this;
     },
     postRender: function postRender() {
-        if (typeof PDFJS === 'undefined') {
-            console.log("ERROR: PDFJS not found!");
+        if (typeof pdfjsLib === 'undefined') {
+            console.log("ERROR: pdfjsLib not found!");
             return;
         }
 
@@ -109983,20 +110021,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return;
         }
 
-        PDFJS.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
         var pdfDoc = null,
             pageNum = 1,
             pageRendering = false,
             pageNumPending = null,
             scale = 2,
-            canvas = document.getElementById('the-canvas'),
             canvas = $view.$('.cw-pdf-canvas')[0],
             ctx = canvas.getContext('2d');
 
         function renderPage(num) {
             pageRendering = true;
             pdfDoc.getPage(num).then(function (page) {
-                var viewport = page.getViewport(scale);
+                var viewport = page.getViewport({ scale: scale });
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
 
@@ -110075,7 +110111,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             prevPage();
         });
 
-        PDFJS.getDocument(url).then(function (pdfDoc_) {
+        pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
             pdfDoc = pdfDoc_;
             $view.$(".cw-pdf-page-count").html(pdfDoc.numPages);
             renderPage(pageNum);
@@ -111916,7 +111952,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
                     jQuery(this).removeClass('hover');
                 },
                 receive: function receive(event, ui) {
-                    var sortable = jQuery(this);
+                    var sortable = jQuery(this).not('.multiple');
                     var container = sortable.closest('tbody').find('.answer_container');
 
                     // default answer container can have more items
@@ -111928,6 +111964,40 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
                             }
                         });
                     }
+                }
+            });
+            this.$('.cloze_item').draggable({
+                revert: 'invalid'
+            });
+
+            this.$('.cloze_drop').droppable({
+                accept: '.cloze_item',
+                tolerance: 'pointer',
+                classes: {
+                    'ui-droppable-hover': 'hover'
+                },
+                drop: function drop(event, ui) {
+                    var container = jQuery(this).closest('fieldset').find('.cloze_items');
+
+                    if (!jQuery(this).is(container)) {
+                        jQuery(this).find('.cloze_item').detach().appendTo(container).css('opacity', 0).animate({ opacity: 1 });
+                    }
+
+                    ui.draggable.closest('.cloze_drop').find('input').val('');
+                    ui.draggable.detach().css({ top: 0, left: 0 }).appendTo(this);
+                    jQuery(this).find('input').val(ui.draggable.text());
+                }
+            });
+
+            __WEBPACK_IMPORTED_MODULE_0_jquery___default()('.vips_tabs').each(function () {
+                if (__WEBPACK_IMPORTED_MODULE_0_jquery___default()(this).hasClass('edit-hidden')) {
+                    jQuery(this).tabs({
+                        active: 1
+                    });
+                } else {
+                    jQuery(this).tabs({
+                        active: 0
+                    });
                 }
             });
         } else {

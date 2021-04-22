@@ -4741,6 +4741,9 @@ section#courseware.view-author .aside-section section.block.block-is-assorted:ho
 .AssortBlock .ui-accordion-content:last-of-type {
   border-bottom: none !important;
 }
+.AssortBlock .ui-accordion-content .block-content iframe {
+  width: 100% !important;
+}
 /* END accordion */
 /* sidebar special */
 .cw-sidebar .AssortBlock .ui-accordion-header {
@@ -11909,11 +11912,9 @@ section.TestBlock .cktoolbar {
 }
 .question_title {
   font-size: 12pt;
-  margin-left: 0.25em;
 }
 .question_description {
   padding: 1em 0 1em 0;
-  margin-left: 0.5em;
 }
 ul.exercise {
   margin: 0;
@@ -11922,9 +11923,6 @@ ul.exercise {
 }
 ul.exercise li.exercise-item {
   border: solid thin #ccc;
-}
-ul.exercise .cw-test-content {
-  padding: 10px;
 }
 ul.exercise:not(#exercise1) {
   display: none;
@@ -11969,7 +11967,7 @@ ul.exercise .exercisetitle .exercisenavbutton.exercisenavnext {
   background-image: url("../../../../../assets/images/icons/blue/arr_1right.svg");
 }
 ul.exercise .cw-test-content {
-  padding: 0 10px;
+  padding: 10px;
   /* vips 1.3 rh_exercise */
   /* vips 1.4 rh_exercise */
 }
@@ -11983,16 +11981,16 @@ ul.exercise .cw-test-content form {
   font-weight: 400;
 }
 ul.exercise .cw-test-content .answer,
-ul.exercise .cw-test-content label {
+ul.exercise .cw-test-content label:not(.undecorated) {
   font-size: 14px;
   font-weight: normal;
-  line-height: 32px;
-  padding-left: 7px;
+  margin-top: 1.5ex;
   text-transform: none;
   display: block;
 }
-ul.exercise .cw-test-content .label_text {
-  margin-left: 7px;
+ul.exercise .cw-test-content .label_text,
+ul.exercise .cw-test-content .label-text {
+  margin-top: 1.5ex;
 }
 ul.exercise .cw-test-content select {
   margin: 0 5px;
@@ -12002,7 +12000,7 @@ ul.exercise .cw-test-content .cloze.solution {
 }
 ul.exercise .cw-test-content p img {
   margin-top: 12px;
-  margin-bttom: 12px;
+  margin-bottom: 12px;
 }
 ul.exercise .cw-test-content textarea {
   border: thin solid #ccc;
