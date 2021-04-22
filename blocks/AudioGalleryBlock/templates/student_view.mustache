@@ -6,7 +6,7 @@
                 <img src="{{user_avatar}}">
                 {{#file_url}}
                 <audio class="cw-audio-gallery-player" controls>
-                    <source  src="{{file_url}}">
+                    <source  src="{{file_url}}" type="audio/mpeg">
                 </audio>
                 {{/file_url}}
                 <input type="hidden" class="cw-audio-gallery-userhasrecord" value="{{#file_url}}true{{/file_url}}{{^file_url}}false{{/file_url}}">

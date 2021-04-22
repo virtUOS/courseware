@@ -127,7 +127,7 @@ export default StudentView.extend({
   makeBlob(){
       var $view = this;
       var control = $view.$('.cw-audio-gallery-content-slide-control')[0];
-      this.blob = new Blob($view.chunks, {type: 'audio/ogg' })
+      this.blob = new Blob($view.chunks, {type: 'audio/mpeg' })
       let url = URL.createObjectURL(this.blob),
            audio = document.createElement('audio');
       audio.controls = true;

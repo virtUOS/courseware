@@ -21,7 +21,7 @@ export default StudentView.extend({
         }
         content = JSON.parse(content);
         if (content.type == 'countdown') {
-            this.countdown(new Date(content.date + " "+ content.time).getTime());
+            this.countdown(new Date(content.date + "T"+ content.time).getTime());
             $view.$('.cw-date-countdown').show();
         }
         if (content.type == 'date') {
@@ -87,7 +87,7 @@ export default StudentView.extend({
     },
 
     date(date, time) {
-        var date = new Date(date+' '+time);
+        var date = new Date(date+'T'+time);
         this.$('.cw-date-date-digits[data-date="date"] .cw-date-date-number').html(("0" + date.getDate()).slice(-2)+'.'+("0" + (date.getMonth()+1)).slice(-2)+'.'+date.getFullYear());
         this.$('.cw-date-date-digits[data-date="time"] .cw-date-date-number').html(("0" + date.getHours()).slice(-2)+':'+("0" + date.getMinutes()).slice(-2));
     }

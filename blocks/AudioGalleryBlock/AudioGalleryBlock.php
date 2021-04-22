@@ -100,7 +100,7 @@ class AudioGalleryBlock extends Block
         $tempDir = $GLOBALS['TMP_PATH'].'/'.uniqid();
         mkdir($tempDir);
         //create file in temp dir
-        $filename = 'Courseware-Aufnahme-'.date("d.m.Y-H:i", time()).'.ogg';
+        $filename = 'Courseware-Aufnahme-'.date("d.m.Y-H:i", time()).'.mp3';
         file_put_contents($tempDir.'/'.$filename, base64_decode($audio));
         // get personal root folder
         
