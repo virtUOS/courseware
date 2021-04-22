@@ -44128,7 +44128,7 @@ function clearHash(el) {
   makeBlob: function makeBlob() {
     var $view = this;
     var control = $view.$('.cw-audio-gallery-content-slide-control')[0];
-    this.blob = new Blob($view.chunks, { type: 'audio/ogg' });
+    this.blob = new Blob($view.chunks, { type: 'audio/mpeg' });
     var url = URL.createObjectURL(this.blob),
         audio = document.createElement('audio');
     audio.controls = true;
@@ -104071,7 +104071,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
         content = JSON.parse(content);
         if (content.type == 'countdown') {
-            this.countdown(new Date(content.date + " " + content.time).getTime());
+            this.countdown(new Date(content.date + "T" + content.time).getTime());
             $view.$('.cw-date-countdown').show();
         }
         if (content.type == 'date') {
@@ -104288,7 +104288,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }, 1000);
     },
     date: function date(date, time) {
-        var date = new Date(date + ' ' + time);
+        var date = new Date(date + 'T' + time);
         this.$('.cw-date-date-digits[data-date="date"] .cw-date-date-number').html(("0" + date.getDate()).slice(-2) + '.' + ("0" + (date.getMonth() + 1)).slice(-2) + '.' + date.getFullYear());
         this.$('.cw-date-date-digits[data-date="time"] .cw-date-date-number').html(("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2));
     }
