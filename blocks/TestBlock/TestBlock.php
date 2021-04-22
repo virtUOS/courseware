@@ -79,8 +79,10 @@ class TestBlock extends Block
                 'vips14'        => $this->vipsVersion('1.4')
             );
         }
-
-        $assignment->recordAssignmentAttempt($user->id);
+        if ($GLOBALS['perm']->have_studip_perm('user', $this->_model->course->id, $user->id) && 
+            !$GLOBALS['perm']->have_studip_perm('tutor', $this->_model->course->id, $user->id)) {
+            $assignment->recordAssignmentAttempt($user->id);
+        }
 
         return array_merge($this->getAttrArray(), array(
             'active' => $active,
