@@ -96,6 +96,10 @@ class InteractiveVideoBlock extends Block
                     }
                 }
             }
+            if ($GLOBALS['perm']->have_studip_perm('user', $this->_model->course->id, $user->id) && 
+                !$GLOBALS['perm']->have_studip_perm('tutor', $this->_model->course->id, $user->id)) {
+                $selected_assignment->recordAssignmentAttempt($user->id);
+            }
         }
         if ($this->iav_source != '') {
             $iav_source = json_decode($this->iav_source, true);
