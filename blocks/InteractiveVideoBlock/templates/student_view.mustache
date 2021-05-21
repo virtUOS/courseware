@@ -33,6 +33,9 @@
                         {{#correct}}
                             <input type="hidden" class="cw-iav-test-correct" value="true">
                             <div class="messagebox messagebox_success">{{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}</div>
+                            {{#tb_exercise}}
+                                <div class="messagebox messagebox_info">{{#i18n}}Bitte vergleichen Sie Ihre Lösung mit der Musterlösung.{{/i18n}}</div>
+                            {{/tb_exercise}}
                             <h2 class="cw-iav-test-content-title">{{title}}</h2>
                             <p class="cw-iav-test-content-question-description">{{{question_description}}}</p>
                             <div class="cw-iav-test-content-question">{{{solution}}}</div>

@@ -71,9 +71,17 @@ class InteractiveVideoBlock extends Block
                             if ($try_counter == 0) {
                                 $has_solution = false;
                             }
+                            $tb_exercise = false;
+
                         } else {
                             $tries_left = false;
                             $no_more_tries = false;
+                        }
+
+                        if ($exercise->type == "tb_exercise") {
+                            $tb_exercise = true;
+                            $tries_left = false;
+                            $correct = true;
                         }
 
                         $rendered_solution = '';
@@ -82,6 +90,7 @@ class InteractiveVideoBlock extends Block
                         }
 
                         $exercises[] = array(
+                            'tb_exercise'           => $tb_exercise,
                             'question'              => $exercise->getSolveTemplate($solution, $selected_assignment, $user->id)->render(),
                             'question_description'  => formatReady($exercise->description),
                             'title'                 => $exercise->title,
