@@ -416,10 +416,6 @@ class TestBlock extends Block
                 $tries_pl = true;
             }
 
-            if($has_solution && $solution['corrected']) {
-                $corrector_comment = $solution['corrector_comment'];
-            }
-
             if ( $exercise->task['answers'][0]['text'] !== '') {
                 $sample_solution = $exercise->task['answers'][0]['text'];
             } else {
@@ -466,7 +462,7 @@ class TestBlock extends Block
                 'correct'             => $correct,
                 'tryagain'            => $tryagain,
                 'exercise_hint'       => $exercise->options['hint'],
-                'corrector_comment'   => $corrector_comment, 
+                'corrector_comment'   => $solution['corrector_comment'], 
                 'sample_solution'     => $sample_solution,
                 'is_corrected'        => $solution['corrected'] && ($released >= 3),
                 'released'            => $released,
