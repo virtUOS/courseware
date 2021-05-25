@@ -399,7 +399,7 @@ class InteractiveVideoBlock extends Block
                 'description' => $file_ref->description,
                 'filename' => $file->name,
                 'filesize' => $file->size,
-                'url' => $this->getFileURL($file_ref),
+                'url' => $this->isFileAnURL($file_ref),
                 'path' => $file->getPath()
             ));
         }
