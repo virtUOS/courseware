@@ -36,7 +36,7 @@ class CoursewareController extends CoursewareStudipController
         if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->plugin->getCourseId())) {
             throw new Trails_Exception(401);
         }
-
+        PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
         if (Navigation::hasItem('/course/mooc_courseware/settings')) {
             Navigation::activateItem('/course/mooc_courseware/settings');
         }
@@ -55,6 +55,16 @@ class CoursewareController extends CoursewareStudipController
             $this->flash['success'] = _cw("Die Einstellungen wurden gespeichert.");
 
             return $this->redirect('courseware/settings');
+        }
+        $folders =  \Folder::findBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'HiddenFolder'));
+        $this->files = array();
+        foreach ($folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isImage()) && (!$ref->isLink())) {
+                    $this->files[] = $ref;
+                }
+            }
         }
     }
     
@@ -235,12 +245,16 @@ class CoursewareController extends CoursewareStudipController
         /////////////////////////////////
         // DISCUSSION BLOCK ACTIVATION //
         /////////////////////////////////
-        $this->storeDiscussionBlockActivation(isset($courseware_settings['discussionblock_activation']) ? true : false);
+        if ($courseware_settings['discussionblock_activation'] === '1') {
+            $this->storeDiscussionBlockActivation(true);
+        } else {
+            $this->storeDiscussionBlockActivation(false);
+        }
 
         //////////////////////
         // VIPS TAB VISIBLE //
         //////////////////////
-        $this->storeVipsTabVisible(isset($courseware_settings['vipstab_visible']) ? true : false);
+        // $this->storeVipsTabVisible(isset($courseware_settings['vipstab_visible']) ? true : false);
 
         /////////////////////////
         // Sections Navigation //
@@ -263,13 +277,21 @@ class CoursewareController extends CoursewareStudipController
         /////////////////////////
         //   Scrollytelling   //
         ////////////////////////
-        $this->storeScrollytelling(isset($courseware_settings['scrollytelling']) ? true : false);
-        
+        if ($courseware_settings['scrollytelling'] === '1') {
+            $this->storeScrollytelling(true);
+        } else {
+            $this->storeScrollytelling(false);
+        }
+
         ////////////////////////
         // EDITING PERMISSION //
         ////////////////////////
         if (!$this->is_tutor) {
-            $this->storeEditingPermission(isset($courseware_settings['editing_permission']) ? true : false);
+            if ($courseware_settings['editing_permission'] === '1') {
+                $this->storeEditingPermission(true);
+            } else {
+                $this->storeEditingPermission(false);
+            }
         }
 
         /////////////////////////////
@@ -292,6 +314,68 @@ class CoursewareController extends CoursewareStudipController
             $this->storeMaxCountIAV(-1);
         } else if(isset($courseware_settings['max-tries-iav'])) {
             $this->storeMaxCountIAV($courseware_settings['max-tries-iav']);
+        }
+
+        ////////////////////////
+        //     Certificate    //
+        ////////////////////////
+        if ($courseware_settings['certificate'] === '1') {
+            $this->storeCertificate(true);
+            $this->storeCertificateLimit($courseware_settings['certificate_limit']);
+            $this->storeCertificateImageId($courseware_settings['certificate_image_id']);
+        } else {
+            $this->storeCertificate(false);
+        }
+
+        ////////////////////
+        //    Reminder    //
+        ////////////////////
+        if ($courseware_settings['reminder'] === '1') {
+            $this->storeReminder(true);
+            if(isset($courseware_settings['reminder_interval'])){
+                $this->storeReminderInterval($courseware_settings['reminder_interval']);
+            } else {
+                $this->storeReminderInterval('5'); // default jährlich
+            }
+            if(isset($courseware_settings['reminder_start_date'])){
+                $this->storeReminderStartDate($courseware_settings['reminder_start_date']);
+            } else {
+                $this->storeReminderStartDate(date("d.m.Y"));
+            }
+            if(isset($courseware_settings['reminder_end_date'])){
+                $this->storeReminderEndDate($courseware_settings['reminder_end_date']);
+            }
+            if(isset($courseware_settings['reminder_message'])){
+                $this->storeReminderMessage($courseware_settings['reminder_message']);
+            }
+        } else {
+            $this->storeReminder(false);
+        }
+
+
+        ///////////////////
+        //    Reseter    //
+        ///////////////////
+        if ($courseware_settings['reseter'] === '1') {
+            $this->storeReseter(true);
+            if(isset($courseware_settings['reseter_interval'])){
+                $this->storeReseterInterval($courseware_settings['reseter_interval']);
+            } else {
+                $this->storeReseterInterval('5'); // default jährlich
+            }
+            if(isset($courseware_settings['reseter_start_date'])){
+                $this->storeReseterStartDate($courseware_settings['reseter_start_date']);
+            } else {
+                $this->storeReseterStartDate(date("d.m.Y"));
+            }
+            if(isset($courseware_settings['reseter_end_date'])){
+                $this->storeReseterEndDate($courseware_settings['reseter_end_date']);
+            }
+            if(isset($courseware_settings['reseter_message'])){
+                $this->storeReseterMessage($courseware_settings['reseter_message']);
+            }
+        } else {
+            $this->storeReseter(false);
         }
 
         $this->courseware_block->save();
@@ -348,6 +432,76 @@ class CoursewareController extends CoursewareStudipController
         if (!$this->courseware_block->setScrollytelling($active)) {
             // TODO: send a message back
         }
+    }
+
+    private function storeCertificate($active)
+    {
+        if (!$this->courseware_block->setCertificate($active)) {
+        }
+    }
+
+    private function storeCertificateLimit($value)
+    {
+        if (!$this->courseware_block->setCertificateLimit($value)) {
+        }
+    }
+
+    private function storeCertificateImageId($value)
+    {
+        if (!$this->courseware_block->setCertificateImageId($value)) {
+        }
+    }
+
+    private function storeReminder($active)
+    {
+        if (!$this->courseware_block->setReminder($active)) {
+        }
+    }
+
+    private function storeReminderInterval($interval)
+    {
+        $this->courseware_block->setReminderInterval($interval);
+    }
+
+    private function storeReminderStartDate($date)
+    {
+        $this->courseware_block->setReminderStartDate(strtotime($date));
+    }
+
+    private function storeReminderEndDate($date)
+    {
+        $this->courseware_block->setReminderEndDate(strtotime($date));
+    }
+
+    private function storeReminderMessage($text)
+    {
+        $this->courseware_block->setReminderMessage(Studip\Markup::purifyHtml(trim($text)));
+    }
+
+    private function storeReseter($active)
+    {
+        if (!$this->courseware_block->setReseter($active)) {
+        }
+    }
+
+    private function storeReseterInterval($interval)
+    {
+        $this->courseware_block->setReseterInterval($interval);
+    }
+
+    private function storeReseterStartDate($date)
+    {
+        $this->courseware_block->setReseterStartDate(strtotime($date));
+    }
+
+    private function storeReseterEndDate($date)
+    {
+        $this->courseware_block->setReseterEndDate(strtotime($date));
+    }
+
+    private function storeReseterMessage($text)
+    {
+        $this->courseware_block->setReseterMessage(Studip\Markup::purifyHtml(trim($text)));
     }
 
     private function storeEditingPermission($tutor_may_edit)

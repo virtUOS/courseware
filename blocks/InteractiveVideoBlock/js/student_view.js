@@ -306,6 +306,7 @@ export default StudentView.extend({
 
             if (interaction) {
                 $player.prop('currentTime', interactionevents[0].moment);
+                $range.slider('value', interactionevents[0].moment)
                 try {$range.slider('disable');}
                 catch(err) {}
                 $player.trigger('pause');
@@ -393,6 +394,8 @@ export default StudentView.extend({
             }
             $view.$('.stop-json').val(JSON.stringify(stop_json));
         }
+        $view.$('.cw-iav-stop-content').fadeOut(0);
+        $view.$('.cw-iav-test-content').fadeOut(0);
     },
 
     continueVideo(event) {

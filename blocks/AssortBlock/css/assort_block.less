@@ -62,8 +62,10 @@ section#courseware.view-author .aside-section section.block.block-is-assorted {
 /* END author mode*/
 
 /* all tabs */
-.AssortBlock .ui-tabs{
-    border: thin solid #eaeaea;
+.AssortBlock .ui-tabs {
+    &.ui-widget-content {
+        border: thin solid #d0d7e3;
+    }
     .ui-state-active, .ui-state-default {
         background-image: none;
         cursor: pointer !important;;
@@ -75,16 +77,20 @@ section#courseware.view-author .aside-section section.block.block-is-assorted {
     }
 
     .ui-state-default {
-            background-color: #e9e9e9;
-    }
-
-    .ui-state-active {
             background-color: #fff;
+    }
+    .ui-tabs-nav {
+        li.ui-state-active {
+            background-color: #fff;
+            a {
+                color: #000;
+            }
+        }
     }
 
     .ui-widget-header {
-        border: none;
-        background-color: #e9e9e9;
+        border-bottom: solid thin #d0d7e3;
+        background-color: #fff;
     }
 }
 /* END all tabs*/
@@ -144,14 +150,15 @@ section#courseware.view-author .aside-section section.block.block-is-assorted {
 /* accordion */
 .AssortBlock {
     .assortblock-content.ui-accordion{
-        border: solid thin #ccc;
+        border: solid thin #d0d7e3;
     }
 
     .ui-accordion-header {
-        background-color: #eee;
+        background-color: #e7ebf1;
         border: none !important;
-        border-bottom: solid thin #ccc !important;
+        border-bottom: solid thin #d0d7e3 !important;
         padding: 1em 1em 1em 6px !important;  
+        font-weight: 600;
         color: #28497c;
         span.ui-icon {
             margin-right: 0.5em;
@@ -160,9 +167,6 @@ section#courseware.view-author .aside-section section.block.block-is-assorted {
             &:last-of-type {
                 border-bottom: none !important;
             }
-        }
-        &.ui-accordion-header-active {
-            font-weight: 600;
         }
     }
 

@@ -48,6 +48,22 @@ class Courseware extends Block
         $this->defineField('sections_as_chapters', \Mooc\SCOPE_BLOCK, false);
         
         $this->defineField('scrollytelling', \Mooc\SCOPE_BLOCK, false);
+
+        $this->defineField('certificate', \Mooc\SCOPE_BLOCK, false);
+        $this->defineField('certificate_limit', \Mooc\SCOPE_BLOCK, 100);
+        $this->defineField('certificate_image_id', \Mooc\SCOPE_BLOCK, '');
+
+        $this->defineField('reminder', \Mooc\SCOPE_BLOCK, false);
+        $this->defineField('reminder_message', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('reminder_interval', \Mooc\SCOPE_BLOCK, 0);
+        $this->defineField('reminder_start_date', \Mooc\SCOPE_BLOCK, 0);
+        $this->defineField('reminder_end_date', \Mooc\SCOPE_BLOCK, '');
+
+        $this->defineField('reseter', \Mooc\SCOPE_BLOCK, false);
+        $this->defineField('reseter_message', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('reseter_interval', \Mooc\SCOPE_BLOCK, 0);
+        $this->defineField('reseter_start_date', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('reseter_end_date', \Mooc\SCOPE_BLOCK, '');
     }
 
     public function student_view($context = array())
@@ -130,6 +146,7 @@ class Courseware extends Block
             'show_section_nav'      => $this->show_section_nav,
             'sections_as_chapters'  => $this->sections_as_chapters,
             'scrollytelling'        => $this->scrollytelling,
+            'certificate'           => $this->certificate,
             'isSequential'          => $this->progression == 'seq',
             'active_section'        => $active_section, 
             'cw_title'              => $courseware->title,
@@ -435,6 +452,136 @@ class Courseware extends Block
     public function getScrollytelling()
     {
         return $this->scrollytelling;
+    }
+
+    public function setCertificate($state)
+    {
+        $this->certificate = $state;
+    }
+
+    public function getCertificate()
+    {
+        return $this->certificate;
+    }
+
+    public function setCertificateLimit($state)
+    {
+        $this->certificate_limit = $state;
+    }
+
+    public function getCertificateLimit()
+    {
+        return $this->certificate_limit;
+    }
+
+    public function setCertificateImageId($state)
+    {
+        $this->certificate_image_id = $state;
+    }
+
+    public function getCertificateImageId()
+    {
+        return $this->certificate_image_id;
+    }
+
+    public function setReminder($state)
+    {
+        $this->reminder = $state;
+    }
+
+    public function getReminder()
+    {
+        return $this->reminder;
+    }
+
+    public function setReminderInterval($state)
+    {
+        $this->reminder_interval = $state;
+    }
+
+    public function getReminderInterval()
+    {
+        return $this->reminder_interval;
+    }
+
+    public function setReminderMessage($state)
+    {
+        $this->reminder_message = $state;
+    }
+
+    public function getReminderMessage()
+    {
+        return $this->reminder_message;
+    }
+
+    public function setReminderStartDate($state)
+    {
+        $this->reminder_start_date = $state;
+    }
+
+    public function getReminderStartDate()
+    {
+        return $this->reminder_start_date == '' ? '': date('d.m.Y', (int) $this->reminder_start_date);
+    }
+
+    public function setReminderEndDate($state)
+    {
+        $this->reminder_end_date = $state;
+    }
+
+    public function getReminderEndDate()
+    {
+        return $this->reminder_end_date == '' ? '': date('d.m.Y', (int) $this->reminder_end_date);
+    }
+
+    public function setReseter($state)
+    {
+        $this->reseter = $state;
+    }
+
+    public function getReseter()
+    {
+        return $this->reseter;
+    }
+
+    public function setReseterInterval($state)
+    {
+        $this->reseter_interval = $state;
+    }
+
+    public function getReseterInterval()
+    {
+        return $this->reseter_interval;
+    }
+
+    public function setReseterStartDate($state)
+    {
+        return $this->reseter_start_date = $state;
+    }
+
+    public function getReseterStartDate()
+    {
+        return $this->reseter_start_date == '' ? '': date('d.m.Y', (int) $this->reseter_start_date);
+    }
+
+    public function setReseterEndDate($state)
+    {
+        return $this->reseter_end_date = $state;
+    }
+
+    public function getReseterEndDate()
+    {
+        return $this->reseter_end_date == '' ? '': date('d.m.Y', (int) $this->reseter_end_date);
+    }
+
+    public function setReseterMessage($state)
+    {
+        $this->reseter_message = $state;
+    }
+
+    public function getReseterMessage()
+    {
+        return $this->reseter_message;
     }
 
     ///////////////////////
