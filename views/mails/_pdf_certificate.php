@@ -1,27 +1,22 @@
 <?php
 $p = '<p style="font-size: 20px; text-align: center;">';
-$pb = '<p style="font-size: 20px; text-align: center; font-weight: bold">';
-$html = $p;
-$html .=  _('Hiermit wird bescheinigt, dass');
-$html .= '</p>';
-$html .= $pb;
-if ($user->geschlecht == 1) {
-    $html .= 'Herr' . ' ';
+$span_bold = '<br /><br /><span style="font-size: 20px; text-align: center; font-weight: bold">';
+$span_close = '</span><br /><br />';
+switch($user->geschlecht) {
+    case 1:
+        $anrede = _('Herr');
+        break;
+    case 2:
+        $anrede = _('Frau');
+        break;
+    default:
+        $anrede= '';
 }
-if ($user->geschlecht == 2) {
-    $html .= 'Frau' . ' ';
-}
-$html .= $user->getFullname();
-$html .= '</p>';
-$html .= $p;
-$html .=  _('am') . ' ' . date('d.m.Y', time());
-$html .= '</p>';
-$html .= $p;
-$html .=  _('erfolgreiche am Seminar');
-$html .= '</p>';
-$html .=  $pb . $course->name . '</p>';
-$html .= $p;
-$html .=  _('teilgenommen hat.');
-$html .= '</p>';
-
-echo studip_utf8encode($html);
+echo $p;
+printf(
+    _("Hiermit wird bescheinigt, dass %s am %s erfolgreich am Seminar %s teilgenommen hat."), 
+    $span_bold.$anrede.' '.$user->getFullname().$span_close,
+    $span_bold.date('d.m.Y', time()).$span_close,
+    $span_bold.$course->name.$span_close
+);
+echo '</p>';

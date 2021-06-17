@@ -130,7 +130,7 @@ if ($flash['success']) {
         <label>
             <?= _cw('Zertifikat erzeugen') ?>
             <dfn>
-                <?= _cw('Wenn Nutzende 100% Fortschritt erreichen wird ein Teilnahme-Zertifikat per E-Mail versand.'); ?>
+                <?= _cw('Wenn der Fortschritt eines Nutzenden die Zertifikatsgrenze erreicht, wird ein Teilnahme-Zertifikat per E-Mail versand.'); ?>
             </dfn>
             <select id="courseware-certificate"
                 name="courseware[certificate]"
