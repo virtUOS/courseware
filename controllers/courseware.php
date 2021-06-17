@@ -36,7 +36,7 @@ class CoursewareController extends CoursewareStudipController
         if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->plugin->getCourseId())) {
             throw new Trails_Exception(401);
         }
-
+        PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
         if (Navigation::hasItem('/course/mooc_courseware/settings')) {
             Navigation::activateItem('/course/mooc_courseware/settings');
         }
@@ -235,12 +235,16 @@ class CoursewareController extends CoursewareStudipController
         /////////////////////////////////
         // DISCUSSION BLOCK ACTIVATION //
         /////////////////////////////////
-        $this->storeDiscussionBlockActivation(isset($courseware_settings['discussionblock_activation']) ? true : false);
+        if ($courseware_settings['discussionblock_activation'] === '1') {
+            $this->storeDiscussionBlockActivation(true);
+        } else {
+            $this->storeDiscussionBlockActivation(false);
+        }
 
         //////////////////////
         // VIPS TAB VISIBLE //
         //////////////////////
-        $this->storeVipsTabVisible(isset($courseware_settings['vipstab_visible']) ? true : false);
+        // $this->storeVipsTabVisible(isset($courseware_settings['vipstab_visible']) ? true : false);
 
         /////////////////////////
         // Sections Navigation //
@@ -263,13 +267,21 @@ class CoursewareController extends CoursewareStudipController
         /////////////////////////
         //   Scrollytelling   //
         ////////////////////////
-        $this->storeScrollytelling(isset($courseware_settings['scrollytelling']) ? true : false);
-        
+        if ($courseware_settings['scrollytelling'] === '1') {
+            $this->storeScrollytelling(true);
+        } else {
+            $this->storeScrollytelling(false);
+        }
+
         ////////////////////////
         // EDITING PERMISSION //
         ////////////////////////
         if (!$this->is_tutor) {
-            $this->storeEditingPermission(isset($courseware_settings['editing_permission']) ? true : false);
+            if ($courseware_settings['editing_permission'] === '1') {
+                $this->storeEditingPermission(true);
+            } else {
+                $this->storeEditingPermission(false);
+            }
         }
 
         /////////////////////////////
