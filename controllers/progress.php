@@ -21,10 +21,13 @@ class ProgressController extends CoursewareStudipController
             Navigation::activateItem('/course/mooc_courseware/progress');
         }
 
-        $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId()));
+        $cid  =$this->plugin->getCourseId();
+        $uid = $this->plugin->getCurrentUserId();
+
+        $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($cid));
         $bids = array_map(function ($block) { return (int) $block->id; }, $blocks);
         $progress = array_reduce(
-            \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id = ?', array($bids, $this->plugin->getCurrentUserId())),
+            \Mooc\DB\UserProgress::findBySQL('block_id IN (?) AND user_id = ?', array($bids, $uid)),
             function ($memo, $item) {
                 $memo[$item->block_id] = array(
                     'grade' => $item->grade,
@@ -37,7 +40,7 @@ class ProgressController extends CoursewareStudipController
             array());
 
         $grouped = array_reduce(
-            \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position, id', array($this->plugin->getCourseId())),
+            \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY position, id', array($cid)),
             function ($memo, $item) {
                 $arr = $memo[$item->parent_id][] = array_merge($item->toArray(), ['db_block'=> $item]);
 

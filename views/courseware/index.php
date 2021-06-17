@@ -23,7 +23,7 @@
   };
 </script>
 
-<script src="<?= $plugin->getPluginURL() ?>/assets/static/courseware.js?v=474" charset="utf-8"></script>
-    <? PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css?v=474') ?>
+<script src="<?= $plugin->getPluginURL() ?>/assets/static/courseware.js?v=477" charset="utf-8"></script>
+    <? PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css?v=477') ?>
 
 <?= $courseware_block->render($view, $context) ?>

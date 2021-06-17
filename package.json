@@ -1,6 +1,6 @@
 {
   "name": "courseware",
-  "version": "4.7.6",
+  "version": "4.7.7",
   "description": "Interaktive multimediale Lernmodule erstellen und bereitstellen",
   "repository": "git@github.com:virtUOS/courseware.git",
   "author": "Zentrum virtUOS / ELAN e.V.",
@@ -28,8 +28,7 @@
     "query-string": "5.1.1",
     "slick-carousel": "1.8.1",
     "style-loader": "2.0.0",
-    "webpack": "3.12.0",
-    "webpack-dev-server": "2.11.5"
+    "webpack": "3.12.0"
   },
   "browserslist": [
     "last 2 versions",
@@ -39,10 +38,8 @@
     "build:dev": "webpack --watch",
     "prebuild:prod": "cd vue/block_manager && npm install && npm run build",
     "build:prod": "NODE_ENV=production webpack",
-    "wds": "webpack-dev-server",
     "locales": "php buildLocales.php",
     "prezip": "npm run build:prod",
     "zip": "zip -r courseware-v$npm_package_version.zip assets blocks controllers cronjobs export import locale migrations models vendor views LICENSE Courseware.php CoursewareObserver.php plugin.manifest README.md"
-  },
-  "dependencies": {}
+  }
 }

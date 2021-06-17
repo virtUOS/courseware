@@ -27,7 +27,7 @@ class ExportController extends CoursewareStudipController
         // dump the XML to the filesystem
         $export = new XmlExport($this->plugin->getBlockFactory());
         $courseware = $this->container['current_courseware'];
-        
+
         foreach ($courseware->getFiles() as $file) {
             if (trim($file['url']) !== '') {
                 continue;
@@ -39,7 +39,7 @@ class ExportController extends CoursewareStudipController
                 copy($file['path'], $destination.'/'.$file['filename']);
             }
         }
-        
+
         if (Request::submitted('plaintext')) {
             $this->response->add_header('Content-Type', 'text/xml;charset=utf-8');
             $this->render_text($export->export($courseware));

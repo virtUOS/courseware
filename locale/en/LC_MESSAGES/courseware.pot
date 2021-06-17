@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  js.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-1215 10:23+0200\n"
+"POT-Creation-Date: 2021-06-0617 10:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "#-#-#-#-#  courseware.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-15 10:23+0100\n"
+"POT-Creation-Date: 2021-06-17 10:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,7 +86,7 @@ msgstr ""
 msgid "Anheben"
 msgstr ""
 
-msgid "Anmerkung zur Lösung"
+msgid "Anmerkungen zur Lösung"
 msgstr ""
 
 msgid "Anpassen abschlie�?en"
@@ -1135,7 +1135,7 @@ msgstr ""
 msgid "senden"
 msgstr ""
 
-msgid "sichtbar ab:"
+msgid "sichtbar ab"
 msgstr ""
 
 msgid "Sidebar für"
@@ -1239,7 +1239,7 @@ msgstr ""
 msgid "Uhrzeit"
 msgstr ""
 
-msgid "unsichtbar ab:"
+msgid "unsichtbar ab"
 msgstr ""
 
 msgid "unten links"
@@ -1471,20 +1471,20 @@ msgstr ""
 msgid "Hinweis"
 msgstr ""
 
-#: Courseware.php:443
+#: Courseware.php:446
 msgid "Zurück zur Courseware"
 msgstr ""
 
-#: Courseware.php:449 Courseware.php:456 Courseware.php:457
+#: Courseware.php:452 Courseware.php:459 Courseware.php:460
 #: models/mooc/db/CoursewareFactory.php:49
 msgid "Courseware"
 msgstr ""
 
-#: Courseware.php:458 Courseware.php:460
+#: Courseware.php:461 Courseware.php:463
 msgid "Create and provide interactive multimedia learning modules"
 msgstr ""
 
-#: Courseware.php:459 Courseware.php:461
+#: Courseware.php:462 Courseware.php:464
 msgid ""
 "With courseware you can create and use interactive multimedia learning "
 "modules. The modules are structured into chapters, subsections and sections "
@@ -1493,15 +1493,20 @@ msgid ""
 "into other courses or other installations."
 msgstr ""
 
-#: Courseware.php:462
+#: Courseware.php:465
 msgid "https://hilfe.studip.de/help/4.0/en/Basis/Courseware"
+msgstr ""
+
+#: controllers/progress.php:104 cronjobs/CoursewareMailCronjob.php:188
+#: cronjobs/CoursewareMailCronjob.php:192 views/courseware/settings.php:128
+msgid "Zertifikat"
 msgstr ""
 
 #: controllers/courseware.php:55
 msgid "Die Einstellungen wurden gespeichert."
 msgstr ""
 
-#: controllers/courseware.php:363
+#: controllers/courseware.php:517
 msgid "Tutoren können diese Einstellung nicht speichern."
 msgstr ""
 
@@ -1561,11 +1566,39 @@ msgstr ""
 msgid "Das Import-Archiv ist beschädigt."
 msgstr ""
 
+#: cronjobs/CoursewareMailCronjob.php:27
+msgid "Courseware E-Mails senden"
+msgstr ""
+
+#: cronjobs/CoursewareMailCronjob.php:32
+msgid ""
+"Sendet E-Mails zur Erinnerung, beim Zurücksetzen des Fortschrittes und bei "
+"Erhalt von Zertifikaten"
+msgstr ""
+
+#: cronjobs/CoursewareMailCronjob.php:42
+msgid "Sollen Ausgaben erzeugt werden"
+msgstr ""
+
+#: cronjobs/CoursewareMailCronjob.php:192
+#: cronjobs/CoursewareMailCronjob.php:211
+#: cronjobs/CoursewareMailCronjob.php:228
+msgid "[Courseware]"
+msgstr ""
+
+#: cronjobs/CoursewareMailCronjob.php:211
+msgid "Erinnerung"
+msgstr ""
+
+#: cronjobs/CoursewareMailCronjob.php:228
+msgid "Fortschritt zurückgesetzt"
+msgstr ""
+
 #: views/cpo/index.php:11
 msgid "Fortschrittsübersicht für Lehrende"
 msgstr ""
 
-#: views/cpo/index.php:67 views/progress/index.php:71
+#: views/cpo/index.php:67 views/progress/index.php:77
 msgid "Dieses Unterkatpitel ist leer."
 msgstr ""
 
@@ -1577,7 +1610,7 @@ msgstr ""
 msgid " bearbeitet"
 msgstr ""
 
-#: views/cpo/index.php:83
+#: views/cpo/index.php:83 views/progress/index.php:92
 msgid "Dieses Kapitel ist leer."
 msgstr ""
 
@@ -1633,20 +1666,20 @@ msgstr ""
 msgid "Die Courseware in dieser Veranstaltung enthält noch keine Diskussion."
 msgstr ""
 
-#: views/progress/index.php:11 views/progress/index.php:14
-msgid "Fortschritt zurücksetzen"
-msgstr ""
-
-#: views/progress/index.php:12
+#: views/progress/index.php:11
 msgid "Soll der Fortschritt wirklich gelöscht werden?"
 msgstr ""
 
-#: views/progress/index.php:58
-msgid "Dieser Abschnitt enthält keine Blöcke"
+#: views/progress/index.php:13 views/courseware/settings.php:254
+msgid "Fortschritt zurücksetzen"
 msgstr ""
 
-#: views/progress/index.php:86
-msgid "Dieses Katpitel ist leer."
+#: views/progress/index.php:19
+msgid "Zertifikat herunterladen"
+msgstr ""
+
+#: views/progress/index.php:64
+msgid "Dieser Abschnitt enthält keine Blöcke"
 msgstr ""
 
 #: views/import/index.php:7
@@ -1669,51 +1702,61 @@ msgid ""
 "haben."
 msgstr ""
 
-#: views/courseware/_settings_discussionblock.php:4
+#: views/courseware/_settings_discussionblock.php:2
 msgid "Blubber-Diskussionsblock aktivieren"
 msgstr ""
 
-#: views/courseware/_settings_discussionblock.php:6
+#: views/courseware/_settings_discussionblock.php:4
 msgid ""
 "Der Blubber-Diskussionsblock bietet eine Möglichkeit zur Kommunikation "
 "zwischen den Teilnehmern. Durch die Aktivierung muss aber der Blubber-Reiter "
 "entfernt werden."
 msgstr ""
 
-#: views/courseware/_settings_editing_permission.php:4
+#: views/courseware/_settings_discussionblock.php:11
+#: views/courseware/_settings_editing_permission.php:12
+#: views/courseware/settings.php:66 views/courseware/settings.php:140
+#: views/courseware/settings.php:192 views/courseware/settings.php:263
+msgid "Ja"
+msgstr ""
+
+#: views/courseware/_settings_discussionblock.php:12
+#: views/courseware/_settings_editing_permission.php:13
+#: views/courseware/settings.php:67 views/courseware/settings.php:141
+#: views/courseware/settings.php:193 views/courseware/settings.php:264
+msgid "Nein"
+msgstr ""
+
+#: views/courseware/_settings_editing_permission.php:2
 msgid "Editierberechtigung für TutorInnen"
 msgstr ""
 
-#: views/courseware/_settings_editing_permission.php:6
+#: views/courseware/_settings_editing_permission.php:4
 msgid ""
 "Wenn Sie diesen Schalter aktivieren, dürfen neben den DozentInnen auch "
 "TutorInnen Ihre Courseware editieren."
 msgstr ""
 
-#: views/courseware/settings.php:21
-msgid "Courseware-Einstellungen"
-msgstr ""
-
-#: views/courseware/settings.php:26
+#: views/courseware/settings.php:15
 msgid "Allgemeines"
 msgstr ""
 
-#: views/courseware/settings.php:31
+#: views/courseware/settings.php:17
 msgid "Titel der Courseware"
 msgstr ""
 
-#: views/courseware/settings.php:33
+#: views/courseware/settings.php:19
 msgid ""
 "Der Titel der Courseware erscheint als Beschriftung des Courseware-Reiters. "
 "Sie können den Reiter also z.B. auch \"Online-Skript\", \"Lernmodul\" o.ä. "
 "nennen."
 msgstr ""
 
-#: views/courseware/settings.php:44
+#: views/courseware/settings.php:25
 msgid "Art der Kapitelabfolge"
 msgstr ""
 
-#: views/courseware/settings.php:46
+#: views/courseware/settings.php:27
 msgid ""
 "Bei freier Kapitelabfolge können alle sichtbaren Kapitel in beliebiger "
 "Reihenfolge ausgewählt werden. Bei sequentieller Abfolge müssen alle "
@@ -1721,125 +1764,284 @@ msgid ""
 "Unterkapitel ausgewählt und angezeigt werden kann."
 msgstr ""
 
-#: views/courseware/settings.php:53
+#: views/courseware/settings.php:36
 msgid "frei"
 msgstr ""
 
-#: views/courseware/settings.php:54
+#: views/courseware/settings.php:37
 msgid "sequentiell"
 msgstr ""
 
-#: views/courseware/settings.php:64
-msgid "Vips-Reiter für AutorInnen entfernen"
-msgstr ""
-
-#: views/courseware/settings.php:66
-msgid ""
-"Diese Einstellung wird ab der Courseware-Version 4.4 und der Vips-Version "
-"1.5 von Vips übernommen"
-msgstr ""
-
-#: views/courseware/settings.php:71
-msgid "Einstellungen in Vips vornehmen"
-msgstr ""
-
-#: views/courseware/settings.php:78
+#: views/courseware/settings.php:45
 msgid "Dritte Navigationsebene anzeigen"
 msgstr ""
 
-#: views/courseware/settings.php:80
+#: views/courseware/settings.php:47
 msgid ""
 "Wählen Sie hier aus wie die dritte Navigationsebene dargestellt werden soll."
 msgstr ""
 
-#: views/courseware/settings.php:86
+#: views/courseware/settings.php:50
 msgid "Über dem Seiteninhalt horizontal anzeigen"
 msgstr ""
 
-#: views/courseware/settings.php:87
+#: views/courseware/settings.php:51
 msgid "Links in der Kapitelnavigation anzeigen"
 msgstr ""
 
-#: views/courseware/settings.php:88
+#: views/courseware/settings.php:52
 msgid "Nicht anzeigen"
 msgstr ""
 
-#: views/courseware/settings.php:96
+#: views/courseware/settings.php:57
 msgid "Scrollytelling aktivieren"
 msgstr ""
 
-#: views/courseware/settings.php:98
+#: views/courseware/settings.php:59
 msgid ""
 "Wenn Sie diesen Schalter aktivieren, wird die Courseware in ein "
 "Scrollytelling verwandelt."
 msgstr ""
 
-#: views/courseware/settings.php:110
+#: views/courseware/settings.php:73
 msgid "Blockeinstellungen"
 msgstr ""
 
-#: views/courseware/settings.php:116
+#: views/courseware/settings.php:78
 msgid "Selbsttests"
 msgstr ""
 
-#: views/courseware/settings.php:122
+#: views/courseware/settings.php:80
 msgid "Anzahl Versuche: Quiz (Selbsttest)"
 msgstr ""
 
-#: views/courseware/settings.php:124
+#: views/courseware/settings.php:82
 msgid ""
 "Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben in einem "
 "Quiz vom Type Selbsttest hat, bevor die Lösung der Aufgabe angezeigt wird."
 msgstr ""
 
-#: views/courseware/settings.php:131 views/courseware/settings.php:160
+#: views/courseware/settings.php:85 views/courseware/settings.php:107
 msgid "Unbegrenzt"
 msgstr ""
 
-#: views/courseware/settings.php:151
+#: views/courseware/settings.php:101
 msgid "Anzahl Versuche: Interactive Video"
 msgstr ""
 
-#: views/courseware/settings.php:153
+#: views/courseware/settings.php:103
 msgid ""
 "Die Anzahl der Versuche, die ein Student beim Lösen von Aufgaben in einem "
 "interaktiven Video hat, bevor die Lösung der Aufgabe angezeigt wird."
 msgstr ""
 
+#: views/courseware/settings.php:131
+msgid "Zertifikat erzeugen"
+msgstr ""
+
+#: views/courseware/settings.php:133
+msgid ""
+"Wenn der Fortschritt eines Nutzenden die Zertifikatsgrenze erreicht, wird "
+"ein Teilnahme-Zertifikat per E-Mail versand."
+msgstr ""
+
+#: views/courseware/settings.php:145
+msgid "Zertifikat Grenze"
+msgstr ""
+
+#: views/courseware/settings.php:147
+msgid "Setzt Grenze in Prozent ab der ein Zertifikat versendet werden soll."
+msgstr ""
+
+#: views/courseware/settings.php:160
+msgid "Zertifikat Hintergrundbild"
+msgstr ""
+
+#: views/courseware/settings.php:162
+msgid "Wählen Sie hier den Hintergrund für das Zertifikat aus."
+msgstr ""
+
+#: views/courseware/settings.php:163
+msgid ""
+"Bitte legen Sie hierfür ein Bild, in einen unsichtbaren Dateiordner dieser "
+"Veranstaltung, ab."
+msgstr ""
+
+#: views/courseware/settings.php:170
+msgid "Keine Datei ausgewählt"
+msgstr ""
+
+#: views/courseware/settings.php:180
+msgid "Erinnern"
+msgstr ""
+
 #: views/courseware/settings.php:183
+msgid "Erinnerung senden"
+msgstr ""
+
+#: views/courseware/settings.php:185
+msgid "Nutzende erhalten in gewählten Zeitinervallen eine Erinnerungs-E-Mail."
+msgstr ""
+
+#: views/courseware/settings.php:197 views/courseware/settings.php:268
+msgid "Intervall"
+msgstr ""
+
+#: views/courseware/settings.php:199
+msgid ""
+"Gibt an in welchem zeitlichen Abstand eine Erinnerung versand werden soll."
+msgstr ""
+
+#: views/courseware/settings.php:206 views/courseware/settings.php:277
+msgid "wöchentlich"
+msgstr ""
+
+#: views/courseware/settings.php:207 views/courseware/settings.php:278
+msgid "14-tägig"
+msgstr ""
+
+#: views/courseware/settings.php:208 views/courseware/settings.php:279
+msgid "monatlich"
+msgstr ""
+
+#: views/courseware/settings.php:209 views/courseware/settings.php:280
+msgid "vierteljährlich"
+msgstr ""
+
+#: views/courseware/settings.php:210 views/courseware/settings.php:281
+msgid "halbjährlich"
+msgstr ""
+
+#: views/courseware/settings.php:211 views/courseware/settings.php:282
+msgid "jährlich"
+msgstr ""
+
+#: views/courseware/settings.php:215 views/courseware/settings.php:286
+msgid "Startdatum"
+msgstr ""
+
+#: views/courseware/settings.php:217
+msgid "An diesem Datum wird zum ersten Mal eine Nachricht verschickt."
+msgstr ""
+
+#: views/courseware/settings.php:228 views/courseware/settings.php:299
+msgid "Enddatum"
+msgstr ""
+
+#: views/courseware/settings.php:230
+msgid "An diesem Datum wird zum letzten Mal eine Nachricht verschickt."
+msgstr ""
+
+#: views/courseware/settings.php:241 views/courseware/settings.php:312
+msgid "Nachrichtentext"
+msgstr ""
+
+#: views/courseware/settings.php:243
+msgid "Erinnerungs-E-Mail Nachrichtentext"
+msgstr ""
+
+#: views/courseware/settings.php:251
+msgid "Fortschritt automatisch zurücksetzen"
+msgstr ""
+
+#: views/courseware/settings.php:256
+msgid ""
+"Nutzende erhalten in gewählten Zeitinervallen eine Aufforderung den Inhalt "
+"erneut zu bearbeiten. Der Fortschritt zurückgesetzt."
+msgstr ""
+
+#: views/courseware/settings.php:270
+msgid ""
+"Gibt an in welchem zeitlichen Abstand der Fortschritt zurückgesetzt werden "
+"soll."
+msgstr ""
+
+#: views/courseware/settings.php:288
+msgid "An diesem Datum wird zum ersten Mal der Fortschritt zurückgesetzt."
+msgstr ""
+
+#: views/courseware/settings.php:301
+msgid "An diesem Datum wird zum letzten Mal der Fortschritt zurückgesetzt."
+msgstr ""
+
+#: views/courseware/settings.php:314
+msgid "Zurücksetzungs-E-Mail Nachrichtentext"
+msgstr ""
+
+#: views/courseware/settings.php:321
 msgid "Übernehmen"
 msgstr ""
 
-#: views/courseware/settings.php:183
+#: views/courseware/settings.php:321
 msgid "Änderungen übernehmen"
 msgstr ""
 
-#: blocks/Courseware/Courseware.php:685 models/mooc/db/CoursewareFactory.php:60
+#: views/mails/_pdf_certificate.php:7
+msgid "Herr"
+msgstr ""
+
+#: views/mails/_pdf_certificate.php:10
+msgid "Frau"
+msgstr ""
+
+#: views/mails/_pdf_certificate.php:17
+#, php-format
+msgid ""
+"Hiermit wird bescheinigt, dass %s am %s erfolgreich am Seminar %s "
+"teilgenommen hat."
+msgstr ""
+
+#: views/mails/_mail_certificate.php:5 views/mails/_mail_reminder.php:5
+#, php-format
+msgid ""
+"In der Courseware der Veranstaltung %s haben Sie %s%% Fortschritt erreicht"
+msgstr ""
+
+#: views/mails/_mail_certificate.php:9
+msgid ""
+"Anbei erhalten Sie Ihr Zertifikat. Dieses Zertifikat können Sie auch unter "
+"dem Menüpunkt \"Fortschrittsübersicht\" in Courseware herunterladen."
+msgstr ""
+
+#: views/mails/_mail_certificate.php:10
+msgid "Courseware Fortschrittsübersicht ansehen:"
+msgstr ""
+
+#: views/mails/_mail_reminder.php:10 views/mails/_mail_reseter.php:9
+msgid "Courseware ansehen:"
+msgstr ""
+
+#: views/mails/_mail_reseter.php:5
+#, php-format
+msgid "Ihr Courseware-Fortschritt der Veranstaltung %s wurde zurückgesetzt"
+msgstr ""
+
+#: blocks/Courseware/Courseware.php:835 models/mooc/db/CoursewareFactory.php:60
 msgid "Unterkapitel 1"
 msgstr ""
 
-#: blocks/Courseware/Courseware.php:693 models/mooc/db/CoursewareFactory.php:68
+#: blocks/Courseware/Courseware.php:843 models/mooc/db/CoursewareFactory.php:68
 msgid "Abschnitt 1"
 msgstr ""
 
-#: blocks/AudioGalleryBlock/AudioGalleryBlock.php:156
+#: blocks/AudioGalleryBlock/AudioGalleryBlock.php:157
 msgid "Sie sind nicht berechtigt diese Aufnahme zu löschen."
 msgstr ""
 
-#: blocks/AudioGalleryBlock/AudioGalleryBlock.php:162
+#: blocks/AudioGalleryBlock/AudioGalleryBlock.php:163
 msgid "Aufnahme konnte nicht gelöscht werden."
 msgstr ""
 
-#: blocks/Section/Section.php:138
+#: blocks/Section/Section.php:139
 msgid "Sie sind nicht berechtigt Blöcke anzulegen."
 msgstr ""
 
-#: blocks/Section/Section.php:183
+#: blocks/Section/Section.php:184
 msgid "Sie sind nicht berechtigt Blöcke zu löschen."
 msgstr ""
 
-#: blocks/Section/Section.php:207 blocks/Section/Section.php:222
-#: blocks/Section/Section.php:242
+#: blocks/Section/Section.php:208 blocks/Section/Section.php:223
+#: blocks/Section/Section.php:243
 msgid "Sie sind nicht berechtigt diese Änderung vorzunehmen."
 msgstr ""
 
@@ -1859,12 +2061,12 @@ msgstr ""
 msgid "Übung"
 msgstr ""
 
-#: blocks/TestBlock/TestBlock.php:188 blocks/TestBlock/TestBlock.php:279
-#: blocks/InteractiveVideoBlock/InteractiveVideoBlock.php:228
+#: blocks/TestBlock/TestBlock.php:194 blocks/TestBlock/TestBlock.php:285
+#: blocks/InteractiveVideoBlock/InteractiveVideoBlock.php:241
 msgid "Das Aufgabenblatt kann zur Zeit nicht bearbeitet werden."
 msgstr ""
 
-#: blocks/TestBlock/TestBlock.php:229
+#: blocks/TestBlock/TestBlock.php:235
 msgid "Diese Aufgabe können nur eingeloggte Nutzer abgeben."
 msgstr ""
 

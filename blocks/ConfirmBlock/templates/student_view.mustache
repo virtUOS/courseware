@@ -1,16 +1,18 @@
 {{^inactive}}
-    <label class="confirmation">
-      <input name=confirmed type=checkbox {{#confirmed}}checked disabled{{/confirmed}}>
-      <span class="confirm-title">{{title}}</span>
-    </label>
-    {{#confirmed}}
-    <div class="messagebox messagebox_success">
-        {{#i18n}}Danke! Sie können nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
+    <div class="cw-confirm-wrapper">
+        {{#confirmed}}
+            <div class="messagebox messagebox_success cw-confirm-messagebox">
+                {{#i18n}}Danke! Sie können nun mit dem nächsten Abschnitt fortfahren.{{/i18n}}
+            </div>
+        {{/confirmed}}
+        <div class="cw-confirm-content">
+            <input class="cw-confirm-checkbox" name=confirmed type=checkbox {{#confirmed}}checked disabled{{/confirmed}}>
+            <p class="confirm-title">{{title}}</p>
+        </div>
     </div>
-    {{/confirmed}}
 {{/inactive}}
 {{#inactive}}
     <div class="messagebox messagebox_info">
-        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschlossen haben.{{/i18n}}
     </div>
 {{/inactive}}

@@ -16,15 +16,15 @@
         {{/isNobody}}
         </article>
       {{/threads}}
-    
+
       {{^threads}}
         <div class="messagebox messagebox_success">
           Sie wurden noch keiner Gruppe zugeordnet. Bitte wenden Sie sich an Ihren Dozenten.
         </div>
       {{/threads}}
-    
+
     {{/inactive}}
-    
+
     {{#inactive}}
     <div class="messagebox messagebox_info">
         {{#i18n}}Für diesen Diskussionsblock muss "Blubber" in dieser Veranstaltung eingeschaltet werden..{{/i18n}}
@@ -33,6 +33,6 @@
 {{/inactive_block}}
 {{#inactive_block}}
     <div class="messagebox messagebox_info">
-        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschlossen haben.{{/i18n}}
     </div>
 {{/inactive_block}}
