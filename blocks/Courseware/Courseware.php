@@ -59,11 +59,11 @@ class Courseware extends Block
         $this->defineField('reminder_start_date', \Mooc\SCOPE_BLOCK, 0);
         $this->defineField('reminder_end_date', \Mooc\SCOPE_BLOCK, '');
 
-        $this->defineField('reseter', \Mooc\SCOPE_BLOCK, false);
-        $this->defineField('reseter_message', \Mooc\SCOPE_BLOCK, '');
-        $this->defineField('reseter_interval', \Mooc\SCOPE_BLOCK, 0);
-        $this->defineField('reseter_start_date', \Mooc\SCOPE_BLOCK, '');
-        $this->defineField('reseter_end_date', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('resetter', \Mooc\SCOPE_BLOCK, false);
+        $this->defineField('resetter_message', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('resetter_interval', \Mooc\SCOPE_BLOCK, 0);
+        $this->defineField('resetter_start_date', \Mooc\SCOPE_BLOCK, '');
+        $this->defineField('resetter_end_date', \Mooc\SCOPE_BLOCK, '');
     }
 
     public function student_view($context = array())
@@ -534,54 +534,54 @@ class Courseware extends Block
         return $this->reminder_end_date == '' ? '': date('d.m.Y', (int) $this->reminder_end_date);
     }
 
-    public function setReseter($state)
+    public function setResetter($state)
     {
-        $this->reseter = $state;
+        $this->resetter = $state;
     }
 
-    public function getReseter()
+    public function getResetter()
     {
-        return $this->reseter;
+        return $this->resetter;
     }
 
-    public function setReseterInterval($state)
+    public function setResetterInterval($state)
     {
-        $this->reseter_interval = $state;
+        $this->resetter_interval = $state;
     }
 
-    public function getReseterInterval()
+    public function getResetterInterval()
     {
-        return $this->reseter_interval;
+        return $this->resetter_interval;
     }
 
-    public function setReseterStartDate($state)
+    public function setResetterStartDate($state)
     {
-        return $this->reseter_start_date = $state;
+        return $this->resetter_start_date = $state;
     }
 
-    public function getReseterStartDate()
+    public function getResetterStartDate()
     {
-        return $this->reseter_start_date == '' ? '': date('d.m.Y', (int) $this->reseter_start_date);
+        return $this->resetter_start_date == '' ? '': date('d.m.Y', (int) $this->resetter_start_date);
     }
 
-    public function setReseterEndDate($state)
+    public function setResetterEndDate($state)
     {
-        return $this->reseter_end_date = $state;
+        return $this->resetter_end_date = $state;
     }
 
-    public function getReseterEndDate()
+    public function getResetterEndDate()
     {
-        return $this->reseter_end_date == '' ? '': date('d.m.Y', (int) $this->reseter_end_date);
+        return $this->resetter_end_date == '' ? '': date('d.m.Y', (int) $this->resetter_end_date);
     }
 
-    public function setReseterMessage($state)
+    public function setResetterMessage($state)
     {
-        $this->reseter_message = $state;
+        $this->resetter_message = $state;
     }
 
-    public function getReseterMessage()
+    public function getResetterMessage()
     {
-        return $this->reseter_message;
+        return $this->resetter_message;
     }
 
     ///////////////////////

@@ -255,13 +255,13 @@ if ($flash['success']) {
             <dfn>
                 <?= _cw('Nutzende erhalten in gewählten Zeitinervallen eine Aufforderung den Inhalt erneut zu bearbeiten. Der Fortschritt zurückgesetzt.'); ?>
             </dfn>
-            <select id="courseware-reseter"
-                name="courseware[reseter]"
+            <select id="courseware-resetter"
+                name="courseware[resetter]"
                 class="size-s"
             >
-                <? $reseter = $courseware_block->getReseter() ?>
-                <option value="1" <? if ($reseter): ?>selected<? endif ?>><?= _cw('Ja')?></option>
-                <option value="0" <? if (!$reseter): ?>selected<? endif ?>><?= _cw('Nein')?></option>
+                <? $resetter = $courseware_block->getResetter() ?>
+                <option value="1" <? if ($resetter): ?>selected<? endif ?>><?= _cw('Ja')?></option>
+                <option value="0" <? if (!$resetter): ?>selected<? endif ?>><?= _cw('Nein')?></option>
             </select>
         </label>
         <label>
@@ -269,17 +269,17 @@ if ($flash['success']) {
             <dfn>
                 <?= _cw('Gibt an in welchem zeitlichen Abstand der Fortschritt zurückgesetzt werden soll.'); ?>
             </dfn>
-            <select id="courseware-reseter-interval"
-                name="courseware[reseter_interval]"
+            <select id="courseware-resetter-interval"
+                name="courseware[resetter_interval]"
                 class="size-s"
             >
-                <? $reseter_interval = $courseware_block->getReseterInterval() ?>
-                <option value="0" <? if ($reseter_interval == '0'): ?>selected<? endif ?>><?= _cw('wöchentlich')?></option>
-                <option value="1" <? if ($reseter_interval == '1'): ?>selected<? endif ?>><?= _cw('14-tägig')?></option>
-                <option value="2" <? if ($reseter_interval == '2'): ?>selected<? endif ?>><?= _cw('monatlich')?></option>
-                <option value="3" <? if ($reseter_interval == '3'): ?>selected<? endif ?>><?= _cw('vierteljährlich')?></option>
-                <option value="4" <? if ($reseter_interval == '4'): ?>selected<? endif ?>><?= _cw('halbjährlich')?></option>
-                <option value="5" <? if ($reseter_interval == '5'): ?>selected<? endif ?>><?= _cw('jährlich')?></option>
+                <? $resetter_interval = $courseware_block->getResetterInterval() ?>
+                <option value="0" <? if ($resetter_interval == '0'): ?>selected<? endif ?>><?= _cw('wöchentlich')?></option>
+                <option value="1" <? if ($resetter_interval == '1'): ?>selected<? endif ?>><?= _cw('14-tägig')?></option>
+                <option value="2" <? if ($resetter_interval == '2'): ?>selected<? endif ?>><?= _cw('monatlich')?></option>
+                <option value="3" <? if ($resetter_interval == '3'): ?>selected<? endif ?>><?= _cw('vierteljährlich')?></option>
+                <option value="4" <? if ($resetter_interval == '4'): ?>selected<? endif ?>><?= _cw('halbjährlich')?></option>
+                <option value="5" <? if ($resetter_interval == '5'): ?>selected<? endif ?>><?= _cw('jährlich')?></option>
             </select>
         </label>
         <label>
@@ -287,13 +287,13 @@ if ($flash['success']) {
             <dfn>
                 <?= _cw('An diesem Datum wird zum ersten Mal der Fortschritt zurückgesetzt.'); ?>
             </dfn>
-            <input 
-                value="<?= $courseware_block->getReseterStartDate() ?>"
+            <input
+                value="<?= $courseware_block->getResetterStartDate() ?>"
                 type="text"
-                name="courseware[reseter_start_date]"
-                id="courseware-reseter-start-date"
-                class="size-s" 
-                data-date-picker='{"<":"#courseware-reseter-end-date"}'/>
+                name="courseware[resetter_start_date]"
+                id="courseware-resetter-start-date"
+                class="size-s"
+                data-date-picker='{"<":"#courseware-resetter-end-date"}'/>
         </label>
         <label>
             <?= _cw('Enddatum') ?>
@@ -301,19 +301,19 @@ if ($flash['success']) {
                 <?= _cw('An diesem Datum wird zum letzten Mal der Fortschritt zurückgesetzt.'); ?>
             </dfn>
             <input
-                value="<?= $courseware_block->getReseterEndDate() ?>"
+                value="<?= $courseware_block->getResetterEndDate() ?>"
                 type="text"
-                name="courseware[reseter_end_date]"
-                id="courseware-reseter-end-date"
+                name="courseware[resetter_end_date]"
+                id="courseware-resetter-end-date"
                 class="size-s"
-                data-date-picker='{">":"#courseware-reseter-start-date"}'/>
+                data-date-picker='{">":"#courseware-resetter-start-date"}'/>
         </label>
         <label>
             <?= _cw('Nachrichtentext') ?>
             <dfn>
                 <?= _cw('Zurücksetzungs-E-Mail Nachrichtentext'); ?>
             </dfn>
-            <textarea name="courseware[reseter_message]"><?= $courseware_block->getReseterMessage(); ?></textarea>
+            <textarea name="courseware[resetter_message]"><?= $courseware_block->getResetterMessage(); ?></textarea>
         </label>
     </fieldset>
 

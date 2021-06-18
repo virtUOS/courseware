@@ -63,9 +63,9 @@ class CoursewareMailCronjob extends CronJob
         $reminder_coursewares = $this->filterCoursewares($coursewares, 'reminder');
         $this->sendReminder($reminder_coursewares);
 
-        //find all courses with courseware reseter active
-        $reseter_coursewares = $this->filterCoursewares($coursewares, 'reseter');
-        $this->sendReseter($reseter_coursewares);
+        //find all courses with courseware resetter active
+        $resetter_coursewares = $this->filterCoursewares($coursewares, 'resetter');
+        $this->sendResetter($resetter_coursewares);
 
     }
 
@@ -151,7 +151,7 @@ class CoursewareMailCronjob extends CronJob
         }
     }
 
-    private function sendReseter($coursewares)
+    private function sendResetter($coursewares)
     {
         foreach($coursewares as $cid => $courseware_data) {
             if (!$this->checkDate($courseware_data['courseware_ui'])) {
@@ -172,7 +172,7 @@ class CoursewareMailCronjob extends CronJob
                     }
                 }
                 if($had_progress) {
-                    $this->sendReseterMail($course_member, $courseware_data);
+                    $this->sendResetterMail($course_member, $courseware_data);
                 }
             }
         }
@@ -217,10 +217,10 @@ class CoursewareMailCronjob extends CronJob
             $this->createMailLog($course_member, 'reminder');
         }
     }
-    private function sendReseterMail($course_member, $courseware_data)
+    private function sendResetterMail($course_member, $courseware_data)
     {
         $template_factory = new Flexi_TemplateFactory(dirname(__FILE__) . '/../views');
-        $template = $template_factory->open('mails/_mail_reseter');
+        $template = $template_factory->open('mails/_mail_resetter');
         $htmlMessage = $template->render(compact('course_member', 'courseware_data'));
 
         $mail = new StudipMail();
@@ -231,7 +231,7 @@ class CoursewareMailCronjob extends CronJob
             ->send();
 
         if ($send_mail) {
-            $this->createMailLog($course_member, 'reseter');
+            $this->createMailLog($course_member, 'resetter');
         }
     }
 
@@ -247,9 +247,9 @@ class CoursewareMailCronjob extends CronJob
 
     private function checkDate($courseware)
     {
-        $interval = $courseware->getReseterInterval();
-        $start = $courseware->getReseterStartDate();
-        $end = $courseware->getReseterEndDate();
+        $interval = $courseware->getResetterInterval();
+        $start = $courseware->getResetterStartDate();
+        $end = $courseware->getResetterEndDate();
         $today = strtotime('today midnight');
 
         if ($today - $start < 0 || $today - $end > 0) {

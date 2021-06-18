@@ -5,7 +5,7 @@ $message = [
         _('Ihr Courseware-Fortschritt der Veranstaltung %s wurde zurückgesetzt'),
         $course_member['course_name']
     ),
-    'content' => $courseware_data['courseware_ui']->getReseterMessage(),
+    'content' => $courseware_data['courseware_ui']->getResetterMessage(),
     'url' => _('Courseware ansehen:') .' '. UrlHelper::getUrl(
         $GLOBALS['ABSOLUTE_URI_STUDIP']
         . 'plugins.php/courseware/courseware/'

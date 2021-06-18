@@ -354,28 +354,28 @@ class CoursewareController extends CoursewareStudipController
 
 
         ///////////////////
-        //    Reseter    //
+        //    Resetter    //
         ///////////////////
-        if ($courseware_settings['reseter'] === '1') {
-            $this->storeReseter(true);
-            if(isset($courseware_settings['reseter_interval'])){
-                $this->storeReseterInterval($courseware_settings['reseter_interval']);
+        if ($courseware_settings['resetter'] === '1') {
+            $this->storeResetter(true);
+            if(isset($courseware_settings['resetter_interval'])){
+                $this->storeResetterInterval($courseware_settings['resetter_interval']);
             } else {
-                $this->storeReseterInterval('5'); // default jährlich
+                $this->storeResetterInterval('5'); // default jährlich
             }
-            if(isset($courseware_settings['reseter_start_date'])){
-                $this->storeReseterStartDate($courseware_settings['reseter_start_date']);
+            if(isset($courseware_settings['resetter_start_date'])){
+                $this->storeResetterStartDate($courseware_settings['resetter_start_date']);
             } else {
-                $this->storeReseterStartDate(date("d.m.Y"));
+                $this->storeResetterStartDate(date("d.m.Y"));
             }
-            if(isset($courseware_settings['reseter_end_date'])){
-                $this->storeReseterEndDate($courseware_settings['reseter_end_date']);
+            if(isset($courseware_settings['resetter_end_date'])){
+                $this->storeResetterEndDate($courseware_settings['resetter_end_date']);
             }
-            if(isset($courseware_settings['reseter_message'])){
-                $this->storeReseterMessage($courseware_settings['reseter_message']);
+            if(isset($courseware_settings['resetter_message'])){
+                $this->storeResetterMessage($courseware_settings['resetter_message']);
             }
         } else {
-            $this->storeReseter(false);
+            $this->storeResetter(false);
         }
 
         $this->courseware_block->save();
@@ -478,30 +478,30 @@ class CoursewareController extends CoursewareStudipController
         $this->courseware_block->setReminderMessage(Studip\Markup::purifyHtml(trim($text)));
     }
 
-    private function storeReseter($active)
+    private function storeResetter($active)
     {
-        if (!$this->courseware_block->setReseter($active)) {
+        if (!$this->courseware_block->setResetter($active)) {
         }
     }
 
-    private function storeReseterInterval($interval)
+    private function storeResetterInterval($interval)
     {
-        $this->courseware_block->setReseterInterval($interval);
+        $this->courseware_block->setResetterInterval($interval);
     }
 
-    private function storeReseterStartDate($date)
+    private function storeResetterStartDate($date)
     {
-        $this->courseware_block->setReseterStartDate(strtotime($date));
+        $this->courseware_block->setResetterStartDate(strtotime($date));
     }
 
-    private function storeReseterEndDate($date)
+    private function storeResetterEndDate($date)
     {
-        $this->courseware_block->setReseterEndDate(strtotime($date));
+        $this->courseware_block->setResetterEndDate(strtotime($date));
     }
 
-    private function storeReseterMessage($text)
+    private function storeResetterMessage($text)
     {
-        $this->courseware_block->setReseterMessage(Studip\Markup::purifyHtml(trim($text)));
+        $this->courseware_block->setResetterMessage(Studip\Markup::purifyHtml(trim($text)));
     }
 
     private function storeEditingPermission($tutor_may_edit)
