@@ -203,12 +203,12 @@ if ($flash['success']) {
                 class="size-s"
             >
                 <? $reminder_interval = $courseware_block->getReminderInterval() ?>
-                <option value="0" <? if ($reminder_interval == '0'): ?>selected<? endif ?>><?= _cw('wöchentlich')?></option>
-                <option value="1" <? if ($reminder_interval == '1'): ?>selected<? endif ?>><?= _cw('14-tägig')?></option>
-                <option value="2" <? if ($reminder_interval == '2'): ?>selected<? endif ?>><?= _cw('monatlich')?></option>
-                <option value="3" <? if ($reminder_interval == '3'): ?>selected<? endif ?>><?= _cw('vierteljährlich')?></option>
-                <option value="4" <? if ($reminder_interval == '4'): ?>selected<? endif ?>><?= _cw('halbjährlich')?></option>
-                <option value="5" <? if ($reminder_interval == '5'): ?>selected<? endif ?>><?= _cw('jährlich')?></option>
+                <option value="<?= \Mooc\WEEKLY ?>" <? if ($reminder_interval == \Mooc\WEEKLY): ?>selected<? endif ?>><?= _cw('wöchentlich')?></option>
+                <option value="<?= \Mooc\FORTNIGHTLY ?>" <? if ($reminder_interval == \Mooc\FORTNIGHTLY): ?>selected<? endif ?>><?= _cw('14-tägig')?></option>
+                <option value="<?= \Mooc\MONTHLY ?>" <? if ($reminder_interval == \Mooc\MONTHLY): ?>selected<? endif ?>><?= _cw('monatlich')?></option>
+                <option value="<?= \Mooc\QUARTERLY ?>" <? if ($reminder_interval == \Mooc\QUARTERLY): ?>selected<? endif ?>><?= _cw('vierteljährlich')?></option>
+                <option value="<?= \Mooc\HALF_YEARLY ?>" <? if ($reminder_interval == \Mooc\HALF_YEARLY): ?>selected<? endif ?>><?= _cw('halbjährlich')?></option>
+                <option value="<?= \Mooc\YEARLY ?>" <? if ($reminder_interval == \Mooc\YEARLY): ?>selected<? endif ?>><?= _cw('jährlich')?></option>
             </select>
         </label>
         <label>
@@ -274,12 +274,12 @@ if ($flash['success']) {
                 class="size-s"
             >
                 <? $resetter_interval = $courseware_block->getResetterInterval() ?>
-                <option value="0" <? if ($resetter_interval == '0'): ?>selected<? endif ?>><?= _cw('wöchentlich')?></option>
-                <option value="1" <? if ($resetter_interval == '1'): ?>selected<? endif ?>><?= _cw('14-tägig')?></option>
-                <option value="2" <? if ($resetter_interval == '2'): ?>selected<? endif ?>><?= _cw('monatlich')?></option>
-                <option value="3" <? if ($resetter_interval == '3'): ?>selected<? endif ?>><?= _cw('vierteljährlich')?></option>
-                <option value="4" <? if ($resetter_interval == '4'): ?>selected<? endif ?>><?= _cw('halbjährlich')?></option>
-                <option value="5" <? if ($resetter_interval == '5'): ?>selected<? endif ?>><?= _cw('jährlich')?></option>
+                <option value="<?= \Mooc\WEEKLY ?>" <? if ($resetter_interval == \Mooc\WEEKLY): ?>selected<? endif ?>><?= _cw('wöchentlich')?></option>
+                <option value="<?= \Mooc\FORTNIGHTLY ?>" <? if ($resetter_interval == \Mooc\FORTNIGHTLY): ?>selected<? endif ?>><?= _cw('14-tägig')?></option>
+                <option value="<?= \Mooc\MONTHLY ?>" <? if ($resetter_interval == \Mooc\MONTHLY): ?>selected<? endif ?>><?= _cw('monatlich')?></option>
+                <option value="<?= \Mooc\QUARTERLY ?>" <? if ($resetter_interval == \Mooc\QUARTERLY): ?>selected<? endif ?>><?= _cw('vierteljährlich')?></option>
+                <option value="<?= \Mooc\HALF_YEARLY ?>" <? if ($resetter_interval == \Mooc\HALF_YEARLY): ?>selected<? endif ?>><?= _cw('halbjährlich')?></option>
+                <option value="<?= \Mooc\YEARLY ?>" <? if ($resetter_interval == \Mooc\YEARLY): ?>selected<? endif ?>><?= _cw('jährlich')?></option>
             </select>
         </label>
         <label>

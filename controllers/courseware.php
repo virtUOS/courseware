@@ -335,7 +335,7 @@ class CoursewareController extends CoursewareStudipController
             if(isset($courseware_settings['reminder_interval'])){
                 $this->storeReminderInterval($courseware_settings['reminder_interval']);
             } else {
-                $this->storeReminderInterval('5'); // default jährlich
+                $this->storeReminderInterval(\Mooc\YEARLY); // default jährlich
             }
             if(isset($courseware_settings['reminder_start_date'])){
                 $this->storeReminderStartDate($courseware_settings['reminder_start_date']);
@@ -361,7 +361,7 @@ class CoursewareController extends CoursewareStudipController
             if(isset($courseware_settings['resetter_interval'])){
                 $this->storeResetterInterval($courseware_settings['resetter_interval']);
             } else {
-                $this->storeResetterInterval('5'); // default jährlich
+                $this->storeResetterInterval(\Mooc\YEARLY); // default jährlich
             }
             if(isset($courseware_settings['resetter_start_date'])){
                 $this->storeResetterStartDate($courseware_settings['resetter_start_date']);

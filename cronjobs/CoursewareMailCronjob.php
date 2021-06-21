@@ -343,13 +343,13 @@ class CoursewareMailCronjob extends CronJob
         $interval = $courseware->getResetterInterval();
         $is_in_interval = false;
         switch ($interval) {
-            case '0': //wöchentlich
+            case \Mooc\WEEKLY: //wöchentlich
                 $is_in_interval = date('N', $start) === date('N', $today);
                 break;
-            case '1': //14-tägig
+            case \Mooc\FORTNIGHTLY: //14-tägig
                 $is_in_interval = 0 === abs(date('W', $today) - date('W', $start)) % 2;
                 break;
-            case '2': //monatlich
+            case \Mooc\MONTHLY: //monatlich
                 $is_in_interval = date('d', $start) === date('d', $today);
                 if (
                     '31' === date('d', $start) &&
@@ -361,15 +361,15 @@ class CoursewareMailCronjob extends CronJob
                     $is_in_interval = '28' === date('d', $today);
                 }
                 break;
-            case '3': // vierteljährlich
+            case \Mooc\QUARTERLY: // vierteljährlich
                 $diff = abs(date('n', $start) - date('n', $today));
                 $is_in_interval = 0 !== $diff && 0 === $diff % 3;
                 break;
-            case '4': // halbjährlich
+            case \Mooc\HALF_YEARLY: // halbjährlich
                 $diff = abs(date('n', $start) - date('n', $today));
                 $is_in_interval = 0 !== $diff && 0 === $diff % 6;
                 break;
-            case '5': // jährlich
+            case \Mooc\YEARLY: // jährlich
                 $is_in_interval = date('d-m', $start) === date('d-m', $today);
                 break;
         }
