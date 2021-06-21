@@ -1,11 +1,11 @@
-
 <?php
+
 use Mooc\DB\Block as DbBlock;
 use Mooc\DB\Field;
-use Mooc\DB\UserProgress;
 use Mooc\DB\MailLog;
-use Mooc\UI\BlockFactory;
-use Courseware\Container;
+use Mooc\DB\UserProgress;
+
+require_once 'lib/classes/CronJob.class.php';
 
 /**
  * Courseware cronjob for Stud.IP
@@ -17,9 +17,6 @@ use Courseware\Container;
  * published by the Free Software Foundation; either version 2 of
  * the License, or (at your option) any later version.
  */
-
-require_once('lib/classes/CronJob.class.php');
-
 class CoursewareMailCronjob extends CronJob
 {
     public static function getName()
@@ -46,14 +43,12 @@ class CoursewareMailCronjob extends CronJob
 
     public function setUp()
     {
-        global $STUDIP_BASE_PATH;
-
         $this->courseware_plugin = PluginEngine::getPlugin('Courseware');
     }
 
     public function execute($last_result, $parameters = [])
     {
-        $coursewares = DbBlock::findBySQL('type = ?', array('Courseware'));
+        $coursewares = DbBlock::findBySQL('type = ?', ['Courseware']);
 
         //find all courses with courseware cert active
         $cert_coursewares = $this->filterCoursewares($coursewares, 'certificate');
@@ -66,19 +61,27 @@ class CoursewareMailCronjob extends CronJob
         //find all courses with courseware resetter active
         $resetter_coursewares = $this->filterCoursewares($coursewares, 'resetter');
         $this->sendResetter($resetter_coursewares);
-
     }
 
-    private function filterCoursewares(Array $all_coursewares, String $activeElement)
-    {
-        $courses = array();
+    private function filterCoursewares(
+        array $all_coursewares,
+        string $activeElement
+    ) {
+        $courses = [];
 
-        foreach($all_coursewares as $courseware) {
-            $field = Field::findOneBySQL('block_id = ? AND name = ?', array($courseware->id, $activeElement));
-            if ($field->json_data == 'true') {
+        foreach ($all_coursewares as $courseware) {
+            $field = Field::findOneBySQL('block_id = ? AND name = ?', [
+                $courseware->id,
+                $activeElement,
+            ]);
+            if ('true' == $field->json_data) {
                 $course['courseware_db'] = $courseware;
-                $course['courseware_ui'] = $this->courseware_plugin->getBlockFactory()->makeBlock($courseware);
-                $course['fields'] = Field::findOneBySQL('block_id = ?', array($courseware->id));
+                $course['courseware_ui'] = $this->courseware_plugin
+                    ->getBlockFactory()
+                    ->makeBlock($courseware);
+                $course['fields'] = Field::findOneBySQL('block_id = ?', [
+                    $courseware->id,
+                ]);
                 $courses[$courseware->seminar_id] = $course;
             }
         }
@@ -88,13 +91,16 @@ class CoursewareMailCronjob extends CronJob
 
     private function courseProgress($cid, $uid)
     {
-        $subchapters = DbBlock::findBySQL('seminar_id = ? AND type = ?', array($cid, 'Subchapter'));
+        $subchapters = DbBlock::findBySQL('seminar_id = ? AND type = ?', [
+            $cid,
+            'Subchapter',
+        ]);
         $complete = 0;
         foreach ($subchapters as $subchapter) {
             $complete += self::subchapterComplete($subchapter, $uid);
         }
-        if (count($subchapters) == 0){ return 0;}
-        return (int)($complete / count($subchapters));
+
+        return count($subchapters) ? (int) ($complete / count($subchapters)) : 0;
     }
 
     private function subchapterComplete($subchapterblock, $uid)
@@ -105,30 +111,37 @@ class CoursewareMailCronjob extends CronJob
             $blocks += count($section->children);
             foreach ($section->children as $block) {
                 $bid = $block->id;
-                $progress = UserProgress::findOneBySQL('block_id = ? AND user_id = ?', array($bid, $uid));
-                if ($progress && ($progress->grade / $progress->max_grade == 1)) {
-                    $blocks_progress++;
+                $progress = UserProgress::findOneBySQL('block_id = ? AND user_id = ?', [
+                    $bid,
+                    $uid,
+                ]);
+                if ($progress && 1 == $progress->grade / $progress->max_grade) {
+                    ++$blocks_progress;
                 }
             }
         }
 
-        if ($blocks === 0) {
-            return 0;
-        }
-
-        return (int) ($blocks_progress / $blocks) * 100;
+        return $blocks ? (int) ($blocks_progress / $blocks) * 100 : 0;
     }
 
     private function sendCertificates($coursewares)
     {
-        foreach($coursewares as $cid => $courseware_data) {
+        foreach ($coursewares as $cid => $courseware_data) {
             $course = \Course::find($cid);
             $students = $course->getMembersWithStatus('autor');
             $limit = $courseware_data['courseware_ui']->getCertificateLimit();
-            foreach($students as $student) {
+            foreach ($students as $student) {
                 $student_progress = $this->courseProgress($cid, $student->user_id);
-                if($student_progress >= $limit && !MailLog::hasCertificate($student->user_id, $cid)) {
-                    $this->sendCertificateMail($student, $student_progress, $courseware_data, $course);
+                if (
+                    $student_progress >= $limit &&
+                    !MailLog::hasCertificate($student->user_id, $cid)
+                ) {
+                    $this->sendCertificateMail(
+                        $student,
+                        $student_progress,
+                        $courseware_data,
+                        $course
+                    );
                 }
             }
         }
@@ -136,16 +149,20 @@ class CoursewareMailCronjob extends CronJob
 
     private function sendReminder($coursewares)
     {
-        foreach($coursewares as $cid => $courseware_data) {
+        foreach ($coursewares as $cid => $courseware_data) {
             if (!$this->checkDate($courseware_data['courseware_ui'])) {
                 continue;
             }
             $course = \Course::find($cid);
             $students = $course->getMembersWithStatus('autor');
-            foreach($students as $student) {
+            foreach ($students as $student) {
                 $student_progress = $this->courseProgress($cid, $student->user_id);
-                if($student_progress < 100) {
-                    $this->sendReminderMail($student, $student_progress, $courseware_data);
+                if ($student_progress < 100) {
+                    $this->sendReminderMail(
+                        $student,
+                        $student_progress,
+                        $courseware_data
+                    );
                 }
             }
         }
@@ -153,43 +170,77 @@ class CoursewareMailCronjob extends CronJob
 
     private function sendResetter($coursewares)
     {
-        foreach($coursewares as $cid => $courseware_data) {
+        foreach ($coursewares as $cid => $courseware_data) {
             if (!$this->checkDate($courseware_data['courseware_ui'])) {
                 continue;
             }
             $course = \Course::find($cid);
             $students = $course->getMembersWithStatus('autor');
-            $blocks = DbBlock::findBySQL('seminar_id = ?', array($cid));
-            foreach($students as $student) {
+            $blocks = DbBlock::findBySQL('seminar_id = ?', [$cid]);
+            foreach ($students as $student) {
                 $had_progress = false;
-                foreach($blocks as $block) {
-                    $progress = UserProgress::findOneBySQL('block_id = ? AND user_id = ?', array($block->id, $student->user_id));
-                    $maillog = MailLog::findOneBySQL('seminar_id = ? AND user_id = ? and mail_type = ?', array($cid, $student->user_id, 'certificate'));
+                foreach ($blocks as $block) {
+                    $progress = UserProgress::findOneBySQL(
+                        'block_id = ? AND user_id = ?',
+                        [$block->id, $student->user_id]
+                    );
                     if ($progress) {
                         $had_progress = true;
                         $progress->delete();
-                        $maillog->delete();
+                        $maillog = MailLog::getCertificate($student->user_id, $cid);
+                        if ($maillog) {
+                            $maillog->delete();
+                        }
                     }
                 }
-                if($had_progress) {
+                if ($had_progress) {
                     $this->sendResetterMail($course_member, $courseware_data);
                 }
             }
         }
     }
 
-    private function sendCertificateMail($course_member, $user_progress, $courseware_data, $course)
-    {
-        $template_factory = new Flexi_TemplateFactory(dirname(__FILE__) . '/../views');
+    private function sendCertificateMail(
+        $course_member,
+        $user_progress,
+        $courseware_data,
+        $course
+    ) {
+        $template_factory = new Flexi_TemplateFactory(
+            dirname(__FILE__) . '/../views'
+        );
         $template = $template_factory->open('mails/_mail_certificate');
-        $htmlMessage = $template->render(compact('course_member', 'user_progress', 'courseware_data'));
+        $htmlMessage = $template->render(
+            compact('course_member', 'user_progress', 'courseware_data')
+        );
 
         $mail = new StudipMail();
-        $pdf_file_name = $course_member->nachname.'_'.$course->name.'_'._('Zertifikat').'.pdf';
-        $pdf_file_path = $this->createCertificatePDF($course_member, $course, $pdf_file_name, $courseware_data);
-        
-        $send_mail = $mail->addRecipient($course_member->email, $course_member->vorname . ' ' . $course_member->nachname)
-            ->setSubject($course_member->course_name . ' '. _('[Courseware]') . ' - ' . _('Zertifikat'))
+        $pdf_file_name =
+            $course_member->nachname .
+            '_' .
+            $course->name .
+            '_' .
+            _('Zertifikat') .
+            '.pdf';
+        $pdf_file_path = $this->createCertificatePDF(
+            $course_member,
+            $course,
+            $pdf_file_name,
+            $courseware_data
+        );
+
+        $send_mail = $mail
+            ->addRecipient(
+                $course_member->email,
+                $course_member->vorname . ' ' . $course_member->nachname
+            )
+            ->setSubject(
+                $course_member->course_name .
+                ' ' .
+                _('[Courseware]') .
+                ' - ' .
+                _('Zertifikat')
+            )
             ->setBodyHtml($htmlMessage)
             ->setBodyText(trim(kill_format($htmlMessage)))
             ->addFileAttachment($pdf_file_path, $pdf_file_name)
@@ -200,15 +251,32 @@ class CoursewareMailCronjob extends CronJob
         }
     }
 
-    private function sendReminderMail($course_member, $user_progress, $courseware_data)
-    {
-        $template_factory = new Flexi_TemplateFactory(dirname(__FILE__) . '/../views');
+    private function sendReminderMail(
+        $course_member,
+        $user_progress,
+        $courseware_data
+    ) {
+        $template_factory = new Flexi_TemplateFactory(
+            dirname(__FILE__) . '/../views'
+        );
         $template = $template_factory->open('mails/_mail_reminder');
-        $htmlMessage = $template->render(compact('course_member', 'user_progress', 'courseware_data'));
+        $htmlMessage = $template->render(
+            compact('course_member', 'user_progress', 'courseware_data')
+        );
 
         $mail = new StudipMail();
-        $send_mail = $mail->addRecipient($course_member->email, $course_member->vorname . ' ' . $course_member->nachname)
-            ->setSubject($course_member->course_name . ' '. _('[Courseware]') . ' - ' . _('Erinnerung'))
+        $send_mail = $mail
+            ->addRecipient(
+                $course_member->email,
+                $course_member->vorname . ' ' . $course_member->nachname
+            )
+            ->setSubject(
+                $course_member->course_name .
+                ' ' .
+                _('[Courseware]') .
+                ' - ' .
+                _('Erinnerung')
+            )
             ->setBodyHtml($htmlMessage)
             ->setBodyText(trim(kill_format($htmlMessage)))
             ->send();
@@ -217,15 +285,30 @@ class CoursewareMailCronjob extends CronJob
             $this->createMailLog($course_member, 'reminder');
         }
     }
+
     private function sendResetterMail($course_member, $courseware_data)
     {
-        $template_factory = new Flexi_TemplateFactory(dirname(__FILE__) . '/../views');
+        $template_factory = new Flexi_TemplateFactory(
+            dirname(__FILE__) . '/../views'
+        );
         $template = $template_factory->open('mails/_mail_resetter');
-        $htmlMessage = $template->render(compact('course_member', 'courseware_data'));
+        $htmlMessage = $template->render(
+            compact('course_member', 'courseware_data')
+        );
 
         $mail = new StudipMail();
-        $send_mail = $mail->addRecipient($course_member->email, $course_member->vorname . ' ' . $course_member->nachname)
-            ->setSubject($course_member->course_name . ' '. _('[Courseware]') . ' - ' . _('Fortschritt zurückgesetzt'))
+        $send_mail = $mail
+            ->addRecipient(
+                $course_member->email,
+                $course_member->vorname . ' ' . $course_member->nachname
+            )
+            ->setSubject(
+                $course_member->course_name .
+                ' ' .
+                _('[Courseware]') .
+                ' - ' .
+                _('Fortschritt zurückgesetzt')
+            )
             ->setBodyHtml($htmlMessage)
             ->setBodyText(trim(kill_format($htmlMessage)))
             ->send();
@@ -247,40 +330,46 @@ class CoursewareMailCronjob extends CronJob
 
     private function checkDate($courseware)
     {
-        $interval = $courseware->getResetterInterval();
+        $today = strtotime('today midnight');
         $start = $courseware->getResetterStartDate();
         $end = $courseware->getResetterEndDate();
-        $today = strtotime('today midnight');
 
-        if ($today - $start < 0 || $today - $end > 0) {
+        $start = '' === $start ? $today : strtotime($start);
+        $end = '' === $end ? $today : strtotime($end);
+        if ($today < $start || $today > $end) {
             return false;
         }
+
+        $interval = $courseware->getResetterInterval();
         $is_in_interval = false;
         switch ($interval) {
-            case '0':   //wöchentlich
+            case '0': //wöchentlich
                 $is_in_interval = date('N', $start) === date('N', $today);
                 break;
-            case '1':   //14-tägig
-                $is_in_interval = abs(date('W', $today) - date('W', $start)) % 2 === 0;
+            case '1': //14-tägig
+                $is_in_interval = 0 === abs(date('W', $today) - date('W', $start)) % 2;
                 break;
-            case '2':   //monatlich
+            case '2': //monatlich
                 $is_in_interval = date('d', $start) === date('d', $today);
-                if (date('d', $start) === '31' && in_array(date('m', $today),['04', '06', '09', '11'])) {
-                    $is_in_interval = date('d', $today) === '30';
+                if (
+                    '31' === date('d', $start) &&
+                    in_array(date('m', $today), ['04', '06', '09', '11'])
+                ) {
+                    $is_in_interval = '30' === date('d', $today);
                 }
-                if (intval(date('d', $start)) > 28 && date('m', $today) === '02') {
-                    $is_in_interval = date('d', $today) === '28';
+                if (intval(date('d', $start)) > 28 && '02' === date('m', $today)) {
+                    $is_in_interval = '28' === date('d', $today);
                 }
                 break;
-            case '3':   // vierteljährlich
+            case '3': // vierteljährlich
                 $diff = abs(date('n', $start) - date('n', $today));
-                $is_in_interval = $diff !== 0 && $diff % 3 === 0;
+                $is_in_interval = 0 !== $diff && 0 === $diff % 3;
                 break;
-            case '4':   // halbjährlich
+            case '4': // halbjährlich
                 $diff = abs(date('n', $start) - date('n', $today));
-                $is_in_interval = $diff !== 0 && $diff % 6 === 0;
+                $is_in_interval = 0 !== $diff && 0 === $diff % 6;
                 break;
-            case '5':   // jährlich
+            case '5': // jährlich
                 $is_in_interval = date('d-m', $start) === date('d-m', $today);
                 break;
         }
@@ -288,30 +377,37 @@ class CoursewareMailCronjob extends CronJob
         return $is_in_interval;
     }
 
-    private function createCertificatePDF($course_member, $course, $pdf_file_name, $courseware_data)
-    {
+    private function createCertificatePDF(
+        $course_member,
+        $course,
+        $pdf_file_name,
+        $courseware_data
+    ) {
         global $TMP_PATH;
-        require_once dirname(__FILE__).'/../pdf/coursewareCertificatePDF.php';
+        require_once dirname(__FILE__) . '/../pdf/coursewareCertificatePDF.php';
 
-        $user = User::find($course_member->id);
-
-        $template_factory = new Flexi_TemplateFactory(dirname(__FILE__) . '/../views');
+        $user = $course_member->user;
+        $template_factory = new Flexi_TemplateFactory(
+            dirname(__FILE__) . '/../views'
+        );
         $template = $template_factory->open('mails/_pdf_certificate');
         $html = $template->render(compact('user', 'course'));
 
-        $file_ref = new \FileRef($courseware_data['courseware_ui']->getCertificateImageId());
+        $file_ref = new \FileRef(
+            $courseware_data['courseware_ui']->getCertificateImageId()
+        );
         if ($file_ref) {
-            $file =  new \File($file_ref->file_id);
+            $file = new \File($file_ref->file_id);
             $background_image = $file['path'];
         } else {
             $background_image = false;
         }
 
-        $pdf = new CoursewareCertificatePDF($background = $background_image);
+        $pdf = new CoursewareCertificatePDF(($background = $background_image));
         $pdf->AddPage();
         $pdf->writeHTML($html, true, false, true, false, '');
-        $pdf->Output($TMP_PATH . '/' .$pdf_file_name, 'F');
+        $pdf->Output($TMP_PATH . '/' . $pdf_file_name, 'F');
 
-        return $TMP_PATH . '/' .$pdf_file_name;
+        return $TMP_PATH . '/' . $pdf_file_name;
     }
 }

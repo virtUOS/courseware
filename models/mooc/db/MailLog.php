@@ -12,26 +12,24 @@ namespace Mooc\DB;
  * @property string  $mail_type
  * @property int     $chdate
  * @property int     $mkdate
- * 
  * @property \Course $course
- * @property \User  $user
+ * @property \User   $user
  */
-
 class MailLog extends \SimpleORMap
 {
-    protected static function configure($config = array())
+    protected static function configure($config = [])
     {
         $config['db_table'] = 'mooc_maillog';
 
-        $config['belongs_to']['course'] = array(
-            'class_name' => '\\Course',
-            'foreign_key' => 'seminar_id'
-        );
+        $config['belongs_to']['course'] = [
+            'class_name' => \Course::class,
+            'foreign_key' => 'seminar_id',
+        ];
 
-        $config['belongs_to']['user'] = array(
-            'class_name'  => 'User',
-            'foreign_key' => 'user_id'
-        );
+        $config['belongs_to']['user'] = [
+            'class_name' => \User::class,
+            'foreign_key' => 'user_id',
+        ];
 
         parent::configure($config);
     }
@@ -41,10 +39,13 @@ class MailLog extends \SimpleORMap
         parent::__construct($id);
     }
 
-    public function hasCertificate($user_id, $cid)
+    public static function getCertificate($user_id, $cid)
     {
-        $cert = self::findOneBySQL('seminar_id = ? AND user_id = ? and mail_type = ?', array($cid, $user_id, 'certificate'));
-        return $cert !== null;
+        return self::findOneBySQL('seminar_id = ? AND user_id = ? and mail_type = ?', [$cid, $user_id, 'certificate']);
     }
 
+    public static function hasCertificate($user_id, $cid)
+    {
+        return null !== self::getCertificate($user_id, $cid);
+    }
 }

@@ -21,13 +21,13 @@ class AddMailCronjobTables extends Migration
         $db = DBManager::get();
 
         $db->exec("CREATE TABLE IF NOT EXISTS `mooc_maillog` (
-          `id` int(11) NOT NULL,
+          `id` int(11) NOT NULL AUTO_INCREMENT,
           `seminar_id` varchar(32) NOT NULL,
           `user_id` varchar(32) NOT NULL,
           `mail_type` varchar(32) NOT NULL,
           `mkdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
           `chdate` timestamp NULL DEFAULT NULL,
-          PRIMARY KEY (`id`,`seminar_id`, `user_id`, `mail_type`)
+          PRIMARY KEY (`id`)
         )");
 
         SimpleORMap::expireTableScheme();

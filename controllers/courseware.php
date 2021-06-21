@@ -480,8 +480,7 @@ class CoursewareController extends CoursewareStudipController
 
     private function storeResetter($active)
     {
-        if (!$this->courseware_block->setResetter($active)) {
-        }
+        $this->courseware_block->setResetter($active);
     }
 
     private function storeResetterInterval($interval)
