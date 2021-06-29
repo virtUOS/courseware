@@ -1,5 +1,7 @@
 <?php
 
+use Mooc\DB\MailLog;
+
 class ProgressController extends CoursewareStudipController
 {
     public function before_filter(&$action, &$args)
@@ -50,6 +52,11 @@ class ProgressController extends CoursewareStudipController
 
         $this->courseware = current($grouped['']);
         $this->buildTree($grouped, $progress, $this->courseware);
+
+        $courseware = \Mooc\DB\Block::findCourseware($cid);
+        $courseware_ui = $this->plugin->getBlockFactory()->makeBlock($courseware);
+
+        $this->hasCert = MailLog::hasCertificate($uid,$cid) && $courseware_ui->getCertificate();
     }
 
     public function reset_action()
@@ -61,6 +68,42 @@ class ProgressController extends CoursewareStudipController
         Mooc\DB\UserProgress::deleteBySQL('block_id IN (?) AND user_id = ?', array($bids, $uid));
 
         return $this->redirect('progress?cid='.$this->plugin->getCourseId());
+    }
+
+    public function certificate_action()
+    {
+        $cid  =$this->plugin->getCourseId();
+
+        if(!MailLog::hasCertificate($this->plugin->getCurrentUserId(),$cid)) {
+            return $this->redirect('progress?cid='.$cid);
+        }
+
+        require_once dirname(__FILE__).'/../pdf/coursewareCertificatePDF.php';
+
+        $user = User::find($this->plugin->getCurrentUserId());
+        $course = Course::find($cid);
+
+        $template_factory = new Flexi_TemplateFactory(dirname(__FILE__) . '/../views');
+        $template = $template_factory->open('mails/_pdf_certificate');
+        $html = $template->render(compact('user', 'course'));
+
+        $courseware = \Mooc\DB\Block::findCourseware($cid);
+        $courseware_ui = $this->plugin->getBlockFactory()->makeBlock($courseware);
+
+        $file_ref = new \FileRef($courseware_ui->getCertificateImageId());
+        if ($file_ref) {
+            $file =  new \File($file_ref->file_id);
+            $background_image = $file['path'];
+        } else {
+            $background_image = false;
+        }
+
+        $pdf = new CoursewareCertificatePDF($background = $background_image);
+        $pdf->AddPage();
+        $pdf->writeHTML($html, true, false, true, false, '');
+        $filename = _('Zertifikat');
+        $pdf->Output($user->nachname.'_'.$course->name.'_'.$filename.'.pdf', 'I');
+        die;
     }
 
     private function buildTree($grouped, $progress, &$root)

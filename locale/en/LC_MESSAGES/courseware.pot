@@ -2007,11 +2007,11 @@ msgstr ""
 msgid "Courseware Fortschrittsübersicht ansehen:"
 msgstr ""
 
-#: views/mails/_mail_reminder.php:10 views/mails/_mail_reseter.php:9
+#: views/mails/_mail_reminder.php:10 views/mails/_mail_resetter.php:9
 msgid "Courseware ansehen:"
 msgstr ""
 
-#: views/mails/_mail_reseter.php:5
+#: views/mails/_mail_resetter.php:5
 #, php-format
 msgid "Ihr Courseware-Fortschritt der Veranstaltung %s wurde zurückgesetzt"
 msgstr ""

@@ -12,6 +12,13 @@ $monate = array(1=>"Jan", 2=>"Feb", 3=>"Mär", 4=>"Apr", 5=>"Mai", 6=>"Jun", 7=>
 >
     <button class="button cw-reset-progress-button"><?= _cw('Fortschritt zurücksetzen')?></button>
 </a>
+<? if($hasCert): ?>
+    <a href="<?= $controller->url_for('progress/certificate/') ?>"
+    target="_blank"
+    >
+        <button class="button cw-cert-progress-button"><?= _cw('Zertifikat herunterladen')?></button>
+    </a>
+<? endif; ?>
 
 <ul id="overview-chapter-nav">
     <li class="overview-chapter-nav-arrow" id="overview-chapter-nav-left"></li>

@@ -56,6 +56,16 @@ class CoursewareController extends CoursewareStudipController
 
             return $this->redirect('courseware/settings');
         }
+        $folders =  \Folder::findBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'HiddenFolder'));
+        $this->files = array();
+        foreach ($folders as $folder) {
+            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+            foreach($file_refs as $ref){
+                if (($ref->isImage()) && (!$ref->isLink())) {
+                    $this->files[] = $ref;
+                }
+            }
+        }
     }
     
     public function news_action()
@@ -306,6 +316,68 @@ class CoursewareController extends CoursewareStudipController
             $this->storeMaxCountIAV($courseware_settings['max-tries-iav']);
         }
 
+        ////////////////////////
+        //     Certificate    //
+        ////////////////////////
+        if ($courseware_settings['certificate'] === '1') {
+            $this->storeCertificate(true);
+            $this->storeCertificateLimit($courseware_settings['certificate_limit']);
+            $this->storeCertificateImageId($courseware_settings['certificate_image_id']);
+        } else {
+            $this->storeCertificate(false);
+        }
+
+        ////////////////////
+        //    Reminder    //
+        ////////////////////
+        if ($courseware_settings['reminder'] === '1') {
+            $this->storeReminder(true);
+            if(isset($courseware_settings['reminder_interval'])){
+                $this->storeReminderInterval($courseware_settings['reminder_interval']);
+            } else {
+                $this->storeReminderInterval(\Mooc\YEARLY); // default jährlich
+            }
+            if(isset($courseware_settings['reminder_start_date'])){
+                $this->storeReminderStartDate($courseware_settings['reminder_start_date']);
+            } else {
+                $this->storeReminderStartDate(date("d.m.Y"));
+            }
+            if(isset($courseware_settings['reminder_end_date'])){
+                $this->storeReminderEndDate($courseware_settings['reminder_end_date']);
+            }
+            if(isset($courseware_settings['reminder_message'])){
+                $this->storeReminderMessage($courseware_settings['reminder_message']);
+            }
+        } else {
+            $this->storeReminder(false);
+        }
+
+
+        ///////////////////
+        //    Resetter    //
+        ///////////////////
+        if ($courseware_settings['resetter'] === '1') {
+            $this->storeResetter(true);
+            if(isset($courseware_settings['resetter_interval'])){
+                $this->storeResetterInterval($courseware_settings['resetter_interval']);
+            } else {
+                $this->storeResetterInterval(\Mooc\YEARLY); // default jährlich
+            }
+            if(isset($courseware_settings['resetter_start_date'])){
+                $this->storeResetterStartDate($courseware_settings['resetter_start_date']);
+            } else {
+                $this->storeResetterStartDate(date("d.m.Y"));
+            }
+            if(isset($courseware_settings['resetter_end_date'])){
+                $this->storeResetterEndDate($courseware_settings['resetter_end_date']);
+            }
+            if(isset($courseware_settings['resetter_message'])){
+                $this->storeResetterMessage($courseware_settings['resetter_message']);
+            }
+        } else {
+            $this->storeResetter(false);
+        }
+
         $this->courseware_block->save();
     }
 
@@ -360,6 +432,75 @@ class CoursewareController extends CoursewareStudipController
         if (!$this->courseware_block->setScrollytelling($active)) {
             // TODO: send a message back
         }
+    }
+
+    private function storeCertificate($active)
+    {
+        if (!$this->courseware_block->setCertificate($active)) {
+        }
+    }
+
+    private function storeCertificateLimit($value)
+    {
+        if (!$this->courseware_block->setCertificateLimit($value)) {
+        }
+    }
+
+    private function storeCertificateImageId($value)
+    {
+        if (!$this->courseware_block->setCertificateImageId($value)) {
+        }
+    }
+
+    private function storeReminder($active)
+    {
+        if (!$this->courseware_block->setReminder($active)) {
+        }
+    }
+
+    private function storeReminderInterval($interval)
+    {
+        $this->courseware_block->setReminderInterval($interval);
+    }
+
+    private function storeReminderStartDate($date)
+    {
+        $this->courseware_block->setReminderStartDate(strtotime($date));
+    }
+
+    private function storeReminderEndDate($date)
+    {
+        $this->courseware_block->setReminderEndDate(strtotime($date));
+    }
+
+    private function storeReminderMessage($text)
+    {
+        $this->courseware_block->setReminderMessage(Studip\Markup::purifyHtml(trim($text)));
+    }
+
+    private function storeResetter($active)
+    {
+        $this->courseware_block->setResetter($active);
+    }
+
+    private function storeResetterInterval($interval)
+    {
+        $this->courseware_block->setResetterInterval($interval);
+    }
+
+    private function storeResetterStartDate($date)
+    {
+        $this->courseware_block->setResetterStartDate(strtotime($date));
+    }
+
+    private function storeResetterEndDate($date)
+    {
+        $this->courseware_block->setResetterEndDate(strtotime($date));
+    }
+
+    private function storeResetterMessage($text)
+    {
+        $this->courseware_block->setResetterMessage(Studip\Markup::purifyHtml(trim($text)));
     }
 
     private function storeEditingPermission($tutor_may_edit)
