@@ -194,7 +194,7 @@ class CoursewareMailCronjob extends CronJob
                     }
                 }
                 if ($had_progress) {
-                    $this->sendResetterMail($course_member, $courseware_data);
+                    $this->sendResetterMail($student, $courseware_data);
                 }
             }
         }
