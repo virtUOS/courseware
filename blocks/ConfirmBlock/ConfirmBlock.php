@@ -56,11 +56,9 @@ class ConfirmBlock extends Block
     public function getPdfExportData()
     {
         $data = $this->student_view();
+        $icon = \Icon::create($data['confirmed'] ? 'checkbox-checked' : 'checkbox-unchecked');
 
-        $unconfirmed = 'https://develop.studip.de/studip/assets/images/icons/blue/checkbox-unchecked.svg';
-        $confirmed = 'https://develop.studip.de/studip/assets/images/icons/blue/checkbox-checked.svg';
-
-        return sprintf('<img src="%s"> %s', $data['confirmed'] ? $confirmed : $unconfirmed, $data['title']);
+        return sprintf('<img src="%s"> %s', $icon->asImagePath(), $data['title']);
     }
 
     public function getHtmlExportData()
