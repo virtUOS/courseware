@@ -1,0 +1,23 @@
+<p>Diagramm: {{chart_label}} ({{chart_type}})</p>
+<table>
+  <tr style="font-weight: bold;">
+    <th>{{#i18n}}Bezeichnung{{/i18n}}</th>
+    <th>{{#i18n}}Wert{{/i18n}}</th>
+    <th>{{#i18n}}Farbe{{/i18n}}</th>
+  </tr>
+  {{#chart_content}}
+  <tr>
+    <td>
+      {{label}}
+      {{^label}}–{{/label}}
+    </td>
+    <td>
+      {{value}}
+      {{^value}}–{{/value}}
+    </td>
+    <td>
+      <span style="color: {{color}};">{{color}}</span>
+    </td>
+  </tr>
+  {{/chart_content}}
+</table>

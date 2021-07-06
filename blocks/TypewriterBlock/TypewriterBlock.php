@@ -3,7 +3,7 @@ namespace Mooc\UI\TypewriterBlock;
 
 use Mooc\UI\Block;
 
-class TypewriterBlock extends Block 
+class TypewriterBlock extends Block
 {
     const NAME = 'Schreibmaschine';
     const BLOCK_CLASS = 'layout';
@@ -44,7 +44,7 @@ class TypewriterBlock extends Block
 
         if (isset ($data['typewriter_json'])) {
             $this->typewriter_json = (string) $data['typewriter_json'];
-        } 
+        }
 
         return;
     }
@@ -54,9 +54,13 @@ class TypewriterBlock extends Block
        return array('typewriter_json' => $this->typewriter_json);
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        $jsonData = json_decode($this->student_view()['typewriter_json'], true);
+        $content = isset($jsonData['content']) ? $jsonData['content'] : '';
+        $data = compact('content');
+
+        return $data;
     }
 
     public function getHtmlExportData()

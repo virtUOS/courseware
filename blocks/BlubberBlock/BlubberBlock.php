@@ -99,9 +99,9 @@ class BlubberBlock extends Block
         return $plugin_manager->isPluginActivated($plugin_info['id'], $block->getModel()->seminar_id);
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()

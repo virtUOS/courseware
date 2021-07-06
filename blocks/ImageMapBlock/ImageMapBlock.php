@@ -4,7 +4,7 @@ namespace Mooc\UI\ImageMapBlock;
 use Mooc\UI\Block;
 use Mooc\DB\Block as DBBlock;
 
-class ImageMapBlock extends Block 
+class ImageMapBlock extends Block
 {
     const NAME = 'Verweissensitive Grafik';
     const BLOCK_CLASS = 'interaction';
@@ -61,7 +61,7 @@ class ImageMapBlock extends Block
             $other_user_file = false;
         }
 
-        
+
         $file_ref = \FileRef::find($content->image_id);
         if ($file_ref) {
            $image_url = $this->getFileURL($file_ref);
@@ -77,14 +77,14 @@ class ImageMapBlock extends Block
         $inotherchapters= $this->getOtherSubchapters();
 
         return array_merge($this->getAttrArray(), array(
-            'image_files_user'      => $files_arr['userfilesarray'], 
-            'image_files_course'    => $files_arr['coursefilesarray'], 
-            'no_image_files'        => $no_files, 
+            'image_files_user'      => $files_arr['userfilesarray'],
+            'image_files_course'    => $files_arr['coursefilesarray'],
+            'no_image_files'        => $no_files,
             'other_user_file'       => $other_user_file,
             'image_url'             => $image_url,
-            'inthischapter'         => $inthischapter, 
+            'inthischapter'         => $inthischapter,
             'inotherchapters'       => $inotherchapters,
-            'hasinternal'           => $hasinternal, 
+            'hasinternal'           => $hasinternal,
             'hasnext'               => $this->getTargetId("next")['id'] != null,
             'hasprev'               => $this->getTargetId("prev")['id'] != null
         ));
@@ -101,7 +101,7 @@ class ImageMapBlock extends Block
         return array('image_url' => $image_url);
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'image_map_content' => $this->image_map_content
@@ -188,7 +188,7 @@ class ImageMapBlock extends Block
         }
 
         foreach($allchapters as $key => $chapter) {
-            if ($key == $this_chapter_pos) { 
+            if ($key == $this_chapter_pos) {
                 continue;
             }
             $relativ_chapter_pos = $key - $this_chapter_pos;
@@ -196,7 +196,7 @@ class ImageMapBlock extends Block
             $i = 0;
             foreach ($subchapters as $subchapter) {
                 array_push($inotherchapters, array(
-                    'value' => 'other_cpos'.$relativ_chapter_pos.'_item'.$i, 
+                    'value' => 'other_cpos'.$relativ_chapter_pos.'_item'.$i,
                     'title' => $chapter->title.' -> '.$subchapter->title
                 ));
                 $i++;
@@ -212,7 +212,7 @@ class ImageMapBlock extends Block
 
         if (isset ($data['image_map_content'])) {
             $this->image_map_content = (string) $data['image_map_content'];
-        } 
+        }
 
         return;
     }
@@ -280,9 +280,36 @@ class ImageMapBlock extends Block
        return $this->getAttrArray();
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        $img = null;
+        $shapes = [];
+
+        $content = json_decode($this->image_map_content, true);
+        if ($content != null) {
+            $fileRef = \FileRef::find($content['image_id']);
+            if ($fileRef) {
+                $img = [
+                    'url' => $this->getFileURL($fileRef),
+                    'src' => '@' . base64_encode(file_get_contents($fileRef->file->getPath()))
+                ];
+            }
+
+            $shapes = array_map(
+                function ($shape) {
+                    return json_encode($shape);
+                },
+                $content['shapes']
+            );
+            // foreach ($content['shapes'] as $shape) {
+            //     if ($shape['link_type'] == "internal") {
+            //         $shape['target'] = "courseware?cid=" . $this->container['cid'] . "&selected=" .  $this->getTargetId($shape['target'])['id'];
+            //     }
+            //     $shapes[] = $shape;
+            // }
+        }
+
+        return compact('img', 'shapes');
     }
 
     public function getHtmlExportData()

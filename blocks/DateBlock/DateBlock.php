@@ -3,7 +3,7 @@ namespace Mooc\UI\DateBlock;
 
 use Mooc\UI\Block;
 
-class DateBlock extends Block 
+class DateBlock extends Block
 {
     const NAME = 'Termin';
     const BLOCK_CLASS = 'layout';
@@ -44,7 +44,7 @@ class DateBlock extends Block
 
         if (isset ($data['date_content'])) {
             $this->date_content = (string) $data['date_content'];
-        } 
+        }
 
         return;
     }
@@ -59,9 +59,9 @@ class DateBlock extends Block
        return array('date_content' => $this->date_content);
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return $this->getHtmlExportData();
     }
 
     public function getHtmlExportData()

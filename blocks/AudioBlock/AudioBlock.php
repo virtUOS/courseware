@@ -91,12 +91,12 @@ class AudioBlock extends Block
         }
 
         return array_merge(
-            $this->getAttrArray(), 
+            $this->getAttrArray(),
             array(
-                'audio_files_user' => $files_arr['userfilesarray'], 
-                'audio_files_course' => $files_arr['coursefilesarray'], 
-                'no_audio_files' => $no_files, 
-                'other_user_file' => $other_user_file, 
+                'audio_files_user' => $files_arr['userfilesarray'],
+                'audio_files_course' => $files_arr['coursefilesarray'],
+                'no_audio_files' => $no_files,
+                'other_user_file' => $other_user_file,
                 'audio_file' => $this->audio_file
             )
         );
@@ -140,7 +140,7 @@ class AudioBlock extends Block
         return array();
     }
 
-    private function store_recording($audio) 
+    private function store_recording($audio)
     {
         global $user;
 
@@ -255,9 +255,11 @@ class AudioBlock extends Block
         );
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        $data = $this->student_view();
+
+        return $data;
     }
 
     public function getHtmlExportData()

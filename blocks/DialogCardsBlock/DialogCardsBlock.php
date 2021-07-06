@@ -3,7 +3,7 @@ namespace Mooc\UI\DialogCardsBlock;
 
 use Mooc\UI\Block;
 
-class DialogCardsBlock extends Block 
+class DialogCardsBlock extends Block
 {
     const NAME = 'Lernkarten';
     const BLOCK_CLASS = 'interaction';
@@ -50,7 +50,7 @@ class DialogCardsBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-        
+
         $cards = json_decode($this->dialogcards_content);
 
         $file_ids = array();
@@ -81,7 +81,7 @@ class DialogCardsBlock extends Block
         return array('first_card' => json_decode($this->dialogcards_content, true)[0]);
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'dialogcards_content' => $this->dialogcards_content
@@ -156,7 +156,7 @@ class DialogCardsBlock extends Block
 
         if (isset ($data['dialogcards_content'])) {
             $this->dialogcards_content = (string) $data['dialogcards_content'];
-        } 
+        }
 
         return;
     }
@@ -166,9 +166,17 @@ class DialogCardsBlock extends Block
        return $this->getAttrArray();
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        $cards = [];
+        foreach (json_decode($this->dialogcards_content, true) as $card) {
+            $cards[] = [
+                'front' => $this->exportSideOfCard($card, 'front'),
+                'back' => $this->exportSideOfCard($card, 'back'),
+            ];
+        }
+
+        return compact('cards');
     }
 
     public function getHtmlExportData()
@@ -275,5 +283,23 @@ class DialogCardsBlock extends Block
             $this->save();
         }
         return $used_files;
+    }
+
+    private function exportSideOfCard($card, $dir)
+    {
+        $side = [
+            'img' => null,
+            'text' => $card[$dir . '_text']
+        ];
+
+        if ($card[$dir . '_img']) {
+            if ($card[$dir . '_external_file']) {
+                $side['img'] = $card[$dir . '_img'];
+            } elseif ($fileRef = \FileRef::find($card[$dir . '_img_file_id'])) {
+                $side['img'] = '@' . base64_encode(file_get_contents($fileRef->file->getPath()));
+            }
+        }
+
+        return $side;
     }
 }

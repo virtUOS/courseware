@@ -3,7 +3,7 @@ namespace Mooc\UI\BeforeAfterBlock;
 
 use Mooc\UI\Block;
 
-class BeforeAfterBlock extends Block 
+class BeforeAfterBlock extends Block
 {
     const NAME = 'Bildvergleich';
     const BLOCK_CLASS = 'multimedia';
@@ -66,10 +66,10 @@ class BeforeAfterBlock extends Block
 
         $files_arr = $this->showFiles($before->file_id, $after->file_id);
 
-        $no_files = 
-            empty($files_arr['userfilesarray']) && 
-            empty($files_arr['coursefilesarray']) && 
-            ($files_arr['before_file_id_found'] == false) && 
+        $no_files =
+            empty($files_arr['userfilesarray']) &&
+            empty($files_arr['coursefilesarray']) &&
+            ($files_arr['before_file_id_found'] == false) &&
             ($files_arr['after_file_id_found'] == false) &&
             empty($before->file_id) &&
             empty($after->file_id);
@@ -108,7 +108,7 @@ class BeforeAfterBlock extends Block
         return array('before_img' => $ba_img_before);
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'ba_before' => $this->ba_before,
@@ -122,17 +122,23 @@ class BeforeAfterBlock extends Block
 
         if (isset ($data['ba_before'])) {
             $this->ba_before = \STUDIP\Markup::purifyHtml((string) $data['ba_before']);
-        } 
+        }
         if (isset ($data['ba_after'])) {
             $this->ba_after = \STUDIP\Markup::purifyHtml((string) $data['ba_after']);
-        } 
+        }
 
         return;
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        $ba_img_before = $this->prepareImageForPdfExport($this->ba_before);
+        $ba_img_after = $this->prepareImageForPdfExport($this->ba_after);
+
+        return array(
+            'beforeafter_img_before' => $ba_img_before,
+            'beforeafter_img_after' => $ba_img_after,
+        );
     }
 
     public function getHtmlExportData()
@@ -152,7 +158,7 @@ class BeforeAfterBlock extends Block
     }
 
     public function exportProperties()
-    { 
+    {
        return array(
             'ba_before' => $this->ba_before,
             'ba_after' => $this->ba_after
@@ -165,7 +171,7 @@ class BeforeAfterBlock extends Block
         $files = array();
         $before = json_decode($this->ba_before);
         $after = json_decode($this->ba_after);
-        
+
         if ($before->source == 'file') {
             array_push($ba_files, $before->file_id);
         }
@@ -302,5 +308,23 @@ class BeforeAfterBlock extends Block
         }
 
         return $folders;
+    }
+
+    private function prepareImageForPdfExport($field): string
+    {
+        $encodedImage = '';
+        if ($field != '') {
+            $decodedField = json_decode($field);
+            if ($decodedField->source == 'url') {
+                $encodedImage = $decodedField->url;
+            }
+            if ($decodedField->source == 'file') {
+                $fileRef = \FileRef::find($decodedField->file_id);
+                if ($fileRef) {
+                    $encodedImage = '@' . base64_encode(file_get_contents($fileRef->file->getPath()));
+                }
+            }
+        }
+        return $encodedImage;
     }
 }

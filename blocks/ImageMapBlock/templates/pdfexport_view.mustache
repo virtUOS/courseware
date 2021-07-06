@@ -1,0 +1,44 @@
+<table cellspacing="4">
+  {{#img}}
+  <tr>
+    <td style="width: 30%; font-weight: bold;">{{#i18n}}URL des Bildes{{/i18n}}</td>
+    <td style="width: 70%;">
+      {{#url}}
+        <a href="{{url}}">{{url}}</a>
+      {{/url}}
+      {{^url}}–{{/url}}</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Bild{{/i18n}}</td>
+      <td>
+        {{#src}}
+          <img src="{{src}}">
+        {{/src}}
+        {{^src}}
+          –
+        {{/src}}</td>
+  </tr>
+
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Verweise{{/i18n}}</td>
+    <td>
+      <ol>
+      {{#shapes}}
+        <li>
+          {{.}}
+        </li>
+      {{/shapes}}
+      </ol>
+    </td>
+  </tr>
+  {{/img}}
+
+  {{^img}}
+    <tr>
+      <td>
+        <p>{{#i18n}}Dieser Block enthält kein Bild.{{/i18n}}</p>
+      </td>
+    </tr>
+  {{/img}}
+
+</table>

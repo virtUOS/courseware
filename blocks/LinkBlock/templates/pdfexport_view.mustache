@@ -1,0 +1,9 @@
+{{#link_is_internal}}
+  <p>
+    <tcpdf method="addHtmlLink" params="{{{link_link_params}}}" />
+  </p>
+{{/link_is_internal}}
+
+{{^link_is_internal}}
+  <p><a href="{{link_href}}">{{link_title}} {{#link_href}}({{#i18n}}Link: {{/i18n}} {{link_href}}){{/link_href}}</a></p>
+{{/link_is_internal}}

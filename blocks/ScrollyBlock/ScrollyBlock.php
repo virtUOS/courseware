@@ -79,9 +79,9 @@ class ScrollyBlock extends Block
         );
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()

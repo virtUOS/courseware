@@ -7,6 +7,7 @@ use Mooc\DB\CoursewareFactory;
 use Mooc\UI\BlockFactory;
 use Courseware\User;
 
+
 function _cw($message)
 {
     return dgettext('courseware', $message);
@@ -30,7 +31,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
     public function __construct()
     {
-        parent::__construct();
+       parent::__construct();
 
         $this->setupAutoload();
         $this->setupContainer();
@@ -91,7 +92,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
             );
             $settingsUrl = PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true);
             $navigation->addSubnavigation(
-                'settings', 
+                'settings',
                 new Navigation(_cw('Einstellungen'), $settingsUrl)
             );
             $navigation->addSubnavigation(
@@ -176,7 +177,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
                 seminar_id = :cid
             AND
                 chdate >= :last_visit
-            AND 
+            AND
 				type NOT IN ('Courseware', 'Chapter', 'Subchapter', 'Section')
         ");
         $stmt->bindParam(':cid', $courseId);
@@ -189,7 +190,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         if ($plugin_manager->getPluginInfo('VipsPlugin') == null){
             $vips = false;
         }
-        if($plugin_manager->getPlugin('VipsPlugin')){ 
+        if($plugin_manager->getPlugin('VipsPlugin')){
             $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
             if (version_compare('1.3',$version) > 0) {
                 $vips = false;
@@ -266,6 +267,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
     public function perform($unconsumedPath)
     {
+        define("K_TCPDF_CALLS_IN_HTML", true);
+
         if ((!$this->isActivated($this->container['cid']))&& ($_SERVER['REQUEST_METHOD'] === 'GET')) {
             throw new AccessDeniedException('plugin not activated for this course!');
         }
@@ -535,8 +538,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         $stmt = $db->prepare('
             DELETE FROM
-                mooc_userprogress 
-            WHERE 
+                mooc_userprogress
+            WHERE
                 user_id = :uid
         ');
         $stmt->bindParam(':uid', $user_id);
@@ -544,10 +547,10 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
         $stmt = $db->prepare('
             DELETE FROM
-                mooc_fields 
-            WHERE 
+                mooc_fields
+            WHERE
                 user_id = :uid
-            AND 
+            AND
                 (name = "visited" OR name = "lastSelected")
         ');
         $stmt->bindParam(':uid', $user_id);
