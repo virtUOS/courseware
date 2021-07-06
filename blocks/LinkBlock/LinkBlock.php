@@ -4,7 +4,7 @@ namespace Mooc\UI\LinkBlock;
 use Mooc\UI\Block;
 use Mooc\DB\Block as DBBlock;
 
-class LinkBlock extends Block 
+class LinkBlock extends Block
 {
     const NAME = 'Link';
     const BLOCK_CLASS = 'function';
@@ -59,7 +59,7 @@ class LinkBlock extends Block
         }
 
         return array_merge($this->getAttrArray(), array(
-            'link_id' => $link_id, 
+            'link_id' => $link_id,
             'link_href' => $link_href,
             'progress' => $progress,
             'open_graph' => $open_graph
@@ -76,9 +76,9 @@ class LinkBlock extends Block
         $inotherchapters= $this->getOtherSubchapters();
 
         return array_merge($this->getAttrArray(), array(
-            'inthischapter' => $inthischapter, 
+            'inthischapter' => $inthischapter,
             'inotherchapters' => $inotherchapters,
-            'hasinternal' => true, 
+            'hasinternal' => true,
             'hasnext'   => $this->getTargetId("next") != null,
             'hasprev'   => $this->getTargetId("prev") != null
         ));
@@ -90,7 +90,7 @@ class LinkBlock extends Block
         return array('link_title' => $this->link_title);
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'link_type'   => $this->link_type,
@@ -172,7 +172,7 @@ class LinkBlock extends Block
         }
 
         foreach($allchapters as $key => $chapter) {
-            if ($key == $this_chapter_pos) { 
+            if ($key == $this_chapter_pos) {
                 continue;
             }
             $relativ_chapter_pos = $key - $this_chapter_pos;
@@ -180,7 +180,7 @@ class LinkBlock extends Block
             $i = 0;
             foreach ($subchapters as $subchapter) {
                 array_push($inotherchapters, array(
-                    'value' => 'other_cpos'.$relativ_chapter_pos.'_item'.$i, 
+                    'value' => 'other_cpos'.$relativ_chapter_pos.'_item'.$i,
                     'title' => $chapter->title.' -> '.$subchapter->title
                 ));
                 $i++;
@@ -196,16 +196,16 @@ class LinkBlock extends Block
 
         if (isset ($data['link_type'])) {
             $this->link_type = (string) $data['link_type'];
-        } 
+        }
         if (isset ($data['link_target'])) {
             $this->link_target = \STUDIP\Markup::purifyHtml((string) $data['link_target']);
-        } 
+        }
         if (isset ($data['link_title'])) {
             $this->link_title = \STUDIP\Markup::purifyHtml((string) $data['link_title']);
-        } 
+        }
         if (isset ($data['link_show_progress'])) {
             $this->link_show_progress = (string) $data['link_show_progress'];
-        } 
+        }
 
         return;
     }
@@ -215,9 +215,9 @@ class LinkBlock extends Block
        return $this->getAttrArray();
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()

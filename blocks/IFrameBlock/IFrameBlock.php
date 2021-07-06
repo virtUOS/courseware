@@ -45,8 +45,8 @@ class IFrameBlock extends Block
         // on view: grade with 100%
         $this->setGrade(1.0);
 
-        if ($this->submit_user_id){ 
-            $url = $this->buildUID(); 
+        if ($this->submit_user_id){
+            $url = $this->buildUID();
             $array = $this->array_rep($url);
         }else {
             $array = $this->array_rep();
@@ -110,13 +110,13 @@ class IFrameBlock extends Block
      * {@inheritdoc}
      */
     public function exportProperties()
-    {        
+    {
         return $this->array_rep();
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()
@@ -223,7 +223,7 @@ class IFrameBlock extends Block
     private function isHTTPS()
     {
         if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) {
-            return true; 
+            return true;
         } else {
             return false;
         }

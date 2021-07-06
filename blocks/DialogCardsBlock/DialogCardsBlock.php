@@ -3,7 +3,7 @@ namespace Mooc\UI\DialogCardsBlock;
 
 use Mooc\UI\Block;
 
-class DialogCardsBlock extends Block 
+class DialogCardsBlock extends Block
 {
     const NAME = 'Lernkarten';
     const BLOCK_CLASS = 'interaction';
@@ -50,7 +50,7 @@ class DialogCardsBlock extends Block
     public function author_view()
     {
         $this->authorizeUpdate();
-        
+
         $cards = json_decode($this->dialogcards_content);
 
         $file_ids = array();
@@ -81,7 +81,7 @@ class DialogCardsBlock extends Block
         return array('first_card' => json_decode($this->dialogcards_content, true)[0]);
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'dialogcards_content' => $this->dialogcards_content
@@ -156,7 +156,7 @@ class DialogCardsBlock extends Block
 
         if (isset ($data['dialogcards_content'])) {
             $this->dialogcards_content = (string) $data['dialogcards_content'];
-        } 
+        }
 
         return;
     }
@@ -166,9 +166,9 @@ class DialogCardsBlock extends Block
        return $this->getAttrArray();
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()

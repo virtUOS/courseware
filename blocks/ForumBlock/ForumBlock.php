@@ -87,9 +87,9 @@ class ForumBlock extends Block
         return;
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()

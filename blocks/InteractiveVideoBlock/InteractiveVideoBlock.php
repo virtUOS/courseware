@@ -105,7 +105,7 @@ class InteractiveVideoBlock extends Block
                     }
                 }
             }
-            if ($GLOBALS['perm']->have_studip_perm('user', $this->_model->course->id, $user->id) && 
+            if ($GLOBALS['perm']->have_studip_perm('user', $this->_model->course->id, $user->id) &&
                 !$GLOBALS['perm']->have_studip_perm('tutor', $this->_model->course->id, $user->id)) {
                 $selected_assignment->recordAssignmentAttempt($user->id);
             }
@@ -114,7 +114,7 @@ class InteractiveVideoBlock extends Block
             $iav_source = json_decode($this->iav_source, true);
             if (!$iav_source['external']) {
                 $file = \FileRef::find($iav_source['file_id']);
-                if ($file) { 
+                if ($file) {
                     $iav_url = $this->isFileDownloadable($file) ? $this->getFileURL($file) : '';
                 } else {
                     $iav_url = '';
@@ -365,9 +365,9 @@ class InteractiveVideoBlock extends Block
         return $this->getAttrArray();
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()

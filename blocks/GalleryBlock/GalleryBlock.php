@@ -20,7 +20,7 @@ class GalleryBlock extends Block
         $this->defineField('gallery_hidenav', \Mooc\SCOPE_BLOCK, '');
         $this->defineField('gallery_height', \Mooc\SCOPE_BLOCK, '600');
         $this->defineField('gallery_show_names', \Mooc\SCOPE_BLOCK, '0');
-    }   
+    }
 
     public function student_view()
     {
@@ -41,7 +41,7 @@ class GalleryBlock extends Block
         }
 
         return array_merge(
-            $this->getAttrArray(), 
+            $this->getAttrArray(),
             array(
                 'showFiles' => $files,
                 'userIsAuthorized' => $this->getUpdateAuthorization(),
@@ -86,7 +86,7 @@ class GalleryBlock extends Block
         return array('img' => $this->showFiles($this->gallery_folder_id)[0]['url']);
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'gallery_file_ids'       => $this->gallery_file_ids,
@@ -106,19 +106,19 @@ class GalleryBlock extends Block
 
         if (isset ($data['gallery_folder_id'])) {
             $this->gallery_folder_id = (string) $data['gallery_folder_id'];
-        } 
+        }
         if (isset ($data['gallery_autoplay'])) {
             $this->gallery_autoplay = (string) $data['gallery_autoplay'];
-        } 
+        }
         if (isset ($data['gallery_autoplay_timer'])) {
             $this->gallery_autoplay_timer = (string) $data['gallery_autoplay_timer'];
-        } 
+        }
         if (isset ($data['gallery_hidenav'])) {
             $this->gallery_hidenav = (string) $data['gallery_hidenav'];
-        } 
+        }
         if (isset ($data['gallery_show_names'])) {
             $this->gallery_show_names = (string) $data['gallery_show_names'];
-        } 
+        }
         if (isset ($data['gallery_height']) && ($data['gallery_height'] > 0) && ($data['gallery_height'] <= 2000)) {
             $this->gallery_height = (string) $data['gallery_height'];
         } else {
@@ -201,9 +201,9 @@ class GalleryBlock extends Block
         return array_merge($this->getAttrArray() , array( 'gallery_folder_name' => $folder_name) );
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()

@@ -3,7 +3,7 @@ namespace Mooc\UI\ChartBlock;
 
 use Mooc\UI\Block;
 
-class ChartBlock extends Block 
+class ChartBlock extends Block
 {
     const NAME = 'Diagramm';
     const BLOCK_CLASS = 'multimedia';
@@ -30,7 +30,7 @@ class ChartBlock extends Block
         return array_merge($this->getAttrArray(), array());
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'chart_content' => $this->chart_content,
@@ -54,13 +54,13 @@ class ChartBlock extends Block
 
         if (isset ($data['chart_content'])) {
             $this->chart_content = (string) $data['chart_content'];
-        } 
+        }
         if (isset ($data['chart_type'])) {
             $this->chart_type = (string) $data['chart_type'];
-        } 
+        }
         if (isset ($data['chart_label'])) {
             $this->chart_label = \STUDIP\Markup::purifyHtml((string) $data['chart_label']);
-        } 
+        }
 
         return;
     }
@@ -70,9 +70,9 @@ class ChartBlock extends Block
        return $this->getAttrArray();
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()

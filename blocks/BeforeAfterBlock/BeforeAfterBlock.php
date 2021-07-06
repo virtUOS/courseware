@@ -3,7 +3,7 @@ namespace Mooc\UI\BeforeAfterBlock;
 
 use Mooc\UI\Block;
 
-class BeforeAfterBlock extends Block 
+class BeforeAfterBlock extends Block
 {
     const NAME = 'Bildvergleich';
     const BLOCK_CLASS = 'multimedia';
@@ -66,10 +66,10 @@ class BeforeAfterBlock extends Block
 
         $files_arr = $this->showFiles($before->file_id, $after->file_id);
 
-        $no_files = 
-            empty($files_arr['userfilesarray']) && 
-            empty($files_arr['coursefilesarray']) && 
-            ($files_arr['before_file_id_found'] == false) && 
+        $no_files =
+            empty($files_arr['userfilesarray']) &&
+            empty($files_arr['coursefilesarray']) &&
+            ($files_arr['before_file_id_found'] == false) &&
             ($files_arr['after_file_id_found'] == false) &&
             empty($before->file_id) &&
             empty($after->file_id);
@@ -108,7 +108,7 @@ class BeforeAfterBlock extends Block
         return array('before_img' => $ba_img_before);
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'ba_before' => $this->ba_before,
@@ -122,17 +122,17 @@ class BeforeAfterBlock extends Block
 
         if (isset ($data['ba_before'])) {
             $this->ba_before = \STUDIP\Markup::purifyHtml((string) $data['ba_before']);
-        } 
+        }
         if (isset ($data['ba_after'])) {
             $this->ba_after = \STUDIP\Markup::purifyHtml((string) $data['ba_after']);
-        } 
+        }
 
         return;
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()
@@ -152,7 +152,7 @@ class BeforeAfterBlock extends Block
     }
 
     public function exportProperties()
-    { 
+    {
        return array(
             'ba_before' => $this->ba_before,
             'ba_after' => $this->ba_after
@@ -165,7 +165,7 @@ class BeforeAfterBlock extends Block
         $files = array();
         $before = json_decode($this->ba_before);
         $after = json_decode($this->ba_after);
-        
+
         if ($before->source == 'file') {
             array_push($ba_files, $before->file_id);
         }

@@ -87,12 +87,12 @@ class EmbedBlock extends Block
 
                 break;
             case 'photo':
-                $html = '<img class="'.$img_class.'" src="'.$oembed->url.'" width="'.$oembed->width.'px" 
+                $html = '<img class="'.$img_class.'" src="'.$oembed->url.'" width="'.$oembed->width.'px"
                 data-originalwidth="'.$oembed->width.'"  data-originalheight="'.$oembed->height.'" height="'.$oembed
                 ->height.'px" title="'.$oembed->title.'">'; break;
             case 'link':
                 if($oembed->provider_name == 'DeviantArt') {
-                    $html = '<img class="'.$img_class.'" src="'.$oembed->fullsize_url.'" width="'.$oembed->width.'px" 
+                    $html = '<img class="'.$img_class.'" src="'.$oembed->fullsize_url.'" width="'.$oembed->width.'px"
                     data-originalwidth="'.$oembed->width.'"  data-originalheight="'.$oembed->height.'" height="'.$oembed
                     ->height.'px" title="'.$oembed->title.'">'; break;
                 }
@@ -248,9 +248,9 @@ class EmbedBlock extends Block
        return $this->getAttrArray();
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()

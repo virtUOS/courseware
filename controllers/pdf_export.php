@@ -17,6 +17,8 @@ class PdfExportController extends CoursewareStudipController
             throw new Trails_Exception(401);
         }
         $this->cid = Request::get('cid');
+
+        \Assets::set_assets_url(parse_url($GLOBALS['ASSETS_URL'])['path']);
         $grouped = $this->getGrouped($this->cid);
 
         $courseware = current($grouped['']);
@@ -113,7 +115,7 @@ class PdfExportController extends CoursewareStudipController
                     $arr['isStrucutalElement'] = false;
                     $arr['isBlock'] = true;
                     $ui_block = $this->plugin->getBlockFactory()->makeBlock($item);
-                    $arr['data'] = $ui_block->getPdfExportData();
+                    $arr['data'] = $ui_block->render('pdfexport');
                     if ('TestBlock' == $item->type) {
                         $arr['student_view'] = json_encode($ui_block->student_view());
                     }

@@ -36,7 +36,7 @@ class CanvasBlock extends Block
             $image_url = $content->image_url;
             $access = true;
         }
-        
+
         $fields = DBField::findBySQL('block_id = ? AND name = ? AND NOT user_id = ?', array($this->id, 'canvas_draw', $user->id));
         foreach($fields as $field){
             $draws [] = $field->json_data;
@@ -64,7 +64,7 @@ class CanvasBlock extends Block
         $files_arr = $this->showFiles($content->image_id);
 
         $no_files = empty($files_arr['userfilesarray']) && empty($files_arr['coursefilesarray']) && ($files_arr['image_id_found'] == false) && empty($content->image_id);
-        
+
         if((!$files_arr['image_id_found']) && (!empty($content->image_id))){
             $other_user_file = array('id' => $content->image_id, 'name' => $content->image_name);
         } else {
@@ -77,12 +77,12 @@ class CanvasBlock extends Block
         array_unshift($folders, $root_folder);
 
         return array_merge(
-            $this->getAttrArray(), 
+            $this->getAttrArray(),
             array(
-                'image_url'=> $content->image_url, 
-                'image_files_user' => $files_arr['userfilesarray'], 
-                'image_files_course' => $files_arr['coursefilesarray'], 
-                'no_image_files' => $no_files, 
+                'image_url'=> $content->image_url,
+                'image_files_user' => $files_arr['userfilesarray'],
+                'image_files_course' => $files_arr['coursefilesarray'],
+                'no_image_files' => $no_files,
                 'other_user_file' => $other_user_file,
                 'folders' => $folders
             )
@@ -238,9 +238,9 @@ class CanvasBlock extends Block
        return array('canvas_content' => $this->canvas_content);
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()
@@ -249,7 +249,7 @@ class CanvasBlock extends Block
         if ($content->source == 'cw') {
             $content->url = './' . $content->image_id . '/' . $content->image_name;
         }
-        
+
         return  $content;
     }
 

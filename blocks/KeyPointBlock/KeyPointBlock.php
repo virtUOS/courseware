@@ -3,7 +3,7 @@ namespace Mooc\UI\KeyPointBlock;
 
 use Mooc\UI\Block;
 
-class KeyPointBlock extends Block 
+class KeyPointBlock extends Block
 {
     const NAME = 'Merksatz';
     const BLOCK_CLASS = 'layout';
@@ -36,7 +36,7 @@ class KeyPointBlock extends Block
         return array_merge($this->getAttrArray());
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'keypoint' => true,
@@ -73,9 +73,9 @@ class KeyPointBlock extends Block
        return $this->getAttrArray();
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()
