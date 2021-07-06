@@ -75,6 +75,11 @@ class CodeBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         return $this->getAttrArray();

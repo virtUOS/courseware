@@ -238,6 +238,11 @@ class CanvasBlock extends Block
        return array('canvas_content' => $this->canvas_content);
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         $content = json_decode($this->canvas_content);

@@ -182,6 +182,11 @@ class AudioGalleryBlock extends Block
         );
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         return $this->getAttrArray();

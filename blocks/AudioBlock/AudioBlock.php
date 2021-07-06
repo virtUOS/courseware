@@ -255,6 +255,11 @@ class AudioBlock extends Block
         );
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         $audio_path =  '';
