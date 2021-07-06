@@ -147,6 +147,11 @@ class AssortBlock extends Block
        return array('assortblocks' => $this->assortblocks, 'assorttype' => $this->assorttype);
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         return array('assortblocks' => json_decode($this->assortblocks), 'assorttype' => $this->assorttype);

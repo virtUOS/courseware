@@ -343,6 +343,11 @@ class FolderBlock extends Block
         );
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         $folder_content = json_decode($this->folder_content);

@@ -181,6 +181,11 @@ class PdfBlock extends Block
         return $files;
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         $array = $this->getAttrArray();

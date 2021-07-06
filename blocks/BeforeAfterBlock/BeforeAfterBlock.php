@@ -130,6 +130,11 @@ class BeforeAfterBlock extends Block
         return;
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         $before = json_decode($this->ba_before);

@@ -280,6 +280,11 @@ class ImageMapBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         $content = json_decode($this->image_map_content);

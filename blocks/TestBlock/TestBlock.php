@@ -532,7 +532,12 @@ class TestBlock extends Block
         return array(
             'xml' => $xml
         );
-        
+
+    }
+
+    public function getPdfExportData()
+    {
+        return '';
     }
 
     public function getHtmlExportData()

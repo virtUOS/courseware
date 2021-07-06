@@ -169,6 +169,11 @@ class DownloadBlock extends Block
         );
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         $file_ref = new \FileRef($this->file_id);

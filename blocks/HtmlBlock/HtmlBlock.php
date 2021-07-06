@@ -197,6 +197,11 @@ class HtmlBlock extends Block
         return $files;
     }
 
+    public function getPdfExportData()
+    {
+        return $this->getHtmlExportData();
+    }
+
     public function getHtmlExportData()
     {
         if (strlen($this->content) === 0) {

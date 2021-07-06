@@ -365,6 +365,11 @@ class InteractiveVideoBlock extends Block
         return $this->getAttrArray();
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         $source = json_decode($this->iav_source);

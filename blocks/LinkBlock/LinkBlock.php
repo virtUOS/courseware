@@ -215,6 +215,11 @@ class LinkBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         $array = $this->getAttrArray();

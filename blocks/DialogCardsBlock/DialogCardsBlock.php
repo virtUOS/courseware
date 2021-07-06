@@ -166,6 +166,11 @@ class DialogCardsBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         //TODO collect files

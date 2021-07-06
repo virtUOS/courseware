@@ -239,6 +239,11 @@ class VideoBlock extends Block
         return $this->array_rep();
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         $array = $this->array_rep();

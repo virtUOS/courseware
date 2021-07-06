@@ -54,6 +54,11 @@ class TypewriterBlock extends Block
        return array('typewriter_json' => $this->typewriter_json);
     }
 
+    public function getPdfExportData()
+    {
+        return '';
+    }
+
     public function getHtmlExportData()
     {
         return json_decode($this->typewriter_json);
