@@ -64,7 +64,7 @@ class PostBlock extends Block
             if ($data['thread_id'] == 'new'){
                 $this->post_title = 'Diskussion-'. $this->_model->id;
             } else {
-                $this->post_title = Post::findOneBySQL('thread_id = ? AND seminar_id = ? AND post_id = 0', 
+                $this->post_title = Post::findOneBySQL('thread_id = ? AND seminar_id = ? AND post_id = 0',
                                     array($data['thread_id'], $this->container['cid']))->content;
             }
         } else {
@@ -125,8 +125,8 @@ class PostBlock extends Block
 
             if (strtotime($posts[0]["mkdate"]) > $data['timestamp']) {
                 return array_merge(
-                    $this->getAttrArray(), 
-                    Post::findPosts($this->thread_id, $this->container['cid'], $this->container['current_user_id']), 
+                    $this->getAttrArray(),
+                    Post::findPosts($this->thread_id, $this->container['cid'], $this->container['current_user_id']),
                     array("update" => true, "timestamp" =>strtotime($posts[0]["mkdate"]))
                 );
             }
@@ -148,9 +148,12 @@ class PostBlock extends Block
        return $this->getAttrArray();
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        $data = $this->student_view();
+        #var_dump($data) || exit;
+
+        return $data;
     }
 
     public function getHtmlExportData()

@@ -1,0 +1,19 @@
+<table cellspacing="4">
+  {{#files}}
+    <tr>
+      <td>
+        {{name}}
+      </td>
+      <td>
+        <img src="{{{img}}}" />
+      </td>
+    </tr>
+{{/files}}
+{{^files}}
+  <tr>
+    <td>
+      <p>{{#i18n}}In dem ausgewählten Ordner befinden sich keine Bilder.{{/i18n}}</p>
+    </td>
+  </tr>
+{{/files}}
+</table>

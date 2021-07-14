@@ -1,0 +1,11 @@
+{{^empty}}
+  <div>
+    <div><span>{{code_lang}}</span></div>
+    <pre><code>{{code_content}}</code></pre>
+  </div>
+{{/empty}}
+{{#empty}}
+  <div class="messagebox messagebox_error">
+    {{#i18n}}Es wurde noch kein Quellcode eingetragen.{{/i18n}}
+  </div>
+{{/empty}}

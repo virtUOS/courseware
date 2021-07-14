@@ -1,10 +1,13 @@
 <?php
 namespace Mooc\UI\KeyPointBlock;
 
+use Courseware\PdfExportHelperTrait;
 use Mooc\UI\Block;
 
-class KeyPointBlock extends Block 
+class KeyPointBlock extends Block
 {
+    use PdfExportHelperTrait;
+
     const NAME = 'Merksatz';
     const BLOCK_CLASS = 'layout';
     const DESCRIPTION = 'Erzeugt einen Merksatz mit Icon und Rahmen';
@@ -36,7 +39,7 @@ class KeyPointBlock extends Block
         return array_merge($this->getAttrArray());
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'keypoint' => true,
@@ -73,9 +76,12 @@ class KeyPointBlock extends Block
        return $this->getAttrArray();
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        $data = $this->student_view();
+        $data['keypoint_img'] = $this->getRasteredIcon($data['keypoint_color'], $data['keypoint_icon'], 100);
+
+        return $data;
     }
 
     public function getHtmlExportData()

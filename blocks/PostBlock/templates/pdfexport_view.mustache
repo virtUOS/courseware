@@ -1,0 +1,17 @@
+<table cellspacing="4" cellpadding="2">
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Titel{{/i18n}}</td>
+    <td>{{post_title}}{{^post_title}}–{{/post_title}}</td>
+  </tr>
+  {{#posts}}
+  <tr>
+    <td style="font-style: italic;">{{user_name}}<br/>({{date}})</td>
+    <td>{{content}}</td>
+  </tr>
+  {{/posts}}
+  {{^posts}}
+  <tr>
+    <td colspan="2">{{#i18n}}Dieser Block enthält keine Kommentare.{{/i18n}}</td>
+  </tr>
+  {{/posts}}
+</table>

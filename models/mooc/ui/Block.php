@@ -654,7 +654,7 @@ abstract class Block {
         }
     }
 
-    public function vipsActivated() 
+    public function vipsActivated()
     {
         if ($this->vipsInstalled()) {
             $plugin_manager = \PluginManager::getInstance();
@@ -694,6 +694,12 @@ abstract class Block {
         } else {
             return false;
         }
+    }
+
+    public function exportBlockIntoPdf($pdf)
+    {
+        $html = $this->render('pdfexport', compact('pdf'));
+        $pdf->writeHTML('<div class="block">' . $html . '</div>');
     }
 
     protected function getFileURL($file_ref)

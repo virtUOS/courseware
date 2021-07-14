@@ -2,7 +2,7 @@
 
 use Mooc\DB\Block;
 
-require_once dirname(__FILE__) . '/../pdf/coursewareExportPDF.php';
+require_once dirname(__FILE__) . "/../pdf/coursewareExportPDF.php";
 
 /**
  * PDF Exporter.
@@ -13,55 +13,87 @@ class PdfExportController extends CoursewareStudipController
 {
     public function index_action()
     {
-        if (!$this->container['current_user']->canCreate($this->container['current_courseware'])) {
+        if (
+            !$this->container["current_user"]->canCreate(
+                $this->container["current_courseware"]
+            )
+        ) {
             throw new Trails_Exception(401);
         }
-        $this->cid = Request::get('cid');
+        $this->cid = Request::get("cid");
+        \URLHelper::setBaseURL($GLOBALS["ABSOLUTE_URI_STUDIP"]);
+
         $grouped = $this->getGrouped($this->cid);
 
-        $courseware = current($grouped['']);
+        $courseware = current($grouped[""]);
         $this->buildTree($grouped, $courseware);
 
         $pdf = $this->visitTree($courseware);
-        $pdf->Output('courseware-export.pdf', 'I');
+        $pdf->Output("courseware-export.pdf", "I");
         exit();
     }
 
     private function visitTree($courseware)
     {
         $pdf = new CoursewareExportPDF();
-        $this->visitItem($pdf, $courseware);
+
+        // create links to all items
+        $this->visitItem($pdf, $courseware, [], [$this, "createLinkToItem"]);
+
+        // write items to pdf
+        $this->visitItem($pdf, $courseware, [], [$this, "writeItem"]);
+
+        // write TOC
+        $pdf->addTOCPage();
+        $pdf->MultiCell(0, 0, _cw("Inhaltsverzeichnis"), 0, "C");
+        $pdf->Ln();
+        $pdf->addTOC(2, "dejavusans", " ", _cw("Inhaltsverzeichnis"));
+        $pdf->endTOCPage();
 
         return $pdf;
     }
 
-    private function visitItem($pdf, $item, $index = [])
+    private function visitItem($pdf, $item, $index, $callback)
     {
-        $this->writeItem($pdf, $item, $index);
-        if ($item['children']) {
-            foreach ($item['children'] as $childIndex => $child) {
-                $this->visitItem($pdf, $child, array_merge($index, [$childIndex + 1]));
+        $callback($pdf, $item, $index);
+        if ($item["children"]) {
+            foreach ($item["children"] as $childIndex => $child) {
+                $this->visitItem(
+                    $pdf,
+                    $child,
+                    array_merge($index, [$childIndex + 1]),
+                    $callback
+                );
             }
         }
     }
 
+    private function createLinkToItem($pdf, $item, $index)
+    {
+        $pdf->addLinkToItem($item["id"]);
+    }
+
     private function writeItem($pdf, $item, $index)
     {
-        switch ($item['type']) {
-            case 'Courseware':
+        if ($link = $pdf->getLinkToItem($item["id"])) {
+            $pdf->SetLink($link);
+        }
+
+        switch ($item["type"]) {
+            case "Courseware":
                 $this->writeCourseware($pdf, $item, $index);
                 break;
-            case 'Chapter':
+            case "Chapter":
                 $this->writeChapter($pdf, $item, $index);
                 break;
-            case 'Subchapter':
+            case "Subchapter":
                 $this->writeSubchapter($pdf, $item, $index);
                 break;
-            case 'Section':
+            case "Section":
                 $this->writeSection($pdf, $item, $index);
                 break;
             default:
-                if ($item['isBlock']) {
+                if ($item["isBlock"]) {
                     $this->writeBlock($pdf, $item, $index);
                 }
                 break;
@@ -71,56 +103,69 @@ class PdfExportController extends CoursewareStudipController
     private function writeCourseware($pdf, $courseware)
     {
         $pdf->AddPage();
-        $html = '<h1>Courseware</h1>';
-        $pdf->writeHTML($html, true, false, true, false, '');
+        $html =
+            '<h1>Courseware</h1><p style="font-style:italic;">' .
+            date("c", time()) .
+            "</p>";
+        $pdf->writeHTML($html);
     }
 
     private function writeChapter($pdf, $chapter, $index)
     {
+        $heading = sprintf("%s. %s", join(".", $index), $chapter["title"]);
+        $html = "<h2>$heading</h2";
+
         $pdf->AddPage();
-        $html = sprintf('<h2>%s) %s</h2>', join('.', $index), $chapter['title']);
-        $pdf->writeHTML($html, true, false, true, false, '');
+        $pdf->setBookmark($heading);
+        $pdf->writeHTML($html);
     }
 
     private function writeSubchapter($pdf, $subchapter, $index)
     {
-        $html = sprintf('<h3>%s) %s</h3>', join('.', $index), $subchapter['title']);
-        $pdf->writeHTML($html, true, false, true, false, '');
+        $heading = sprintf("%s. %s", join(".", $index), $subchapter["title"]);
+        $html = "<h3>$heading</h3>";
+        $pdf->setBookmark($heading);
+        $pdf->writeHTML($html);
     }
 
     private function writeSection($pdf, $section, $index)
     {
-        $html = sprintf('<h4>%s) %s</h4>', join('.', $index), $section['title']);
-        $pdf->writeHTML($html, true, false, true, false, '');
+        $heading = sprintf("%s. %s", join(".", $index), $section["title"]);
+        $html = "<h4>$heading</h4>";
+        $pdf->setBookmark($heading);
+        $pdf->writeHTML($html);
     }
 
     private function writeBlock($pdf, $block, $index)
     {
-        $html = sprintf('<h5>%s) Block</h5>', join('.', $index), $block['title']);
-        $html .= $block['data'];
-        $pdf->writeHTML($html, true, false, true, false, '');
+        $html = sprintf(
+            "<h5>%s. Block (%s)</h5>",
+            join(".", $index),
+            $block["type"]
+        );
+        $pdf->writeHTML($html);
+
+        $block["uiBlock"]->exportBlockIntoPdf($pdf);
     }
 
     private function getGrouped($cid)
     {
         $grouped = array_reduce(
-            Block::findBySQL('seminar_id = ? ORDER BY id, position', [$cid]),
+            Block::findBySQL("seminar_id = ? ORDER BY id, position", [$cid]),
             function ($memo, $item) {
                 $arr = $item->toArray();
-                $arr['isStrucutalElement'] = true;
-                $arr['childType'] = $this->getSubElement($arr['type']);
                 if (!$item->isStructuralBlock()) {
-                    $arr['isStrucutalElement'] = false;
-                    $arr['isBlock'] = true;
-                    $ui_block = $this->plugin->getBlockFactory()->makeBlock($item);
-                    $arr['data'] = $ui_block->getPdfExportData();
-                    if ('TestBlock' == $item->type) {
-                        $arr['student_view'] = json_encode($ui_block->student_view());
-                    }
+                    $arr["isBlock"] = true;
+                    $ui_block = $this->plugin
+                        ->getBlockFactory()
+                        ->makeBlock($item);
+                    $arr["uiBlock"] = $ui_block;
                 }
-                if ('Section' == $item->type) {
-                    $ui_block = $this->plugin->getBlockFactory()->makeBlock($item);
-                    $arr['icon'] = $ui_block->icon;
+                if ("Section" == $item->type) {
+                    $ui_block = $this->plugin
+                        ->getBlockFactory()
+                        ->makeBlock($item);
+                    $arr["icon"] = $ui_block->icon;
                 }
                 $memo[$item->parent_id][] = $arr;
 
@@ -136,19 +181,19 @@ class PdfExportController extends CoursewareStudipController
     {
         $sub_element = null;
         switch ($type) {
-            case 'Courseware':
-                $sub_element = 'Chapter';
+            case "Courseware":
+                $sub_element = "Chapter";
                 break;
-            case 'Chapter':
-                $sub_element = 'Subchapter';
+            case "Chapter":
+                $sub_element = "Subchapter";
                 break;
-            case 'Subchapter':
-                $sub_element = 'Section';
+            case "Subchapter":
+                $sub_element = "Section";
                 break;
-            case 'Section':
-                $sub_element = 'Block';
+            case "Section":
+                $sub_element = "Block";
                 break;
-            case 'Block':
+            case "Block":
             default:
         }
 
@@ -158,26 +203,26 @@ class PdfExportController extends CoursewareStudipController
     private function buildTree($grouped, &$root)
     {
         $this->addChildren($grouped, $root);
-        if ('Section' !== $root['type']) {
-            if (!empty($root['children'])) {
-                foreach ($root['children'] as &$child) {
+        if ("Section" !== $root["type"]) {
+            if (!empty($root["children"])) {
+                foreach ($root["children"] as &$child) {
                     $this->buildTree($grouped, $child);
                 }
             }
         } else {
-            $root['children'] = $this->addChildren($grouped, $root);
+            $root["children"] = $this->addChildren($grouped, $root);
         }
     }
 
     private function addChildren($grouped, &$parent)
     {
-        $parent['children'] = $grouped[$parent['id']];
-        if (null != $parent['children']) {
-            usort($parent['children'], function ($a, $b) {
-                return $a['position'] - $b['position'];
+        $parent["children"] = $grouped[$parent["id"]];
+        if (null != $parent["children"]) {
+            usort($parent["children"], function ($a, $b) {
+                return $a["position"] - $b["position"];
             });
         }
 
-        return $parent['children'];
+        return $parent["children"];
     }
 }

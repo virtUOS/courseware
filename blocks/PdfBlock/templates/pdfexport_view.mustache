@@ -1,0 +1,19 @@
+<table cellspacing="4">
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Titel{{/i18n}}</td>
+    <td>{{pdf_title}}{{^pdf_title}}–{{/pdf_title}}</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Dateiname{{/i18n}}</td>
+    <td>{{pdf_filename}}{{^pdf_filename}}–{{/pdf_filename}}</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}URL der Datei{{/i18n}}</td>
+      <td>
+        {{#pdf_link}}
+          <a href="{{pdf_link}}">{{pdf_link}}</a>
+        {{/pdf_link}}
+        {{^pdf_link}}–{{/pdf_link}}
+      </td>
+  </tr>
+</table>

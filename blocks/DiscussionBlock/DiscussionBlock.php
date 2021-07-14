@@ -188,7 +188,7 @@ class DiscussionBlock extends Block
         $plugin_info = $plugin_manager->getPluginInfo('Blubber');
         return $plugin_manager->isPluginActivated($plugin_info['id'], $block->getModel()->seminar_id);
     }
-    
+
     // is the CoursewareObserver plugin activated
     private static function coursewareObserverActivated($block)
     {
@@ -197,9 +197,9 @@ class DiscussionBlock extends Block
         return $plugin_info["enabled"];
     }
 
-    public function getPdfExportData()
+    public function pdfexport_view()
     {
-        return '';
+        return array();
     }
 
     public function getHtmlExportData()
