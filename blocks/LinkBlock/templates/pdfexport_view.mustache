@@ -1,9 +1,14 @@
-{{#link_is_internal}}
-  <p>
-    <tcpdf method="addHtmlLink" params="{{{link_link_params}}}" />
-  </p>
-{{/link_is_internal}}
+<table cellspacing="4" style="border: 2px solid #ccc">
+  <tr>
+    {{#link_is_internal}}
+      <td>
+        <tcpdf method="addHtmlLink" params="{{{link_link_params}}}" />
+      </td>
+    {{/link_is_internal}}
 
-{{^link_is_internal}}
-  <p><a href="{{link_href}}">{{link_title}} {{#link_href}}({{#i18n}}Link: {{/i18n}} {{link_href}}){{/link_href}}</a></p>
-{{/link_is_internal}}
+    {{^link_is_internal}}
+      <td><a href="{{link_href}}">{{link_title}} {{#link_href}}({{#i18n}}Link: {{/i18n}} {{link_href}}){{/link_href}}</a></td>
+    {{/link_is_internal}}
+  </tr>
+</table>
+<h6>{{#i18n}}Link-Block{{/i18n}}</h6>

@@ -80,8 +80,34 @@ class KeyPointBlock extends Block
     {
         $data = $this->student_view();
         $data['keypoint_img'] = $this->getRasteredIcon($data['keypoint_color'], $data['keypoint_icon'], 100);
+        $data['keypoint_hexcolor'] = $this->getHexColor($data['keypoint_color']);
 
         return $data;
+    }
+
+    private function getHexColor($color)
+    {
+        $hexcolor = '#000';
+        switch($color) {
+            case 'red':
+                $hexcolor = '#d60000';
+                break;
+            case 'green':
+                $hexcolor = '#339d41';
+                break;
+            case 'grey':
+                $hexcolor = '#3c454e';
+                break;
+            case 'blue':
+                $hexcolor = '#28497c';
+                break;
+            case 'yellow':
+                $hexcolor = '#ffdb33';
+                break;
+
+        }
+
+        return $hexcolor;
     }
 
     public function getHtmlExportData()

@@ -1,11 +1,11 @@
 {{^empty}}
-  <div>
-    <div><span>{{code_lang}}</span></div>
+  <div style="background-color: #f8f8f8">
     <pre><code>{{code_content}}</code></pre>
+    <div style="background-color: #ccc; font-weight: bold; text-align: right; line-height: 24px"><span>{{code_lang}}</span></div>
   </div>
 {{/empty}}
 {{#empty}}
   <div class="messagebox messagebox_error">
-    {{#i18n}}Es wurde noch kein Quellcode eingetragen.{{/i18n}}
+    {{#i18n}}Es wurde kein Quellcode eingetragen.{{/i18n}}
   </div>
 {{/empty}}

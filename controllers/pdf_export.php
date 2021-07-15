@@ -102,17 +102,18 @@ class PdfExportController extends CoursewareStudipController
 
     private function writeCourseware($pdf, $courseware)
     {
+        $course = Course::findOneById($this->cid);
         $pdf->AddPage();
         $html =
-            '<h1>Courseware</h1><p style="font-style:italic;">' .
-            date("c", time()) .
+            '<h1>'.$course->name.'</h1><p style="font-style:italic;">' .
+            date("d.m.Y - H:i", time()) .
             "</p>";
         $pdf->writeHTML($html);
     }
 
     private function writeChapter($pdf, $chapter, $index)
     {
-        $heading = sprintf("%s. %s", join(".", $index), $chapter["title"]);
+        $heading = sprintf("%s %s", join(".", $index), $chapter["title"]);
         $html = "<h2>$heading</h2";
 
         $pdf->AddPage();
@@ -122,7 +123,7 @@ class PdfExportController extends CoursewareStudipController
 
     private function writeSubchapter($pdf, $subchapter, $index)
     {
-        $heading = sprintf("%s. %s", join(".", $index), $subchapter["title"]);
+        $heading = sprintf("%s %s", join(".", $index), $subchapter["title"]);
         $html = "<h3>$heading</h3>";
         $pdf->setBookmark($heading);
         $pdf->writeHTML($html);
@@ -130,7 +131,7 @@ class PdfExportController extends CoursewareStudipController
 
     private function writeSection($pdf, $section, $index)
     {
-        $heading = sprintf("%s. %s", join(".", $index), $section["title"]);
+        $heading = sprintf("%s %s", join(".", $index), $section["title"]);
         $html = "<h4>$heading</h4>";
         $pdf->setBookmark($heading);
         $pdf->writeHTML($html);
@@ -143,7 +144,7 @@ class PdfExportController extends CoursewareStudipController
             join(".", $index),
             $block["type"]
         );
-        $pdf->writeHTML($html);
+        // $pdf->writeHTML($html);
 
         $block["uiBlock"]->exportBlockIntoPdf($pdf);
     }

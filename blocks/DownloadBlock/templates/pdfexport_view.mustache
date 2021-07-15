@@ -1,24 +1,15 @@
-<style>
-  dt { font-weight: bold;  }
-</style>
-<dl>
-  <dt>{{#i18n}}Download-Titel{{/i18n}}</dt>
-  <dd>{{download_title}}{{^download_title}}–{{/download_title}}</dd>
-
-  <dt>{{#i18n}}Dateiname{{/i18n}}</dt>
-  <dd>{{file}}{{^file}}–{{/file}}</dd>
-
-  <dt>{{#i18n}}Datei-ID{{/i18n}}</dt>
-  <dd>{{file_id}}{{^file_id}}–{{/file_id}}</dd>
-
-  <dt>{{#i18n}}Download-URL{{/i18n}}</dt>
-  <dd>{{#url}}<a href="{{url}}">{{url}}</a>{{/url}}
-    {{^url}}–{{/url}}
-  </dd>
-
-  <dt>{{#i18n}}Information vor dem Download{{/i18n}}</dt>
-  <dd>{{download_info}}{{^download_info}}–{{/download_info}}</dd>
-
-  <dt>{{#i18n}}Information nach dem Download{{/i18n}}</dt>
-  <dd>{{download_success}}{{^download_success}}–{{/download_success}}</dd>
-</dl>
+<table cellspacing="4" style="border: 2px solid #ccc">
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Titel{{/i18n}}</td>
+    <td>{{download_title}}{{^download_title}}–{{/download_title}}</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Dateiname{{/i18n}}</td>
+    <td>{{file}}{{^file}}–{{/file}}</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Download-URL{{/i18n}}</td>
+    <td>{{#url}}<a href="{{url}}">{{url}}</a>{{/url}}{{^url}}–{{/url}}</td>
+  </tr>
+</table>
+<h6>{{#i18n}}Download-Block{{/i18n}}</h6>

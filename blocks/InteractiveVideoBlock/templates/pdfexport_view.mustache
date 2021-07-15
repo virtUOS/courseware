@@ -1,12 +1,9 @@
-<table cellspacing="4">
+
+<table cellspacing="4" style="border: 2px solid #ccc">
   {{#url}}
   <tr>
     <td style="width: 30%; font-weight: bold;">{{#i18n}}URL des Videos{{/i18n}}</td>
-    <td style="width: 70%;">
-      {{#url}}
-        <a href="{{url}}">{{url}}</a>
-      {{/url}}
-      {{^url}}–{{/url}}</td>
+    <td style="width: 70%;">{{#url}}<a href="{{url}}">{{url}}</a>{{/url}}{{^url}}–{{/url}}</td>
   </tr>
 
   <tr>
@@ -73,3 +70,4 @@
   {{/url}}
 
 </table>
+<h6>{{#i18n}}Interaktiver-Video-Block{{/i18n}}</h6>

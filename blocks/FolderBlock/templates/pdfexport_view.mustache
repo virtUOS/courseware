@@ -1,7 +1,7 @@
 {{#folder_available}}
-<table cellspacing="4">
+<table cellspacing="4" style="border: 2px solid #ccc">
   <tr>
-    <td style="font-weight: bold;">{{#i18n}}Titel des Blocks{{/i18n}}</td>
+    <td style="font-weight: bold;">{{#i18n}}Titel{{/i18n}}</td>
     <td>{{folder_title}}{{^folder_title}}–{{/folder_title}}</td>
   </tr>
   <tr>
@@ -10,15 +10,11 @@
   </tr>
   <tr>
     <td style="font-weight: bold;">{{#i18n}}URL des Dateiordners{{/i18n}}</td>
-    <td>
-      {{#folder_link}}
-        <a href="{{folder_link}}">{{folder_link}}</a>
-      {{/folder_link}}
-      {{^folder_link}}–{{/folder_link}}
-    </td>
+    <td>{{#folder_link}}<a href="{{folder_link}}">{{folder_link}}</a>{{/folder_link}}{{^folder_link}}–{{/folder_link}}</td>
   </tr>
 </table>
 {{/folder_available}}
 {{^folder_available}}
   <p>{{#i18n}}Es wurde kein Ordner ausgewählt.{{/i18n}}</p>
 {{/folder_available}}
+<h6>{{#i18n}}Dateiordner-Block{{/i18n}}</h6>
