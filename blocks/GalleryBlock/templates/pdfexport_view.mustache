@@ -1,11 +1,11 @@
-<table cellspacing="4">
+<table cellspacing="4" style="border: 2px solid #ccc">
   {{#files}}
     <tr>
       <td>
         {{name}}
       </td>
       <td>
-        <img src="{{{img}}}" />
+        <img src="{{{img}}}" height="64"/>
       </td>
     </tr>
 {{/files}}
@@ -17,3 +17,4 @@
   </tr>
 {{/files}}
 </table>
+<h6>{{#i18n}}Galerie-Block{{/i18n}}</h6>

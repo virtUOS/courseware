@@ -1,11 +1,15 @@
-<dl>
-  <dt>{{#i18n}}Vorher{{/i18n}}</dt>
-  <dd>
-    <img src="{{{beforeafter_img_before}}}" alt="">
-  </dd>
-
-  <dt>{{#i18n}}Nachher{{/i18n}}</dt>
-  <dd>
-    <img src="{{{beforeafter_img_after}}}" alt="">
-  </dd>
-</dl>
+<table cellspacing="4" style="border: 2px solid #ccc">
+  <tr>
+    <td>{{#i18n}}Vorher{{/i18n}}</td>
+    <td>{{#i18n}}Nachher{{/i18n}}</td>
+  </tr>
+  <tr>
+    <td>
+      <img src="{{{beforeafter_img_before}}}" height="64">
+    </td>
+    <td>
+      <img src="{{{beforeafter_img_after}}}" height="64">
+    </td>
+  </tr>
+</table>
+<h6>{{#i18n}}Bildvergleich-Block{{/i18n}}</h6>

@@ -1,5 +1,7 @@
-<p>Diagramm: {{chart_label}} ({{chart_type}})</p>
-<table>
+<table style="border: 2px solid #ccc">
+  <tr>
+    <th colspan="3">{{#i18n}}Datenbezeichnung{{/i18n}}: {{chart_label}}</th>
+  </tr>
   <tr style="font-weight: bold;">
     <th>{{#i18n}}Bezeichnung{{/i18n}}</th>
     <th>{{#i18n}}Wert{{/i18n}}</th>
@@ -15,9 +17,9 @@
       {{value}}
       {{^value}}–{{/value}}
     </td>
-    <td>
-      <span style="color: {{color}};">{{color}}</span>
+    <td style="background-color: {{color}};">
     </td>
   </tr>
   {{/chart_content}}
 </table>
+<h6>{{#i18n}}Diagramm-Block{{/i18n}}</h6>

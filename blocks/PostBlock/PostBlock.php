@@ -151,7 +151,6 @@ class PostBlock extends Block
     public function pdfexport_view()
     {
         $data = $this->student_view();
-        #var_dump($data) || exit;
 
         return $data;
     }
