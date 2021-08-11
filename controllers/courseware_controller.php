@@ -16,7 +16,7 @@ class CoursewareStudipController extends StudipController
     public function before_filter(&$action, &$args)
     {
         parent::before_filter($action, $args);
-        $this->data = studip_utf8decode($this->parseRequestBody());
+        $this->data = $this->parseRequestBody();
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base'));
         $this->setDefaultPageTitle();
     }

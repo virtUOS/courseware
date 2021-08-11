@@ -1,6 +1,6 @@
 <?php
 
-namespace Courseware;
+namespace CoursewarePlugin;
 
 use Mooc\DB\Block as DbBlock;
 use Mooc\UI\Block as UiBlock;

@@ -36,7 +36,7 @@ class Field extends \SimpleORMap
         $config['additional_fields']['content'] = array(
             'get' => function (Field $self) {
                 if (isset($self->json_data)) {
-                    return studip_utf8decode(json_decode($self->json_data, true));
+                    return json_decode($self->json_data, true);
                 }
 
                 return $self->getDefault();
@@ -46,7 +46,7 @@ class Field extends \SimpleORMap
                     return null;
                 }
 
-                return $self->json_data = json_encode(studip_utf8encode($value));
+                return $self->json_data = json_encode($value);
             },
         );
 

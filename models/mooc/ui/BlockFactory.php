@@ -1,7 +1,7 @@
 <?php
 namespace Mooc\UI;
 
-use Courseware\Container;
+use CoursewarePlugin\Container;
 
 /**
  * TODO

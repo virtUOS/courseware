@@ -1,0 +1,457 @@
+<?php
+
+namespace Mooc\Command;
+
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Mooc\DB\Block as dbBlock;
+use Courseware\StructuralElement as StructuralElement;
+use Courseware\Container as Container;
+use Courseware\Block as Block;
+
+/**
+ * @author Ron Lucke <lucke@elan-ev.de>
+ */
+
+class MigrateCoursewareCommand extends Command
+{
+    protected function configure()
+    {
+        $this->setName('courseware:migrate');
+        $this->setDescription('migrate from courseware plugin data to couseware core');
+    }
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        $output->writeln('Start migration ...');
+        $this->plugin_courseware = \PluginManager::getInstance()->getPlugin('Courseware');
+        \PluginEngine::getPlugin('CoreForum');
+        $coursewares =  dbBlock::findBySQL('type = ?', array('Courseware'));
+        // TODO: for each cid not migrated jet
+        $cid = $coursewares[1]->seminar_id;
+        $grouped = $this->getGrouped($cid, true);
+        $courseware = current($grouped['']);
+        $this->buildTree($grouped, $courseware);
+        //TODO: create new Courseware elements
+        $this->createNewCourseware($courseware, $output);
+        //TODO: store migration success in db
+        $output->writeln('Migration complete.');
+
+        return 0;
+    }
+
+    private function getGrouped($cid)
+    {
+        $grouped = array_reduce(
+            dbBlock::findBySQL('seminar_id = ? ORDER BY id, position', array($cid)),
+            function($memo, $item) use($remote) {
+                $arr = $item->toArray();
+                $arr['isStrucutalElement'] = true;
+                $arr['childType'] = $this->getSubElement($arr['type']);
+                $ui_block = $this->plugin_courseware->getBlockFactory()->makeBlock($item);
+                $arr['ui_block'] = $ui_block;
+                if (!$item->isStructuralBlock()) {
+                    $arr['isStrucutalElement'] = false;
+                    $arr['isBlock'] = true;
+                    $arr['fields'] = $ui_block->getFields();
+                }
+                $memo[$item->parent_id][] = $arr;
+                return $memo;
+            },
+            array());
+
+        return $grouped;
+    }
+
+    private function getSubElement($type) {
+        $sub_element = null;
+        switch($type) {
+            case 'Courseware':
+                $sub_element = 'Chapter';
+                break;
+            case 'Chapter':
+                $sub_element = 'Subchapter';
+                break;
+            case 'Subchapter':
+                $sub_element = 'Section';
+                break;
+            case 'Section':
+                $sub_element = 'Block';
+                break;
+            case 'Block':
+            default:
+        }
+
+        return $sub_element;
+    }
+
+    private function buildTree($grouped, &$root)
+    {
+        $this->addChildren($grouped, $root);
+        if ($root['type'] !== 'Section') {
+            if (!empty($root['children'])) {
+                foreach($root['children'] as &$child) {
+                    $this->buildTree($grouped, $child);
+                }
+            }
+        } else {
+            $root['children'] = $this->addChildren($grouped, $root);
+        }
+    }
+
+    private function addChildren($grouped, &$parent)
+    {
+        $parent['children'] = $grouped[$parent['id']];
+        if ($parent['children'] != null) {
+            usort($parent['children'], function($a, $b) {
+                return $a['position'] - $b['position'];
+            });
+        }
+
+        return $parent['children'];
+    }
+
+    private function createNewCourseware($courseware, $output)
+    {
+        $cid = $courseware['seminar_id'];
+        $course = \Course::find($cid);
+        $courseTeacher = $course->getMembersWithStatus('dozent')[0];
+        $teacher = \User::find($courseTeacher->user_id);
+
+        //get courseware settings
+        $settings = [];
+        $settings['progression'] = ($courseware['ui_block']->progression);
+        $settings['editing_permission'] = ($courseware['ui_block']->editing_permission);
+
+        //TODO: courseware root - is a root present?
+        $root = StructuralElement::getCoursewareCourse($cid);
+
+        //TODO: set root name
+        if($root === null) {
+            $root = StructuralElement::build([
+                'parent_id' => null,
+                'range_id' => $cid,
+                'range_type' => 'course',
+                'owner_id' => $teacher->id,
+                'editor_id' => $teacher->id,
+                'purpose' => 'content',
+                'title' => $course->name,
+            ]);
+    
+            $root->store();
+        }
+
+        //TODO: create Chapters
+        foreach($courseware['children'] as $chapter) {
+            $new_chapter = $this->createStructuralElement($chapter, $root->id, $teacher, $cid, $output, true);
+            foreach($chapter['children'] as $subchapter) {
+                $new_subchapter = $this->createStructuralElement($subchapter, $new_chapter->id, $teacher, $cid, $output, true);
+                foreach($subchapter['children'] as $section) {
+                    $new_section = $this->createStructuralElement($section, $new_subchapter->id, $teacher, $cid, $output, true);
+                    $new_container = $this->createContainer($new_section->id, $teacher, $output);
+                    foreach($section['children'] as $block) {
+                        $new_block = $this->createBlock($block, $new_container, $teacher, $cid, $output, true);
+                        //TODO: migrate user data
+                        // -> AudioGallery - audio_gallery_user_recodring
+                        //TODO: migrate user progress
+                        //add block to container payload
+                        $new_container->type->addBlock($new_block);
+                        $new_container->store();
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private function createStructuralElement($element, $parent_id, $user, $cid, $output, $log = false)
+    {
+        $element = StructuralElement::build([
+            'parent_id' => $parent_id,
+            'range_id' => $cid,
+            'range_type' => 'course',
+            'owner_id' => $user->id,
+            'editor_id' => $user->id,
+            'purpose' => 'content',
+            'title' => $element['title'],
+        ]);
+
+        $element->store();
+
+        return $element;
+    }
+    private function createContainer($structural_element_id, $user, $output, $log = false)
+    {
+        $payload = array(
+            'colspan' => 'full',
+            'sections' => [array('name' => 'Liste', 'icon' => '', 'blocks' => [])]
+        );
+
+        $container = Container::build([
+            'structural_element_id' => $structural_element_id,
+            'owner_id' => $user->id,
+            'editor_id' => $user->id,
+            'container_type' => 'list',
+            'payload' => json_encode($payload)
+        ]);
+        $container->store();
+
+        return $container;
+    }
+    private function createBlock($block, $container, $user, $cid, $output, $log = false)
+    {
+        if($log) {
+            $output->writeln($block['type']);
+            // $output->writeln($block['fields']);
+        }
+        $addBlock = false;
+        $block_type = '';
+        $payload = [];
+        switch($block['type']) {
+            case 'AssortBlock':
+                // we skip this block type
+                break;
+            case 'AudioBlock':
+                $source = false;
+                if ($block['fields']['audio_source'] === 'cw') {
+                    $source = 'studip_file';
+                }
+                if ($block['fields']['audio_source'] === 'webaudio') {
+                    $source = 'web';
+                }
+                if (!$source) {
+                    break;
+                }
+                $url = $source === 'web' ? $block['fields']['audio_file']: '';
+                $payload = array(
+                    'title' => $block['fields']['audio_description'],
+                    'source' => $source,
+                    'file_id' => $block['fields']['audio_id'],
+                    'folder_id' => '',
+                    'web_url' => $url,
+                    'recorder_enabled' => false
+                );
+                $block_type = 'audio';
+                $addBlock = true;
+                break;
+            case 'AudioGalleryBlock':
+                $rootFolder = \Folder::findTopFolder($cid);
+                $folder_type = 'HiddenFolder';
+                $destinationFolderName = 'AudioGallery';
+                $destinationFolder = \FileManager::createSubFolder(
+                    \FileManager::getTypedFolder($rootFolder->id),
+                    $user,
+                    $folder_type,
+                    $destinationFolderName,
+                    ''
+                );
+                $destinationFolder->__set('download_allowed', 1);
+                $destinationFolder->store();
+                $payload = array(
+                    'title' => '',
+                    'source' => 'studip_folder',
+                    'file_id' => '',
+                    'folder_id' => $destinationFolder->id,
+                    'web_url' => '',
+                    'recorder_enabled' => true
+                );
+                $block_type = 'audio';
+                $addBlock = true;
+            case 'BeforeAfterBlock':
+                $before = json_decode($block['fields']['ba_before']);
+                if($before->source === 'file') {
+                    $before_source = 'studip';
+                }
+                if($before->source === 'url') {
+                    $before_source = 'web';
+                }
+                $after = json_decode($block['fields']['ba_after']);
+                if($after->source === 'file') {
+                    $after_source = 'studip';
+                }
+                if($after->source === 'url') {
+                    $after_source = 'web';
+                }
+                $payload = array(
+                    'before_source' => $before_source,
+                    'after_source' => $after_source,
+                    'before_file_id' => $before->file_id,
+                    'after_file_id' => $after->file_id,
+                    'before_web_url' => $before->url,
+                    'after_web_url' => $after->url,
+                );
+                $block_type = 'before-after';
+                $addBlock = true;
+                break;
+            case 'BlubberBlock':
+                // we skip this block type
+                break;
+            case 'CanvasBlock':
+                $canvas_content = json_decode($block['fields']['canvas_content']);
+                if ($canvas_content->source !== 'cw' || !$canvas_content->image) {
+                    $image = 'false';
+                } else {
+                    $image = 'true';
+                }
+                $payload = array(
+                    'title' => $canvas_content->description,
+                    'image' => $image,
+                    'file_id' => $canvas_content->image_id,
+                    'upload_folder_id' =>  $canvas_content->upload_folder_id,
+                    'show_usersdata' => $canvas_content->show_userdata,
+                );
+                $block_type = 'canvas';
+                $addBlock = true;
+                break;
+            case 'ChartBlock':
+                $chart_content = json_decode($block['fields']['chart_content']);
+                $payload = array(
+                    'content' => $chart_content,
+                    'label' => $block['fields']['chart_label'],
+                    'type' =>  $block['fields']['chart_type']
+                );
+                $block_type = 'chart';
+                $addBlock = true;
+                break;
+            case 'CodeBlock':
+                // non json
+                break;
+            case 'ConfirmBlock':
+                $payload = array(
+                    'text' => $block['title']
+                );
+                $block_type = 'confirm';
+                $addBlock = true;
+                break;
+            case 'DateBlock':
+                //json -> date_content
+                break;
+            case 'DialogCardsBlock':
+                //json -> dialogcards_content
+                break;
+            case 'DiscussionBlock':
+                // we skip this block type
+                break;
+            case 'DownloadBlock':
+                $payload = array(
+                    'title' => $block['fields']['download_title'],
+                    'file_id' => $block['fields']['file_id'],
+                    'info' => $block['fields']['download_info'],
+                    'success' =>  $block['fields']['download_success'],
+                    'grade' => $block['fields']['download_grade']
+                );
+                $block_type = 'download';
+                $addBlock = true;
+                break;
+            case 'EmbedBlock':
+                $embed_time = json_decode($block['fields']['embed_time']);
+                $starttime = sprintf('%02d:%02d:%02d', floor($embed_time->start / 3600), floor($embed_time->start / 60 % 60), floor($embed_time->start % 60));
+                $endtime = sprintf('%02d:%02d:%02d', floor($embed_time->end / 3600), floor($embed_time->end / 60 % 60), floor($embed_time->end % 60));
+                $payload = array(
+                    'title' => $block['fields']['embed_title'],
+                    'url' => $block['fields']['embed_url'],
+                    'source' => $block['fields']['embed_source'],
+                    'starttime' => $starttime,
+                    'endtime' => $endtime
+                );
+                $block_type = 'embed';
+                $addBlock = true;
+                break;
+            case 'EvaluationBlock':
+                //we skip this block type
+                break;
+            case 'FolderBlock':
+                $folder_content = json_decode($block['fields']['folder_content']);
+                $payload = array(
+                    'title' => $folder_content->folder_title,
+                    'folder_id' => $folder_content->folder_id
+                );
+                $block_type = 'folder';
+                $addBlock = true;
+                break;
+            case 'ForumBlock':
+                //we skip this block type
+                break;
+            case 'GalleryBlock':
+                $payload = array(
+                    'folder_id' => $block['fields']['gallery_folder_id'],
+                    'autoplay' => $block['fields']['gallery_autoplay'] === '1' ? 'true' : 'false',
+                    'autoplay_timer' => $block['fields']['gallery_autoplay_timer'],
+                    'nav' =>  $block['fields']['gallery_hidenav'] === '1' ? 'false' :'true',
+                    'height' => $block['fields']['gallery_height'],
+                    'show_filenames' => $block['fields']['gallery_show_names'] === '1' ? 'true' : 'false',
+                );
+                $block_type = 'gallery';
+                $addBlock = true;
+                break;
+            case 'HtmlBlock':
+                // non json
+                $block_type = 'text';
+                $payload = array(
+                    'text' => $block['fields']['content']
+                );
+                $addBlock = true;
+                break;
+            case 'IFrameBlock':
+                // non json
+                break;
+            case 'ImageMapBlock':
+                // json -> image_map_content
+                break;
+            case 'InteractiveVideoBlock':
+                // we need a block for this type!!!
+                break;
+            case 'KeyPointBlock':
+                // non json
+                break;
+            case 'LinkBlock':
+                // non json
+                break;
+            case 'OpenCastBlock':
+                // we need a block for this type!!!
+                break;
+            case 'PdfBlock':
+                //non json
+                break;
+            case 'PostBlock':
+                // convert this to a TextBlock and put content into comments
+                break;
+            case 'ScrollyBlock':
+                //we skip this block type
+                break;
+            case 'SearchBlock':
+                //we skip this block type
+                break;
+            case 'TestBlock':
+                // we need a block for this!!!
+                break;
+            case 'TypewriterBlock':
+                //json -> typewriter_json
+                break;
+            case 'VideoBlock':
+                // non json
+                break;
+            default:
+                //skip all exotic blocks
+                break;
+        }
+        if($addBlock){
+            $output->writeln($block_type);
+            $block = Block::build([
+                'container_id' => $container->id,
+                'owner_id' => $user->id,
+                'editor_id' => $user->id,
+                'edit_blocker_id' => null,
+                'position' => $container->countBlocks(),
+                'block_type' => $block_type,
+                'payload' => json_encode($payload),
+                'visible' => 1,
+            ]);
+            $block->store();
+        } else {
+            $block = null;
+        }
+
+        return $block;
+    }
+}

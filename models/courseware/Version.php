@@ -1,5 +1,5 @@
 <?php
-namespace Courseware;
+namespace CoursewarePlugin;
 
 /**
  * @author  <tgloeggl@uos.de>

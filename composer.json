@@ -3,13 +3,19 @@
         "mustache/mustache": "2.11.1",
         "pimple/pimple": "3.0.2",
         "symfony/dom-crawler": "~2.8",
-        "willdurand/negotiation": "1.5.0"
+        "symfony/console": "~2.3",
+        "symfony/dependency-injection": "~2.3",
+        "willdurand/negotiation": "1.5.0",
+        "meyfa/php-svg": "0.11.2"
     },
     "autoload": {
         "psr-4": {
             "Mooc\\Export\\": "export/",
             "Mooc\\Import\\": "import/",
-            "Mooc\\UI\\": "blocks/"
+            "Mooc\\Command\\": "command/",
+            "Mooc\\UI\\": "blocks/",
+            "Mooc\\DB\\": "models/mooc/db/",
+            "CoursewarePlugin\\": "models/courseware"
         },
         "classmap": ["controllers/"],
         "files": ["models/courseware/constants.php"]

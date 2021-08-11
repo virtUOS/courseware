@@ -1,5 +1,5 @@
 <?php
-namespace Courseware;
+namespace CoursewarePlugin;
 
 use Mooc\DB\CoursewareFactory;
 use Mooc\UI\BlockFactory;

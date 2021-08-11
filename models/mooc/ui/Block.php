@@ -1,7 +1,7 @@
 <?php
 namespace Mooc\UI;
 
-use Courseware\Container;
+use CoursewarePlugin\Container;
 use Mooc\DB\Field;
 use Mooc\DB\UserProgress;
 use Mooc\UI\Section\Section;
@@ -654,7 +654,7 @@ abstract class Block {
         }
     }
 
-    public function vipsActivated() 
+    public function vipsActivated()
     {
         if ($this->vipsInstalled()) {
             $plugin_manager = \PluginManager::getInstance();
