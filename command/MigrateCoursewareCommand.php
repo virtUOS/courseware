@@ -141,17 +141,25 @@ class MigrateCoursewareCommand extends Command
         }
 
         foreach($courseware['children'] as $chapter) {
-            $new_chapter = $this->createStructuralElement($chapter, $root->id, $teacher, $cid, $output, true);
+            $new_chapter = $this->createStructuralElement($chapter, $root->id, $teacher, $cid, $output);
             foreach($chapter['children'] as $subchapter) {
-                $new_subchapter = $this->createStructuralElement($subchapter, $new_chapter->id, $teacher, $cid, $output, true);
+                $new_subchapter = $this->createStructuralElement($subchapter, $new_chapter->id, $teacher, $cid, $output);
                 foreach($subchapter['children'] as $section) {
-                    $new_section = $this->createStructuralElement($section, $new_subchapter->id, $teacher, $cid, $output, true);
+                    $new_section = $this->createStructuralElement($section, $new_subchapter->id, $teacher, $cid, $output);
                     $new_container = $this->createContainer($new_section->id, $teacher, $output);
                     foreach($section['children'] as $block) {
-                        $new_block = $this->createBlock($block, $new_container, $teacher, $cid, $output, true);
-                        //TODO: migrate user data
-                        // -> AudioGallery - audio_gallery_user_recodring
-                        //TODO: migrate user progress
+                        $new_block = $this->createBlock($block, $new_container, $teacher, $cid, $output);
+                        $user_progresses = \Mooc\DB\UserProgress::findBySQL('block_id = ?', array($block['id']));
+                        foreach($user_progresses as $user_progress) {
+                            $progress = \Courseware\UserProgress::build([
+                                'user_id' => $user_progress['user_id'],
+                                'block_id' => $new_block->id,
+                                'grade' => $user_progress['grade'] / $user_progress['max_grade'],
+                                'mkdate' => $this->convertCoursewareDate($user_progress['mkdate']),
+                                'chdate' => $this->convertCoursewareDate($user_progress['chdate'])
+                            ]);
+                            $progress->store();
+                        }
                         //add block to container payload
                         $new_container->type->addBlock($new_block);
                         $new_container->store();
@@ -163,7 +171,7 @@ class MigrateCoursewareCommand extends Command
         return true;
     }
 
-    private function createStructuralElement($element, $parent_id, $user, $cid, $output, $log = false)
+    private function createStructuralElement($element, $parent_id, $user, $cid, $output)
     {
         $element = StructuralElement::build([
             'parent_id' => $parent_id,
@@ -179,7 +187,7 @@ class MigrateCoursewareCommand extends Command
 
         return $element;
     }
-    private function createContainer($structural_element_id, $user, $output, $log = false)
+    private function createContainer($structural_element_id, $user, $output)
     {
         $payload = array(
             'colspan' => 'full',
@@ -197,12 +205,8 @@ class MigrateCoursewareCommand extends Command
 
         return $container;
     }
-    private function createBlock($block, $container, $user, $cid, $output, $log = false)
+    private function createBlock($block, $container, $user, $cid, $output)
     {
-        if($log) {
-            $output->writeln($block['type']);
-            // $output->writeln($block['fields']);
-        }
         $addBlock = false;
         $block_type = '';
         $payload = [];
@@ -505,6 +509,11 @@ class MigrateCoursewareCommand extends Command
                 break;
             case 'PostBlock':
                 // convert this to a TextBlock and put content into comments
+                $block_type = 'text';
+                $payload = array(
+                    'text' => $block['fields']['post_title']
+                );
+                $addBlock = true;
                 break;
             case 'ScrollyBlock':
                 //we skip this block type
@@ -555,8 +564,7 @@ class MigrateCoursewareCommand extends Command
                 break;
         }
         if($addBlock){
-            $output->writeln($block_type);
-            $block = Block::build([
+            $new_block = Block::build([
                 'container_id' => $container->id,
                 'owner_id' => $user->id,
                 'editor_id' => $user->id,
@@ -566,11 +574,45 @@ class MigrateCoursewareCommand extends Command
                 'payload' => json_encode($payload),
                 'visible' => 1,
             ]);
-            $block->store();
+            $new_block->store();
         } else {
-            $block = null;
+            $new_block = null;
         }
 
-        return $block;
+        if($block['type'] === 'PostBlock') {
+            $thread_id = $block['fields']['thread_id'];
+            $posts = \Mooc\DB\Post::findBySQL('thread_id = ? AND post_id > 0', array($thread_id));
+            foreach($posts as $post) {
+                $block_comment = \Courseware\BlockComment::build([
+                    'block_id' => $new_block->id,
+                    'user_id' => $post['user_id'],
+                    'comment' => $post['content'],
+                    'mkdate' =>  $this->convertCoursewareDate($post['mkdate']),
+                    'chdate' => $this->convertCoursewareDate($post['chdate'])
+                ]);
+                $block_comment->store();
+            }
+        }
+
+        if($block['type'] === 'AudioGallery') {
+            //todo copy audio files into course
+        }
+        if($block['type'] === 'Canvas') {
+            //todo migrate user data -> drawings
+        }
+        if($block['type'] === 'TestBlock') {
+            //todo migrate user data -> tries
+        }
+        if($block['type'] === 'InteractiveVideoBlock') {
+            //todo migrate user data -> tries
+        }
+
+        return $new_block;
+    }
+
+    private function convertCoursewareDate($date)
+    {
+        $new_date = date_create_from_format('Y-m-d H:i:s', $date);
+        return date_timestamp_get($new_date);
     }
 }

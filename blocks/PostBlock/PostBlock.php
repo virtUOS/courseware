@@ -4,7 +4,7 @@ namespace Mooc\UI\PostBlock;
 
 use Mooc\UI\Block;
 use Mooc\DB\Post as Post;
-use Courseware\User as User;
+use CoursewarePlugin\User as User;
 
 class PostBlock extends Block
 {
