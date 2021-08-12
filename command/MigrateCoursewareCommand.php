@@ -140,7 +140,6 @@ class MigrateCoursewareCommand extends Command
             $root->store();
         }
 
-        //TODO: create Chapters
         foreach($courseware['children'] as $chapter) {
             $new_chapter = $this->createStructuralElement($chapter, $root->id, $teacher, $cid, $output, true);
             foreach($chapter['children'] as $subchapter) {
@@ -314,7 +313,12 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'CodeBlock':
-                // non json
+                $payload = array(
+                    'content' => $block['fields']['code_content'],
+                    'lang' =>  $block['fields']['code_lang']
+                );
+                $block_type = 'code';
+                $addBlock = true;
                 break;
             case 'ConfirmBlock':
                 $payload = array(
@@ -324,10 +328,35 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'DateBlock':
-                //json -> date_content
+                $date_content = json_decode($block['fields']['date_content']);
+                $date = date_create_from_format('Y-m-d H:i', $date_content->date . ' ' . $date_content->time);
+                $payload = array(
+                    'style' => $date_content->type,
+                    'timestamp' => date_timestamp_get($date) * 1000
+                );
+                $block_type = 'date';
+                $addBlock = true;
                 break;
             case 'DialogCardsBlock':
-                //json -> dialogcards_content
+                $cards = json_decode($block['fields']['dialogcards_content']);
+                foreach($cards as &$card) {
+                    $card->front_file_id = $card->front_img_file_id;
+                    unset($card->front_img_file_id);
+                    unset($card->front_img_file_name);
+                    unset($card->front_img);
+                    unset($card->front_external_file);
+                    $card->back_file_id = $card->back_img_file_id;
+                    unset($card->back_img_file_id);
+                    unset($card->back_img_file_name);
+                    unset($card->back_img);
+                    unset($card->back_external_file);
+                    $card->active = false; 
+                }
+                $payload = array(
+                    'cards' => $cards
+                );
+                $block_type = 'dialog-cards';
+                $addBlock = true;
                 break;
             case 'DiscussionBlock':
                 // we skip this block type
@@ -385,7 +414,6 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'HtmlBlock':
-                // non json
                 $block_type = 'text';
                 $payload = array(
                     'text' => $block['fields']['content']
@@ -393,25 +421,87 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'IFrameBlock':
-                // non json
+                $cc = json_decode($block['fields']['cc_infos'])[0];
+                $payload = array(
+                    'title' => $block['fields']['header'],
+                    'url' =>  $block['fields']['url'],
+                    'height' =>  $block['fields']['height'],
+                    'submit_user_id' =>  $block['fields']['submit_user_id'] ? 'true' : 'false',
+                    'submit_param' =>  $block['fields']['submit_param'],
+                    'salt' =>  $block['fields']['salt'],
+                    'cc_info' =>  $cc->cc_type,
+                    'cc_work' =>  $cc->work_name . ' ' . $cc->work_url,
+                    'cc_author' =>  $cc->author_name . ' ' . $cc->author_url,
+                    'cc_base' =>  $cc->license_name . ' ' . $cc->license_url,
+                );
+                $block_type = 'iframe';
+                $addBlock = true;
                 break;
             case 'ImageMapBlock':
-                // json -> image_map_content
+                $image_map_content = json_decode($block['fields']['image_map_content']);
+                $shapes = $image_map_content->shapes;
+                foreach($shapes as &$shape) {
+                    $shape->data->color = $shape->data->colorName;
+                    unset($shape->data->colorName);
+                    unset($shape->data->fillStyle);
+                    if($shape->link_type === 'internal') {
+                        $shape->target_internal = $shape->target;
+                        $shape->target_external = '';
+                    }
+                    if($shape->link_type === 'external') {
+                        $shape->target_internal = '';
+                        $shape->target_external = $shape->target;
+                    }
+                    unset($shape->target);
+                }
+                $payload = array(
+                    'file_id' => $image_map_content->image_id,
+                    'shapes' => $shapes
+                );
+                $block_type = 'image-map';
+                $addBlock = true;
                 break;
             case 'InteractiveVideoBlock':
                 // we need a block for this type!!!
                 break;
             case 'KeyPointBlock':
-                // non json
+                $payload = array(
+                    'text' => $block['fields']['keypoint_content'],
+                    'color' =>  $block['fields']['keypoint_color'],
+                    'icon' =>  $block['fields']['keypoint_icon']
+                );
+                $block_type = 'key-point';
+                $addBlock = true;
                 break;
             case 'LinkBlock':
-                // non json
+                $linkTarget = $block['fields']['link_target'];
+                $type = $block['fields']['link_type'];
+                $target = '';
+                $url = '';
+                if($type === 'external') {
+                    $url = $linkTarget;
+                }
+                $payload = array(
+                    'type' => $type,
+                    'target' =>  $target,
+                    'url' =>  $url,
+                    'title' =>  $block['fields']['link_title']
+                );
+                $block_type = 'link';
+                $addBlock = true;
                 break;
             case 'OpenCastBlock':
                 // we need a block for this type!!!
                 break;
             case 'PdfBlock':
-                //non json
+                $payload = array(
+                    'title' => $block['fields']['pdf_title'],
+                    'file_id' =>  $block['fields']['pdf_file_id'],
+                    'downloadable' =>  $block['fields']['pdf_disable_download'] ? 'false' : 'true',
+                    'doc_type' => 'pdf'
+                );
+                $block_type = 'document';
+                $addBlock = true;
                 break;
             case 'PostBlock':
                 // convert this to a TextBlock and put content into comments
@@ -426,10 +516,39 @@ class MigrateCoursewareCommand extends Command
                 // we need a block for this!!!
                 break;
             case 'TypewriterBlock':
-                //json -> typewriter_json
+                $typewriter = json_decode($block['fields']['typewriter_json']);
+                $payload = array(
+                    'text' => $typewriter->content,
+                    'speed' =>  $typewriter->speed,
+                    'font' =>  $typewriter->font,
+                    'size' => $typewriter->size
+                );
+                $block_type = 'typewriter';
+                $addBlock = true;
                 break;
             case 'VideoBlock':
-                // non json
+                $webvideo = json_decode($block['fields']['webvideo'])[0];
+                if ($webvideo->source === 'url') {
+                    $source = 'web';
+                    $file_id = '';
+                    $web_url = $webvideo->src;
+                }
+                if ($webvideo->source === 'file') {
+                    $source = 'studip';
+                    $file_id = $webvideo->file_id;
+                    $web_url = '';
+                }
+                $payload = array(
+                    'title' => $block['fields']['videoTitle'],
+                    'source' => $source,
+                    'file_id' => $file_id,
+                    'web_url' => $web_url,
+                    'aspect' => $block['fields']['aspect'],
+                    'context_menu' => strpos($block['fields']['webvideosettings'], 'oncontextmenu') > -1 ? 'disabled' : 'enabled',
+                    'autoplay' => strpos($block['fields']['webvideosettings'], 'autoplay') > -1 ? 'enabled' : 'disabled'
+                );
+                $block_type = 'video';
+                $addBlock = true;
                 break;
             default:
                 //skip all exotic blocks
