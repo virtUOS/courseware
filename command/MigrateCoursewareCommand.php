@@ -240,26 +240,27 @@ class MigrateCoursewareCommand extends Command
             case 'AudioGalleryBlock':
                 $rootFolder = \Folder::findTopFolder($cid);
                 $folder_type = 'HiddenFolder';
-                $destinationFolderName = 'AudioGallery';
-                $destinationFolder = \FileManager::createSubFolder(
+                $audioGalleryFolderName = 'AudioGallery';
+                $audioGalleryFolder = \FileManager::createSubFolder(
                     \FileManager::getTypedFolder($rootFolder->id),
                     $user,
                     $folder_type,
-                    $destinationFolderName,
+                    $audioGalleryFolderName,
                     ''
                 );
-                $destinationFolder->__set('download_allowed', 1);
-                $destinationFolder->store();
+                $audioGalleryFolder->__set('download_allowed', 1);
+                $audioGalleryFolder->store();
                 $payload = array(
                     'title' => '',
                     'source' => 'studip_folder',
                     'file_id' => '',
-                    'folder_id' => $destinationFolder->id,
+                    'folder_id' => $audioGalleryFolder->id,
                     'web_url' => '',
                     'recorder_enabled' => true
                 );
                 $block_type = 'audio';
                 $addBlock = true;
+                break;
             case 'BeforeAfterBlock':
                 $before = json_decode($block['fields']['ba_before']);
                 if($before->source === 'file') {
@@ -579,7 +580,7 @@ class MigrateCoursewareCommand extends Command
             $new_block = null;
         }
 
-        if($block['type'] === 'PostBlock') {
+        if($new_block && $block['type'] === 'PostBlock') {
             $thread_id = $block['fields']['thread_id'];
             $posts = \Mooc\DB\Post::findBySQL('thread_id = ? AND post_id > 0', array($thread_id));
             foreach($posts as $post) {
@@ -594,17 +595,47 @@ class MigrateCoursewareCommand extends Command
             }
         }
 
-        if($block['type'] === 'AudioGallery') {
-            //todo copy audio files into course
+        if($new_block && $block['type'] === 'AudioGalleryBlock') {
+            $recordings = \Mooc\DB\Field::findBySQL('block_id = ? AND name = ?', array($block['id'], "audio_gallery_user_recording"));
+            foreach($recordings as $record) {
+                $data = json_decode($record['json_data']);
+                $recording_user = \User::find($data->user_id);
+                $record_file = \FileManager::copyFile(
+                    \FileRef::find($data->file_ref_id)->getFiletype(),
+                    $audioGalleryFolder,
+                    $recording_user
+                );
+                $record_file_ref = $record_file->getFileRef();
+                $record_file_ref->name = $recording_user->getFullName() . '_' . $record_file_ref->name;
+                $record_file_ref->store();
+                $output->writeln($record_file_ref->name);
+            }
         }
-        if($block['type'] === 'Canvas') {
-            //todo migrate user data -> drawings
-        }
-        if($block['type'] === 'TestBlock') {
-            //todo migrate user data -> tries
-        }
-        if($block['type'] === 'InteractiveVideoBlock') {
-            //todo migrate user data -> tries
+        if($new_block && $block['type'] === 'CanvasBlock') {
+            $drawings = \Mooc\DB\Field::findBySQL('block_id = ? AND name = ?', array($block['id'], "canvas_draw"));
+            foreach($drawings as $draw) {
+                $data = json_decode($draw['json_data']);
+                $canvas_draw = json_decode($data);
+                $clickX = json_decode($canvas_draw->clickX);
+                foreach($clickX as &$cx) {
+                    $cx = intval($cx * 1.26);
+                }
+                $canvas_draw->clickX = json_encode($clickX);
+                $clickY = json_decode($canvas_draw->clickY);
+                foreach($clickY as &$cy) {
+                    $cy = intval($cy * 1.26);
+                }
+                $canvas_draw->clickY = json_encode($clickY);
+                $payload = array(
+                    'canvas_draw' => $canvas_draw
+                );
+                $user_data_field = \Courseware\UserDataField::build([
+                    'user_id' => $draw['user_id'],
+                    'block_id' => $new_block->id,
+                    'payload' => json_encode($payload)
+                ]);
+                $user_data_field->store();
+            }
         }
 
         return $new_block;
