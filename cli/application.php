@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Mooc\Command\Command;
 use Mooc\Command\MigrateCoursewareCommand;
+use Mooc\Command\MigrateResetStatus;
 
 /**
  * Builds the service container.
@@ -46,6 +47,7 @@ function registerCommands(Application $application, ContainerInterface $containe
 {
     $commands = array(
         new MigrateCoursewareCommand(),
+        new MigrateResetStatus(),
     );
 
     foreach ($commands as $command) {

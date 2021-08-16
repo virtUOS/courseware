@@ -41,7 +41,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
             // markup for link element to courseware
             StudipFormat::addStudipMarkup('courseware', '\[(mooc-forumblock):([0-9]{1,32})\]', null, 'Courseware::markupForumLink');
 
-            $this->setupNavigation();
+            // $this->setupNavigation();
         }
 
         // set text-domain for translations in this plugin
@@ -50,7 +50,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
     public function getPluginname()
     {
-        return 'Courseware';
+        return 'Courseware-Plugin';
     }
 
     // bei Aufruf des Plugins über plugin.php/mooc/...
@@ -73,7 +73,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $courseware = $this->container['current_courseware'];
 
         $navigation = new Navigation(
-            $courseware->title,
+            $this->getPluginname(),
             PluginEngine::getURL($this, compact('cid'), 'courseware', true)
         );
         $navigation->setImage(Icon::create('group3', 'info_alt'));
@@ -83,64 +83,64 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $navigation->addSubnavigation('index', clone $navigation);
 
 
-        //NavigationForLecturers
-        if ($this->container['current_user']->hasPerm($courseId, 'tutor')) {
-            $managerUrl = PluginEngine::getURL($this, compact('cid'), 'block_manager/index', true);
-            $navigation->addSubnavigation(
-                'block_manager',
-                new Navigation(_cw('Verwaltung'), $managerUrl)
-            );
-            $settingsUrl = PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true);
-            $navigation->addSubnavigation(
-                'settings',
-                new Navigation(_cw('Einstellungen'), $settingsUrl)
-            );
-            $navigation->addSubnavigation(
-                'news',
-                new Navigation(
-                    _cw('Letzte Änderungen'),
-                    PluginEngine::getURL($this, compact('cid'), 'courseware/news', true)
-                )
-            );
-            $cpoUrl = PluginEngine::getURL($this, compact('cid'), 'cpo', true);
-            $navigation->addSubnavigation(
-                'progressoverview',
-                new Navigation(_cw('Fortschrittsübersicht'), $cpoUrl)
-            );
+        // //NavigationForLecturers
+        // if ($this->container['current_user']->hasPerm($courseId, 'tutor')) {
+        //     $managerUrl = PluginEngine::getURL($this, compact('cid'), 'block_manager/index', true);
+        //     $navigation->addSubnavigation(
+        //         'block_manager',
+        //         new Navigation(_cw('Verwaltung'), $managerUrl)
+        //     );
+        //     $settingsUrl = PluginEngine::getURL($this, compact('cid'), 'courseware/settings', true);
+        //     $navigation->addSubnavigation(
+        //         'settings',
+        //         new Navigation(_cw('Einstellungen'), $settingsUrl)
+        //     );
+        //     $navigation->addSubnavigation(
+        //         'news',
+        //         new Navigation(
+        //             _cw('Letzte Änderungen'),
+        //             PluginEngine::getURL($this, compact('cid'), 'courseware/news', true)
+        //         )
+        //     );
+        //     $cpoUrl = PluginEngine::getURL($this, compact('cid'), 'cpo', true);
+        //     $navigation->addSubnavigation(
+        //         'progressoverview',
+        //         new Navigation(_cw('Fortschrittsübersicht'), $cpoUrl)
+        //     );
 
-            $postoverviewUrl = PluginEngine::getURL($this, compact('cid'), 'cpo/postoverview', true);
-            $navigation->addSubnavigation(
-                'postoverview',
-                new Navigation(_cw('Diskussionsübersicht'), $postoverviewUrl)
-            );
-            // $exportUrl = PluginEngine::getURL($this, compact('cid'), 'export', true);
-            // $navigation->addSubnavigation(
-            //     'export',
-            //     new Navigation(_cw('Export'), $exportUrl)
-            // );
-            // $importUrl = PluginEngine::getURL($this, compact('cid'), 'import', true);
-            // $navigation->addSubnavigation(
-            //     'import',
-            //     new Navigation(_cw('Import'), $importUrl)
-            // );
+        //     $postoverviewUrl = PluginEngine::getURL($this, compact('cid'), 'cpo/postoverview', true);
+        //     $navigation->addSubnavigation(
+        //         'postoverview',
+        //         new Navigation(_cw('Diskussionsübersicht'), $postoverviewUrl)
+        //     );
+        //     // $exportUrl = PluginEngine::getURL($this, compact('cid'), 'export', true);
+        //     // $navigation->addSubnavigation(
+        //     //     'export',
+        //     //     new Navigation(_cw('Export'), $exportUrl)
+        //     // );
+        //     // $importUrl = PluginEngine::getURL($this, compact('cid'), 'import', true);
+        //     // $navigation->addSubnavigation(
+        //     //     'import',
+        //     //     new Navigation(_cw('Import'), $importUrl)
+        //     // );
 
-        //NavigationForStudents
-        } else {
-            if (!$this->container['current_user']->isNobody()) {
-                $navigation->addSubnavigation(
-                    'news',
-                    new Navigation(
-                        _cw('Letzte Änderungen'),
-                        PluginEngine::getURL($this, compact('cid'), 'courseware/news', true)
-                    )
-                );
-                $progressUrl = PluginEngine::getURL($this, compact('cid'), 'progress', true);
-                $navigation->addSubnavigation(
-                    'progress',
-                    new Navigation(_cw('Fortschrittsübersicht'), $progressUrl)
-                );
-            }
-        }
+        // //NavigationForStudents
+        // } else {
+        //     if (!$this->container['current_user']->isNobody()) {
+        //         $navigation->addSubnavigation(
+        //             'news',
+        //             new Navigation(
+        //                 _cw('Letzte Änderungen'),
+        //                 PluginEngine::getURL($this, compact('cid'), 'courseware/news', true)
+        //             )
+        //         );
+        //         $progressUrl = PluginEngine::getURL($this, compact('cid'), 'progress', true);
+        //         $navigation->addSubnavigation(
+        //             'progress',
+        //             new Navigation(_cw('Fortschrittsübersicht'), $progressUrl)
+        //         );
+        //     }
+        // }
 
         return $tabs;
     }
@@ -158,103 +158,104 @@ class Courseware extends StudIPPlugin implements StandardPlugin
      */
     public function getIconNavigation($courseId, $last_visit, $user_id)
     {
-        if (!$user_id) {
-            $user_id = $GLOBALS['user']->id;
-        }
-        $icon = new AutoNavigation(
-            $this->getDisplayTitle(),
-            PluginEngine::getURL($this, array('cid' => $courseId, 'iconnav' => 'true'), 'courseware/news', true)
-        );
+        // if (!$user_id) {
+        //     $user_id = $GLOBALS['user']->id;
+        // }
+        // $icon = new AutoNavigation(
+        //     $this->getDisplayTitle(),
+        //     PluginEngine::getURL($this, array('cid' => $courseId, 'iconnav' => 'true'), 'courseware/news', true)
+        // );
 
-        $db = DBManager::get();
+        // $db = DBManager::get();
 
-        $stmt = $db->prepare("
-            SELECT
-                COUNT(*)
-            FROM
-                mooc_blocks
-            WHERE
-                seminar_id = :cid
-            AND
-                chdate >= :last_visit
-            AND
-				type NOT IN ('Courseware', 'Chapter', 'Subchapter', 'Section')
-        ");
-        $stmt->bindParam(':cid', $courseId);
-        $stmt->bindParam(':last_visit', $last_visit);
-        $stmt->execute();
-        $new_ones = (int) $stmt->fetch(PDO::FETCH_ASSOC)['COUNT(*)'];
+        // $stmt = $db->prepare("
+        //     SELECT
+        //         COUNT(*)
+        //     FROM
+        //         mooc_blocks
+        //     WHERE
+        //         seminar_id = :cid
+        //     AND
+        //         chdate >= :last_visit
+        //     AND
+		// 		type NOT IN ('Courseware', 'Chapter', 'Subchapter', 'Section')
+        // ");
+        // $stmt->bindParam(':cid', $courseId);
+        // $stmt->bindParam(':last_visit', $last_visit);
+        // $stmt->execute();
+        // $new_ones = (int) $stmt->fetch(PDO::FETCH_ASSOC)['COUNT(*)'];
 
-        $plugin_manager = \PluginManager::getInstance();
-        $vips = true;
-        if ($plugin_manager->getPluginInfo('VipsPlugin') == null){
-            $vips = false;
-        }
-        if($plugin_manager->getPlugin('VipsPlugin')){
-            $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
-            if (version_compare('1.3',$version) > 0) {
-                $vips = false;
-            }
-        } else {
-            $vips = false;
-        }
+        // $plugin_manager = \PluginManager::getInstance();
+        // $vips = true;
+        // if ($plugin_manager->getPluginInfo('VipsPlugin') == null){
+        //     $vips = false;
+        // }
+        // if($plugin_manager->getPlugin('VipsPlugin')){
+        //     $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
+        //     if (version_compare('1.3',$version) > 0) {
+        //         $vips = false;
+        //     }
+        // } else {
+        //     $vips = false;
+        // }
 
-        if ($vips) {
-            // getting all tests
-            $stmt = $db->prepare("
-                SELECT
-                    json_data
-                FROM
-                    mooc_blocks
-                JOIN
-                    mooc_fields
-                ON
-                    mooc_blocks.id = mooc_fields.block_id
-                WHERE
-                    mooc_blocks.type = 'TestBlock'
-                AND
-                    mooc_blocks.seminar_id = :cid
-                AND
-                    mooc_fields.name = 'test_id'
-            ");
-            $stmt->bindParam(':cid', $courseId);
-            $stmt->execute();
+        // if ($vips) {
+        //     // getting all tests
+        //     $stmt = $db->prepare("
+        //         SELECT
+        //             json_data
+        //         FROM
+        //             mooc_blocks
+        //         JOIN
+        //             mooc_fields
+        //         ON
+        //             mooc_blocks.id = mooc_fields.block_id
+        //         WHERE
+        //             mooc_blocks.type = 'TestBlock'
+        //         AND
+        //             mooc_blocks.seminar_id = :cid
+        //         AND
+        //             mooc_fields.name = 'test_id'
+        //     ");
+        //     $stmt->bindParam(':cid', $courseId);
+        //     $stmt->execute();
 
-            $tests = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($tests) {
-                $test_ids = array();
-                foreach ($tests as $key => $value) {
-                    array_push($test_ids, (int) str_replace('"', '', $value));
-                }
-                //looking for new tests
-                $stmt = $db->prepare('
-                    SELECT
-                        COUNT(*)
-                    FROM
-                        vips_exercise_ref
-                    JOIN
-                        vips_exercise
-                    ON
-                        vips_exercise_ref.exercise_id = vips_exercise.ID
-                    WHERE
-                        vips_exercise_ref.test_id IN ('.implode(', ', $test_ids).')
-                    AND
-                        unix_timestamp(created) >=  :last_visit
-                ');
-                $stmt->bindParam(':last_visit', $last_visit);
-                $stmt->execute();
-                $new_ones += (int) $stmt->fetch(PDO::FETCH_ASSOC)['COUNT(*)'];
-            }
-        }
-        if ($new_ones) {
-            $title = $new_ones > 1 ? sprintf(_('%s neue Courseware-Inhalte'), $new_ones) : _('1 neuer Courseware-Inhalt');
-            $icon->setImage(Icon::create('group3', 'attention', ['title' => $title]));
-            $icon->setBadgeNumber($new_ones);
-        } else {
-            $icon->setImage(Icon::create('group3', 'inactive', ['title' => 'Courseware']));
-        }
+        //     $tests = $stmt->fetch(PDO::FETCH_ASSOC);
+        //     if ($tests) {
+        //         $test_ids = array();
+        //         foreach ($tests as $key => $value) {
+        //             array_push($test_ids, (int) str_replace('"', '', $value));
+        //         }
+        //         //looking for new tests
+        //         $stmt = $db->prepare('
+        //             SELECT
+        //                 COUNT(*)
+        //             FROM
+        //                 vips_exercise_ref
+        //             JOIN
+        //                 vips_exercise
+        //             ON
+        //                 vips_exercise_ref.exercise_id = vips_exercise.ID
+        //             WHERE
+        //                 vips_exercise_ref.test_id IN ('.implode(', ', $test_ids).')
+        //             AND
+        //                 unix_timestamp(created) >=  :last_visit
+        //         ');
+        //         $stmt->bindParam(':last_visit', $last_visit);
+        //         $stmt->execute();
+        //         $new_ones += (int) $stmt->fetch(PDO::FETCH_ASSOC)['COUNT(*)'];
+        //     }
+        // }
+        // if ($new_ones) {
+        //     $title = $new_ones > 1 ? sprintf(_('%s neue Courseware-Inhalte'), $new_ones) : _('1 neuer Courseware-Inhalt');
+        //     $icon->setImage(Icon::create('group3', 'attention', ['title' => $title]));
+        //     $icon->setBadgeNumber($new_ones);
+        // } else {
+        //     $icon->setImage(Icon::create('group3', 'inactive', ['title' => 'Courseware']));
+        // }
 
-        return $icon;
+        // return $icon;
+        return false;
     }
 
     /**
@@ -267,6 +268,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
     public function perform($unconsumedPath)
     {
+        define("K_TCPDF_CALLS_IN_HTML", true);
+
         if ((!$this->isActivated($this->container['cid']))&& ($_SERVER['REQUEST_METHOD'] === 'GET')) {
             throw new AccessDeniedException('plugin not activated for this course!');
         }

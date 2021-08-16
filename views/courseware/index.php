@@ -1,29 +1,20 @@
 <? $body_id = 'courseware-index'; ?>
-
-<?
-  $block_types = $plugin->getBlockFactory()->getBlockClasses();
-  $blocks_url = PluginEngine::getURL($plugin, array(), "blocks",     true);
-  $cid = $container['cid'];
-  $courseware_url = PluginEngine::getURL($plugin, array(), "courseware", true);
-  $plugin_url = PluginEngine::getURL($plugin, array(), "",           true);
-?>
-
-<script>
-  var COURSEWARE = {
-    config: {
-      blocks_url: <?= json_encode($blocks_url) ?>,
-      cid: <?= json_encode($cid) ?>,
-      courseware_url: <?= json_encode($courseware_url) ?>,
-      plugin_url: <?= json_encode($plugin_url) ?>,
-      block_types: <?= json_encode($block_types) ?>,
-      templates: <?= json_encode($templates) ?>,
-      nobody: <?= json_encode($container['current_user']->isNobody()) ?>,
-      user_may_author: <?= json_encode($container['current_user']->canUpdate($courseware_block)) ?>,
-    }
-  };
-</script>
-
-<script src="<?= $plugin->getPluginURL() ?>/assets/static/courseware.js?v=487" charset="utf-8"></script>
-    <? PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css?v=487') ?>
-
-<?= $courseware_block->render($view, $context) ?>
+<div style="max-width: 1095px;">
+    <? if($status !== null):?>
+        <?= MessageBox::success('Lerninhalte wurden übertragen');?>
+    <? else: ?>
+        <?= MessageBox::warning('Lerninhalte wurden noch nicht übertragen');?>
+    <? endif; ?>
+    <p style="border: solid thin #d0d7e3; padding: 1em; text-align: justify; margin-top: 18px">
+        Seit der Stud.IP Version 5.0 ist Courseware ein fester Systembestandteil. Aufgrund diverser Neuerungen wurden die
+        Lerninhalte in die neue Struktur übertragen. Courseware 5 bietet eine Vielzahl von neuen Funktionen
+        und verfügt über die neusten Bedienkonzepte in Stud.IP. Unter dem Menüpunkt "Mein Arbeitsplatz" haben nun
+        alle Nutzenden die Möglichkeit eigene Lerninhalte zu erstellen und können diese dann mit anderen in Veranstaltungen
+        und Studiengruppen teilen.<br>
+        Ausführliche Informationen zur neuen Courseware finden Sie in der <a href="https://hilfe.studip.de/help/5.0/de/Basis.Courseware" target="_blank">
+          Stud.IP Hilfe</a>.<br>
+          <a href="<?= $CoursewareLink ?>" class="button">
+            Zur Courseware dieser Veranstaltung
+        </a>
+    </p>
+</div>

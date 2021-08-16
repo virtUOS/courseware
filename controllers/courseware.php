@@ -20,181 +20,188 @@ class CoursewareController extends CoursewareStudipController
             Navigation::activateItem('/course/mooc_courseware/index');
         }
 
-        $this->view = $this->getViewParam();
+        $this->status = \Mooc\DB\MigrationStatus::findOneBySQL('seminar_id = ?', array($this->container['cid']));
+        $this->CoursewareLink = URLHelper::getLink('dispatch.php/course/courseware/', ['cid' => $this->container['cid']]);
 
-        // setup `context` parameter
-        $this->context = clone Request::getInstance();
+        // $this->view = $this->getViewParam();
 
-        // add Templates
-        $this->templates = $this->getMustacheTemplates();
+        // // setup `context` parameter
+        // $this->context = clone Request::getInstance();
+
+        // // add Templates
+        // $this->templates = $this->getMustacheTemplates();
     }
 
     // show this course's settings page but only to tutors+
     public function settings_action()
     {
-        // only tutor+ may visit this page
-        if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->plugin->getCourseId())) {
-            throw new Trails_Exception(401);
-        }
-        PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
-        if (Navigation::hasItem('/course/mooc_courseware/settings')) {
-            Navigation::activateItem('/course/mooc_courseware/settings');
-        }
+        return $this->redirect('courseware');
 
-        $user = $this->container['current_user'];
+        // // only tutor+ may visit this page
+        // if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->plugin->getCourseId())) {
+        //     throw new Trails_Exception(401);
+        // }
+        // PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
+        // if (Navigation::hasItem('/course/mooc_courseware/settings')) {
+        //     Navigation::activateItem('/course/mooc_courseware/settings');
+        // }
 
-        if (!$user->hasPerm($this->container['cid'], 'tutor')) {
-            throw new Trails_Exception(401);
-        }
+        // $user = $this->container['current_user'];
 
-        $this->is_tutor = $user->getPerm($this->container['cid']) === 'tutor';
+        // if (!$user->hasPerm($this->container['cid'], 'tutor')) {
+        //     throw new Trails_Exception(401);
+        // }
 
-        if (Request::isPost()) {
-            CSRFProtection::verifyUnsafeRequest();
-            $this->storeSettings();
-            $this->flash['success'] = _cw("Die Einstellungen wurden gespeichert.");
+        // $this->is_tutor = $user->getPerm($this->container['cid']) === 'tutor';
 
-            return $this->redirect('courseware/settings');
-        }
-        $folders =  \Folder::findBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'HiddenFolder'));
-        $this->files = array();
-        foreach ($folders as $folder) {
-            $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
-            foreach($file_refs as $ref){
-                if (($ref->isImage()) && (!$ref->isLink())) {
-                    $this->files[] = $ref;
-                }
-            }
-        }
+        // if (Request::isPost()) {
+        //     CSRFProtection::verifyUnsafeRequest();
+        //     $this->storeSettings();
+        //     $this->flash['success'] = _cw("Die Einstellungen wurden gespeichert.");
+
+        //     return $this->redirect('courseware/settings');
+        // }
+        // $folders =  \Folder::findBySQL('range_id = ? AND folder_type = ?', array($this->container['cid'], 'HiddenFolder'));
+        // $this->files = array();
+        // foreach ($folders as $folder) {
+        //     $file_refs = \FileRef::findBySQL('folder_id = ?', array($folder->id));
+        //     foreach($file_refs as $ref){
+        //         if (($ref->isImage()) && (!$ref->isLink())) {
+        //             $this->files[] = $ref;
+        //         }
+        //     }
+        // }
     }
     
     public function news_action()
     {
-        PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
-        //get all new blocks and push them into an array
-        $db = DBManager::get();
-        $stmt = $db->prepare("
-            SELECT
-                *
-            FROM
-                mooc_blocks
-            WHERE
-                seminar_id = :cid
-            AND
-                chdate >= :last_visit
-            AND 
-				type NOT IN ('Courseware', 'Chapter', 'Subchapter', 'Section')
-        ");
-        $stmt->bindParam(":cid", $this->container['cid']);
-        $stmt->bindParam(":last_visit", object_get_visit($this->container['cid'], "courseware"));
-        $stmt->execute();
-        $new_ones = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $this->new_ones = $new_ones;
+        return $this->redirect('courseware');
 
-        $plugin_manager = \PluginManager::getInstance();
-        $vips = true;
-        if ($plugin_manager->getPluginInfo('VipsPlugin') == null){
-            $vips = false;
-        }
-        if($plugin_manager->getPlugin('VipsPlugin')){ 
-            $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
-            if (version_compare('1.3',$version) > 0) {
-                $vips = false;
-            }
-        } else {
-            $vips = false;
-        }
+        // PageLayout::addStylesheet($this->plugin->getPluginURL().'/assets/static/courseware.css');
+        // //get all new blocks and push them into an array
+        // $db = DBManager::get();
+        // $stmt = $db->prepare("
+        //     SELECT
+        //         *
+        //     FROM
+        //         mooc_blocks
+        //     WHERE
+        //         seminar_id = :cid
+        //     AND
+        //         chdate >= :last_visit
+        //     AND 
+		// 		type NOT IN ('Courseware', 'Chapter', 'Subchapter', 'Section')
+        // ");
+        // $stmt->bindParam(":cid", $this->container['cid']);
+        // $stmt->bindParam(":last_visit", object_get_visit($this->container['cid'], "courseware"));
+        // $stmt->execute();
+        // $new_ones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // $this->new_ones = $new_ones;
 
-        if ($vips) {
-            // getting all tests
-            $db = DBManager::get();
-            $stmt = $db->prepare("
-                SELECT 
-                    json_data 
-                FROM 
-                    mooc_blocks
-                JOIN 
-                    mooc_fields 
-                ON 
-                    mooc_blocks.id = mooc_fields.block_id 
-                WHERE 
-                    mooc_blocks.type = 'TestBlock'
-                AND
-                    mooc_blocks.seminar_id = :cid
-                AND 
-                    mooc_fields.name = 'test_id' 
-            ");
-            $stmt->bindParam(":cid", $this->container['cid']);
-            $stmt->execute();
+        // $plugin_manager = \PluginManager::getInstance();
+        // $vips = true;
+        // if ($plugin_manager->getPluginInfo('VipsPlugin') == null){
+        //     $vips = false;
+        // }
+        // if($plugin_manager->getPlugin('VipsPlugin')){ 
+        //     $version = $plugin_manager->getPluginManifest($plugin_manager->getPlugin('VipsPlugin')->getPluginPath())['version'];
+        //     if (version_compare('1.3',$version) > 0) {
+        //         $vips = false;
+        //     }
+        // } else {
+        //     $vips = false;
+        // }
 
-            $tests =  $stmt->fetch(PDO::FETCH_ASSOC);
-            if($tests) {
-                $test_ids = array();
-                foreach ($tests as $key=>$value){
-                        array_push($test_ids, (int) str_replace('"', '', $value));
-                }
-                //looking for new tests
-                $stmt = $db->prepare("
-                    SELECT
-                        *
-                    FROM
-                        vips_exercise_ref
-                    JOIN
-                        vips_exercise
-                    ON
-                        vips_exercise_ref.exercise_id = vips_exercise.ID
-                    WHERE
-                        vips_exercise_ref.test_id IN (".implode(', ', $test_ids).")
-                    AND
-                        unix_timestamp(created) >=  :last_visit
-                ");
-                $stmt->bindParam(":last_visit", object_get_visit($_SESSION['SessionSeminar'], "courseware"));
-                $stmt->execute();
-                $new_tests =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // if ($vips) {
+        //     // getting all tests
+        //     $db = DBManager::get();
+        //     $stmt = $db->prepare("
+        //         SELECT 
+        //             json_data 
+        //         FROM 
+        //             mooc_blocks
+        //         JOIN 
+        //             mooc_fields 
+        //         ON 
+        //             mooc_blocks.id = mooc_fields.block_id 
+        //         WHERE 
+        //             mooc_blocks.type = 'TestBlock'
+        //         AND
+        //             mooc_blocks.seminar_id = :cid
+        //         AND 
+        //             mooc_fields.name = 'test_id' 
+        //     ");
+        //     $stmt->bindParam(":cid", $this->container['cid']);
+        //     $stmt->execute();
 
-                $this->new_ones = array_merge($this->new_ones, $new_tests);
-            }
-        }
+        //     $tests =  $stmt->fetch(PDO::FETCH_ASSOC);
+        //     if($tests) {
+        //         $test_ids = array();
+        //         foreach ($tests as $key=>$value){
+        //                 array_push($test_ids, (int) str_replace('"', '', $value));
+        //         }
+        //         //looking for new tests
+        //         $stmt = $db->prepare("
+        //             SELECT
+        //                 *
+        //             FROM
+        //                 vips_exercise_ref
+        //             JOIN
+        //                 vips_exercise
+        //             ON
+        //                 vips_exercise_ref.exercise_id = vips_exercise.ID
+        //             WHERE
+        //                 vips_exercise_ref.test_id IN (".implode(', ', $test_ids).")
+        //             AND
+        //                 unix_timestamp(created) >=  :last_visit
+        //         ");
+        //         $stmt->bindParam(":last_visit", object_get_visit($_SESSION['SessionSeminar'], "courseware"));
+        //         $stmt->execute();
+        //         $new_tests =  $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if (Navigation::hasItem('/course/mooc_courseware/news')) {
-            Navigation::activateItem('/course/mooc_courseware/news');
-        }
-        if(empty($this->new_ones) && (Request::get("iconnav") == 'true')) {
-            return $this->redirect('courseware');
-        }
-        $user = $this->container['current_user'];
-        $this->new_content = array();
-        foreach ($this->new_ones as $item){
-            $block = new Mooc\DB\Block($item["id"]);
-            if ( (strpos($item["title"], "AsideSection") >-1) || (in_array($block->type , array("Chapter", "Subchapter", "Section"))) ){continue;}
-            if($block->parent->parent->parent != null) {
-                if (!$block->parent->parent->parent->isPublished() || !$block->parent->parent->parent->isVisible() || !$user->canRead($block->parent->parent->parent)) {continue;}
-            }
-            $chapter = $block->parent->parent->parent->title;
-            if($block->parent->parent != null) {
-                if (!$block->parent->parent->isPublished() || !$block->parent->parent->isVisible() || !$user->canRead($block->parent->parent)) {continue;}
-            }
-            $subchapter = $block->parent->parent->title;
-            $section = $block->parent->title;
-            if (!$block->isVisible() || !$user->canRead($block->parent)) {continue;}
-            $class_name = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
-            $name_constant = $class_name.'::NAME';
+        //         $this->new_ones = array_merge($this->new_ones, $new_tests);
+        //     }
+        // }
 
-            if (defined($name_constant)) {
-                $title = _cw(constant($name_constant));
-            } else {
-                $title = $block->title;
-            }
-            $ui_block = $this->plugin->getBlockFactory()->makeBlock($block);
-            $this->new_content[$chapter][$subchapter][$section][$block->id] = array(
-                'title' => $title, 
-                'type' => $block->type,
-                'id' => $block->id,
-                'ui_block' => $ui_block 
-            );
-        }
+        // if (Navigation::hasItem('/course/mooc_courseware/news')) {
+        //     Navigation::activateItem('/course/mooc_courseware/news');
+        // }
+        // if(empty($this->new_ones) && (Request::get("iconnav") == 'true')) {
+        //     return $this->redirect('courseware');
+        // }
+        // $user = $this->container['current_user'];
+        // $this->new_content = array();
+        // foreach ($this->new_ones as $item){
+        //     $block = new Mooc\DB\Block($item["id"]);
+        //     if ( (strpos($item["title"], "AsideSection") >-1) || (in_array($block->type , array("Chapter", "Subchapter", "Section"))) ){continue;}
+        //     if($block->parent->parent->parent != null) {
+        //         if (!$block->parent->parent->parent->isPublished() || !$block->parent->parent->parent->isVisible() || !$user->canRead($block->parent->parent->parent)) {continue;}
+        //     }
+        //     $chapter = $block->parent->parent->parent->title;
+        //     if($block->parent->parent != null) {
+        //         if (!$block->parent->parent->isPublished() || !$block->parent->parent->isVisible() || !$user->canRead($block->parent->parent)) {continue;}
+        //     }
+        //     $subchapter = $block->parent->parent->title;
+        //     $section = $block->parent->title;
+        //     if (!$block->isVisible() || !$user->canRead($block->parent)) {continue;}
+        //     $class_name = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
+        //     $name_constant = $class_name.'::NAME';
+
+        //     if (defined($name_constant)) {
+        //         $title = _cw(constant($name_constant));
+        //     } else {
+        //         $title = $block->title;
+        //     }
+        //     $ui_block = $this->plugin->getBlockFactory()->makeBlock($block);
+        //     $this->new_content[$chapter][$subchapter][$section][$block->id] = array(
+        //         'title' => $title, 
+        //         'type' => $block->type,
+        //         'id' => $block->id,
+        //         'ui_block' => $ui_block 
+        //     );
+        // }
         
-        return true;
+        // return true;
     }
 
     /////////////////////
