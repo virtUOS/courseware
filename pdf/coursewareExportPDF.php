@@ -40,7 +40,7 @@
             return parent::writeHTML(
                 $this->getDefaultStyle() . $html,
                 $ln,
-                $filll,
+                $fill,
                 $reseth,
                 $cell,
                 $align
@@ -121,6 +121,10 @@
 
         dt {
             font-weight: bold;
+        }
+
+        blockquote {
+            background-color: #f5f5f5;
         }
     </style>
         <?php return ob_get_clean();
