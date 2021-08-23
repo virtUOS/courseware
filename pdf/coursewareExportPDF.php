@@ -97,8 +97,8 @@
         h5 {
             font-weight: bold;
             background-color: #ffffff;
-            font-size: 14px;
-            line-height: 16px;
+            font-size: 12px;
+            line-height: 14px;
         }
 
         h6 {

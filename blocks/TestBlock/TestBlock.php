@@ -468,7 +468,8 @@ class TestBlock extends Block
                 'released'            => $released,
                 'tries_left'          => $tries_left,
                 'tries_pl'            => $tries_pl,
-                'character_picker'    => $character_picker
+                'character_picker'    => $character_picker,
+                'print_template'      => $exercise->getPrintTemplate($solution, $assignment, $user->id)->render()
             );
             $entry['skip_entry'] = !$entry['show_solution'] && !$entry['solving_allowed'];
             $available = !$entry['show_solution'] && !$entry['solving_allowed']; //or correction is available
@@ -538,7 +539,6 @@ class TestBlock extends Block
     public function pdfexport_view()
     {
         $data = $this->student_view();
-        var_dump($data) || exit;
 
         return $data;
     }
