@@ -3,7 +3,10 @@
 namespace Mooc\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Mooc\DB\Block as dbBlock;
 use Courseware\StructuralElement as StructuralElement;
 use Courseware\Container as Container;
@@ -19,34 +22,82 @@ class MigrateCoursewareCommand extends Command
     {
         $this->setName('courseware:migrate');
         $this->setDescription('migrate from courseware plugin data to couseware core');
+        $this->addArgument('cid', InputArgument::OPTIONAL, 'Which course should be migrated?');
     }
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Start migration ...');
+        $startStyle = new OutputFormatterStyle('yellow', 'default', ['bold']);
+        $output->getFormatter()->setStyle('start', $startStyle);
+
+        $successStyle = new OutputFormatterStyle('green', 'default', ['bold']);
+        $output->getFormatter()->setStyle('success', $successStyle);
+
+        $skipedStyle = new OutputFormatterStyle('green', 'default', []);
+        $output->getFormatter()->setStyle('skiped', $skipedStyle);
+
+        $batchInfoStyle = new OutputFormatterStyle('cyan', 'default', []);
+        $output->getFormatter()->setStyle('batch-info', $batchInfoStyle);
+
         $this->plugin_courseware = \PluginManager::getInstance()->getPlugin('Courseware');
         \PluginEngine::getPlugin('CoreForum');
-        $coursewares =  dbBlock::findBySQL('type = ?', array('Courseware'));
-        foreach($coursewares as $courseware) {
-            $cid = $courseware->seminar_id;
-            $is_migrated = \Mooc\DB\MigrationStatus::findBySQL('seminar_id = ?', array($cid));
-            if($is_migrated) {
-                $course = \Course::find($cid);
-                $output->writeln('Courseware for ' . $course->name . '(' . $course->id . ')' . ' has already been migrated.');
-                continue;
+
+        $arg_cid = $input->getArgument('cid');
+
+        if ($arg_cid !== null) {
+            $output->writeln('<start>Start single migration ...</start>');
+            $courseware =  dbBlock::findOneBySQL('type = ? AND seminar_id = ?', array('Courseware', $arg_cid));
+            if ($courseware !== null) {
+                $this->migrateCourse($courseware, $output);
+            } else {
+                $output->writeln('<comment>Could not find Courseware in Course: ' . $arg_cid . '</comment>');
             }
-            $grouped = $this->getGrouped($cid, true);
-            $courseware = current($grouped['']);
-            $this->buildTree($grouped, $courseware);
-            $this->createNewCourseware($courseware, $output);
-            $status = \Mooc\DB\MigrationStatus::build([
-                'seminar_id' => $cid,
-                'mkdate' => time()
-            ]);
-            $status->store();
+        } else {
+            $helper = $this->getHelper('question');
+            $question = new ConfirmationQuestion('<question>Are you sure you want to migrate all coursewares at once? (y|n)</question> ', false);
+            if(!$helper->ask($input, $output, $question)) {
+                $output->writeln('<comment>Migration canceled.</comment>');
+                $output->writeln('<info>You can migrate individual courses if you use the course id as an argument.</info>');
+                return 0;
+            }
+            $output->writeln('<start>Start batch migration ...</start>');
+            $coursewares =  dbBlock::findBySQL('type = ?', array('Courseware'));
+            $coursewares_count = count($coursewares);
+            if ($coursewares_count === 1) {
+                $output->writeln('<batch-info>Batch migration for only one Courseware.</batch-info>');
+            } else {
+                $output->writeln('<batch-info>Batch migration for ' . $coursewares_count . ' Coursewares.</batch-info>');
+            }
+            
+            foreach($coursewares as $courseware) {
+                $this->migrateCourse($courseware, $output);
+            }
         }
-        $output->writeln('Migration complete.');
+
+        $output->writeln('<success>Migration complete.</success>');
 
         return 0;
+    }
+
+    private function migrateCourse($courseware, $output)
+    {
+        $cid = $courseware->seminar_id;
+        $is_migrated = \Mooc\DB\MigrationStatus::findBySQL('seminar_id = ?', array($cid));
+        if($is_migrated) {
+            $course = \Course::find($cid);
+            $output->writeln('<skiped>Courseware for ' . $course->name . '(' . $course->id . ')' . ' has already been migrated.</skiped>');
+            return false;
+        }
+        $grouped = $this->getGrouped($cid, true);
+        $courseware = current($grouped['']);
+        $this->buildTree($grouped, $courseware);
+        $this->createNewCourseware($courseware, $output);
+        $status = \Mooc\DB\MigrationStatus::build([
+            'seminar_id' => $cid,
+            'mkdate' => time()
+        ]);
+        $status->store();
+
+        return true;
     }
 
     private function getGrouped($cid)
@@ -152,17 +203,25 @@ class MigrateCoursewareCommand extends Command
         $subchapter_map = [];
         $section_map = [];
         $new_link_blocks = [];
+        $structural_element_counter = 0;
+        $container_counter = 0;
+        $block_counter = 0;
         foreach($courseware['children'] as $chapter) {
             $new_chapter = $this->createStructuralElement($chapter, $root->id, $teacher, $cid, $output);
+            $structural_element_counter++;
             foreach($chapter['children'] as $subchapter) {
                 $new_subchapter = $this->createStructuralElement($subchapter, $new_chapter->id, $teacher, $cid, $output);
+                $structural_element_counter++;
                 $subchapter_map[$subchapter['id']] = $new_subchapter->id;
                 foreach($subchapter['children'] as $section) {
                     $new_section = $this->createStructuralElement($section, $new_subchapter->id, $teacher, $cid, $output);
+                    $structural_element_counter++;
                     $section_map[$section['id']] = $new_section->id;
                     $new_container = $this->createContainer($new_section->id, $teacher, $output);
+                    $container_counter++;
                     foreach($section['children'] as $block) {
                         $create_new_block = $this->createBlock($block, $new_container, $teacher, $cid, $courseware['ui_block'], $output);
+                        $block_counter++;
                         $new_block = $create_new_block['new_block'];
                         if($new_block->type->getType() === 'link') {
                             array_push($new_link_blocks, array('block' => $new_block, 'link_target' => $create_new_block['link_target']));
@@ -201,8 +260,13 @@ class MigrateCoursewareCommand extends Command
             }
         }
 
+        $output->write('<success>');
+        $output->write($structural_element_counter . ' structural elements, ');
+        $output->write($container_counter . ' containers and ');
+        $output->write($block_counter . ' blocks ');
+        $output->write('were created.');
+        $output->writeln('</success>');
 
-        $output->writeln('done!');
         return true;
     }
 
@@ -502,7 +566,19 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'InteractiveVideoBlock':
-                // we need a block for this type!!!
+                $source = json_decode($block['fields']['source']);
+                $payload = array(
+                    'assignment_id' => $block['fields']['assignment_id'],
+                    'overlays' =>  $block['fields']['iav_overlays'],
+                    'stops' =>  $block['fields']['iav_stops'],
+                    'tests' =>  $block['fields']['iav_tests'],
+                    'file_id' => $source->file_id,
+                    'file_name' => $source->file_name,
+                    'external_source' => $source->external,
+                    'range_inactive' => block['fields']['range_inactive']
+                );
+                $block_type = 'interactive-video';
+                $addBlock = true;
                 break;
             case 'KeyPointBlock':
                 $payload = array(
@@ -558,7 +634,11 @@ class MigrateCoursewareCommand extends Command
                 //we skip this block type
                 break;
             case 'TestBlock':
-                // we need a block for this!!!
+                $payload = array(
+                    'assignment_id' => $block['fields']['assignment_id']
+                );
+                $block_type = 'TestBlock';
+                $addBlock = true;
                 break;
             case 'TypewriterBlock':
                 $typewriter = json_decode($block['fields']['typewriter_json']);

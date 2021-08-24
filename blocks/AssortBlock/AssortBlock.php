@@ -3,7 +3,7 @@ namespace Mooc\UI\AssortBlock;
 
 use Mooc\UI\Block;
 
-class AssortBlock extends Block 
+class AssortBlock extends Block
 {
     const NAME = 'Gruppieren';
     const BLOCK_CLASS = 'layout';
@@ -48,11 +48,11 @@ class AssortBlock extends Block
            $block->hash = $this->getBlockHash($block->id);
         }
         $this->assortblocks = json_encode($assortblocks);
-        
+
         return $this->getAttrArray();
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array('assortblocks' => $this->assortblocks, 'assorttype' => $this->assorttype);
     }
@@ -85,7 +85,7 @@ class AssortBlock extends Block
         $blocks = array();
         foreach($children as $child)
         {
-            if (in_array($child["type"], 
+            if (in_array($child["type"],
                 array("HtmlBlock", "VideoBlock", "IFrameBlock", "DownloadBlock", "KeyPointBlock", "LinkBlock", "EmbedBlock", "FolderBlock")
             )){
                 $className = '\Mooc\UI\\'.$child["type"].'\\'.$child["type"];
@@ -198,7 +198,7 @@ class AssortBlock extends Block
 
                 if (!$blockfound) {unset($assortblocks[$i]);}
             }
-            $this->assortblocks = json_encode($assortblocks); 
+            $this->assortblocks = json_encode($assortblocks);
         }
         if (isset($properties['assorttype'])) {
             $this->assorttype = $properties['assorttype'];

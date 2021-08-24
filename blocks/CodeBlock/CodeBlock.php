@@ -49,7 +49,7 @@ class CodeBlock extends Block
         );
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'code_content' => $this->code_content,
@@ -62,10 +62,10 @@ class CodeBlock extends Block
         $this->authorizeUpdate();
         if (isset ($data['code_content'])) {
             $this->code_content = (string) $data['code_content'];
-        } 
+        }
         if (isset ($data['code_lang'])) {
             $this->code_lang = (string) $data['code_lang'];
-        } 
+        }
 
         return;
     }
