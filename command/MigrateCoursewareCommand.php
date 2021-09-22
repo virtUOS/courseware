@@ -221,8 +221,11 @@ class MigrateCoursewareCommand extends Command
                     $container_counter++;
                     foreach($section['children'] as $block) {
                         $create_new_block = $this->createBlock($block, $new_container, $teacher, $cid, $courseware['ui_block'], $output);
-                        $block_counter++;
                         $new_block = $create_new_block['new_block'];
+                        if($new_block === null) {
+                          continue;
+                        }
+                        $block_counter++;
                         if($new_block->type->getType() === 'link') {
                             array_push($new_link_blocks, array('block' => $new_block, 'link_target' => $create_new_block['link_target']));
                         }
