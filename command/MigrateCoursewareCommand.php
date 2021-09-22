@@ -620,14 +620,31 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'OpenCastBlock':
-                //var_dump($block['fields']);die;
-                $payload = [
-                    'series_id'  => '',
-                    'episode_id' => '', $block['fields'][''],
-                    'url' => $block['fields']['url_opencast']
-                ];
-                $block_type = 'opencast-block';
-                $addBlock = true;
+                $oc = json_decode($block['fields']['opencast_content'], true);
+
+                if (!empty($oc)) {
+                    $url = $episode_id = '';
+
+                    if ($oc['useplayer'] == 'theodul') {
+                        $url = $oc['url_opencast_theodul'];
+                    } else {
+                        $url = $oc['url_opencast_paella'];
+                    }
+
+                    preg_match('#.*&id=(.*)#',  $url, $matches);
+                    if (!empty($matches[1])) {
+                        $episode_id = $matches[1];
+                    }
+
+                    $payload = [
+                        'series_id'  => '',
+                        'episode_id' => $episode_id,
+                        'url' => $url
+                    ];
+                    $block_type = 'plugin-opencast-video';
+                    $addBlock = true;
+                }
+
                 break;
             case 'PdfBlock':
                 $payload = array(
