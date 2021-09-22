@@ -736,7 +736,6 @@ class MigrateCoursewareCommand extends Command
                 $record_file_ref = $record_file->getFileRef();
                 $record_file_ref->name = $recording_user->getFullName() . '_' . $record_file_ref->name;
                 $record_file_ref->store();
-                $output->writeln($record_file_ref->name);
             }
         }
         if($new_block && $block['type'] === 'CanvasBlock') {
