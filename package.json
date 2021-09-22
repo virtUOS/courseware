@@ -28,6 +28,7 @@
     "query-string": "5.1.1",
     "slick-carousel": "1.8.1",
     "style-loader": "2.0.0",
+    "url-parse": "^1.5.3",
     "webpack": "3.12.0"
   },
   "browserslist": [
@@ -35,7 +36,10 @@
     "safari >= 7"
   ],
   "scripts": {
+    "build:dev": "webpack --watch",
+    "prebuild:prod": "cd vue/block_manager && npm install && npm run build",
     "build:prod": "NODE_ENV=production webpack",
+    "locales": "php buildLocales.php",
     "prezip": "npm run build:prod",
     "zip": "zip -r courseware-v$npm_package_version.zip blocks cli command controllers cronjobs migrations models vendor views LICENSE Courseware.php plugin.manifest README.md"
   }
