@@ -620,7 +620,14 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'OpenCastBlock':
-                // we need a block for this type!!!
+                //var_dump($block['fields']);die;
+                $payload = [
+                    'series_id'  => '',
+                    'episode_id' => '', $block['fields'][''],
+                    'url' => $block['fields']['url_opencast']
+                ];
+                $block_type = 'opencast-block';
+                $addBlock = true;
                 break;
             case 'PdfBlock':
                 $payload = array(
