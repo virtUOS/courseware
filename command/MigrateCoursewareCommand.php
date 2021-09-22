@@ -735,6 +735,9 @@ class MigrateCoursewareCommand extends Command
                         $audioGalleryFolder,
                         $recording_user
                     );
+                    if(!is_object($record_file)) {
+                        continue;
+                    }
                     $record_file_ref = $record_file->getFileRef();
                     $record_file_ref->name = $recording_user->getFullName() . '_' . $record_file_ref->name;
                     $record_file_ref->store();
