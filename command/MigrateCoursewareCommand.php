@@ -81,13 +81,19 @@ class MigrateCoursewareCommand extends Command
     private function migrateCourse($courseware, $output)
     {
         $cid = $courseware->seminar_id;
+        $course = \Course::find($cid);
+
+        if(empty($course)) {
+            $output->writeln('<skiped>Course (' . $cid . ')' . ' does not exist in database.</skiped>');
+            return false;
+        }
+
         $plugin_manager = \PluginManager::getInstance();
         $plugin_info = $plugin_manager->getPluginInfo('CoursewareModule');
         $plugin_manager->setPluginActivated($plugin_info['id'], $cid, true);
 
         $is_migrated = \Mooc\DB\MigrationStatus::findBySQL('seminar_id = ?', array($cid));
         if($is_migrated) {
-            $course = \Course::find($cid);
             $output->writeln('<skiped>Courseware for ' . $course->name . '(' . $course->id . ')' . ' has already been migrated.</skiped>');
             return false;
         }
