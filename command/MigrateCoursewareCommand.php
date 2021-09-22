@@ -67,7 +67,7 @@ class MigrateCoursewareCommand extends Command
             } else {
                 $output->writeln('<batch-info>Batch migration for ' . $coursewares_count . ' Coursewares.</batch-info>');
             }
-            
+
             foreach($coursewares as $courseware) {
                 $this->migrateCourse($courseware, $output);
             }
@@ -81,6 +81,10 @@ class MigrateCoursewareCommand extends Command
     private function migrateCourse($courseware, $output)
     {
         $cid = $courseware->seminar_id;
+        $plugin_manager = \PluginManager::getInstance();
+        $plugin_info = $plugin_manager->getPluginInfo('CoursewareModule');
+        $plugin_manager->setPluginActivated($plugin_info['id'], $cid, true);
+
         $is_migrated = \Mooc\DB\MigrationStatus::findBySQL('seminar_id = ?', array($cid));
         if($is_migrated) {
             $course = \Course::find($cid);
