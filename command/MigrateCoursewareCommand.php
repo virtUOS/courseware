@@ -728,14 +728,18 @@ class MigrateCoursewareCommand extends Command
             foreach($recordings as $record) {
                 $data = json_decode($record['json_data']);
                 $recording_user = \User::find($data->user_id);
-                $record_file = \FileManager::copyFile(
-                    \FileRef::find($data->file_ref_id)->getFiletype(),
-                    $audioGalleryFolder,
-                    $recording_user
-                );
-                $record_file_ref = $record_file->getFileRef();
-                $record_file_ref->name = $recording_user->getFullName() . '_' . $record_file_ref->name;
-                $record_file_ref->store();
+                $file_ref = \FileRef::find($data->file_ref_id);
+                if ($file_ref !== null) {
+                    $record_file = \FileManager::copyFile(
+                        $file_ref->getFiletype(),
+                        $audioGalleryFolder,
+                        $recording_user
+                    );
+                    $record_file_ref = $record_file->getFileRef();
+                    $record_file_ref->name = $recording_user->getFullName() . '_' . $record_file_ref->name;
+                    $record_file_ref->store();
+                }
+
             }
         }
         if($new_block && $block['type'] === 'CanvasBlock') {
