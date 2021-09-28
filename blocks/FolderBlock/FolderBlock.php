@@ -3,7 +3,7 @@ namespace Mooc\UI\FolderBlock;
 
 use Mooc\UI\Block;
 
-class FolderBlock extends Block 
+class FolderBlock extends Block
 {
     const NAME = 'Dateiordner';
     const BLOCK_CLASS = 'function';
@@ -61,7 +61,7 @@ class FolderBlock extends Block
                     } else {
                         $folder_timed['end'] = strftime('%x', $typed_folder->end_time);
                     }
-                    
+
                     // $folder_type_change = 'Dieser Ordner ist für die Studenten nur vom ' .  ($typed_folder->start_time > 0 ? strftime('%x %X', $typed_folder->start_time) : 'unbegrenzt') . ' bis zum ' . ($typed_folder->end_time > 0 ? strftime('%x %X', $typed_folder->end_time) : 'unbegrenzt') . ' sichtbar.';
                     break;
             }
@@ -134,7 +134,7 @@ class FolderBlock extends Block
         }
         $folder_content = json_decode($this->folder_content);
         $folder_id = $folder_content->folder_id;
-        
+
         $this->authorizeUpdate();
         $folders =  \Folder::findBySQL('range_id = ? AND folder_type != ?', array($this->container['cid'], 'RootFolder'));
         $folderarray = [];
@@ -174,7 +174,7 @@ class FolderBlock extends Block
         }
 
         return array_merge(
-            $this->getAttrArray(), 
+            $this->getAttrArray(),
             array(
                 'folders' => $folderarray,
                 'other_user_folder' => $other_user_folder,
@@ -252,8 +252,8 @@ class FolderBlock extends Block
                }
             }
             $filesarray[] = array('id' => $item->getId(),
-                            'name' => $item->getFilename(), 
-                            'icon' => $this->getIcon($item->getId()), 
+                            'name' => $item->getFilename(),
+                            'icon' => $this->getIcon($item->getId()),
                             'url' => $this->getFileURL($item),
                             'downloadable' => $item->isDownloadable($GLOBALS['user']->id),
                             'user' => $user_name);
@@ -288,7 +288,7 @@ class FolderBlock extends Block
         return $icon;
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         $folder_content = json_decode($this->folder_content);
         return array(

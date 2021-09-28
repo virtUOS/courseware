@@ -3,7 +3,7 @@ namespace Mooc\UI\DownloadBlock;
 
 use Mooc\UI\Block;
 
-class DownloadBlock extends Block 
+class DownloadBlock extends Block
 {
     const NAME = 'Download';
     const BLOCK_CLASS = 'function';
@@ -24,13 +24,13 @@ class DownloadBlock extends Block
     public function student_view()
     {
         $file_ref = \FileRef::find($this->file_id);
-        if ($file_ref) { 
+        if ($file_ref) {
             $url = $this->getFileURL($file_ref);
             $access = $this->isFileDownloadable($file_ref);
             $icon = $this->getIcon($file_ref);
 
             $file_available = true;
-        } else { 
+        } else {
             $url = '';
             $icon = '';
             $file_available = false;
@@ -42,8 +42,8 @@ class DownloadBlock extends Block
         }
 
         return array_merge(
-            $this->getAttrArray(), 
-            array('confirmed' => !! $this->getProgress()->grade, 
+            $this->getAttrArray(),
+            array('confirmed' => !! $this->getProgress()->grade,
                   'url' => $url,
                   'icon' => $icon,
                   'download_access' => $access,
@@ -155,12 +155,12 @@ class DownloadBlock extends Block
         return $filesarray;
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
-            'file' => $this->file, 
-            'file_id' => $this->file_id, 
-            'file_name' => $this->file_name, 
+            'file' => $this->file,
+            'file_id' => $this->file_id,
+            'file_name' => $this->file_name,
             'folder_id' => $this->folder_id,
             'download_title' => $this->download_title,
             'download_info' => $this->download_info,
@@ -194,7 +194,7 @@ class DownloadBlock extends Block
         }
         $file_ref = new \FileRef($this->file_id);
         $file = new \File($file_ref->file_id);
-        
+
         $files[] = array(
             'id' => $this->file_id,
             'name' => $file_ref->name,

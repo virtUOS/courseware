@@ -654,7 +654,7 @@ abstract class Block {
         }
     }
 
-    public function vipsActivated() 
+    public function vipsActivated()
     {
         if ($this->vipsInstalled()) {
             $plugin_manager = \PluginManager::getInstance();

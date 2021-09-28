@@ -7,7 +7,7 @@ use Mooc\UI\Block;
  * @author Ron Lucke <rlucke@uos.de>
  */
 
-class TestBlock extends Block 
+class TestBlock extends Block
 {
     const NAME = 'Quiz';
     const BLOCK_CLASS = 'interaction';
@@ -63,7 +63,7 @@ class TestBlock extends Block
             return array(
                 'exercises'     => false,
                 'typemismatch'  => false,
-                'active'        => $active, 
+                'active'        => $active,
                 'version'       => $version,
                 'installed'     => $installed,
                 'vips14'        => $this->vipsVersion('1.4')
@@ -73,13 +73,13 @@ class TestBlock extends Block
             return array(
                 'exercises'     => false,
                 'typemismatch'  => true,
-                'active'        => $active, 
+                'active'        => $active,
                 'version'       => $version,
                 'installed'     => $installed,
                 'vips14'        => $this->vipsVersion('1.4')
             );
         }
-        if ($GLOBALS['perm']->have_studip_perm('user', $this->_model->course->id, $user->id) && 
+        if ($GLOBALS['perm']->have_studip_perm('user', $this->_model->course->id, $user->id) &&
             !$GLOBALS['perm']->have_studip_perm('tutor', $this->_model->course->id, $user->id)) {
             $assignment->recordAssignmentAttempt($user->id);
         }
@@ -118,11 +118,11 @@ class TestBlock extends Block
             );
         }
 
-        return array_merge($this->getAttrArray(), array( 
+        return array_merge($this->getAttrArray(), array(
             'has_assignments'   => !empty($assignments),
             'type'              => $this->getSubTypes()[$subtype],
-            'assignments'       => $assignments, 
-            'active'            => $active, 
+            'assignments'       => $assignments,
+            'active'            => $active,
             'version'           => $version,
             'installed'         => $installed,
             'manage_tests_url'  => \PluginEngine::getURL('vipsplugin', array(), 'sheets')
@@ -146,7 +146,7 @@ class TestBlock extends Block
         $this->authorizeUpdate();
         if (isset ($data['assignment_id'])) {
             $this->assignment_id = (string) $data['assignment_id'];
-        } 
+        }
 
         return;
     }
@@ -222,16 +222,16 @@ class TestBlock extends Block
             if ($assignment->type == "selftest") {
                 $assignment->correctSolution($solution);
                 return array(
-                    'is_nobody'      => true, 
-                    'hasSolution'    => true, 
+                    'is_nobody'      => true,
+                    'hasSolution'    => true,
                     'solution'       => $exercise->getCorrectionTemplate($solution)->render(),
                     'exercise_index' => $exercise_index,
                     'title'          => $exercise->title
                 );
             } else {
                 return array(
-                    'is_nobody'      => true, 
-                    'hasSolution'    => true, 
+                    'is_nobody'      => true,
+                    'hasSolution'    => true,
                     'solution'       => _cw('Diese Aufgabe können nur eingeloggte Nutzer abgeben.'),
                     'exercise_index' => $exercise_index,
                     'title'          => $exercise->title
@@ -331,7 +331,7 @@ class TestBlock extends Block
             $correct = $solution ? ($exercise_ref['points']== $solution->points) : false;
             if (($assignment->type != 'selftest')&&($solution != '')) {
                 $correct = true;
-            } 
+            }
             if ($correct) {
                 $progress->grade++;
             }
@@ -462,11 +462,11 @@ class TestBlock extends Block
                 'correct'             => $correct,
                 'tryagain'            => $tryagain,
                 'exercise_hint'       => $exercise->options['hint'],
-                'corrector_comment'   => $solution['corrector_comment'], 
+                'corrector_comment'   => $solution['corrector_comment'],
                 'sample_solution'     => $sample_solution,
                 'is_corrected'        => $solution['corrected'] && ($released >= 3),
                 'released'            => $released,
-                'tries_left'          => $tries_left, 
+                'tries_left'          => $tries_left,
                 'tries_pl'            => $tries_pl,
                 'character_picker'    => $character_picker
             );
@@ -496,13 +496,13 @@ class TestBlock extends Block
             'exercises'            => $exercises,
             'available'            => $available,
             'exercises_available'  => $exercises_available,
-            'solved_completely'    => $solved_completely, 
+            'solved_completely'    => $solved_completely,
             'isSequential'         => $this->container['current_courseware']->getProgressionType() == 'seq',
             'correction_available' => $correction_available
         );
     }
 
-    private function getAttrArray() 
+    private function getAttrArray()
     {
         return array(
             'test_id' => $this->test_id,

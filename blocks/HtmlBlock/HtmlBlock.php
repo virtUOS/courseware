@@ -23,7 +23,7 @@ class HtmlBlock extends Block
             return array('inactive' => true);
         }
         $this->setGrade(1.0);
-        
+
         $content = $this->content;
         if (strpos($content, "<!DOCTYPE html") == 0 ) {
             $content = \STUDIP\Markup::markAsHtml($content);
@@ -100,7 +100,7 @@ class HtmlBlock extends Block
         $pos = strrpos($this->content, $encoding);
         if ($pos === false) {
             $content = $encoding.$this->content;
-        } else { 
+        } else {
             $content = $this->content;
         }
         $document->loadHTML($content);
@@ -145,7 +145,7 @@ class HtmlBlock extends Block
         $pos = strrpos($this->content, $encoding);
         if ($pos === false) {
             $content = $encoding.$this->content;
-        } else { 
+        } else {
             $content = $this->content;
         }
         $document->loadHTML($content);
@@ -208,7 +208,7 @@ class HtmlBlock extends Block
         $pos = strrpos($this->content, $encoding);
         if ($pos === false) {
             $content = $encoding.$this->content;
-        } else { 
+        } else {
             $content = $this->content;
         }
         $document->loadHTML($content);
@@ -253,7 +253,7 @@ class HtmlBlock extends Block
         $pos = strrpos($contents, $encoding);
         if ($pos === false) {
             $content = $encoding.$contents;
-        } else { 
+        } else {
             $content = $contents;
         }
         $document->loadHTML($content);

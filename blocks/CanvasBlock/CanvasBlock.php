@@ -36,7 +36,7 @@ class CanvasBlock extends Block
             $image_url = $content->image_url;
             $access = true;
         }
-        
+
         $fields = DBField::findBySQL('block_id = ? AND name = ? AND NOT user_id = ?', array($this->id, 'canvas_draw', $user->id));
         foreach($fields as $field){
             $draws [] = $field->json_data;
@@ -244,7 +244,7 @@ class CanvasBlock extends Block
         if ($content->source == 'cw') {
             $content->url = './' . $content->image_id . '/' . $content->image_name;
         }
-        
+
         return  $content;
     }
 
