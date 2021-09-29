@@ -672,7 +672,8 @@ class MigrateCoursewareCommand extends Command
                 break;
             case 'TestBlock':
                 $payload = array(
-                    'assignment_id' => $block['fields']['assignment_id']
+                    'title' => '',
+                    'assignment' => $block['fields']['assignment_id']
                 );
                 $block_type = 'test';
                 $addBlock = true;
