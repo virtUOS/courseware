@@ -674,7 +674,7 @@ class MigrateCoursewareCommand extends Command
                 $payload = array(
                     'assignment_id' => $block['fields']['assignment_id']
                 );
-                $block_type = 'plugin-vips-test';
+                $block_type = 'test';
                 $addBlock = true;
                 break;
             case 'TypewriterBlock':
