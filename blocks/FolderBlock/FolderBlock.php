@@ -399,7 +399,7 @@ class FolderBlock extends Block
         if($folder_name == '') {$folder_name = $this->id;}
         $request = array('name' => $folder_name, 'description' => 'gallery folder');
         if ($folder_type == '') {
-            $new_folder = new StandardFolder();
+            $new_folder = new \StandardFolder();
         } else {
             $new_folder = new $folder_type();
         }
