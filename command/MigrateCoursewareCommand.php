@@ -11,6 +11,7 @@ use Mooc\DB\Block as dbBlock;
 use Courseware\StructuralElement as StructuralElement;
 use Courseware\Container as Container;
 use Courseware\Block as Block;
+use Courseware\Instance as Instance;
 
 /**
  * @author Ron Lucke <lucke@elan-ev.de>
@@ -54,7 +55,7 @@ class MigrateCoursewareCommand extends Command
         } else {
             $helper = $this->getHelper('question');
             $question = new ConfirmationQuestion('<question>Are you sure you want to migrate all coursewares at once? (y|n)</question> ', false);
-            if(!$helper->ask($input, $output, $question)) {
+            if (!$helper->ask($input, $output, $question)) {
                 $output->writeln('<comment>Migration canceled.</comment>');
                 $output->writeln('<info>You can migrate individual courses if you use the course id as an argument.</info>');
                 return 0;
@@ -68,7 +69,7 @@ class MigrateCoursewareCommand extends Command
                 $output->writeln('<batch-info>Batch migration for ' . $coursewares_count . ' Coursewares.</batch-info>');
             }
 
-            foreach($coursewares as $courseware) {
+            foreach ($coursewares as $courseware) {
                 $this->migrateCourse($courseware, $output);
             }
         }
@@ -83,8 +84,9 @@ class MigrateCoursewareCommand extends Command
         $cid = $courseware->seminar_id;
         $course = \Course::find($cid);
 
-        if(empty($course)) {
+        if (empty($course)) {
             $output->writeln('<skiped>Course (' . $cid . ')' . ' does not exist in database.</skiped>');
+
             return false;
         }
 
@@ -93,8 +95,9 @@ class MigrateCoursewareCommand extends Command
         $plugin_manager->setPluginActivated($plugin_info['id'], $cid, true);
 
         $is_migrated = \Mooc\DB\MigrationStatus::findBySQL('seminar_id = ?', array($cid));
-        if($is_migrated) {
+        if ($is_migrated) {
             $output->writeln('<skiped>Courseware for ' . $course->name . '(' . $course->id . ')' . ' has already been migrated.</skiped>');
+
             return false;
         }
         $grouped = $this->getGrouped($cid, true);
@@ -127,6 +130,7 @@ class MigrateCoursewareCommand extends Command
                     $arr['fields'] = $ui_block->getFields();
                 }
                 $memo[$item->parent_id][] = $arr;
+
                 return $memo;
             },
             array());
@@ -136,7 +140,7 @@ class MigrateCoursewareCommand extends Command
 
     private function getSubElement($type) {
         $sub_element = null;
-        switch($type) {
+        switch ($type) {
             case 'Courseware':
                 $sub_element = 'Chapter';
                 break;
@@ -190,14 +194,9 @@ class MigrateCoursewareCommand extends Command
         $courseTeacher = $course->getMembersWithStatus('dozent')[0];
         $teacher = \User::find($courseTeacher->user_id);
 
-        //get courseware settings
-        $settings = [];
-        $settings['progression'] = ($courseware['ui_block']->progression);
-        $settings['editing_permission'] = ($courseware['ui_block']->editing_permission);
-
         $root = StructuralElement::getCoursewareCourse($cid);
 
-        if($root === null) {
+        if ($root === null) {
             $root = StructuralElement::build([
                 'parent_id' => null,
                 'range_id' => $cid,
@@ -210,37 +209,47 @@ class MigrateCoursewareCommand extends Command
     
             $root->store();
         }
+
+        //get courseware settings
+        $instance = new Instance($root);
+        if ($courseware['ui_block']->editing_permission === 'dozent') {
+            $instance->setEditingPermissionLevel('dozent');
+        }
+        if ($courseware['ui_block']->progression === 'seq') {
+            $instance->setSequentialProgression(true);
+        }
+
         $subchapter_map = [];
         $section_map = [];
         $new_link_blocks = [];
         $structural_element_counter = 0;
         $container_counter = 0;
         $block_counter = 0;
-        foreach($courseware['children'] as $chapter) {
+        foreach ($courseware['children'] as $chapter) {
             $new_chapter = $this->createStructuralElement($chapter, $root->id, $teacher, $cid, $output);
             $structural_element_counter++;
-            foreach($chapter['children'] as $subchapter) {
+            foreach ($chapter['children'] as $subchapter) {
                 $new_subchapter = $this->createStructuralElement($subchapter, $new_chapter->id, $teacher, $cid, $output);
                 $structural_element_counter++;
                 $subchapter_map[$subchapter['id']] = $new_subchapter->id;
-                foreach($subchapter['children'] as $section) {
+                foreach ($subchapter['children'] as $section) {
                     $new_section = $this->createStructuralElement($section, $new_subchapter->id, $teacher, $cid, $output);
                     $structural_element_counter++;
                     $section_map[$section['id']] = $new_section->id;
                     $new_container = $this->createContainer($new_section->id, $teacher, $output);
                     $container_counter++;
-                    foreach($section['children'] as $block) {
+                    foreach ($section['children'] as $block) {
                         $create_new_block = $this->createBlock($block, $new_container, $teacher, $cid, $courseware['ui_block'], $output);
                         $new_block = $create_new_block['new_block'];
-                        if($new_block === null) {
+                        if ($new_block === null) {
                           continue;
                         }
                         $block_counter++;
-                        if($new_block->type->getType() === 'link') {
+                        if ($new_block->type->getType() === 'link') {
                             array_push($new_link_blocks, array('block' => $new_block, 'link_target' => $create_new_block['link_target']));
                         }
                         $user_progresses = \Mooc\DB\UserProgress::findBySQL('block_id = ?', array($block['id']));
-                        foreach($user_progresses as $user_progress) {
+                        foreach ($user_progresses as $user_progress) {
                             $progress = \Courseware\UserProgress::build([
                                 'user_id' => $user_progress['user_id'],
                                 'block_id' => $new_block->id,
@@ -257,15 +266,15 @@ class MigrateCoursewareCommand extends Command
                 }
             }
         }
-        foreach($new_link_blocks as $link_block) {
+        foreach ($new_link_blocks as $link_block) {
             $new_link_block = $link_block['block'];
             $old_target = $link_block['link_target']['id'];
             $payload = json_decode($new_link_block->payload);
             if ($payload->type === 'internal') {
-                if($link_block['link_target']['element'] === 'section') {
+                if ($link_block['link_target']['element'] === 'section') {
                     $payload->target = $section_map[$old_target];
                 }
-                if($link_block['link_target']['element'] === 'subchapter') {
+                if ($link_block['link_target']['element'] === 'subchapter') {
                     $payload->target = $subchapter_map[$old_target];
                 }
                 $new_link_block->payload = json_encode($payload);
@@ -285,19 +294,69 @@ class MigrateCoursewareCommand extends Command
 
     private function createStructuralElement($element, $parent_id, $user, $cid, $output)
     {
-        $element = StructuralElement::build([
+        $structural_element = StructuralElement::build([
             'parent_id' => $parent_id,
             'range_id' => $cid,
             'range_type' => 'course',
             'owner_id' => $user->id,
             'editor_id' => $user->id,
+            'position' => $element['position'],
             'purpose' => 'content',
             'title' => $element['title'],
+            'release_date' => $element['publication_date'] !== null ? $element['publication_date'] : '',
+            'withdraw_date' => $element['withdraw_date'] !== null ? $element['withdraw_date'] : ''
         ]);
 
-        $element->store();
+        if (isset($element['approval'])) {
+            $approval = json_decode($element['approval']);
 
-        return $element;
+            $has_read = false;
+            $read_approval = [];
+            $read_approval['all'] = $approval->settings->defaultRead !== null ? $approval->settings->defaultRead : true;
+            $read_approval['users'] = [];
+            $read_approval['groups'] = [];
+
+            $has_write = false;
+            $write_approval = [];
+            $write_approval['all'] = false;
+            $write_approval['users'] = [];
+            $write_approval['groups'] = [];
+
+            foreach ($approval->users as $user => $permission) {
+                if ($permission === 'read') {
+                    array_push($read_approval['users'], $user);
+                    $has_read = true;
+                }
+                if ($permission === 'write') {
+                    array_push($write_approval['users'], $user);
+                    $has_write = true;
+                }
+            }
+
+            foreach ($approval->groups as $group => $permission) {
+                if ($permission === 'read') {
+                    array_push($read_approval['groups'], $group);
+                    $has_read = true;
+                }
+                if ($permission === 'write') {
+                    array_push($write_approval['groups'], $group);
+                    $has_write = true;
+                }
+            }
+
+            if ($has_read) {
+                $structural_element->read_approval = $read_approval;
+            }
+
+            if ($has_write) {
+                $structural_element->write_approval = $write_approval;
+            }
+
+        }
+
+        $structural_element->store();
+
+        return $structural_element;
     }
     private function createContainer($structural_element_id, $user, $output)
     {
@@ -322,7 +381,7 @@ class MigrateCoursewareCommand extends Command
         $addBlock = false;
         $block_type = '';
         $payload = [];
-        switch($block['type']) {
+        switch ($block['type']) {
             case 'AssortBlock':
                 // we skip this block type
                 break;
@@ -579,12 +638,12 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'InteractiveVideoBlock':
-                $source = json_decode($block['fields']['source']);
+                $source = json_decode($block['fields']['iav_source']);
                 $payload = array(
                     'assignment_id' => $block['fields']['assignment_id'],
-                    'overlays' =>  $block['fields']['iav_overlays'],
-                    'stops' =>  $block['fields']['iav_stops'],
-                    'tests' =>  $block['fields']['iav_tests'],
+                    'overlays' =>  json_decode($block['fields']['iav_overlays']),
+                    'stops' =>  json_decode($block['fields']['iav_stops']),
+                    'tests' =>  json_decode($block['fields']['iav_tests']),
                     'file_id' => $source->file_id,
                     'file_name' => $source->file_name,
                     'external_source' => $source->external,
@@ -717,7 +776,7 @@ class MigrateCoursewareCommand extends Command
                 //skip all exotic blocks
                 break;
         }
-        if($addBlock){
+        if ($addBlock){
             $new_block = Block::build([
                 'container_id' => $container->id,
                 'owner_id' => $user->id,
@@ -726,16 +785,16 @@ class MigrateCoursewareCommand extends Command
                 'position' => $container->countBlocks(),
                 'block_type' => $block_type,
                 'payload' => json_encode($payload),
-                'visible' => 1,
+                'visible' => $block['visible']
             ]);
             $new_block->store();
         } else {
             $new_block = null;
         }
 
-        if($new_block && $block['type'] === 'PostBlock') {
+        if ($new_block && $block['type'] === 'PostBlock') {
             $thread_id = $block['fields']['thread_id'];
-            $posts = \Mooc\DB\Post::findBySQL('thread_id = ? AND post_id > 0', array($thread_id));
+            $posts = \Mooc\DB\Post::findBySQL('thread_id = ? AND seminar_id = ? AND post_id > 0', array($thread_id, $cid));
             foreach($posts as $post) {
                 $block_comment = \Courseware\BlockComment::build([
                     'block_id' => $new_block->id,
@@ -748,9 +807,9 @@ class MigrateCoursewareCommand extends Command
             }
         }
 
-        if($new_block && $block['type'] === 'AudioGalleryBlock') {
+        if ($new_block && $block['type'] === 'AudioGalleryBlock') {
             $recordings = \Mooc\DB\Field::findBySQL('block_id = ? AND name = ?', array($block['id'], "audio_gallery_user_recording"));
-            foreach($recordings as $record) {
+            foreach ($recordings as $record) {
                 $data = json_decode($record['json_data']);
                 $recording_user = \User::find($data->user_id);
                 $file_ref = \FileRef::find($data->file_ref_id);
@@ -760,7 +819,7 @@ class MigrateCoursewareCommand extends Command
                         $audioGalleryFolder,
                         $recording_user
                     );
-                    if(!is_object($record_file)) {
+                    if (!is_object($record_file)) {
                         continue;
                     }
                     $record_file_ref = $record_file->getFileRef();
@@ -770,18 +829,18 @@ class MigrateCoursewareCommand extends Command
 
             }
         }
-        if($new_block && $block['type'] === 'CanvasBlock') {
+        if ($new_block && $block['type'] === 'CanvasBlock') {
             $drawings = \Mooc\DB\Field::findBySQL('block_id = ? AND name = ?', array($block['id'], "canvas_draw"));
-            foreach($drawings as $draw) {
+            foreach ($drawings as $draw) {
                 $data = json_decode($draw['json_data']);
                 $canvas_draw = json_decode($data);
                 $clickX = json_decode($canvas_draw->clickX);
-                foreach($clickX as &$cx) {
+                foreach ($clickX as &$cx) {
                     $cx = intval($cx * 1.26);
                 }
                 $canvas_draw->clickX = json_encode($clickX);
                 $clickY = json_decode($canvas_draw->clickY);
-                foreach($clickY as &$cy) {
+                foreach ($clickY as &$cy) {
                     $cy = intval($cy * 1.26);
                 }
                 $canvas_draw->clickY = json_encode($clickY);
@@ -798,7 +857,7 @@ class MigrateCoursewareCommand extends Command
         }
 
         $link_target = [];
-        if($new_block && $block['type'] === 'LinkBlock') {
+        if ($new_block && $block['type'] === 'LinkBlock') {
             $target = $block['fields']['link_target'];
             $id = null;
 
@@ -852,6 +911,7 @@ class MigrateCoursewareCommand extends Command
     private function convertCoursewareDate($date)
     {
         $new_date = date_create_from_format('Y-m-d H:i:s', $date);
+
         return date_timestamp_get($new_date);
     }
 }
