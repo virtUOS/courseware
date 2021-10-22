@@ -32,6 +32,9 @@ class MigrateCoursewareCommand extends Command
 
         $successStyle = new OutputFormatterStyle('green', 'default', ['bold']);
         $output->getFormatter()->setStyle('success', $successStyle);
+      
+        $errorStyle = new OutputFormatterStyle('red', 'default', ['bold']);
+        $output->getFormatter()->setStyle('error', $errorStyle);
 
         $skipedStyle = new OutputFormatterStyle('green', 'default', []);
         $output->getFormatter()->setStyle('skiped', $skipedStyle);
@@ -193,6 +196,14 @@ class MigrateCoursewareCommand extends Command
         $output->write('creating Courseware for: ' . $course->name . '(' . $course->id . ')' . '... ');
         $courseTeacher = $course->getMembersWithStatus('dozent')[0];
         $teacher = \User::find($courseTeacher->user_id);
+      
+        if ($teacher === null) {
+            $output->write('<error>');
+            $output->write('lecturer could not be found. Skipping Course!');
+            $output->writeln('</error>');
+
+            return false;
+        }
 
         $root = StructuralElement::getCoursewareCourse($cid);
 
