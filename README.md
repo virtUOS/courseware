@@ -9,6 +9,11 @@ Entwicklung
 In der [developer documentation](docs/development.md) wird beschrieben wie man 
 das Courseware Plugin erstellt nachdem Teile des Quellcode verändert wurden.
 
+Weiter-Entwicklung
+------------------
+Seit der Veröffentlichung von Stud.IP 5 mit integrierter Courseware erhält dieses Plugin **keine weiteren Features**.
+Bugs werden zeitnahe gefixt und es wird entsprechende Releases geben.
+
 
 Anforderungen
 ------------
