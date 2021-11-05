@@ -5,7 +5,7 @@
                 <div class="modal alert" role="dialog">
                     <header class="modal-header">
                         <slot name="header">
-                            {{ $t('message.deleteDialogTitle', [this.title]) }}
+                            {{ $t('message.deleteDialogTitle', [title]) }}
                             <span class="modal-close-button" @click="close"></span>
                         </slot>
                     </header>
