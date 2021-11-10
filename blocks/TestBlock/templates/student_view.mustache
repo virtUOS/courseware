@@ -28,9 +28,6 @@
                                     {{#has_solution}}
                                         {{#tryagain}}{{#tries_left}}
                                             <div class="messagebox messagebox_error">{{#i18n}}Ihr Lösungsversuch war noch nicht korrekt. Versuchen Sie es bitte nochmal. {{#tries_left}}Sie haben noch {{tries_left}} Versuch{{#tries_pl}}e{{/tries_pl}}.{{/tries_left}}{{/i18n}}</div>
-                                            {{#corrector_comment}}
-                                                <div class="messagebox messagebox_info answerinfo exercise-corrector-comment">{{{corrector_comment}}}</div>
-                                            {{/corrector_comment}}
                                         {{/tries_left}}{{/tryagain}}
                                         {{#correct}}
                                             {{^tb_exercise}}<div class="messagebox messagebox_success">{{#i18n}}Ihre Lösung ist korrekt!{{/i18n}}</div>{{/tb_exercise}}
@@ -42,9 +39,6 @@
                                         {{^correct}}
                                             {{^tries_left}}
                                                 <div class="messagebox messagebox_error">{{#i18n}}Ihre Lösung ist nicht korrekt!{{/i18n}}</div>
-                                                {{#corrector_comment}}
-                                                    <div class="messagebox messagebox_info answerinfo exercise-corrector-comment">{{{corrector_comment}}}</div>
-                                                {{/corrector_comment}}
                                             {{/tries_left}}
                                         {{/correct}}
                                     {{/has_solution}}
@@ -77,14 +71,12 @@
                                         {{#is_corrected}}
                                             <div class="messagebox messagebox_info">{{#i18n}}Diese Aufgabe wurde bereits korrigiert.{{/i18n}}</div>
                                             {{> _solution}}
-                                            {{#corrector_comment}}
-                                                <div class="cw-testblock-corrector-comment-corrected"><h4>{{#i18n}}Anmerkung zur Lösung{{/i18n}}:</h4>{{corrector_comment}}</div>
-                                            {{/corrector_comment}}
                                         {{/is_corrected}}
                                     {{/self_test}}
                                 {{/show_solution}}
                                 {{#show_solution}}
                                     {{> _solution}}
+                                    {{> _corrector_comment}}
                                     {{#self_test}}
                                         {{#reset_allowed}}
                                             {{> _reset_exercise}}
@@ -121,6 +113,7 @@
                                 <div class="cw-test-content">
                                     {{#is_corrected}}
                                         {{> _solution}}
+                                        {{> _corrector_comment}}
                                     {{/is_corrected}}
                                     {{^is_corrected}}
                                         <div class="messagebox messagebox_info">{{#i18n}}Diese Aufgabe wurde noch nicht korrigiert.{{/i18n}}</div>
@@ -154,7 +147,7 @@
 {{/inactive}}
 {{#inactive}}
     <div class="messagebox messagebox_info">
-        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschloßen haben.{{/i18n}}
+        {{#i18n}}Dieser Block steht Ihnen erst zur Verfügung, sobald Sie die vorhergehenden Abschnitte erfolgreich abgeschlossen haben.{{/i18n}}
     </div>
 {{/inactive}}
 

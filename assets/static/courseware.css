@@ -2314,6 +2314,18 @@ button.cw-reset-progress-button:hover {
 #courseware-news .cw-news-list-blocks .cw-news-item-block .messagebox {
   display: none;
 }
+#courseware-settings label {
+  font-weight: 700;
+}
+#courseware-settings label dfn {
+  display: block;
+  max-width: 48em;
+  font-weight: 400;
+}
+#courseware-settings label.cw-settings-label-vips-tries input {
+  display: inline-block;
+  margin-right: 1em;
+}
 .btn-base {
   width: 20px;
   height: 20px;
@@ -4648,8 +4660,8 @@ section#courseware.view-author .aside-section section.block.block-is-assorted:ho
 }
 /* END author mode*/
 /* all tabs */
-.AssortBlock .ui-tabs {
-  border: thin solid #eaeaea;
+.AssortBlock .ui-tabs.ui-widget-content {
+  border: thin solid #d0d7e3;
 }
 .AssortBlock .ui-tabs .ui-state-active,
 .AssortBlock .ui-tabs .ui-state-default {
@@ -4663,14 +4675,17 @@ section#courseware.view-author .aside-section section.block.block-is-assorted:ho
   cursor: pointer !important;
 }
 .AssortBlock .ui-tabs .ui-state-default {
-  background-color: #e9e9e9;
-}
-.AssortBlock .ui-tabs .ui-state-active {
   background-color: #fff;
 }
+.AssortBlock .ui-tabs .ui-tabs-nav li.ui-state-active {
+  background-color: #fff;
+}
+.AssortBlock .ui-tabs .ui-tabs-nav li.ui-state-active a {
+  color: #000;
+}
 .AssortBlock .ui-tabs .ui-widget-header {
-  border: none;
-  background-color: #e9e9e9;
+  border-bottom: solid thin #d0d7e3;
+  background-color: #fff;
 }
 /* END all tabs*/
 /* vertical tabs */
@@ -4715,13 +4730,14 @@ section#courseware.view-author .aside-section section.block.block-is-assorted:ho
 /* END normal tabs*/
 /* accordion */
 .AssortBlock .assortblock-content.ui-accordion {
-  border: solid thin #ccc;
+  border: solid thin #d0d7e3;
 }
 .AssortBlock .ui-accordion-header {
-  background-color: #eee;
+  background-color: #e7ebf1;
   border: none !important;
-  border-bottom: solid thin #ccc !important;
+  border-bottom: solid thin #d0d7e3 !important;
   padding: 1em 1em 1em 6px !important;
+  font-weight: 600;
   color: #28497c;
 }
 .AssortBlock .ui-accordion-header span.ui-icon {
@@ -4729,9 +4745,6 @@ section#courseware.view-author .aside-section section.block.block-is-assorted:ho
 }
 .AssortBlock .ui-accordion-header.ui-accordion-header-collapsed:last-of-type {
   border-bottom: none !important;
-}
-.AssortBlock .ui-accordion-header.ui-accordion-header-active {
-  font-weight: 600;
 }
 .AssortBlock .ui-accordion-content {
   padding: 1em !important;
@@ -4779,8 +4792,8 @@ section#courseware.view-author .aside-section section.block.block-is-assorted:ho
   position: relative;
   margin: 0;
   text-align: center;
-  border: solid thin #ccc;
-  background-color: #fcfcfc;
+  border: solid thin #d0d7e3;
+  background-color: #e7ebf1;
   border-bottom: none;
 }
 .cw-audio-container {
@@ -5200,8 +5213,8 @@ section.BlubberBlock input[type=submit] {
   position: relative;
   margin: 0;
   text-align: center;
-  border: solid thin #ccc;
-  background-color: #fcfcfc;
+  border: solid thin #d0d7e3;
+  background-color: #e7ebf1;
   border-bottom: none;
 }
 .CanvasBlock .cw-canvasblock-toolbar {
@@ -5475,8 +5488,24 @@ section#courseware .block-content:not([data-view="student"]) input.cw-code-file-
   border: none;
   padding: 1em 0;
 }
-section.ConfirmBlock span.confirm-title {
-  line-height: 3em;
+.cw-confirm-wrapper {
+  border: solid thin #d0d7e3;
+  padding: 1em;
+}
+.cw-confirm-wrapper .cw-confirm-messagebox {
+  margin-bottom: 1em;
+}
+.cw-confirm-wrapper .cw-confirm-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.cw-confirm-wrapper .cw-confirm-content .cw-confirm-checkbox {
+  margin-right: 2em;
+}
+.cw-confirm-wrapper .cw-confirm-content .confirm-title {
+  margin: 0;
 }
 .btn-base {
   width: 20px;
@@ -5903,8 +5932,8 @@ section.DiscussionBlock .contentbox article.thread.open .comment-writer {
   position: relative;
   margin: 0;
   text-align: center;
-  border: solid thin #ccc;
-  background-color: #fcfcfc;
+  border: solid thin #d0d7e3;
+  background-color: #e7ebf1;
   border-bottom: none;
 }
 .cw-download-file {
@@ -6027,8 +6056,8 @@ section.DiscussionBlock .contentbox article.thread.open .comment-writer {
   position: relative;
   margin: 0;
   text-align: center;
-  border: solid thin #ccc;
-  background-color: #fcfcfc;
+  border: solid thin #d0d7e3;
+  background-color: #e7ebf1;
 }
 .EmbedBlock .cw-embedblock-iframe {
   width: 870px !important;
@@ -6119,8 +6148,8 @@ section#courseware.view-author .EmbedBlock .cw-embedblock-image.full-width {
   position: relative;
   margin: 0;
   text-align: center;
-  border: solid thin #ccc;
-  background-color: #fcfcfc;
+  border: solid thin #d0d7e3;
+  background-color: #e7ebf1;
   border-bottom: none;
   margin-bottom: 0;
 }
@@ -6653,8 +6682,8 @@ section.HtmlBlock div.content:after {
   position: relative;
   margin: 0;
   text-align: center;
-  border: solid thin #ccc;
-  background-color: #fcfcfc;
+  border: solid thin #d0d7e3;
+  background-color: #e7ebf1;
   border-bottom: none;
 }
 .content iframe {
@@ -8917,8 +8946,8 @@ section#courseware .block-content:not([data-view="student"]) input.cw-link-targe
   position: relative;
   margin: 0;
   text-align: center;
-  border: solid thin #ccc;
-  background-color: #fcfcfc;
+  border: solid thin #d0d7e3;
+  background-color: #e7ebf1;
   margin: 0 -2px 0 0;
   border-bottom: none;
 }
@@ -9005,8 +9034,8 @@ section#courseware .PostBlock .cw-postblock-header {
   position: relative;
   margin: 0;
   text-align: center;
-  border: solid thin #ccc;
-  background-color: #fcfcfc;
+  border: solid thin #d0d7e3;
+  background-color: #e7ebf1;
 }
 section#courseware .PostBlock .cw-postblock-posts {
   margin-bottom: 1em;
@@ -9394,8 +9423,8 @@ section#courseware.scrollyware section.block.ScrollyBlock ul .cw-scrolly-blocks 
   position: relative;
   margin: 0;
   text-align: center;
-  border: solid thin #ccc;
-  background-color: #fcfcfc;
+  border: solid thin #d0d7e3;
+  background-color: #e7ebf1;
 }
 .cw-search-input-search {
   width: 100%;
@@ -11942,8 +11971,8 @@ ul.exercise .exercisetitle {
   position: relative;
   margin: 0;
   text-align: center;
-  border: solid thin #ccc;
-  background-color: #fcfcfc;
+  border: solid thin #d0d7e3;
+  background-color: #e7ebf1;
   text-transform: uppercase;
   border: none;
   border-bottom: solid thin #ccc;
@@ -12063,9 +12092,9 @@ ul.exercise .cw-test-content span.correct_item,
 ul.exercise .cw-test-content .studip_input_wrapper.correct_item {
   background-color: lightgreen;
 }
-ul.exercise .cw-test-content .cw-testblock-corrector-comment-corrected {
-  background-color: #eee;
-  padding: 1em;
+ul.exercise .cw-test-content .cw-testblock-corrector-comment {
+  background-color: #f5f5f5;
+  padding: 0.25em 1em;
 }
 ul.exercise > li:after {
   content: '';
@@ -12440,8 +12469,8 @@ section#courseware .block-content:not([data-view="student"]) label.cw-video-time
   position: relative;
   margin: 0;
   text-align: center;
-  border: solid thin #ccc;
-  background-color: #fcfcfc;
+  border: solid thin #d0d7e3;
+  background-color: #e7ebf1;
 }
 /* sidebar special */
 .cw-sidebar .video-header {

@@ -71,9 +71,17 @@ class InteractiveVideoBlock extends Block
                             if ($try_counter == 0) {
                                 $has_solution = false;
                             }
+                            $tb_exercise = false;
+
                         } else {
                             $tries_left = false;
                             $no_more_tries = false;
+                        }
+
+                        if ($exercise->type == "tb_exercise") {
+                            $tb_exercise = true;
+                            $tries_left = false;
+                            $correct = true;
                         }
 
                         $rendered_solution = '';
@@ -82,6 +90,7 @@ class InteractiveVideoBlock extends Block
                         }
 
                         $exercises[] = array(
+                            'tb_exercise'           => $tb_exercise,
                             'question'              => $exercise->getSolveTemplate($solution, $selected_assignment, $user->id)->render(),
                             'question_description'  => formatReady($exercise->description),
                             'title'                 => $exercise->title,
@@ -96,12 +105,16 @@ class InteractiveVideoBlock extends Block
                     }
                 }
             }
+            if ($GLOBALS['perm']->have_studip_perm('user', $this->_model->course->id, $user->id) &&
+                !$GLOBALS['perm']->have_studip_perm('tutor', $this->_model->course->id, $user->id)) {
+                $selected_assignment->recordAssignmentAttempt($user->id);
+            }
         }
         if ($this->iav_source != '') {
             $iav_source = json_decode($this->iav_source, true);
             if (!$iav_source['external']) {
                 $file = \FileRef::find($iav_source['file_id']);
-                if ($file) { 
+                if ($file) {
                     $iav_url = $this->isFileDownloadable($file) ? $this->getFileURL($file) : '';
                 } else {
                     $iav_url = '';
@@ -386,7 +399,7 @@ class InteractiveVideoBlock extends Block
                 'description' => $file_ref->description,
                 'filename' => $file->name,
                 'filesize' => $file->size,
-                'url' => $this->getFileURL($file_ref),
+                'url' => $this->isFileAnURL($file_ref),
                 'path' => $file->getPath()
             ));
         }

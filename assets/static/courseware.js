@@ -44366,7 +44366,7 @@ function clearHash(el) {
   makeBlob: function makeBlob() {
     var $view = this;
     var control = $view.$('.cw-audio-gallery-content-slide-control')[0];
-    this.blob = new Blob($view.chunks, { type: 'audio/ogg' });
+    this.blob = new Blob($view.chunks, { type: 'audio/mpeg' });
     var url = URL.createObjectURL(this.blob),
         audio = document.createElement('audio');
     audio.controls = true;
@@ -104309,7 +104309,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
         content = JSON.parse(content);
         if (content.type == 'countdown') {
-            this.countdown(new Date(content.date + " " + content.time).getTime());
+            this.countdown(new Date(content.date + "T" + content.time).getTime());
             $view.$('.cw-date-countdown').show();
         }
         if (content.type == 'date') {
@@ -104526,7 +104526,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }, 1000);
     },
     date: function date(date, time) {
-        var date = new Date(date + ' ' + time);
+        var date = new Date(date + 'T' + time);
         this.$('.cw-date-date-digits[data-date="date"] .cw-date-date-number').html(("0" + date.getDate()).slice(-2) + '.' + ("0" + (date.getMonth() + 1)).slice(-2) + '.' + date.getFullYear());
         this.$('.cw-date-date-digits[data-date="time"] .cw-date-date-number').html(("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2));
     }
@@ -108262,7 +108262,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         jQuery(this).removeClass('hover');
                     },
                     receive: function receive(event, ui) {
-                        var sortable = jQuery(this);
+                        var sortable = jQuery(this).not('.multiple');
                         var container = sortable.closest('tbody').find('.answer_container');
 
                         // default answer container can have more items
@@ -108274,6 +108274,40 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                 }
                             });
                         }
+                    }
+                });
+                this.$('.cloze_item').draggable({
+                    revert: 'invalid'
+                });
+
+                this.$('.cloze_drop').droppable({
+                    accept: '.cloze_item',
+                    tolerance: 'pointer',
+                    classes: {
+                        'ui-droppable-hover': 'hover'
+                    },
+                    drop: function drop(event, ui) {
+                        var container = jQuery(this).closest('fieldset').find('.cloze_items');
+
+                        if (!jQuery(this).is(container)) {
+                            jQuery(this).find('.cloze_item').detach().appendTo(container).css('opacity', 0).animate({ opacity: 1 });
+                        }
+
+                        ui.draggable.closest('.cloze_drop').find('input').val('');
+                        ui.draggable.detach().css({ top: 0, left: 0 }).appendTo(this);
+                        jQuery(this).find('input').val(ui.draggable.text());
+                    }
+                });
+
+                __WEBPACK_IMPORTED_MODULE_0_jquery___default()('.vips_tabs').each(function () {
+                    if (__WEBPACK_IMPORTED_MODULE_0_jquery___default()(this).hasClass('edit-hidden')) {
+                        jQuery(this).tabs({
+                            active: 1
+                        });
+                    } else {
+                        jQuery(this).tabs({
+                            active: 0
+                        });
                     }
                 });
             } else {
@@ -108459,6 +108493,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             if (interaction) {
                 $player.prop('currentTime', interactionevents[0].moment);
+                $range.slider('value', interactionevents[0].moment);
                 try {
                     $range.slider('disable');
                 } catch (err) {}
@@ -108542,6 +108577,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
             $view.$('.stop-json').val(JSON.stringify(stop_json));
         }
+        $view.$('.cw-iav-stop-content').fadeOut(0);
+        $view.$('.cw-iav-test-content').fadeOut(0);
     },
     continueVideo: function continueVideo(event) {
         var $view = this,

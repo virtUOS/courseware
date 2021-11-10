@@ -53,7 +53,7 @@ class VideoBlock extends Block
                         }
                     }
                 }
-                
+
                 $array['webvideo_set'] = true;
             }
 
@@ -107,7 +107,7 @@ class VideoBlock extends Block
         return $this->array_rep();
     }
 
-    private function store_recording($video) 
+    private function store_recording($video)
     {
         global $user;
 
@@ -245,7 +245,7 @@ class VideoBlock extends Block
         if ($array['webvideo'] != '') {
             $array['webvideo'] = json_decode($array['webvideo'], true);
         }
-        
+
         return $array;
     }
 

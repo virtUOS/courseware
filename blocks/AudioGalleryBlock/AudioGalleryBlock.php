@@ -39,7 +39,7 @@ class AudioGalleryBlock extends Block
         $this->authorizeUpdate();
 
         return array_merge(
-            $this->getAttrArray(), 
+            $this->getAttrArray(),
             array()
         );
     }
@@ -92,7 +92,7 @@ class AudioGalleryBlock extends Block
         return array('user_record' => $user_record, 'audio_records' => $audio_records);
     }
 
-    public function store_recording_handler(array $data) 
+    public function store_recording_handler(array $data)
     {
         global $user;
         $audio = $data['audio_file'];
@@ -103,7 +103,7 @@ class AudioGalleryBlock extends Block
         $filename = 'Courseware-Aufnahme-'.date("d.m.Y-H:i", time()).'.mp3';
         file_put_contents($tempDir.'/'.$filename, base64_decode($audio));
         // get personal root folder
-        
+
         $root_folder = \Folder::findTopFolder($user->id);
         $parent_folder = \FileManager::getTypedFolder($root_folder->id);
         $subfolders = $parent_folder->getSubfolders();
@@ -122,9 +122,9 @@ class AudioGalleryBlock extends Block
             $new_folder->user_id = $user->id;
             $cw_folder = $parent_folder->createSubfolder($new_folder);
         }
-        
+
         $folder = \FileManager::getTypedFolder($cw_folder->id);
-        
+
         // create studip file
         $audio_file = [
                 'name'                      => $filename,
@@ -149,13 +149,13 @@ class AudioGalleryBlock extends Block
         $this->setGrade(1.0);
     }
 
-    public function delete_record_handler(array $data) 
+    public function delete_record_handler(array $data)
     {
         $uid = $data['uid'];
 
         if (($this->container['current_user']->id != $uid)&&(!$this->container['current_user']->canUpdate($this))) {
             throw new \InvalidArgumentException(_cw("Sie sind nicht berechtigt diese Aufnahme zu löschen."));
-        } else { 
+        } else {
             $field = Field::findOneBySQL('block_id = ? AND user_id = ?AND name = ?', array($this->id, $uid, 'audio_gallery_user_recording'));
             if ($field->delete()) {
                 $this->setGrade(0.0);

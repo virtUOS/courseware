@@ -808,11 +808,12 @@ class BlockManagerController extends CoursewareStudipController
     private function updateListValue(&$list, $old_id, $new_id)
     {
         reset($list);
-        $el = key($list);
-        foreach($list[$el] as $key => $value) {
-            if ($value == $old_id) {
-                $list[$el][$key] = $new_id;
-                return true;
+        foreach($list as $el => $arr) {
+            foreach($list[$el] as $key => $value) {
+                if ($value == $old_id) {
+                    $list[$el][$key] = $new_id;
+                    return true;
+                }
             }
         }
         $this->errors[] = _cw('Sortierung ist fehlgeschlagen');
