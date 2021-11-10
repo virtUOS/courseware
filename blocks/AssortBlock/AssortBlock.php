@@ -181,7 +181,7 @@ class AssortBlock extends Block
     {
         if (isset($properties['assortblocks'])) {
             $model = $this->getModel();
-            $assortblocks = json_decode($properties['assortblocks']);
+            $assortblocks = json_decode($properties['assortblocks'], true);
             $size = count($assortblocks);
             foreach ($assortblocks as $i => $block) {
                 if($model->previousSibling()) {
@@ -204,7 +204,7 @@ class AssortBlock extends Block
 
                 if (!$blockfound) {unset($assortblocks[$i]);}
             }
-            $this->assortblocks = json_encode($assortblocks);
+            $this->assortblocks = json_encode($assortblocks, true);
         }
         if (isset($properties['assorttype'])) {
             $this->assorttype = $properties['assorttype'];

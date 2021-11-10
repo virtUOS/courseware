@@ -136,31 +136,37 @@ export default StudentView.extend({
         });
     },
 
-    fitTextToShape(context, text, shape_width) {
-        let text_width = context.measureText(text).width;
-        if (text_width > shape_width) {
-            text = text.split(' ');
-            let line = "";
-            let word = " ";
-            let new_text = [];
-            do{
-                word = text.shift();
-                if (context.measureText(word).width >= shape_width) {
-                    return [''];
-                }
-                line = line + word + " ";
-                if (context.measureText(line).width > shape_width) {
-                    text.unshift(word);
-                    line = line.substring(0, line.lastIndexOf(word));
-                    new_text.push(line.trim());
-                    line = "";
-                }
-            } while (text.length > 0)
-            new_text.push(line.trim());
-            return new_text;
-        } else {
+    fitTextToShape(context, text, shapeWidth) {
+        shapeWidth = shapeWidth || 0;
+
+        let newText = [];
+        
+        if (shapeWidth <= 0) {
             return [text];
         }
+        let words = text.split(' ');
+        let i = 1;
+        while (words.length > 0 && i <= words.length) {
+            let word = words.slice(0, i).join(' ');
+            let wordWidth = context.measureText(word).width + 2;
+            if ( wordWidth > shapeWidth ) {
+                if (i === 1) {
+                    i = 2;
+                }
+                newText.push(words.slice(0, i - 1).join(' '));
+                words = words.splice(i - 1);
+                i = 1;
+            }
+            else {
+                i++;
+            }
+        }
+        if (i > 0) {
+            newText.push(words.join(' '));
+        }
+
+        return newText;
+
     },
 
     mapImage() {
