@@ -76,11 +76,7 @@ export default AuthorView.extend({
             if (($embed_time.start >= $embed_time.end) || (this.$('.cw-embedblock-time-end-check').prop( "checked" ) == false)){
                 $embed_time.end = '';
             }
-            if (!$embed_time.start) {
-                $embed_time = '';
-            } else {
-                $embed_time = JSON.stringify($embed_time);
-            }
+            $embed_time = JSON.stringify($embed_time);
         } else {
             $embed_time = null;
         }
