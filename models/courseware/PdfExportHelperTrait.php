@@ -14,7 +14,11 @@ trait PdfExportHelperTrait
             $color,
             $icon
         );
-        $iconSvg = file_get_contents($iconFilename);
+
+        $iconSvg = @file_get_contents($iconFilename);
+        if (!$iconSvg) {
+            return false;
+        }
         $image = SVG::fromString($iconSvg);
         $rasterImage = $image->toRasterImage($size, $size, "white");
 
