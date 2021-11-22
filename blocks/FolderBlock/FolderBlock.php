@@ -343,6 +343,23 @@ class FolderBlock extends Block
         );
     }
 
+    public function pdfexport_view()
+    {
+        $data = $this->student_view();
+        if ($data['folder_id']) {
+            $folder = \Folder::find($data['folder_id']);
+            $data['folder_link'] = \URLHelper::getLink(
+                'dispatch.php/' . $folder->getRangeUrl(),
+                ['cid' => $folder->range_id],
+                true
+            );
+        } else {
+            $data['folder_link'] = null;
+        }
+
+        return $data;
+    }
+
     public function getHtmlExportData()
     {
         $folder_content = json_decode($this->folder_content);

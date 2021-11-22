@@ -64,6 +64,7 @@ class BlockManagerController extends CoursewareStudipController
         $this->courseware_export_url = PluginEngine::getURL('courseware/export', compact('cid'), true);
         $this->courseware_import_url = PluginEngine::getURL('courseware/import', compact('cid'), true);
         $this->courseware_export_html_url = PluginEngine::getURL('courseware/cwp_export', compact('cid'), true);
+        $this->courseware_export_pdf_url = PluginEngine::getURL('courseware/pdf_export', compact('cid'), true);
     }
 
     public function get_courseware_action()

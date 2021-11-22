@@ -59,7 +59,7 @@ class DownloadBlock extends Block
             return array('inactive' => true);
         }
         $folder_id = $this->folder_id;
-        
+
         $this->authorizeUpdate();
         $allfiles = $this->showFiles($folder_id);
         $folders =  \Folder::findBySQL('range_id = ? AND folder_type NOT IN (?)', array($this->container['cid'], array('RootFolder', 'HomeworkFolder', 'HiddenFolder')));
@@ -167,6 +167,16 @@ class DownloadBlock extends Block
             'download_success' => $this->download_success,
             'download_grade'=> $this->download_grade
         );
+    }
+
+    public function pdfexport_view()
+    {
+        $data = $this->getAttrArray();
+
+        $fileRef = new \FileRef($this->file_id);
+        $data['url'] = $fileRef ? $fileRef->getDownloadURL() : null;
+
+        return $data;
     }
 
     public function getHtmlExportData()

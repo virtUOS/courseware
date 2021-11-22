@@ -107473,31 +107473,35 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             context.closePath();
         });
     },
-    fitTextToShape: function fitTextToShape(context, text, shape_width) {
-        var text_width = context.measureText(text).width;
-        if (text_width > shape_width) {
-            text = text.split(' ');
-            var line = "";
-            var word = " ";
-            var new_text = [];
-            do {
-                word = text.shift();
-                if (context.measureText(word).width >= shape_width) {
-                    return [''];
-                }
-                line = line + word + " ";
-                if (context.measureText(line).width > shape_width) {
-                    text.unshift(word);
-                    line = line.substring(0, line.lastIndexOf(word));
-                    new_text.push(line.trim());
-                    line = "";
-                }
-            } while (text.length > 0);
-            new_text.push(line.trim());
-            return new_text;
-        } else {
+    fitTextToShape: function fitTextToShape(context, text, shapeWidth) {
+        shapeWidth = shapeWidth || 0;
+
+        var newText = [];
+
+        if (shapeWidth <= 0) {
             return [text];
         }
+        var words = text.split(' ');
+        var i = 1;
+        while (words.length > 0 && i <= words.length) {
+            var word = words.slice(0, i).join(' ');
+            var wordWidth = context.measureText(word).width + 2;
+            if (wordWidth > shapeWidth) {
+                if (i === 1) {
+                    i = 2;
+                }
+                newText.push(words.slice(0, i - 1).join(' '));
+                words = words.splice(i - 1);
+                i = 1;
+            } else {
+                i++;
+            }
+        }
+        if (i > 0) {
+            newText.push(words.join(' '));
+        }
+
+        return newText;
     },
     mapImage: function mapImage() {
         var $img = this.$('.cw-image-from-canvas');
@@ -107747,32 +107751,35 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             context.closePath();
         });
     },
-    fitTextToShape: function fitTextToShape(context, text, shape_width) {
-        var text_width = context.measureText(text).width;
-        if (text_width > shape_width) {
-            text = text.split(' ');
-            var line = "";
-            var word = " ";
-            var new_text = [];
-            do {
-                word = text.shift();
-                if (context.measureText(word).width >= shape_width) {
-                    return ['#error'];
-                }
-                line = line + word + " ";
-                if (context.measureText(line).width > shape_width) {
-                    text.unshift(word);
-                    line = line.substring(0, line.lastIndexOf(word));
-                    new_text.push(line.trim());
-                    line = "";
-                }
-            } while (text.length > 0);
-            new_text.push(line.trim());
+    fitTextToShape: function fitTextToShape(context, text, shapeWidth) {
+        shapeWidth = shapeWidth || 0;
 
-            return new_text;
-        } else {
+        var newText = [];
+
+        if (shapeWidth <= 0) {
             return [text];
         }
+        var words = text.split(' ');
+        var i = 1;
+        while (words.length > 0 && i <= words.length) {
+            var word = words.slice(0, i).join(' ');
+            var wordWidth = context.measureText(word).width + 2;
+            if (wordWidth > shapeWidth) {
+                if (i === 1) {
+                    i = 2;
+                }
+                newText.push(words.slice(0, i - 1).join(' '));
+                words = words.splice(i - 1);
+                i = 1;
+            } else {
+                i++;
+            }
+        }
+        if (i > 0) {
+            newText.push(words.join(' '));
+        }
+
+        return newText;
     },
     hitTest: function hitTest(mouseX, mouseY, shape) {
         if (shape.type == 'arc') {

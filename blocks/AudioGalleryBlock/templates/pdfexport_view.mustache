@@ -1,0 +1,15 @@
+<table cellspacing="4" style="border: 2px solid #ccc">
+  {{#user_record}}
+    <tr>
+      <td>Audiodatei für: „{{user_name}}“</td>
+      <td>{{file_name}}</td>
+    </tr>
+  {{/user_record}}
+  {{#audio_records}}
+    <tr>
+      <td>Audiodatei für „{{user_name}}“</td>
+      <td>{{file_name}}</td>
+    </tr>
+  {{/audio_records}}
+</table>
+<h6>{{#i18n}}Audio-Galerie-Block{{/i18n}}</h6>

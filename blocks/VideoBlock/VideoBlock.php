@@ -239,6 +239,13 @@ class VideoBlock extends Block
         return $this->array_rep();
     }
 
+    public function pdfexport_view()
+    {
+        $data = $this->student_view();
+
+        return $data;
+    }
+
     public function getHtmlExportData()
     {
         $array = $this->array_rep();

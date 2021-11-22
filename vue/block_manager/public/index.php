@@ -13,10 +13,10 @@
             lang: '<?= $lang ?>',
             courseware_export_url: '<?= $courseware_export_url ?>',
             courseware_import_url: '<?= $courseware_import_url ?>',
-            courseware_export_html_url: '<?= $courseware_export_html_url ?>'
+            courseware_export_html_url: '<?= $courseware_export_html_url ?>',
+            courseware_export_pdf_url: '<?= $courseware_export_pdf_url ?>'
         }
     }
 </script>
 <div id="block_mananger_content"></div>
 <!-- built files will be auto injected -->
-

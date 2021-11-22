@@ -365,6 +365,28 @@ class InteractiveVideoBlock extends Block
         return $this->getAttrArray();
     }
 
+    public function pdfexport_view()
+    {
+        $url = '';
+        if ($this->iav_source != '') {
+            $iav_source = json_decode($this->iav_source, true);
+            if (!$iav_source['external']) {
+                $file = \FileRef::find($iav_source['file_id']);
+                if ($file) {
+                    $url = $this->isFileDownloadable($file) ? $this->getFileURL($file) : '';
+                }
+            } else {
+                $url = $iav_source['url'];
+            }
+        }
+
+        $overlays = json_decode($this->iav_overlays, true);
+        $stops = json_decode($this->iav_stops, true);
+        $data = compact('url', 'overlays', 'stops');
+
+        return $data;
+    }
+
     public function getHtmlExportData()
     {
         $source = json_decode($this->iav_source);

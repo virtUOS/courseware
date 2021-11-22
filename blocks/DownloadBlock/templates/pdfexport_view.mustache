@@ -1,0 +1,15 @@
+<table cellspacing="4" style="border: 2px solid #ccc">
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Titel{{/i18n}}</td>
+    <td>{{download_title}}{{^download_title}}–{{/download_title}}</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Dateiname{{/i18n}}</td>
+    <td>{{file}}{{^file}}–{{/file}}</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Download-URL{{/i18n}}</td>
+    <td>{{#url}}<a href="{{url}}">{{url}}</a>{{/url}}{{^url}}–{{/url}}</td>
+  </tr>
+</table>
+<h6>{{#i18n}}Download-Block{{/i18n}}</h6>

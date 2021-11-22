@@ -1,0 +1,33 @@
+<table cellspacing="4"  style="border: 2px solid #ccc">
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Titel{{/i18n}}</td>
+    <td>{{videoTitle}}{{^videoTitle}}–{{/videoTitle}}</td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="font-weight: bold;">{{#i18n}}Videos{{/i18n}}</td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <ul>
+        {{#webvideo}}
+          <li>
+            <dl>
+              <dt>{{#i18n}}Name{{/i18n}}</dt>
+              <dd>{{file_name}}</dd>
+
+              <dt>{{#i18n}}Display-Größe{{/i18n}}</dt>
+              <dd>{{query}}</dd>
+
+              <dt>{{#i18n}}URL{{/i18n}}</dt>
+              <dd>{{src}}</dd>
+            </dl>
+            <br>
+          </li>
+        {{/webvideo}}
+      </ul>
+    </td>
+  </tr>
+</table>
+<h6>{{#i18n}}Video-Block{{/i18n}}</h6>

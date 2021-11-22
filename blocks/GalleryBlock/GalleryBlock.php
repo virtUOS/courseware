@@ -201,6 +201,22 @@ class GalleryBlock extends Block
         return array_merge($this->getAttrArray() , array( 'gallery_folder_name' => $folder_name) );
     }
 
+    public function pdfexport_view()
+    {
+        $files = array_map(
+            function ($file) {
+                if ($fileRef = \FileRef::find($file['id'])) {
+                    $file['img'] = '@' . base64_encode(file_get_contents($fileRef->file->getPath()));
+                }
+
+                return $file;
+            },
+            $this->showFiles($this->gallery_folder_id)
+        );
+
+        return compact('files');
+    }
+
     public function getHtmlExportData()
     {
         //todo map files

@@ -1,0 +1,73 @@
+
+<table cellspacing="4" style="border: 2px solid #ccc">
+  {{#url}}
+  <tr>
+    <td style="width: 30%; font-weight: bold;">{{#i18n}}URL des Videos{{/i18n}}</td>
+    <td style="width: 70%;">{{#url}}<a href="{{url}}">{{url}}</a>{{/url}}{{^url}}–{{/url}}</td>
+  </tr>
+
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Einblendungen{{/i18n}}</td>
+    <td>
+      <ul>
+      {{#overlays}}
+        <li>
+          <dl>
+            <dt>{{#i18n}}Titel{{/i18n}}</dt>
+            <dd>{{title}}</dd>
+
+            <dt>{{#i18n}}Text{{/i18n}}</dt>
+            <dd>{{content}}</dd>
+
+            <dt>{{#i18n}}Start{{/i18n}}</dt>
+            <dd>{{start}}</dd>
+
+            <dt>{{#i18n}}Ende{{/i18n}}</dt>
+            <dd>{{end}}</dd>
+          </dl>
+        </li>
+      {{/overlays}}
+      {{^overlays}}
+        <li>{{#i18n}}keine Einblendungen{{/i18n}}</li>
+      {{/overlays}}
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Haltepunkte{{/i18n}}</td>
+    <td>
+      <ul>
+      {{#stops}}
+        <li>
+          <dl>
+            <dt>{{#i18n}}Titel{{/i18n}}</dt>
+            <dd>{{title}}</dd>
+
+            <dt>{{#i18n}}Text{{/i18n}}</dt>
+            <dd>{{content}}</dd>
+
+            <dt>{{#i18n}}Zeitpunkt{{/i18n}}</dt>
+            <dd>{{moment}}</dd>
+          </dl>
+        </li>
+      {{/stops}}
+      {{^stops}}
+        <li>{{#i18n}}keine Haltepunkte{{/i18n}}</li>
+      {{/stops}}
+      </ul>
+    </td>
+  </tr>
+
+  {{/url}}
+
+  {{^url}}
+    <tr>
+      <td>
+        <p>{{#i18n}}Dieser Block enthält kein Video.{{/i18n}}</p>
+      </td>
+    </tr>
+  {{/url}}
+
+</table>
+<h6>{{#i18n}}Interaktiver-Video-Block{{/i18n}}</h6>

@@ -197,6 +197,72 @@ class HtmlBlock extends Block
         return $files;
     }
 
+    public function pdfexport_view()
+    {
+        $html = preg_replace_callback('/src="([^@].*)"/U', function ($m) {return $this->convertURL($m[1]);}, $this->content);
+
+        return array('text' => $html);
+    }
+
+    protected function convertURL($url)
+    {
+        $domains = [];
+        $host_url_parsed = @parse_url($GLOBALS['ABSOLUTE_URI_STUDIP']);
+        if (isset($GLOBALS['STUDIP_DOMAINS'])) {
+            $domains = $GLOBALS['STUDIP_DOMAINS'];
+        }
+        $domains[] = $host_url_parsed['host'];
+
+        $convurl = $url;
+        $url_elements = @parse_url($url);
+        $url = $url_elements['path'].'?'.$url_elements['query'];
+        if (mb_strpos(implode('#', $domains), $url_elements['host']) !== false) {
+            if (mb_strpos($url, 'dispatch.php/media_proxy?url=') !== false) {
+                $targeturl = urldecode(mb_substr($url, 4));
+                try {
+                    // is file in cache?
+                    if (!$metadata = $this->media_proxy->getMetaData($targeturl)) {
+                        $convurl = $targeturl;
+                    } else {
+                        $convurl = $this->config->getValue('MEDIA_CACHE_PATH') . '/' . md5($targeturl);
+                    }
+                } catch (Exception $e) {
+                    $convurl = '';
+                }
+            } else if (mb_stripos($url, 'dispatch.php/document/download') !== false) {
+                if (preg_match('#([a-f0-9]{32})#', $url, $matches)) {
+                    $file_ref = \FileRef::find($matches[1]);
+                    $folder = $file_ref->folder->getTypedFolder();
+                    if($folder->isFileDownloadable($file_ref->id, $GLOBALS['user']->id)) {
+                        $convurl = $file_ref->file->getPath();
+                    }
+                }
+            } else if (mb_stripos($url, 'download') !== false
+                    || mb_stripos($url, 'sendfile.php') !== false) {
+                //// get file id
+                if (preg_match('#([a-f0-9]{32})#', $url, $matches)) {
+                    $file_ref = \FileRef::find($matches[1]);
+                    $folder = $file_ref->folder->getTypedFolder();
+                    if($folder->isFileDownloadable($file_ref->id, $GLOBALS['user']->id)) {
+                        $convurl = $file_ref->file->getPath();
+                    } else {
+                        $convurl = \Assets::image_path('messagebox/exception.png');
+                    }
+                }
+            }
+        }
+
+        $src = 'src=""';
+        $file_content = @file_get_contents($convurl, false, get_default_http_stream_context($convurl));
+        if ($file_content) {
+            $img_size = @getimagesizefromstring($file_content);
+            if (is_array($img_size) && $img_size[0] > 0) {
+                $src = 'src="@' . base64_encode($file_content) . '"';
+            }
+        }
+        return $src;
+    }
+
     public function getHtmlExportData()
     {
         if (strlen($this->content) === 0) {

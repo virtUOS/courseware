@@ -166,6 +166,19 @@ class DialogCardsBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function pdfexport_view()
+    {
+        $cards = [];
+        foreach (json_decode($this->dialogcards_content, true) as $card) {
+            $cards[] = [
+                'front' => $this->exportSideOfCard($card, 'front'),
+                'back' => $this->exportSideOfCard($card, 'back'),
+            ];
+        }
+
+        return compact('cards');
+    }
+
     public function getHtmlExportData()
     {
         //TODO collect files
@@ -270,5 +283,23 @@ class DialogCardsBlock extends Block
             $this->save();
         }
         return $used_files;
+    }
+
+    private function exportSideOfCard($card, $dir)
+    {
+        $side = [
+            'img' => null,
+            'text' => $card[$dir . '_text']
+        ];
+
+        if ($card[$dir . '_img']) {
+            if ($card[$dir . '_external_file']) {
+                $side['img'] = $card[$dir . '_img'];
+            } elseif ($fileRef = \FileRef::find($card[$dir . '_img_file_id'])) {
+                $side['img'] = '@' . base64_encode(file_get_contents($fileRef->file->getPath()));
+            }
+        }
+
+        return $side;
     }
 }

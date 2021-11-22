@@ -1,0 +1,20 @@
+<table cellspacing="4" style="border: 2px solid #ccc">
+  {{#files}}
+    <tr>
+      <td>
+        {{name}}
+      </td>
+      <td>
+        <img src="{{{img}}}" height="64"/>
+      </td>
+    </tr>
+{{/files}}
+{{^files}}
+  <tr>
+    <td>
+      <p>{{#i18n}}In dem ausgewählten Ordner befinden sich keine Bilder.{{/i18n}}</p>
+    </td>
+  </tr>
+{{/files}}
+</table>
+<h6>{{#i18n}}Galerie-Block{{/i18n}}</h6>

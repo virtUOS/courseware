@@ -248,6 +248,11 @@ class EmbedBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function pdfexport_view()
+    {
+        return $this->getAttrArray();
+    }
+
     public function getHtmlExportData()
     {
         return array_merge($this->getAttrArray(), $this->student_view());

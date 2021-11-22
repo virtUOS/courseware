@@ -1,0 +1,37 @@
+<table cellspacing="4" style="border: 2px solid #ccc">
+  <tr>
+  <td>
+<ol>
+  {{#cards}}
+    <li>
+      {{#i18n}}Karte{{/i18n}}
+      <table cellspacing="4">
+        <tr>
+          <td>
+            <p style="font-style: italic;">{{#i18n}}Vorderseite{{/i18n}}</p>
+            {{#front}}
+              {{#img}}
+                <img src="{{img}}">
+              {{/img}}
+              <p>{{text}}</p>
+            {{/front}}
+          </td>
+
+          <td>
+            <p style="font-style: italic;">{{#i18n}}Rückseite{{/i18n}}</p>
+            {{#back}}
+              {{#img}}
+                <img src="{{img}}">
+              {{/img}}
+              <p>{{text}}</p>
+            {{/back}}
+          </td>
+        </tr>
+      </table>
+    </li>
+  {{/cards}}
+</ol>
+</td>
+</tr>
+</table>
+<h6>{{#i18n}}Lernkarten-Block{{/i18n}}</h6>

@@ -75,6 +75,15 @@ class CodeBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function pdfexport_view()
+    {
+        if ($this->code_content == '') {
+            return array('empty' => true);
+        }
+
+        return $this->getAttrArray();
+    }
+
     public function getHtmlExportData()
     {
         return $this->getAttrArray();
