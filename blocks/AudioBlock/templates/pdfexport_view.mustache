@@ -1,0 +1,20 @@
+<table cellspacing="4" style="border: 2px solid #ccc">
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Beschreibung{{/i18n}}</td>
+    <td>{{audio_description}}{{^audio_description}}–{{/audio_description}}</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}Dateiname{{/i18n}}</td>
+    <td>{{audio_file_name}}{{^audio_file_name}}–{{/audio_file_name}}</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">{{#i18n}}URL der Datei{{/i18n}}</td>
+      <td>
+        {{#audio_file}}
+          <a href="{{audio_file}}">{{audio_file}}</a>
+        {{/audio_file}}
+        {{^audio_file}}–{{/audio_file}}
+      </td>
+  </tr>
+</table>
+<h6>{{#i18n}}Audio-Block{{/i18n}}</h6>

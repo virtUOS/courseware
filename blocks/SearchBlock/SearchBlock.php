@@ -60,6 +60,13 @@ class SearchBlock extends Block
         return $this->getAttrArray();
     }
 
+    public function pdfexport_view()
+    {
+        $data = $this->student_view();
+
+        return $data;
+    }
+
     public function getHtmlExportData()
     {
         return $this->getAttrArray();
@@ -107,7 +114,7 @@ class SearchBlock extends Block
         $answer = array();
         // Blocks
         $stmt = $db->prepare('
-            SELECT 
+            SELECT
                 *
             FROM
                 mooc_fields
@@ -116,17 +123,17 @@ class SearchBlock extends Block
             OR
                 json_data LIKE CONCAT ("%",:request_ansi,"%")
             AND
-                name IN ("webvideo", 
-                         "url", 
-                         "videoTitle", 
-                         "content", 
-                         "title", 
-                         "audio_description", 
+                name IN ("webvideo",
+                         "url",
+                         "videoTitle",
+                         "content",
+                         "title",
+                         "audio_description",
                          "audio_file_name",
-                         "download_title", 
-                         "file", 
-                         "file_name", 
-                         "code_lang", 
+                         "download_title",
+                         "file",
+                         "file_name",
+                         "code_lang",
                          "code_content",
                          "keypoint_content",
                          "gallery_file_names"
@@ -159,7 +166,7 @@ class SearchBlock extends Block
                 }
 
                 if ($item['name'] == 'url') {
-                    // remove opencast part from url 
+                    // remove opencast part from url
                     $url = str_replace( '\/engage\/theodul\/ui\/core.html', '', $item['json_data']);
                     if(!stripos($url, $request_blocks)) {
                         continue;
@@ -167,7 +174,7 @@ class SearchBlock extends Block
                 }
 
                 // get readable name
-                $class_name = 'Mooc\UI\\'.$block->type.'\\'.$block->type; 
+                $class_name = 'Mooc\UI\\'.$block->type.'\\'.$block->type;
                 $name_constant = $class_name.'::NAME';
 
                 if (defined($name_constant)) {
@@ -180,7 +187,7 @@ class SearchBlock extends Block
                 $title = $section->title; // section title
                 $subchapter = (new DBBlock($block->parent->parent->id))->title; //subchapter title
                 $chapter = (new DBBlock($block->parent->parent->parent->id))->title; //chapter title
-                
+
                 if (($title == null) || ($subchapter == null) || ($chapter == null) ) {
                     continue;
                 }
@@ -188,7 +195,7 @@ class SearchBlock extends Block
 
                 $html = "<li>".$chapter." &rarr; ".$subchapter." &rarr; ".$title." &rarr; <a href='".$link."'>".$type."</a></li>";
 
-                if (strpos($title, 'AsideSection') >-1) { 
+                if (strpos($title, 'AsideSection') >-1) {
                     $chapter_id = str_replace('AsideSection for block ', '', $title);
                     $title = "Sidebar";
                     $chapter_block = new DBBlock($chapter_id);
@@ -217,15 +224,15 @@ class SearchBlock extends Block
 
         //Structural Elements
         $stmt = $db->prepare('
-            SELECT 
+            SELECT
                 *
             FROM
                 mooc_blocks
             WHERE
-                title LIKE CONCAT ("%",:request,"%") 
+                title LIKE CONCAT ("%",:request,"%")
             AND
                 type IN ("Chapter" , "Subchapter" , "Section")
-            AND 
+            AND
                 seminar_id = :cid
         ');
         $stmt->bindParam(':request', $request);
@@ -240,7 +247,7 @@ class SearchBlock extends Block
                 continue;
             }
 
-            if (strpos($item['title'], 'AsideSection') >-1) { 
+            if (strpos($item['title'], 'AsideSection') >-1) {
                 continue;
             }
 
@@ -273,13 +280,13 @@ class SearchBlock extends Block
 
         // Threads
         $stmt = $db->prepare('
-            SELECT 
+            SELECT
                 thread_id
             FROM
                 mooc_posts
             WHERE
-                content LIKE CONCAT ("%",:request,"%") 
-            AND 
+                content LIKE CONCAT ("%",:request,"%")
+            AND
                 seminar_id = :cid
             AND
                 hidden = 0
@@ -308,7 +315,7 @@ class SearchBlock extends Block
                     $link = \PluginEngine::getURL('courseware/courseware').'&selected='.$block->parent_id;
                     $html = "<li>".$chapter." &rarr; ".$subchapter." &rarr; ".$title." &rarr; <a href='".$link."'>".$name."</a></li>";
 
-                    if (strpos($title, 'AsideSection') >-1) { 
+                    if (strpos($title, 'AsideSection') >-1) {
                     $chapter_id = str_replace('AsideSection for block ', '', $title);
                     $title = "Sidebar";
                     $chapter_block = new DBBlock($chapter_id);
@@ -332,7 +339,7 @@ class SearchBlock extends Block
                     array_push($answer, array(
                         'html'  =>  $html
                     ));
-                } 
+                }
             }
         }
 
@@ -423,6 +430,6 @@ class SearchBlock extends Block
             "ÿ" => "\\\\u00ff",
         );
 
-        return strtr($string, $ansi_utf8);      
+        return strtr($string, $ansi_utf8);
     }
 }

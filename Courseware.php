@@ -266,6 +266,8 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
     public function perform($unconsumedPath)
     {
+        define("K_TCPDF_CALLS_IN_HTML", true);
+
         if ((!$this->isActivated($this->container['cid']))&& ($_SERVER['REQUEST_METHOD'] === 'GET')) {
             throw new AccessDeniedException('plugin not activated for this course!');
         }

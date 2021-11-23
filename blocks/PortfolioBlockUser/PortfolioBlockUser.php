@@ -66,6 +66,12 @@ class PortfolioBlockUser extends Block
         return array('content' => $content);
     }
 
+    public function pdfexport_view()
+    {
+        // Nothing to do as we cannot export this block in a meaningful way.
+        return array();
+    }
+
     /**
      * Updates the block's contents.
      *

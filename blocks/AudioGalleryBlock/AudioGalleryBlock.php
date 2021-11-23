@@ -182,6 +182,19 @@ class AudioGalleryBlock extends Block
         );
     }
 
+    public function pdfexport_view()
+    {
+        $data = array_merge(
+            $this->getAttrArray(),
+            array(
+                'audio_records' => $this->get_records()['audio_records'],
+                'user_record' => $this->get_records()['user_record'],
+            )
+        );
+
+        return $data;
+    }
+
     public function getHtmlExportData()
     {
         return $this->getAttrArray();

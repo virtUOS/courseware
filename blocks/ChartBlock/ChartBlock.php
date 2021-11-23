@@ -70,6 +70,14 @@ class ChartBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function pdfexport_view()
+    {
+        $array = $this->getAttrArray();
+        $array['chart_content'] = json_decode($array['chart_content']);
+
+        return $array;
+    }
+
     public function getHtmlExportData()
     {
         $array = $this->getAttrArray();

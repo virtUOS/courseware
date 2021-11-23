@@ -79,6 +79,11 @@ class ScrollyBlock extends Block
         );
     }
 
+    public function pdfexport_view()
+    {
+        return array();
+    }
+
     public function getHtmlExportData()
     {
         return $this->getAttrArray();

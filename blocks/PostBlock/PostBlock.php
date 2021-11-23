@@ -148,6 +148,13 @@ class PostBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function pdfexport_view()
+    {
+        $data = $this->student_view();
+
+        return $data;
+    }
+
     public function getHtmlExportData()
     {
         return;

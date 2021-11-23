@@ -197,6 +197,11 @@ class DiscussionBlock extends Block
         return $plugin_info["enabled"];
     }
 
+    public function pdfexport_view()
+    {
+        return array();
+    }
+
     public function getHtmlExportData()
     {
         return;

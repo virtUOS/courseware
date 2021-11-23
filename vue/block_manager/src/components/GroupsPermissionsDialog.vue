@@ -121,7 +121,7 @@ export default {
             list.groups = this.perms;
             axios
                 .post('set_element_approval_list', { bid: bid, list: JSON.stringify(list) })
-                .then(response => {
+                .then(() => {
                     this.$emit('close');
                 })
                 .catch(error => {

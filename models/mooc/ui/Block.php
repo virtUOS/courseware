@@ -696,6 +696,12 @@ abstract class Block {
         }
     }
 
+    public function exportBlockIntoPdf($pdf)
+    {
+        $html = $this->render('pdfexport', compact('pdf'));
+        $pdf->writeHTML('<div class="block">' . $html . '</div>');
+    }
+
     protected function getFileURL($file_ref)
     {
         return $file_ref->getDownloadURL();

@@ -1130,6 +1130,34 @@ button.cw-reset-progress-button:hover {
       -ms-flex-align: start;
           align-items: flex-start;
 }
+#block_manager-index #cw-blockmanager-content .action-menu-item .set-groups {
+  background-image: url("../../../../assets/images/icons/blue/group3.svg");
+  background-image: url("../../../../../assets/images/icons/blue/group3.svg");
+}
+#block_manager-index #cw-blockmanager-content .action-menu-item .set-users {
+  background-image: url("../../../../assets/images/icons/blue/headache.svg");
+  background-image: url("../../../../../assets/images/icons/blue/headache.svg");
+}
+#block_manager-index #cw-blockmanager-content .action-menu-item .edit-element {
+  background-image: url("../../../../assets/images/icons/blue/edit.svg");
+  background-image: url("../../../../../assets/images/icons/blue/edit.svg");
+}
+#block_manager-index #cw-blockmanager-content .action-menu-item .remove-element {
+  background-image: url("../../../../assets/images/icons/blue/trash.svg");
+  background-image: url("../../../../../assets/images/icons/blue/trash.svg");
+}
+#block_manager-index #cw-blockmanager-content .action-menu-item .add-child-element {
+  background-image: url("../../../../assets/images/icons/blue/add.svg");
+  background-image: url("../../../../../assets/images/icons/blue/add.svg");
+}
+#block_manager-index #cw-blockmanager-content .action-menu-item a {
+  padding-left: 32px;
+  background-repeat: no-repeat;
+  background-position-x: left;
+  background-size: 24px;
+  line-height: 34px;
+  background-position-y: 3px;
+}
 #block_manager-index .cw-blockmanager-wrapper {
   border: solid thin #28497c;
   border-top: none;
@@ -1332,12 +1360,14 @@ button.cw-reset-progress-button:hover {
   background-image: url("../../../../../assets/images/icons/white/link-intern.svg");
 }
 #block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-download,
-#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-html-download {
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-html-download,
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-pdf-download {
   background-image: url("../../../../assets/images/icons/blue/download.svg");
   background-image: url("../../../../../assets/images/icons/blue/download.svg");
 }
 #block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-download:hover,
-#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-html-download:hover {
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-html-download:hover,
+#block_manager-index .cw-blockmanager-wrapper ul#cw-action-selection li #cw-export-pdf-download:hover {
   background-image: url("../../../../assets/images/icons/white/download.svg");
   background-image: url("../../../../../assets/images/icons/white/download.svg");
 }
@@ -1917,34 +1947,6 @@ button.cw-reset-progress-button:hover {
   background-size: 32px;
   background-position-y: center;
   padding: 1em 1em 1em 3em;
-}
-#block_manager-index .action-menu-item .set-groups {
-  background-image: url("../../../../assets/images/icons/blue/group3.svg");
-  background-image: url("../../../../../assets/images/icons/blue/group3.svg");
-}
-#block_manager-index .action-menu-item .set-users {
-  background-image: url("../../../../assets/images/icons/blue/headache.svg");
-  background-image: url("../../../../../assets/images/icons/blue/headache.svg");
-}
-#block_manager-index .action-menu-item .edit-element {
-  background-image: url("../../../../assets/images/icons/blue/edit.svg");
-  background-image: url("../../../../../assets/images/icons/blue/edit.svg");
-}
-#block_manager-index .action-menu-item .remove-element {
-  background-image: url("../../../../assets/images/icons/blue/trash.svg");
-  background-image: url("../../../../../assets/images/icons/blue/trash.svg");
-}
-#block_manager-index .action-menu-item .add-child-element {
-  background-image: url("../../../../assets/images/icons/blue/add.svg");
-  background-image: url("../../../../../assets/images/icons/blue/add.svg");
-}
-#block_manager-index .action-menu-item a {
-  padding-left: 32px;
-  background-repeat: no-repeat;
-  background-position-x: left;
-  background-size: 24px;
-  line-height: 34px;
-  background-position-y: 3px;
 }
 #block_manager-index .modal-backdrop {
   position: fixed;
@@ -12509,6 +12511,53 @@ section#courseware button.cw-videoblock-recorder-reset {
 }
 .cw-webvideo-source-file {
   display: none;
+}
+section.PortfolioBlock .controls button.no-sorting {
+  visibility: hidden;
+}
+section.PortfolioBlock textarea {
+  width: 100%;
+  background-color: red;
+}
+section.PortfolioBlock .ePortfolioContent {
+  background-color: #f8f8f8;
+  border: solid thin #ddd;
+  padding: 1em;
+}
+section.PortfolioBlockSupervisor textarea {
+  width: 100%;
+  background-color: red;
+}
+section.PortfolioBlockSupervisor .ePortfolioContent {
+  background-color: #f8f8f8;
+  border: solid thin #ddd;
+  padding: 1em;
+  margin-bottom: 1em;
+  margin-right: 6px;
+}
+section.PortfolioBlockSupervisor .ePortfolioContentSupervisor {
+  background-color: #f8f8f8;
+  border: solid thin #ddd;
+  padding: 1em;
+}
+section.PortfolioBlockUser .controls button.no-sorting {
+  visibility: hidden;
+}
+section.PortfolioBlockUser textarea {
+  width: 100%;
+  background-color: red;
+}
+section.PortfolioBlockUser div.content {
+  background-color: #667788;
+}
+section.PortfolioBlockUser div.content img {
+  max-width: 100%;
+}
+section.PortfolioBlockUser div.content:after {
+  content: ".";
+  display: block;
+  visibility: hidden;
+  clear: both;
 }
 
 /*# sourceMappingURL=courseware.css.map*/

@@ -280,6 +280,38 @@ class ImageMapBlock extends Block
        return $this->getAttrArray();
     }
 
+    public function pdfexport_view()
+    {
+        $img = null;
+        $shapes = [];
+
+        $content = json_decode($this->image_map_content, true);
+        if ($content != null) {
+            $fileRef = \FileRef::find($content['image_id']);
+            if ($fileRef) {
+                $img = [
+                    'url' => $this->getFileURL($fileRef),
+                    'src' => '@' . base64_encode(file_get_contents($fileRef->file->getPath()))
+                ];
+            }
+
+            $shapes = array_map(
+                function ($shape) {
+                    return json_encode($shape);
+                },
+                $content['shapes']
+            );
+            // foreach ($content['shapes'] as $shape) {
+            //     if ($shape['link_type'] == "internal") {
+            //         $shape['target'] = "courseware?cid=" . $this->container['cid'] . "&selected=" .  $this->getTargetId($shape['target'])['id'];
+            //     }
+            //     $shapes[] = $shape;
+            // }
+        }
+
+        return compact('img', 'shapes');
+    }
+
     public function getHtmlExportData()
     {
         $content = json_decode($this->image_map_content);

@@ -200,6 +200,14 @@ class PdfBlock extends Block
         return $files;
     }
 
+    public function pdfexport_view()
+    {
+        $data = $this->student_view();
+        $data["pdf_link"] = \URLHelper::getLink($data["pdf_file"], null, true);
+
+        return $data;
+    }
+
     public function getHtmlExportData()
     {
         $array = $this->getAttrArray();

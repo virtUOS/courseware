@@ -114,6 +114,11 @@ class IFrameBlock extends Block
         return $this->array_rep();
     }
 
+    public function pdfexport_view()
+    {
+        return $this->student_view();
+    }
+
     public function getHtmlExportData()
     {
         $array = $this->array_rep();

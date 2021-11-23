@@ -130,6 +130,17 @@ class BeforeAfterBlock extends Block
         return;
     }
 
+    public function pdfexport_view()
+    {
+        $ba_img_before = $this->prepareImageForPdfExport($this->ba_before);
+        $ba_img_after = $this->prepareImageForPdfExport($this->ba_after);
+
+        return array(
+            'beforeafter_img_before' => $ba_img_before,
+            'beforeafter_img_after' => $ba_img_after,
+        );
+    }
+
     public function getHtmlExportData()
     {
         $before = json_decode($this->ba_before);
@@ -297,5 +308,23 @@ class BeforeAfterBlock extends Block
         }
 
         return $folders;
+    }
+
+    private function prepareImageForPdfExport($field): string
+    {
+        $encodedImage = '';
+        if ($field != '') {
+            $decodedField = json_decode($field);
+            if ($decodedField->source == 'url') {
+                $encodedImage = $decodedField->url;
+            }
+            if ($decodedField->source == 'file') {
+                $fileRef = \FileRef::find($decodedField->file_id);
+                if ($fileRef) {
+                    $encodedImage = '@' . base64_encode(file_get_contents($fileRef->file->getPath()));
+                }
+            }
+        }
+        return $encodedImage;
     }
 }

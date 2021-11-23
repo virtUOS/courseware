@@ -41,6 +41,11 @@ class EvaluationBlock extends Block
         return array();
     }
 
+    public function pdfexport_view()
+    {
+        return array();
+    }
+
     public function getHtmlExportData()
     {
         return array();

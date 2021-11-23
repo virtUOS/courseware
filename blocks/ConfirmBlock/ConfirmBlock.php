@@ -53,6 +53,14 @@ class ConfirmBlock extends Block
         return array();
     }
 
+    public function pdfexport_view()
+    {
+        $data = $this->student_view();
+        $icon = $data['confirmed'] ? 'checkbox-checked' : 'checkbox-unchecked';
+
+        return $data;
+    }
+
     public function getHtmlExportData()
     {
         return ;

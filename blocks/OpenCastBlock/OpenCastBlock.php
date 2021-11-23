@@ -163,6 +163,13 @@ class OpenCastBlock extends Block
         );
     }
 
+    public function pdfexport_view()
+    {
+        $data = $this->preview_view();
+
+        return $data;
+    }
+
     public function getHtmlExportData()
     {
         return;
