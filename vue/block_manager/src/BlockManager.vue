@@ -149,7 +149,7 @@
                     </a>
                 </li>
                 <li>
-                    <a :href="coursewareExportPdfURL">
+                    <a :href="coursewareExportPdfURL" target="_blank">
                         <div id="cw-export-pdf-download" class="cw-action-menu-button" :title="$t('message.exportPdfExplain')">
                             <p>{{ $t('message.exportPdfButton') }}</p>
                         </div>
