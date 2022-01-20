@@ -26,6 +26,14 @@ class CpoController extends CoursewareStudipController
         $members = (new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), 'autor');
         $dids = array_map(function($teacher){return $teacher->user_id;} , $teachers); // dozent ids
         $mids = array_map(function($members){return $members->user_id;} , $members); // member ids
+
+        $this->uid = Request::get('uid');
+        if ($this->uid && $GLOBALS['perm']->have_studip_perm('user', $this->plugin->getCourseId(), $this->uid)) {
+            $mids = [$this->uid];
+        } else {
+            $this->uid = null;
+        }
+
         $blocks = \Mooc\DB\Block::findBySQL('seminar_id = ? ORDER BY id, position', array($this->plugin->getCourseId()));
         $bids   = array_map(function ($block) { return (int) $block->id; }, $blocks); // block ids
         $progress = array_reduce(
@@ -56,6 +64,11 @@ class CpoController extends CoursewareStudipController
             array());
 
         $members_count = count((new \CourseMember())->findByCourseAndStatus(array($this->plugin->getCourseId()), 'autor'));
+
+        if ($this->uid) {
+            $members_count = 1;
+        }
+
         foreach ($progress as &$block) {
             $block['grade'] = $block['grade'] / $block['users'];
             if($block['users'] < $members) {
