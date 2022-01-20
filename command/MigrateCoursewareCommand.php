@@ -672,7 +672,7 @@ class MigrateCoursewareCommand extends Command
                     'file_id' => $source->file_id,
                     'file_name' => $source->file_name,
                     'external_source' => $source->external,
-                    'range_inactive' => block['fields']['range_inactive']
+                    'range_inactive' => $block['fields']['range_inactive']
                 );
                 $block_type = 'interactive-video';
                 $addBlock = true;
