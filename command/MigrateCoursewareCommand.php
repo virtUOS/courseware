@@ -196,6 +196,10 @@ class MigrateCoursewareCommand extends Command
         $output->write('creating Courseware for: ' . $course->name . '(' . $course->id . ')' . '... ');
         $courseTeacher = $course->getMembersWithStatus('dozent')[0];
         $teacher = \User::find($courseTeacher->user_id);
+
+        $structural_element_counter = 0;
+        $container_counter = 0;
+        $block_counter = 0;
       
         if ($teacher === null) {
             $output->write('<error>');
@@ -219,7 +223,13 @@ class MigrateCoursewareCommand extends Command
             ]);
     
             $root->store();
+            $structural_element_counter++;
         }
+
+        $this->fillEmptyPage($root, $teacher, true, $output);
+        $container_counter++;
+        $block_counter++;
+        $block_counter++;
 
         //get courseware settings
         $instance = new Instance($root);
@@ -233,14 +243,18 @@ class MigrateCoursewareCommand extends Command
         $subchapter_map = [];
         $section_map = [];
         $new_link_blocks = [];
-        $structural_element_counter = 0;
-        $container_counter = 0;
-        $block_counter = 0;
+
         foreach ($courseware['children'] as $chapter) {
             $new_chapter = $this->createStructuralElement($chapter, $root->id, $teacher, $cid, $output);
+            $this->fillEmptyPage($new_chapter, $teacher, false, $output);
+            $container_counter++;
+            $block_counter++;
             $structural_element_counter++;
             foreach ($chapter['children'] as $subchapter) {
                 $new_subchapter = $this->createStructuralElement($subchapter, $new_chapter->id, $teacher, $cid, $output);
+                $this->fillEmptyPage($new_subchapter, $teacher, false, $output);
+                $container_counter++;
+                $block_counter++;
                 $structural_element_counter++;
                 $subchapter_map[$subchapter['id']] = $new_subchapter->id;
                 foreach ($subchapter['children'] as $section) {
@@ -917,6 +931,62 @@ class MigrateCoursewareCommand extends Command
         }
 
         return array('new_block' => $new_block, 'link_target' => $link_target);
+    }
+
+    private function fillEmptyPage($structural_element, $user, $headline = true, $output)
+    {
+        // add list container
+        $new_container = $this->createContainer($structural_element->id, $user, $output);
+
+        if ($headline) {
+            // add headline block
+            $payload_headline = array(
+                'title' => $structural_element->title,
+                'subtitle' => '',
+                'style' => 'bigicon_before',
+                'height' => 'half',
+                'background_color' => '#28497c',
+                'background_image_id' => '',
+                'background_type' => 'color',
+                'text_color' => '#ffffff',
+                'icon' => 'learnmodule',
+                'icon_color' => 'white',
+            );
+            $new_headline_block = Block::build([
+                'container_id' => $new_container->id,
+                'owner_id' => $user->id,
+                'editor_id' => $user->id,
+                'edit_blocker_id' => null,
+                'position' => $new_container->countBlocks(),
+                'block_type' => 'headline',
+                'payload' => json_encode($payload_headline),
+                'visible' => true
+            ]);
+            $new_headline_block->store();
+            //add block to container payload
+            $new_container->type->addBlock($new_headline_block);
+            $new_container->store();
+        }
+
+        // add toc block
+        $payload_toc = array(
+            'style' => 'list',
+            'title' => '',
+        );
+        $new_toc_block = Block::build([
+            'container_id' => $new_container->id,
+            'owner_id' => $user->id,
+            'editor_id' => $user->id,
+            'edit_blocker_id' => null,
+            'position' => $new_container->countBlocks(),
+            'block_type' => 'table-of-contents',
+            'payload' => json_encode($payload_toc),
+            'visible' => true
+        ]);
+        $new_toc_block->store();
+        //add block to container payload
+        $new_container->type->addBlock($new_toc_block);
+        $new_container->store();
     }
 
     private function convertCoursewareDate($date)
