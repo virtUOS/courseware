@@ -671,7 +671,7 @@ class MigrateCoursewareCommand extends Command
                     'tests' =>  json_decode($block['fields']['iav_tests']),
                     'file_id' => $source->file_id,
                     'file_name' => $source->file_name,
-                    'external_source' => $source->external,
+                    'source' => $source->external ? 'web' : 'studip',
                     'range_inactive' => $block['fields']['range_inactive']
                 );
                 $block_type = 'interactive-video';
