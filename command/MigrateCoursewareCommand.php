@@ -790,7 +790,7 @@ class MigrateCoursewareCommand extends Command
                     'source' => $source,
                     'file_id' => $file_id,
                     'web_url' => $web_url,
-                    'aspect' => $block['fields']['aspect'],
+                    'aspect' => explode('-', $block['fields']['aspect'])[1],
                     'context_menu' => strpos($block['fields']['webvideosettings'], 'oncontextmenu') > -1 ? 'disabled' : 'enabled',
                     'autoplay' => strpos($block['fields']['webvideosettings'], 'autoplay') > -1 ? 'enabled' : 'disabled'
                 );
