@@ -17,33 +17,30 @@ use Courseware\Instance as Instance;
  * @author Ron Lucke <lucke@elan-ev.de>
  */
 
-class MigrateCoursewareCommand extends Command
+class MigrateCoursewareCommandOld extends Command
 {
     protected function configure()
     {
-        $this->setName('courseware:migrate');
+        $this->setName('courseware:migrate:old');
         $this->setDescription('migrate from courseware plugin data to couseware core');
         $this->addArgument('cid', InputArgument::OPTIONAL, 'Which course should be migrated?');
     }
     public function execute(InputInterface $input, OutputInterface $output)
     {
-
-        $this->output = $output;
-
         $startStyle = new OutputFormatterStyle('yellow', 'default', ['bold']);
-        $this->output->getFormatter()->setStyle('start', $startStyle);
+        $output->getFormatter()->setStyle('start', $startStyle);
 
         $successStyle = new OutputFormatterStyle('green', 'default', ['bold']);
-        $this->output->getFormatter()->setStyle('success', $successStyle);
+        $output->getFormatter()->setStyle('success', $successStyle);
       
         $errorStyle = new OutputFormatterStyle('red', 'default', ['bold']);
-        $this->output->getFormatter()->setStyle('error', $errorStyle);
+        $output->getFormatter()->setStyle('error', $errorStyle);
 
         $skipedStyle = new OutputFormatterStyle('green', 'default', []);
-        $this->output->getFormatter()->setStyle('skiped', $skipedStyle);
+        $output->getFormatter()->setStyle('skiped', $skipedStyle);
 
         $batchInfoStyle = new OutputFormatterStyle('cyan', 'default', []);
-        $this->output->getFormatter()->setStyle('batch-info', $batchInfoStyle);
+        $output->getFormatter()->setStyle('batch-info', $batchInfoStyle);
 
         $this->plugin_courseware = \PluginManager::getInstance()->getPlugin('Courseware');
         \PluginEngine::getPlugin('CoreForum');
@@ -51,47 +48,47 @@ class MigrateCoursewareCommand extends Command
         $arg_cid = $input->getArgument('cid');
 
         if ($arg_cid !== null) {
-            $this->output->writeln('<start>Start single migration ...</start>');
+            $output->writeln('<start>Start single migration ...</start>');
             $courseware =  dbBlock::findOneBySQL('type = ? AND seminar_id = ?', array('Courseware', $arg_cid));
             if ($courseware !== null) {
-                $this->migrateCourse($courseware);
+                $this->migrateCourse($courseware, $output);
             } else {
-                $this->output->writeln('<comment>Could not find Courseware in Course: ' . $arg_cid . '</comment>');
+                $output->writeln('<comment>Could not find Courseware in Course: ' . $arg_cid . '</comment>');
             }
         } else {
             $helper = $this->getHelper('question');
             $question = new ConfirmationQuestion('<question>Are you sure you want to migrate all coursewares at once? (y|n)</question> ', false);
-            if (!$helper->ask($input, $this->output, $question)) {
-                $this->output->writeln('<comment>Migration canceled.</comment>');
-                $this->output->writeln('<info>You can migrate individual courses if you use the course id as an argument.</info>');
+            if (!$helper->ask($input, $output, $question)) {
+                $output->writeln('<comment>Migration canceled.</comment>');
+                $output->writeln('<info>You can migrate individual courses if you use the course id as an argument.</info>');
                 return 0;
             }
-            $this->output->writeln('<start>Start batch migration ...</start>');
+            $output->writeln('<start>Start batch migration ...</start>');
             $coursewares =  dbBlock::findBySQL('type = ?', array('Courseware'));
             $coursewares_count = count($coursewares);
             if ($coursewares_count === 1) {
-                $this->output->writeln('<batch-info>Batch migration for only one Courseware.</batch-info>');
+                $output->writeln('<batch-info>Batch migration for only one Courseware.</batch-info>');
             } else {
-                $this->output->writeln('<batch-info>Batch migration for ' . $coursewares_count . ' Coursewares.</batch-info>');
+                $output->writeln('<batch-info>Batch migration for ' . $coursewares_count . ' Coursewares.</batch-info>');
             }
 
             foreach ($coursewares as $courseware) {
-                $this->migrateCourse($courseware);
+                $this->migrateCourse($courseware, $output);
             }
         }
 
-        $this->output->writeln('<success>Migration complete.</success>');
+        $output->writeln('<success>Migration complete.</success>');
 
         return 0;
     }
 
-    private function migrateCourse($courseware)
+    private function migrateCourse($courseware, $output)
     {
         $cid = $courseware->seminar_id;
         $course = \Course::find($cid);
 
         if (empty($course)) {
-            $this->output->writeln('<skiped>Course (' . $cid . ')' . ' does not exist in database.</skiped>');
+            $output->writeln('<skiped>Course (' . $cid . ')' . ' does not exist in database.</skiped>');
 
             return false;
         }
@@ -102,14 +99,14 @@ class MigrateCoursewareCommand extends Command
 
         $is_migrated = \Mooc\DB\MigrationStatus::findBySQL('seminar_id = ?', array($cid));
         if ($is_migrated) {
-            $this->output->writeln('<skiped>Courseware for ' . $course->name . '(' . $course->id . ')' . ' has already been migrated.</skiped>');
+            $output->writeln('<skiped>Courseware for ' . $course->name . '(' . $course->id . ')' . ' has already been migrated.</skiped>');
 
             return false;
         }
         $grouped = $this->getGrouped($cid, true);
         $courseware = current($grouped['']);
         $this->buildTree($grouped, $courseware);
-        $this->createNewCourseware($courseware);
+        $this->createNewCourseware($courseware, $output);
         $status = \Mooc\DB\MigrationStatus::build([
             'seminar_id' => $cid,
             'mkdate' => time()
@@ -192,52 +189,54 @@ class MigrateCoursewareCommand extends Command
         return $parent['children'];
     }
 
-    private function createNewCourseware($courseware)
+    private function createNewCourseware($courseware, $output)
     {
-        $this->cid = $courseware['seminar_id'];
-        $this->courseware_ui_block = $courseware['ui_block'];
-        $course = \Course::find($this->cid);
-        $this->output->write('creating Courseware for: ' . $course->name . '(' . $course->id . ')' . '... ');
+        $cid = $courseware['seminar_id'];
+        $course = \Course::find($cid);
+        $output->write('creating Courseware for: ' . $course->name . '(' . $course->id . ')' . '... ');
         $courseTeacher = $course->getMembersWithStatus('dozent')[0];
-        $this->teacher = \User::find($courseTeacher->user_id);
+        $teacher = \User::find($courseTeacher->user_id);
 
-        $this->structural_element_counter = 0;
-        $this->container_counter = 0;
-        $this->block_counter = 0;
+        $structural_element_counter = 0;
+        $container_counter = 0;
+        $block_counter = 0;
       
-        if ($this->teacher === null) {
-            $this->output->write('<error>');
-            $this->output->write('lecturer could not be found. Skipping Course!');
-            $this->output->writeln('</error>');
+        if ($teacher === null) {
+            $output->write('<error>');
+            $output->write('lecturer could not be found. Skipping Course!');
+            $output->writeln('</error>');
 
             return false;
         }
 
-        $root = StructuralElement::getCoursewareCourse($this->cid);
+        $root = StructuralElement::getCoursewareCourse($cid);
 
         if ($root === null) {
             $root = StructuralElement::build([
                 'parent_id' => null,
-                'range_id' => $this->cid,
+                'range_id' => $cid,
                 'range_type' => 'course',
-                'owner_id' => $this->teacher->id,
-                'editor_id' => $this->teacher->id,
+                'owner_id' => $teacher->id,
+                'editor_id' => $teacher->id,
                 'purpose' => 'content',
                 'title' => $course->name,
             ]);
     
             $root->store();
-            $this->structural_element_counter++;
+            $structural_element_counter++;
         }
 
-        $this->fillEmptyPage($root, true);
+        $this->fillEmptyPage($root, $teacher, true, $output);
+        $container_counter++;
+        $block_counter++;
+        $block_counter++;
 
         //get courseware settings
         $instance = new Instance($root);
-        if ($this->courseware_ui_block->editing_permission === 'dozent') {
+        if ($courseware['ui_block']->editing_permission === 'dozent') {
             $instance->setEditingPermissionLevel('dozent');
         }
-        if ($this->courseware_ui_block->progression === 'seq') {
+        if ($courseware['ui_block']->progression === 'seq') {
             $instance->setSequentialProgression(true);
         }
 
@@ -246,77 +245,51 @@ class MigrateCoursewareCommand extends Command
         $new_link_blocks = [];
 
         foreach ($courseware['children'] as $chapter) {
-            $subchapters = $chapter['children'];
-            if (count($subchapters) > 1) {
-                $new_chapter = $this->createStructuralElement($chapter, $root->id);
-                $this->fillEmptyPage($new_chapter, false);
-                foreach ($subchapters as $subchapter) {
-                    $sections = $subchapter['children'];
-                    if (count($sections) > 1) {
-                        $new_subchapter = $this->createStructuralElement($subchapter, $new_chapter->id);
-                        $this->fillEmptyPage($new_subchapter, false);
-                        $subchapter_map[$subchapter['id']] = $new_subchapter->id;
-                        foreach ($sections as $section) {
-                            $new_section = $this->createStructuralElement($section, $new_subchapter->id);
-                            $section_map[$section['id']] = $new_section->id;
-                            $new_container = $this->createContainer($new_section->id);
-                            $this->createSectionBlocks($section['children'], $new_container);
-                        }
-                    }
-                    if (count($sections) === 1) {
-                        $section = $sections[0];
-                        $new_section = $this->createStructuralElement($section, $new_chapter->id);
-                        $new_section->title =
-                            strval($subchapter['title']) === strval($section['title']) ?
-                            $subchapter['title'] :
-                            $subchapter['title'] . ' - ' . $section['title'];
-                        $new_section->position = $subchapter['position'];
-                        $new_section->store();
-                        $section_map[$section['id']] = $new_section->id;
-                        $new_container = $this->createContainer($new_section->id);
-                        $this->createSectionBlocks($section['children'], $new_container);
-                    }
-                }
-            } 
-            if (count($subchapters) === 1) {
-                $subchapter = $subchapters[0];
-                $sections = $subchapter['children'];
-                if (count($sections) > 1) {
-                    $new_subchapter = $this->createStructuralElement($subchapter, $root->id);
-                    $new_subchapter->title =
-                        strval($chapter['title']) == strval($subchapter['title']) ?
-                        $chapter['title'] :
-                        $chapter['title'] . ' - ' . $subchapter['title'];
-                    $new_subchapter->position = $chapter['position'];
-                    $new_subchapter->store();
-                    $this->fillEmptyPage($new_subchapter, false);
-                    $subchapter_map[$subchapter['id']] = $new_subchapter->id;
-                    foreach ($sections as $section) {
-                        $new_section = $this->createStructuralElement($section, $new_subchapter->id);
-                        $section_map[$section['id']] = $new_section->id;
-                        $new_container = $this->createContainer($new_section->id);
-                        $this->createSectionBlocks($section['children'], $new_container);
-                    }
-                }
-                if (count($sections) === 1) {
-                    $section = $sections[0];
-                    $new_section = $this->createStructuralElement($section, $root->id);
-                    $new_subchapter_title =
-                        strval($chapter['title']) === strval($subchapter['title']) ?
-                        $chapter['title'] :
-                        $chapter['title'] . ' - ' . $subchapter['title'];
-                    $new_section->title =
-                        strval($new_subchapter_title) === strval($section['title']) ?
-                        $new_subchapter_title :
-                        $new_subchapter_title . ' - ' . $section['title'];
-                    $new_section->position = $chapter['position'];
-                    $new_section->store();
+            $new_chapter = $this->createStructuralElement($chapter, $root->id, $teacher, $cid, $output);
+            $this->fillEmptyPage($new_chapter, $teacher, false, $output);
+            $container_counter++;
+            $block_counter++;
+            $structural_element_counter++;
+            foreach ($chapter['children'] as $subchapter) {
+                $new_subchapter = $this->createStructuralElement($subchapter, $new_chapter->id, $teacher, $cid, $output);
+                $this->fillEmptyPage($new_subchapter, $teacher, false, $output);
+                $container_counter++;
+                $block_counter++;
+                $structural_element_counter++;
+                $subchapter_map[$subchapter['id']] = $new_subchapter->id;
+                foreach ($subchapter['children'] as $section) {
+                    $new_section = $this->createStructuralElement($section, $new_subchapter->id, $teacher, $cid, $output);
+                    $structural_element_counter++;
                     $section_map[$section['id']] = $new_section->id;
-                    $new_container = $this->createContainer($new_section->id);
-                    $this->createSectionBlocks($section['children'], $new_container);
+                    $new_container = $this->createContainer($new_section->id, $teacher, $output);
+                    $container_counter++;
+                    foreach ($section['children'] as $block) {
+                        $create_new_block = $this->createBlock($block, $new_container, $teacher, $cid, $courseware['ui_block'], $output);
+                        $new_block = $create_new_block['new_block'];
+                        if ($new_block === null) {
+                          continue;
+                        }
+                        $block_counter++;
+                        if ($new_block->type->getType() === 'link') {
+                            array_push($new_link_blocks, array('block' => $new_block, 'link_target' => $create_new_block['link_target']));
+                        }
+                        $user_progresses = \Mooc\DB\UserProgress::findBySQL('block_id = ?', array($block['id']));
+                        foreach ($user_progresses as $user_progress) {
+                            $progress = \Courseware\UserProgress::build([
+                                'user_id' => $user_progress['user_id'],
+                                'block_id' => $new_block->id,
+                                'grade' => $user_progress['grade'] / $user_progress['max_grade'],
+                                'mkdate' => $this->convertCoursewareDate($user_progress['mkdate']),
+                                'chdate' => $this->convertCoursewareDate($user_progress['chdate'])
+                            ]);
+                            $progress->store();
+                        }
+                        //add block to container payload
+                        $new_container->type->addBlock($new_block);
+                        $new_container->store();
+                    }
                 }
             }
-
         }
         foreach ($new_link_blocks as $link_block) {
             $new_link_block = $link_block['block'];
@@ -334,24 +307,24 @@ class MigrateCoursewareCommand extends Command
             }
         }
 
-        $this->output->write('<success>');
-        $this->output->write($this->structural_element_counter . ' structural elements, ');
-        $this->output->write($this->container_counter . ' containers and ');
-        $this->output->write($this->block_counter . ' blocks ');
-        $this->output->write('were created.');
-        $this->output->writeln('</success>');
+        $output->write('<success>');
+        $output->write($structural_element_counter . ' structural elements, ');
+        $output->write($container_counter . ' containers and ');
+        $output->write($block_counter . ' blocks ');
+        $output->write('were created.');
+        $output->writeln('</success>');
 
         return true;
     }
 
-    private function createStructuralElement($element, $parent_id)
+    private function createStructuralElement($element, $parent_id, $user, $cid, $output)
     {
         $structural_element = StructuralElement::build([
             'parent_id' => $parent_id,
-            'range_id' => $this->cid,
+            'range_id' => $cid,
             'range_type' => 'course',
-            'owner_id' => $this->teacher->id,
-            'editor_id' => $this->teacher->id,
+            'owner_id' => $user->id,
+            'editor_id' => $user->id,
             'position' => $element['position'],
             'purpose' => 'content',
             'title' => $element['title'],
@@ -407,11 +380,10 @@ class MigrateCoursewareCommand extends Command
         }
 
         $structural_element->store();
-        $this->structural_element_counter++;
 
         return $structural_element;
     }
-    private function createContainer($structural_element_id)
+    private function createContainer($structural_element_id, $user, $output)
     {
         $payload = array(
             'colspan' => 'full',
@@ -420,44 +392,16 @@ class MigrateCoursewareCommand extends Command
 
         $container = Container::build([
             'structural_element_id' => $structural_element_id,
-            'owner_id' => $this->teacher->id,
-            'editor_id' => $this->teacher->id,
+            'owner_id' => $user->id,
+            'editor_id' => $user->id,
             'container_type' => 'list',
             'payload' => json_encode($payload)
         ]);
         $container->store();
-        $this->container_counter++;
 
         return $container;
     }
-    private function createSectionBlocks($blocks, $new_container)
-    {
-        foreach ($blocks as $block) {
-            $create_new_block = $this->createBlock($block, $new_container);
-            $new_block = $create_new_block['new_block'];
-            if ($new_block === null) {
-            continue;
-            }
-            if ($new_block->type->getType() === 'link') {
-                array_push($new_link_blocks, array('block' => $new_block, 'link_target' => $create_new_block['link_target']));
-            }
-            $user_progresses = \Mooc\DB\UserProgress::findBySQL('block_id = ?', array($block['id']));
-            foreach ($user_progresses as $user_progress) {
-                $progress = \Courseware\UserProgress::build([
-                    'user_id' => $user_progress['user_id'],
-                    'block_id' => $new_block->id,
-                    'grade' => $user_progress['grade'] / $user_progress['max_grade'],
-                    'mkdate' => $this->convertCoursewareDate($user_progress['mkdate']),
-                    'chdate' => $this->convertCoursewareDate($user_progress['chdate'])
-                ]);
-                $progress->store();
-            }
-            //add block to container payload
-            $new_container->type->addBlock($new_block);
-            $new_container->store();
-        }
-    }
-    private function createBlock($block, $container)
+    private function createBlock($block, $container, $user, $cid, $courseware, $output)
     {
         $addBlock = false;
         $block_type = '';
@@ -490,12 +434,12 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'AudioGalleryBlock':
-                $rootFolder = \Folder::findTopFolder($this->cid);
+                $rootFolder = \Folder::findTopFolder($cid);
                 $folder_type = 'HiddenFolder';
                 $audioGalleryFolderName = 'AudioGallery';
                 $audioGalleryFolder = \FileManager::createSubFolder(
                     \FileManager::getTypedFolder($rootFolder->id),
-                    $this->teacher,
+                    $user,
                     $folder_type,
                     $audioGalleryFolderName,
                     ''
@@ -860,8 +804,8 @@ class MigrateCoursewareCommand extends Command
         if ($addBlock){
             $new_block = Block::build([
                 'container_id' => $container->id,
-                'owner_id' => $this->teacher->id,
-                'editor_id' => $this->teacher->id,
+                'owner_id' => $user->id,
+                'editor_id' => $user->id,
                 'edit_blocker_id' => null,
                 'position' => $container->countBlocks(),
                 'block_type' => $block_type,
@@ -869,14 +813,13 @@ class MigrateCoursewareCommand extends Command
                 'visible' => $block['visible']
             ]);
             $new_block->store();
-            $this->block_counter++;
         } else {
             $new_block = null;
         }
 
         if ($new_block && $block['type'] === 'PostBlock') {
             $thread_id = $block['fields']['thread_id'];
-            $posts = \Mooc\DB\Post::findBySQL('thread_id = ? AND seminar_id = ? AND post_id > 0', array($thread_id, $this->cid));
+            $posts = \Mooc\DB\Post::findBySQL('thread_id = ? AND seminar_id = ? AND post_id > 0', array($thread_id, $cid));
             foreach($posts as $post) {
                 $block_comment = \Courseware\BlockComment::build([
                     'block_id' => $new_block->id,
@@ -944,12 +887,12 @@ class MigrateCoursewareCommand extends Command
             $id = null;
 
             if ($target == "next") {
-                $id = $this->courseware_ui_block->getNeighborSections($block['db_block']->parent)["next"]["id"];
+                $id = $courseware->getNeighborSections($block['db_block']->parent)["next"]["id"];
                 $link_target['element'] = 'section';
             }
 
             if ($target == "prev") {
-                $id = $this->courseware_ui_block->getNeighborSections($block['db_block']->parent)["prev"]["id"];
+                $id = $courseware->getNeighborSections($block['db_block']->parent)["prev"]["id"];
                 $link_target['element'] = 'section';
             }
 
@@ -990,10 +933,10 @@ class MigrateCoursewareCommand extends Command
         return array('new_block' => $new_block, 'link_target' => $link_target);
     }
 
-    private function fillEmptyPage($structural_element, $headline = true)
+    private function fillEmptyPage($structural_element, $user, $headline = true, $output)
     {
         // add list container
-        $new_container = $this->createContainer($structural_element->id);
+        $new_container = $this->createContainer($structural_element->id, $user, $output);
 
         if ($headline) {
             // add headline block
@@ -1011,8 +954,8 @@ class MigrateCoursewareCommand extends Command
             );
             $new_headline_block = Block::build([
                 'container_id' => $new_container->id,
-                'owner_id' => $this->teacher->id,
-                'editor_id' => $this->teacher->id,
+                'owner_id' => $user->id,
+                'editor_id' => $user->id,
                 'edit_blocker_id' => null,
                 'position' => $new_container->countBlocks(),
                 'block_type' => 'headline',
@@ -1020,8 +963,6 @@ class MigrateCoursewareCommand extends Command
                 'visible' => true
             ]);
             $new_headline_block->store();
-            $this->block_counter++;
-
             //add block to container payload
             $new_container->type->addBlock($new_headline_block);
             $new_container->store();
@@ -1034,8 +975,8 @@ class MigrateCoursewareCommand extends Command
         );
         $new_toc_block = Block::build([
             'container_id' => $new_container->id,
-            'owner_id' => $this->teacher->id,
-            'editor_id' => $this->teacher->id,
+            'owner_id' => $user->id,
+            'editor_id' => $user->id,
             'edit_blocker_id' => null,
             'position' => $new_container->countBlocks(),
             'block_type' => 'table-of-contents',
@@ -1043,8 +984,6 @@ class MigrateCoursewareCommand extends Command
             'visible' => true
         ]);
         $new_toc_block->store();
-        $this->block_counter++;
-
         //add block to container payload
         $new_container->type->addBlock($new_toc_block);
         $new_container->store();

@@ -27,5 +27,7 @@ class MigrateResetStatus extends Command
         $output->write('<comment>Resetting courseware migration status... </comment>');
         \Mooc\DB\MigrationStatus::resetMigrationStatus();
         $output->writeln('<comment>done!</comment>');
+
+        return 0;
     }
 }
