@@ -301,14 +301,14 @@ class MigrateCoursewareCommand extends Command
                 if (count($sections) === 1) {
                     $section = $sections[0];
                     $new_section = $this->createStructuralElement($section, $root->id);
-                    $new_subchapter_title =
-                        strval($chapter['title']) === strval($subchapter['title']) ?
-                        $chapter['title'] :
-                        $chapter['title'] . ' - ' . $subchapter['title'];
+                    $new_section_title =
+                        strval($subchapter['title']) === strval($section['title']) ?
+                        $subchapter['title'] :
+                        $subchapter['title'] . ' - ' . $section['title'];
                     $new_section->title =
-                        strval($new_subchapter_title) === strval($section['title']) ?
-                        $new_subchapter_title :
-                        $new_subchapter_title . ' - ' . $section['title'];
+                        strval($new_section_title) === strval($chapter['title']) ?
+                        $new_section_title :
+                        $chapter['title'] . ' - ' . $new_section_title;
                     $new_section->position = $chapter['position'];
                     $new_section->store();
                     $section_map[$section['id']] = $new_section->id;
