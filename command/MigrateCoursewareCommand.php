@@ -243,16 +243,16 @@ class MigrateCoursewareCommand extends Command
 
         $subchapter_map = [];
         $section_map = [];
-        $new_link_blocks = [];
+        $this->new_link_blocks = [];
 
         foreach ($courseware['children'] as $chapter) {
             $subchapters = $chapter['children'];
-            if (count($subchapters) > 1) {
+            if (count((array)$subchapters) > 1) {
                 $new_chapter = $this->createStructuralElement($chapter, $root->id);
                 $this->fillEmptyPage($new_chapter, false);
                 foreach ($subchapters as $subchapter) {
                     $sections = $subchapter['children'];
-                    if (count($sections) > 1) {
+                    if (count((array)$sections) > 1) {
                         $new_subchapter = $this->createStructuralElement($subchapter, $new_chapter->id);
                         $this->fillEmptyPage($new_subchapter, false);
                         $subchapter_map[$subchapter['id']] = $new_subchapter->id;
@@ -263,7 +263,7 @@ class MigrateCoursewareCommand extends Command
                             $this->createSectionBlocks($section['children'], $new_container);
                         }
                     }
-                    if (count($sections) === 1) {
+                    if (count((array)$sections) === 1) {
                         $section = $sections[0];
                         $new_section = $this->createStructuralElement($section, $new_chapter->id);
                         $new_section->title =
@@ -278,10 +278,10 @@ class MigrateCoursewareCommand extends Command
                     }
                 }
             } 
-            if (count($subchapters) === 1) {
+            if (count((array)$subchapters) === 1) {
                 $subchapter = $subchapters[0];
                 $sections = $subchapter['children'];
-                if (count($sections) > 1) {
+                if (count((array)$sections) > 1) {
                     $new_subchapter = $this->createStructuralElement($subchapter, $root->id);
                     $new_subchapter->title =
                         strval($chapter['title']) == strval($subchapter['title']) ?
@@ -298,7 +298,7 @@ class MigrateCoursewareCommand extends Command
                         $this->createSectionBlocks($section['children'], $new_container);
                     }
                 }
-                if (count($sections) === 1) {
+                if (count((array)$sections) === 1) {
                     $section = $sections[0];
                     $new_section = $this->createStructuralElement($section, $root->id);
                     $new_section_title =
@@ -318,7 +318,7 @@ class MigrateCoursewareCommand extends Command
             }
 
         }
-        foreach ($new_link_blocks as $link_block) {
+        foreach ($this->new_link_blocks as $link_block) {
             $new_link_block = $link_block['block'];
             $old_target = $link_block['link_target']['id'];
             $payload = json_decode($new_link_block->payload);
@@ -439,7 +439,7 @@ class MigrateCoursewareCommand extends Command
             continue;
             }
             if ($new_block->type->getType() === 'link') {
-                array_push($new_link_blocks, array('block' => $new_block, 'link_target' => $create_new_block['link_target']));
+                array_push($this->new_link_blocks, array('block' => $new_block, 'link_target' => $create_new_block['link_target']));
             }
             $user_progresses = \Mooc\DB\UserProgress::findBySQL('block_id = ?', array($block['id']));
             foreach ($user_progresses as $user_progress) {
@@ -799,8 +799,12 @@ class MigrateCoursewareCommand extends Command
             case 'PostBlock':
                 // convert this to a TextBlock and put content into comments
                 $block_type = 'text';
+                $hint = 'Dies ist ein automatisch konvertierter Block des Typs "Kommentare &
+                Diskussion". Um die vorhandenen Kommentare anzuzeigen, wählen Sie bitte
+                links die Ansicht "Bearbeiten" und aktivieren Sie dann im Menü an diesem
+                Block die Aktion "Kommentare anzeigen".';
                 $payload = array(
-                    'text' => $block['fields']['post_title']
+                    'text' => $hint
                 );
                 $addBlock = true;
                 break;

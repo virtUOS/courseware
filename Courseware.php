@@ -39,7 +39,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
 
     public function getPluginname()
     {
-        return 'Courseware-Plugin';
+        return 'Migration alter Courseware-Inhalte';
     }
 
     // bei Aufruf des Plugins über plugin.php/mooc/...
