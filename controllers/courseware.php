@@ -745,12 +745,13 @@ class CoursewareController extends CoursewareStudipController
             case 'PostBlock':
                 // convert this to a TextBlock and put content into comments
                 $block_type = 'text';
-                $hint = 'Dies ist ein automatisch konvertierter Block des Typs "Kommentare &
+                $title = '<h3>' . $block['fields']['post_title'] . '</h3>';
+                $hint = '<p>Dies ist ein automatisch konvertierter Block des Typs "Kommentare &
                 Diskussion". Um die vorhandenen Kommentare anzuzeigen, wählen Sie bitte
                 links die Ansicht "Bearbeiten" und aktivieren Sie dann im Menü an diesem
-                Block die Aktion "Kommentare anzeigen".';
+                Block die Aktion "Kommentare anzeigen".</p>';
                 $payload = array(
-                    'text' => $hint
+                    'text' => $title . $hint
                 );
                 $addBlock = true;
                 break;

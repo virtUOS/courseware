@@ -75,24 +75,26 @@
     $('.state-done').hide();
     $('.state-error').hide();
     $('#migrate').on('click', function() {
-        $('.state-idle').hide();
-        $('.state-loading').show();
-        $.ajax({
-            url: STUDIP.ABSOLUTE_URI_STUDIP + 'plugins.php/courseware/courseware/migrate?cid=' + STUDIP.URLHelper.parameters.cid,
-            type: 'POST',
-            success: response => {
-                $('.state-loading').hide();
-                if (response.code === 200) {
-                    $('.state-done').show();
-                } else {
-                    $('.state-error .error-message').html(response.error);
+        STUDIP.Dialog.confirm('Möchten Sie die Migration wirklich starten?').done(function() {
+            $('.state-idle').hide();
+            $('.state-loading').show();
+            $.ajax({
+                url: STUDIP.ABSOLUTE_URI_STUDIP + 'plugins.php/courseware/courseware/migrate?cid=' + STUDIP.URLHelper.parameters.cid,
+                type: 'POST',
+                success: response => {
+                    $('.state-loading').hide();
+                    if (response.code === 200) {
+                        $('.state-done').show();
+                    } else {
+                        $('.state-error .error-message').html(response.error);
+                        $('.state-error').show();
+                    }
+                },
+                error: response => {
+                    $('.state-loading').hide();
                     $('.state-error').show();
                 }
-            },
-            error: response => {
-                $('.state-loading').hide();
-                $('.state-error').show();
-            }
+            });
         });
     });
 
