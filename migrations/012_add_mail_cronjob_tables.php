@@ -6,8 +6,6 @@
  * @author    Ron Lucke <lucke@elan-ev.de>
  */
 
-require_once 'public/plugins_packages/virtUOS/Courseware/cronjobs/CoursewareMailCronjob.php';
-
 
 class AddMailCronjobTables extends Migration
 {
@@ -31,14 +29,10 @@ class AddMailCronjobTables extends Migration
         )");
 
         SimpleORMap::expireTableScheme();
-
-        CoursewareMailCronjob::register()->schedulePeriodic(30, 6)->activate();
     }
 
     public function down()
     {
-        CoursewareCronjob::unregister();
-
         // To avoid data loss, nothing is deleted by default
         // remove the following "return;"-statement to clean tables on uninstall
         return;

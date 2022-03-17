@@ -76,7 +76,7 @@ class Courseware extends StudIPPlugin implements StandardPlugin
      */
     public function getIconNavigation($courseId, $last_visit, $user_id)
     {
-        return false;
+        return null;
     }
 
     /**
@@ -237,11 +237,11 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         $metadata = parent::getMetadata();
 
         $metadata['pluginname'] = dgettext('Courseware', 'Courseware');
-        $metadata['displayname'] = dgettext('Courseware', 'Courseware');
-        $metadata['summary'] = dgettext('Courseware', 'Create and provide interactive multimedia learning modules');
-        $metadata['description'] = dgettext('Courseware', 'With courseware you can create and use interactive multimedia learning modules. The modules are structured into chapters, subsections and sections and can consist of text blocks, video sequences, tasks (requires the Vips plug-in) and communication elements. Modules can be exported and imported into other courses or other installations.');
-        $metadata['descriptionShort'] = dgettext('Courseware', 'Create and provide interactive multimedia learning modules');
-        $metadata['descriptionLong'] = dgettext('Courseware', 'With courseware you can create and use interactive multimedia learning modules. The modules are structured into chapters, subsections and sections and can consist of text blocks, video sequences, tasks (requires the Vips plug-in) and communication elements. Modules can be exported and imported into other courses or other installations.');
+        $metadata['displayname'] = dgettext('Courseware', 'Migration alter Courseware-Inhalte');
+        $metadata['summary'] = dgettext('Courseware', 'Migration der Lerninhalte aus dem Courseware-Plugin in Stud.IP-Courseware');
+        // $metadata['description'] = dgettext('Courseware', 'With courseware you can create and use interactive multimedia learning modules. The modules are structured into chapters, subsections and sections and can consist of text blocks, video sequences, tasks (requires the Vips plug-in) and communication elements. Modules can be exported and imported into other courses or other installations.');
+        // $metadata['descriptionShort'] = dgettext('Courseware', 'Create and provide interactive multimedia learning modules');
+        // $metadata['descriptionLong'] = dgettext('Courseware', 'With courseware you can create and use interactive multimedia learning modules. The modules are structured into chapters, subsections and sections and can consist of text blocks, video sequences, tasks (requires the Vips plug-in) and communication elements. Modules can be exported and imported into other courses or other installations.');
         $metadata['homepage'] = dgettext('Courseware', 'https://hilfe.studip.de/help/4.0/en/Basis/Courseware');
 
         return $metadata;

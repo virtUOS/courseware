@@ -1,7 +1,0 @@
-﻿site_name: MOOC.IP
-pages:
-- [index.md, Home]
-- [basics.md, Einleitung]
-- [structure.md, Strukturierung]
-- [blocks.md, Blöcke]
-- [development.md, Entwicklung]

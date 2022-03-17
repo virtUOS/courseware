@@ -10,8 +10,6 @@
     },
     "autoload": {
         "psr-4": {
-            "Mooc\\Export\\": "export/",
-            "Mooc\\Import\\": "import/",
             "Mooc\\Command\\": "command/",
             "Mooc\\UI\\": "blocks/",
             "Mooc\\DB\\": "models/mooc/db/",

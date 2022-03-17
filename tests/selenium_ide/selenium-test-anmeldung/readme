@@ -1,3 +1,0 @@
-Dieses Testsuite besteht aus Tests die sich mit der Anmeldung zum mooc beschäftigen. 
-Verschiedene Felder werden ausgelassen und geprüft ob eine Fehlermeldung erscheint.
-Eine komplette Anmeldung ist im Test "einverstanden" dargestellt.

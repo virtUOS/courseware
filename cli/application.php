@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Mooc\Command\Command;
 use Mooc\Command\MigrateCoursewareCommand;
-use Mooc\Command\MigrateCoursewareCommandOld;
 use Mooc\Command\MigrateResetStatus;
 
 /**
@@ -47,7 +46,6 @@ function bootstrapApplication()
 function registerCommands(Application $application, ContainerInterface $container)
 {
     $commands = array(
-        new MigrateCoursewareCommandOld(),
         new MigrateCoursewareCommand(),
         new MigrateResetStatus(),
     );
