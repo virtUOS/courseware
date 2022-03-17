@@ -21,7 +21,7 @@ class CoursewareController extends CoursewareStudipController
             Navigation::activateItem('/course/mooc_courseware/index');
         }
 
-        $this->canMigrate = $perm->have_studip_perm('dozent', \Context::getId(), $user->id);
+        $this->canMigrate = $perm->have_studip_perm('dozent', \Context::getId(), $user->id) && Config::get()->COURSEWARE_MANUAL_MIGRATION;
 
         $this->status = \Mooc\DB\MigrationStatus::findOneBySQL('seminar_id = ?', array($this->container['cid']));
         $this->CoursewareLink = URLHelper::getLink('dispatch.php/course/courseware/', ['cid' => $this->container['cid']]);
@@ -43,14 +43,28 @@ class CoursewareController extends CoursewareStudipController
     {
         global $user, $perm;
 
-        if (!$perm->have_studip_perm('dozent', \Context::getId(), $user->id)) {
+        $cid = \Context::getId();
+
+        if (!$perm->have_studip_perm('dozent', $cid, $user->id)) {
             return $this->redirect('courseware');
         }
 
-        $status = $this->migrateCourseware(\Context::getId());
+        $actionStatus = $this->migrateCourseware($cid);
+
+        if ($actionStatus['code'] === 200) {
+            $MigrationStatus = \Mooc\DB\MigrationStatus::findOneBySQL('seminar_id = ?', array($cid));
+            if ($MigrationStatus !== null) {
+                $MigrationStatus->delete();
+            }
+            $MigrationStatus = \Mooc\DB\MigrationStatus::build([
+                'seminar_id' => $cid,
+                'mkdate' => time()
+            ]);
+            $MigrationStatus->store();
+        }
 
         $this->response->add_header('Content-Type', 'application/json');
-        $this->render_text(json_encode($status));
+        $this->render_text(json_encode($actionStatus));
     }
 
     private function migrateCourseware($cid)
