@@ -6,9 +6,9 @@
         </header>
         <section>
             <? if($status !== null):?>
-                <?= MessageBox::success('Lerninhalte wurden automatisch übertragen');?>
+                <?= MessageBox::success('Lerninhalte wurden übertragen');?>
             <? else: ?>
-                <?= MessageBox::warning('Lerninhalte wurden noch nicht automatisch übertragen');?>
+                <?= MessageBox::warning('Lerninhalte wurden noch nicht übertragen');?>
             <? endif; ?>
             Seit der Stud.IP Version 5.0 ist Courseware ein fester Systembestandteil. Aufgrund diverser Neuerungen wurden die
             Lerninhalte in die neue Struktur übertragen. Courseware 5 bietet eine Vielzahl von neuen Funktionen
@@ -30,11 +30,13 @@
             <section class="state-idle">
                 Sie können diese Funktion verwenden, um bereits automatisch von Stud.IP
                 konvertierte Courseware-Inhalte durch eine Neumigration aus der alten
-                Courseware zu ersetzen. 
-                <br /><b> BITTE BEACHTEN: <br />
-                Hierbei werden alle aktuellen
-                Courseware-Inhalte in diesem Kurs gelöscht und durch eine Kopie der
-                alten Courseware-Inhalte (mit Stand 29.9.2021) ersetzt.</b>
+                Courseware zu ersetzen.
+                <? if($status !== null):?>
+                    <br /><b> BITTE BEACHTEN: <br />
+                    Hierbei werden alle aktuellen
+                    Courseware-Inhalte in diesem Kurs gelöscht und durch eine Kopie der
+                    alten Courseware-Inhalte ersetzt.</b>
+                <? endif; ?>
                 <br />
                 <button class="button" id="migrate">
                     Migration starten
