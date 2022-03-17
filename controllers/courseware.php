@@ -51,18 +51,6 @@ class CoursewareController extends CoursewareStudipController
 
         $actionStatus = $this->migrateCourseware($cid);
 
-        if ($actionStatus['code'] === 200) {
-            $MigrationStatus = \Mooc\DB\MigrationStatus::findOneBySQL('seminar_id = ?', array($cid));
-            if ($MigrationStatus !== null) {
-                $MigrationStatus->delete();
-            }
-            $MigrationStatus = \Mooc\DB\MigrationStatus::build([
-                'seminar_id' => $cid,
-                'mkdate' => time()
-            ]);
-            $MigrationStatus->store();
-        }
-
         $this->response->add_header('Content-Type', 'application/json');
         $this->render_text(json_encode($actionStatus));
     }
@@ -94,6 +82,10 @@ class CoursewareController extends CoursewareStudipController
         $courseware = current($grouped['']);
         $this->buildTree($grouped, $courseware);
         $this->createNewCourseware($courseware);
+        $migrationStatus = \Mooc\DB\MigrationStatus::findOneBySQL('seminar_id = ?', array($cid));
+        if ($migrationStatus !== null) {
+            $migrationStatus->delete();
+        }
         $status = \Mooc\DB\MigrationStatus::build([
             'seminar_id' => $cid,
             'mkdate' => time()
