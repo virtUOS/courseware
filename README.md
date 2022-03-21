@@ -14,6 +14,11 @@ Weiter-Entwicklung
 Seit der Veröffentlichung von Stud.IP 5 mit integrierter Courseware erhält dieses Plugin **keine weiteren Features**.
 Bugs werden zeitnahe gefixt und es wird entsprechende Releases geben.
 
+Version 5
+---------
+Diese Version ist nur für die Migration der Courseware-Inhalte in die Kern-Courseware. Administratoren können über ein Komondozeilen-Tool die Migration für alle Veranstaltungen auslösen.
+Optional kann in der Stud.IP Konfiguration auch die manuelle Migration aktiviert werden. Hiermit haben Lehrende die Möglichkeit die Migration zu einem gewünschten Zeitpunkt selber auszulösen.
+
 
 Anforderungen
 ------------
