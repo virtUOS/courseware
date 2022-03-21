@@ -1,15 +1,17 @@
 <? $body_id = 'courseware-index'; ?>
 <div style="max-width: 1095px;">
-    <article class="studip">
+    <div id="cw-messagebox-wrapper">
+        <? if($status !== null):?>
+            <?= MessageBox::success('Lerninhalte wurden übertragen');?>
+        <? else: ?>
+            <?= MessageBox::warning('Lerninhalte wurden noch nicht übertragen');?>
+        <? endif; ?>
+    </div>
+    <article class="studip" id="cw-info">
         <header>
             <h1>Informationen</h1>
         </header>
         <section>
-            <? if($status !== null):?>
-                <?= MessageBox::success('Lerninhalte wurden übertragen');?>
-            <? else: ?>
-                <?= MessageBox::warning('Lerninhalte wurden noch nicht übertragen');?>
-            <? endif; ?>
             Seit der Stud.IP Version 5.0 ist Courseware ein fester Systembestandteil. Aufgrund diverser Neuerungen wurden die
             Lerninhalte in die neue Struktur übertragen. Courseware 5 bietet eine Vielzahl von neuen Funktionen
             und verfügt über die neusten Bedienkonzepte in Stud.IP. Unter dem Menüpunkt "Mein Arbeitsplatz" haben nun
@@ -25,19 +27,32 @@
     <? if ($canMigrate): ?>
         <article class="studip">
             <header>
-                <h1>Erneute Migration alter Courseware-Inhalte</h1>
+                <? if($status !== null):?>
+                    <h1>Erneute Migration alter Courseware-Inhalte</h1>
+                <? else: ?>
+                    <h1>Manuelle Migration alter Courseware-Inhalte</h1>
+                <? endif; ?>
             </header>
             <section class="state-idle">
-                Sie können diese Funktion verwenden, um bereits automatisch von Stud.IP
-                konvertierte Courseware-Inhalte durch eine Neumigration aus der alten
-                Courseware zu ersetzen.
                 <? if($status !== null):?>
-                    <br /><b> BITTE BEACHTEN: <br />
-                    Hierbei werden alle aktuellen
-                    Courseware-Inhalte in diesem Kurs gelöscht und durch eine Kopie der
-                    alten Courseware-Inhalte ersetzt.</b>
+                    <p>
+                        Sie können diese Funktion verwenden, um bereits automatisch von Stud.IP
+                        konvertierte Courseware-Inhalte durch eine Neumigration aus der alten
+                        Courseware zu ersetzen.
+                    </p>
+                    <h4>BITTE BEACHTEN:</h4>
+                    <p style="font-weight: 700"> 
+                        Hierbei werden alle aktuellen
+                        Courseware-Inhalte in diesem Kurs gelöscht und durch eine Kopie der
+                        alten Courseware-Inhalte ersetzt.
+                    </p>
+                <? else: ?>
+                    <p>
+                        Sie können diese Funktion verwenden, um Courseware-Inhalte des Courseware-Plugins
+                        in die Courseware von Stud.IP 5 zu übertragen. Durch die neue Struktur von
+                        Courseware werden Inhalte ggf. anders dargestellt. 
+                    </p>
                 <? endif; ?>
-                <br />
                 <button class="button" id="migrate">
                     Migration starten
                 </a>
@@ -53,7 +68,7 @@
                 </p>
             </section>
             <section class="state-done">
-                <?= MessageBox::success('Die erneute Migration der alten Courseware-Inhalte war erfolgreich');?>
+                <?= MessageBox::success('Die  Migration der alten Courseware-Inhalte war erfolgreich');?>
                 <a href="<?= $CoursewareLink ?>" class="button">
                     Zur Courseware dieser Veranstaltung
                 </a>
@@ -65,7 +80,7 @@
                         <span>Nachrichtenbox schließen</span>
                     </a>
                 </div>
-                    <span class="error-message">Die erneute Migration der alten Courseware-Inhalte ist fehlgeschlagen</span>
+                <span class="error-message">Die Migration der alten Courseware-Inhalte ist fehlgeschlagen</span>
             </div>
             </section>
         </article>
@@ -78,6 +93,8 @@
     $('.state-error').hide();
     $('#migrate').on('click', function() {
         STUDIP.Dialog.confirm('Möchten Sie die Migration wirklich starten?').done(function() {
+            $('#cw-messagebox-wrapper').hide();
+            $('#cw-info').hide();
             $('.state-idle').hide();
             $('.state-loading').show();
             $.ajax({
