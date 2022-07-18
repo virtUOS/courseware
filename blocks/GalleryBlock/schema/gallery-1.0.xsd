@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/gallery/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/gallery/"
+    elementFormDefault="qualified"
+>
+        <xsd:attribute name="gallery_file_ids" type="xsd:string" /> 
+        <xsd:attribute name="gallery_file_names" type="xsd:string" /> 
+        <xsd:attribute name="gallery_folder_id" type="xsd:string" /> 
+        <xsd:attribute name="gallery_folder_name" type="xsd:string" /> 
+        <xsd:attribute name="gallery_autoplay" type="xsd:string" /> 
+        <xsd:attribute name="gallery_autoplay_timer" type="xsd:string" /> 
+        <xsd:attribute name="gallery_hidenav" type="xsd:string" /> 
+        <xsd:attribute name="gallery_height" type="xsd:string" />
+        <xsd:attribute name="gallery_show_names" type="xsd:boolean" /> 
+</xsd:schema>

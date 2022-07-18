@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/embed/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/embed/"
+    elementFormDefault="qualified"
+>
+    <xsd:attribute name="embed_url" type="xsd:string" />
+    <xsd:attribute name="embed_source" type="xsd:string" />
+    <xsd:attribute name="embed_time" type="xsd:string" />
+    <xsd:attribute name="embed_title" type="xsd:string" />
+    <xsd:attribute name="embed_fullwidth" type="xsd:string" />
+</xsd:schema>

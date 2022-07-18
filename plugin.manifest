@@ -1,9 +1,9 @@
 pluginname=Courseware
 pluginclassname=Courseware
 origin=virtUOS
-version=5.0.7
+version=5.0.8
 category=Inhalte und Aufgabenstellungen
 icon=../../../assets/images/icons/black/group3.svg
 studipMinVersion=5.0
-studipMaxVersion=5.1.99
+studipMaxVersion=5.2.99
 

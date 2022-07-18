@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/block/test/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/block/test/"
+    elementFormDefault="qualified"
+>
+    <xsd:attribute name="test_id" type="xsd:string" />
+    <xsd:attribute name="assignment_id" type="xsd:string" />
+    <xsd:attribute name="xml" type="xsd:string" />
+</xsd:schema>

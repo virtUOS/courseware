@@ -60,6 +60,14 @@ class Courseware extends StudIPPlugin implements StandardPlugin
         );
         $navigation->addSubnavigation('index', clone $navigation);
 
+        if ($this->container['current_user']->hasPerm($cid, 'tutor')) {
+            $importUrl = PluginEngine::getURL($this, compact('cid'), 'import', true);
+            $navigation->addSubnavigation(
+                'import',
+                new Navigation(_cw('Import für alte Courseware-Archive'), $importUrl)
+            );
+        }
+
         return array('mooc_courseware' => $navigation);
     }
 

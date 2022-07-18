@@ -202,7 +202,9 @@ class CoursewareController extends CoursewareStudipController
         if ($this->courseware_ui_block->progression === 'seq') {
             $instance->setSequentialProgression(true);
         }
-
+        if ($courseware['children'] === null) {
+            return true;
+        }
         $subchapter_map = [];
         $section_map = [];
         $this->new_link_blocks = [];
@@ -928,9 +930,9 @@ class CoursewareController extends CoursewareStudipController
                 $thischapter = $block['db_block']->parent->parent->parent;
                 $allchapters = $thischapter->parent->children;
                 $i = 0;
-                $this_chapter_pos = "";
-                foreach ((array)$allchapters as $chapter) {
-                    if ($thischapter->id == $chapter->id) {
+                $this_chapter_pos = 0;
+                foreach ($allchapters as $chapter) {
+                    if ($thischapter['id'] === $chapter['id']) {
                         $this_chapter_pos = $i;
                     }
                     $i++;

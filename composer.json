@@ -13,6 +13,8 @@
             "Mooc\\Command\\": "command/",
             "Mooc\\UI\\": "blocks/",
             "Mooc\\DB\\": "models/mooc/db/",
+            "Mooc\\Export\\": "export/",
+            "Mooc\\Import\\": "import/",
             "CoursewarePlugin\\": "models/courseware"
         },
         "classmap": ["controllers/"],

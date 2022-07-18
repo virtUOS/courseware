@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://moocip.de/schema/courseware/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://moocip.de/schema/courseware/"
+    elementFormDefault="qualified">
+
+    <xsd:element name="courseware">
+        <xsd:complexType>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element name="chapter" type="chapter" />
+                <xsd:element name="file" type="file" />
+            </xsd:choice>
+            <xsd:attribute name="title" type="xsd:string" use="required" />
+            <xsd:attribute name="progression" type="xsd:string"  />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="chapter">
+      <xsd:sequence>
+        <xsd:choice minOccurs="0" maxOccurs="1">
+            <xsd:element name="asidesection" type="asidesection" />
+        </xsd:choice>
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="subchapter" type="subchapter" />
+        </xsd:choice>
+      </xsd:sequence>
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="subchapter">
+        <xsd:sequence>
+          <xsd:choice minOccurs="0" maxOccurs="1">
+            <xsd:element name="asidesection" type="asidesection" />
+          </xsd:choice>
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="section" type="section" />
+        </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="section">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="block" type="block" />
+        </xsd:choice>
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="asidesection">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="block" type="block" />
+        </xsd:choice>
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="block" mixed="true">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:any />
+        </xsd:choice>
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="sub-type" type="xsd:string" />
+        <xsd:attribute name="uuid" type="xsd:string" />
+        <xsd:anyAttribute />
+    </xsd:complexType>
+
+    <xsd:complexType name="file">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="id" type="xsd:string" use="required" />
+                <xsd:attribute name="name" type="xsd:string" use="required" />
+                <xsd:attribute name="filename">
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                            <xsd:minLength value="1"/>
+                        </xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:attribute>
+                <xsd:attribute name="filesize" type="xsd:integer" use="required" />
+                <xsd:attribute name="url" type="xsd:string" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+</xsd:schema>
