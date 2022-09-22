@@ -540,7 +540,18 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'BlubberBlock':
-                // we skip this block type
+                // convert this to a LinkBlock
+                $title = 'Konversation in Blubber';
+                $url = \URLHelper::getLink('dispatch.php/course/messenger/course', ['cid' => $this->cid]);
+
+                $payload = array(
+                    'type' => 'external',
+                    'target' =>  '',
+                    'url' =>  $url,
+                    'title' =>  $title
+                );
+                $block_type = 'link';
+                $addBlock = true;
                 break;
             case 'CanvasBlock':
                 $canvas_content = json_decode($block['fields']['canvas_content']);
@@ -616,7 +627,18 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'DiscussionBlock':
-                // we skip this block type
+                // convert this to a LinkBlock
+                $title = 'Konversation in Blubber';
+                $url = \URLHelper::getLink('dispatch.php/course/messenger/course', ['cid' => $this->cid]);
+
+                $payload = array(
+                    'type' => 'external',
+                    'target' =>  '',
+                    'url' =>  $url,
+                    'title' =>  $title
+                );
+                $block_type = 'link';
+                $addBlock = true;
                 break;
             case 'DownloadBlock':
                 $payload = array(
@@ -644,7 +666,15 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'EvaluationBlock':
-                //we skip this block type
+                // convert this to a LinkBlock
+                $block_type = 'link';
+                $payload = array(
+                    'type' => 'external',
+                    'target' =>  '',
+                    'url' => \URLHelper::getLink('dispatch.php/course/overview', ['cid' => $this->cid]),
+                    'title' =>  'Evaluationen'
+                );
+                $addBlock = true;
                 break;
             case 'FolderBlock':
                 $folder_content = json_decode($block['fields']['folder_content']);
@@ -656,7 +686,19 @@ class MigrateCoursewareCommand extends Command
                 $addBlock = true;
                 break;
             case 'ForumBlock':
-                //we skip this block type
+                // convert this to a LinkBlock
+                $block_type = 'link';
+                $area_id = $block['fields']['area_id'];
+                $area = \ForumEntry::getConstraints($area_id);
+                $title = $area ? $area['name'] : 'Forum';
+                $url = \URLHelper::getLink('plugins.php/coreforum/index/index/' . $area_id);
+                $payload = array(
+                    'type' => 'external',
+                    'target' =>  '',
+                    'url' =>  $url,
+                    'title' =>  $title
+                );
+                $addBlock = true;
                 break;
             case 'GalleryBlock':
                 $payload = array(
@@ -813,7 +855,13 @@ class MigrateCoursewareCommand extends Command
                 //we skip this block type
                 break;
             case 'SearchBlock':
-                //we skip this block type
+                $block_type = 'text';
+                $title = '<h3>Suche</h3>';
+                $hint = '<p>An dieser Stelle befand sich ein Such-Block. Ab Stud.IP 5.2 befindet sich die Courseware-Suche in der Sidebar.</p>';
+                $payload = array(
+                    'text' => $title . $hint
+                );
+                $addBlock = true;
                 break;
             case 'TestBlock':
                 $payload = array(
@@ -845,6 +893,33 @@ class MigrateCoursewareCommand extends Command
                     $source = 'studip';
                     $file_id = $webvideo->file_id;
                     $web_url = '';
+                }
+                if ($webvideo->src) {
+                    $url = $webvideo->src;
+                    if (strpos($url, 'youtube.com') || strpos($url, 'youtu.be')) {
+                        // convert this to a EmbedBlock
+                        $payload = array(
+                            'title' => '',
+                            'url' => $url,
+                            'source' => 'youtube'
+                        );
+                        $block_type = 'embed';
+                        $addBlock = true;
+                        break;
+                    } else {
+                        parse_str(parse_url($webvideo->src)['query'], $src_params);
+                        $file_id = $src_params['file_id'];
+                        $file = \FileRef::find($file_id);
+                        if ($file) {
+                            $source = 'studip';
+                            $file_id = $file_id;
+                            $web_url = '';
+                        } else {
+                            $source = 'web';
+                            $file_id = '';
+                            $web_url = $webvideo->src;
+                        }
+                    }
                 }
                 $payload = array(
                     'title' => $block['fields']['videoTitle'],
