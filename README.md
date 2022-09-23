@@ -20,7 +20,7 @@ Diese Version ist nur für die Migration der Courseware-Inhalte in die Kern-Cour
 
 Optional kann in der Stud.IP Konfiguration auch die manuelle Migration aktiviert werden. Hiermit haben Lehrende die Möglichkeit die Migration zu einem gewünschten Zeitpunkt selber auszulösen.
 
-Um das Komondozeilen-Tool zu nutzen wechselt man in der Verzeichnis public/plugins_packages/virtUOS/Courseware/cli.
+Um das Komondozeilen-Tool zu nutzen wechselt man in der Verzeichnis *public/plugins_packages/virtUOS/Courseware/cli*.
 Die Migration für Courseware-Inhalte in allen Veranstaltung löst man mit "php application.php courseware:migrate" aus. Wird nach dem Befehl noch eine Veranstaltungsnummer angegeben, so wird die Migration nur für diese Veranstaltung ausgeführt.
 Auf der Komondozeile erhalten Sie Informationen über den Fortschritt der Migration. Sollte die Migration unerwartet abbrechen, so kann diese wieder am Punkt des Abbruchs aufgenommen werden. Courseware speichert welche Veranstaltungen schon migriert worden sind.
 
