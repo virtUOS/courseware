@@ -894,7 +894,7 @@ class MigrateCoursewareCommand extends Command
                     $file_id = $webvideo->file_id;
                     $web_url = '';
                 }
-                if ($webvideo->src) {
+                if ((!$webvideo->source || typeof $webvideo->source === "undefined") && $webvideo->src) {
                     $url = $webvideo->src;
                     if (strpos($url, 'youtube.com') || strpos($url, 'youtu.be')) {
                         // convert this to a EmbedBlock
@@ -907,7 +907,7 @@ class MigrateCoursewareCommand extends Command
                         $addBlock = true;
                         break;
                     } else {
-                        parse_str(parse_url($webvideo->src)['query'], $src_params);
+                        parse_str(parse_url($url)['query'], $src_params);
                         $file_id = $src_params['file_id'];
                         $file = \FileRef::find($file_id);
                         if ($file) {
@@ -917,7 +917,7 @@ class MigrateCoursewareCommand extends Command
                         } else {
                             $source = 'web';
                             $file_id = '';
-                            $web_url = $webvideo->src;
+                            $web_url = $url;
                         }
                     }
                 }
